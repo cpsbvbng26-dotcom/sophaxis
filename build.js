@@ -133,6 +133,13 @@ function page({ title, description, rel, canonical, body }) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(SITE.baseUrl + canonical)}">
+<link rel="icon" href="${up}favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
+<meta property="og:image" content="${esc(SITE.baseUrl)}og.png">
+<meta name="twitter:card" content="summary">
 <style>${CSS}</style>
 </head>
 <body>
@@ -289,6 +296,8 @@ function build(out, paperDir) {
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
   };
   papers.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
+  /* The logo is drawn by hand from rectangles only, and copied as it is. */
+  for (const f of ['favicon.svg', 'og.png']) files[f] = fs.readFileSync(path.join(__dirname, 'assets', f));
   for (const [f, s] of Object.entries(files)) fs.writeFileSync(path.join(out, f), s);
   return { problems: [], files: Object.keys(files), papers };
 }
