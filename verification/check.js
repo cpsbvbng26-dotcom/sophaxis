@@ -149,6 +149,8 @@ console.log('\n4. The policy keeps its promises in writing');
     'For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.',
     'The address keeps working, so that citations lead to the notice instead of to nothing.',
     'Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.',
+    'The operator\'s address is not published; it is given on request, without delay.',
+    'A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request.',
     'Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.',
     'Authors can ask for the copy to be removed; the record then links to the repository only.',
     'For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.',
@@ -460,7 +462,16 @@ console.log('\n12. Seven policies, consent and rights, takedown');
   ok('the seven policies each have a page, a date of last change, and a link from the index', slugs.every((s) => {
     const f = path.join(ROOT, 'site', 'policies', s + '.html');
     return fs.existsSync(f) && /Last updated: \d{4}-\d{2}-\d{2}\./.test(read(f)) && idx.includes('href="./policies/' + s + '.html"');
-  }) && fs.readdirSync(path.join(ROOT, 'policies')).length === slugs.length);
+  }) && fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => !f.endsWith('.ja.md')).length === slugs.length);
+  const ja = read(path.join(ROOT, 'site', 'policies', 'privacy.ja.html'));
+  ok('the Japanese page on personal data covers the headings of the Act: handler, data, purposes, provision, foreign services, safety, retention, requests',
+    ja.startsWith('<!doctype html>\n<html lang="ja">') && /最終更新：\d{4}-\d{2}-\d{2}。/.test(ja)
+    && ['取り扱う者', '取り扱う個人情報', '利用目的', '公開と第三者への提供', '外国にある事業者の利用', '安全のための措置', '保存の期間', '開示・訂正・利用停止・削除の求め'].every((h) => ja.includes('<h2>' + h + '</h2>')));
+  ok('the Japanese page names every foreign service the English policy names, and links back to it', ['GitHub（米国）', 'Vercel（米国）', 'DataCite（ドイツ）', 'Crossref（米国）', 'ORCID（米国）', 'Internet Archive（米国）'].every((s) => ja.includes(s))
+    && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>2026-10-30'));
+  ok('Japanese lines join without a space, English lines with one', ja.includes('読みません。サイトは、閲覧者の個人情報を集めません。') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
+  ok('every page links the Japanese page on personal data', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+    .every((f) => /href="(\.\/|\.\.\/|\/)policies\/privacy\.ja\.html" lang="ja">個人情報の取り扱い<\/a>/.test(read(path.join(ROOT, 'site', f)))));
   ok('every page links the Terms of Use, the Privacy Policy and the Takedown Policy', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
     .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./|/)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
