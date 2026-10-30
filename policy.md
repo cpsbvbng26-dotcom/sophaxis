@@ -9,6 +9,7 @@ and it gives each one a stable record page.
 Acceptance is moderation, not peer review.
 A listing on Sophaxis says that a submission passed the checks below.
 It does not say that the work is correct, original or important.
+Sophaxis does not guarantee the quality of any listed work.
 
 Sophaxis does not host files and does not assign DOIs.
 The file and the DOI stay with the repository where the author deposited the work.
@@ -26,7 +27,7 @@ Work that belongs mainly to another field is out of scope, even if it uses mathe
 
 ## How to submit
 
-1. Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org or SSRN, under an accepted licence, and obtain its DOI.
+1. Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, under an accepted licence, and obtain its DOI.
 2. Link your ORCID record to your GitHub account: add `https://github.com/<your username>` under "Websites & social links".
 3. Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.
 4. An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.
