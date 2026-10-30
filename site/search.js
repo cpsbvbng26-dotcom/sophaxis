@@ -7,7 +7,7 @@
 'use strict';
 
 function normalise(s) {
-  return String(s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  return String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
 /* Pure: every word must occur; the field and the year narrow the result. */
