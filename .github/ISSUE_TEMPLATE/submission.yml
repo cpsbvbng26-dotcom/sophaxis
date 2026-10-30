@@ -1,0 +1,85 @@
+name: Submit a preprint
+description: List a preprint that you have deposited in Zenodo or figshare.
+title: "[Submission] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Your GitHub username and everything you write here will be visible to anyone.
+        Acceptance is moderation, not peer review. Read the policy before submitting: https://sophaxis.vercel.app/policy.html
+  - type: input
+    id: doi
+    attributes:
+      label: DOI of the deposited preprint
+      description: A Zenodo (10.5281/zenodo.…) or figshare (10.6084/m9.figshare.…) DOI.
+      placeholder: 10.5281/zenodo.0000000
+    validations:
+      required: true
+  - type: input
+    id: update
+    attributes:
+      label: Existing Sophaxis id (only for a new version)
+      placeholder: 2026.0001
+  - type: input
+    id: title
+    attributes:
+      label: Title
+    validations:
+      required: true
+  - type: textarea
+    id: authors
+    attributes:
+      label: Authors
+      description: One author per line, with ORCID iD if available. A language model cannot be an author.
+      placeholder: |
+        Jane Doe, 0000-0002-1825-0097
+    validations:
+      required: true
+  - type: textarea
+    id: abstract
+    attributes:
+      label: Abstract
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Philosophy
+        - Mathematics
+        - Philosophy of Mathematics
+        - Logic
+    validations:
+      required: true
+  - type: dropdown
+    id: license
+    attributes:
+      label: Licence of the deposited work
+      options:
+        - CC BY 4.0
+        - CC BY-SA 4.0
+        - CC0 1.0
+    validations:
+      required: true
+  - type: textarea
+    id: llm
+    attributes:
+      label: Use of language models
+      description: Name the tools and say what they were used for (drafting, translation, proofs, code, literature search, editing). If none were used, say so.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: I am an author of this work.
+          required: true
+        - label: The work carries the licence stated above.
+          required: true
+        - label: I understand that listing is moderation, not peer review.
+          required: true
+        - label: The submission does not expose personal data of third parties.
+          required: true

@@ -1,0 +1,13 @@
+{
+  "id": "2026.0002",
+  "title": "A Withdrawn Fixture",
+  "authors": [ { "name": "John Roe" } ],
+  "abstract": "This record tests the withdrawal notice. It is not a real preprint.",
+  "category": "logic",
+  "license": "CC0-1.0",
+  "versions": [ { "version": 1, "doi": "10.6084/m9.figshare.7654321", "date": "2026-11-05" } ],
+  "llm_disclosure": "No language model was used in preparing this work.",
+  "issue": 2,
+  "status": "withdrawn",
+  "withdrawal_note": "Withdrawn by the author on 2026-11-20."
+}

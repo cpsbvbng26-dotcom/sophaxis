@@ -1,0 +1,22 @@
+{
+  "id": "2026.0001",
+  "title": "A Fixture Record for Testing the Build",
+  "authors": [
+    { "name": "Jane Doe", "orcid": "0000-0002-1825-0097" },
+    { "name": "Taro Yamada" }
+  ],
+  "abstract": "This record exists only to test the build. It is not a real preprint and is never published.",
+  "category": "philosophy-of-mathematics",
+  "license": "CC-BY-4.0",
+  "versions": [
+    { "version": 1, "doi": "10.5281/zenodo.1234567", "date": "2026-11-01" },
+    { "version": 2, "doi": "10.5281/zenodo.1234999", "date": "2026-12-01" }
+  ],
+  "llm_disclosure": "Drafting and editing were done with a language model; the authors checked every claim.",
+  "issue": 1,
+  "status": "listed",
+  "operator_own": true,
+  "notes": [
+    { "date": "2026-12-02", "text": "A citation in section 2 is corrected in v2." }
+  ]
+}

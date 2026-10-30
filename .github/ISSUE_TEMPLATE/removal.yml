@@ -1,0 +1,33 @@
+name: Request removal
+description: Ask for a record to be removed for a legal reason, such as copyright infringement or exposure of personal data.
+title: "[Removal] "
+labels: ["removal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Do not include personal data. Describe the problem without repeating the material itself.
+        Records are otherwise never deleted; withdrawn works keep a record with a notice.
+  - type: input
+    id: id
+    attributes:
+      label: Sophaxis id
+      placeholder: 2026.0001
+    validations:
+      required: true
+  - type: dropdown
+    id: reason
+    attributes:
+      label: Reason
+      options:
+        - Copyright infringement
+        - Exposure of personal data
+        - Other legal reason
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+    validations:
+      required: true
