@@ -31,7 +31,7 @@ console.log('\n1. The published records and the site');
   ok('every record in data/papers is valid', r.problems.length === 0, r.problems.join(' / '));
   if (r.problems.length === 0) {
     const site = path.join(ROOT, 'site');
-    const differ = r.files.filter((f) => !fs.existsSync(path.join(site, f)) || read(path.join(site, f)) !== read(path.join(out, f)));
+    const differ = r.files.filter((f) => !fs.existsSync(path.join(site, f)) || !fs.readFileSync(path.join(site, f)).equals(fs.readFileSync(path.join(out, f))));
     ok('site/ is exactly what build.js produces (run node build.js)', differ.length === 0, differ.join(', '));
     const listed = (dir) => fs.readdirSync(dir, { recursive: true }).filter((f) => fs.statSync(path.join(dir, f)).isFile()).sort();
     const extra = listed(site).filter((f) => !r.files.includes(f.split(path.sep).join('/')));
@@ -132,6 +132,24 @@ console.log('\n5. Every page: no requests to other servers, valid CSP, links tha
     });
     ok(label + ': ' + pages.length + ' pages pass', pages.length > 0 && bad.length === 0, bad.join(' / '));
   }
+}
+
+/* ------------------------------------------------------------ 6 */
+console.log('\n6. The logo and the share card');
+{
+  const svg = read(path.join(ROOT, 'assets', 'favicon.svg'));
+  const tags = [...svg.matchAll(/<([a-z]+)[\s>]/g)].map((m) => m[1]);
+  ok('the logo is drawn from rectangles and polygons only, with no text', tags.every((t) => ['svg', 'title', 'rect', 'polygon'].includes(t)), tags.join(' '));
+  const png = fs.readFileSync(path.join(ROOT, 'assets', 'og.png'));
+  const isPng = png.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  ok('the share card is a square PNG of 600 × 600', isPng && png.readUInt32BE(16) === 600 && png.readUInt32BE(20) === 600);
+  const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
+  const missing = pages.filter((f) => {
+    const h = read(path.join(ROOT, 'site', f));
+    return !/<link rel="icon" href="(\.\.\/|\.\/)favicon\.svg" type="image\/svg\+xml">/.test(h)
+      || !h.includes('<meta property="og:image" content="https://sophaxis.vercel.app/og.png">');
+  });
+  ok('every page links the logo and the share card', pages.length > 0 && missing.length === 0, missing.join(', '));
 }
 
 console.log('\n' + '-'.repeat(60));
