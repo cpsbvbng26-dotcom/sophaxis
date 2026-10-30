@@ -398,7 +398,7 @@ function fields(papers, current, up) {
 function indexPage(papers) {
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
-<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic and the philosophy of mathematics. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
+<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <h2>Listing</h2>
 ${fields(papers, '', './')}
