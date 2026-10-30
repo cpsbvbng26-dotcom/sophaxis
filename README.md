@@ -6,7 +6,7 @@ Sophaxis is an overlay preprint server for philosophy, mathematics, logic and th
 Authors deposit their preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square; Sophaxis moderates the submission and gives it a stable record page.
 
 - **Acceptance is moderation, not peer review.** The quality of listed work is not guaranteed.
-- **Diamond open access.** Sophaxis charges nothing, to authors or to readers.
+- **No fees.** Sophaxis charges nothing, to authors or to readers.
 - **Language models and other generative models are allowed when disclosed.** No generative model can be an author.
 - Sophaxis assigns no DOIs. The DOI comes from the repository.
 - It keeps an unmodified copy of the PDF where the repository allows it, so that search engines can index the full text.
@@ -57,7 +57,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 著者が Zenodo・figshare・OSF Preprints・arXiv・Preprints.org・SSRN・Research Square のどれかに置いた稿を、モデレーションのうえで一覧に載せ、固定の頁を与えます。
 
 - 受理はモデレーションであり、査読ではありません。載った稿の質は保証しません。
-- 読む側からも書く側からも、費用を取りません（ダイヤモンド・オープンアクセス）。
+- 読む側からも書く側からも、費用を取りません。
 - 言語モデルなどの生成モデルを使った稿は、使い方の開示を条件に受けます。画像や図を作るモデルも同じです。生成モデルは著者になれません。
 - DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
 - 検索エンジンが本文を読めるように、預け先が許す場合は PDF を変えずに写して置きます。
