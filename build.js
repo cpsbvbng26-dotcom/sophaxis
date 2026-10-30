@@ -170,8 +170,11 @@ ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 .meta { color: var(--muted); font-size: .9rem; }
 .id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
 .abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
@@ -358,7 +361,7 @@ ${keywords}
 ${copies}
 ${p.published_doi ? `<p>Published version: <a href="https://doi.org/${esc(p.published_doi)}">${esc(p.published_doi)}</a> (not on ${esc(SITE.name)})</p>` : ''}
 <h2>Versions</h2>
-<table><tr><th>Version</th><th>Date</th><th>DOI</th><th>Repository</th></tr>${versions}</table>
+<div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th></tr>${versions}</table></div>
 <h2>Use of language models and other generative models</h2>
 <p>${esc(p.llm_disclosure)}</p>
 ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
