@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-PBAV2PBBzBTNErOjfOnb6i2LoWh73nEiOpUxK5eGjVc='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture | Sophaxis</title>
+<meta name="description" content="In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses t">
+<link rel="canonical" href="https://sophaxis.vercel.app/abs/2026.0001.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="../feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture | Sophaxis">
+<meta property="og:description" content="In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses t">
+<meta property="og:url" content="https://sophaxis.vercel.app/abs/2026.0001.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<meta name="citation_title" content="Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture">
+<meta name="citation_author" content="Takuya Nemoto">
+<meta name="citation_publication_date" content="2026/10/13">
+<meta name="citation_online_date" content="2026/10/15">
+<meta name="citation_doi" content="10.6084/m9.figshare.34419198.v2">
+<meta name="citation_abstract_html_url" content="https://sophaxis.vercel.app/abs/2026.0001.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a></nav>
+</div></header>
+<main class="wrap">
+
+<p class="meta"><span class="id">Sophaxis:2026.0001</span> · <a href="../list/mathematics.html">Mathematics</a><span class="flag">operator’s own submission</span></p>
+
+<h1>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</h1>
+<p><a href="../author/0009-0000-1406-0547.html">Takuya Nemoto</a> <a class="id" href="https://orcid.org/0009-0000-1406-0547">ORCID 0009-0000-1406-0547</a></p>
+<h2>Abstract</h2>
+<div class="abstract"><p>In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses that identity to study the symmetric n-player game in which a player whose k co-players cooperate earns k + 1 by cooperating and k + 2 by defecting. Main results: 1. The three-player rotation scheme, in which exactly one player defects in each period, is a subgame-perfect equilibrium path if and only if δ ≥ 1/φ ≈ 0.618, where φ is the golden ratio. For n players the threshold lies in (1/(n−2) − 2/(n−2)^n, 1/(n−2)). 2. The payoff vector (2, 4, 2) is never an equilibrium payoff. This corrects an example in the author's earlier preprint (https://doi.org/10.5281/zenodo.22058777). 3. With public randomization, (2+t, 4−t, 2+t) is an equilibrium payoff if and only if δ ≥ max(1/2, 1−t). 4. Without randomization, the set of sustainable t passes through three regimes: two points for 1/2 ≤ δ &lt; 1/φ, a countably infinite set at δ = 1/φ, and the full segment for δ ≥ 2/3. Inside the window 1/φ &lt; δ &lt; 2/3 it has positive Hausdorff dimension, with an explicit lower bound. 5. Golden-window conjecture: inside the window the set has Lebesgue measure zero, and its dimension increases continuously from 0 to 1. Numerical evidence is reported. 6. In the linear dilemma with benefit b and cost c, the rotation is sustainable exactly when cooperation is efficient, the three-player threshold is (√(1 + 4c/b) − 1)/2, and the rotation always needs more patience than cooperation by everyone. The literature has not been searched systematically, and some of the results may be known. All proofs are given in full. This is a preprint and has not been peer-reviewed. Every number in the paper is produced by games/games.py and checked by verification/check_games.py in https://github.com/cpsbvbng26-dotcom/trinity-operator (MIT licence). Generative AI disclosure: the author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.Version 2: author line changed to &quot;Independent Researcher&quot; (with a note); wording of the language-model declaration revised. Mathematical content unchanged.</p></div>
+
+<div class="notice">This is a preprint. It has not been peer-reviewed. Listing on Sophaxis means it passed moderation, not that it is correct. Sophaxis does not guarantee its quality.</div>
+<h2>Read</h2>
+<p><a href="https://doi.org/10.6084/m9.figshare.34419198.v2">Latest version (v2) at figshare</a> · licence <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+
+
+<h2>Versions</h2>
+<table><tr><th>Version</th><th>Date</th><th>DOI</th><th>Repository</th></tr><tr><td>v1</td><td>2026-10-13</td><td><a href="https://doi.org/10.6084/m9.figshare.34419198.v1">10.6084/m9.figshare.34419198.v1</a></td><td>figshare</td></tr><tr><td>v2</td><td>2026-10-15</td><td><a href="https://doi.org/10.6084/m9.figshare.34419198.v2">10.6084/m9.figshare.34419198.v2</a></td><td>figshare</td></tr></table>
+<h2>Use of language models and other generative models</h2>
+<p>The author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.</p>
+
+<h2>Cite</h2>
+<p class="meta">APA</p>
+<p class="cite">Nemoto, T. (2026). Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture [Preprint]. figshare. https://doi.org/10.6084/m9.figshare.34419198.v2</p>
+<p class="meta">Chicago (author-date)</p>
+<p class="cite">Nemoto, Takuya. 2026. “Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture.” Preprint, figshare. https://doi.org/10.6084/m9.figshare.34419198.v2.</p>
+<p class="meta">BibTeX</p>
+<pre>@misc{nemoto2026sophaxis20260001,
+  author       = {Takuya Nemoto},
+  title        = {Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture},
+  year         = {2026},
+  howpublished = {figshare},
+  doi          = {10.6084/m9.figshare.34419198.v2},
+  note         = {Preprint, not peer-reviewed. Listed on Sophaxis as 2026.0001}
+}</pre>
+<p class="meta">Submission: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/8">issue #8</a></p>
+
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a></p>
+</div></footer>
+</body>
+</html>
