@@ -10,6 +10,7 @@ Authors deposit their preprint in Zenodo, figshare, OSF Preprints, arXiv, Prepri
 - **Language models and other generative models are allowed when disclosed.** No generative model can be an author.
 - Sophaxis assigns no DOIs. The DOI comes from the repository.
 - It keeps an unmodified copy of the PDF where the repository allows it, so that search engines can index the full text.
+- Search, field pages, author pages (by ORCID iD), an Atom feed (`feed.xml`), the records as JSON (`papers.json`), and citations in APA, Chicago and BibTeX.
 
 Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
 Read the [policy](policy.md) before submitting.
@@ -30,7 +31,7 @@ node build.js                # writes site/ from site.json, policy.md and data/p
 node verification/check.js   # checks the records, the site and the policy
 ```
 
-No dependencies. The site loads nothing from other servers and runs no scripts.
+No dependencies. The site loads nothing from other servers. The only script is `assets/search.js`, on the search page, which reads `papers.json` from the site itself.
 `site/` is generated; edit `site.json`, `policy.md` or `data/papers/` and run `node build.js`.
 
 ### Moderating
@@ -61,6 +62,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 言語モデルなどの生成モデルを使った稿は、使い方の開示を条件に受けます。画像や図を作るモデルも同じです。生成モデルは著者になれません。
 - DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
 - 検索エンジンが本文を読めるように、預け先が許す場合は PDF を変えずに写して置きます。
+- 検索、分野ごとの一覧、著者ごとの頁（ORCID iD のある著者）、新着の Atom フィード、記録の JSON、APA・Chicago・BibTeX の引用形式があります。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
