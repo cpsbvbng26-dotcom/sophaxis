@@ -1,0 +1,25 @@
+{
+  "name": "Sophaxis",
+  "tagline": "Preprints in Philosophy and Mathematics",
+  "baseUrl": "https://sophaxis.vercel.app/",
+  "repo": "https://github.com/cpsbvbng26-dotcom/sophaxis",
+  "operator": {
+    "name": "Takuya Nemoto",
+    "orcid": "0009-0000-1406-0547"
+  },
+  "categories": {
+    "philosophy": "Philosophy",
+    "mathematics": "Mathematics",
+    "philosophy-of-mathematics": "Philosophy of Mathematics",
+    "logic": "Logic"
+  },
+  "licenses": {
+    "CC-BY-4.0": "CC BY 4.0",
+    "CC-BY-SA-4.0": "CC BY-SA 4.0",
+    "CC0-1.0": "CC0 1.0"
+  },
+  "repositories": {
+    "10.5281/zenodo.": "Zenodo",
+    "10.6084/m9.figshare.": "figshare"
+  }
+}
