@@ -123,6 +123,10 @@ console.log('\n4. The policy keeps its promises in writing');
     'No other generative model can be listed as an author either.',
     'If no generative model was used, the statement says so.',
     'Records are not deleted.',
+    'Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.',
+    'Authors can ask for the copy to be removed; the record then links to the repository only.',
+    'When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.',
+    'Sophaxis does not control whether or when a search engine indexes a page.',
     'Sophaxis does not guarantee the quality of any listed work.',
     'Only an author of a work can submit it.',
     'A submission that does not pass both is not listed.',
@@ -275,6 +279,59 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   ok('the workflow runs only on submission issues', wf.includes("if: contains(github.event.issue.labels.*.name, 'submission')"));
   const src = read(path.join(ROOT, 'tools', 'intake.js'));
   ok('the intake reads only the ORCID person and works, not emails or addresses', !/\/(email|address|addresses|record)\b'?/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')) && src.includes("'/person'") && src.includes("'/works'"));
+}
+
+/* ------------------------------------------------------------ 10 */
+console.log('\n10. PDF copies and the tags Google Scholar reads');
+{
+  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
+  const tag = (n) => [...a.matchAll(new RegExp('<meta name="' + n + '" content="([^"]*)">', 'g'))].map((m) => m[1]);
+  ok('the record page carries citation_title, one citation_author per author and the dates', tag('citation_title')[0] === 'A Fixture Record for Testing the Build'
+    && tag('citation_author').join('|') === 'Jane Doe|Taro Yamada' && tag('citation_publication_date')[0] === '2026/11/01' && tag('citation_online_date')[0] === '2026/12/01');
+  ok('the record page gives the DOI of the latest version and its own address', tag('citation_doi')[0] === '10.5281/zenodo.1234999'
+    && tag('citation_abstract_html_url')[0] === 'https://sophaxis.vercel.app/abs/2026.0001.html');
+  ok('citation_pdf_url points to the copy, by absolute address', tag('citation_pdf_url')[0] === 'https://sophaxis.vercel.app/pdf/2026.0001v2.pdf');
+  ok('the copy is in the site byte for byte', fs.readFileSync(path.join(FIX, 'pdf', '2026.0001v2.pdf')).equals(fs.readFileSync(path.join(__dirname, 'fixtures', 'pdf', '2026.0001v2.pdf'))));
+  ok('the record page links the copy and says it is unmodified, under the licence, with the authors', a.includes('href="../pdf/2026.0001v2.pdf"')
+    && a.includes('Unmodified copies') && a.includes('shared under CC BY 4.0, by Jane Doe, Taro Yamada') && a.includes('href="https://creativecommons.org/licenses/by/4.0/"'));
+  ok('the sitemap lists the copy', read(path.join(FIX, 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/pdf/2026.0001v2.pdf</loc>'));
+  const w = read(path.join(FIX, 'abs', '2026.0002.html'));
+  ok('a record without a copy has no citation_pdf_url and no PDF link', !w.includes('citation_pdf_url') && !w.includes('../pdf/'));
+
+  const good = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  [
+    ['a copy for a version the record does not have', (p) => { p.pdfs[0].version = 3; p.pdfs[0].file = '2026.0001v3.pdf'; }],
+    ['a copy named otherwise than <id>v<version>.pdf', (p) => { p.pdfs[0].file = 'paper.pdf'; }],
+    ['a copy without a sha256', (p) => { delete p.pdfs[0].sha256; }],
+    ['a copy without the https address it came from', (p) => { p.pdfs[0].source = 'ftp://example.org/x.pdf'; }],
+  ].forEach(([label, spoil]) => {
+    const p = JSON.parse(JSON.stringify(good));
+    spoil(p);
+    ok('refuses ' + label, validate(p, '2026.0001.json').length > 0);
+  });
+  const tampered = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-tamper-'));
+  fs.mkdirSync(path.join(tampered, 'papers')); fs.mkdirSync(path.join(tampered, 'pdf'));
+  fs.copyFileSync(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json'), path.join(tampered, 'papers', '2026.0001.json'));
+  fs.writeFileSync(path.join(tampered, 'pdf', '2026.0001v2.pdf'), '%PDF-1.4\n% changed\n');
+  ok('a copy that does not match its sha256 stops the build', build(fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), path.join(tampered, 'papers')).problems.some((x) => x.includes('does not match its sha256')));
+  fs.rmSync(path.join(tampered, 'pdf', '2026.0001v2.pdf'));
+  ok('a missing copy stops the build', build(fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), path.join(tampered, 'papers')).problems.some((x) => x.includes('is missing')));
+
+  const F = require('../tools/fetch_pdf.js');
+  ok('figshare: the version DOI leads to that version in its API', F.sourceFor('10.6084/m9.figshare.34419198.v2', 2).api === 'https://api.figshare.com/v2/articles/34419198/versions/2');
+  ok('Zenodo: the DOI leads to its record in the API', F.sourceFor('10.5281/zenodo.1234567', 1).api === 'https://zenodo.org/api/records/1234567');
+  ok('arXiv: one DOI, the version number picks the file', F.sourceFor('10.48550/arXiv.2508.15126', 2).url === 'https://arxiv.org/pdf/2508.15126v2');
+  ok('Research Square: the version DOI leads to its PDF', F.sourceFor('10.21203/rs.3.rs-39251/v1', 1).url === 'https://www.researchsquare.com/article/rs-39251/v1.pdf');
+  ok('no copy is attempted from OSF Preprints, Preprints.org or SSRN, or from a figshare DOI without a version', ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.2139/ssrn.7537983', '10.6084/m9.figshare.34419198'].every((d) => F.sourceFor(d, 1) === null));
+  const pdf = Buffer.from('%PDF-1.4\nx\n');
+  ok('a file is kept only if it is a PDF and matches the repository checksum', F.accept(pdf, null).length === 0
+    && F.accept(pdf, crypto.createHash('md5').update(pdf).digest('hex')).length === 0
+    && F.accept(pdf, '0'.repeat(32)).length > 0 && F.accept(Buffer.from('<html>'), null).length > 0);
+
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'pdf.yml'));
+  ok('the PDF workflow is started by hand, may only write contents, and passes the id through the environment', /on:\n  workflow_dispatch:/.test(wf)
+    && /permissions:\n  contents: write\n(?!  \w)/.test(wf) && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')));
+  ok('the PDF workflow pushes only to a branch of its own, never to main', wf.includes('git push origin "claude/pdf-$ID"') && !/git push[^\n]*main/.test(wf));
 }
 
 console.log('\n' + '-'.repeat(60));
