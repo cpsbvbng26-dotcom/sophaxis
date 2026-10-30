@@ -11,8 +11,23 @@ A listing on Sophaxis says that a submission passed the checks below.
 It does not say that the work is correct, original or important.
 Sophaxis does not guarantee the quality of any listed work.
 
-Sophaxis does not host files and does not assign DOIs.
-The file and the DOI stay with the repository where the author deposited the work.
+Sophaxis does not assign DOIs.
+The DOI stays with the repository where the author deposited the work, and it is the reference to cite.
+
+## Copies of the PDF and search engines
+
+Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
+It copies the file only from a repository that lets a script fetch it: Zenodo, figshare, arXiv and Research Square.
+Where the repository publishes a checksum, the copy must match it.
+When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
+For OSF Preprints, Preprints.org and SSRN, the record links to the repository only.
+
+The copy is the file the authors deposited, shared under the work's own licence, with its authors, its licence and a link to the original.
+The accepted licences allow this.
+Authors can ask for the copy to be removed; the record then links to the repository only.
+
+Every record page carries the citation tags that Google Scholar reads.
+Sophaxis does not control whether or when a search engine indexes a page.
 
 ## Diamond open access
 
