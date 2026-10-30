@@ -236,6 +236,8 @@ console.log('\n6. The logo and the share card');
 console.log('\n7. Search engines see the site as Sophaxis');
 {
   const i = read(path.join(ROOT, 'site', 'index.html'));
+  ok('the top page carries the Google Search Console verification tag, and no other page does', i.includes('<meta name="google-site-verification" content="UEPpX5mfnLlhOBTBTETu-PmRO_Y4L2SmjEiaq_U1Zf8">')
+    && !read(path.join(ROOT, 'site', 'submit.html')).includes('google-site-verification'));
   ok('the top page is titled Sophaxis', i.includes('<title>Sophaxis</title>') && i.includes('<meta property="og:title" content="Sophaxis">'));
   ok('the top page names the site in WebSite microdata', /itemscope itemtype="https:\/\/schema\.org\/WebSite"><meta itemprop="name" content="Sophaxis">\s*<a class="brand" href="\.\/" itemprop="url">/.test(i));
   const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
