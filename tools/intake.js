@@ -176,7 +176,7 @@ function linksGithub(urls, login) {
   });
 }
 
-const tokens = (s) => new Set(String(s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().split(/[^a-z0-9぀-ヿ一-鿿]+/).filter(Boolean));
+const tokens = (s) => new Set(String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().split(/[^a-z0-9\u3040-\u30ff\u4e00-\u9fff]+/).filter(Boolean));
 function sameName(person, author) {
   if (!person.family || !person.given) return false;
   const have = tokens(author.name + ' ' + author.given + ' ' + author.family);
