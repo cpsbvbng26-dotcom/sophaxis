@@ -147,6 +147,8 @@ console.log('\n4. The policy keeps its promises in writing');
     'Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.',
     'Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.',
     'Authors can ask for the copy to be removed; the record then links to the repository only.',
+    'For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.',
+    'Sophaxis then keeps that file unmodified, and the record says that the authors provided it.',
     'When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.',
     'Sophaxis does not control whether or when a search engine indexes a page.',
     'Sophaxis does not guarantee the quality of any listed work.',
@@ -371,6 +373,18 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   ok('arXiv: one DOI, the version number picks the file', F.sourceFor('10.48550/arXiv.2508.15126', 2).url === 'https://arxiv.org/pdf/2508.15126v2');
   ok('Research Square: the version DOI leads to its PDF', F.sourceFor('10.21203/rs.3.rs-39251/v1', 1).url === 'https://www.researchsquare.com/article/rs-39251/v1.pdf');
   ok('no copy is attempted from OSF Preprints, Preprints.org or SSRN, or from a figshare DOI without a version', ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.2139/ssrn.7537983', '10.6084/m9.figshare.34419198'].every((d) => F.sourceFor(d, 1) === null));
+  ok('an author-provided PDF is taken only from an attachment of a GitHub issue', F.attachmentOk('https://github.com/user-attachments/files/12345678/paper.pdf')
+    && !F.attachmentOk('https://example.org/paper.pdf') && !F.attachmentOk('https://github.com.evil.example/user-attachments/files/1/p.pdf') && !F.attachmentOk('http://github.com/user-attachments/files/1/p.pdf'));
+  const byAuthors = JSON.parse(JSON.stringify(good));
+  byAuthors.pdfs[0].provided_by = 'someone';
+  ok('refuses a copy said to be provided by anyone but the authors', validate(byAuthors, '2026.0001.json').length > 0);
+  const given = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-given-'));
+  fs.mkdirSync(path.join(given, 'papers')); fs.mkdirSync(path.join(given, 'pdf'));
+  fs.writeFileSync(path.join(given, 'papers', '2026.0001.json'), JSON.stringify(Object.assign({}, good, { pdfs: [Object.assign({}, good.pdfs[0], { provided_by: 'authors', source: 'https://github.com/user-attachments/files/1/p.pdf' })] })));
+  fs.copyFileSync(path.join(__dirname, 'fixtures', 'pdf', '2026.0001v2.pdf'), path.join(given, 'pdf', '2026.0001v2.pdf'));
+  const givenOut = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-'));
+  build(givenOut, path.join(given, 'papers'));
+  ok('the record page says when the authors provided the copy', read(path.join(givenOut, 'abs', '2026.0001.html')).includes('Unmodified copies of the PDF that the authors provided in their submission issue, because Zenodo does not let a script fetch its files'));
   const pdf = Buffer.from('%PDF-1.4\nx\n');
   ok('a file is kept only if it is a PDF and matches the repository checksum', F.accept(pdf, null).length === 0
     && F.accept(pdf, crypto.createHash('md5').update(pdf).digest('hex')).length === 0
