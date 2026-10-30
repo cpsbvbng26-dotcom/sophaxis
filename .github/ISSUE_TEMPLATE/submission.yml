@@ -31,7 +31,7 @@ body:
     id: authors
     attributes:
       label: Authors
-      description: One author per line, with ORCID iD if available. A language model cannot be an author.
+      description: One author per line, with ORCID iD if available. A language model or other generative model cannot be an author.
       placeholder: |
         Jane Doe, 0000-0002-1825-0097
     validations:
@@ -66,8 +66,8 @@ body:
   - type: textarea
     id: llm
     attributes:
-      label: Use of language models
-      description: Name the tools and say what they were used for (drafting, translation, proofs, code, literature search, editing). If none were used, say so.
+      label: Use of language models and other generative models
+      description: Name the tools and say what they were used for (drafting, translation, proofs, code, literature search, editing, figures, images). This covers every generative model, not only language models. If none were used, say so.
     validations:
       required: true
   - type: checkboxes

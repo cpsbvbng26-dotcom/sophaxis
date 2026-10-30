@@ -7,7 +7,7 @@ Authors deposit their preprint in Zenodo, figshare or OSF Preprints; Sophaxis mo
 
 - **Acceptance is moderation, not peer review.**
 - **Diamond open access.** Sophaxis charges nothing, to authors or to readers.
-- **Language models are allowed when disclosed.** A language model cannot be an author.
+- **Language models and other generative models are allowed when disclosed.** No generative model can be an author.
 - Sophaxis hosts no files and assigns no DOIs. The DOI comes from the repository.
 
 Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
@@ -51,7 +51,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 
 - 受理はモデレーションであり、査読ではありません。
 - 読む側からも書く側からも、費用を取りません（ダイヤモンド・オープンアクセス）。
-- 言語モデルを使った稿は、使い方の開示を条件に受けます。言語モデルは著者になれません。
+- 言語モデルなどの生成モデルを使った稿は、使い方の開示を条件に受けます。画像や図を作るモデルも同じです。生成モデルは著者になれません。
 - ファイルの保管と DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
 
 運営は根本卓哉です。
