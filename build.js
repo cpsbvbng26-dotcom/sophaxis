@@ -162,7 +162,7 @@ function page({ title, description, rel, canonical, body }) {
 ${body}
 </main>
 <footer><div class="wrap">
-<p>${esc(SITE.name)} is a diamond open access overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review.</p>
+<p>${esc(SITE.name)} is a diamond open access overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
 </div></footer>
 </body>
@@ -223,7 +223,7 @@ ${withdrawn}
 <p>${authors}</p>
 <h2>Abstract</h2>
 <div class="abstract"><p>${esc(p.abstract)}</p></div>
-<div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct.</div>
+<div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality.</div>
 <h2>Read</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence ${esc(SITE.licenses[p.license])}</p>
 <h2>Versions</h2>
@@ -271,7 +271,7 @@ function indexPage(papers) {
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
 <p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic and the philosophy of mathematics. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
-<div class="notice">Acceptance is moderation, not peer review. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
+<div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <h2>Listing</h2>
 ${fields(papers, '', './')}
 ${listing(papers, './', 'No preprints are listed yet.')}
@@ -306,7 +306,7 @@ function submitPage() {
   const body = `
 <h1>Submit a preprint</h1>
 <ol>
-<li>Deposit your preprint in <a href="https://zenodo.org">Zenodo</a>, <a href="https://figshare.com">figshare</a>, <a href="https://osf.io/preprints/osf">OSF Preprints</a>, <a href="https://arxiv.org">arXiv</a>, <a href="https://www.preprints.org">Preprints.org</a> or <a href="https://www.ssrn.com">SSRN</a> under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and note its DOI.</li>
+<li>Deposit your preprint in <a href="https://zenodo.org">Zenodo</a>, <a href="https://figshare.com">figshare</a>, <a href="https://osf.io/preprints/osf">OSF Preprints</a>, <a href="https://arxiv.org">arXiv</a>, <a href="https://www.preprints.org">Preprints.org</a>, <a href="https://www.ssrn.com">SSRN</a> or <a href="https://www.researchsquare.com">Research Square</a> under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and note its DOI.</li>
 <li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
 <li>Open a <a href="${esc(SITE.repo)}/issues/new?template=submission.yml">submission issue</a> and give the DOI, your ORCID iD, the category and the statement on generative models. You need a GitHub account. The title, the authors, the abstract and the licence are taken from the DOI metadata.</li>
 <li>An automatic check posts its result in the issue. A moderator checks the submission against the <a href="./policy.html">policy</a>. If it passes, a record page is published here.</li>
