@@ -136,6 +136,9 @@ console.log('\n4. The policy keeps its promises in writing');
     'On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.',
     'Work on SSRN is accepted only if it carries one of the accepted licences.',
     'The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.',
+    'It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.',
+    'No other page runs a script.',
+    'Authors without one have no such page, because a name alone can belong to several people.',
     'Submissions by the operator are moderated under the same rules',
     'Claude is not an author.',
   ].forEach((s) => ok('policy says: ' + s.slice(0, 60), policy.includes(s)));
@@ -166,7 +169,12 @@ console.log('\n5. Every page: no requests to other servers, valid CSP, links tha
       if (csp.includes("'unsafe-inline'")) bad.push(f + ': unsafe-inline');
       const styles = [...h.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]);
       styles.forEach((s) => { if (!csp.includes("'sha256-" + crypto.createHash('sha256').update(s).digest('base64') + "'")) bad.push(f + ': style hash'); });
-      if (/<script/i.test(h)) bad.push(f + ': script');
+      /* One script on the whole site: search.js, on search.html only, from this site, with a CSP that allows nothing more. */
+      const scripts = h.match(/<script[^>]*>[\s\S]*?<\/script>/gi) || [];
+      if (f === 'search.html') {
+        if (scripts.length !== 1 || scripts[0] !== '<script src="./search.js" defer></script>') bad.push(f + ': only search.js may run');
+        if (!/script-src 'self'; connect-src 'self';/.test(csp) || /unsafe-(inline|eval)/.test(csp)) bad.push(f + ': search CSP');
+      } else if (scripts.length || /<script/i.test(h) || csp.includes('script-src')) bad.push(f + ': script');
       if (/<(img|link|iframe)[^>]+(src|href)="https?:/i.test(h.replace(/<link rel="canonical"[^>]*>/, ''))) bad.push(f + ': external load');
       [...h.matchAll(/href="(\.{1,2}\/[^"#]+)"/g)].forEach((m) => {
         const target = path.resolve(path.dirname(path.join(dir, f)), m[1]);
@@ -231,6 +239,7 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const form = I.parseIssue(read(fx('issue.md')));
   ok('the issue form is read: DOI, ORCID iD, category and statement', form.doi === '10.6084/m9.figshare.1234567.v1' && form.orcid === '0000-0002-1825-0097'
     && form.category === 'philosophy-of-mathematics' && form.update === '' && form.llm.startsWith('No language model'));
+  ok('other categories are read, without the main one', form.others.join() === 'logic,mathematics');
 
   const dc = I.fromDataCite(json('datacite.json'));
   ok('DataCite metadata: title, authors with ORCID iD, licence and date', dc.title === 'A Fixture on Cyclic Operators' && dc.authors.length === 2
@@ -239,6 +248,7 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const cr = I.fromCrossref(json('crossref.json'));
   ok('Crossref metadata: markup removed, licence from its URL, full date when "posted" has only a year', cr.title === 'Introducing Fixtures: A Note'
     && cr.abstract === 'A fixture abstract about modal logic.' && cr.licences[0] === 'CC-BY-SA-4.0' && cr.date === '2026-11-05' && cr.authors[1].orcid === '0000-0002-1825-0097');
+  ok('keywords come from the metadata, without broad classification schemes or repeats', dc.keywords.join('|') === 'Repeated games|Golden ratio' && cr.keywords.join('|') === 'Logic|Philosophy');
   ok('licences outside the three are not mapped', I.licenceOf('https://creativecommons.org/licenses/by-nc/4.0/') === null && I.licenceOf('cc-by-nd-4.0') === null);
 
   const person = I.orcidPerson(json('orcid-person.json'));
@@ -267,6 +277,8 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const r = run({});
   const d = I.draft({ form, login: 'jcarberry', issue: 7, meta: dc, versions: [{ doi: dc.doi, date: dc.date }], result: r, paperDir: papers, today: '2026-11-10' });
   ok('the draft record is valid and takes the next id', d.problems.length === 0 && d.record.id === '2026.0002' && d.record.issue === 7 && d.record.license === 'CC-BY-4.0', d.problems.join('; '));
+  ok('the draft keeps given and family names, keywords and other categories', d.record.authors[1].family === 'Roe' && d.record.authors[1].given === 'Jane'
+    && d.record.keywords.join('|') === 'Repeated games|Golden ratio' && d.record.categories.join() === 'logic,mathematics');
   ok('the draft is not marked as the operator’s own unless the operator opened the issue', !d.record.operator_own
     && I.draft({ form, login: 'CPSBVBNG26-DOTCOM', issue: 7, meta: dc, versions: [{ doi: dc.doi, date: dc.date }], result: r, paperDir: papers, today: '2026-11-10' }).record.operator_own === true);
   const up = I.draft({ form: Object.assign({}, form, { update: '2026.0001' }), login: 'jcarberry', issue: 8, meta: dc, versions: [{ doi: '10.5281/zenodo.1234999', date: '2026-12-01' }, { doi: '10.5281/zenodo.2000000', date: '2026-12-20' }], result: r, paperDir: papers });
@@ -335,6 +347,54 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   ok('the PDF workflow is started by hand, may only write contents, and passes the id through the environment', /on:\n  workflow_dispatch:/.test(wf)
     && /permissions:\n  contents: write\n(?!  \w)/.test(wf) && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')));
   ok('the PDF workflow pushes only to a branch of its own, never to main', wf.includes('git push origin "claude/pdf-$ID"') && !/git push[^\n]*main/.test(wf));
+}
+
+/* ------------------------------------------------------------ 11 */
+console.log('\n11. Finding work: search, feed, records as JSON, authors, keywords, citations, several fields');
+{
+  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
+  ok('a record can sit in several fields, and each field page lists it', a.includes('<a href="../list/philosophy-of-mathematics.html">Philosophy of Mathematics</a> · <a href="../list/logic.html">Logic</a>')
+    && read(path.join(FIX, 'list', 'logic.html')).includes('2026.0001') && read(path.join(FIX, 'list', 'logic.html')).includes('Logic (2)<'));
+  ok('keywords are shown and given to Google Scholar', a.includes('Keywords: structuralism; modal logic') && a.includes('<meta name="citation_keywords" content="structuralism; modal logic">'));
+  ok('APA: family name and initials, year, title, [Preprint], repository, DOI', a.includes('Doe, J., &amp; Yamada, T. (2026). A Fixture Record for Testing the Build [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.1234999'));
+  ok('Chicago author-date: first author inverted, the others not', a.includes('Doe, Jane, and Taro Yamada. 2026. “A Fixture Record for Testing the Build.” Preprint, Zenodo. https://doi.org/10.5281/zenodo.1234999.'));
+  ok('an author with an ORCID iD links to an author page that lists the record', a.includes('<a href="../author/0000-0002-1825-0097.html">Jane Doe</a>')
+    && read(path.join(FIX, 'author', '0000-0002-1825-0097.html')).includes('href="../abs/2026.0001.html"'));
+  ok('an author without an ORCID iD gets no page: a name alone can belong to several people', !a.includes('../author/Taro') && fs.readdirSync(path.join(FIX, 'author')).length === 1);
+  const feedXml = read(path.join(FIX, 'feed.xml'));
+  ok('the Atom feed lists every record, newest first, with authors, fields and abstract', feedXml.startsWith('<?xml') && feedXml.includes('xmlns="http://www.w3.org/2005/Atom"')
+    && feedXml.indexOf('abs/2026.0001.html') < feedXml.indexOf('abs/2026.0002.html') && feedXml.includes('<uri>https://orcid.org/0000-0002-1825-0097</uri>')
+    && feedXml.includes('<category term="logic" label="Logic"/>') && (feedXml.match(/<entry>/g) || []).length === 2);
+  ok('every page points to the feed', fs.readdirSync(FIX, { recursive: true }).filter((f) => f.endsWith('.html')).every((f) => read(path.join(FIX, f)).includes('<link rel="alternate" type="application/atom+xml"')));
+  const pj = JSON.parse(read(path.join(FIX, 'papers.json')));
+  ok('papers.json holds the public fields of every record and nothing from the submission process', pj.length === 2 && pj[0].id === '2026.0001'
+    && pj[0].categories.join() === 'philosophy-of-mathematics,logic' && pj[0].pdfs[0].url === 'https://sophaxis.vercel.app/pdf/2026.0001v2.pdf'
+    && pj.every((p) => !('issue' in p) && !('operator_own' in p) && !('notes' in p)));
+
+  const S = require('../assets/search.js');
+  const ids = (q, f, y) => S.match(pj, q, f || '', y || '').map((p) => p.id).join();
+  ok('search: every word must occur, in any field of the record, ignoring case and accents', ids('FIXTURE build') === '2026.0001' && ids('fixture') === '2026.0001,2026.0002' && ids('fixtüre') === '2026.0001,2026.0002' && ids('nowhere') === '');
+  ok('search: by author, ORCID iD, keyword and DOI', ids('roe') === '2026.0002' && ids('0000-0002-1825-0097') === '2026.0001' && ids('structuralism') === '2026.0001' && ids('10.6084/m9.figshare.7654321') === '2026.0002');
+  ok('search: the field and the year narrow the result', ids('', 'logic') === '2026.0001,2026.0002' && ids('', 'philosophy-of-mathematics') === '2026.0001' && ids('', '', '2025') === '');
+  const js = read(path.join(ROOT, 'assets', 'search.js')).replace(/\/\*[\s\S]*?\*\//g, '');
+  ok('search.js reads only papers.json from this site, and never writes markup', (js.match(/fetch\(/g) || []).length === 1 && js.includes("fetch('./papers.json')")
+    && !/https?:|innerHTML|outerHTML|insertAdjacentHTML|document\.write|eval\(|new Function|localStorage|cookie|sendBeacon|XMLHttpRequest/.test(js));
+  const sp = read(path.join(FIX, 'search.html'));
+  ok('the search page works as a plain form and says what to use without the script', sp.includes('action="./search.html" method="get"') && sp.includes('id="nojs"') && sp.includes('href="./papers.json"'));
+  ok('the sitemap lists the search page, the field pages and the author pages', ['search.html', 'list/logic.html', 'author/0000-0002-1825-0097.html'].every((u) => read(path.join(FIX, 'sitemap.xml')).includes(u)));
+
+  const good = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  [
+    ['an unknown second field', (p) => { p.categories = ['physics']; }],
+    ['the main field repeated as a second field', (p) => { p.categories = ['philosophy-of-mathematics']; }],
+    ['more than twelve keywords', (p) => { p.keywords = Array(13).fill('x'); }],
+    ['an empty keyword', (p) => { p.keywords = [' ']; }],
+    ['an empty family name', (p) => { p.authors[1].family = ''; }],
+  ].forEach(([label, spoil]) => {
+    const p = JSON.parse(JSON.stringify(good));
+    spoil(p);
+    ok('refuses ' + label, validate(p, '2026.0001.json').length > 0);
+  });
 }
 
 console.log('\n' + '-'.repeat(60));
