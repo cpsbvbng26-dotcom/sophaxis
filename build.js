@@ -303,7 +303,7 @@ function submitPage() {
   const body = `
 <h1>Submit a preprint</h1>
 <ol>
-<li>Deposit your preprint in <a href="https://zenodo.org">Zenodo</a>, <a href="https://figshare.com">figshare</a> or <a href="https://osf.io/preprints/osf">OSF Preprints</a> under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and note its DOI.</li>
+<li>Deposit your preprint in <a href="https://zenodo.org">Zenodo</a>, <a href="https://figshare.com">figshare</a>, <a href="https://osf.io/preprints/osf">OSF Preprints</a>, <a href="https://arxiv.org">arXiv</a>, <a href="https://www.preprints.org">Preprints.org</a> or <a href="https://www.ssrn.com">SSRN</a> under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and note its DOI.</li>
 <li>Open a <a href="${esc(SITE.repo)}/issues/new?template=submission.yml">submission issue</a> and fill in the form. You need a GitHub account.</li>
 <li>A moderator checks the submission against the <a href="./policy.html">policy</a>. If it passes, a record page is published here.</li>
 </ol>

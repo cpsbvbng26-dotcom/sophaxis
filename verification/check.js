@@ -86,9 +86,19 @@ console.log('\n3. Validation refuses broken records');
     spoil(p);
     ok('refuses ' + label, validate(p, '2026.0001.json').length > 0);
   });
-  const osf = JSON.parse(JSON.stringify(good));
-  osf.versions[1].doi = '10.31219/osf.io/3sj5u';
-  ok('accepts an OSF Preprints DOI', validate(osf, '2026.0001.json').length === 0);
+  [
+    ['OSF Preprints', '10.31219/osf.io/3sj5u'],
+    ['arXiv', '10.48550/arXiv.2202.01037'],
+    ['Preprints.org', '10.20944/preprints201605.0001.v1'],
+    ['SSRN', '10.2139/ssrn.7537983'],
+  ].forEach(([name, doi]) => {
+    const p = JSON.parse(JSON.stringify(good));
+    p.versions[1].doi = doi;
+    ok('accepts a DOI from ' + name, validate(p, '2026.0001.json').length === 0);
+  });
+  const bio = JSON.parse(JSON.stringify(good));
+  bio.versions[1].doi = '10.1101/2020.03.01.123456';
+  ok('refuses a bioRxiv or medRxiv DOI (out of scope)', validate(bio, '2026.0001.json').length > 0);
   const psy = JSON.parse(JSON.stringify(good));
   psy.versions[1].doi = '10.31234/osf.io/3sj5u';
   ok('refuses a DOI from another service hosted on OSF', validate(psy, '2026.0001.json').length > 0);
@@ -110,6 +120,8 @@ console.log('\n4. The policy keeps its promises in writing');
     'No other generative model can be listed as an author either.',
     'If no generative model was used, the statement says so.',
     'Records are not deleted.',
+    'On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.',
+    'Work on SSRN is accepted only if it carries one of the accepted licences.',
     'The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.',
     'Submissions by the operator are moderated under the same rules',
     'Claude is not an author.',

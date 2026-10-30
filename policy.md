@@ -26,7 +26,7 @@ Work that belongs mainly to another field is out of scope, even if it uses mathe
 
 ## How to submit
 
-1. Deposit the preprint in Zenodo, figshare or OSF Preprints, under an open licence, and obtain its DOI.
+1. Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org or SSRN, under an accepted licence, and obtain its DOI.
 2. Open a submission issue in the Sophaxis repository and fill in the form.
 3. A moderator checks the submission. If it passes, a record page is published.
 
@@ -43,6 +43,10 @@ Your GitHub username and everything you write in the form will be visible to any
 - The work is not spam, not abusive and does not expose personal data of third parties.
 
 A moderator who declines a submission gives a short reason in the issue.
+
+The licence condition applies in every repository.
+On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.
+Work on SSRN is accepted only if it carries one of the accepted licences.
 
 ## Language models and other generative models
 
@@ -62,7 +66,9 @@ the record receives a notice, and the authors are asked to add a disclosure.
 
 ## Versions, corrections and withdrawal
 
-A new version is a new version in the repository, with its own DOI.
+A new version is a new version in the repository.
+Most repositories give each version its own DOI.
+arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version.
 Submit it as an update to the existing record; earlier versions stay listed.
 
 Corrections are added to the record as dated notes.
