@@ -1,0 +1,20 @@
+name: probe
+on:
+  push:
+    branches: [claude/probe-disclosure]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash {0}
+        run: |
+          UA='Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)'
+          for u in https://philarchive.org/archive/NEMMRA "https://papers.ssrn.com/sol3/Delivery.cfm?abstractid=7537983"; do
+            echo "=== $u"; curl -sS -L -A "$UA" -o /tmp/p.pdf -w '%{http_code} %{content_type} %{size_download}\n' "$u"; head -c 5 /tmp/p.pdf | od -c | head -1
+            if [ "$(head -c 4 /tmp/p.pdf)" = "%PDF" ]; then
+              command -v pdftotext >/dev/null || sudo apt-get install -y -qq poppler-utils >/dev/null
+              pdftotext -layout /tmp/p.pdf /tmp/p.txt
+              echo "--- first lines"; head -15 /tmp/p.txt
+              echo "--- disclosure"; grep -n -i -E -A8 "disclos|declaration|language model was|use of (generative|language)|Claude|acknowledg" /tmp/p.txt | head -80
+            fi
+          done
