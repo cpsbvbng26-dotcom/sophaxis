@@ -9,6 +9,10 @@ The search page runs one script, served by Sophaxis itself.
 It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
 No other page runs a script.
 
+Each record page has share links to X, Bluesky, Facebook, LinkedIn and email.
+They are plain links to each service's own page.
+Nothing is sent anywhere until a reader follows one, and the service then works under its own privacy policy.
+
 The site is hosted on Vercel.
 Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.
 Sophaxis has not turned on Vercel's analytics.
