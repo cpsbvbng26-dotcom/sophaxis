@@ -212,7 +212,10 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang 
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(SITE.baseUrl + canonical)}">
+<link rel="icon" href="${up}favicon.ico" sizes="48x48">
 <link rel="icon" href="${up}favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${up}favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="${up}apple-touch-icon.png">
 <link rel="alternate" type="application/atom+xml" title="${esc(SITE.name)}: new preprints" href="${up}feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.name)}">
@@ -667,8 +670,9 @@ function build(out, paperDir) {
   authorIds(papers).forEach((o) => { files['author/' + o + '.html'] = authorPage(papers, o); });
   /* The PDF copies are copied byte for byte; loadPapers has checked their sha256. */
   papers.forEach((p) => (p.pdfs || []).forEach((x) => { files['pdf/' + x.file] = fs.readFileSync(path.join(pdfDir(paperDir), x.file)); }));
-  /* The logo is drawn by hand from rectangles only, and copied as it is. */
-  for (const f of ['favicon.svg', 'og.png']) files[f] = fs.readFileSync(path.join(__dirname, 'assets', f));
+  /* The logo is drawn by hand from rectangles only, and copied as it is. The ICO and the PNGs
+   * are the same logo in pixels, for search results and home screens that do not take SVG. */
+  for (const f of ['favicon.svg', 'favicon.ico', 'favicon-192.png', 'apple-touch-icon.png', 'og.png']) files[f] = fs.readFileSync(path.join(__dirname, 'assets', f));
   /* The one script of the site, used only by search.html. */
   files['search.js'] = fs.readFileSync(path.join(__dirname, 'assets', 'search.js'));
   for (const [f, s] of Object.entries(files)) fs.writeFileSync(path.join(out, f), s);
