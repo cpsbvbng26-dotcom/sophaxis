@@ -7,6 +7,12 @@ on:
       id:
         description: Record id, such as 2026.0001
         required: true
+      from:
+        description: Only where the repository does not let a script fetch the file — the PDF the authors attached to their submission issue (https://github.com/user-attachments/…)
+        required: false
+      version:
+        description: With "from" — the version number that the attached PDF is
+        required: false
 permissions:
   contents: write
 jobs:
@@ -19,9 +25,13 @@ jobs:
         with:
           node-version: 22
       # The id reaches the shell only through the environment, and fetch_pdf.js checks its form.
-      - run: node tools/fetch_pdf.js "$ID" && node build.js && node verification/check.js
+      - run: |
+          if [ -n "$FROM" ]; then node tools/fetch_pdf.js "$ID" --from "$FROM" --version "$VERSION"; else node tools/fetch_pdf.js "$ID"; fi
+          node build.js && node verification/check.js
         env:
           ID: ${{ inputs.id }}
+          FROM: ${{ inputs.from }}
+          VERSION: ${{ inputs.version }}
       - run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
