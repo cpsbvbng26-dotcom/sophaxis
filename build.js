@@ -124,6 +124,10 @@ const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('
 
 function page({ title, description, rel, canonical, body }) {
   const up = rel ? '../' : './';
+  /* The top page names the site for search engines: WebSite microdata, without a script. */
+  const home = canonical === '';
+  const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">` : '>';
+  const brand = home ? 'href="./" itemprop="url"' : `href="${up}index.html"`;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -135,6 +139,7 @@ function page({ title, description, rel, canonical, body }) {
 <link rel="canonical" href="${esc(SITE.baseUrl + canonical)}">
 <link rel="icon" href="${up}favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="${esc(SITE.name)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
@@ -143,8 +148,8 @@ function page({ title, description, rel, canonical, body }) {
 <style>${CSS}</style>
 </head>
 <body>
-<header class="top"><div class="wrap">
-<a class="brand" href="${up}index.html">${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
+<header class="top"><div class="wrap"${site}
+<a class="brand" ${brand}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
 <nav><a href="${up}index.html">Listing</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policy</a></nav>
 </div></header>
 <main class="wrap">
@@ -248,7 +253,7 @@ function indexPage(papers) {
 ${papers.length ? `<ol class="list">${items}</ol>` : '<p class="meta">No preprints are listed yet.</p>'}
 `;
   return page({
-    title: SITE.name + ' — ' + SITE.tagline,
+    title: SITE.name,
     description: SITE.name + ' is a diamond open access overlay preprint server for philosophy and mathematics.',
     rel: false,
     canonical: '',
