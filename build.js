@@ -32,6 +32,9 @@ function orcidOk(o) {
   return d[15] === (r === 10 ? 'X' : String(r));
 }
 
+/* The accepted repository a DOI belongs to, or undefined. DOIs are not case-sensitive. */
+const repoPrefix = (doi) => Object.keys(SITE.repositories).find((pre) => String(doi).toLowerCase().startsWith(pre.toLowerCase()));
+
 /* Returns a list of problems. An empty list means the record is valid. */
 function validate(p, file) {
   const e = [];
@@ -53,7 +56,7 @@ function validate(p, file) {
   (p.versions || []).forEach((v, i) => {
     if (v.version !== i + 1) e.push(file + ': versions must be numbered 1, 2, 3 …');
     if (!DOI.test(v.doi || '')) e.push(file + ': version ' + (i + 1) + ' has an invalid DOI');
-    if (!Object.keys(SITE.repositories).some((pre) => (v.doi || '').startsWith(pre))) {
+    if (!repoPrefix(v.doi || '')) {
       e.push(file + ': version ' + (i + 1) + ' is not in an accepted repository');
     }
     if (!DATE.test(v.date || '')) e.push(file + ': version ' + (i + 1) + ' has an invalid date');
@@ -190,7 +193,7 @@ function markdown(src) {
 
 const authorsText = (p) => p.authors.map((a) => a.name).join(', ');
 const latest = (p) => p.versions[p.versions.length - 1];
-const repoName = (doi) => SITE.repositories[Object.keys(SITE.repositories).find((pre) => doi.startsWith(pre))];
+const repoName = (doi) => SITE.repositories[repoPrefix(doi)];
 
 function bibtex(p) {
   const v = latest(p);
@@ -304,8 +307,9 @@ function submitPage() {
 <h1>Submit a preprint</h1>
 <ol>
 <li>Deposit your preprint in <a href="https://zenodo.org">Zenodo</a>, <a href="https://figshare.com">figshare</a>, <a href="https://osf.io/preprints/osf">OSF Preprints</a>, <a href="https://arxiv.org">arXiv</a>, <a href="https://www.preprints.org">Preprints.org</a> or <a href="https://www.ssrn.com">SSRN</a> under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and note its DOI.</li>
-<li>Open a <a href="${esc(SITE.repo)}/issues/new?template=submission.yml">submission issue</a> and fill in the form. You need a GitHub account.</li>
-<li>A moderator checks the submission against the <a href="./policy.html">policy</a>. If it passes, a record page is published here.</li>
+<li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
+<li>Open a <a href="${esc(SITE.repo)}/issues/new?template=submission.yml">submission issue</a> and give the DOI, your ORCID iD, the category and the statement on generative models. You need a GitHub account. The title, the authors, the abstract and the licence are taken from the DOI metadata.</li>
+<li>An automatic check posts its result in the issue. A moderator checks the submission against the <a href="./policy.html">policy</a>. If it passes, a record page is published here.</li>
 </ol>
 <div class="notice">The submission issue is public. Your GitHub username and everything in the form will be visible to anyone. Do not include personal data you do not want published.</div>
 <p>To update a listed preprint with a new version, open a submission issue and give the existing ${esc(SITE.name)} id. To request removal for legal reasons, open a <a href="${esc(SITE.repo)}/issues/new?template=removal.yml">removal issue</a>.</p>
@@ -349,7 +353,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, loadPapers, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, STYLE_HASH };
 
 if (require.main === module) {
   const r = build(OUT, PAPER_DIR);
