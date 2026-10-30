@@ -143,6 +143,9 @@ console.log('\n4. The policy keeps its promises in writing');
   ok('the submission form requires the language-model statement', /id: llm[\s\S]*?required: true/.test(form));
   ok('the submission form asks about every generative model, not only language models', form.includes('label: Use of language models and other generative models') && form.includes('This covers every generative model, not only language models.'));
   ok('the submission form warns that the issue is public', form.includes('This issue is public.'));
+  /* Sophaxis charges nothing, but it is run by one person, not by a community: it does not call itself diamond open access. */
+  const claims = [policy, read(path.join(ROOT, 'README.md'))].concat(fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).map((f) => read(path.join(ROOT, 'site', f))));
+  ok('nothing calls Sophaxis diamond open access', claims.every((t) => !/diamond|ダイヤモンド/i.test(t)));
   const repos = Object.entries(JSON.parse(read(path.join(ROOT, 'site.json'))).repositories);
   const submit = read(path.join(ROOT, 'site', 'submit.html'));
   ok('the policy, the form and the submit page name every accepted repository', repos.every(([pre, name]) => policy.includes(name) && form.includes(name) && form.includes(pre) && submit.includes(name)), repos.map(([, n]) => n).join(', '));
