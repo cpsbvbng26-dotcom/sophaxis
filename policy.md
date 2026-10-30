@@ -29,7 +29,7 @@ Authors can ask for the copy to be removed; the record then links to the reposit
 Every record page carries the citation tags that Google Scholar reads.
 Sophaxis does not control whether or when a search engine indexes a page.
 
-## Diamond open access
+## No fees
 
 Sophaxis charges nothing, to authors or to readers.
 There are no submission fees, no listing fees and no paid tiers.
