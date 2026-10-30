@@ -112,7 +112,8 @@ console.log('\n3. Validation refuses broken records');
 /* ------------------------------------------------------------ 4 */
 console.log('\n4. The policy keeps its promises in writing');
 {
-  const policy = read(path.join(ROOT, 'policy.md'));
+  /* The promises are checked across the policy index and the seven policies, wherever each one lives. */
+  const policy = [read(path.join(ROOT, 'policy.md'))].concat(fs.readdirSync(path.join(ROOT, 'policies')).sort().map((f) => read(path.join(ROOT, 'policies', f)))).join('\n');
   [
     'Acceptance is moderation, not peer review.',
     'Sophaxis charges nothing, to authors or to readers.',
@@ -123,6 +124,19 @@ console.log('\n4. The policy keeps its promises in writing');
     'No other generative model can be listed as an author either.',
     'If no generative model was used, the statement says so.',
     'Records are not deleted.',
+    'Every author of the work agrees to its listing on Sophaxis.',
+    'The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.',
+    'Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.',
+    'Sophaxis asks for no transfer of copyright and no exclusive licence.',
+    'It does not run plagiarism checks.',
+    'The operator then looks at the submission once more, and that decision is final.',
+    'These terms are governed by the laws of Japan.',
+    'To the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.',
+    'If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.',
+    'A private channel is not available yet.',
+    'For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.',
+    'The address keeps working, so that citations lead to the notice instead of to nothing.',
+    'Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.',
     'Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.',
     'Authors can ask for the copy to be removed; the record then links to the repository only.',
     'When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.',
@@ -395,6 +409,54 @@ console.log('\n11. Finding work: search, feed, records as JSON, authors, keyword
     spoil(p);
     ok('refuses ' + label, validate(p, '2026.0001.json').length > 0);
   });
+}
+
+/* ------------------------------------------------------------ 12 */
+console.log('\n12. Seven policies, consent and rights, takedown');
+{
+  const slugs = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'privacy', 'takedown'];
+  const idx = read(path.join(ROOT, 'site', 'policy.html'));
+  ok('the seven policies each have a page, a date of last change, and a link from the index', slugs.every((s) => {
+    const f = path.join(ROOT, 'site', 'policies', s + '.html');
+    return fs.existsSync(f) && /Last updated: \d{4}-\d{2}-\d{2}\./.test(read(f)) && idx.includes('href="./policies/' + s + '.html"');
+  }) && fs.readdirSync(path.join(ROOT, 'policies')).length === slugs.length);
+  ok('every page links the Terms of Use, the Privacy Policy and the Takedown Policy', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+    .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  ok('the submission form requires consent of every author and the right to share the version', /- label: Every author of this work agrees to its listing on Sophaxis\.\n\s+required: true/.test(form)
+    && /- label: The authors may share this version under its licence; if a journal has published the work, the publisher allows it\.\n\s+required: true/.test(form));
+  const rem = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'removal.yml'));
+  ok('the removal form asks for no personal data, and covers author consent and the PDF copy', /- label: This issue contains no personal data\.\n\s+required: true/.test(rem)
+    && rem.includes('An author did not agree to the listing') && rem.includes('An author asks for the PDF copy to be removed') && rem.includes('policies/takedown.html'));
+
+  const r = read(path.join(FIX, 'abs', '2026.0003.html'));
+  ok('a removed record keeps its address with a notice, and nothing else', r.includes('Record removed') && r.includes('Removed because it exposed personal data. Date: 2026-12-10.')
+    && r.includes('<meta name="robots" content="noindex">') && !r.includes('citation_') && !r.includes('../pdf/'));
+  const everywhere = ['index.html', 'feed.xml', 'papers.json', 'sitemap.xml', 'search.html', 'list/logic.html', 'list/mathematics.html'].map((f) => read(path.join(FIX, f))).join('\n');
+  ok('a removed record is left out of the listing, the fields, the feed, the JSON and the sitemap', !everywhere.includes('2026.0003') && read(path.join(FIX, 'index.html')).includes('All fields (2)<'));
+  const removed = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0003.json')));
+  [
+    ['a removed record that keeps its title', (p) => { p.title = 'x'; }],
+    ['a removed record that keeps a PDF copy', (p) => { p.pdfs = []; }],
+    ['a removed record without a date', (p) => { delete p.removal_date; }],
+    ['a removed record with an unknown reason', (p) => { p.removal_reason = 'because'; }],
+  ].forEach(([label, spoil]) => {
+    const p = JSON.parse(JSON.stringify(removed));
+    spoil(p);
+    ok('refuses ' + label, validate(p, '2026.0003.json').length > 0);
+  });
+
+  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
+  ok('a record links the published version, outside Sophaxis', a.includes('Published version: <a href="https://doi.org/10.1000/fixture.journal.1">10.1000/fixture.journal.1</a> (not on Sophaxis)')
+    && JSON.parse(read(path.join(FIX, 'papers.json')))[0].published_doi === '10.1000/fixture.journal.1');
+  const good = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  ok('refuses a published version that is not a DOI', validate(Object.assign({}, good, { published_doi: 'journal.org/x' }), '2026.0001.json').length > 0);
+
+  const I = require('../tools/intake.js');
+  const f = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
+  ok('the intake reads the published version and puts it in the draft', f.published === '10.1000/fixture.journal.1'
+    && I.draft({ form: f, login: 'jcarberry', issue: 9, meta: I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json')))),
+      versions: [{ doi: '10.6084/m9.figshare.1234567.v1', date: '2026-11-03' }], result: { licence: 'CC-BY-4.0' }, paperDir: fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), today: '2026-11-10' }).record.published_doi === '10.1000/fixture.journal.1');
 }
 
 console.log('\n' + '-'.repeat(60));
