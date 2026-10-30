@@ -106,6 +106,12 @@ console.log('\n3. Validation refuses broken records');
   psy.versions[1].doi = '10.31234/osf.io/3sj5u';
   ok('refuses a DOI from another service hosted on OSF', validate(psy, '2026.0001.json').length > 0);
   ok('the ORCID checksum accepts a valid iD', orcidOk('0000-0002-1825-0097'));
+  const twice = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-twice-'));
+  fs.mkdirSync(path.join(twice, 'papers'));
+  const copy = JSON.parse(JSON.stringify(good));
+  fs.writeFileSync(path.join(twice, 'papers', '2026.0001.json'), JSON.stringify(Object.assign({}, copy, { pdfs: undefined })));
+  fs.writeFileSync(path.join(twice, 'papers', '2026.0002.json'), JSON.stringify(Object.assign({}, copy, { id: '2026.0002', pdfs: undefined })));
+  ok('refuses the same DOI in two records', build(fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), path.join(twice, 'papers')).problems.some((x) => x.includes('is in both 2026.0001 and 2026.0002')));
   ok('the ORCID checksum accepts an iD ending in X', orcidOk('0000-0002-9079-593X'));
 }
 
@@ -124,6 +130,8 @@ console.log('\n4. The policy keeps its promises in writing');
     'No other generative model can be listed as an author either.',
     'If no generative model was used, the statement says so.',
     'Records are not deleted.',
+    'A work is listed once, under one Sophaxis id.',
+    'That id is never given to another work, even after a record is withdrawn or removed.',
     'Every author of the work agrees to its listing on Sophaxis.',
     'The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.',
     'Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.',
@@ -290,6 +298,12 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   ok('not verified without an accepted licence', !run({ meta: Object.assign({}, dc, { licences: [] }) }).ok);
   ok('not verified for a DOI outside the accepted repositories', !run({ form: Object.assign({}, form, { doi: '10.1101/2020.01.01.000001' }) }).ok);
   ok('not verified when the metadata cannot be read', !run({ meta: null }).ok && !run({ person: null }).ok);
+  const listed = new Map([['10.6084/m9.figshare.1234567.v1', '2026.0005']]);
+  ok('not verified when the work is already listed, and the comment names the record', !run({ listed }).ok
+    && run({ listed }).checks.some((c) => c[2].includes('already listed as 2026.0005')));
+  ok('a concept DOI matches its listed versions', I.listedAs('10.6084/m9.figshare.1234567', listed) === '2026.0005' && I.listedAs('10.6084/m9.figshare.1234568', listed) === null);
+  ok('an update is verified only with the id of the record that lists the work', run({ listed, form: Object.assign({}, form, { update: '2026.0005' }) }).ok
+    && !run({ listed, form: Object.assign({}, form, { update: '2026.0009' }) }).ok);
 
   const papers = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-papers-'));
   fs.copyFileSync(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json'), path.join(papers, '2026.0001.json'));
