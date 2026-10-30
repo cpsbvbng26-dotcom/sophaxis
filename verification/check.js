@@ -85,6 +85,12 @@ console.log('\n3. Validation refuses broken records');
     spoil(p);
     ok('refuses ' + label, validate(p, '2026.0001.json').length > 0);
   });
+  const osf = JSON.parse(JSON.stringify(good));
+  osf.versions[1].doi = '10.31219/osf.io/3sj5u';
+  ok('accepts an OSF Preprints DOI', validate(osf, '2026.0001.json').length === 0);
+  const psy = JSON.parse(JSON.stringify(good));
+  psy.versions[1].doi = '10.31234/osf.io/3sj5u';
+  ok('refuses a DOI from another service hosted on OSF', validate(psy, '2026.0001.json').length > 0);
   ok('the ORCID checksum accepts a valid iD', orcidOk('0000-0002-1825-0097'));
   ok('the ORCID checksum accepts an iD ending in X', orcidOk('0000-0002-9079-593X'));
 }
@@ -107,6 +113,9 @@ console.log('\n4. The policy keeps its promises in writing');
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   ok('the submission form requires the language-model statement', /id: llm[\s\S]*?required: true/.test(form));
   ok('the submission form warns that the issue is public', form.includes('This issue is public.'));
+  const repos = Object.entries(JSON.parse(read(path.join(ROOT, 'site.json'))).repositories);
+  const submit = read(path.join(ROOT, 'site', 'submit.html'));
+  ok('the policy, the form and the submit page name every accepted repository', repos.every(([pre, name]) => policy.includes(name) && form.includes(name) && form.includes(pre) && submit.includes(name)), repos.map(([, n]) => n).join(', '));
   ok('the submission form offers only the accepted licences', ['CC BY 4.0', 'CC BY-SA 4.0', 'CC0 1.0'].every((l) => form.includes('- ' + l)) && !form.includes('NC'));
 }
 
