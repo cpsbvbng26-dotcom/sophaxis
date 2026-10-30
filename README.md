@@ -8,7 +8,8 @@ Authors deposit their preprint in Zenodo, figshare, OSF Preprints, arXiv, Prepri
 - **Acceptance is moderation, not peer review.** The quality of listed work is not guaranteed.
 - **Diamond open access.** Sophaxis charges nothing, to authors or to readers.
 - **Language models and other generative models are allowed when disclosed.** No generative model can be an author.
-- Sophaxis hosts no files and assigns no DOIs. The DOI comes from the repository.
+- Sophaxis assigns no DOIs. The DOI comes from the repository.
+- It keeps an unmodified copy of the PDF where the repository allows it, so that search engines can index the full text.
 
 Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
 Read the [policy](policy.md) before submitting.
@@ -36,6 +37,7 @@ No dependencies. The site loads nothing from other servers and runs no scripts.
 
 When a verified submission passes moderation, add the draft record from the issue as `data/papers/<id>.json`,
 run `node build.js` and `node verification/check.js`, and open a pull request that closes the issue.
+After it is merged, run the `pdf` workflow with the record id. It copies the PDFs onto a branch `claude/pdf-<id>`; open a pull request from it.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
 
 ## Licence
@@ -57,7 +59,8 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 受理はモデレーションであり、査読ではありません。載った稿の質は保証しません。
 - 読む側からも書く側からも、費用を取りません（ダイヤモンド・オープンアクセス）。
 - 言語モデルなどの生成モデルを使った稿は、使い方の開示を条件に受けます。画像や図を作るモデルも同じです。生成モデルは著者になれません。
-- ファイルの保管と DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
+- DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
+- 検索エンジンが本文を読めるように、預け先が許す場合は PDF を変えずに写して置きます。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
