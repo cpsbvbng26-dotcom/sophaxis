@@ -47,6 +47,7 @@ const FIX = tmp();
   ok('the fixtures are valid', r.problems.length === 0, r.problems.join(' / '));
   const a = read(path.join(FIX, 'abs', '2026.0001.html'));
   ok('the record page says it has not been peer-reviewed', a.includes('It has not been peer-reviewed.'));
+  ok('the record page says its quality is not guaranteed', a.includes('does not guarantee its quality.'));
   ok('the record page links the latest version by DOI', a.includes('href="https://doi.org/10.5281/zenodo.1234999"'));
   ok('the record page lists every version', a.includes('>v1<') && a.includes('>v2<'));
   ok('the record page shows the language-model statement', a.includes('Use of language models and other generative models') && a.includes('the authors checked every claim'));
@@ -59,6 +60,7 @@ const FIX = tmp();
   const i = read(path.join(FIX, 'index.html'));
   ok('the listing shows the most recently updated first', i.indexOf('2026.0001') >= 0 && i.indexOf('2026.0001') < i.indexOf('2026.0002'));
   ok('the listing marks the withdrawn record', i.includes('>withdrawn<'));
+  ok('the listing and every footer say that quality is not guaranteed', i.includes('The quality of listed work is not guaranteed.') && i.includes('the quality of listed work is not guaranteed.</p>') && a.includes('the quality of listed work is not guaranteed.</p>'));
 }
 
 /* ------------------------------------------------------------ 3 */
@@ -91,6 +93,7 @@ console.log('\n3. Validation refuses broken records');
     ['arXiv', '10.48550/arXiv.2202.01037'],
     ['Preprints.org', '10.20944/preprints201605.0001.v1'],
     ['SSRN', '10.2139/ssrn.7537983'],
+    ['Research Square', '10.21203/rs.3.rs-39251/v1'],
   ].forEach(([name, doi]) => {
     const p = JSON.parse(JSON.stringify(good));
     p.versions[1].doi = doi;
@@ -120,6 +123,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'No other generative model can be listed as an author either.',
     'If no generative model was used, the statement says so.',
     'Records are not deleted.',
+    'Sophaxis does not guarantee the quality of any listed work.',
     'Only an author of a work can submit it.',
     'A submission that does not pass both is not listed.',
     'It is not an official identity check.',
