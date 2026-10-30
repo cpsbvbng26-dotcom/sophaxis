@@ -215,7 +215,7 @@ function page({ title, description, rel, canonical, body, head, csp }) {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
 <meta property="og:image" content="${esc(SITE.baseUrl)}og.png">
-${head || ''}<meta name="twitter:card" content="summary">
+${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="summary">
 <style>${CSS}</style>
 </head>
 <body>
