@@ -45,8 +45,8 @@ function validate(p, file) {
   (p.authors || []).forEach((a, i) => {
     if (!a.name) e.push(file + ': author ' + (i + 1) + ' has no name');
     if (a.orcid && !orcidOk(a.orcid)) e.push(file + ': author ' + (i + 1) + ' has an invalid ORCID');
-    if (/\b(claude|chatgpt|gpt-\d|gemini|llama|copilot|language model)\b/i.test(a.name || '')) {
-      e.push(file + ': a language model cannot be an author');
+    if (/\b(claude|chatgpt|gpt-\d|gemini|llama|copilot|midjourney|dall-e|stable diffusion|firefly|language model|generative model)\b/i.test(a.name || '')) {
+      e.push(file + ': a language model or other generative model cannot be an author');
     }
   });
   if (!Array.isArray(p.versions) || p.versions.length === 0) e.push(file + ': versions must be a non-empty list');
@@ -225,7 +225,7 @@ ${withdrawn}
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence ${esc(SITE.licenses[p.license])}</p>
 <h2>Versions</h2>
 <table><tr><th>Version</th><th>Date</th><th>DOI</th><th>Repository</th></tr>${versions}</table>
-<h2>Use of language models</h2>
+<h2>Use of language models and other generative models</h2>
 <p>${esc(p.llm_disclosure)}</p>
 ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <h2>Cite</h2>
@@ -268,7 +268,7 @@ function indexPage(papers) {
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
 <p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic and the philosophy of mathematics. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
-<div class="notice">Acceptance is moderation, not peer review. Work written with language models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
+<div class="notice">Acceptance is moderation, not peer review. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <h2>Listing</h2>
 ${fields(papers, '', './')}
 ${listing(papers, './', 'No preprints are listed yet.')}
@@ -315,7 +315,7 @@ function submitPage() {
 
 function policyPage() {
   const md = fs.readFileSync(path.join(ROOT, 'policy.md'), 'utf8');
-  return page({ title: 'Policy | ' + SITE.name, description: 'Scope, moderation, language models, versions and privacy at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: markdown(md) });
+  return page({ title: 'Policy | ' + SITE.name, description: 'Scope, moderation, generative models, versions and privacy at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: markdown(md) });
 }
 
 function sitemap(papers) {
