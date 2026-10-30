@@ -131,6 +131,9 @@ console.log('\n4. The policy keeps its promises in writing');
     'No other generative model can be listed as an author either.',
     'If no generative model was used, the statement says so.',
     'Records are not deleted.',
+    'Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, so that they stay readable even if this site goes away.',
+    'Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record.',
+    'The operator also asks the Internet Archive to exclude its earlier copies of the record.',
     'A work is listed once, under one Sophaxis id.',
     'That id is never given to another work, even after a record is withdrawn or removed.',
     'Every author of the work agrees to its listing on Sophaxis.',
@@ -520,6 +523,24 @@ console.log('\n13. Structured data, share links, sitemap dates and the 404 page'
   ok('the 404 page links from the root, is not indexed and is not in the sitemap', nf.includes('<link rel="icon" href="/favicon.svg"') && nf.includes('href="/index.html"')
     && nf.includes('href="/search.html"') && !/href="\.{1,2}\//.test(nf) && nf.includes('<meta name="robots" content="noindex">') && !read(path.join(ROOT, 'site', 'sitemap.xml')).includes('404'));
   ok('the privacy policy says that share links send nothing until followed', read(path.join(ROOT, 'policies', 'privacy.md')).includes('Nothing is sent anywhere until a reader follows one, and the service then works under its own privacy policy.'));
+}
+
+/* ------------------------------------------------------------ 14 */
+console.log('\n14. The weekly check and the Internet Archive');
+{
+  const Wt = require('../tools/watch.js');
+  const p = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const ok1 = { licences: ['CC-BY-4.0'] };
+  ok('no problem when every DOI resolves with its licence', Wt.compare(p, { '10.5281/zenodo.1234567': ok1, '10.5281/zenodo.1234999': ok1 }).length === 0);
+  ok('a DOI that no longer resolves is reported', Wt.compare(p, { '10.5281/zenodo.1234567': ok1, '10.5281/zenodo.1234999': null }).join().includes('2026.0001: the DOI 10.5281/zenodo.1234999 no longer resolves'));
+  ok('a changed licence is reported', Wt.compare(p, { '10.5281/zenodo.1234567': { licences: ['CC-BY-NC-4.0'] } }).join().includes('no longer carries CC BY 4.0'));
+  ok('a DOI that could not be checked this week is not reported as broken', Wt.compare(p, {}).length === 0);
+  const removed = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0003.json')));
+  const urls = Wt.archiveUrls([p, removed]);
+  ok('the archive saves the top page, each record and each PDF copy, and never a removed record', urls.includes('https://sophaxis.vercel.app/') && urls.includes('https://sophaxis.vercel.app/abs/2026.0001.html')
+    && urls.includes('https://sophaxis.vercel.app/pdf/2026.0001v2.pdf') && !urls.some((u) => u.includes('2026.0003')));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'watch.yml'));
+  ok('the weekly check runs on a schedule, may only read the code and write issues', /schedule:\n\s+- cron: '\d+ \d+ \* \* \d'/.test(wf) && /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
 }
 
 console.log('\n' + '-'.repeat(60));
