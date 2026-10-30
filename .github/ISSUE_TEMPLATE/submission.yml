@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         This issue is public. Your GitHub username and everything you write here will be visible to anyone.
-        Acceptance is moderation, not peer review. Read the policy before submitting: https://sophaxis.vercel.app/policy.html
+        Acceptance is moderation, not peer review. Read the Submission Policy before submitting: https://sophaxis.vercel.app/policies/submission.html
 
         Give the DOI and your ORCID iD. The title, the authors, the abstract and the licence are taken from the DOI metadata.
         Before submitting, add `https://github.com/<your username>` under "Websites & social links" in your ORCID record.
@@ -28,6 +28,12 @@ body:
       placeholder: 0000-0002-1825-0097
     validations:
       required: true
+  - type: input
+    id: published
+    attributes:
+      label: DOI of the published version (only if a journal has published the work)
+      description: The record links to it. The deposited version must be one that you may share under its licence.
+      placeholder: 10.1000/journal.0000
   - type: input
     id: update
     attributes:
@@ -74,7 +80,11 @@ body:
       options:
         - label: I am an author of this work.
           required: true
-        - label: I understand that listing is moderation, not peer review.
+        - label: Every author of this work agrees to its listing on Sophaxis.
           required: true
-        - label: The submission does not expose personal data of third parties.
+        - label: The authors may share this version under its licence; if a journal has published the work, the publisher allows it.
+          required: true
+        - label: The work contains no material that the authors may not share, and no personal data of third parties.
+          required: true
+        - label: I understand that listing is moderation, not peer review.
           required: true

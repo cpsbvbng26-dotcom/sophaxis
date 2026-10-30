@@ -1,13 +1,15 @@
 name: Request removal
-description: Ask for a record to be removed for a legal reason, such as copyright infringement or exposure of personal data.
+description: Ask for a record to be removed under the Takedown Policy, for example for copyright infringement or exposure of personal data.
 title: "[Removal] "
 labels: ["removal"]
 body:
   - type: markdown
     attributes:
       value: |
-        This issue is public. Do not include personal data. Describe the problem without repeating the material itself.
-        Records are otherwise never deleted; withdrawn works keep a record with a notice.
+        Read the Takedown Policy first: https://sophaxis.vercel.app/policies/takedown.html
+
+        This issue is public. Do not include personal data. Describe where the problem is, without repeating the material itself.
+        If the request cannot be made in public, give only the Sophaxis id and the kind of problem. The abstract and the PDF copy are then taken offline while the request is reviewed.
   - type: input
     id: id
     attributes:
@@ -18,16 +20,38 @@ body:
   - type: dropdown
     id: reason
     attributes:
-      label: Reason
+      label: Kind of problem
       options:
         - Copyright infringement
         - Exposure of personal data
-        - Other legal reason
+        - An author did not agree to the listing
+        - An author asks for the PDF copy to be removed
+        - Another legal reason
+    validations:
+      required: true
+  - type: dropdown
+    id: relation
+    attributes:
+      label: How you are concerned
+      options:
+        - I am an author of the work
+        - I hold rights in the material
+        - My personal data appears in the record
+        - I act on behalf of one of these
+        - Other
     validations:
       required: true
   - type: textarea
     id: details
     attributes:
-      label: Details
-    validations:
-      required: true
+      label: Where the problem is
+      description: Which part of the record or the PDF, and why. Do not repeat the material or include personal data.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: I make this request in good faith, and what I say in it is true.
+          required: true
+        - label: This issue contains no personal data.
+          required: true

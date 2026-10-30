@@ -36,8 +36,28 @@ function orcidOk(o) {
 const repoPrefix = (doi) => Object.keys(SITE.repositories).find((pre) => String(doi).toLowerCase().startsWith(pre.toLowerCase()));
 
 /* Returns a list of problems. An empty list means the record is valid. */
+const REMOVED_KEEP = ['id', 'status', 'removal_date', 'removal_reason', 'issue'];
+const REMOVAL_REASONS = {
+  'copyright': 'Removed because of a copyright claim.',
+  'personal-data': 'Removed because it exposed personal data.',
+  'author-consent': 'Removed because an author had not agreed to the listing.',
+  'legal': 'Removed for another legal reason.',
+  'under-review': 'The abstract and the PDF copy are offline while a removal request is reviewed.',
+};
+
 function validate(p, file) {
   const e = [];
+  /* A removed record keeps only its id, the date and the kind of reason (Takedown Policy). */
+  if (p.status === 'removed') {
+    if (!p.id || !ID.test(p.id)) e.push(file + ': id must look like 2026.0001');
+    if (p.id && path.basename(file, '.json') !== p.id) e.push(file + ': file name must be the id');
+    if (!DATE.test(p.removal_date || '')) e.push(file + ': a removed record needs removal_date');
+    if (!REMOVAL_REASONS[p.removal_reason]) e.push(file + ': removal_reason must be one of ' + Object.keys(REMOVAL_REASONS).join(', '));
+    if (!Number.isInteger(p.issue) || p.issue < 1) e.push(file + ': issue must be the submission issue number');
+    const extra = Object.keys(p).filter((k) => !REMOVED_KEEP.includes(k));
+    if (extra.length) e.push(file + ': a removed record keeps nothing else: ' + extra.join(', '));
+    return e;
+  }
   const need = (k) => { if (p[k] === undefined || p[k] === '') e.push(file + ': ' + k + ' is missing'); };
   ['id', 'title', 'authors', 'abstract', 'category', 'license', 'versions', 'llm_disclosure', 'issue', 'status'].forEach(need);
   if (p.id && !ID.test(p.id)) e.push(file + ': id must look like 2026.0001');
@@ -76,7 +96,8 @@ function validate(p, file) {
   if (typeof p.llm_disclosure === 'string' && p.llm_disclosure.trim().length < 20) {
     e.push(file + ': the language-model statement is too short');
   }
-  if (!['listed', 'withdrawn'].includes(p.status)) e.push(file + ': status must be listed or withdrawn');
+  if (!['listed', 'withdrawn'].includes(p.status)) e.push(file + ': status must be listed, withdrawn or removed');
+  if (p.published_doi !== undefined && !DOI.test(p.published_doi)) e.push(file + ': published_doi is not a DOI');
   if (p.status === 'withdrawn' && !p.withdrawal_note) e.push(file + ': a withdrawn record needs a note');
   (p.notes || []).forEach((n, i) => {
     if (!DATE.test(n.date || '') || !n.text) e.push(file + ': note ' + (i + 1) + ' needs a date and text');
@@ -193,7 +214,7 @@ ${head || ''}<meta name="twitter:card" content="summary">
 <body>
 <header class="top"><div class="wrap"${site}
 <a class="brand" ${brand}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
-<nav><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policy</a></nav>
+<nav><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a></nav>
 </div></header>
 <main class="wrap">
 ${body}
@@ -201,6 +222,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a></p>
 </div></footer>
 </body>
 </html>
@@ -212,7 +234,8 @@ function markdown(src) {
   const out = [];
   let para = [];
   let list = null;
-  const inline = (s) => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+  const inline = (s) => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\(((?:\.\.?\/|https:\/\/)[^)\s]+)\)/g, '<a href="$2">$1</a>');
   const flushPara = () => { if (para.length) { out.push('<p>' + inline(para.join(' ')) + '</p>'); para = []; } };
   const flushList = () => { if (list) { out.push('<' + list.tag + '>' + list.items.map((i) => '<li>' + inline(i) + '</li>').join('') + '</' + list.tag + '>'); list = null; } };
   for (const line of src.split('\n')) {
@@ -289,7 +312,18 @@ function scholarTags(p) {
   ].join('\n') + '\n';
 }
 
+function removedPage(p) {
+  const body = `
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span></p>
+<h1>Record removed</h1>
+<div class="notice">${esc(REMOVAL_REASONS[p.removal_reason])} Date: ${esc(p.removal_date)}.</div>
+<p>This address is kept so that citations lead here. The title, the authors, the abstract and the PDF copy are no longer shown. See the <a href="../policies/takedown.html">Takedown Policy</a>.</p>
+`;
+  return page({ title: SITE.name + ':' + p.id + ' | ' + SITE.name, description: 'A record removed under the Takedown Policy.', rel: true, canonical: 'abs/' + p.id + '.html', body, head: '<meta name="robots" content="noindex">\n' });
+}
+
 function recordPage(p) {
+  if (p.status === 'removed') return removedPage(p);
   const v = latest(p);
   const authors = p.authors.map((a) => (a.orcid ? `<a href="../author/${esc(a.orcid)}.html">${esc(a.name)}</a>` : esc(a.name))
     + (a.orcid ? ` <a class="id" href="https://orcid.org/${esc(a.orcid)}">ORCID ${esc(a.orcid)}</a>` : '')).join('<br>');
@@ -313,6 +347,7 @@ ${keywords}
 <h2>Read</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a></p>
 ${copies}
+${p.published_doi ? `<p>Published version: <a href="https://doi.org/${esc(p.published_doi)}">${esc(p.published_doi)}</a> (not on ${esc(SITE.name)})</p>` : ''}
 <h2>Versions</h2>
 <table><tr><th>Version</th><th>Date</th><th>DOI</th><th>Repository</th></tr>${versions}</table>
 <h2>Use of language models and other generative models</h2>
@@ -402,17 +437,39 @@ function submitPage() {
 <li>Deposit your preprint in <a href="https://zenodo.org">Zenodo</a>, <a href="https://figshare.com">figshare</a>, <a href="https://osf.io/preprints/osf">OSF Preprints</a>, <a href="https://arxiv.org">arXiv</a>, <a href="https://www.preprints.org">Preprints.org</a>, <a href="https://www.ssrn.com">SSRN</a> or <a href="https://www.researchsquare.com">Research Square</a> under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and note its DOI.</li>
 <li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
 <li>Open a <a href="${esc(SITE.repo)}/issues/new?template=submission.yml">submission issue</a> and give the DOI, your ORCID iD, the category and the statement on generative models. You need a GitHub account. The title, the authors, the abstract and the licence are taken from the DOI metadata.</li>
-<li>An automatic check posts its result in the issue. A moderator checks the submission against the <a href="./policy.html">policy</a>. If it passes, a record page is published here.</li>
+<li>An automatic check posts its result in the issue. A moderator checks the submission under the <a href="./policies/moderation.html">Moderation Policy</a>. If it passes, a record page is published here.</li>
 </ol>
+<p>In the form, you confirm that every author agrees to the listing and that the authors may share this version under its licence. See the <a href="./policies/submission.html">Submission Policy</a> and the <a href="./policies/copyright.html">Copyright Policy</a>.</p>
 <div class="notice">The submission issue is public. Your GitHub username and everything in the form will be visible to anyone. Do not include personal data you do not want published.</div>
-<p>To update a listed preprint with a new version, open a submission issue and give the existing ${esc(SITE.name)} id. To request removal for legal reasons, open a <a href="${esc(SITE.repo)}/issues/new?template=removal.yml">removal issue</a>.</p>
+<p>To update a listed preprint with a new version, open a submission issue and give the existing ${esc(SITE.name)} id. To request removal for legal reasons, follow the <a href="./policies/takedown.html">Takedown Policy</a> and open a <a href="${esc(SITE.repo)}/issues/new?template=removal.yml">removal issue</a>.</p>
 `;
   return page({ title: 'Submit | ' + SITE.name, description: 'How to submit a preprint to ' + SITE.name + '.', rel: false, canonical: 'submit.html', body });
 }
 
+/* The policies, in the order a reader meets them. Each is policies/<slug>.md. */
+const POLICIES = [
+  ['terms', 'The rules for everyone who reads or submits.'],
+  ['submission', 'Who can submit what, and what the submitter confirms.'],
+  ['moderation', 'What moderation checks, and what it does not.'],
+  ['copyright', 'Authors keep their copyright; what Sophaxis copies and why.'],
+  ['licences', 'The accepted licences, and the licences of this site.'],
+  ['privacy', 'What the site and the checks read, and what becomes public.'],
+  ['takedown', 'How to ask for removal, and what happens then.'],
+];
+const policySource = (slug) => fs.readFileSync(path.join(ROOT, 'policies', slug + '.md'), 'utf8');
+const policyTitle = (slug) => policySource(slug).split('\n')[0].replace(/^# /, '');
+
 function policyPage() {
   const md = fs.readFileSync(path.join(ROOT, 'policy.md'), 'utf8');
-  return page({ title: 'Policy | ' + SITE.name, description: 'Scope, moderation, generative models, versions and privacy at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: markdown(md) });
+  const list = `<h2>The policies</h2>
+<ul>${POLICIES.map(([slug, what]) => `<li><a href="./policies/${slug}.html">${esc(policyTitle(slug))}</a>: ${esc(what)}</li>`).join('')}</ul>`;
+  const html = markdown(md).replace('<h2>What Sophaxis is not</h2>', list + '\n<h2>What Sophaxis is not</h2>');
+  return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
+}
+
+function onePolicyPage(slug) {
+  return page({ title: policyTitle(slug) + ' | ' + SITE.name, description: policyTitle(slug) + ' of ' + SITE.name + '.', rel: true, canonical: 'policies/' + slug + '.html',
+    body: markdown(policySource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
 }
 
 /* One page per ORCID iD. Authors without one get no page: a name alone can belong to several people. */
@@ -476,6 +533,7 @@ function papersJson(papers) {
     license: p.license,
     versions: p.versions.map((v) => ({ version: v.version, doi: v.doi, date: v.date })),
     pdfs: (p.pdfs || []).map((x) => ({ version: x.version, url: SITE.baseUrl + 'pdf/' + x.file })),
+    ...(p.published_doi ? { published_doi: p.published_doi } : {}),
     status: p.status,
     llm_disclosure: p.llm_disclosure,
   })), null, 2) + '\n';
@@ -502,6 +560,7 @@ function searchPage() {
 function sitemap(papers) {
   const urls = ['', 'submit.html', 'policy.html']
     .concat(['search.html'])
+    .concat(POLICIES.map(([slug]) => 'policies/' + slug + '.html'))
     .concat(Object.keys(SITE.categories).map((slug) => 'list/' + slug + '.html'))
     .concat(authorIds(papers).map((o) => 'author/' + o + '.html'))
     .concat(papers.map((p) => 'abs/' + p.id + '.html'))
@@ -513,13 +572,16 @@ function sitemap(papers) {
 /* ------------------------------------------------------------ write */
 
 function build(out, paperDir) {
-  const { papers, problems } = loadPapers(paperDir);
+  const { papers: all, problems } = loadPapers(paperDir);
   if (problems.length) return { problems };
+  /* Removed records keep only their notice page; they are left out of every list, feed and search. */
+  const papers = all.filter((p) => p.status !== 'removed');
   fs.rmSync(out, { recursive: true, force: true });
   fs.mkdirSync(path.join(out, 'abs'), { recursive: true });
   fs.mkdirSync(path.join(out, 'list'), { recursive: true });
   fs.mkdirSync(path.join(out, 'pdf'), { recursive: true });
   fs.mkdirSync(path.join(out, 'author'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'policies'), { recursive: true });
   const files = {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
@@ -531,7 +593,8 @@ function build(out, paperDir) {
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
-  papers.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
+  all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
+  POLICIES.forEach(([slug]) => { files['policies/' + slug + '.html'] = onePolicyPage(slug); });
   authorIds(papers).forEach((o) => { files['author/' + o + '.html'] = authorPage(papers, o); });
   /* The PDF copies are copied byte for byte; loadPapers has checked their sha256. */
   papers.forEach((p) => (p.pdfs || []).forEach((x) => { files['pdf/' + x.file] = fs.readFileSync(path.join(pdfDir(paperDir), x.file)); }));
