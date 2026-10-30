@@ -71,8 +71,18 @@ function validate(p, file) {
     if (!DATE.test(n.date || '') || !n.text) e.push(file + ': note ' + (i + 1) + ' needs a date and text');
   });
   if (!Number.isInteger(p.issue) || p.issue < 1) e.push(file + ': issue must be the submission issue number');
+  (p.pdfs || []).forEach((x, i) => {
+    const where = file + ': pdf ' + (i + 1);
+    if (!(p.versions || []).some((v) => v.version === x.version)) e.push(where + ' is for a version the record does not have');
+    if (x.file !== p.id + 'v' + x.version + '.pdf') e.push(where + ' must be named <id>v<version>.pdf');
+    if (!/^[0-9a-f]{64}$/.test(x.sha256 || '')) e.push(where + ' needs a sha256');
+    if (!/^https:\/\//.test(x.source || '')) e.push(where + ' needs the https address it was copied from');
+  });
   return e;
 }
+
+/* The PDF copies sit beside the records: data/papers → data/pdf. */
+const pdfDir = (paperDir) => path.join(paperDir, '..', 'pdf');
 
 function loadPapers(dir) {
   if (!fs.existsSync(dir)) return { papers: [], problems: [] };
@@ -84,6 +94,11 @@ function loadPapers(dir) {
     try { p = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); }
     catch (err) { problems.push(f + ': not valid JSON'); continue; }
     problems.push(...validate(p, f));
+    (p.pdfs || []).forEach((x) => {
+      const at = path.join(pdfDir(dir), String(x.file));
+      if (!fs.existsSync(at)) problems.push(f + ': the copy ' + x.file + ' is missing');
+      else if (crypto.createHash('sha256').update(fs.readFileSync(at)).digest('hex') !== x.sha256) problems.push(f + ': the copy ' + x.file + ' does not match its sha256');
+    });
     papers.push(p);
   }
   const ids = papers.map((p) => p.id);
@@ -128,7 +143,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 
 const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('base64') + "'";
 
-function page({ title, description, rel, canonical, body }) {
+function page({ title, description, rel, canonical, body, head }) {
   const up = rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
   const home = canonical === '';
@@ -150,7 +165,7 @@ function page({ title, description, rel, canonical, body }) {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
 <meta property="og:image" content="${esc(SITE.baseUrl)}og.png">
-<meta name="twitter:card" content="summary">
+${head || ''}<meta name="twitter:card" content="summary">
 <style>${CSS}</style>
 </head>
 <body>
@@ -208,12 +223,37 @@ function bibtex(p) {
 }`;
 }
 
+const LICENCE_URL = {
+  'CC-BY-4.0': 'https://creativecommons.org/licenses/by/4.0/',
+  'CC-BY-SA-4.0': 'https://creativecommons.org/licenses/by-sa/4.0/',
+  'CC0-1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
+};
+
+/* Highwire Press tags, which Google Scholar reads from an abstract page. */
+function scholarTags(p) {
+  const v = latest(p);
+  const copy = (p.pdfs || []).slice(-1)[0];
+  const tag = (name, content) => `<meta name="${name}" content="${esc(content)}">`;
+  return [
+    tag('citation_title', p.title),
+    ...p.authors.map((a) => tag('citation_author', a.name)),
+    tag('citation_publication_date', p.versions[0].date.replace(/-/g, '/')),
+    tag('citation_online_date', v.date.replace(/-/g, '/')),
+    tag('citation_doi', v.doi),
+    tag('citation_abstract_html_url', SITE.baseUrl + 'abs/' + p.id + '.html'),
+    ...(copy ? [tag('citation_pdf_url', SITE.baseUrl + 'pdf/' + copy.file)] : []),
+  ].join('\n') + '\n';
+}
+
 function recordPage(p) {
   const v = latest(p);
   const authors = p.authors.map((a) => esc(a.name)
     + (a.orcid ? ` <a class="id" href="https://orcid.org/${esc(a.orcid)}">ORCID ${esc(a.orcid)}</a>` : '')).join('<br>');
   const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td></tr>`).join('');
   const notes = (p.notes || []).map((n) => `<li><span class="meta">${esc(n.date)}</span> ${esc(n.text)}</li>`).join('');
+  const pdfs = p.pdfs || [];
+  const copies = pdfs.length ? `<p>PDF on ${esc(SITE.name)}: ${pdfs.map((x) => `<a href="../pdf/${esc(x.file)}">v${x.version}</a>`).join(' · ')}</p>
+<p class="meta">Unmodified copies of the files the authors deposited at ${esc(repoName(v.doi))}, kept so that search engines can index the full text. They are shared under ${esc(SITE.licenses[p.license])}, by ${esc(authorsText(p))}. Cite the DOI.</p>` : '';
   const withdrawn = p.status === 'withdrawn'
     ? `<div class="notice"><b>Withdrawn.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break.</div>` : '';
   const body = `
@@ -225,7 +265,8 @@ ${withdrawn}
 <div class="abstract"><p>${esc(p.abstract)}</p></div>
 <div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality.</div>
 <h2>Read</h2>
-<p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence ${esc(SITE.licenses[p.license])}</p>
+<p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a></p>
+${copies}
 <h2>Versions</h2>
 <table><tr><th>Version</th><th>Date</th><th>DOI</th><th>Repository</th></tr>${versions}</table>
 <h2>Use of language models and other generative models</h2>
@@ -241,6 +282,7 @@ ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
     rel: true,
     canonical: 'abs/' + p.id + '.html',
     body,
+    head: scholarTags(p),
   });
 }
 
@@ -325,7 +367,8 @@ function policyPage() {
 function sitemap(papers) {
   const urls = ['', 'submit.html', 'policy.html']
     .concat(Object.keys(SITE.categories).map((slug) => 'list/' + slug + '.html'))
-    .concat(papers.map((p) => 'abs/' + p.id + '.html'));
+    .concat(papers.map((p) => 'abs/' + p.id + '.html'))
+    .concat(papers.flatMap((p) => (p.pdfs || []).map((x) => 'pdf/' + x.file)));
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + urls.map((u) => '  <url><loc>' + SITE.baseUrl + u + '</loc></url>').join('\n') + '\n</urlset>\n';
 }
@@ -338,6 +381,7 @@ function build(out, paperDir) {
   fs.rmSync(out, { recursive: true, force: true });
   fs.mkdirSync(path.join(out, 'abs'), { recursive: true });
   fs.mkdirSync(path.join(out, 'list'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'pdf'), { recursive: true });
   const files = {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
@@ -347,6 +391,8 @@ function build(out, paperDir) {
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
   papers.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
+  /* The PDF copies are copied byte for byte; loadPapers has checked their sha256. */
+  papers.forEach((p) => (p.pdfs || []).forEach((x) => { files['pdf/' + x.file] = fs.readFileSync(path.join(pdfDir(paperDir), x.file)); }));
   /* The logo is drawn by hand from rectangles only, and copied as it is. */
   for (const f of ['favicon.svg', 'og.png']) files[f] = fs.readFileSync(path.join(__dirname, 'assets', f));
   for (const [f, s] of Object.entries(files)) fs.writeFileSync(path.join(out, f), s);
