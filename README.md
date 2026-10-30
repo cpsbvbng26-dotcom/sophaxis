@@ -3,7 +3,7 @@
 **Preprints in Philosophy and Mathematics**
 
 Sophaxis is an overlay preprint server for philosophy, mathematics, logic and the philosophy of mathematics.
-Authors deposit their preprint in Zenodo, figshare or OSF Preprints; Sophaxis moderates the submission and gives it a stable record page.
+Authors deposit their preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org or SSRN; Sophaxis moderates the submission and gives it a stable record page.
 
 - **Acceptance is moderation, not peer review.**
 - **Diamond open access.** Sophaxis charges nothing, to authors or to readers.
@@ -47,7 +47,7 @@ The operator, Takuya Nemoto, is responsible for it. Claude is not an author.
 ## 日本語
 
 Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学のための、重ね合わせ型（オーバーレイ型）のプレプリントサーバーです。
-著者が Zenodo・figshare・OSF Preprints のどれかに置いた稿を、モデレーションのうえで一覧に載せ、固定の頁を与えます。
+著者が Zenodo・figshare・OSF Preprints・arXiv・Preprints.org・SSRN のどれかに置いた稿を、モデレーションのうえで一覧に載せ、固定の頁を与えます。
 
 - 受理はモデレーションであり、査読ではありません。
 - 読む側からも書く側からも、費用を取りません（ダイヤモンド・オープンアクセス）。

@@ -1,5 +1,5 @@
 name: Submit a preprint
-description: List a preprint that you have deposited in Zenodo, figshare or OSF Preprints.
+description: List a preprint that you have deposited in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org or SSRN.
 title: "[Submission] "
 labels: ["submission"]
 body:
@@ -12,7 +12,7 @@ body:
     id: doi
     attributes:
       label: DOI of the deposited preprint
-      description: A Zenodo (10.5281/zenodo.…), figshare (10.6084/m9.figshare.…) or OSF Preprints (10.31219/osf.io/…) DOI.
+      description: A Zenodo (10.5281/zenodo.…), figshare (10.6084/m9.figshare.…), OSF Preprints (10.31219/osf.io/…), arXiv (10.48550/arXiv.…), Preprints.org (10.20944/preprints…) or SSRN (10.2139/ssrn.…) DOI. On arXiv and SSRN, the work must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
       placeholder: 10.5281/zenodo.0000000
     validations:
       required: true
