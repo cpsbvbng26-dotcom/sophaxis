@@ -67,6 +67,9 @@ the record receives a notice, and the authors are asked to add a disclosure.
 
 ## Versions and updates
 
+A work is listed once, under one Sophaxis id.
+That id is never given to another work, even after a record is withdrawn or removed.
+
 A new version is a new version in the repository.
 Most repositories give each version its own DOI.
 arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version.

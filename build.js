@@ -135,6 +135,12 @@ function loadPapers(dir) {
   }
   const ids = papers.map((p) => p.id);
   if (new Set(ids).size !== ids.length) problems.push('ids are not unique');
+  /* One work, one record: a DOI may appear in only one record (a record may repeat it across versions, as arXiv does). */
+  const owner = new Map();
+  papers.forEach((p) => new Set((p.versions || []).map((v) => String(v.doi).toLowerCase())).forEach((d) => {
+    if (owner.has(d)) problems.push('the DOI ' + d + ' is in both ' + owner.get(d) + ' and ' + p.id);
+    else owner.set(d, p.id);
+  }));
   return { papers, problems };
 }
 
