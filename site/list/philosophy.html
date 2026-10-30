@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-55JgjPH9uBe0kHcLN1AwmGLlfwtMZw0vj0BBS8nbhkw='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-PBAV2PBBzBTNErOjfOnb6i2LoWh73nEiOpUxK5eGjVc='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Philosophy | Sophaxis</title>
 <meta name="description" content="Preprints in Philosophy listed on Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/list/philosophy.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="../feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sophaxis">
 <meta property="og:title" content="Philosophy | Sophaxis">
@@ -43,13 +44,19 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
 <a class="brand" href="../index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
-<nav><a href="../index.html">Listing</a><a href="../submit.html">Submit</a><a href="../policy.html">Policy</a></nav>
+<nav><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policy</a></nav>
 </div></header>
 <main class="wrap">
 
