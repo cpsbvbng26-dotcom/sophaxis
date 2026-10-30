@@ -166,6 +166,11 @@ console.log('\n4. The policy keeps its promises in writing');
   const repos = Object.entries(JSON.parse(read(path.join(ROOT, 'site.json'))).repositories);
   const submit = read(path.join(ROOT, 'site', 'submit.html'));
   ok('the policy, the form and the submit page name every accepted repository', repos.every(([pre, name]) => policy.includes(name) && form.includes(name) && form.includes(pre) && submit.includes(name)), repos.map(([, n]) => n).join(', '));
+  /* The two field lists in the form must match site.json, so that every field can be chosen and nothing else. */
+  const cats = Object.values(JSON.parse(read(path.join(ROOT, 'site.json'))).categories);
+  const lists = [/id: category[\s\S]*?options:\n((?: {8}- .*\n)+)/, /id: others[\s\S]*?options:\n((?: {8}- .*\n)+)/].map((re) => ((re.exec(form) || [])[1] || '').trim().split('\n').map((l) => l.replace(/^\s*- /, '')));
+  ok('both field lists in the submission form match the fields of the site', lists.every((l) => l.join('|') === cats.join('|')), lists.map((l) => l.join(',')).join(' / '));
+  ok('the scope in the policy names every field', cats.every((c) => policy.toLowerCase().includes(c.toLowerCase())));
   ok('the submission form names only the accepted licences', ['CC BY 4.0', 'CC BY-SA 4.0', 'CC0 1.0'].every((l) => form.includes(l)) && !form.includes('NC'));
   ok('the submission form asks for the DOI and the ORCID iD, and no longer for the title or the authors', /id: doi[\s\S]*?required: true/.test(form) && /id: orcid[\s\S]*?required: true/.test(form) && !/id: (title|authors|license)\b/.test(form));
 }
