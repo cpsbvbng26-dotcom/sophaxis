@@ -21,6 +21,9 @@
   "repositories": {
     "10.5281/zenodo.": "Zenodo",
     "10.6084/m9.figshare.": "figshare",
-    "10.31219/osf.io/": "OSF Preprints"
+    "10.31219/osf.io/": "OSF Preprints",
+    "10.48550/arXiv.": "arXiv",
+    "10.20944/preprints": "Preprints.org",
+    "10.2139/ssrn.": "SSRN"
   }
 }
