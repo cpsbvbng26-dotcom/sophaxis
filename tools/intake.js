@@ -190,13 +190,33 @@ function sameName(person, author) {
 /* ------------------------------------------------------------ the checks */
 
 /* Pure: everything fetched is passed in. Returns { ok, checks: [[label, pass, detail]] }. */
-function check({ form, login, meta, person, works }) {
+/* The record that already lists a DOI, if any. A concept DOI matches its versions (figshare .v1, .v2 …). */
+function listedAs(doi, listed) {
+  const d = String(doi || '').toLowerCase();
+  for (const [known, id] of listed || []) if (known === d || known.startsWith(d + '.v') || d.startsWith(known + '.v')) return id;
+  return null;
+}
+
+function listedDois(paperDir) {
+  const out = new Map();
+  if (!fs.existsSync(paperDir)) return out;
+  fs.readdirSync(paperDir).filter((f) => f.endsWith('.json')).forEach((f) => {
+    const p = JSON.parse(fs.readFileSync(path.join(paperDir, f), 'utf8'));
+    (p.versions || []).forEach((v) => out.set(String(v.doi).toLowerCase(), p.id));
+  });
+  return out;
+}
+
+function check({ form, login, meta, person, works, listed }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
   const pre = repoPrefix(form.doi || '');
   add('The DOI is in an accepted repository', pre, pre ? SITE.repositories[pre] : 'accepted: ' + Object.values(SITE.repositories).join(', '));
   add('The ORCID iD is valid', form.orcid && orcidOk(form.orcid));
   add('A category is chosen', form.category);
+  const already = listedAs(form.doi, listed);
+  if (form.update) add('The record to update exists and lists this work', already === form.update || (already === null && listed && [...listed.values()].includes(form.update)), form.update);
+  else add('The work is not listed yet', !already, already ? 'already listed as ' + already + '; give that id to add a new version' : '');
   if (form.published) add('The published version is given as a DOI', /^10\.\d{4,9}\/\S+$/.test(form.published), form.published);
   add('The statement on generative models is given', (form.llm || '').trim().length >= 20);
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
@@ -336,7 +356,7 @@ async function run(form, login) {
       works = w ? orcidDois(w) : new Set();
     }
   } catch (e) { console.error(e.message); person = null; }
-  return { result: check({ form, login, meta, person, works }), meta, versions };
+  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')) }), meta, versions };
 }
 
 async function github(method, url, body) {
@@ -375,6 +395,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, MARK };
+module.exports = { listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
