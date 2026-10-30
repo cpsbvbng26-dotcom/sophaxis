@@ -2,12 +2,15 @@
 /* Copy the PDF of each version of a listed record from its repository, unmodified.
  *
  *   node tools/fetch_pdf.js 2026.0001
+ *   node tools/fetch_pdf.js 2026.0002 --from https://github.com/user-attachments/files/… --version 1
  *
  * Run by .github/workflows/pdf.yml, which has network access. Writes data/pdf/<id>v<n>.pdf
  * and adds { version, file, sha256, source } to the record's "pdfs". Versions that already
  * have a copy are left alone.
  *
- * Only repositories that let a script fetch the file are used. Where the repository
+ * Only repositories that let a script fetch the file are used. Where the repository does not, the
+ * authors can attach the deposited PDF to their submission issue; --from takes that attachment,
+ * and the copy is marked as provided by the authors. Where the repository
  * publishes a checksum, the copy must match it. Every listed work carries CC BY 4.0,
  * CC BY-SA 4.0 or CC0 1.0, which allow an unmodified copy with credit and the licence.
  */
@@ -40,6 +43,11 @@ function sourceFor(doi, n) {
 }
 
 const isPdfName = (s) => /\.pdf$/i.test(s || '');
+
+/* Pure: an attachment that the authors added to a GitHub issue, and nothing else. */
+function attachmentOk(url) {
+  return /^https:\/\/github\.com\/user-attachments\/(files|assets)\/[A-Za-z0-9._\/-]+$/.test(String(url || ''));
+}
 
 async function get(url, accept) {
   const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: accept || '*/*' }, redirect: 'follow' });
@@ -78,6 +86,10 @@ function accept(bytes, md5) {
 
 async function main() {
   const id = process.argv[2] || '';
+  const opt = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] || '' : ''; };
+  const from = opt('--from');
+  const only = from ? Number(opt('--version')) : null;
+  if (from && !attachmentOk(from)) throw new Error('--from takes only an attachment of a GitHub issue (https://github.com/user-attachments/…)');
   if (!/^\d{4}\.\d{4}$/.test(id)) throw new Error('give a record id such as 2026.0001');
   const file = path.join(ROOT, 'data', 'papers', id + '.json');
   const p = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -85,8 +97,9 @@ async function main() {
   fs.mkdirSync(dir, { recursive: true });
   p.pdfs = p.pdfs || [];
   for (const v of p.versions) {
+    if (only !== null && v.version !== only) continue;
     if (p.pdfs.some((x) => x.version === v.version)) { console.log('v' + v.version + ': already copied'); continue; }
-    const src = sourceFor(v.doi, v.version);
+    const src = from ? { kind: 'direct', url: from } : sourceFor(v.doi, v.version);
     if (!src) { console.log('v' + v.version + ': this repository does not let a script fetch the file; the record links to it only'); continue; }
     try {
       const { bytes, source, md5 } = await download(src);
@@ -94,17 +107,18 @@ async function main() {
       if (problems.length) { console.log('v' + v.version + ': not kept, ' + problems.join(', ')); continue; }
       const name = id + 'v' + v.version + '.pdf';
       fs.writeFileSync(path.join(dir, name), bytes);
-      p.pdfs.push({ version: v.version, file: name, sha256: crypto.createHash('sha256').update(bytes).digest('hex'), source });
+      p.pdfs.push(Object.assign({ version: v.version, file: name, sha256: crypto.createHash('sha256').update(bytes).digest('hex'), source }, from ? { provided_by: 'authors' } : {}));
       console.log('v' + v.version + ': copied ' + name + ' (' + bytes.length + ' bytes' + (md5 ? ', checksum matches' : '') + ')');
     } catch (e) {
       console.log('v' + v.version + ': not copied, ' + e.message);
     }
   }
+  if (only !== null && !p.versions.some((v) => v.version === only)) throw new Error('the record has no version ' + only);
   p.pdfs.sort((a, b) => a.version - b.version);
   if (!p.pdfs.length) delete p.pdfs;
   fs.writeFileSync(file, JSON.stringify(p, null, 2) + '\n');
 }
 
-module.exports = { sourceFor, accept };
+module.exports = { sourceFor, accept, attachmentOk };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

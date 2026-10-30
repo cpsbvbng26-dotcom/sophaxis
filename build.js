@@ -109,6 +109,7 @@ function validate(p, file) {
     if (x.file !== p.id + 'v' + x.version + '.pdf') e.push(where + ' must be named <id>v<version>.pdf');
     if (!/^[0-9a-f]{64}$/.test(x.sha256 || '')) e.push(where + ' needs a sha256');
     if (!/^https:\/\//.test(x.source || '')) e.push(where + ' needs the https address it was copied from');
+    if (x.provided_by !== undefined && x.provided_by !== 'authors') e.push(where + ': provided_by can only be "authors"');
   });
   return e;
 }
@@ -338,7 +339,9 @@ function recordPage(p) {
   const notes = (p.notes || []).map((n) => `<li><span class="meta">${esc(n.date)}</span> ${esc(n.text)}</li>`).join('');
   const pdfs = p.pdfs || [];
   const copies = pdfs.length ? `<p>PDF on ${esc(SITE.name)}: ${pdfs.map((x) => `<a href="../pdf/${esc(x.file)}">v${x.version}</a>`).join(' · ')}</p>
-<p class="meta">Unmodified copies of the files the authors deposited at ${esc(repoName(v.doi))}, kept so that search engines can index the full text. They are shared under ${esc(SITE.licenses[p.license])}, by ${esc(authorsText(p))}. Cite the DOI.</p>` : '';
+<p class="meta">${pdfs.some((x) => x.provided_by === 'authors')
+    ? `Unmodified copies of the PDF that the authors provided in their submission issue, because ${esc(repoName(v.doi))} does not let a script fetch its files`
+    : `Unmodified copies of the files the authors deposited at ${esc(repoName(v.doi))}`}, kept so that search engines can index the full text. They are shared under ${esc(SITE.licenses[p.license])}, by ${esc(authorsText(p))}. Cite the DOI.</p>` : '';
   const withdrawn = p.status === 'withdrawn'
     ? `<div class="notice"><b>Withdrawn.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break.</div>` : '';
   const body = `

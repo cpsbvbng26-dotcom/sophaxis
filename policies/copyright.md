@@ -17,7 +17,9 @@ Sophaxis keeps an unmodified copy of the PDF of each listed version, so that sea
 It copies the file only from a repository that lets a script fetch it: Zenodo, figshare, arXiv and Research Square.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
-For OSF Preprints, Preprints.org and SSRN, the record links to the repository only.
+For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.
+Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
+Without such a file, the record links to the repository only.
 
 The copy is the file the authors deposited, shared under the work's own licence, with its authors, its licence and a link to the original.
 The accepted licences allow this.

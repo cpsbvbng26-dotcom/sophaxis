@@ -40,6 +40,8 @@ When a policy changes, change its "Last updated" date too.
 When a verified submission passes moderation, add the draft record from the issue as `data/papers/<id>.json`,
 run `node build.js` and `node verification/check.js`, and open a pull request that closes the issue.
 After it is merged, run the `pdf` workflow with the record id. It copies the PDFs onto a branch `claude/pdf-<id>`; open a pull request from it.
+Where the repository does not let a script fetch the file (OSF Preprints, Preprints.org, SSRN), ask the authors to attach the PDF to their submission issue,
+and run the workflow with `from` set to that attachment and `version` to the version it is.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
 
 ### Removing a record
