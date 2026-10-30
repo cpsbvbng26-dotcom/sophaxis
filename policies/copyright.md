@@ -25,6 +25,8 @@ The copy is the file the authors deposited, shared under the work's own licence,
 The accepted licences allow this.
 Authors can ask for the copy to be removed; the record then links to the repository only.
 
+Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, so that they stay readable even if this site goes away.
+
 Every record page carries the citation tags that Google Scholar reads.
 Sophaxis does not control whether or when a search engine indexes a page.
 

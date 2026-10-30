@@ -44,3 +44,6 @@ The automatic check applies to them without exception.
 Corrections are added to the record as dated notes.
 They do not replace the work.
 A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.
+
+Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record.
+A problem is reported in a public issue, and the operator looks into it.

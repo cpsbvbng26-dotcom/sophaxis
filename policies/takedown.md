@@ -29,6 +29,7 @@ If the request is upheld, the record page is replaced by a notice that keeps onl
 The address keeps working, so that citations lead to the notice instead of to nothing.
 The title, the authors, the abstract and the PDF copy are removed from the site.
 Where the law requires it, the operator also asks GitHub to remove the material from the repository history.
+The operator also asks the Internet Archive to exclude its earlier copies of the record.
 
 If the request is not upheld, the operator says why in the issue.
 
