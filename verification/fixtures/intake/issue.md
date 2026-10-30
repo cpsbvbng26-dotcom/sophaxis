@@ -14,6 +14,10 @@ _No response_
 
 Philosophy of Mathematics
 
+### Other categories (optional)
+
+Logic, Philosophy of Mathematics, Mathematics
+
 ### Abstract (only if the DOI metadata has none)
 
 _No response_

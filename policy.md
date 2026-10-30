@@ -120,6 +120,9 @@ Do not include personal data in the issue.
 ## Privacy
 
 The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.
+The search page runs one script, served by Sophaxis itself.
+It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
+No other page runs a script.
 Submissions are public GitHub issues and are subject to GitHub's terms.
 
 When a submission issue is opened or edited, a GitHub Action reads two kinds of public data.
@@ -127,6 +130,15 @@ It reads the metadata of the DOI from DataCite or Crossref.
 It reads the name, the websites and the works of the ORCID record given in the form.
 It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
 Email addresses and other details in an ORCID record are not read.
+
+## Finding work
+
+Each record can be listed in more than one field.
+Authors with an ORCID iD have a page that lists their work on Sophaxis.
+Authors without one have no such page, because a name alone can belong to several people.
+New records are announced in an Atom feed, `feed.xml`.
+The public part of every record is available as `papers.json`, for reuse.
+Abstracts in both keep the licence of their work.
 
 ## Metadata and abstracts
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sophaxis: new preprints</title>
+  <subtitle>Preprints in Philosophy and Mathematics. Moderation, not peer review.</subtitle>
+  <id>https://sophaxis.vercel.app/</id>
+  <link rel="self" href="https://sophaxis.vercel.app/feed.xml"/>
+  <link href="https://sophaxis.vercel.app/"/>
+  <updated>2026-10-30T00:00:00Z</updated>
+
+</feed>

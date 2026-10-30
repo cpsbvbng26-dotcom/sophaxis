@@ -44,6 +44,17 @@ body:
         - Logic
     validations:
       required: true
+  - type: dropdown
+    id: others
+    attributes:
+      label: Other categories (optional)
+      description: Fields where the work should also be listed.
+      multiple: true
+      options:
+        - Philosophy
+        - Mathematics
+        - Philosophy of Mathematics
+        - Logic
   - type: textarea
     id: abstract
     attributes:

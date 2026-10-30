@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-55JgjPH9uBe0kHcLN1AwmGLlfwtMZw0vj0BBS8nbhkw='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-PBAV2PBBzBTNErOjfOnb6i2LoWh73nEiOpUxK5eGjVc='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Policy | Sophaxis</title>
 <meta name="description" content="Scope, moderation, generative models, versions and privacy at Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/policy.html">
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sophaxis">
 <meta property="og:title" content="Policy | Sophaxis">
@@ -43,13 +44,19 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
 <a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
-<nav><a href="./index.html">Listing</a><a href="./submit.html">Submit</a><a href="./policy.html">Policy</a></nav>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policy</a></nav>
 </div></header>
 <main class="wrap">
 <h1>Policy</h1>
@@ -90,8 +97,10 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>Removal requests</h2>
 <p>To request removal for legal reasons, open a removal issue. Do not include personal data in the issue.</p>
 <h2>Privacy</h2>
-<p>The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers. Submissions are public GitHub issues and are subject to GitHub's terms.</p>
+<p>The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers. The search page runs one script, served by Sophaxis itself. It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere. No other page runs a script. Submissions are public GitHub issues and are subject to GitHub's terms.</p>
 <p>When a submission issue is opened or edited, a GitHub Action reads two kinds of public data. It reads the metadata of the DOI from DataCite or Crossref. It reads the name, the websites and the works of the ORCID record given in the form. It uses them only for the checks, and writes nothing else from the ORCID record anywhere. Email addresses and other details in an ORCID record are not read.</p>
+<h2>Finding work</h2>
+<p>Each record can be listed in more than one field. Authors with an ORCID iD have a page that lists their work on Sophaxis. Authors without one have no such page, because a name alone can belong to several people. New records are announced in an Atom feed, <code>feed.xml</code>. The public part of every record is available as <code>papers.json</code>, for reuse. Abstracts in both keep the licence of their work.</p>
 <h2>Metadata and abstracts</h2>
 <p>Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse. The abstract is part of the work. It is shown under the work's own licence, with its authors and a link to the work. This is why Sophaxis lists only work under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.</p>
 <h2>Operator and conflicts of interest</h2>

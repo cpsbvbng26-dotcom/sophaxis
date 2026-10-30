@@ -8,7 +8,9 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
 2. 掲載を決めるのは運営者（根本卓哉）。受理された Issue の中身から `data/papers/<id>.json` を作り、PR で入れる。勝手に受理しない。
 3. 規約の約束（査読ではない、費用を取らない、言語モデルは開示で受ける・著者にしない、記録を消さない）を弱めない。`verification/check.js` が文で固めている。
 4. DOI を推測で埋めない。投稿者が書いた DOI だけを使う。
-5. 外部へリクエストを出さない。スクリプトを置かない。CSP は `default-src 'none'`。
+5. 外部へリクエストを出さない。CSP は `default-src 'none'`。スクリプトは検索の頁の `assets/search.js` 一本だけで、
+   同じ場所の `papers.json` だけを読む（2026-10-30 に利用者が決めた）。ほかの頁にスクリプトを足さない。
+   検索の結果は textContent で組み、innerHTML を使わない。
 6. 投稿の Issue は公開される。個人情報を記録に写さない。
 7. 投稿は `tools/intake.js` が受ける（`.github/workflows/intake.yml`）。DOI の登録情報（DataCite・Crossref）と、
    ORCID の公開記録のうち名前・リンク・業績だけを読む。ORCID の記録をそのまま記録・ログ・コメントに写さない

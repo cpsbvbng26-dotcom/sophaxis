@@ -7,7 +7,9 @@
       "orcid": "0000-0002-1825-0097"
     },
     {
-      "name": "Taro Yamada"
+      "name": "Taro Yamada",
+      "given": "Taro",
+      "family": "Yamada"
     }
   ],
   "abstract": "This record exists only to test the build. It is not a real preprint and is never published.",
@@ -42,5 +44,12 @@
       "sha256": "4812affd354836277e419f2435243725a71e3e6808f69d5712b8d3e400bcfc02",
       "source": "https://zenodo.org/api/records/1234999/files/fixture.pdf/content"
     }
+  ],
+  "categories": [
+    "logic"
+  ],
+  "keywords": [
+    "structuralism",
+    "modal logic"
   ]
 }

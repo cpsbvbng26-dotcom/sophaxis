@@ -44,9 +44,20 @@ function validate(p, file) {
   if (p.id && path.basename(file, '.json') !== p.id) e.push(file + ': file name must be the id');
   if (p.category && !SITE.categories[p.category]) e.push(file + ': unknown category ' + p.category);
   if (p.license && !SITE.licenses[p.license]) e.push(file + ': licence not accepted: ' + p.license);
+  if (p.categories !== undefined) {
+    if (!Array.isArray(p.categories)) e.push(file + ': categories must be a list');
+    else {
+      p.categories.forEach((c) => { if (!SITE.categories[c]) e.push(file + ': unknown category ' + c); });
+      if (p.categories.includes(p.category) || new Set(p.categories).size !== p.categories.length) e.push(file + ': other categories must differ from the main one and from each other');
+    }
+  }
+  if (p.keywords !== undefined && (!Array.isArray(p.keywords) || p.keywords.length > 12 || p.keywords.some((k) => typeof k !== 'string' || !k.trim() || k.length > 80))) {
+    e.push(file + ': keywords must be a list of at most 12 short phrases');
+  }
   if (!Array.isArray(p.authors) || p.authors.length === 0) e.push(file + ': authors must be a non-empty list');
   (p.authors || []).forEach((a, i) => {
     if (!a.name) e.push(file + ': author ' + (i + 1) + ' has no name');
+    if ((a.given !== undefined && typeof a.given !== 'string') || (a.family !== undefined && (typeof a.family !== 'string' || !a.family))) e.push(file + ': author ' + (i + 1) + ' has a malformed given or family name');
     if (a.orcid && !orcidOk(a.orcid)) e.push(file + ': author ' + (i + 1) + ' has an invalid ORCID');
     if (/\b(claude|chatgpt|gpt-\d|gemini|llama|copilot|midjourney|dall-e|stable diffusion|firefly|language model|generative model)\b/i.test(a.name || '')) {
       e.push(file + ': a language model or other generative model cannot be an author');
@@ -138,12 +149,22 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 `;
 
 const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('base64') + "'";
 
-function page({ title, description, rel, canonical, body, head }) {
+/* Every page forbids scripts. The search page alone may run search.js from this site and read papers.json. */
+const CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; base-uri 'none'; form-action 'none'`;
+const SEARCH_CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'`;
+
+function page({ title, description, rel, canonical, body, head, csp }) {
   const up = rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
   const home = canonical === '';
@@ -154,11 +175,12 @@ function page({ title, description, rel, canonical, body, head }) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="${csp || CSP}">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(SITE.baseUrl + canonical)}">
 <link rel="icon" href="${up}favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="${esc(SITE.name)}: new preprints" href="${up}feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.name)}">
 <meta property="og:title" content="${esc(title)}">
@@ -171,7 +193,7 @@ ${head || ''}<meta name="twitter:card" content="summary">
 <body>
 <header class="top"><div class="wrap"${site}
 <a class="brand" ${brand}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
-<nav><a href="${up}index.html">Listing</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policy</a></nav>
+<nav><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policy</a></nav>
 </div></header>
 <main class="wrap">
 ${body}
@@ -207,6 +229,13 @@ function markdown(src) {
 }
 
 const authorsText = (p) => p.authors.map((a) => a.name).join(', ');
+const cats = (p) => [p.category].concat(p.categories || []);
+/* Family and given names: from the DOI metadata when the record has them, otherwise the last word is the family name. */
+const familyOf = (a) => a.family || a.name.trim().split(/\s+/).pop();
+const givenOf = (a) => (a.family ? a.given || '' : a.name.trim().split(/\s+/).slice(0, -1).join(' '));
+const initials = (g) => g.split(/[\s-]+/).filter(Boolean).map((w) => w[0].toUpperCase() + '.').join(' ');
+/* Both styles put a comma before the last "&" or "and", even with two authors. */
+const andList = (xs, conj) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ', ' + conj + ' ' + xs[xs.length - 1]);
 const latest = (p) => p.versions[p.versions.length - 1];
 const repoName = (doi) => SITE.repositories[repoPrefix(doi)];
 
@@ -221,6 +250,20 @@ function bibtex(p) {
   doi          = {${v.doi}},
   note         = {Preprint, not peer-reviewed. Listed on ${SITE.name} as ${p.id}}
 }`;
+}
+
+/* APA 7, for a preprint. */
+function apa(p) {
+  const v = latest(p);
+  const names = p.authors.map((a) => (givenOf(a) ? familyOf(a) + ', ' + initials(givenOf(a)) : familyOf(a)));
+  return `${andList(names, '&')} (${v.date.slice(0, 4)}). ${p.title} [Preprint]. ${repoName(v.doi)}. https://doi.org/${v.doi}`;
+}
+
+/* Chicago, author-date. */
+function chicago(p) {
+  const v = latest(p);
+  const names = p.authors.map((a, i) => (!givenOf(a) ? familyOf(a) : i === 0 ? familyOf(a) + ', ' + givenOf(a) : givenOf(a) + ' ' + familyOf(a)));
+  return `${andList(names, 'and')}. ${v.date.slice(0, 4)}. “${p.title}.” Preprint, ${repoName(v.doi)}. https://doi.org/${v.doi}.`;
 }
 
 const LICENCE_URL = {
@@ -241,14 +284,16 @@ function scholarTags(p) {
     tag('citation_online_date', v.date.replace(/-/g, '/')),
     tag('citation_doi', v.doi),
     tag('citation_abstract_html_url', SITE.baseUrl + 'abs/' + p.id + '.html'),
+    ...((p.keywords || []).length ? [tag('citation_keywords', p.keywords.join('; '))] : []),
     ...(copy ? [tag('citation_pdf_url', SITE.baseUrl + 'pdf/' + copy.file)] : []),
   ].join('\n') + '\n';
 }
 
 function recordPage(p) {
   const v = latest(p);
-  const authors = p.authors.map((a) => esc(a.name)
+  const authors = p.authors.map((a) => (a.orcid ? `<a href="../author/${esc(a.orcid)}.html">${esc(a.name)}</a>` : esc(a.name))
     + (a.orcid ? ` <a class="id" href="https://orcid.org/${esc(a.orcid)}">ORCID ${esc(a.orcid)}</a>` : '')).join('<br>');
+  const keywords = (p.keywords || []).length ? `<p class="meta">Keywords: ${p.keywords.map(esc).join('; ')}</p>` : '';
   const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td></tr>`).join('');
   const notes = (p.notes || []).map((n) => `<li><span class="meta">${esc(n.date)}</span> ${esc(n.text)}</li>`).join('');
   const pdfs = p.pdfs || [];
@@ -257,12 +302,13 @@ function recordPage(p) {
   const withdrawn = p.status === 'withdrawn'
     ? `<div class="notice"><b>Withdrawn.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break.</div>` : '';
   const body = `
-<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · <a href="../list/${esc(p.category)}.html">${esc(SITE.categories[p.category])}</a>${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 ${withdrawn}
 <h1>${esc(p.title)}</h1>
 <p>${authors}</p>
 <h2>Abstract</h2>
 <div class="abstract"><p>${esc(p.abstract)}</p></div>
+${keywords}
 <div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality.</div>
 <h2>Read</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a></p>
@@ -273,6 +319,11 @@ ${copies}
 <p>${esc(p.llm_disclosure)}</p>
 ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <h2>Cite</h2>
+<p class="meta">APA</p>
+<p class="cite">${esc(apa(p))}</p>
+<p class="meta">Chicago (author-date)</p>
+<p class="cite">${esc(chicago(p))}</p>
+<p class="meta">BibTeX</p>
 <pre>${esc(bibtex(p))}</pre>
 <p class="meta">Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a></p>
 `;
@@ -305,7 +356,7 @@ function fields(papers, current, up) {
   const link = (href, label, n, here) => `<li><a href="${href}"${here ? ' aria-current="page"' : ''}>${esc(label)} (${n})</a></li>`;
   const all = link(up + 'index.html', 'All fields', papers.length, current === '');
   const each = Object.entries(SITE.categories).map(([slug, label]) =>
-    link(up + 'list/' + slug + '.html', label, papers.filter((p) => p.category === slug).length, current === slug));
+    link(up + 'list/' + slug + '.html', label, papers.filter((p) => cats(p).includes(slug)).length, current === slug));
   return `<ul class="fields" aria-label="Fields">${[all].concat(each).join('')}</ul>`;
 }
 
@@ -329,7 +380,7 @@ ${listing(papers, './', 'No preprints are listed yet.')}
 
 function fieldPage(papers, slug) {
   const label = SITE.categories[slug];
-  const mine = papers.filter((p) => p.category === slug);
+  const mine = papers.filter((p) => cats(p).includes(slug));
   const body = `
 <h1>${esc(label)}</h1>
 ${fields(papers, slug, '../')}
@@ -364,9 +415,95 @@ function policyPage() {
   return page({ title: 'Policy | ' + SITE.name, description: 'Scope, moderation, generative models, versions and privacy at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: markdown(md) });
 }
 
+/* One page per ORCID iD. Authors without one get no page: a name alone can belong to several people. */
+function authorIds(papers) {
+  return [...new Set(papers.flatMap((p) => p.authors.filter((a) => a.orcid).map((a) => a.orcid)))].sort();
+}
+
+function authorPage(papers, orcid) {
+  const mine = sortListing(papers.filter((p) => p.authors.some((a) => a.orcid === orcid)));
+  const name = mine[0].authors.find((a) => a.orcid === orcid).name;
+  const body = `
+<h1>${esc(name)}</h1>
+<p><a class="id" href="https://orcid.org/${esc(orcid)}">ORCID ${esc(orcid)}</a></p>
+<p class="meta">Preprints listed on ${esc(SITE.name)} with this ORCID iD among the authors.</p>
+${listing(mine, '../', '')}
+`;
+  return page({ title: name + ' | ' + SITE.name, description: 'Preprints by ' + name + ' listed on ' + SITE.name + '.', rel: true, canonical: 'author/' + orcid + '.html', body });
+}
+
+/* Atom feed of the listing, newest first. */
+function feed(papers) {
+  const sorted = sortListing(papers);
+  const stamp = (d) => d + 'T00:00:00Z';
+  const updated = sorted.length ? stamp(latest(sorted[0]).date) : stamp(SITE.since);
+  const entries = sorted.map((p) => {
+    const url = SITE.baseUrl + 'abs/' + p.id + '.html';
+    return `  <entry>
+    <id>${url}</id>
+    <title>${esc(p.title)}</title>
+    <link href="${url}"/>
+    <published>${stamp(p.versions[0].date)}</published>
+    <updated>${stamp(latest(p).date)}</updated>
+${p.authors.map((a) => `    <author><name>${esc(a.name)}</name>${a.orcid ? `<uri>https://orcid.org/${esc(a.orcid)}</uri>` : ''}</author>`).join('\n')}
+${cats(p).map((c) => `    <category term="${esc(c)}" label="${esc(SITE.categories[c])}"/>`).join('\n')}
+    <summary>${esc(p.abstract)}</summary>
+  </entry>`;
+  }).join('\n');
+  return `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>${esc(SITE.name)}: new preprints</title>
+  <subtitle>${esc(SITE.tagline)}. Moderation, not peer review.</subtitle>
+  <id>${SITE.baseUrl}</id>
+  <link rel="self" href="${SITE.baseUrl}feed.xml"/>
+  <link href="${SITE.baseUrl}"/>
+  <updated>${updated}</updated>
+${entries}
+</feed>
+`;
+}
+
+/* The public records as JSON, for the search page and for anyone who wants to reuse them. */
+function papersJson(papers) {
+  return JSON.stringify(sortListing(papers).map((p) => ({
+    id: p.id,
+    url: SITE.baseUrl + 'abs/' + p.id + '.html',
+    title: p.title,
+    authors: p.authors.map((a) => (a.orcid ? { name: a.name, orcid: a.orcid } : { name: a.name })),
+    abstract: p.abstract,
+    keywords: p.keywords || [],
+    categories: cats(p),
+    license: p.license,
+    versions: p.versions.map((v) => ({ version: v.version, doi: v.doi, date: v.date })),
+    pdfs: (p.pdfs || []).map((x) => ({ version: x.version, url: SITE.baseUrl + 'pdf/' + x.file })),
+    status: p.status,
+    llm_disclosure: p.llm_disclosure,
+  })), null, 2) + '\n';
+}
+
+function searchPage() {
+  const options = Object.entries(SITE.categories).map(([slug, label]) => `<option value="${esc(slug)}">${esc(label)}</option>`).join('');
+  const body = `
+<h1>Search</h1>
+<form class="search" id="search" action="./search.html" method="get" role="search">
+<label>Words <input type="search" name="q" autocomplete="off" placeholder="title, author, abstract, keyword, DOI"></label>
+<label>Field <select name="field"><option value="">All fields</option>${options}</select></label>
+<label>Year <input type="text" name="year" inputmode="numeric" pattern="\\d{4}" size="4" placeholder="2026"></label>
+<button type="submit">Search</button>
+</form>
+<p class="meta" id="nojs">Search runs in your browser, with one script from this site. Without it, use the listing, the field pages or the <a href="./papers.json">list of records</a>.</p>
+<p class="meta" id="status" aria-live="polite"></p>
+<ol class="list" id="results"></ol>
+<script src="./search.js" defer></script>
+`;
+  return page({ title: 'Search | ' + SITE.name, description: 'Search the preprints listed on ' + SITE.name + '.', rel: false, canonical: 'search.html', body, csp: SEARCH_CSP });
+}
+
 function sitemap(papers) {
   const urls = ['', 'submit.html', 'policy.html']
+    .concat(['search.html'])
     .concat(Object.keys(SITE.categories).map((slug) => 'list/' + slug + '.html'))
+    .concat(authorIds(papers).map((o) => 'author/' + o + '.html'))
     .concat(papers.map((p) => 'abs/' + p.id + '.html'))
     .concat(papers.flatMap((p) => (p.pdfs || []).map((x) => 'pdf/' + x.file)));
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -382,19 +519,26 @@ function build(out, paperDir) {
   fs.mkdirSync(path.join(out, 'abs'), { recursive: true });
   fs.mkdirSync(path.join(out, 'list'), { recursive: true });
   fs.mkdirSync(path.join(out, 'pdf'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'author'), { recursive: true });
   const files = {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
     'policy.html': policyPage(),
+    'search.html': searchPage(),
+    'feed.xml': feed(papers),
+    'papers.json': papersJson(papers),
     'sitemap.xml': sitemap(papers),
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
   papers.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
+  authorIds(papers).forEach((o) => { files['author/' + o + '.html'] = authorPage(papers, o); });
   /* The PDF copies are copied byte for byte; loadPapers has checked their sha256. */
   papers.forEach((p) => (p.pdfs || []).forEach((x) => { files['pdf/' + x.file] = fs.readFileSync(path.join(pdfDir(paperDir), x.file)); }));
   /* The logo is drawn by hand from rectangles only, and copied as it is. */
   for (const f of ['favicon.svg', 'og.png']) files[f] = fs.readFileSync(path.join(__dirname, 'assets', f));
+  /* The one script of the site, used only by search.html. */
+  files['search.js'] = fs.readFileSync(path.join(__dirname, 'assets', 'search.js'));
   for (const [f, s] of Object.entries(files)) fs.writeFileSync(path.join(out, f), s);
   return { problems: [], files: Object.keys(files), papers };
 }
