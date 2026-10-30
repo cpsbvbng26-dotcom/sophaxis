@@ -15,8 +15,8 @@ Do not include personal data in the issue.
 Describe where the problem is, without repeating the material itself.
 Say how you are concerned: as an author, as the rights holder, as the person whose data appears, or on their behalf.
 
-A private channel is not available yet.
-If a request cannot be made in public, open the issue with only the Sophaxis id and the kind of problem.
+A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The address is kept there, not on this site.
 The operator then takes the abstract and the PDF copy offline while the request is reviewed.
 
 ## What happens
