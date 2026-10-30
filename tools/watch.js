@@ -69,12 +69,19 @@ async function main() {
   const problems = list.flatMap((p) => compare(p, found));
   console.log(problems.length ? problems.join('\n') : 'every DOI resolves and keeps its licence');
 
+  /* The Internet Archive answers 429 to saves that come too close together: space them, and retry once. */
+  const pause = (ms) => new Promise((r) => setTimeout(r, ms));
   for (const u of archiveUrls(list)) {
     if (dry) { console.log('would save ' + u); continue; }
-    try {
-      const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
-      console.log('archive ' + r.status + ' ' + u);
-    } catch (e) { console.log('archive failed ' + u + ': ' + e.message); }
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
+        console.log('archive ' + r.status + ' ' + u);
+        if (r.status !== 429) break;
+      } catch (e) { console.log('archive failed ' + u + ': ' + e.message); break; }
+      await pause(60000);
+    }
+    await pause(20000);
   }
   if (dry) return;
 
