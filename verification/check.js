@@ -231,7 +231,27 @@ console.log('\n6. The logo and the share card');
   const png = fs.readFileSync(path.join(ROOT, 'assets', 'og.png'));
   const isPng = png.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
   ok('the share card is a square PNG of 600 × 600', isPng && png.readUInt32BE(16) === 600 && png.readUInt32BE(20) === 600);
+  const pngSize = (b) => b.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) ? b.readUInt32BE(16) + 'x' + b.readUInt32BE(20) : 'not a PNG';
+  const ico = fs.readFileSync(path.join(ROOT, 'assets', 'favicon.ico'));
+  const icoSizes = ico.readUInt16LE(0) === 0 && ico.readUInt16LE(2) === 1
+    ? Array.from({ length: ico.readUInt16LE(4) }, (_, i) => {
+      const e = 6 + 16 * i;
+      return pngSize(ico.subarray(ico.readUInt32LE(e + 12), ico.readUInt32LE(e + 12) + ico.readUInt32LE(e + 8)));
+    }) : [];
+  ok('the ICO holds the logo at 16, 32 and 48 px', icoSizes.join(' ') === '16x16 32x32 48x48', icoSizes.join(' '));
+  ok('the PNG logos are 192 × 192 and 180 × 180',
+    pngSize(fs.readFileSync(path.join(ROOT, 'assets', 'favicon-192.png'))) === '192x192'
+    && pngSize(fs.readFileSync(path.join(ROOT, 'assets', 'apple-touch-icon.png'))) === '180x180');
   const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
+  const noPixels = pages.filter((f) => {
+    const h = read(path.join(ROOT, 'site', f));
+    return !/<link rel="icon" href="(\.\.\/|\.\/|\/)favicon\.ico" sizes="48x48">/.test(h)
+      || !/<link rel="icon" href="(\.\.\/|\.\/|\/)favicon-192\.png" sizes="192x192" type="image\/png">/.test(h)
+      || !/<link rel="apple-touch-icon" href="(\.\.\/|\.\/|\/)apple-touch-icon\.png">/.test(h);
+  });
+  ok('every page links the logo as ICO and PNG too, for search results', pages.length > 0 && noPixels.length === 0, noPixels.join(', '));
+  ok('the ICO and the PNG logos are served from the root of the site',
+    ['favicon.ico', 'favicon-192.png', 'apple-touch-icon.png'].every((f) => fs.existsSync(path.join(ROOT, 'site', f))));
   const missing = pages.filter((f) => {
     const h = read(path.join(ROOT, 'site', f));
     return !/<link rel="icon" href="(\.\.\/|\.\/|\/)favicon\.svg" type="image\/svg\+xml">/.test(h)
