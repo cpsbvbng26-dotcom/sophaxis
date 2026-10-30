@@ -10,7 +10,11 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
 4. DOI を推測で埋めない。投稿者が書いた DOI だけを使う。
 5. 外部へリクエストを出さない。スクリプトを置かない。CSP は `default-src 'none'`。
 6. 投稿の Issue は公開される。個人情報を記録に写さない。
-7. `assets/favicon.svg` と `assets/og.png` は手で置いたもので、生成物ではない。`build.js` がそのまま `site/` へ写す。
+7. 投稿は `tools/intake.js` が受ける（`.github/workflows/intake.yml`）。DOI の登録情報（DataCite・Crossref）と、
+   ORCID の公開記録のうち名前・リンク・業績だけを読む。ORCID の記録をそのまま記録・ログ・コメントに写さない
+   （メールアドレスや所在の国が入っている）。本人確認が通らない投稿は載せない。
+   issue の本文は環境変数でだけ渡し、シェルに展開しない。
+8. `assets/favicon.svg` と `assets/og.png` は手で置いたもので、生成物ではない。`build.js` がそのまま `site/` へ写す。
    ロゴは文字のフォントを使わず、長方形だけで組んである。`og.png` はロゴを角を丸めずに 600 × 600 の PNG にしたもの。
    ロゴを変えたら、こちらも描き直す。
 

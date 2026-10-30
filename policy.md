@@ -27,11 +27,28 @@ Work that belongs mainly to another field is out of scope, even if it uses mathe
 ## How to submit
 
 1. Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org or SSRN, under an accepted licence, and obtain its DOI.
-2. Open a submission issue in the Sophaxis repository and fill in the form.
-3. A moderator checks the submission. If it passes, a record page is published.
+2. Link your ORCID record to your GitHub account: add `https://github.com/<your username>` under "Websites & social links".
+3. Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.
+4. An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.
+5. A moderator checks the submission. If it passes, a record page is published.
+
+The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata, not typed in by hand.
 
 The submission issue is public.
 Your GitHub username and everything you write in the form will be visible to anyone.
+
+## Identity of the submitter
+
+Only an author of a work can submit it.
+Sophaxis confirms this through ORCID, before a moderator reads the work.
+
+- The ORCID record given in the form links to the GitHub account that opened the issue.
+- The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.
+
+A submission that does not pass both is not listed.
+Authors without an ORCID iD cannot submit.
+
+This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 
 ## What moderation checks
 
@@ -88,6 +105,19 @@ Do not include personal data in the issue.
 
 The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.
 Submissions are public GitHub issues and are subject to GitHub's terms.
+
+When a submission issue is opened or edited, a GitHub Action reads two kinds of public data.
+It reads the metadata of the DOI from DataCite or Crossref.
+It reads the name, the websites and the works of the ORCID record given in the form.
+It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
+Email addresses and other details in an ORCID record are not read.
+
+## Metadata and abstracts
+
+Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse.
+The abstract is part of the work.
+It is shown under the work's own licence, with its authors and a link to the work.
+This is why Sophaxis lists only work under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
 
 ## Operator and conflicts of interest
 

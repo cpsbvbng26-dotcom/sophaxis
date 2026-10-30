@@ -62,8 +62,14 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>Scope</h2>
 <p>Sophaxis accepts work in philosophy, mathematics, logic and the philosophy of mathematics. Work that belongs mainly to another field is out of scope, even if it uses mathematics.</p>
 <h2>How to submit</h2>
-<ol><li>Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org or SSRN, under an accepted licence, and obtain its DOI.</li><li>Open a submission issue in the Sophaxis repository and fill in the form.</li><li>A moderator checks the submission. If it passes, a record page is published.</li></ol>
+<ol><li>Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org or SSRN, under an accepted licence, and obtain its DOI.</li><li>Link your ORCID record to your GitHub account: add <code>https://github.com/&lt;your username&gt;</code> under &quot;Websites &amp; social links&quot;.</li><li>Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.</li><li>An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.</li><li>A moderator checks the submission. If it passes, a record page is published.</li></ol>
+<p>The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata, not typed in by hand.</p>
 <p>The submission issue is public. Your GitHub username and everything you write in the form will be visible to anyone.</p>
+<h2>Identity of the submitter</h2>
+<p>Only an author of a work can submit it. Sophaxis confirms this through ORCID, before a moderator reads the work.</p>
+<ul><li>The ORCID record given in the form links to the GitHub account that opened the issue.</li><li>The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.</li></ul>
+<p>A submission that does not pass both is not listed. Authors without an ORCID iD cannot submit.</p>
+<p>This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.</p>
 <h2>What moderation checks</h2>
 <ul><li>The work is in scope.</li><li>The DOI resolves to the work described, and the submitter is one of its authors.</li><li>The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.</li><li>The work has a title, an abstract and references, in the ordinary form of a scholarly paper.</li><li>The submission includes a statement on the use of language models and other generative models (see below).</li><li>The work is not spam, not abusive and does not expose personal data of third parties.</li></ul>
 <p>A moderator who declines a submission gives a short reason in the issue.</p>
@@ -81,6 +87,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>To request removal for legal reasons, open a removal issue. Do not include personal data in the issue.</p>
 <h2>Privacy</h2>
 <p>The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers. Submissions are public GitHub issues and are subject to GitHub's terms.</p>
+<p>When a submission issue is opened or edited, a GitHub Action reads two kinds of public data. It reads the metadata of the DOI from DataCite or Crossref. It reads the name, the websites and the works of the ORCID record given in the form. It uses them only for the checks, and writes nothing else from the ORCID record anywhere. Email addresses and other details in an ORCID record are not read.</p>
+<h2>Metadata and abstracts</h2>
+<p>Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse. The abstract is part of the work. It is shown under the work's own licence, with its authors and a link to the work. This is why Sophaxis lists only work under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.</p>
 <h2>Operator and conflicts of interest</h2>
 <p>Sophaxis is operated by Takuya Nemoto, an independent researcher. Submissions by the operator are moderated under the same rules and are marked on their record pages as the operator's own.</p>
 <h2>Licences of this site</h2>
