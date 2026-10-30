@@ -27,5 +27,19 @@
   "llm_disclosure": "The author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.",
   "issue": 8,
   "status": "listed",
-  "operator_own": true
+  "operator_own": true,
+  "pdfs": [
+    {
+      "version": 1,
+      "file": "2026.0001v1.pdf",
+      "sha256": "72769a1e45579e99bde6ddf51923eafb78048118a191f99cb4ff42799866948f",
+      "source": "https://ndownloader.figshare.com/files/70001934"
+    },
+    {
+      "version": 2,
+      "file": "2026.0001v2.pdf",
+      "sha256": "71639d4c5cfdf70a6d321f861d3ad539568e6551f2e2adb75f967ea54624038c",
+      "source": "https://ndownloader.figshare.com/files/70212858"
+    }
+  ]
 }
