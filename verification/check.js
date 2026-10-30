@@ -205,7 +205,9 @@ console.log('\n5. Every page: no requests to other servers, valid CSP, links tha
         if (scripts.length !== 1 || scripts[0] !== '<script src="./search.js" defer></script>') bad.push(f + ': only search.js may run');
         if (!/script-src 'self'; connect-src 'self';/.test(csp) || /unsafe-(inline|eval)/.test(csp)) bad.push(f + ': search CSP');
       } else if (scripts.length || /<script/i.test(h) || csp.includes('script-src')) bad.push(f + ': script');
-      if (/<(img|link|iframe)[^>]+(src|href)="https?:/i.test(h.replace(/<link rel="canonical"[^>]*>/, ''))) bad.push(f + ': external load');
+      /* A microdata <link itemprop> only states a value; the browser fetches nothing for it. */
+      if (/<(img|link|iframe)[^>]+(src|href)="https?:/i.test(h.replace(/<link rel="canonical"[^>]*>/, '').replace(/<link itemprop="[a-zA-Z]+" href="[^"]*">/g, ''))) bad.push(f + ': external load');
+      [...h.matchAll(/href="(\/[^"#]*)"/g)].forEach((m) => { if (!fs.existsSync(path.join(dir, m[1]))) bad.push(f + ': broken link ' + m[1]); });
       [...h.matchAll(/href="(\.{1,2}\/[^"#]+)"/g)].forEach((m) => {
         const target = path.resolve(path.dirname(path.join(dir, f)), m[1]);
         if (!fs.existsSync(target)) bad.push(f + ': broken link ' + m[1]);
@@ -227,7 +229,7 @@ console.log('\n6. The logo and the share card');
   const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
   const missing = pages.filter((f) => {
     const h = read(path.join(ROOT, 'site', f));
-    return !/<link rel="icon" href="(\.\.\/|\.\/)favicon\.svg" type="image\/svg\+xml">/.test(h)
+    return !/<link rel="icon" href="(\.\.\/|\.\/|\/)favicon\.svg" type="image\/svg\+xml">/.test(h)
       || !h.includes('<meta property="og:image" content="https://sophaxis.vercel.app/og.png">');
   });
   ok('every page links the logo and the share card', pages.length > 0 && missing.length === 0, missing.join(', '));
@@ -408,7 +410,7 @@ console.log('\n11. Finding work: search, feed, records as JSON, authors, keyword
   ok('keywords are shown and given to Google Scholar', a.includes('Keywords: structuralism; modal logic') && a.includes('<meta name="citation_keywords" content="structuralism; modal logic">'));
   ok('APA: family name and initials, year, title, [Preprint], repository, DOI', a.includes('Doe, J., &amp; Yamada, T. (2026). A Fixture Record for Testing the Build [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.1234999'));
   ok('Chicago author-date: first author inverted, the others not', a.includes('Doe, Jane, and Taro Yamada. 2026. “A Fixture Record for Testing the Build.” Preprint, Zenodo. https://doi.org/10.5281/zenodo.1234999.'));
-  ok('an author with an ORCID iD links to an author page that lists the record', a.includes('<a href="../author/0000-0002-1825-0097.html">Jane Doe</a>')
+  ok('an author with an ORCID iD links to an author page that lists the record', a.includes('<a href="../author/0000-0002-1825-0097.html"><span itemprop="name">Jane Doe</span></a>')
     && read(path.join(FIX, 'author', '0000-0002-1825-0097.html')).includes('href="../abs/2026.0001.html"'));
   ok('an author without an ORCID iD gets no page: a name alone can belong to several people', !a.includes('../author/Taro') && fs.readdirSync(path.join(FIX, 'author')).length === 1);
   const feedXml = read(path.join(FIX, 'feed.xml'));
@@ -457,7 +459,7 @@ console.log('\n12. Seven policies, consent and rights, takedown');
     return fs.existsSync(f) && /Last updated: \d{4}-\d{2}-\d{2}\./.test(read(f)) && idx.includes('href="./policies/' + s + '.html"');
   }) && fs.readdirSync(path.join(ROOT, 'policies')).length === slugs.length);
   ok('every page links the Terms of Use, the Privacy Policy and the Takedown Policy', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
-    .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
+    .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./|/)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   ok('the submission form requires consent of every author and the right to share the version', /- label: Every author of this work agrees to its listing on Sophaxis\.\n\s+required: true/.test(form)
     && /- label: The authors may share this version under its licence; if a journal has published the work, the publisher allows it\.\n\s+required: true/.test(form));
@@ -493,6 +495,31 @@ console.log('\n12. Seven policies, consent and rights, takedown');
   ok('the intake reads the published version and puts it in the draft', f.published === '10.1000/fixture.journal.1'
     && I.draft({ form: f, login: 'jcarberry', issue: 9, meta: I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json')))),
       versions: [{ doi: '10.6084/m9.figshare.1234567.v1', date: '2026-11-03' }], result: { licence: 'CC-BY-4.0' }, paperDir: fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), today: '2026-11-10' }).record.published_doi === '10.1000/fixture.journal.1');
+}
+
+/* ------------------------------------------------------------ 13 */
+console.log('\n13. Structured data, share links, sitemap dates and the 404 page');
+{
+  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
+  const art = (/<article itemscope itemtype="https:\/\/schema\.org\/ScholarlyArticle">([\s\S]*?)<\/article>/.exec(a) || [])[1] || '';
+  ok('the record page describes the work as a ScholarlyArticle: title, authors, dates, DOI, licence, free to read', art.includes('<h1 itemprop="headline">A Fixture Record for Testing the Build</h1>')
+    && (art.match(/itemprop="author" itemscope itemtype="https:\/\/schema\.org\/Person"/g) || []).length === 2
+    && art.includes('<meta itemprop="datePublished" content="2026-11-01">') && art.includes('<meta itemprop="dateModified" content="2026-12-01">')
+    && art.includes('<link itemprop="sameAs" href="https://doi.org/10.5281/zenodo.1234999">') && art.includes('<link itemprop="license" href="https://creativecommons.org/licenses/by/4.0/">')
+    && art.includes('<meta itemprop="isAccessibleForFree" content="true">') && art.includes('<p itemprop="abstract">'));
+  ok('the structured data points to the PDF copy and to the ORCID record', art.includes('<link itemprop="contentUrl" href="https://sophaxis.vercel.app/pdf/2026.0001v2.pdf">')
+    && art.includes('href="https://orcid.org/0000-0002-1825-0097" itemprop="sameAs"'));
+  const share = (/<p class="share">([\s\S]*?)<\/p>/.exec(a) || [])[1] || '';
+  ok('share links are plain links to X, Bluesky, Facebook, LinkedIn and email, each carrying the record address', ['https://x.com/intent/post?', 'https://bsky.app/intent/compose?', 'https://www.facebook.com/sharer/sharer.php?u=', 'https://www.linkedin.com/sharing/share-offsite/?url=', 'mailto:?subject=']
+    .every((u) => share.includes('href="' + u)) && (share.match(/https%3A%2F%2Fsophaxis\.vercel\.app%2Fabs%2F2026\.0001\.html/g) || []).length === 5 && !/<script|<img|<iframe/.test(share));
+  const sm = read(path.join(FIX, 'sitemap.xml'));
+  ok('the sitemap gives each address the date it last changed', sm.includes('<loc>https://sophaxis.vercel.app/abs/2026.0001.html</loc><lastmod>2026-12-01</lastmod>')
+    && sm.includes('<loc>https://sophaxis.vercel.app/pdf/2026.0001v2.pdf</loc><lastmod>2026-12-01</lastmod>')
+    && sm.includes('<loc>https://sophaxis.vercel.app/policies/terms.html</loc><lastmod>') && (sm.match(/<url>/g) || []).length === (sm.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || []).length);
+  const nf = read(path.join(ROOT, 'site', '404.html'));
+  ok('the 404 page links from the root, is not indexed and is not in the sitemap', nf.includes('<link rel="icon" href="/favicon.svg"') && nf.includes('href="/index.html"')
+    && nf.includes('href="/search.html"') && !/href="\.{1,2}\//.test(nf) && nf.includes('<meta name="robots" content="noindex">') && !read(path.join(ROOT, 'site', 'sitemap.xml')).includes('404'));
+  ok('the privacy policy says that share links send nothing until followed', read(path.join(ROOT, 'policies', 'privacy.md')).includes('Nothing is sent anywhere until a reader follows one, and the service then works under its own privacy policy.'));
 }
 
 console.log('\n' + '-'.repeat(60));
