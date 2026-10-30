@@ -177,7 +177,7 @@ ${head || ''}<meta name="twitter:card" content="summary">
 ${body}
 </main>
 <footer><div class="wrap">
-<p>${esc(SITE.name)} is a diamond open access overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
 </div></footer>
 </body>
@@ -320,7 +320,7 @@ ${listing(papers, './', 'No preprints are listed yet.')}
 `;
   return page({
     title: SITE.name,
-    description: SITE.name + ' is a diamond open access overlay preprint server for philosophy and mathematics.',
+    description: SITE.name + ' is an overlay preprint server for philosophy and mathematics. It charges nothing, to authors or to readers.',
     rel: false,
     canonical: '',
     body,
