@@ -180,6 +180,7 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
 .cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
 .search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
 .search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
@@ -195,8 +196,9 @@ const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('
 const CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; base-uri 'none'; form-action 'none'`;
 const SEARCH_CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'`;
 
-function page({ title, description, rel, canonical, body, head, csp }) {
-  const up = rel ? '../' : './';
+function page({ title, description, rel, root, canonical, body, head, csp }) {
+  /* The 404 page is served at any address, so it links from the root. */
+  const up = root ? '/' : rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
   const home = canonical === '';
   const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">` : '>';
@@ -335,8 +337,32 @@ function removedPage(p) {
 function recordPage(p) {
   if (p.status === 'removed') return removedPage(p);
   const v = latest(p);
-  const authors = p.authors.map((a) => (a.orcid ? `<a href="../author/${esc(a.orcid)}.html">${esc(a.name)}</a>` : esc(a.name))
-    + (a.orcid ? ` <a class="id" href="https://orcid.org/${esc(a.orcid)}">ORCID ${esc(a.orcid)}</a>` : '')).join('<br>');
+  /* schema.org ScholarlyArticle in microdata: Google reads it, and no script is needed. */
+  const authors = p.authors.map((a) => '<span itemprop="author" itemscope itemtype="https://schema.org/Person">'
+    + (a.orcid ? `<a href="../author/${esc(a.orcid)}.html"><span itemprop="name">${esc(a.name)}</span></a>` : `<span itemprop="name">${esc(a.name)}</span>`)
+    + (a.orcid ? ` <a class="id" href="https://orcid.org/${esc(a.orcid)}" itemprop="sameAs">ORCID ${esc(a.orcid)}</a>` : '') + '</span>').join('<br>');
+  const url = SITE.baseUrl + 'abs/' + p.id + '.html';
+  const lastCopy = (p.pdfs || []).slice(-1)[0];
+  const facts = [
+    `<meta itemprop="datePublished" content="${esc(p.versions[0].date)}">`,
+    `<meta itemprop="dateModified" content="${esc(v.date)}">`,
+    `<meta itemprop="identifier" content="doi:${esc(v.doi)}">`,
+    `<meta itemprop="isAccessibleForFree" content="true">`,
+    `<link itemprop="url" href="${esc(url)}">`,
+    `<link itemprop="sameAs" href="https://doi.org/${esc(v.doi)}">`,
+    `<link itemprop="license" href="${LICENCE_URL[p.license]}">`,
+    ...((p.keywords || []).length ? [`<meta itemprop="keywords" content="${esc(p.keywords.join(', '))}">`] : []),
+    ...(lastCopy ? [`<span itemprop="encoding" itemscope itemtype="https://schema.org/MediaObject"><link itemprop="contentUrl" href="${esc(SITE.baseUrl + 'pdf/' + lastCopy.file)}"><meta itemprop="encodingFormat" content="application/pdf"></span>`] : []),
+  ].join('\n');
+  /* Plain links to each service's own share page. Nothing is sent anywhere until a reader follows one. */
+  const q = encodeURIComponent;
+  const share = [
+    ['X', `https://x.com/intent/post?text=${q(p.title)}&url=${q(url)}`],
+    ['Bluesky', `https://bsky.app/intent/compose?text=${q(p.title + ' ' + url)}`],
+    ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${q(url)}`],
+    ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${q(url)}`],
+    ['Email', `mailto:?subject=${q(p.title)}&body=${q(url)}`],
+  ].map(([n, h]) => `<a href="${esc(h)}">${n}</a>`).join(' · ');
   const keywords = (p.keywords || []).length ? `<p class="meta">Keywords: ${p.keywords.map(esc).join('; ')}</p>` : '';
   const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td></tr>`).join('');
   const notes = (p.notes || []).map((n) => `<li><span class="meta">${esc(n.date)}</span> ${esc(n.text)}</li>`).join('');
@@ -350,10 +376,13 @@ function recordPage(p) {
   const body = `
 <p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 ${withdrawn}
-<h1>${esc(p.title)}</h1>
+<article itemscope itemtype="https://schema.org/ScholarlyArticle">
+${facts}
+<h1 itemprop="headline">${esc(p.title)}</h1>
 <p>${authors}</p>
 <h2>Abstract</h2>
-<div class="abstract"><p>${esc(p.abstract)}</p></div>
+<div class="abstract"><p itemprop="abstract">${esc(p.abstract)}</p></div>
+</article>
 ${keywords}
 <div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality.</div>
 <h2>Read</h2>
@@ -372,6 +401,8 @@ ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <p class="cite">${esc(chicago(p))}</p>
 <p class="meta">BibTeX</p>
 <pre>${esc(bibtex(p))}</pre>
+<h2>Share</h2>
+<p class="share">${share}</p>
 <p class="meta">Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a></p>
 `;
   return page({
@@ -569,16 +600,30 @@ function searchPage() {
   return page({ title: 'Search | ' + SITE.name, description: 'Search the preprints listed on ' + SITE.name + '.', rel: false, canonical: 'search.html', body, csp: SEARCH_CSP });
 }
 
+/* Each address with the date it last changed: a record with its latest version, a copy with its version,
+ * a policy with its "Last updated" date, and the lists with the newest record. */
 function sitemap(papers) {
-  const urls = ['', 'submit.html', 'policy.html']
-    .concat(['search.html'])
-    .concat(POLICIES.map(([slug]) => 'policies/' + slug + '.html'))
-    .concat(Object.keys(SITE.categories).map((slug) => 'list/' + slug + '.html'))
-    .concat(authorIds(papers).map((o) => 'author/' + o + '.html'))
-    .concat(papers.map((p) => 'abs/' + p.id + '.html'))
-    .concat(papers.flatMap((p) => (p.pdfs || []).map((x) => 'pdf/' + x.file)));
+  const newest = [SITE.since].concat(papers.map((p) => latest(p).date)).sort().pop();
+  const policyDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(policySource(slug)) || [, newest])[1];
+  const latestPolicy = POLICIES.map(([slug]) => policyDate(slug)).sort().pop();
+  const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest]]
+    .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
+    .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
+    .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map((p) => latest(p).date).sort().pop()]))
+    .concat(papers.map((p) => ['abs/' + p.id + '.html', latest(p).date]))
+    .concat(papers.flatMap((p) => (p.pdfs || []).map((x) => ['pdf/' + x.file, p.versions.find((v) => v.version === x.version).date])));
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    + urls.map((u) => '  <url><loc>' + SITE.baseUrl + u + '</loc></url>').join('\n') + '\n</urlset>\n';
+    + urls.map(([u, d]) => '  <url><loc>' + SITE.baseUrl + u + '</loc><lastmod>' + d + '</lastmod></url>').join('\n') + '\n</urlset>\n';
+}
+
+/* Served by Vercel for any address that does not exist. Every link starts at the root. */
+function notFoundPage() {
+  const body = `
+<h1>Page not found</h1>
+<p>There is no page at this address.</p>
+<p>The <a href="/index.html">listing</a> shows every preprint, and the <a href="/search.html">search</a> finds a title, an author or a DOI. Every record keeps its address, so a citation to a Sophaxis id leads to its page.</p>
+`;
+  return page({ title: 'Page not found | ' + SITE.name, description: 'There is no page at this address.', root: true, canonical: '404.html', body, head: '<meta name="robots" content="noindex">\n' });
 }
 
 /* ------------------------------------------------------------ write */
@@ -599,6 +644,7 @@ function build(out, paperDir) {
     'submit.html': submitPage(),
     'policy.html': policyPage(),
     'search.html': searchPage(),
+    '404.html': notFoundPage(),
     'feed.xml': feed(papers),
     'papers.json': papersJson(papers),
     'sitemap.xml': sitemap(papers),
