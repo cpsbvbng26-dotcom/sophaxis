@@ -33,6 +33,7 @@ const FIELDS = {
   'Your ORCID iD': 'orcid',
   'Existing Sophaxis id (only for a new version)': 'update',
   'Category': 'category',
+  'Other categories (optional)': 'others',
   'Abstract (only if the DOI metadata has none)': 'abstract',
   'Use of language models and other generative models': 'llm',
 };
@@ -49,9 +50,23 @@ function parseIssue(body) {
   }
   if (out.doi) out.doi = out.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').trim();
   if (out.orcid) out.orcid = (out.orcid.match(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/) || [''])[0];
-  const slug = Object.keys(SITE.categories).find((k) => SITE.categories[k] === out.category);
-  out.category = slug || '';
+  const slugOf = (label) => Object.keys(SITE.categories).find((k) => SITE.categories[k] === label.trim());
+  out.category = slugOf(out.category || '') || '';
+  out.others = [...new Set(String(out.others || '').split(/,\s*/).map(slugOf).filter((s) => s && s !== out.category))];
   return out;
+}
+
+/* Keywords from the metadata, without the broad classification schemes that say nothing about the work. */
+function keywordsOf(list) {
+  const seen = new Set();
+  const out = [];
+  for (const k of list) {
+    const t = plain(k).replace(/^FOS:\s*/i, '').trim();
+    if (!t || t.length > 80 || seen.has(t.toLowerCase())) continue;
+    seen.add(t.toLowerCase());
+    out.push(t);
+  }
+  return out.slice(0, 12);
 }
 
 /* ------------------------------------------------------------ text */
@@ -106,6 +121,7 @@ function fromDataCite(json) {
     licences: (a.rightsList || []).map((r) => licenceOf(r.rightsIdentifier) || licenceOf(r.rightsUri)).filter(Boolean),
     abstract: abs ? plain(abs.description) : '',
     date: date ? date.slice(0, 10) : null,
+    keywords: keywordsOf((a.subjects || []).filter((s) => !/fields of science|anzsrc|oecd/i.test(s.subjectScheme || '') && !/^FOS:/i.test(s.subject || '')).map((s) => s.subject)),
   };
 }
 
@@ -125,6 +141,7 @@ function fromCrossref(json) {
     licences: (m.license || []).map((l) => licenceOf(l.URL)).filter(Boolean),
     abstract: plain(m.abstract),
     date: full('posted') || full('published') || full('issued') || full('created'),
+    keywords: keywordsOf(m.subject || []),
   };
 }
 
@@ -218,9 +235,11 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today }) 
   const p = {
     id,
     title: meta.title,
-    authors: meta.authors.map((a) => (a.orcid ? { name: a.name, orcid: a.orcid } : { name: a.name })),
+    authors: meta.authors.map((a) => Object.assign({ name: a.name }, a.orcid ? { orcid: a.orcid } : {}, a.family ? { given: a.given, family: a.family } : {})),
     abstract: meta.abstract || plain(form.abstract),
     category: form.category,
+    ...(form.others && form.others.length ? { categories: form.others } : {}),
+    ...(meta.keywords && meta.keywords.length ? { keywords: meta.keywords } : {}),
     license: result.licence,
     versions: versions.map((v, i) => ({ version: i + 1, doi: v.doi, date: v.date })),
     llm_disclosure: form.llm.trim(),
