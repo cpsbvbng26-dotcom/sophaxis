@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-PBAV2PBBzBTNErOjfOnb6i2LoWh73nEiOpUxK5eGjVc='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Submission Policy | Sophaxis</title>
+<meta name="description" content="Submission Policy of Sophaxis.">
+<link rel="canonical" href="https://sophaxis.vercel.app/policies/submission.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="../feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Submission Policy | Sophaxis">
+<meta property="og:description" content="Submission Policy of Sophaxis.">
+<meta property="og:url" content="https://sophaxis.vercel.app/policies/submission.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a></nav>
+</div></header>
+<main class="wrap">
+<h1>Submission Policy</h1>
+<p>Last updated: 2026-10-30.</p>
+<h2>Who can submit</h2>
+<p>Only an author of a work can submit it. Sophaxis confirms this through ORCID, before a moderator reads the work.</p>
+<ul><li>The ORCID record given in the form links to the GitHub account that opened the issue.</li><li>The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.</li></ul>
+<p>A submission that does not pass both is not listed. Authors without an ORCID iD cannot submit.</p>
+<p>This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.</p>
+<h2>What can be submitted</h2>
+<p>Sophaxis accepts work in philosophy, mathematics, logic and the philosophy of mathematics. Work that belongs mainly to another field is out of scope, even if it uses mathematics.</p>
+<p>The work must already be deposited in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI. It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the <a href="./licences.html">Licence Policy</a>. It must have a title, an abstract and references, in the ordinary form of a scholarly paper.</p>
+<p>Work that a journal has already published may be submitted only in a version that the authors may share under such a licence. Publishers set different terms for this. The submitter gives the DOI of the published version in the form, and the record links to it.</p>
+<h2>What the submitter confirms</h2>
+<ul><li>The submitter is an author of the work.</li><li>Every author of the work agrees to its listing on Sophaxis.</li><li>The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.</li><li>The work contains no material, such as figures or long quotations, that the authors may not share, and no personal data of third parties.</li><li>The statement on generative models is complete and true.</li></ul>
+<h2>How to submit</h2>
+<ol><li>Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, under an accepted licence, and obtain its DOI.</li><li>Link your ORCID record to your GitHub account: add <code>https://github.com/&lt;your username&gt;</code> under &quot;Websites &amp; social links&quot;.</li><li>Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.</li><li>An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.</li><li>A moderator checks the submission under the <a href="./moderation.html">Moderation Policy</a>. If it passes, a record page is published.</li></ol>
+<p>The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata, not typed in by hand.</p>
+<p>The submission issue is public. Your GitHub username and everything you write in the form will be visible to anyone.</p>
+<h2>Language models and other generative models</h2>
+<p>Work written or developed with language models is accepted, on one condition: the use is disclosed. The same condition applies to every other generative model, including models that produce images, figures, audio or code.</p>
+<p>The disclosure must name the tools used and say what they were used for, for example drafting, translation, proofs, code, literature search, editing, figures or images. If no generative model was used, the statement says so.</p>
+<p>A language model cannot be listed as an author. No other generative model can be listed as an author either. The authors are responsible for every claim, citation and calculation in the work.</p>
+<p>If substantial undisclosed use comes to light after listing, the record receives a notice, and the authors are asked to add a disclosure.</p>
+<h2>Versions and updates</h2>
+<p>A new version is a new version in the repository. Most repositories give each version its own DOI. arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version. Submit it as an update to the existing record; earlier versions stay listed.</p>
+<h2>Withdrawal</h2>
+<p>An author can withdraw a listed work by opening an issue. Records are not deleted. A withdrawn work keeps its record page with a withdrawal notice, so that citations to it do not break. An author who did not agree to the listing can ask for it to be withdrawn in the same way. Removal for legal reasons follows the <a href="./takedown.html">Takedown Policy</a>.</p>
+<p class="meta"><a href="../policy.html">All policies</a></p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a></p>
+</div></footer>
+</body>
+</html>

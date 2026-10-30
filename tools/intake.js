@@ -32,6 +32,7 @@ const FIELDS = {
   'DOI of the deposited preprint': 'doi',
   'Your ORCID iD': 'orcid',
   'Existing Sophaxis id (only for a new version)': 'update',
+  'DOI of the published version (only if a journal has published the work)': 'published',
   'Category': 'category',
   'Other categories (optional)': 'others',
   'Abstract (only if the DOI metadata has none)': 'abstract',
@@ -49,6 +50,7 @@ function parseIssue(body) {
     if (FIELDS[label]) out[FIELDS[label]] = value === '_No response_' ? '' : value;
   }
   if (out.doi) out.doi = out.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').trim();
+  if (out.published) out.published = out.published.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').trim();
   if (out.orcid) out.orcid = (out.orcid.match(/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/) || [''])[0];
   const slugOf = (label) => Object.keys(SITE.categories).find((k) => SITE.categories[k] === label.trim());
   out.category = slugOf(out.category || '') || '';
@@ -195,6 +197,7 @@ function check({ form, login, meta, person, works }) {
   add('The DOI is in an accepted repository', pre, pre ? SITE.repositories[pre] : 'accepted: ' + Object.values(SITE.repositories).join(', '));
   add('The ORCID iD is valid', form.orcid && orcidOk(form.orcid));
   add('A category is chosen', form.category);
+  if (form.published) add('The published version is given as a DOI', /^10\.\d{4,9}\/\S+$/.test(form.published), form.published);
   add('The statement on generative models is given', (form.llm || '').trim().length >= 20);
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
@@ -240,6 +243,7 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today }) 
     category: form.category,
     ...(form.others && form.others.length ? { categories: form.others } : {}),
     ...(meta.keywords && meta.keywords.length ? { keywords: meta.keywords } : {}),
+    ...(form.published ? { published_doi: form.published } : {}),
     license: result.licence,
     versions: versions.map((v, i) => ({ version: i + 1, doi: v.doi, date: v.date })),
     llm_disclosure: form.llm.trim(),
