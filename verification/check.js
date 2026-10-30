@@ -210,8 +210,10 @@ console.log('\n5. Every page: no requests to other servers, valid CSP, links tha
         if (scripts.length !== 1 || scripts[0] !== '<script src="./search.js" defer></script>') bad.push(f + ': only search.js may run');
         if (!/script-src 'self'; connect-src 'self';/.test(csp) || /unsafe-(inline|eval)/.test(csp)) bad.push(f + ': search CSP');
       } else if (scripts.length || /<script/i.test(h) || csp.includes('script-src')) bad.push(f + ': script');
-      /* A microdata <link itemprop> only states a value; the browser fetches nothing for it. */
-      if (/<(img|link|iframe)[^>]+(src|href)="https?:/i.test(h.replace(/<link rel="canonical"[^>]*>/, '').replace(/<link itemprop="[a-zA-Z]+" href="[^"]*">/g, ''))) bad.push(f + ': external load');
+      /* A microdata <link itemprop> only states a value; the browser fetches nothing for it.
+       * Nor for a language alternate, which Google wants as a full URL; only Sophaxis's own are let through. */
+      if (/<(img|link|iframe)[^>]+(src|href)="https?:/i.test(h.replace(/<link rel="canonical"[^>]*>/, '').replace(/<link itemprop="[a-zA-Z]+" href="[^"]*">/g, '')
+        .replace(/<link rel="alternate" hreflang="[a-z]{2}" href="https:\/\/sophaxis\.vercel\.app\/[^"]*">/g, ''))) bad.push(f + ': external load');
       [...h.matchAll(/href="(\/[^"#]*)"/g)].forEach((m) => { if (!fs.existsSync(path.join(dir, m[1]))) bad.push(f + ': broken link ' + m[1]); });
       [...h.matchAll(/href="(\.{1,2}\/[^"#]+)"/g)].forEach((m) => {
         const target = path.resolve(path.dirname(path.join(dir, f)), m[1]);
@@ -490,8 +492,17 @@ console.log('\n12. Seven policies, consent and rights, takedown');
   ok('the Japanese page names every foreign service the English policy names, and links back to it', ['GitHub（米国）', 'Vercel（米国）', 'DataCite（ドイツ）', 'Crossref（米国）', 'ORCID（米国）', 'Internet Archive（米国）'].every((s) => ja.includes(s))
     && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>2026-10-30'));
   ok('Japanese lines join without a space, English lines with one', ja.includes('読みません。サイトは、閲覧者の個人情報を集めません。') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
-  ok('every page links the Japanese page on personal data', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
-    .every((f) => /href="(\.\/|\.\.\/|\/)policies\/privacy\.ja\.html" lang="ja">個人情報の取り扱い<\/a>/.test(read(path.join(ROOT, 'site', f)))));
+  {
+    const en = read(path.join(ROOT, 'site', 'policies', 'privacy.html'));
+    const pair = '<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/privacy.html">\n'
+      + '<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/policies/privacy.ja.html">';
+    const footers = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+      .map((f) => [f, (/<footer[\s\S]*?<\/footer>/.exec(read(path.join(ROOT, 'site', f))) || [''])[0]]);
+    const japanese = footers.filter(([, t]) => /[\u3040-\u30ff\u4e00-\u9fff]/.test(t)).map(([f]) => f);
+    ok('the footer is in English on every page; the Japanese page is reached from the Privacy Policy, and the two name each other with hreflang',
+      footers.length > 0 && japanese.length === 0 && en.includes('href="./privacy.ja.html"') && en.includes(pair) && ja.includes(pair),
+      japanese.join(', '));
+  }
   ok('every page links the Terms of Use, the Privacy Policy and the Takedown Policy', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
     .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./|/)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));

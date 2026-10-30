@@ -237,7 +237,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}policies/privacy.ja.html" lang="ja">個人情報の取り扱い</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a></p>
 </div></footer>
 </body>
 </html>
@@ -517,13 +517,18 @@ function policyPage() {
 
 /* The Japanese page on personal data, under the headings of Japan's Act on the Protection of Personal Information. */
 const privacyJa = () => fs.readFileSync(path.join(ROOT, 'policies', 'privacy.ja.md'), 'utf8');
+/* The site is in English; the Japanese page is reached from the Privacy Policy, not from every footer.
+ * The two point at each other so that search engines show each to readers of its language. */
+const privacyAlternates = () => ['en', 'privacy.html', 'ja', 'privacy.ja.html']
+  .reduce((a, x, i, l) => (i % 2 ? a : a + `<link rel="alternate" hreflang="${x}" href="${esc(SITE.baseUrl)}policies/${l[i + 1]}">\n`), '');
 function privacyJaPage() {
-  return page({ title: '個人情報の取り扱いについて | ' + SITE.name, description: SITE.name + ' の個人情報の取り扱い。', rel: true, canonical: 'policies/privacy.ja.html', lang: 'ja',
+  return page({ title: '個人情報の取り扱いについて | ' + SITE.name, description: SITE.name + ' の個人情報の取り扱い。', rel: true, canonical: 'policies/privacy.ja.html', lang: 'ja', head: privacyAlternates(),
     body: markdown(privacyJa()) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
 }
 
 function onePolicyPage(slug) {
   return page({ title: policyTitle(slug) + ' | ' + SITE.name, description: policyTitle(slug) + ' of ' + SITE.name + '.', rel: true, canonical: 'policies/' + slug + '.html',
+    head: slug === 'privacy' ? privacyAlternates() : '',
     body: markdown(policySource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
 }
 
