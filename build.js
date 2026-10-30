@@ -196,7 +196,7 @@ const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('
 const CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; base-uri 'none'; form-action 'none'`;
 const SEARCH_CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'`;
 
-function page({ title, description, rel, root, canonical, body, head, csp }) {
+function page({ title, description, rel, root, canonical, body, head, csp, lang }) {
   /* The 404 page is served at any address, so it links from the root. */
   const up = root ? '/' : rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
@@ -204,7 +204,7 @@ function page({ title, description, rel, root, canonical, body, head, csp }) {
   const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">` : '>';
   const brand = home ? 'href="./" itemprop="url"' : `href="${up}index.html"`;
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang || 'en'}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -234,7 +234,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}policies/privacy.ja.html" lang="ja">個人情報の取り扱い</a></p>
 </div></footer>
 </body>
 </html>
@@ -248,7 +248,9 @@ function markdown(src) {
   let list = null;
   const inline = (s) => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\[([^\]]+)\]\(((?:\.\.?\/|https:\/\/)[^)\s]+)\)/g, '<a href="$2">$1</a>');
-  const flushPara = () => { if (para.length) { out.push('<p>' + inline(para.join(' ')) + '</p>'); para = []; } };
+  /* Lines of a paragraph join with a space, except after Japanese text, which takes none. */
+  const join = (lines) => lines.reduce((acc, l) => (acc && /[\u3000-\u30ff\u4e00-\u9fff\uff00-\uffef]$/.test(acc) ? acc + l : (acc ? acc + ' ' + l : l)), '');
+  const flushPara = () => { if (para.length) { out.push('<p>' + inline(join(para)) + '</p>'); para = []; } };
   const flushList = () => { if (list) { out.push('<' + list.tag + '>' + list.items.map((i) => '<li>' + inline(i) + '</li>').join('') + '</' + list.tag + '>'); list = null; } };
   for (const line of src.split('\n')) {
     let m;
@@ -510,6 +512,13 @@ function policyPage() {
   return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
 }
 
+/* The Japanese page on personal data, under the headings of Japan's Act on the Protection of Personal Information. */
+const privacyJa = () => fs.readFileSync(path.join(ROOT, 'policies', 'privacy.ja.md'), 'utf8');
+function privacyJaPage() {
+  return page({ title: '個人情報の取り扱いについて | ' + SITE.name, description: SITE.name + ' の個人情報の取り扱い。', rel: true, canonical: 'policies/privacy.ja.html', lang: 'ja',
+    body: markdown(privacyJa()) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
+}
+
 function onePolicyPage(slug) {
   return page({ title: policyTitle(slug) + ' | ' + SITE.name, description: policyTitle(slug) + ' of ' + SITE.name + '.', rel: true, canonical: 'policies/' + slug + '.html',
     body: markdown(policySource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
@@ -608,6 +617,7 @@ function sitemap(papers) {
   const latestPolicy = POLICIES.map(([slug]) => policyDate(slug)).sort().pop();
   const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
+    .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
     .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map((p) => latest(p).date).sort().pop()]))
     .concat(papers.map((p) => ['abs/' + p.id + '.html', latest(p).date]))
@@ -653,6 +663,7 @@ function build(out, paperDir) {
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
   all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
   POLICIES.forEach(([slug]) => { files['policies/' + slug + '.html'] = onePolicyPage(slug); });
+  files['policies/privacy.ja.html'] = privacyJaPage();
   authorIds(papers).forEach((o) => { files['author/' + o + '.html'] = authorPage(papers, o); });
   /* The PDF copies are copied byte for byte; loadPapers has checked their sha256. */
   papers.forEach((p) => (p.pdfs || []).forEach((x) => { files['pdf/' + x.file] = fs.readFileSync(path.join(pdfDir(paperDir), x.file)); }));
