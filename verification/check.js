@@ -49,7 +49,7 @@ const FIX = tmp();
   ok('the record page says it has not been peer-reviewed', a.includes('It has not been peer-reviewed.'));
   ok('the record page links the latest version by DOI', a.includes('href="https://doi.org/10.5281/zenodo.1234999"'));
   ok('the record page lists every version', a.includes('>v1<') && a.includes('>v2<'));
-  ok('the record page shows the language-model statement', a.includes('Use of language models') && a.includes('the authors checked every claim'));
+  ok('the record page shows the language-model statement', a.includes('Use of language models and other generative models') && a.includes('the authors checked every claim'));
   ok('the record page gives a BibTeX entry with the DOI', /@misc\{doe2026sophaxis20260001,[\s\S]*doi\s+= \{10\.5281\/zenodo\.1234999\}/.test(a));
   ok('the operator’s own submission is marked', a.includes('operator’s own submission'));
   ok('notes and corrections are shown with their date', a.includes('2026-12-02') && a.includes('Notes and corrections'));
@@ -69,6 +69,7 @@ console.log('\n3. Validation refuses broken records');
     ['an invalid DOI', (p) => { p.versions[0].doi = 'zenodo.1234567'; }],
     ['a DOI outside the accepted repositories', (p) => { p.versions[0].doi = '10.1234/example'; }],
     ['a language model as an author', (p) => { p.authors.push({ name: 'Claude' }); }],
+    ['an image generator as an author', (p) => { p.authors.push({ name: 'Midjourney' }); }],
     ['a missing language-model statement', (p) => { p.llm_disclosure = ''; }],
     ['a token language-model statement', (p) => { p.llm_disclosure = 'None.'; }],
     ['a licence that is not accepted', (p) => { p.license = 'CC-BY-NC-4.0'; }],
@@ -105,6 +106,9 @@ console.log('\n4. The policy keeps its promises in writing');
     'It will not start charging.',
     'Work written or developed with language models is accepted, on one condition: the use is disclosed.',
     'A language model cannot be listed as an author.',
+    'The same condition applies to every other generative model, including models that produce images, figures, audio or code.',
+    'No other generative model can be listed as an author either.',
+    'If no generative model was used, the statement says so.',
     'Records are not deleted.',
     'The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.',
     'Submissions by the operator are moderated under the same rules',
@@ -112,6 +116,7 @@ console.log('\n4. The policy keeps its promises in writing');
   ].forEach((s) => ok('policy says: ' + s.slice(0, 60), policy.includes(s)));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   ok('the submission form requires the language-model statement', /id: llm[\s\S]*?required: true/.test(form));
+  ok('the submission form asks about every generative model, not only language models', form.includes('label: Use of language models and other generative models') && form.includes('This covers every generative model, not only language models.'));
   ok('the submission form warns that the issue is public', form.includes('This issue is public.'));
   const repos = Object.entries(JSON.parse(read(path.join(ROOT, 'site.json'))).repositories);
   const submit = read(path.join(ROOT, 'site', 'submit.html'));
