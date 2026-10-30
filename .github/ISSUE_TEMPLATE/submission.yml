@@ -8,12 +8,24 @@ body:
       value: |
         This issue is public. Your GitHub username and everything you write here will be visible to anyone.
         Acceptance is moderation, not peer review. Read the policy before submitting: https://sophaxis.vercel.app/policy.html
+
+        Give the DOI and your ORCID iD. The title, the authors, the abstract and the licence are taken from the DOI metadata.
+        Before submitting, add `https://github.com/<your username>` under "Websites & social links" in your ORCID record.
+        An automatic check then confirms that the account opening this issue belongs to an author of the work.
   - type: input
     id: doi
     attributes:
       label: DOI of the deposited preprint
-      description: A Zenodo (10.5281/zenodo.…), figshare (10.6084/m9.figshare.…), OSF Preprints (10.31219/osf.io/…), arXiv (10.48550/arXiv.…), Preprints.org (10.20944/preprints…) or SSRN (10.2139/ssrn.…) DOI. On arXiv and SSRN, the work must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
+      description: A Zenodo (10.5281/zenodo.…), figshare (10.6084/m9.figshare.…), OSF Preprints (10.31219/osf.io/…), arXiv (10.48550/arXiv.…), Preprints.org (10.20944/preprints…) or SSRN (10.2139/ssrn.…) DOI. The work must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata.
       placeholder: 10.5281/zenodo.0000000
+    validations:
+      required: true
+  - type: input
+    id: orcid
+    attributes:
+      label: Your ORCID iD
+      description: Your ORCID record must link to your GitHub account, and the iD must belong to an author of the work.
+      placeholder: 0000-0002-1825-0097
     validations:
       required: true
   - type: input
@@ -21,27 +33,6 @@ body:
     attributes:
       label: Existing Sophaxis id (only for a new version)
       placeholder: 2026.0001
-  - type: input
-    id: title
-    attributes:
-      label: Title
-    validations:
-      required: true
-  - type: textarea
-    id: authors
-    attributes:
-      label: Authors
-      description: One author per line, with ORCID iD if available. A language model or other generative model cannot be an author.
-      placeholder: |
-        Jane Doe, 0000-0002-1825-0097
-    validations:
-      required: true
-  - type: textarea
-    id: abstract
-    attributes:
-      label: Abstract
-    validations:
-      required: true
   - type: dropdown
     id: category
     attributes:
@@ -53,16 +44,11 @@ body:
         - Logic
     validations:
       required: true
-  - type: dropdown
-    id: license
+  - type: textarea
+    id: abstract
     attributes:
-      label: Licence of the deposited work
-      options:
-        - CC BY 4.0
-        - CC BY-SA 4.0
-        - CC0 1.0
-    validations:
-      required: true
+      label: Abstract (only if the DOI metadata has none)
+      description: Leave this empty if the repository already holds the abstract.
   - type: textarea
     id: llm
     attributes:
@@ -76,8 +62,6 @@ body:
       label: Confirmations
       options:
         - label: I am an author of this work.
-          required: true
-        - label: The work carries the licence stated above.
           required: true
         - label: I understand that listing is moderation, not peer review.
           required: true
