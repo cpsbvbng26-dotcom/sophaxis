@@ -26,7 +26,7 @@ Work that belongs mainly to another field is out of scope, even if it uses mathe
 
 ## How to submit
 
-1. Deposit the preprint in Zenodo or figshare, under an open licence, and obtain its DOI.
+1. Deposit the preprint in Zenodo, figshare or OSF Preprints, under an open licence, and obtain its DOI.
 2. Open a submission issue in the Sophaxis repository and fill in the form.
 3. A moderator checks the submission. If it passes, a record page is published.
 
