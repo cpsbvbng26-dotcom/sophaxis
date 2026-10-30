@@ -13,7 +13,7 @@ Authors deposit their preprint in Zenodo, figshare, OSF Preprints, arXiv, Prepri
 - Search, field pages, author pages (by ORCID iD), an Atom feed (`feed.xml`), the records as JSON (`papers.json`), and citations in APA, Chicago and BibTeX.
 
 Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
-Read the [policy](policy.md) before submitting.
+Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.md), [Submission](policies/submission.md), [Moderation](policies/moderation.md), [Copyright](policies/copyright.md), [Licences](policies/licences.md), [Privacy](policies/privacy.md) and [Takedown](policies/takedown.md).
 
 ## Submitting
 
@@ -27,12 +27,13 @@ and posts the result and a draft record in the issue. Only verified submissions 
 ## How the site is made
 
 ```
-node build.js                # writes site/ from site.json, policy.md and data/papers/*.json
-node verification/check.js   # checks the records, the site and the policy
+node build.js                # writes site/ from site.json, policy.md, policies/*.md and data/papers/*.json
+node verification/check.js   # checks the records, the site and the policies
 ```
 
 No dependencies. The site loads nothing from other servers. The only script is `assets/search.js`, on the search page, which reads `papers.json` from the site itself.
-`site/` is generated; edit `site.json`, `policy.md` or `data/papers/` and run `node build.js`.
+`site/` is generated; edit `site.json`, `policy.md`, `policies/` or `data/papers/` and run `node build.js`.
+When a policy changes, change its "Last updated" date too.
 
 ### Moderating
 
@@ -40,6 +41,14 @@ When a verified submission passes moderation, add the draft record from the issu
 run `node build.js` and `node verification/check.js`, and open a pull request that closes the issue.
 After it is merged, run the `pdf` workflow with the record id. It copies the PDFs onto a branch `claude/pdf-<id>`; open a pull request from it.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
+
+### Removing a record
+
+Follow the [Takedown Policy](policies/takedown.md). Replace the record with only
+`{ "id", "status": "removed", "removal_date", "removal_reason", "issue" }`, delete its files in `data/pdf/`, rebuild and open a pull request.
+`removal_reason` is one of `copyright`, `personal-data`, `author-consent`, `legal`, or `under-review` while a request is reviewed.
+The page keeps its address with a notice; the record leaves every list, the feed, the JSON and the sitemap.
+The record stays in the git history; where the law requires it, ask GitHub to remove it from there too.
 
 ## Licence
 
