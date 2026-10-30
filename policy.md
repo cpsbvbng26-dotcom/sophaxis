@@ -39,20 +39,22 @@ Your GitHub username and everything you write in the form will be visible to any
 - The DOI resolves to the work described, and the submitter is one of its authors.
 - The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
 - The work has a title, an abstract and references, in the ordinary form of a scholarly paper.
-- The submission includes a statement on the use of language models (see below).
+- The submission includes a statement on the use of language models and other generative models (see below).
 - The work is not spam, not abusive and does not expose personal data of third parties.
 
 A moderator who declines a submission gives a short reason in the issue.
 
-## Language models
+## Language models and other generative models
 
 Work written or developed with language models is accepted, on one condition: the use is disclosed.
+The same condition applies to every other generative model, including models that produce images, figures, audio or code.
 
 The disclosure must name the tools used and say what they were used for,
-for example drafting, translation, proofs, code, literature search or editing.
-If no language model was used, the statement says so.
+for example drafting, translation, proofs, code, literature search, editing, figures or images.
+If no generative model was used, the statement says so.
 
 A language model cannot be listed as an author.
+No other generative model can be listed as an author either.
 The authors are responsible for every claim, citation and calculation in the work.
 
 If substantial undisclosed use comes to light after listing,
