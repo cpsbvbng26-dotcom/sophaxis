@@ -9,7 +9,7 @@ body:
         Read the Takedown Policy first: https://sophaxis.vercel.app/policies/takedown.html
 
         This issue is public. Do not include personal data. Describe where the problem is, without repeating the material itself.
-        If the request cannot be made in public, give only the Sophaxis id and the kind of problem. The abstract and the PDF copy are then taken offline while the request is reviewed.
+        If the request cannot be made in public, send it by email to the address on the operator's ORCID record (https://orcid.org/0009-0000-1406-0547) instead. The abstract and the PDF copy are then taken offline while the request is reviewed.
   - type: input
     id: id
     attributes:

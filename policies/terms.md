@@ -56,4 +56,5 @@ Nothing in them limits a right that the law does not allow to be limited.
 ## Contact
 
 Questions go to the [issues of the repository](https://github.com/cpsbvbng26-dotcom/sophaxis/issues).
+Anything that should not be public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 Requests to remove material follow the [Takedown Policy](./takedown.html).

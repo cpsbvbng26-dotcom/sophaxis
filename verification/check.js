@@ -145,12 +145,12 @@ console.log('\n4. The policy keeps its promises in writing');
     'These terms are governed by the laws of Japan.',
     'To the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.',
     'If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.',
-    'A private channel is not available yet.',
+    'A request that cannot be made in public goes by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
     'For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.',
     'The address keeps working, so that citations lead to the notice instead of to nothing.',
     'Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.',
     'The operator\'s address is not published; it is given on request, without delay.',
-    'A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request.',
+    'A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
     'Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.',
     'Authors can ask for the copy to be removed; the record then links to the repository only.',
     'For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.',
@@ -478,6 +478,12 @@ console.log('\n12. Seven policies, consent and rights, takedown');
   ok('the submission form requires consent of every author and the right to share the version', /- label: Every author of this work agrees to its listing on Sophaxis\.\n\s+required: true/.test(form)
     && /- label: The authors may share this version under its licence; if a journal has published the work, the publisher allows it\.\n\s+required: true/.test(form));
   const rem = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'removal.yml'));
+  /* The private channel is the email on the operator's ORCID record. The address itself is never copied here. */
+  const allPolicies = [read(path.join(ROOT, 'policy.md'))].concat(fs.readdirSync(path.join(ROOT, 'policies')).map((f) => read(path.join(ROOT, 'policies', f)))).join('\n');
+  const everything = [allPolicies, rem, read(path.join(ROOT, 'README.md'))].concat(fs.readdirSync(path.join(ROOT, 'site'), { recursive: true })
+    .filter((f) => /\.(html|xml|json|txt)$/.test(f)).map((f) => read(path.join(ROOT, 'site', f)))).join('\n');
+  ok('no email address appears anywhere on the site or in the policies; private requests point to the ORCID record', !/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z0-9.-]+/.test(everything.replace(/noreply@anthropic\.com/g, ''))
+    && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへ'));
   ok('the removal form asks for no personal data, and covers author consent and the PDF copy', /- label: This issue contains no personal data\.\n\s+required: true/.test(rem)
     && rem.includes('An author did not agree to the listing') && rem.includes('An author asks for the PDF copy to be removed') && rem.includes('policies/takedown.html'));
 

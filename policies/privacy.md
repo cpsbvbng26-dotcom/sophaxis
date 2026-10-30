@@ -54,5 +54,5 @@ Each handles personal data under its own terms.
 
 An author can withdraw a work, or ask for the PDF copy to be removed.
 A person whose personal data appears in a record can ask for its removal under the [Takedown Policy](./takedown.html).
-A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request.
+A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The operator aims to answer within 7 days.
