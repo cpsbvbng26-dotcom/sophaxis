@@ -50,6 +50,7 @@ const FIX = tmp();
   ok('the record page says its quality is not guaranteed', a.includes('does not guarantee its quality.'));
   ok('the record page links the latest version by DOI', a.includes('href="https://doi.org/10.5281/zenodo.1234999"'));
   ok('the record page lists every version', a.includes('>v1<') && a.includes('>v2<'));
+  ok('the versions table has column headers and its own scroll box, so a long DOI never widens the page', a.includes('<div class="table"><table><tr><th scope="col">Version</th>') && !/<th>/.test(a));
   ok('the record page shows the language-model statement', a.includes('Use of language models and other generative models') && a.includes('the authors checked every claim'));
   ok('the record page gives a BibTeX entry with the DOI', /@misc\{doe2026sophaxis20260001,[\s\S]*doi\s+= \{10\.5281\/zenodo\.1234999\}/.test(a));
   ok('the operator’s own submission is marked', a.includes('operator’s own submission'));
