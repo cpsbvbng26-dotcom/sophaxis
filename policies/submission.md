@@ -17,7 +17,7 @@ This confirms that the person who controls the ORCID record opened the issue. It
 
 ## What can be submitted
 
-Sophaxis accepts work in philosophy, mathematics, logic and the philosophy of mathematics.
+Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 Work that belongs mainly to another field is out of scope, even if it uses mathematics.
 
 The work must already be deposited in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI.

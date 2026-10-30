@@ -47,6 +47,7 @@ body:
         - Philosophy
         - Mathematics
         - Philosophy of Mathematics
+        - Philosophy of Science
         - Logic
     validations:
       required: true
@@ -60,6 +61,7 @@ body:
         - Philosophy
         - Mathematics
         - Philosophy of Mathematics
+        - Philosophy of Science
         - Logic
   - type: textarea
     id: abstract

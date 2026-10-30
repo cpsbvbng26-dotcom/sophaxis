@@ -10,7 +10,7 @@ The other policies are part of these terms.
 
 ## What Sophaxis provides
 
-Sophaxis lists preprints in philosophy, mathematics, logic and the philosophy of mathematics.
+Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 It gives each listed work a record page, a search, a feed and, where the repository allows, a copy of the PDF.
 It does this free of charge.
 
