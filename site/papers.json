@@ -27,7 +27,16 @@
         "date": "2026-10-15"
       }
     ],
-    "pdfs": [],
+    "pdfs": [
+      {
+        "version": 1,
+        "url": "https://sophaxis.vercel.app/pdf/2026.0001v1.pdf"
+      },
+      {
+        "version": 2,
+        "url": "https://sophaxis.vercel.app/pdf/2026.0001v2.pdf"
+      }
+    ],
     "status": "listed",
     "llm_disclosure": "The author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author."
   }
