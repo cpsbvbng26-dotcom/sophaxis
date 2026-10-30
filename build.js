@@ -117,6 +117,9 @@ pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; ove
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 `;
 
@@ -211,7 +214,7 @@ function recordPage(p) {
   const withdrawn = p.status === 'withdrawn'
     ? `<div class="notice"><b>Withdrawn.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break.</div>` : '';
   const body = `
-<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${esc(SITE.categories[p.category])}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · <a href="../list/${esc(p.category)}.html">${esc(SITE.categories[p.category])}</a>${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 ${withdrawn}
 <h1>${esc(p.title)}</h1>
 <p>${authors}</p>
@@ -238,25 +241,60 @@ ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
   });
 }
 
-function indexPage(papers) {
-  const sorted = papers.slice().sort((a, b) => (latest(b).date + b.id).localeCompare(latest(a).date + a.id));
-  const items = sorted.map((p) => `<li>
+function sortListing(papers) {
+  return papers.slice().sort((a, b) => (latest(b).date + b.id).localeCompare(latest(a).date + a.id));
+}
+
+function listing(papers, up, empty) {
+  if (!papers.length) return `<p class="meta">${empty}</p>`;
+  const items = sortListing(papers).map((p) => `<li>
 <p class="meta"><span class="id">${esc(p.id)}</span> · ${esc(SITE.categories[p.category])} · ${esc(p.versions[0].date)}${p.status === 'withdrawn' ? '<span class="flag">withdrawn</span>' : ''}</p>
-<a href="./abs/${esc(p.id)}.html"><b>${esc(p.title)}</b></a>
+<a href="${up}abs/${esc(p.id)}.html"><b>${esc(p.title)}</b></a>
 <p class="meta">${esc(authorsText(p))}</p>
 </li>`).join('\n');
+  return `<ol class="list">${items}</ol>`;
+}
+
+/* The field selector: plain links to one static page per field, no script. */
+function fields(papers, current, up) {
+  const link = (href, label, n, here) => `<li><a href="${href}"${here ? ' aria-current="page"' : ''}>${esc(label)} (${n})</a></li>`;
+  const all = link(up + 'index.html', 'All fields', papers.length, current === '');
+  const each = Object.entries(SITE.categories).map(([slug, label]) =>
+    link(up + 'list/' + slug + '.html', label, papers.filter((p) => p.category === slug).length, current === slug));
+  return `<ul class="fields" aria-label="Fields">${[all].concat(each).join('')}</ul>`;
+}
+
+function indexPage(papers) {
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
 <p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic and the philosophy of mathematics. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. Work written with language models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <h2>Listing</h2>
-${papers.length ? `<ol class="list">${items}</ol>` : '<p class="meta">No preprints are listed yet.</p>'}
+${fields(papers, '', './')}
+${listing(papers, './', 'No preprints are listed yet.')}
 `;
   return page({
     title: SITE.name,
     description: SITE.name + ' is a diamond open access overlay preprint server for philosophy and mathematics.',
     rel: false,
     canonical: '',
+    body,
+  });
+}
+
+function fieldPage(papers, slug) {
+  const label = SITE.categories[slug];
+  const mine = papers.filter((p) => p.category === slug);
+  const body = `
+<h1>${esc(label)}</h1>
+${fields(papers, slug, '../')}
+${listing(mine, '../', 'No preprints are listed in this field yet.')}
+`;
+  return page({
+    title: label + ' | ' + SITE.name,
+    description: 'Preprints in ' + label + ' listed on ' + SITE.name + '.',
+    rel: true,
+    canonical: 'list/' + slug + '.html',
     body,
   });
 }
@@ -281,7 +319,9 @@ function policyPage() {
 }
 
 function sitemap(papers) {
-  const urls = ['', 'submit.html', 'policy.html'].concat(papers.map((p) => 'abs/' + p.id + '.html'));
+  const urls = ['', 'submit.html', 'policy.html']
+    .concat(Object.keys(SITE.categories).map((slug) => 'list/' + slug + '.html'))
+    .concat(papers.map((p) => 'abs/' + p.id + '.html'));
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + urls.map((u) => '  <url><loc>' + SITE.baseUrl + u + '</loc></url>').join('\n') + '\n</urlset>\n';
 }
@@ -293,6 +333,7 @@ function build(out, paperDir) {
   if (problems.length) return { problems };
   fs.rmSync(out, { recursive: true, force: true });
   fs.mkdirSync(path.join(out, 'abs'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'list'), { recursive: true });
   const files = {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
@@ -300,6 +341,7 @@ function build(out, paperDir) {
     'sitemap.xml': sitemap(papers),
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
   };
+  Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
   papers.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
   /* The logo is drawn by hand from rectangles only, and copied as it is. */
   for (const f of ['favicon.svg', 'og.png']) files[f] = fs.readFileSync(path.join(__dirname, 'assets', f));

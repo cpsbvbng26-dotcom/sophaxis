@@ -163,6 +163,22 @@ console.log('\n7. Search engines see the site as Sophaxis');
   ok('every page gives Sophaxis as the site name', pages.length > 0 && missing.length === 0, missing.join(', '));
 }
 
+/* ------------------------------------------------------------ 8 */
+console.log('\n8. Readers can choose a field');
+{
+  const cats = Object.keys(JSON.parse(read(path.join(ROOT, 'site.json'))).categories);
+  const i = read(path.join(FIX, 'index.html'));
+  ok('the listing offers every field and all fields', i.includes('href="./index.html" aria-current="page">All fields (2)<') && cats.every((c) => i.includes('href="./list/' + c + '.html"')));
+  ok('every field has its own page, in the site and the sitemap', cats.every((c) => fs.existsSync(path.join(ROOT, 'site', 'list', c + '.html')) && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('/list/' + c + '.html<')));
+  const pm = read(path.join(FIX, 'list', 'philosophy-of-mathematics.html'));
+  ok('a field page lists only its own records', pm.includes('2026.0001') && !pm.includes('2026.0002'));
+  ok('a field page marks its own field as current', pm.includes('href="../list/philosophy-of-mathematics.html" aria-current="page">Philosophy of Mathematics (1)<') && (pm.match(/aria-current="page"/g) || []).length === 1);
+  const empty = read(path.join(FIX, 'list', 'mathematics.html'));
+  ok('an empty field says so', empty.includes('No preprints are listed in this field yet.'));
+  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
+  ok('a record page links its field', a.includes('<a href="../list/philosophy-of-mathematics.html">Philosophy of Mathematics</a>'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
