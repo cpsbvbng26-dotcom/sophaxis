@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sophaxis.vercel.app/sitemap.xml
