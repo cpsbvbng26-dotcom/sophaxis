@@ -395,6 +395,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, MARK };
+module.exports = { lookUp, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
