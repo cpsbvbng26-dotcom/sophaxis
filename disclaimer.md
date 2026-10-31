@@ -43,7 +43,14 @@ It is not responsible for their content, their availability or their terms.
 ## Availability
 
 The site is provided as it is, and may be unavailable, change or close.
-If it closes, the repository with every record stays public.
+If it closes, the repository with every record stays public; see Continuity in the [Terms of Use](./policies/terms.html).
+
+Sophaxis depends on outside services:
+
+- If Vercel stops, the site is not served; the records stay in the repository on GitHub and in the Internet Archive.
+- If GitHub stops, no one can submit, and the automatic checks do not run; the site keeps showing what it last built.
+- If DataCite, Crossref or JaLC cannot be reached, a submission cannot be checked until they can.
+- If a repository removes a deposit, its DOI stops resolving, and the record is withdrawn under the [Withdrawal Policy](./policies/withdrawal.html).
 
 ## Not advice
 
