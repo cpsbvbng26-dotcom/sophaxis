@@ -57,6 +57,28 @@ Follow the [Takedown Policy](policies/takedown.md). Replace the record with only
 The page keeps its address with a notice; the record leaves every list, the feed, the JSON and the sitemap.
 The record stays in the git history; where the law requires it, ask GitHub to remove it from there too.
 
+## Reusing the records
+
+Every shown record is in `papers.json`, newest first. The fields:
+
+| Field | Content |
+| --- | --- |
+| `id` | The Sophaxis id, such as `2026.0001`. It never changes and is never reused. |
+| `url` | The record page. |
+| `title` | The title, from the DOI metadata. |
+| `authors` | Each author's `name`, and `orcid` where the metadata gives one. |
+| `abstract` | The abstract. It is part of the work and stays under the work's licence. |
+| `keywords` | The keywords from the DOI metadata, possibly empty. |
+| `categories` | The fields of `site.json` the record is listed in, the main one first. |
+| `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
+| `versions` | Each `version` with its `doi` and `date` (YYYY-MM-DD), oldest first. |
+| `pdfs` | The `version` and `url` of each PDF copy kept on Sophaxis, possibly empty. |
+| `published_doi` | The DOI of the version a journal published, only when there is one. |
+| `status` | `listed` or `withdrawn`. Removed records are left out. |
+| `llm_disclosure` | The authors' statement on the use of generative models. |
+
+`feed.xml` is an Atom feed of the same records, and `cite/<id>.bib`, `cite/<id>.ris` and `cite/<id>.json` (CSL-JSON) hold the citation of each one.
+
 ## Licence
 
 Text: CC BY 4.0. Code: MIT ([LICENSE](LICENSE)). Each listed work keeps its own licence.
@@ -79,6 +101,8 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
 - 検索エンジンが本文を読めるように、預け先が許す場合は PDF を変えずに写して置きます。
 - 検索、分野ごとの一覧、著者ごとの頁（ORCID iD のある著者）、新着の Atom フィード、記録の JSON、APA・Chicago・BibTeX の引用形式があります。
+- 引用は BibTeX・RIS・CSL-JSON のファイルでも取り出せます。記録の JSON の項目は、上の英語の節に書いてあります。
+- 論文の頁には、関連する記録、誤りを報告する窓口、Internet Archive の保存版へのリンクがあります。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
