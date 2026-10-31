@@ -41,14 +41,14 @@ const FIELDS = {
 };
 
 /* GitHub renders an issue form as "### Label" followed by the answer. */
-function parseIssue(body) {
+function parseIssue(body, fields = FIELDS) {
   const out = {};
   const parts = String(body || '').replace(/\r\n/g, '\n').split(/^### /m).slice(1);
   for (const part of parts) {
     const nl = part.indexOf('\n');
     const label = (nl < 0 ? part : part.slice(0, nl)).trim();
     const value = (nl < 0 ? '' : part.slice(nl + 1)).trim();
-    if (FIELDS[label]) out[FIELDS[label]] = value === '_No response_' ? '' : value;
+    if (fields[label]) out[fields[label]] = value === '_No response_' ? '' : value;
   }
   if (out.doi) out.doi = out.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').trim();
   if (out.published) out.published = out.published.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').trim();
@@ -251,6 +251,7 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today }) 
     const file = path.join(dir, form.update + '.json');
     if (!fs.existsSync(file)) return { problems: ['no record ' + form.update] };
     const p = JSON.parse(fs.readFileSync(file, 'utf8'));
+    if (p.status !== 'listed') return { problems: ['the record ' + form.update + ' is ' + p.status + ' and takes no new versions'] };
     const known = new Set(p.versions.map((v) => v.doi.toLowerCase() + ' ' + v.date));
     versions.filter((v) => !known.has(v.doi.toLowerCase() + ' ' + v.date)).forEach((v) => p.versions.push({ version: p.versions.length + 1, doi: v.doi, date: v.date }));
     return { record: p, problems: validate(p, form.update + '.json') };
@@ -405,6 +406,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { lookUp, versionsOf, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, MARK };
+module.exports = { lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
