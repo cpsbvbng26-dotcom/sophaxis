@@ -37,5 +37,7 @@ Ask for it by email.
 
 ## Where the site runs
 
-The site is hosted on Vercel.
-The code, the records and the issues are kept on GitHub.
+The site is hosted on Vercel and built from the public repository on GitHub.
+The code, the records and the issues are kept on GitHub, and the automatic checks run as GitHub Actions there.
+Sophaxis is not affiliated with GitHub or Vercel; see the [Disclaimer](./disclaimer.html).
+Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of its own](./repositories.html).

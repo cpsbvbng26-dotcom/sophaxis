@@ -25,7 +25,8 @@ const { sourceFor, LIMITS } = require('./fetch_pdf.js');
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
 const MARK = '<!-- sophaxis-intake -->';
-const UA = 'Sophaxis intake (' + SITE.repo + ')';
+/* One User-Agent for every request Sophaxis makes, as the page for repositories promises. */
+const UA = 'Sophaxis (' + SITE.repo + ')';
 
 /* ------------------------------------------------------------ the issue */
 

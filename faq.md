@@ -50,6 +50,13 @@ Submissions are GitHub issues.
 This keeps every step public and lets the automatic check confirm that the account opening the issue belongs to an author.
 Sophaxis has no accounts of its own and no passwords.
 
+## Is Sophaxis connected to GitHub and ORCID?
+
+Yes, in public only.
+The code, the records and the submissions are on GitHub, and the automatic checks run as GitHub Actions in the public repository.
+ORCID is read through its public API.
+Sophaxis does not use GitHub or ORCID sign-in, asks no one for access to their accounts, and is not affiliated with either; see the [Disclaimer](./disclaimer.html).
+
 ## Can I use language models?
 
 Yes, if you disclose how.

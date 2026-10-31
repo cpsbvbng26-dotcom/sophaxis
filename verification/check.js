@@ -846,6 +846,30 @@ console.log('\n23. Names of the repositories');
   ok('Figshare is written with a capital F in every page, policy and form', bad.length === 0 && JSON.parse(read(path.join(ROOT, 'site.json'))).repositories['10.6084/m9.figshare.'] === 'Figshare', bad.join(', '));
 }
 
+/* ------------------------------------------------------------ 24 */
+console.log('\n24. Disclaimer, the page for repositories, and GitHub');
+{
+  const dis = read(path.join(ROOT, 'disclaimer.md'));
+  const rep = read(path.join(ROOT, 'site', 'repositories.html'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  ok('the disclaimer covers peer review, metadata, the identity check, affiliation, GitHub, links, availability, advice and liability, and defers to the Terms',
+    ['## Listed work', '## Metadata', '## The identity check', '## No affiliation', '## GitHub and other services', '## Links', '## Availability', '## Not advice', '## Liability'].every((h) => dis.includes(h))
+    && dis.includes('The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.')
+    && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.')
+    && dis.includes('Sophaxis does not use GitHub or ORCID sign-in'));
+  ok('the page for repositories lists every repository of site.json with its DOI prefix', Object.entries(site.repositories).every(([p, n]) => rep.includes('<li>' + n.replace(/&/g, '&amp;') + ': DOIs beginning <code>' + p + '</code></li>')));
+  const ua = 'Sophaxis (' + site.repo + ')';
+  ok('every request Sophaxis makes names itself with the User-Agent the page for repositories gives',
+    rep.includes('<code>' + ua + '</code>') && read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes("const UA = '" + ua + "';")
+    && read(path.join(ROOT, 'tools', 'intake.js')).includes("const UA = 'Sophaxis (' + SITE.repo + ')';") && read(path.join(ROOT, 'tools', 'watch.js')).includes("'User-Agent': 'Sophaxis (' + SITE.repo + ')'"));
+  ok('the GitHub connection is stated in the FAQ and on the contact page', read(path.join(ROOT, 'faq.md')).includes('## Is Sophaxis connected to GitHub and ORCID?')
+    && read(path.join(ROOT, 'contact.md')).includes('the automatic checks run as GitHub Actions there.'));
+  ok('every page links the disclaimer and the page for repositories from its footer, and the sitemap lists both',
+    fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+      .every((f) => /<footer>[\s\S]*href="(\.\/|\.\.\/|\/)disclaimer\.html">Disclaimer<\/a> · <a href="(\.\/|\.\.\/|\/)repositories\.html">For repositories<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
+    && ['disclaimer.html', 'repositories.html'].every((f) => read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/' + f + '</loc>')));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
