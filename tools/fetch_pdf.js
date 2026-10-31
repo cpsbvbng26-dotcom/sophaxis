@@ -66,7 +66,7 @@ async function download(src) {
   if (src.kind === 'figshare') {
     const a = await (await get(src.api, 'application/json')).json();
     const f = (a.files || []).filter((x) => x.mimetype === 'application/pdf' || isPdfName(x.name));
-    if (f.length !== 1) throw new Error('figshare: expected one PDF, found ' + f.length);
+    if (f.length !== 1) throw new Error('Figshare: expected one PDF, found ' + f.length);
     url = f[0].download_url; md5 = f[0].computed_md5; source = f[0].download_url;
   } else if (src.kind === 'zenodo') {
     const a = await (await get(src.api, 'application/json')).json();

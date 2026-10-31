@@ -74,7 +74,7 @@ function keywordsOf(list) {
 
 /* ------------------------------------------------------------ text */
 
-/* Metadata arrives with tags, and sometimes with tags escaped twice (figshare).
+/* Metadata arrives with tags, and sometimes with tags escaped twice (Figshare).
  * Only well-formed tags are removed, so a decoded "δ < 1/φ" survives. */
 const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
 const TAG = /<\/?([a-zA-Z][a-zA-Z0-9:-]*)(\s[^<>]*)?\/?>/g;
@@ -191,7 +191,7 @@ function sameName(person, author) {
 /* ------------------------------------------------------------ the checks */
 
 /* Pure: everything fetched is passed in. Returns { ok, checks: [[label, pass, detail]] }. */
-/* The record that already lists a DOI, if any. A concept DOI matches its versions (figshare .v1, .v2 …). */
+/* The record that already lists a DOI, if any. A concept DOI matches its versions (Figshare .v1, .v2 …). */
 function listedAs(doi, listed) {
   const d = String(doi || '').toLowerCase();
   for (const [known, id] of listed || []) if (known === d || known.startsWith(d + '.v') || d.startsWith(known + '.v')) return id;
@@ -333,7 +333,7 @@ async function lookUp(doi) {
   return cr ? { meta: fromCrossref(cr), raw: cr } : { meta: null };
 }
 
-/* The versions behind a DOI: figshare numbers them .v1, .v2, …; arXiv keeps one DOI. */
+/* The versions behind a DOI: Figshare numbers them .v1, .v2, …; arXiv keeps one DOI. */
 async function versionsOf(doi, meta, raw) {
   if (/^10\.6084\/m9\.figshare\.\d+$/i.test(doi)) {
     const out = [];
