@@ -13,7 +13,7 @@ The authors bear full responsibility for their work, including its statement on 
 
 ## Metadata
 
-Titles, authors, abstracts, licences, versions and dates come from the DOI metadata held by DataCite and Crossref, and are shown as received.
+Titles, authors, abstracts, licences, versions and dates come from the DOI metadata held by DataCite, Crossref and JaLC, and are shown as received.
 An error there can appear here.
 Errors can be reported through the link on each record page.
 

@@ -9,7 +9,7 @@ The rules themselves are in the [Submission Policy](./policies/submission.html) 
 
 You need four things.
 
-1. A preprint deposited in Zenodo, Figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI.
+1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
 2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.
 3. An [ORCID](https://orcid.org) iD. Registration is free.
 4. A [GitHub](https://github.com) account. Registration is free.
@@ -59,7 +59,7 @@ Fix the cause, for example the link in your ORCID record, then edit the issue; t
 To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
 An edit that changes nothing does not start the check.
 
-If the repository does not let Sophaxis fetch the PDF (OSF Preprints, Preprints.org, SSRN), the comment asks you to attach the deposited PDF to the issue.
+If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, Figshare, arXiv and Research Square), the comment asks you to attach the deposited PDF to the issue.
 This is optional, and the file must be at most 20 MB.
 To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 
