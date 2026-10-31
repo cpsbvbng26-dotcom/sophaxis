@@ -11,7 +11,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
-const { build, validate, orcidOk } = require('../build.js');
+const { build, validate, orcidOk, loadPapers, pdfLimits } = require('../build.js');
 
 const ROOT = path.join(__dirname, '..');
 let pass = 0;
@@ -421,6 +421,19 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   ok('a file is kept only if it is a PDF and matches the repository checksum', F.accept(pdf, null).length === 0
     && F.accept(pdf, crypto.createHash('md5').update(pdf).digest('hex')).length === 0
     && F.accept(pdf, '0'.repeat(32)).length > 0 && F.accept(Buffer.from('<html>'), null).length > 0);
+  const lim = JSON.parse(read(path.join(ROOT, 'site.json'))).pdfLimits;
+  ok('the PDF limits are 20 MB a file and 1 GB together, the same in site.json, the fetcher and the build',
+    lim.fileMB === 20 && lim.totalGB === 1 && F.LIMITS.file === 20 * 1024 * 1024 && F.LIMITS.total === 1024 * 1024 * 1024
+    && JSON.stringify(pdfLimits()) === JSON.stringify(F.LIMITS));
+  const small = { file: 16, total: 30 };
+  ok('a file over the limit is not kept, nor one that would take the copies over the total', F.accept(pdf, null, 0, small).length === 0
+    && F.accept(Buffer.concat([pdf, Buffer.alloc(10)]), null, 0, small).length > 0 && F.accept(pdf, null, 20, small).length > 0
+    && F.accept(pdf, null, 19, small).length === 0);
+  ok('the build refuses copies over the limits', loadPapers(path.join(given, 'papers'), { file: 4, total: 1e9 }).problems.some((x) => x.includes('larger than'))
+    && loadPapers(path.join(given, 'papers'), { file: 1e9, total: 4 }).problems.some((x) => x.includes('together are larger than'))
+    && loadPapers(path.join(given, 'papers')).problems.length === 0);
+  ok('the Copyright Policy states the limits', read(path.join(ROOT, 'policies', 'copyright.md'))
+    .includes('A copy is kept only if the file is at most ' + lim.fileMB + ' MB, and only while all the copies together stay within ' + lim.totalGB + ' GB.'));
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'pdf.yml'));
   ok('the PDF workflow is started by hand, may only write contents, and passes the id through the environment', /on:\n  workflow_dispatch:/.test(wf)
