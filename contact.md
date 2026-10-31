@@ -12,6 +12,7 @@ It is not run by a company, a university or a publisher.
 - GitHub: [cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
 
 The operator is also the moderator, and is responsible for the site and its records.
+The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.html).
 The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.html) set out.
 Submissions by the operator are moderated under the same rules and are marked as the operator's own.
 

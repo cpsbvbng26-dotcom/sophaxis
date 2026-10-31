@@ -36,6 +36,13 @@ The site is built from that repository and served by Vercel.
 Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, JaLC, ORCID and the repositories.
 Using GitHub to submit is subject to GitHub's own terms and privacy statement.
 
+## How Sophaxis was made
+
+The site, its code, its policies and these pages were written with Claude Code, a coding tool by Anthropic, at the operator's request.
+The operator reviewed them and is responsible for them; Claude is not an author of Sophaxis or of any listed work.
+No language model decides on a submission: the automatic check is ordinary code, and every decision is made by a moderator.
+Sophaxis is not affiliated with or endorsed by Anthropic.
+
 ## Links
 
 Sophaxis links to repositories, DOIs and other sites that it does not control.
