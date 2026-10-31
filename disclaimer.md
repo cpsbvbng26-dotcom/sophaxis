@@ -32,7 +32,7 @@ Their names are used only to identify their services, and belong to their owners
 
 Sophaxis runs on GitHub: its code, its records and its submissions (GitHub issues) are kept there, and its automatic checks run as GitHub Actions in the public repository.
 The site is built from that repository and served by Vercel.
-Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, ORCID and the repositories.
+Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, JaLC, ORCID and the repositories.
 Using GitHub to submit is subject to GitHub's own terms and privacy statement.
 
 ## Links
