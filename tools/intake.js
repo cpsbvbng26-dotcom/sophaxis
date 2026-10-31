@@ -334,7 +334,7 @@ ${rows}
     out += `
 Identity and licence are verified. This is not acceptance: a moderator still reads the work against the policy.
 
-Draft record \`data/papers/${d.record.id}.json\`:
+Draft record \`data/papers/${d.record.id}.json\`. The id is provisional: if another record takes it first, the record is listed under the next free id. An id is never given to a second work.
 
 ~~~~json
 ${JSON.stringify(d.record, null, 2).replace(/~~~~/g, '~ ~ ~ ~')}

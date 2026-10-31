@@ -408,6 +408,49 @@ function related(p, all) {
   return { byAuthors, onTopic };
 }
 
+/* A DOI for every record, once Sophaxis registers DOIs of its own. Until site.json gives a prefix, there is none.
+ * The suffix comes from the Sophaxis id, so it is as unique as the id and never changes. */
+function recordDoi(p, conf = SITE.doi) {
+  if (!conf || !conf.prefix) return null;
+  return conf.prefix + '/' + conf.suffix.replace('{id}', p.id);
+}
+
+/* The DataCite metadata of a record's DOI. The record DOI names the Sophaxis record;
+ * each version keeps the DOI of its repository, which is linked as the thing the record describes. */
+function dataciteRecord(p, conf = SITE.doi) {
+  const doi = recordDoi(p, conf);
+  if (!doi) return null;
+  const url = SITE.baseUrl + 'abs/' + p.id + '.html';
+  if (p.status === 'removed') {
+    /* A registered DOI cannot be deleted. A removed record keeps its DOI, pointing to the notice, and is hidden from search. */
+    return { data: { type: 'dois', attributes: { doi, event: 'hide', url } } };
+  }
+  const v = latest(p);
+  return {
+    data: {
+      type: 'dois',
+      attributes: {
+        doi,
+        event: 'publish',
+        url,
+        creators: p.authors.map((a) => Object.assign(
+          { name: givenOf(a) ? familyOf(a) + ', ' + givenOf(a) : a.name, nameType: 'Personal' },
+          givenOf(a) ? { givenName: givenOf(a), familyName: familyOf(a) } : {},
+          a.orcid ? { nameIdentifiers: [{ nameIdentifier: 'https://orcid.org/' + a.orcid, nameIdentifierScheme: 'ORCID', schemeUri: 'https://orcid.org' }] } : {})),
+        titles: [{ title: p.title }],
+        publisher: { name: SITE.name },
+        publicationYear: Number(p.versions[0].date.slice(0, 4)),
+        types: { resourceTypeGeneral: 'Preprint', resourceType: 'Overlay record' },
+        subjects: (p.keywords || []).map((k) => ({ subject: k })),
+        dates: [{ date: p.versions[0].date, dateType: 'Issued' }, { date: v.date, dateType: 'Updated' }],
+        relatedIdentifiers: p.versions.map((x) => ({ relatedIdentifier: x.doi, relatedIdentifierType: 'DOI', relationType: 'IsVersionOf' })),
+        rightsList: [{ rightsIdentifier: p.license.toLowerCase(), rightsIdentifierScheme: 'SPDX', rightsUri: LICENCE_URL[p.license] }],
+        descriptions: [{ description: p.abstract, descriptionType: 'Abstract' }].concat(p.status === 'withdrawn' ? [{ description: 'Withdrawn on ' + p.withdrawal_date + '. ' + p.withdrawal_note, descriptionType: 'Other' }] : []),
+      },
+    },
+  };
+}
+
 function recordPage(p, all = [p]) {
   if (p.status === 'removed') return removedPage(p);
   const v = latest(p);
@@ -482,7 +525,7 @@ ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <p class="meta">Download: <a href="../cite/${esc(p.id)}.bib">BibTeX</a> · <a href="../cite/${esc(p.id)}.ris">RIS</a> · <a href="../cite/${esc(p.id)}.json">CSL-JSON</a></p>
 ${relatedHtml}<h2>Share</h2>
 <p class="share">${share}</p>
-<p class="meta">Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a> · <a href="${esc(SITE.repo)}/issues/new?template=correction.yml&amp;id=${esc(p.id)}">Report an error in this record</a> · <a href="https://web.archive.org/web/${esc(url)}">Saved copies at the Internet Archive</a></p>
+${recordDoi(p) ? `<p class="meta">Record DOI: <a href="https://doi.org/${esc(recordDoi(p))}">${esc(recordDoi(p))}</a></p>\n` : ''}<p class="meta">Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a> · <a href="${esc(SITE.repo)}/issues/new?template=correction.yml&amp;id=${esc(p.id)}">Report an error in this record</a> · <a href="https://web.archive.org/web/${esc(url)}">Saved copies at the Internet Archive</a></p>
 `;
   return page({
     title: p.title + ' | ' + SITE.name,
@@ -834,6 +877,11 @@ function build(out, paperDir) {
     files['cite/' + p.id + '.ris'] = ris(p);
     files['cite/' + p.id + '.json'] = cslJson(p);
   });
+  /* Ready to register, once site.json gives a DOI prefix: one file per record, removed records included. */
+  if (recordDoi({ id: '2026.0001' })) {
+    fs.mkdirSync(path.join(out, 'datacite'), { recursive: true });
+    all.forEach((p) => { files['datacite/' + p.id + '.json'] = JSON.stringify(dataciteRecord(p), null, 2) + '\n'; });
+  }
   POLICIES.forEach(([slug]) => { files['policies/' + slug + '.html'] = onePolicyPage(slug); });
   files['policies/privacy.ja.html'] = privacyJaPage();
   authorIds(papers).forEach((o) => { files['author/' + o + '.html'] = authorPage(papers, o); });
@@ -848,7 +896,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, recordDoi, dataciteRecord, STYLE_HASH };
 
 if (require.main === module) {
   const r = build(OUT, PAPER_DIR);
