@@ -1,12 +1,12 @@
 # Takedown Policy
 
-Last updated: 2026-10-30.
+Last updated: 2026-10-31.
 
 ## When a record is removed
 
 Records are not deleted.
 The only exception is removal required by law, such as copyright infringement or exposure of personal data.
-A record is also removed when an author shows that they did not agree to the listing and the work cannot be withdrawn in the ordinary way.
+A record is also removed when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](./withdrawal.html).
 
 ## How to ask
 

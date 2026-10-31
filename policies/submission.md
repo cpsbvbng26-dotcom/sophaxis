@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-10-30.
+Last updated: 2026-10-31.
 
 ## Who can submit
 
@@ -77,9 +77,6 @@ Submit it as an update to the existing record; earlier versions stay listed.
 
 ## Withdrawal
 
-An author can withdraw a listed work by opening an issue.
-Records are not deleted.
-A withdrawn work keeps its record page with a withdrawal notice,
-so that citations to it do not break.
-An author who did not agree to the listing can ask for it to be withdrawn in the same way.
+Any one author can withdraw a listed work under the [Withdrawal Policy](./withdrawal.html).
+Records are not deleted: a withdrawn work keeps its record page with a withdrawal notice, so that citations to it do not break.
 Removal for legal reasons follows the [Takedown Policy](./takedown.html).

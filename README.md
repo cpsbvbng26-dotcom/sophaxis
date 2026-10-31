@@ -49,6 +49,11 @@ Where the repository does not let a script fetch the file (OSF Preprints, Prepri
 and run the workflow with `from` set to that attachment and `version` to the version it is.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
 
+### Withdrawing a record
+
+Follow the [Withdrawal Policy](policies/withdrawal.md). A withdrawal issue runs `tools/withdraw.js`, which checks that the account asking belongs to an author
+and posts the record as it is after withdrawal. Replace the record with it, delete its files in `data/pdf/`, rebuild and open a pull request that closes the issue.
+
 ### Removing a record
 
 Follow the [Takedown Policy](policies/takedown.md). Replace the record with only

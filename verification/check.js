@@ -57,7 +57,8 @@ const FIX = tmp();
   ok('notes and corrections are shown with their date', a.includes('2026-12-02') && a.includes('Notes and corrections'));
   ok('the ORCID iD links to orcid.org', a.includes('href="https://orcid.org/0000-0002-1825-0097"'));
   const w = read(path.join(FIX, 'abs', '2026.0002.html'));
-  ok('a withdrawn record keeps its page with a notice', w.includes('Withdrawn.') && w.includes('citations do not break'));
+  ok('a withdrawn record keeps its page with a notice that gives the date, the reason and the Withdrawal Policy', w.includes('<b>Withdrawn on 2026-11-20.</b> The author found an error in the main proof.')
+    && w.includes('citations do not break') && w.includes('href="../policies/withdrawal.html"'));
   const i = read(path.join(FIX, 'index.html'));
   ok('the listing shows the most recently updated first', i.indexOf('2026.0001') >= 0 && i.indexOf('2026.0001') < i.indexOf('2026.0002'));
   ok('the listing marks the withdrawn record', i.includes('>withdrawn<'));
@@ -119,7 +120,7 @@ console.log('\n3. Validation refuses broken records');
 /* ------------------------------------------------------------ 4 */
 console.log('\n4. The policy keeps its promises in writing');
 {
-  /* The promises are checked across the policy index and the seven policies, wherever each one lives. */
+  /* The promises are checked across the policy index and the eight policies, wherever each one lives. */
   const policy = [read(path.join(ROOT, 'policy.md'))].concat(fs.readdirSync(path.join(ROOT, 'policies')).sort().map((f) => read(path.join(ROOT, 'policies', f)))).join('\n');
   [
     'Acceptance is moderation, not peer review.',
@@ -349,6 +350,10 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   ok('the draft is not marked as the operator’s own unless the operator opened the issue', !d.record.operator_own
     && I.draft({ form, login: 'CPSBVBNG26-DOTCOM', issue: 7, meta: dc, versions: [{ doi: dc.doi, date: dc.date }], result: r, paperDir: papers, today: '2026-11-10' }).record.operator_own === true);
   const up = I.draft({ form: Object.assign({}, form, { update: '2026.0001' }), login: 'jcarberry', issue: 8, meta: dc, versions: [{ doi: '10.5281/zenodo.1234999', date: '2026-12-01' }, { doi: '10.5281/zenodo.2000000', date: '2026-12-20' }], result: r, paperDir: papers });
+  const gone = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-papers-'));
+  fs.copyFileSync(path.join(__dirname, 'fixtures', 'papers', '2026.0002.json'), path.join(gone, '2026.0002.json'));
+  ok('a withdrawn record takes no new version', I.draft({ form: Object.assign({}, form, { update: '2026.0002' }), login: 'jcarberry', issue: 9, meta: dc, versions: [{ doi: '10.6084/m9.figshare.7654321', date: '2026-12-01' }], result: r, paperDir: gone })
+    .problems.join().includes('2026.0002 is withdrawn and takes no new versions'));
   ok('an update adds only the new version to the existing record', up.problems.length === 0 && up.record.versions.length === 3 && up.record.versions[2].doi === '10.5281/zenodo.2000000');
   const c = I.comment(r, { record: Object.assign({}, d.record, { title: 'x ~~~~ y' }), problems: [] });
   ok('the comment carries the marker and keeps the draft inside its fence', c.startsWith(I.MARK) && (c.match(/~~~~/g) || []).length === 2);
@@ -361,9 +366,11 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
-  ok('the workflow passes the issue text through the environment, never into the shell', runs.length === 1 && !runs[0].includes('${{') && wf.includes('ISSUE_BODY: ${{ github.event.issue.body }}'));
+  ok('the workflow passes the issue text through the environment, never into the shell', runs.join() === 'node tools/intake.js,node tools/withdraw.js'
+    && (wf.match(/ISSUE_BODY: \$\{\{ github\.event\.issue\.body \}\}/g) || []).length === 2);
   ok('the workflow may only read the code and write to issues', /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
-  ok('the workflow runs only on submission issues', wf.includes("if: contains(github.event.issue.labels.*.name, 'submission')"));
+  ok('each job of the workflow runs only on its own kind of issue: submission or withdrawal', (wf.match(/^    if: /gm) || []).length === 2
+    && wf.includes("if: contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: contains(github.event.issue.labels.*.name, 'withdrawal')"));
   const src = read(path.join(ROOT, 'tools', 'intake.js'));
   ok('the intake reads only the ORCID person and works, not emails or addresses', !/\/(email|address|addresses|record)\b'?/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')) && src.includes("'/person'") && src.includes("'/works'"));
 }
@@ -495,11 +502,11 @@ console.log('\n11. Finding work: search, feed, records as JSON, authors, keyword
 }
 
 /* ------------------------------------------------------------ 12 */
-console.log('\n12. Seven policies, consent and rights, takedown');
+console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
 {
-  const slugs = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'privacy', 'takedown'];
+  const slugs = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'privacy', 'withdrawal', 'takedown'];
   const idx = read(path.join(ROOT, 'site', 'policy.html'));
-  ok('the seven policies each have a page, a date of last change, and a link from the index', slugs.every((s) => {
+  ok('the eight policies each have a page, a date of last change, and a link from the index', slugs.every((s) => {
     const f = path.join(ROOT, 'site', 'policies', s + '.html');
     return fs.existsSync(f) && /Last updated: \d{4}-\d{2}-\d{2}\./.test(read(f)) && idx.includes('href="./policies/' + s + '.html"');
   }) && fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => !f.endsWith('.ja.md')).length === slugs.length);
@@ -508,7 +515,7 @@ console.log('\n12. Seven policies, consent and rights, takedown');
     ja.startsWith('<!doctype html>\n<html lang="ja">') && /最終更新：\d{4}-\d{2}-\d{2}。/.test(ja)
     && ['取り扱う者', '取り扱う個人情報', '利用目的', '公開と第三者への提供', '外国にある事業者の利用', '安全のための措置', '保存の期間', '開示・訂正・利用停止・削除の求め'].every((h) => ja.includes('<h2>' + h + '</h2>')));
   ok('the Japanese page names every foreign service the English policy names, and links back to it', ['GitHub（米国）', 'Vercel（米国）', 'DataCite（ドイツ）', 'Crossref（米国）', 'ORCID（米国）', 'Internet Archive（米国）'].every((s) => ja.includes(s))
-    && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>2026-10-30'));
+    && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>' + /最終更新：(\d{4}-\d{2}-\d{2})。/.exec(read(path.join(ROOT, 'policies', 'privacy.ja.md')))[1]));
   ok('Japanese lines join without a space, English lines with one', ja.includes('読みません。サイトは、閲覧者の個人情報を集めません。') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
   {
     const en = read(path.join(ROOT, 'site', 'policies', 'privacy.html'));
@@ -697,6 +704,43 @@ console.log('\n17. The fields of papers.json, as the README describes them');
   const emitted = [...new Set(JSON.parse(read(path.join(FIX, 'papers.json'))).flatMap((x) => Object.keys(x)))];
   ok('the README documents every field of papers.json, in order, and no other', documented.length > 0 && documented.join() === emitted.join(),
     'README ' + documented.join(',') + ' / papers.json ' + emitted.join(','));
+}
+
+/* ------------------------------------------------------------ 18 */
+console.log('\n18. Withdrawal: the policy, the form and the check');
+{
+  const W = require('../tools/withdraw.js');
+  const rec = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const body = '### Sophaxis id\n\n2026.0001\n\n### Your ORCID iD\n\nhttps://orcid.org/0000-0002-1825-0097\n\n### Reason, shown on the record page\n\nThe authors found an <b>error</b> in the main proof.\n';
+  const form = W.parse(body);
+  ok('the withdrawal form is read: the id, the ORCID iD from a link, and the reason as plain text',
+    form.id === '2026.0001' && form.orcid === '0000-0002-1825-0097' && form.reason === 'The authors found an error in the main proof.');
+  const person = { given: 'Jane', family: 'Doe', urls: ['https://github.com/janedoe'] };
+  const passes = W.check({ form, login: 'janedoe', record: rec, person, works: new Set() });
+  ok('an author whose ORCID record links the account and whose iD the record lists passes', passes.ok);
+  ok('another account, an iD the record does not list, or a record already withdrawn does not pass',
+    !W.check({ form, login: 'someone-else', record: rec, person, works: new Set() }).ok
+    && !W.check({ form: Object.assign({}, form, { orcid: '0000-0001-5109-3700' }), login: 'janedoe', record: rec, person, works: new Set() }).ok
+    && !W.check({ form, login: 'janedoe', record: Object.assign({}, rec, { status: 'withdrawn' }), person, works: new Set() }).ok
+    && !W.check({ form, login: 'janedoe', record: null, person, works: new Set() }).ok);
+  ok('an author without an iD in the record passes when the ORCID record lists the DOI and the name matches',
+    W.check({ form: Object.assign({}, form, { orcid: '0000-0001-5109-3700' }), login: 'taro', record: rec, person: { given: 'Taro', family: 'Yamada', urls: ['https://github.com/taro'] }, works: new Set(['10.5281/zenodo.1234567']) }).ok);
+  const d = W.draft(rec, form, '2026-12-10');
+  ok('the withdrawn record keeps everything but the PDF copies, and validates', d.problems.length === 0 && d.record.status === 'withdrawn'
+    && d.record.withdrawal_date === '2026-12-10' && d.record.withdrawal_note === form.reason && !d.record.pdfs && d.files.join() === '2026.0001v2.pdf'
+    && d.record.title === rec.title && d.record.versions.length === rec.versions.length && rec.pdfs.length === 1);
+  const c = W.comment(passes, d);
+  ok('the comment carries its marker, the record after withdrawal, and the copies to delete', c.startsWith(W.MARK) && c.includes('"status": "withdrawn"') && c.includes('`data/pdf/2026.0001v2.pdf` deleted')
+    && !W.comment({ ok: false, checks: [['x', false, '']] }, null).includes('~~~~json'));
+  ok('the build refuses a withdrawn record without a date or with PDF copies', validate(Object.assign({}, d.record, { withdrawal_date: undefined }), 'x.json').some((e) => e.includes('withdrawal_date'))
+    && validate(Object.assign({}, d.record, { pdfs: rec.pdfs }), 'x.json').some((e) => e.includes('keeps no PDF copies')));
+  const t = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'withdrawal.yml'));
+  ok('the withdrawal form asks for the fields the check reads, under the label the workflow runs on', Object.keys(W.FIELDS).every((l) => t.includes('label: ' + l)) && t.includes('labels: ["withdrawal"]'));
+  const pol = read(path.join(ROOT, 'policies', 'withdrawal.md'));
+  ok('the Withdrawal Policy says who may withdraw, that the record stays, that the PDF copies go, and how it differs from removal',
+    ['Any one author of a listed work can withdraw it.', 'An automatic check confirms both and posts the result in the issue.', 'The PDF copies are taken off the site, and the record links to the repository only.',
+      'A withdrawn record takes no new versions.', 'Withdrawal on Sophaxis does not touch the deposit.', 'It follows the [Takedown Policy](./takedown.html).'].every((x) => pol.includes(x))
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('[Withdrawal Policy](./withdrawal.html)'));
 }
 
 console.log('\n' + '-'.repeat(60));

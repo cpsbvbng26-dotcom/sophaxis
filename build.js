@@ -98,7 +98,11 @@ function validate(p, file) {
   }
   if (!['listed', 'withdrawn'].includes(p.status)) e.push(file + ': status must be listed, withdrawn or removed');
   if (p.published_doi !== undefined && !DOI.test(p.published_doi)) e.push(file + ': published_doi is not a DOI');
-  if (p.status === 'withdrawn' && !p.withdrawal_note) e.push(file + ': a withdrawn record needs a note');
+  if (p.status === 'withdrawn') {
+    if (!DATE.test(p.withdrawal_date || '')) e.push(file + ': a withdrawn record needs its withdrawal_date');
+    if (!p.withdrawal_note) e.push(file + ': a withdrawn record needs a note');
+    if ((p.pdfs || []).length) e.push(file + ': a withdrawn record keeps no PDF copies');
+  }
   (p.notes || []).forEach((n, i) => {
     if (!DATE.test(n.date || '') || !n.text) e.push(file + ': note ' + (i + 1) + ' needs a date and text');
   });
@@ -444,7 +448,7 @@ function recordPage(p, all = [p]) {
   const relatedHtml = rel.byAuthors.length || rel.onTopic.length ? `<h2>Related records</h2>
 ${rel.byAuthors.length ? '<p class="meta">By the same authors</p>\n' + relList(rel.byAuthors) + '\n' : ''}${rel.onTopic.length ? '<p class="meta">Sharing a keyword</p>\n' + relList(rel.onTopic) + '\n' : ''}` : '';
   const withdrawn = p.status === 'withdrawn'
-    ? `<div class="notice"><b>Withdrawn.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break.</div>` : '';
+    ? `<div class="notice"><b>Withdrawn on ${esc(p.withdrawal_date)}.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break. See the <a href="../policies/withdrawal.html">Withdrawal Policy</a>.</div>` : '';
   const body = `
 <p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 ${withdrawn}
@@ -570,6 +574,7 @@ const POLICIES = [
   ['copyright', 'Authors keep their copyright; what Sophaxis copies and why.'],
   ['licences', 'The accepted licences, and the licences of this site.'],
   ['privacy', 'What the site and the checks read, and what becomes public.'],
+  ['withdrawal', 'How an author withdraws a listed work, and what stays.'],
   ['takedown', 'How to ask for removal, and what happens then.'],
 ];
 const policySource = (slug) => fs.readFileSync(path.join(ROOT, 'policies', slug + '.md'), 'utf8');

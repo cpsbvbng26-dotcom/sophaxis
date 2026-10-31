@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-10-30.
+Last updated: 2026-10-31.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -37,6 +37,7 @@ When a submission issue is opened or edited, a GitHub Action reads two kinds of 
 It reads the metadata of the DOI from DataCite or Crossref.
 It reads the name, the websites and the works of the ORCID record given in the form.
 It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
+When a withdrawal issue is opened or edited, the same check reads the same parts of the ORCID record, together with the record on Sophaxis.
 Email addresses and other details in an ORCID record are not read.
 
 ## Records
