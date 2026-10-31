@@ -66,7 +66,7 @@ The statement is shown on the record page.
 
 ## How long does moderation take?
 
-The operator aims to respond to each submission within 14 days.
+As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
 [From submission to listing](./process.html) follows a submission step by step.
 
 ## Who is responsible for a listed work?
