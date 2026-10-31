@@ -20,6 +20,7 @@
 const fs = require('fs');
 const path = require('path');
 const { validate, orcidOk, repoPrefix } = require('../build.js');
+const { sourceFor, LIMITS } = require('./fetch_pdf.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
@@ -274,6 +275,15 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today }) 
   return { record: p, problems: validate(p, id + '.json') };
 }
 
+/* Pure: what to tell the authors about the PDF copy, given the DOI of a version. Where the repository
+ * does not let a script fetch the file, the copy can only come from an attachment to the issue. */
+function pdfNote(doi) {
+  if (sourceFor(doi, 1)) return '';
+  return `
+The repository of this work does not let Sophaxis fetch the PDF. To have an unmodified copy kept on Sophaxis, so that search engines can index the full text, attach the deposited PDF to this issue (drag it into a comment). The file must be the one in the repository, at most ${LIMITS.file / 1024 / 1024} MB. Without it, the record links to the repository only.
+`;
+}
+
 function comment(result, d) {
   const safe = (s) => String(s).replace(/[`|<>]/g, '');
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
@@ -293,7 +303,7 @@ Draft record \`data/papers/${d.record.id}.json\`:
 ~~~~json
 ${JSON.stringify(d.record, null, 2).replace(/~~~~/g, '~ ~ ~ ~')}
 ~~~~
-`;
+` + pdfNote(d.record.versions[d.record.versions.length - 1].doi);
   } else if (d && d.problems && d.problems.length) {
     out += '\nThe draft record does not validate: ' + safe(d.problems.join('; ')) + '\n';
   } else {
@@ -395,6 +405,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { lookUp, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, MARK };
+module.exports = { lookUp, versionsOf, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

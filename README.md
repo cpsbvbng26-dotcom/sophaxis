@@ -23,6 +23,10 @@ Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.
 The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata.
 An automatic check (`tools/intake.js`, run by `.github/workflows/intake.yml`) confirms that the GitHub account belongs to an author of the work,
 and posts the result and a draft record in the issue. Only verified submissions are listed.
+Where the repository does not let Sophaxis fetch the PDF (OSF Preprints, Preprints.org, SSRN), the comment asks the authors to attach the deposited PDF to the issue.
+
+Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
+notes new versions at figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies.
 
 ## How the site is made
 

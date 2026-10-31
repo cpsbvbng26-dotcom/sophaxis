@@ -73,6 +73,11 @@ body:
     attributes:
       label: Use of language models and other generative models
       description: Name the tools and say what they were used for (drafting, translation, proofs, code, literature search, editing, figures, images). This covers every generative model, not only language models. If none were used, say so.
+      placeholder: |
+        Examples:
+        None were used.
+        ChatGPT (OpenAI) translated the first draft from Japanese into English; the author revised every sentence.
+        Claude (Anthropic) wrote the code in the appendix and suggested literature; the author checked each reference.
     validations:
       required: true
   - type: checkboxes

@@ -353,6 +353,11 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const c = I.comment(r, { record: Object.assign({}, d.record, { title: 'x ~~~~ y' }), problems: [] });
   ok('the comment carries the marker and keeps the draft inside its fence', c.startsWith(I.MARK) && (c.match(/~~~~/g) || []).length === 2);
   ok('a failed check posts no draft', !I.comment(run({ login: 'someone-else' }), null).includes('~~~~json'));
+  const ssrn = I.comment(r, { record: Object.assign({}, d.record, { versions: [{ version: 1, doi: '10.2139/ssrn.7537983', date: '2026-10-01' }] }), problems: [] });
+  ok('where the repository does not let Sophaxis fetch the PDF, the comment asks the authors to attach it, within the limit',
+    ssrn.includes('attach the deposited PDF to this issue') && ssrn.includes('at most 20 MB')
+    && ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1'].every((x) => I.pdfNote(x).includes('attach the deposited PDF'))
+    && I.pdfNote('10.6084/m9.figshare.34419198.v2') === '' && !c.includes('attach the deposited PDF'));
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
@@ -596,6 +601,15 @@ console.log('\n14. The weekly check and the Internet Archive');
   ok('a DOI that no longer resolves is reported', Wt.compare(p, { '10.5281/zenodo.1234567': ok1, '10.5281/zenodo.1234999': null }).join().includes('2026.0001: the DOI 10.5281/zenodo.1234999 no longer resolves'));
   ok('a changed licence is reported', Wt.compare(p, { '10.5281/zenodo.1234567': { licences: ['CC-BY-NC-4.0'] } }).join().includes('no longer carries CC BY 4.0'));
   ok('a DOI that could not be checked this week is not reported as broken', Wt.compare(p, {}).length === 0);
+  const fig = { id: '2026.0005', status: 'listed', versions: [{ version: 1, doi: '10.6084/m9.figshare.34419198.v1' }, { version: 2, doi: '10.6084/m9.figshare.34419198.v2' }] };
+  const arx = { id: '2026.0006', status: 'listed', versions: [{ version: 1, doi: '10.48550/arXiv.2508.15126' }] };
+  ok('new versions are looked for at figshare and arXiv only, and only for listed records', Wt.followed(fig) === '10.6084/m9.figshare.34419198'
+    && Wt.followed(arx) === '10.48550/arXiv.2508.15126' && Wt.followed(p) === null && Wt.followed(Object.assign({}, fig, { status: 'withdrawn' })) === null);
+  ok('a version at the repository that the record lacks is reported, and nothing else', Wt.newVersions(fig, 3).join().includes('2026.0005: the repository has 3 versions and the record lists 2')
+    && Wt.newVersions(fig, 2).length === 0 && Wt.newVersions(fig, null).length === 0);
+  const onlyNews = Wt.report([], '2026-11-02', Wt.newVersions(fig, 3));
+  ok('the weekly issue lists new versions apart from problems, and says that the authors submit them', onlyNews.startsWith(Wt.MARK) && onlyNews.includes('New versions at the repository:')
+    && onlyNews.includes('the authors submit it') && !onlyNews.includes('Moderation Policy') && Wt.report(['x'], '2026-11-02').includes('Moderation Policy'));
   const removed = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0003.json')));
   const urls = Wt.archiveUrls([p, removed]);
   ok('the archive saves the top page, each record and each PDF copy, and never a removed record', urls.includes('https://sophaxis.vercel.app/') && urls.includes('https://sophaxis.vercel.app/abs/2026.0001.html')
