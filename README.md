@@ -48,6 +48,14 @@ After it is merged, run the `pdf` workflow with the record id. It copies the PDF
 Where the repository does not let a script fetch the file (OSF Preprints, Preprints.org, SSRN), ask the authors to attach the PDF to their submission issue,
 and run the workflow with `from` set to that attachment and `version` to the version it is.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
+The id in a draft is provisional. If `data/papers/<id>.json` already exists when the record is added, give the record the next free id instead.
+`verification/check.js` reads the whole git history and fails if an id that was ever given to one work now holds another, or has disappeared.
+
+### DOIs of Sophaxis's own
+
+Sophaxis does not register DOIs today. If it becomes a DataCite member, set `"doi": { "prefix": "10.xxxxx", "suffix": "sophaxis.{id}" }` in `site.json`.
+The build then gives every record the DOI `<prefix>/sophaxis.<id>`, shows it on the record page and writes its DataCite metadata to `site/datacite/<id>.json`.
+`node tools/register_doi.js --dry-run`, then `--test`, then without a flag, registers them. The pages that say that Sophaxis assigns no DOIs must change in the same pull request; the check fails until they do.
 
 ### Pausing submissions
 

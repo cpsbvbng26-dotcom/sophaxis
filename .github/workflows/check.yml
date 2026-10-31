@@ -5,7 +5,10 @@ jobs:
     name: Records and site
     runs-on: ubuntu-latest
     steps:
+      # The whole history: the check confirms that no Sophaxis id was ever given to a second work.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
