@@ -1,0 +1,28 @@
+[
+  {
+    "id": "sophaxis-2026.0002",
+    "type": "article",
+    "genre": "Preprint",
+    "title": "Machine-mediated Rediscovery: A Case Study in Novelty, Priority, and Self-correction",
+    "author": [
+      {
+        "family": "Nemoto",
+        "given": "Takuya"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026,
+          9,
+          30
+        ]
+      ]
+    },
+    "publisher": "SSRN",
+    "DOI": "10.2139/ssrn.7537983",
+    "URL": "https://doi.org/10.2139/ssrn.7537983",
+    "abstract": "A language model supplied the mathematical content of a short series of preprints that were presented as a new \"framework\". Less than a year later, the same author, now working with a different language model, established that the central operator was a special case of the Friedkin-Johnsen model of opinion dynamics, a standard model that the first preprint had itself named as a neighbouring field without citing any of its literature. The route from the first publication ran through nine recorded stages, the last three recorded contemporaneously, and ended in that identification. This paper uses the case to ask what existing frameworks in the philosophy and sociology of science can and cannot say about novelty claims when the generating step is performed by a machine. I argue that (i) the case is neither a Mertonian multiple nor a rediscovery in the usual sense, because the arrival was neither independent nor human; (ii) when generation moves outside the human agent, the context of justification must absorb a task that was previously distributed across both contexts, namely the search for priority; and (iii) the correction that followed is best read as epistemic iteration from a defective starting point, in which implementation, not reflection, exposed the error that mattered. The correction was itself carried out with a language model, and the record does not separate the human share from the machine's share at each step. The paper makes no claim of mathematical novelty.",
+    "note": "Preprint, not peer-reviewed. Listed on Sophaxis as 2026.0002"
+  }
+]
