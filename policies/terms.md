@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-10-30.
+Last updated: 2026-10-31.
 
 ## Who these terms apply to
 
@@ -14,10 +14,22 @@ Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of ma
 It gives each listed work a record page, a search, a feed and, where the repository allows, a copy of the PDF.
 It does this free of charge.
 
-## What authors are responsible for
+## The authors bear full responsibility
 
-The authors are responsible for the content of their work, including every claim, citation and calculation.
-The submitter confirms the points in the [Submission Policy](./submission.html), including that every author agrees and that the version may be shared under its licence.
+The authors bear full responsibility for their work and for its listing on Sophaxis.
+This covers:
+
+- the content of the work, including every claim, proof, citation, calculation and figure;
+- the right to share the version under its licence, and the permission of any publisher;
+- material from others in the work, and any infringement of copyright or other rights;
+- personal data of third parties in the work;
+- the statement on generative models, and any use that it leaves out;
+- the truth of everything the submitter confirms in the [Submission Policy](./submission.html).
+
+Moderation does not move any of this to the operator.
+A listing says only that a submission passed the checks in the [Moderation Policy](./moderation.html).
+If a third party makes a claim against Sophaxis or its operator because of a listed work, the authors are responsible for it, to the extent the law allows.
+The operator still acts on requests under the [Takedown Policy](./takedown.html).
 
 ## What readers may do
 

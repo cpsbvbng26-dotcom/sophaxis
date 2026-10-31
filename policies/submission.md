@@ -35,6 +35,7 @@ The submitter gives the DOI of the published version in the form, and the record
 - The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
 - The work contains no material, such as figures or long quotations, that the authors may not share, and no personal data of third parties.
 - The statement on generative models is complete and true.
+- The authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.html) set out.
 
 ## How to submit
 
@@ -60,7 +61,7 @@ If no generative model was used, the statement says so.
 
 A language model cannot be listed as an author.
 No other generative model can be listed as an author either.
-The authors are responsible for every claim, citation and calculation in the work.
+The authors bear full responsibility for the work, as the [Terms of Use](./terms.html) set out.
 
 If substantial undisclosed use comes to light after listing,
 the record receives a notice, and the authors are asked to add a disclosure.
