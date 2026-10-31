@@ -553,6 +553,7 @@ ${listing(mine, '../', 'No preprints are listed in this field yet.')}
 function submitPage() {
   const body = `
 <h1>Submit a preprint</h1>
+<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation.</p>
 <ol>
 <li>Deposit your preprint in <a href="https://zenodo.org">Zenodo</a>, <a href="https://figshare.com">figshare</a>, <a href="https://osf.io/preprints/osf">OSF Preprints</a>, <a href="https://arxiv.org">arXiv</a>, <a href="https://www.preprints.org">Preprints.org</a>, <a href="https://www.ssrn.com">SSRN</a> or <a href="https://www.researchsquare.com">Research Square</a> under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and note its DOI.</li>
 <li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
@@ -586,6 +587,12 @@ function policyPage() {
 <ul>${POLICIES.map(([slug, what]) => `<li><a href="./policies/${slug}.html">${esc(policyTitle(slug))}</a>: ${esc(what)}</li>`).join('')}</ul>`;
   const html = markdown(md).replace('<h2>What Sophaxis is not</h2>', list + '\n<h2>What Sophaxis is not</h2>');
   return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
+}
+
+/* One submission followed from start to finish, for people who come from the site. */
+const processSource = () => fs.readFileSync(path.join(ROOT, 'process.md'), 'utf8');
+function processPage() {
+  return page({ title: 'From submission to listing | ' + SITE.name, description: 'How a submission to ' + SITE.name + ' goes from the form through the automatic check and moderation to a record page.', rel: false, canonical: 'process.html', body: markdown(processSource()) });
 }
 
 /* Short answers, each drawn from a policy, which applies where they differ. */
@@ -710,7 +717,8 @@ function sitemap(papers) {
   const latestPolicy = POLICIES.map(([slug]) => policyDate(slug)).sort().pop();
   const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest],
     ['contact.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(contactSource()) || [, newest])[1]],
-    ['faq.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(faqSource()) || [, newest])[1]]]
+    ['faq.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(faqSource()) || [, newest])[1]],
+    ['process.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(processSource()) || [, newest])[1]]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -751,6 +759,7 @@ function build(out, paperDir) {
     'policy.html': policyPage(),
     'contact.html': contactPage(),
     'faq.html': faqPage(),
+    'process.html': processPage(),
     'search.html': searchPage(),
     '404.html': notFoundPage(),
     'feed.xml': feed(papers),
