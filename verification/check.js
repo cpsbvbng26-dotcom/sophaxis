@@ -808,6 +808,31 @@ console.log('\n21. The FAQ agrees with the policies');
     && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/faq.html</loc>'));
 }
 
+/* ------------------------------------------------------------ 22 */
+console.log('\n22. From submission to listing: the page agrees with the form, the check and the policies');
+{
+  const pr = read(path.join(ROOT, 'process.md'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const list = (xs, conj) => xs.slice(0, -1).join(', ') + ' ' + conj + ' ' + xs[xs.length - 1];
+  const days = /respond to each submission within (\d+) days/.exec(read(path.join(ROOT, 'policies', 'moderation.md')))[1];
+  ok('the page names the repositories and licences of site.json, the moderation time and the PDF limit',
+    pr.includes(list(Object.values(site.repositories), 'or') + ', with a DOI.') && pr.includes(list(Object.values(site.licenses), 'or') + ' on the deposit')
+    && pr.includes('within ' + days + ' days.') && pr.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  const intake = read(path.join(ROOT, 'tools', 'intake.js'));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
+  ok('what the page tells the submitter to do and to expect is what the form and the automatic check do',
+    ['label: DOI of the deposited preprint', 'label: Your ORCID iD', 'label: Category', 'label: Use of language models and other generative models', 'under "Websites & social links"'].every((x) => form.includes(x))
+    && pr.includes('under "Websites & social links"') && intake.includes('**Automatic checks**')
+    && pr.includes('reads only the name, the links and the works in your ORCID record') && intake.includes('the name, the websites and the works of the public ORCID record') && pr.includes('a comment titled "Automatic checks"')
+    && intake.includes("verified ? 'verified' : 'unverified'") && pr.includes('the label `verified` or `unverified`')
+    && /types: \[[^\]]*edited/.test(wf) && pr.includes('then edit the issue; the check runs again.'));
+  ok('the page sends the reader to the policies, which apply where it differs, and every link leads to a page of the site',
+    pr.includes('where this page differs, they apply.') && [...pr.matchAll(/\]\(\.\/([^)]+)\)/g)].every((m) => fs.existsSync(path.join(ROOT, 'site', m[1]))));
+  ok('the submit page and the FAQ lead to it, and the sitemap lists it', read(path.join(ROOT, 'site', 'submit.html')).includes('<a href="./process.html">From submission to listing</a>')
+    && read(path.join(ROOT, 'site', 'faq.html')).includes('href="./process.html"') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/process.html</loc>'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
