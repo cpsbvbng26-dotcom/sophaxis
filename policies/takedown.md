@@ -19,6 +19,11 @@ Requests are welcome from any country, in English or Japanese.
 A request may rest on the law of the requester's country, such as a copyright notice under the law of the United States or a request under the data protection law of the European Union.
 The operator considers it under this policy and under Japanese law, and takes the material offline when either requires it.
 
+The site is served by Vercel, and the repository and its issues are kept on GitHub, both in the United States.
+A request can also go to GitHub, for example as a copyright notice under its own process, or to Vercel.
+They decide under their own terms; the operator decides on Sophaxis under this policy, whatever they decide.
+Where the operator removes material, it also asks GitHub to remove it from the repository history when the law requires it, as set out below.
+
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The address is kept there, not on this site.
 The operator then takes the abstract and the PDF copy offline while the request is reviewed.

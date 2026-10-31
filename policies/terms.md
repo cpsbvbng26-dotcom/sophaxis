@@ -96,6 +96,17 @@ Sophaxis is run from Japan and can be read from anywhere.
 - A person outside Japan who may sue in the courts of their own country under that country's law keeps that right; the agreement on the court above does not take it away.
 - These terms are written in English. If a translation is ever published and differs from the English text, the English text applies.
 
+## GitHub and Vercel
+
+Sophaxis runs on two services based in the United States, and their own terms apply alongside these.
+
+- Submitting to Sophaxis means using GitHub: opening an issue, commenting and attaching files are governed by GitHub's Terms of Service and Privacy Statement, between the user and GitHub.
+- Reading Sophaxis means receiving pages from Vercel, which handles each request, including the IP address, under its own terms and privacy policy, possibly in countries other than Japan or the reader's own.
+- These terms bind the operator and the people who use Sophaxis. They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel, or against the operator for what GitHub or Vercel does.
+- A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court. The steps in Disputes above cover only the operator and Sophaxis.
+- Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](./takedown.html) whether or not GitHub or Vercel has acted.
+- If GitHub or Vercel removes, limits or blocks something on their side, for example under the law of the United States, Sophaxis may not be able to restore it.
+
 ## Contact
 
 The operator and every way to reach the operator are on the [Operator and contact](../contact.html) page.
