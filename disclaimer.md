@@ -70,3 +70,4 @@ They are not legal or professional advice.
 To the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
 This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
+Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.html) sets out.

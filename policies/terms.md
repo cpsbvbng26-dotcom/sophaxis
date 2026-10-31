@@ -74,6 +74,19 @@ These terms are governed by the laws of Japan.
 Nothing in them limits a right that the law does not allow to be limited.
 In particular, nothing in them excludes or limits liability for intent or gross negligence, or any liability that Japan's Consumer Contract Act or another law does not allow to be excluded or limited.
 
+## Disputes
+
+A dispute about Sophaxis or a listed work is settled by agreement wherever possible.
+
+1. Write to the operator first, by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in an issue if the matter can be public. Say what the dispute is about and what would settle it.
+2. Both sides then try, in good faith, to reach an agreement by talking. The operator answers within 7 days and does not leave a dispute without reply.
+3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
+
+If a dispute is not settled in these ways, it goes to the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement.
+The operator's address is given on request, as the [Operator and contact](../contact.html) page says.
+This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
+Nothing in this section stops anyone from asking a court for urgent relief, or from using the [Takedown Policy](./takedown.html).
+
 ## Contact
 
 The operator and every way to reach the operator are on the [Operator and contact](../contact.html) page.
