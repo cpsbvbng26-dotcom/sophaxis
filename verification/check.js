@@ -521,6 +521,9 @@ console.log('\n12. Seven policies, consent and rights, takedown');
       footers.length > 0 && japanese.length === 0 && en.includes('href="./privacy.ja.html"') && en.includes(pair) && ja.includes(pair),
       japanese.join(', '));
   }
+  ok('every page says in its footer that the site is hosted on Vercel, beside the link to the Privacy Policy that names what Vercel processes', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+    .every((f) => /<footer>[\s\S]*Operated by Takuya Nemoto\. Hosted on Vercel\.[\s\S]*href="(\.\/|\.\.\/|\/)policies\/privacy\.html">Privacy<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('The site is hosted on Vercel.'));
   ok('every page links the Terms of Use, the Privacy Policy and the Takedown Policy', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
     .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./|/)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
