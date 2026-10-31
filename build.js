@@ -253,7 +253,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}contact.html">Contact</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>
@@ -589,6 +589,21 @@ function policyPage() {
   return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
 }
 
+/* What Sophaxis does not promise, in one place. The Terms of Use apply where they differ. */
+const disclaimerSource = () => fs.readFileSync(path.join(ROOT, 'disclaimer.md'), 'utf8');
+function disclaimerPage() {
+  return page({ title: 'Disclaimer | ' + SITE.name, description: 'What ' + SITE.name + ' does not promise: peer review, metadata, identity, affiliation, links, availability and liability.', rel: false, canonical: 'disclaimer.html', body: markdown(disclaimerSource()) });
+}
+
+/* For the repositories and the DOI registration agencies: what Sophaxis reads from them and what it shows.
+ * The list of repositories comes from site.json, so it cannot fall behind. */
+const repositoriesSource = () => fs.readFileSync(path.join(ROOT, 'repositories.md'), 'utf8');
+function repositoriesPage() {
+  const list = '<ul>' + Object.entries(SITE.repositories).map(([prefix, name]) => `<li>${esc(name)}: DOIs beginning <code>${esc(prefix)}</code></li>`).join('') + '</ul>';
+  return page({ title: 'For repositories and DOI registration agencies | ' + SITE.name, description: 'What ' + SITE.name + ' reads from repositories and DOI registration agencies, how often, and what it shows.', rel: false, canonical: 'repositories.html',
+    body: markdown(repositoriesSource()).replace('<p>{{repositories}}</p>', list) });
+}
+
 /* One submission followed from start to finish, for people who come from the site. */
 const processSource = () => fs.readFileSync(path.join(ROOT, 'process.md'), 'utf8');
 function processPage() {
@@ -718,7 +733,9 @@ function sitemap(papers) {
   const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest],
     ['contact.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(contactSource()) || [, newest])[1]],
     ['faq.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(faqSource()) || [, newest])[1]],
-    ['process.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(processSource()) || [, newest])[1]]]
+    ['process.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(processSource()) || [, newest])[1]],
+    ['disclaimer.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(disclaimerSource()) || [, newest])[1]],
+    ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -760,6 +777,8 @@ function build(out, paperDir) {
     'contact.html': contactPage(),
     'faq.html': faqPage(),
     'process.html': processPage(),
+    'disclaimer.html': disclaimerPage(),
+    'repositories.html': repositoriesPage(),
     'search.html': searchPage(),
     '404.html': notFoundPage(),
     'feed.xml': feed(papers),
