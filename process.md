@@ -17,22 +17,38 @@ You need four things.
 Every author of the work must agree to the listing.
 If you used language models or other generative models, note which tools you used and what for.
 
-## Step 1. Link your ORCID record to GitHub
+## Step 1. Find your GitHub username
 
-In your ORCID record, add `https://github.com/<your username>` under "Websites & social links", and make it public.
+A submission is a GitHub issue: a public post in the Sophaxis repository, with comments below it.
+If you have no GitHub account, create one at [github.com/signup](https://github.com/signup).
+
+Your username is the last part of the address of your GitHub profile, `https://github.com/<your username>`.
+After you sign in, it also appears in the menu under your picture at the top right.
+
+## Step 2. Link your ORCID record to GitHub
+
+1. Sign in at [orcid.org](https://orcid.org). Your ORCID record opens; your ORCID iD is the 16-digit number under your name.
+2. Find the section "Websites & social links" and click its edit button (the pencil).
+3. Choose "Add link". Give a title, such as GitHub, and the address `https://github.com/<your username>`.
+4. Set its visibility to "Everyone", then save.
+
 This is how Sophaxis confirms that the person who opens the submission is an author of the work.
 Sophaxis reads only the name, the links and the works in your ORCID record; your email address is never read.
 
-## Step 2. Open a submission issue
+## Step 3. Open a submission issue
 
-Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml) while signed in to GitHub.
-Give the DOI, your ORCID iD, the category and the statement on generative models, and tick the confirmations.
+1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens.
+2. After "[Submission]" in the title, add a few words, such as the title of your work.
+3. Give the DOI, your ORCID iD, the category and the statement on generative models, and tick the confirmations.
+4. Press the button at the bottom of the form to create the issue.
+
 The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.
 
 The issue is public.
 Your GitHub username and everything you write in it can be read by anyone.
+GitHub tells you about each new comment on an issue you opened, on github.com and, by default, by email.
 
-## Step 3. The automatic check answers
+## Step 4. The automatic check answers
 
 Usually within a few minutes, a comment titled "Automatic checks" appears in the issue.
 It shows each check as pass or fail: the repository, the licence, the DOI metadata, the link from your ORCID record and your authorship.
@@ -40,13 +56,18 @@ The issue receives the label `verified` or `unverified`.
 
 If a check fails, the comment says why.
 Fix the cause, for example the link in your ORCID record, then edit the issue; the check runs again.
+To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
+An edit that changes nothing does not start the check.
 
 If the repository does not let Sophaxis fetch the PDF (OSF Preprints, Preprints.org, SSRN), the comment asks you to attach the deposited PDF to the issue.
 This is optional, and the file must be at most 20 MB.
+To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 
 A pass is not acceptance.
 
-## Step 4. A moderator reads the submission
+The buttons on GitHub and ORCID may be renamed over time; the steps stay the same.
+
+## Step 5. A moderator reads the submission
 
 A moderator reads the verified submission against the [Moderation Policy](./policies/moderation.html):
 the scope, the form of a scholarly paper, the statement on generative models, and the absence of spam, abuse and personal data of third parties.
@@ -55,7 +76,7 @@ Moderation is not peer review. It does not check proofs, arguments or data.
 The operator aims to respond within 14 days.
 The decision is written in the issue.
 
-## Step 5. The decision
+## Step 6. The decision
 
 If the submission is accepted, its record page is published with a Sophaxis id, such as 2026.0001, and the issue is closed.
 Where the repository allows, an unmodified copy of the PDF is added afterwards.
