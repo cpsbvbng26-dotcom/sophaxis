@@ -9,5 +9,6 @@
   "llm_disclosure": "No language model was used in preparing this work.",
   "issue": 2,
   "status": "withdrawn",
-  "withdrawal_note": "Withdrawn by the author on 2026-11-20."
+  "withdrawal_date": "2026-11-20",
+  "withdrawal_note": "The author found an error in the main proof."
 }
