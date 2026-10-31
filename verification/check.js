@@ -652,6 +652,50 @@ console.log('\n15. Citation files, related records, reporting an error');
     && read(path.join(ROOT, 'policies', 'moderation.md')).includes('Anyone can report an error in a record through the link on its page, which opens a public correction issue.'));
 }
 
+/* ------------------------------------------------------------ 16 */
+console.log('\n16. Contrast (WCAG 2.2, level AA)');
+{
+  /* The colours are read from the style the site actually serves, in both schemes. Every rule that sets a text
+   * colour is paired with its own background, or, when it sets none, with each background text can sit on. */
+  const css = (/<style>([\s\S]*?)<\/style>/.exec(read(path.join(ROOT, 'site', 'index.html'))) || [, ''])[1];
+  const palette = (block) => Object.fromEntries([...(block || '').matchAll(/--([a-z]+): (#[0-9a-f]{6})/g)].map((m) => [m[1], m[2]]));
+  const light = palette((/^:root \{([^}]*)\}/m.exec(css) || [])[1]);
+  const dark = palette((/@media \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/.exec(css) || [])[1]);
+  const lum = (h) => {
+    const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+  const surfaces = [...new Set([...css.matchAll(/background: var\(--([a-z]+)\)/g)].map((m) => m[1]).filter((t) => t !== 'accent'))];
+  const pairs = [];
+  for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const fg = /(?:^|;)\s*color: var\(--([a-z]+)\)/.exec(m[2]);
+    if (!fg) continue;
+    const bg = /background: var\(--([a-z]+)\)/.exec(m[2]);
+    for (const b of bg ? [bg[1]] : surfaces) pairs.push([m[1].trim(), fg[1], b]);
+  }
+  const low = [];
+  for (const [scheme, pal] of [['light', light], ['dark', dark]]) {
+    for (const [sel, f, b] of pairs) {
+      const r = pal[f] && pal[b] ? ratio(pal[f], pal[b]) : 0;
+      if (r < 4.5) low.push(`${scheme} ${sel}: ${f} on ${b} ${r.toFixed(2)}`);
+    }
+  }
+  ok('both colour schemes define the same tokens', Object.keys(light).length >= 6 && Object.keys(light).sort().join() === Object.keys(dark).sort().join());
+  ok('every text colour on its background reaches 4.5:1 in both schemes', pairs.length >= 10 && low.length === 0, low.join('; ') || pairs.length + ' pairs');
+}
+
+/* ------------------------------------------------------------ 17 */
+console.log('\n17. The fields of papers.json, as the README describes them');
+{
+  const readme = read(path.join(ROOT, 'README.md'));
+  const section = (/## Reusing the records\n([\s\S]*?)\n## /.exec(readme) || [, ''])[1];
+  const documented = [...section.matchAll(/^\| `([a-z_]+)` \|/gm)].map((m) => m[1]);
+  const emitted = [...new Set(JSON.parse(read(path.join(FIX, 'papers.json'))).flatMap((x) => Object.keys(x)))];
+  ok('the README documents every field of papers.json, in order, and no other', documented.length > 0 && documented.join() === emitted.join(),
+    'README ' + documented.join(',') + ' / papers.json ' + emitted.join(','));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
