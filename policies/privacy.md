@@ -60,3 +60,4 @@ The operator aims to answer within 7 days.
 
 These rights are open to everyone, wherever they live.
 Where a person's own law gives them more rights over their personal data, such as the General Data Protection Regulation in the European Union, the operator honours those rights as far as they apply to Sophaxis.
+Personal data that GitHub or Vercel hold about their own users, such as GitHub accounts or Vercel's request logs, is theirs to handle under their own privacy statements; a request about it goes to them.
