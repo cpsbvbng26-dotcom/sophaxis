@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-10-30.
+Last updated: 2026-10-31.
 
 ## Moderation is not peer review
 
@@ -42,6 +42,7 @@ The automatic check applies to them without exception.
 ## After listing
 
 Corrections are added to the record as dated notes.
+Anyone can report an error in a record through the link on its page, which opens a public correction issue.
 They do not replace the work.
 A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.
 

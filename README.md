@@ -10,7 +10,8 @@ Authors deposit their preprint in Zenodo, figshare, OSF Preprints, arXiv, Prepri
 - **Language models and other generative models are allowed when disclosed.** No generative model can be an author.
 - Sophaxis assigns no DOIs. The DOI comes from the repository.
 - It keeps an unmodified copy of the PDF where the repository allows it, so that search engines can index the full text.
-- Search, field pages, author pages (by ORCID iD), an Atom feed (`feed.xml`), the records as JSON (`papers.json`), and citations in APA, Chicago and BibTeX.
+- Search, field pages, author pages (by ORCID iD), an Atom feed (`feed.xml`), the records as JSON (`papers.json`), and citations in APA, Chicago and BibTeX, with BibTeX, RIS and CSL-JSON files (`cite/`).
+- On each record page: related records (a shared ORCID iD or keyword), a link to report an error, and the saved copies at the Internet Archive.
 
 Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
 Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.md), [Submission](policies/submission.md), [Moderation](policies/moderation.md), [Copyright](policies/copyright.md), [Licences](policies/licences.md), [Privacy](policies/privacy.md) and [Takedown](policies/takedown.md).
