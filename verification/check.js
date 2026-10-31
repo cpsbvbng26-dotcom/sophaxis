@@ -859,7 +859,8 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     ['## Listed work', '## Metadata', '## The identity check', '## No affiliation', '## GitHub and other services', '## Links', '## Availability', '## Not advice', '## Liability'].every((h) => dis.includes(h))
     && dis.includes('The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.')
     && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.')
-    && dis.includes('Sophaxis does not use GitHub or ORCID sign-in'));
+    && dis.includes('Sophaxis does not use GitHub or ORCID sign-in')
+    && dis.includes('through the public APIs of DataCite, Crossref, JaLC, ORCID and the repositories.'));
   ok('the page for repositories lists every repository of site.json with its DOI prefix', Object.entries(site.repositories).every(([p, n]) => rep.includes('<li>' + n.replace(/&/g, '&amp;') + ': DOIs beginning <code>' + p + '</code></li>')));
   const ua = 'Sophaxis (' + site.repo + ')';
   ok('every request Sophaxis makes names itself with the User-Agent the page for repositories gives',
