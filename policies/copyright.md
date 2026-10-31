@@ -1,6 +1,6 @@
 # Copyright Policy
 
-Last updated: 2026-10-30.
+Last updated: 2026-10-31.
 
 ## Authors keep their copyright
 
@@ -20,6 +20,8 @@ When a deposit holds more than one PDF, Sophaxis does not guess which one is the
 For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
+A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB.
+A larger file stays at its repository, and the record links to it.
 
 The copy is the file the authors deposited, shared under the work's own licence, with its authors, its licence and a link to the original.
 The accepted licences allow this.
