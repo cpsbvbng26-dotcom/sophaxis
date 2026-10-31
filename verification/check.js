@@ -1058,6 +1058,22 @@ console.log('\n30. Sophaxis says that it was built with Claude Code');
   ok('the automatic check calls no language model', !/anthropic|openai|api\.claude|generativelanguage/i.test(['intake.js', 'withdraw.js', 'watch.js', 'fetch_pdf.js'].map((f) => read(path.join(ROOT, 'tools', f))).join('\n')));
 }
 
+/* ------------------------------------------------------------ 31 */
+console.log('\n31. Disputes: agreement first, then the court named in the Terms');
+{
+  const terms = read(path.join(ROOT, 'policies', 'terms.md'));
+  const d = (/## Disputes\n([\s\S]*?)\n## /.exec(terms) || [, ''])[1];
+  ok('a dispute goes first to the operator, then to good-faith talks, then to mediation, and only then to court',
+    d.includes('settled by agreement wherever possible') && /1\. Write to the operator first/.test(d) && /2\. Both sides then try, in good faith, to reach an agreement by talking\./.test(d)
+    && /3\. If talking does not settle it within 60 days, either side may propose mediation/.test(d) && d.indexOf('mediation') < d.indexOf('district court'));
+  ok('the court of first instance is the district or summary court of the operator\'s place of residence, without taking away the rights of consumers or of people outside Japan',
+    d.includes("the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement.")
+    && d.includes('This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.')
+    && d.includes('urgent relief') && terms.includes('These terms are governed by the laws of Japan.'));
+  ok('the reply time in a dispute is the 7 days the contact page promises', d.includes('The operator answers within 7 days') && read(path.join(ROOT, 'contact.md')).includes('The operator aims to answer within 7 days.')
+    && read(path.join(ROOT, 'disclaimer.md')).includes('Disputes are settled by agreement first'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
