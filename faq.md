@@ -57,6 +57,13 @@ The code, the records and the submissions are on GitHub, and the automatic check
 ORCID is read through its public API.
 Sophaxis does not use GitHub or ORCID sign-in, asks no one for access to their accounts, and is not affiliated with either; see the [Disclaimer](./disclaimer.html).
 
+## Was Sophaxis made with a language model?
+
+Yes. The site, its code and its policies were written with Claude Code (Anthropic) at the operator's request.
+The operator is responsible for them, and Claude is not an author.
+No language model decides on a submission.
+See the [Disclaimer](./disclaimer.html).
+
 ## Can I use language models?
 
 Yes, if you disclose how.
