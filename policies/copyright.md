@@ -9,7 +9,7 @@ The work stays under the licence the authors gave it in the repository.
 
 ## What Sophaxis copies, and on what basis
 
-Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse.
+Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse; for Jxiv, they come from the public metadata of JaLC.
 The abstract is part of the work.
 It is shown under the work's own licence, with its authors and a link to the work.
 
@@ -17,7 +17,7 @@ Sophaxis keeps an unmodified copy of the PDF of each listed version, so that sea
 It copies the file only from a repository that lets a script fetch it: Zenodo, Figshare, arXiv and Research Square.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
-For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.
+For any other repository, the authors can attach the deposited PDF to their submission issue.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
 A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB.

@@ -1,0 +1,43 @@
+{
+  "status": "OK",
+  "apiType": "doi",
+  "apiVersion": "v1",
+  "message": { "total": 1, "rows": 1, "totalPages": 1, "page": 1 },
+  "data": {
+    "siteId": "SI/JST.preprint",
+    "content_type": "RD",
+    "doi": "10.51094/jxiv.99999",
+    "ra": "JaLC",
+    "prefix": "10.51094",
+    "publisher_list": [{ "publisher_name": "Jxiv, JST Preprint Server", "lang": "en", "location": "JPN" }],
+    "title_list": [
+      { "lang": "ja", "title": "試験用の記録", "subtitle": "副題" },
+      { "lang": "en", "title": "A Fixture Record from JaLC", "subtitle": "For Testing the Intake" }
+    ],
+    "creator_list": [
+      {
+        "sequence": "1", "type": "person",
+        "names": [{ "lang": "ja", "last_name": "山田", "first_name": "花子" }, { "lang": "en", "last_name": "Yamada", "first_name": "Hanako" }],
+        "researcher_id_list": [{ "id_code": "https://orcid.org/0000-0002-1825-0097", "type": "ORCID" }]
+      },
+      {
+        "sequence": "2", "type": "person",
+        "names": [{ "lang": "ja", "last_name": "佐藤", "first_name": "一郎" }, { "lang": "en", "last_name": "Sato", "first_name": "Ichiro" }]
+      }
+    ],
+    "publication_date": { "publication_year": "2026", "publication_month": "3", "publication_day": "7" },
+    "edition": { "version": "1" },
+    "subject_list": [
+      { "subject": "数学", "lang": "ja" },
+      { "subject": "Mathematics", "lang": "en" },
+      { "subject": "modal logic", "lang": "en" },
+      { "subject": "structuralism", "lang": "en" }
+    ],
+    "resource_type": "Preprint",
+    "rights_list": [{ "rights": "https://creativecommons.org/licenses/by/4.0", "uri": "https://creativecommons.org/licenses/by/4.0" }],
+    "description_list": [
+      { "description": "<p>日本語の要旨。</p>", "type": "Abstract", "lang": "ja" },
+      { "description": "<p>An English abstract with <b>tags</b> &amp; an entity.</p>", "type": "Abstract", "lang": "en" }
+    ]
+  }
+}

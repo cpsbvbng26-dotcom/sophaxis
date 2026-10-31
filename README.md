@@ -3,7 +3,7 @@
 **Preprints in Philosophy and Mathematics**
 
 Sophaxis is an overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
-Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square; Sophaxis moderates the submission and gives it a stable record page.
+Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv; Sophaxis moderates the submission and gives it a stable record page.
 
 - **Acceptance is moderation, not peer review.** The quality of listed work is not guaranteed.
 - **No fees.** Sophaxis charges nothing, to authors or to readers.
@@ -24,7 +24,7 @@ Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.
 The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata.
 An automatic check (`tools/intake.js`, run by `.github/workflows/intake.yml`) confirms that the GitHub account belongs to an author of the work,
 and posts the result and a draft record in the issue. Only verified submissions are listed.
-Where the repository does not let Sophaxis fetch the PDF (OSF Preprints, Preprints.org, SSRN), the comment asks the authors to attach the deposited PDF to the issue.
+Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, Figshare, arXiv and Research Square), the comment asks the authors to attach the deposited PDF to the issue.
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies.
@@ -104,7 +104,7 @@ The operator, Takuya Nemoto, is responsible for it. Claude is not an author.
 ## 日本語
 
 Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学・科学哲学のための、重ね合わせ型（オーバーレイ型）のプレプリントサーバーです。
-著者が Zenodo・Figshare・OSF Preprints・arXiv・Preprints.org・SSRN・Research Square のどれかに置いた稿を、モデレーションのうえで一覧に載せ、固定の頁を与えます。
+著者が Zenodo・Figshare・OSF Preprints・SocArXiv・MetaArXiv・arXiv・Preprints.org・SSRN・Research Square・SciELO Preprints・Qeios・ScienceOpen Preprints・Advance・KC Works・Jxiv のどれかに置いた稿を、モデレーションのうえで一覧に載せ、固定の頁を与えます。
 
 - 受理はモデレーションであり、査読ではありません。載った稿の質は保証しません。
 - 稿の中身・権利・生成モデルの開示の責任は、すべて著者が負います。法律が許す範囲で、第三者からの請求も著者の責任です。

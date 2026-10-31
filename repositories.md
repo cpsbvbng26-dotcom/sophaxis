@@ -14,7 +14,7 @@ Sophaxis does not harvest or mirror any repository.
 
 ## What Sophaxis reads
 
-- The DOI metadata of a submitted work, from the public REST APIs of DataCite and Crossref: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence.
+- The DOI metadata of a submitted work, from the public REST APIs of DataCite, Crossref and, for Jxiv, JaLC: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence.
 - The list of versions of a work, from the same metadata.
 - The PDF of a version, unmodified, only where the work's licence allows it and the repository offers it to scripts (Zenodo, Figshare, arXiv and Research Square), through their public APIs or download addresses. This happens once per version, when the operator starts it by hand. Where the repository publishes a checksum, the copy must match it.
 

@@ -9,7 +9,7 @@
  *   node tools/intake.js --dry-run --doi 10.6084/m9.figshare.1 --orcid 0000-0002-1825-0097 --login alice
  *
  * What it reads, and nothing else:
- *   - the public metadata of the DOI, from DataCite or Crossref;
+ *   - the public metadata of the DOI, from DataCite or Crossref, or from JaLC for Jxiv;
  *   - the name, the websites and the works of the public ORCID record given in the form.
  * Nothing from the ORCID record is written anywhere except the result of the checks.
  *
@@ -134,6 +134,7 @@ function fromCrossref(json) {
   const full = (k) => (m[k] && m[k]['date-parts'] ? iso(m[k]['date-parts'][0]) : null);
   return {
     agency: 'Crossref',
+    type: m.type || '',
     doi: m.DOI,
     title: plain((m.title || [])[0]),
     authors: (m.author || []).map((c) => ({
@@ -146,6 +147,38 @@ function fromCrossref(json) {
     abstract: plain(m.abstract),
     date: full('posted') || full('published') || full('issued') || full('created'),
     keywords: keywordsOf(m.subject || []),
+  };
+}
+
+/* JaLC registers the DOIs of Jxiv. Its records carry titles, names and abstracts in Japanese and English;
+ * the English one is taken where there is one, since the site is in English. */
+function fromJaLC(json) {
+  const d = json.data;
+  const en = (list) => (list || []).find((x) => x.lang === 'en') || (list || [])[0] || {};
+  const t = en(d.title_list);
+  const pd = d.publication_date || {};
+  const date = pd.publication_year && pd.publication_month && pd.publication_day
+    ? [pd.publication_year, pd.publication_month, pd.publication_day].map((x, i) => String(x).padStart(i ? 2 : 4, '0')).join('-') : null;
+  /* The first English subject is the field of the server's own classification, not a keyword of the work. */
+  const subjects = (d.subject_list || []).filter((x) => x.lang === 'en').map((x) => x.subject).slice(1);
+  return {
+    agency: 'JaLC',
+    type: d.resource_type || '',
+    doi: d.doi,
+    title: plain([t.title, t.subtitle].filter(Boolean).join(': ')),
+    authors: (d.creator_list || []).filter((c) => c.type === 'person').map((c) => {
+      const n = en(c.names);
+      return {
+        name: plain([n.first_name, n.last_name].filter(Boolean).join(' ')),
+        given: n.first_name || '',
+        family: n.last_name || '',
+        orcid: orcidOf(((c.researcher_id_list || []).find((r) => r.type === 'ORCID') || {}).id_code),
+      };
+    }),
+    licences: (d.rights_list || []).map((r) => licenceOf(r.uri) || licenceOf(r.rights)).filter(Boolean),
+    abstract: plain(en((d.description_list || []).filter((x) => x.type === 'Abstract')).description),
+    date,
+    keywords: keywordsOf(subjects),
   };
 }
 
@@ -223,6 +256,7 @@ function check({ form, login, meta, person, works, listed }) {
   add('The statement on generative models is given', (form.llm || '').trim().length >= 20);
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
+  add('The DOI is for a work, not for a review of one', meta.type !== 'peer-review', meta.type || '');
   const lic = meta.licences.find((l) => SITE.licenses[l]);
   add('The work carries an accepted licence', lic, lic ? SITE.licenses[lic] : 'none of CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in the metadata');
   add('The DOI metadata has a title and a date', meta.title && meta.date);
@@ -331,7 +365,9 @@ async function lookUp(doi) {
   const dc = await getJson('https://api.datacite.org/dois/' + enc);
   if (dc) return { meta: fromDataCite(dc), raw: dc };
   const cr = await getJson('https://api.crossref.org/works/' + enc);
-  return cr ? { meta: fromCrossref(cr), raw: cr } : { meta: null };
+  if (cr) return { meta: fromCrossref(cr), raw: cr };
+  const ja = await getJson('https://api.japanlinkcenter.org/dois/' + enc);
+  return ja && ja.status === 'OK' && ja.data ? { meta: fromJaLC(ja), raw: ja } : { meta: null };
 }
 
 /* The versions behind a DOI: Figshare numbers them .v1, .v2, …; arXiv keeps one DOI. */
@@ -407,6 +443,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, MARK };
+module.exports = { lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

@@ -28,7 +28,7 @@ Sophaxis gives each record an id, such as 2026.0001, which never changes and is 
 
 ## Which repositories are accepted?
 
-Zenodo, Figshare, OSF Preprints, arXiv, Preprints.org, SSRN and Research Square.
+Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works and Jxiv.
 The work must have a DOI from one of them.
 
 ## Which licences are accepted?
@@ -87,7 +87,7 @@ Give the DOI of the published version in the form, and the record links to it.
 ## Does Sophaxis keep a copy of the PDF?
 
 Where the repository allows a script to fetch it, Sophaxis keeps an unmodified copy, so that search engines can index the full text.
-For OSF Preprints, Preprints.org and SSRN, you can attach the deposited PDF to your submission issue.
+For any other repository, you can attach the deposited PDF to your submission issue.
 A copy is kept only if the file is at most 20 MB.
 See the [Copyright Policy](./policies/copyright.html).
 

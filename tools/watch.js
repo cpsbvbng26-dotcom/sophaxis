@@ -30,7 +30,7 @@ function compare(p, found) {
   for (const doi of [...new Set(p.versions.map((v) => v.doi))]) {
     const meta = found[doi.toLowerCase()];
     if (meta === undefined) continue;
-    if (meta === null) { out.push(`${p.id}: the DOI ${doi} no longer resolves in DataCite or Crossref`); continue; }
+    if (meta === null) { out.push(`${p.id}: the DOI ${doi} no longer resolves in DataCite, Crossref or JaLC`); continue; }
     if (!meta.licences.includes(p.license)) {
       out.push(`${p.id}: the DOI ${doi} no longer carries ${SITE.licenses[p.license]} in its metadata (now: ${meta.licences.join(', ') || 'none'})`);
     }

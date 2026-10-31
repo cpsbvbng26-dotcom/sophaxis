@@ -34,7 +34,7 @@ Submissions are public GitHub issues and are subject to GitHub's terms.
 Your GitHub username and everything you write in the form become public.
 
 When a submission issue is opened or edited, a GitHub Action reads two kinds of public data.
-It reads the metadata of the DOI from DataCite or Crossref.
+It reads the metadata of the DOI from DataCite, Crossref or JaLC (Japan Link Center).
 It reads the name, the websites and the works of the ORCID record given in the form.
 It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
 When a withdrawal issue is opened or edited, the same check reads the same parts of the ORCID record, together with the record on Sophaxis.
