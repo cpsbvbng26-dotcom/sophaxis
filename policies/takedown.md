@@ -24,6 +24,7 @@ The operator then takes the abstract and the PDF copy offline while the request 
 The operator aims to answer each request within 7 days.
 For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.
 The authors are told in their submission issue and can respond.
+This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 
 If the request is upheld, the record page is replaced by a notice that keeps only the Sophaxis id, the date and the kind of reason.
 The address keeps working, so that citations lead to the notice instead of to nothing.

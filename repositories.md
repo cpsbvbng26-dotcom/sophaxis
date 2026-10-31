@@ -35,4 +35,19 @@ A request about a deposit itself stays with the repository; Sophaxis cannot chan
 
 Reach the operator through an [issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues) or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 
-Sophaxis is independent, and is not affiliated with any repository or registration agency; see the [Disclaimer](./disclaimer.html).
+## Disclaimer toward repositories and registration agencies
+
+Sophaxis is independent, and is not affiliated with, endorsed by or a partner of any repository or registration agency.
+A record on Sophaxis is Sophaxis's own description of a deposit; it is not a statement by the repository or the agency.
+They are not responsible for Sophaxis, for its records, for its moderation, or for any error that Sophaxis introduces when it shows their metadata.
+Their names identify their services only, and their trademarks belong to them; Sophaxis shows none of their logos.
+Sophaxis uses each service through its public interfaces and within its published terms, as Sophaxis understands them; where a service says otherwise, Sophaxis follows the service.
+See also the [Disclaimer](./disclaimer.html).
+
+## Acknowledgements
+
+Sophaxis exists because these services make research and its metadata openly available. Sophaxis thanks:
+
+{{acknowledgements}}
+
+Thank you to arXiv for use of its open access interoperability.

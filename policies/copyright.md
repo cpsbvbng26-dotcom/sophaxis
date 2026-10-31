@@ -32,6 +32,16 @@ Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copi
 Every record page carries the citation tags that Google Scholar reads.
 Sophaxis does not control whether or when a search engine indexes a page.
 
+## How Sophaxis meets the licences
+
+Sophaxis shares a listed work only under the work's own licence, and only as that licence allows.
+The three accepted licences permit copying and sharing for any purpose, provided the work is credited.
+
+- Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI.
+- No changes: the PDF copy is the deposited file, byte for byte, with every notice it carries. The abstract is shown as plain text, with formatting tags removed and its words unchanged.
+- No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do.
+- No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work.
+
 ## Work published in a journal
 
 When a journal publishes a work, the copyright or an exclusive licence may pass to the publisher.
