@@ -29,7 +29,7 @@ It does not compare the work with the literature.
 
 A moderator accepts or declines a submission in its issue, and labels the issue `accepted` or `declined`.
 Every decision stays public in its issue.
-The operator aims to respond to each submission within 14 days.
+As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
 
 A moderator who declines a submission names one or more of these reasons, with a short explanation:
 

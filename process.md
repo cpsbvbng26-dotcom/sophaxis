@@ -73,7 +73,7 @@ A moderator reads the verified submission against the [Moderation Policy](./poli
 the scope, the form of a scholarly paper, the statement on generative models, and the absence of spam, abuse and personal data of third parties.
 Moderation is not peer review. It does not check proofs, arguments or data.
 
-The operator aims to respond within 14 days.
+As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
 The decision is written in the issue.
 
 ## Step 6. The decision
