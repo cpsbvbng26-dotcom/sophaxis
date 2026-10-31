@@ -14,7 +14,7 @@ The abstract is part of the work.
 It is shown under the work's own licence, with its authors and a link to the work.
 
 Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
-It copies the file only from a repository that lets a script fetch it: Zenodo, figshare, arXiv and Research Square.
+It copies the file only from a repository that lets a script fetch it: Zenodo, Figshare, arXiv and Research Square.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
 For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.

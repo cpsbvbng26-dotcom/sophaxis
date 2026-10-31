@@ -31,7 +31,7 @@ A withdrawn record takes no new versions.
 ## The work in its repository
 
 Withdrawal on Sophaxis does not touch the deposit.
-Sophaxis cannot withdraw or delete a work at Zenodo, figshare or any other repository; a request about the deposit goes to that repository.
+Sophaxis cannot withdraw or delete a work at Zenodo, Figshare or any other repository; a request about the deposit goes to that repository.
 If the repository withdraws or deletes the deposit, the weekly check finds that the DOI no longer resolves, and the operator withdraws the record with a note that says so.
 
 ## Withdrawal and removal

@@ -35,5 +35,5 @@ If the request is not upheld, the operator says why in the issue.
 
 ## The work in its repository
 
-Sophaxis cannot remove a work from Zenodo, figshare or any other repository.
+Sophaxis cannot remove a work from Zenodo, Figshare or any other repository.
 A request about the deposit itself goes to that repository.

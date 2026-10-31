@@ -38,7 +38,7 @@ function compare(p, found) {
   return out;
 }
 
-/* Pure: where a new version would show. figshare gives each version its own DOI (.v1, .v2, …),
+/* Pure: where a new version would show. Figshare gives each version its own DOI (.v1, .v2, …),
  * and arXiv keeps one DOI for all; other repositories are not followed. */
 function followed(p) {
   if (p.status !== 'listed') return null;
