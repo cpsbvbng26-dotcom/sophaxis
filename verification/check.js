@@ -743,6 +743,26 @@ console.log('\n18. Withdrawal: the policy, the form and the check');
     && read(path.join(ROOT, 'policies', 'submission.md')).includes('[Withdrawal Policy](./withdrawal.html)'));
 }
 
+/* ------------------------------------------------------------ 19 */
+console.log('\n19. The authors bear full responsibility');
+{
+  const terms = read(path.join(ROOT, 'policies', 'terms.md'));
+  ok('the Terms of Use put the content, the rights, material from others, personal data, the disclosure and the confirmations on the authors',
+    terms.includes('The authors bear full responsibility for their work and for its listing on Sophaxis.')
+    && ['the content of the work', 'the right to share the version', 'material from others', 'personal data of third parties', 'the statement on generative models', 'the truth of everything the submitter confirms']
+      .every((x) => terms.includes('- ' + x)));
+  ok('moderation moves none of it to the operator; a claim from a third party is the authors\u2019, only as far as the law allows; takedown still applies',
+    terms.includes('Moderation does not move any of this to the operator.')
+    && terms.includes('the authors are responsible for it, to the extent the law allows.') && terms.includes('Nothing in them limits a right that the law does not allow to be limited.')
+    && terms.includes('The operator still acts on requests under the [Takedown Policy](./takedown.html).'));
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  ok('the submitter confirms it in the form and in the Submission Policy',
+    form.includes('- label: The authors bear full responsibility for the work and its listing, as the Terms of Use set out.\n          required: true')
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('- The authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.html) set out.'));
+  ok('every record page says so beside the notice that it is not peer-reviewed',
+    read(path.join(FIX, 'abs', '2026.0001.html')).includes('does not guarantee its quality. The authors bear full responsibility for its content.</div>'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
