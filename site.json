@@ -7,6 +7,7 @@
   "repo": "https://github.com/cpsbvbng26-dotcom/sophaxis",
   "pdfLimits": { "fileMB": 20, "totalGB": 1 },
   "submissionsPaused": false,
+  "securityTxtExpires": "2027-10-31T00:00:00.000Z",
   "doi": { "prefix": null, "suffix": "sophaxis.{id}" },
   "operator": {
     "name": "Takuya Nemoto",

@@ -1,0 +1,5 @@
+Contact: https://sophaxis.vercel.app/contact.html
+Expires: 2027-10-31T00:00:00.000Z
+Preferred-Languages: en, ja
+Canonical: https://sophaxis.vercel.app/.well-known/security.txt
+Policy: https://sophaxis.vercel.app/contact.html

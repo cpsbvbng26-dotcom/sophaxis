@@ -32,6 +32,19 @@ The email address is kept on the ORCID record, not on this site.
 Write in English or Japanese.
 The operator aims to answer within 7 days.
 
+## Security
+
+A security problem goes by email, not to a public issue, so that it can be fixed before it is known.
+Say what you found and how to reproduce it.
+Sophaxis offers no reward, and thanks every report.
+The site gives the same contact in the standard file [security.txt](./.well-known/security.txt).
+
+## Accessibility
+
+Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.
+Its checks confirm the contrast of every text colour in the light and dark schemes, a link to skip to the content, a visible focus for keyboard users, the language of every page, one main heading per page, and headers for every table.
+A barrier can be reported in an issue with the label `accessibility`, or by email.
+
 ## Postal address
 
 The operator's postal address is not published.

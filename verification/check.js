@@ -1108,6 +1108,34 @@ console.log('\n33. GitHub and Vercel: their terms apply alongside, and these ter
     && pv.includes('Personal data that GitHub or Vercel hold about their own users') && pv.includes('Vercel (United States)') && pv.includes('GitHub (United States)'));
 }
 
+/* ------------------------------------------------------------ 34 */
+console.log('\n34. Accessibility of every page, and the security contact');
+{
+  const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
+  const bad = (test) => pages.filter((f) => !test(read(path.join(ROOT, 'site', f))));
+  const noSkip = bad((h) => /<body>\n<a class="skip" href="#main">Skip to content<\/a>/.test(h) && h.includes('<main class="wrap" id="main">'));
+  ok('every page starts with a link that skips to the content, which it reaches', pages.length > 0 && noSkip.length === 0, noSkip.join(', '));
+  const lang = bad((h) => /^<!doctype html>\n<html lang="(en|ja)">/.test(h));
+  ok('every page names its language', lang.length === 0, lang.join(', '));
+  const h1 = bad((h) => (h.match(/<h1[ >]/g) || []).length === 1);
+  ok('every page has exactly one main heading', h1.length === 0, h1.join(', '));
+  const tables = bad((h) => (h.match(/<table>/g) || []).length === (h.match(/<table><tr><th scope="col">/g) || []).length);
+  ok('every table begins with column headers', tables.length === 0, tables.join(', '));
+  const empty = bad((h) => !/<a [^>]*>\s*<\/a>/.test(h) && !/<img(?![^>]*\balt=)[^>]*>/.test(h));
+  ok('no link is empty and no image lacks a text alternative', empty.length === 0, empty.join(', '));
+  const css = (/<style>([\s\S]*?)<\/style>/.exec(read(path.join(ROOT, 'site', 'index.html'))) || [, ''])[1];
+  ok('keyboard focus is visible, and the skip link appears when it has focus', /a:focus-visible[^{]*\{ outline: 3px solid var\(--accent\)/.test(css) && /\.skip:focus \{ left: /.test(css));
+  ok('the contact page states the accessibility aim and how to report a barrier', read(path.join(ROOT, 'contact.md')).includes('Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.')
+    && read(path.join(ROOT, 'contact.md')).includes('label `accessibility`'));
+  const sec = read(path.join(ROOT, 'site', '.well-known', 'security.txt'));
+  const exp = new Date((/^Expires: (.+)$/m.exec(sec) || [, ''])[1]);
+  const days = (exp - Date.now()) / 864e5;
+  ok('security.txt gives a contact, a policy and an expiry in the coming year (renew it before it lapses)',
+    /^Contact: https:\/\/sophaxis\.vercel\.app\/contact\.html$/m.test(sec) && /^Policy: /m.test(sec) && /^Canonical: https:\/\/sophaxis\.vercel\.app\/\.well-known\/security\.txt$/m.test(sec)
+    && days > 0 && days <= 366, 'expires in ' + Math.floor(days) + ' days');
+  ok('the contact page sends security problems to email, not to a public issue', read(path.join(ROOT, 'contact.md')).includes('A security problem goes by email, not to a public issue'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

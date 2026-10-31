@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-BZgGosWkdwDD0oX+obCdwCUhHjXbbL0/UFKOvPoQtxI='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-JRJdsF0DkWfQvruSvohr/ZPzmkuNkrWXEXJz66hXCTY='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Disclaimer | Sophaxis</title>
 <meta name="description" content="What Sophaxis does not promise: peer review, metadata, identity, affiliation, links, availability and liability.">
 <link rel="canonical" href="https://sophaxis.vercel.app/disclaimer.html">
@@ -25,6 +25,10 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
 .wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
 header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
 header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
@@ -61,11 +65,12 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
 <a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
 <nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
 </div></header>
-<main class="wrap">
+<main class="wrap" id="main">
 <h1>Disclaimer</h1>
 <p>Last updated: 2026-10-31.</p>
 <p>This page gathers in one place what Sophaxis does not promise. The <a href="./policies/terms.html">Terms of Use</a> are binding; where this page differs, they apply.</p>
