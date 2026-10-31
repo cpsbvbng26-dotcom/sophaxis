@@ -27,9 +27,34 @@
     "10.5281/zenodo.": "Zenodo",
     "10.6084/m9.figshare.": "Figshare",
     "10.31219/osf.io/": "OSF Preprints",
+    "10.31235/osf.io/": "SocArXiv",
+    "10.31222/osf.io/": "MetaArXiv",
     "10.48550/arXiv.": "arXiv",
     "10.20944/preprints": "Preprints.org",
     "10.2139/ssrn.": "SSRN",
-    "10.21203/rs.3.rs-": "Research Square"
+    "10.21203/rs.3.rs-": "Research Square",
+    "10.1590/SciELOPreprints.": "SciELO Preprints",
+    "10.32388/": "Qeios",
+    "10.14293/PR2199.": "ScienceOpen Preprints",
+    "10.31124/advance.": "Advance",
+    "10.17613/": "KC Works",
+    "10.51094/jxiv.": "Jxiv"
+  },
+  "repositoryHomes": {
+    "Zenodo": "https://zenodo.org",
+    "Figshare": "https://figshare.com",
+    "OSF Preprints": "https://osf.io/preprints/osf",
+    "SocArXiv": "https://osf.io/preprints/socarxiv",
+    "MetaArXiv": "https://osf.io/preprints/metaarxiv",
+    "arXiv": "https://arxiv.org",
+    "Preprints.org": "https://www.preprints.org",
+    "SSRN": "https://www.ssrn.com",
+    "Research Square": "https://www.researchsquare.com",
+    "SciELO Preprints": "https://preprints.scielo.org",
+    "Qeios": "https://www.qeios.com",
+    "ScienceOpen Preprints": "https://www.scienceopen.com",
+    "Advance": "https://advance.sagepub.com",
+    "KC Works": "https://works.hcommons.org",
+    "Jxiv": "https://jxiv.jst.go.jp"
   }
 }
