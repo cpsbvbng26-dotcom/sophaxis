@@ -67,6 +67,7 @@ The statement is shown on the record page.
 ## How long does moderation take?
 
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+A slow decision does not mean that submissions are paused; when they are, the top page says so.
 [From submission to listing](./process.html) follows a submission step by step.
 
 ## Who is responsible for a listed work?

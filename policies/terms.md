@@ -62,7 +62,7 @@ No change will introduce fees.
 
 Sophaxis is run by one person, and is planned so that it can stop without loss.
 
-- If the operator cannot handle submissions for more than 30 days, the top page says that new submissions are paused. Listed records stay online.
+- A slow decision is not a pause: moderation can take several weeks or a few months. A pause is for when the operator cannot work on Sophaxis at all, for example because of illness. If that lasts for more than 30 days, the top page says that new submissions are paused. Listed records stay online.
 - If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive.
 - The operator may hand Sophaxis over to another person or to an institution. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
 - Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
