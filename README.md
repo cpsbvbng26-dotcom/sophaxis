@@ -51,7 +51,7 @@ Ids run `2026.0001`, `2026.0002`, … in order of listing.
 
 ### Pausing submissions
 
-When the operator cannot handle submissions for more than 30 days, set `"submissionsPaused": true` in `site.json`, rebuild and open a pull request.
+When the operator cannot work on Sophaxis at all for more than 30 days, set `"submissionsPaused": true` in `site.json`, rebuild and open a pull request.
 The top page and the submit page then say that new submissions are paused. Set it back to `false` to reopen.
 
 ### Withdrawing a record

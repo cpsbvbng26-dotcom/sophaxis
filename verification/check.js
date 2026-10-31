@@ -912,7 +912,9 @@ console.log('\n26. One operator: decisions, continuity, dependencies and statist
   const terms = read(path.join(ROOT, 'policies', 'terms.md'));
   const lic = read(path.join(ROOT, 'policies', 'licences.md'));
   ok('Continuity: a pause after 30 days, the records kept public, a hand-over announced first, anyone may continue under the licences the Licence Policy names',
-    terms.includes('## Continuity') && terms.includes('for more than 30 days, the top page says that new submissions are paused.')
+    terms.includes('## Continuity') && terms.includes('If that lasts for more than 30 days, the top page says that new submissions are paused.')
+    && terms.includes('A slow decision is not a pause: moderation can take several weeks or a few months.')
+    && read(path.join(ROOT, 'faq.md')).includes('A slow decision does not mean that submissions are paused; when they are, the top page says so.')
     && terms.includes('A hand-over is announced on the site first') && terms.includes('CC BY 4.0 for the text and MIT for the code.')
     && lic.includes('The text of this site is licensed under CC BY 4.0.') && lic.includes('The code is licensed under MIT.'));
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
