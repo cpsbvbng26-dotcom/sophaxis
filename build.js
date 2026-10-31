@@ -253,7 +253,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>
@@ -585,7 +585,13 @@ function policyPage() {
   const list = `<h2>The policies</h2>
 <ul>${POLICIES.map(([slug, what]) => `<li><a href="./policies/${slug}.html">${esc(policyTitle(slug))}</a>: ${esc(what)}</li>`).join('')}</ul>`;
   const html = markdown(md).replace('<h2>What Sophaxis is not</h2>', list + '\n<h2>What Sophaxis is not</h2>');
-  return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
+  return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
+}
+
+/* Who runs Sophaxis and how to reach the operator. The email address stays on the ORCID record. */
+const contactSource = () => fs.readFileSync(path.join(ROOT, 'contact.md'), 'utf8');
+function contactPage() {
+  return page({ title: 'Operator and contact | ' + SITE.name, description: 'Who operates ' + SITE.name + ', and how to reach the operator.', rel: false, canonical: 'contact.html', body: markdown(contactSource()) });
 }
 
 /* The Japanese page on personal data, under the headings of Japan's Act on the Protection of Personal Information. */
@@ -696,7 +702,8 @@ function sitemap(papers) {
   const newest = [SITE.since].concat(papers.map((p) => latest(p).date)).sort().pop();
   const policyDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(policySource(slug)) || [, newest])[1];
   const latestPolicy = POLICIES.map(([slug]) => policyDate(slug)).sort().pop();
-  const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest]]
+  const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest],
+    ['contact.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(contactSource()) || [, newest])[1]]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -735,6 +742,7 @@ function build(out, paperDir) {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
     'policy.html': policyPage(),
+    'contact.html': contactPage(),
     'search.html': searchPage(),
     '404.html': notFoundPage(),
     'feed.xml': feed(papers),
