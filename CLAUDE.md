@@ -19,6 +19,8 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
    ORCID の公開記録のうち名前・リンク・業績だけを読む。ORCID の記録をそのまま記録・ログ・コメントに写さない
    （メールアドレスや所在の国が入っている）。本人確認が通らない投稿は載せない。
    issue の本文は環境変数でだけ渡し、シェルに展開しない。
+   撤回の issue は `tools/withdraw.js` が受ける（同じワークフローの別の仕事）。本人確認は投稿と同じ。
+   撤回した記録は消さない。`status: "withdrawn"`・`withdrawal_date`・`withdrawal_note` を付け、PDF の写しは外す。
 8. PDF の写しは `tools/fetch_pdf.js` が預け先から取る（`.github/workflows/pdf.yml`、手で起動）。`data/pdf/` に置き、
    記録の `pdfs` に sha256 と取得元を書く。写しは変えない。手で PDF を足さない。預け先が取らせない場合は、
    著者が投稿の issue に添付した PDF だけを `--from` で取り、`provided_by: "authors"` を付ける。
