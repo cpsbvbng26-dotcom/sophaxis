@@ -75,10 +75,14 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>What moderation does not check</h2>
 <p>It does not check proofs, arguments or data. It does not run plagiarism checks. It does not compare the work with the literature.</p>
 <h2>Decisions</h2>
-<p>A moderator accepts or declines a submission in its issue. A moderator who declines a submission gives a short reason in the issue. The operator aims to respond to each submission within 14 days.</p>
+<p>A moderator accepts or declines a submission in its issue, and labels the issue <code>accepted</code> or <code>declined</code>. Every decision stays public in its issue. The operator aims to respond to each submission within 14 days.</p>
+<p>A moderator who declines a submission names one or more of these reasons, with a short explanation:</p>
+<ul><li>Out of scope: the work belongs mainly to a field outside philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.</li><li>Not in the form of a scholarly paper: it lacks a title, an abstract or references.</li><li>Licence: the DOI metadata does not carry an accepted licence.</li><li>Authorship: the submitter could not be confirmed as an author, or not every author agrees.</li><li>Disclosure: the statement on generative models is missing or does not say how they were used.</li><li>Rights or personal data: the work contains material that the authors may not share, or personal data of third parties.</li><li>Spam or abuse.</li></ul>
 <p>The submitter can answer in the issue. The operator then looks at the submission once more, and that decision is final.</p>
+<h2>Moderators</h2>
+<p>The operator is at present the only moderator. Other moderators may be invited. Each is named, with an ORCID iD, on the <a href="../contact.html">Operator and contact</a> page before taking any decision, and moderates under this policy without pay.</p>
 <h2>Conflicts of interest</h2>
-<p>Submissions by the operator are moderated under the same rules and are marked on their record pages. The automatic check applies to them without exception.</p>
+<p>Submissions by the operator are moderated under the same rules and are marked on their record pages. The automatic check applies to them without exception. While the operator is the only moderator, the operator also decides on their own submissions; the mark on the record page says so. Once there is another moderator, no moderator decides on their own submission or on one by a close collaborator.</p>
 <h2>After listing</h2>
 <p>Corrections are added to the record as dated notes. Anyone can report an error in a record through the link on its page, which opens a public correction issue. They do not replace the work. A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.</p>
 <p>Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record. A problem is reported in a public issue, and the operator looks into it.</p>
@@ -87,7 +91,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by Takuya Nemoto. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
-<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../contact.html">Contact</a></p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../stats.html">Statistics</a> · <a href="../contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>
