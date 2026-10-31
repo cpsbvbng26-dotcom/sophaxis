@@ -27,6 +27,7 @@ It is not an official identity check.
 Sophaxis is an independent, personal project.
 It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.
 Their names are used only to identify their services, and belong to their owners.
+They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
 
 ## GitHub and other services
 
@@ -60,4 +61,5 @@ They are not legal or professional advice.
 ## Liability
 
 To the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
+This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.

@@ -503,6 +503,7 @@ ${facts}
 <p>${authors}</p>
 <h2>Abstract</h2>
 <div class="abstract"><p itemprop="abstract">${esc(p.abstract)}</p></div>
+<p class="meta">Abstract by ${esc(authorsText(p))}, from the DOI metadata, shown as plain text without other changes, under <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>.</p>
 </article>
 ${keywords}
 <div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality. The authors bear full responsibility for its content.</div>
@@ -678,11 +679,27 @@ function disclaimerPage() {
 
 /* For the repositories and the DOI registration agencies: what Sophaxis reads from them and what it shows.
  * The list of repositories comes from site.json, so it cannot fall behind. */
+/* Thanks to every service Sophaxis relies on: the repositories of site.json, then the agencies and the infrastructure. */
+const SERVICES = [
+  ['DataCite', 'https://datacite.org', 'DOI metadata, openly available under CC0'],
+  ['Crossref', 'https://www.crossref.org', 'DOI metadata, openly available through its REST API'],
+  ['Japan Link Center (JaLC)', 'https://japanlinkcenter.org', 'DOI metadata for Jxiv'],
+  ['ORCID', 'https://orcid.org', 'public records through its public API, for the identity check'],
+  ['the Internet Archive', 'https://archive.org', 'saved copies of the pages and the PDF copies'],
+  ['GitHub', 'https://github.com', 'the repository, the submissions and the automatic checks'],
+  ['Vercel', 'https://vercel.com', 'serving the site'],
+];
+function acknowledgements() {
+  const repos = Object.values(SITE.repositories).map((n) => `<li><a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>, for keeping the deposits and their DOIs</li>`);
+  const others = SERVICES.map(([n, u, what]) => `<li><a href="${esc(u)}">${esc(n)}</a>, for ${esc(what)}</li>`);
+  return '<ul>' + repos.concat(others).join('') + '</ul>';
+}
+
 const repositoriesSource = () => fs.readFileSync(path.join(ROOT, 'repositories.md'), 'utf8');
 function repositoriesPage() {
   const list = '<ul>' + Object.entries(SITE.repositories).map(([prefix, name]) => `<li>${esc(name)}: DOIs beginning <code>${esc(prefix)}</code></li>`).join('') + '</ul>';
   return page({ title: 'For repositories and DOI registration agencies | ' + SITE.name, description: 'What ' + SITE.name + ' reads from repositories and DOI registration agencies, how often, and what it shows.', rel: false, canonical: 'repositories.html',
-    body: markdown(repositoriesSource()).replace('<p>{{repositories}}</p>', list) });
+    body: markdown(repositoriesSource()).replace('<p>{{repositories}}</p>', list).replace('<p>{{acknowledgements}}</p>', acknowledgements()) });
 }
 
 /* One submission followed from start to finish, for people who come from the site. */

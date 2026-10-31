@@ -72,6 +72,7 @@ Sophaxis is run by one person, and is planned so that it can stop without loss.
 
 These terms are governed by the laws of Japan.
 Nothing in them limits a right that the law does not allow to be limited.
+In particular, nothing in them excludes or limits liability for intent or gross negligence, or any liability that Japan's Consumer Contract Act or another law does not allow to be excluded or limited.
 
 ## Contact
 
