@@ -414,7 +414,7 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   const F = require('../tools/fetch_pdf.js');
   ok('Figshare: the version DOI leads to that version in its API', F.sourceFor('10.6084/m9.figshare.34419198.v2', 2).api === 'https://api.figshare.com/v2/articles/34419198/versions/2');
   ok('Zenodo: the DOI leads to its record in the API', F.sourceFor('10.5281/zenodo.1234567', 1).api === 'https://zenodo.org/api/records/1234567');
-  ok('arXiv: one DOI, the version number picks the file', F.sourceFor('10.48550/arXiv.2508.15126', 2).url === 'https://arxiv.org/pdf/2508.15126v2');
+  ok('arXiv: one DOI, the version number picks the file', F.sourceFor('10.48550/arXiv.2508.15126', 2).url === 'https://export.arxiv.org/pdf/2508.15126v2');
   ok('Research Square: the version DOI leads to its PDF', F.sourceFor('10.21203/rs.3.rs-39251/v1', 1).url === 'https://www.researchsquare.com/article/rs-39251/v1.pdf');
   ok('no copy is attempted from OSF Preprints, Preprints.org or SSRN, or from a Figshare DOI without a version', ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.2139/ssrn.7537983', '10.6084/m9.figshare.34419198'].every((d) => F.sourceFor(d, 1) === null));
   ok('an author-provided PDF is taken only from an attachment of a GitHub issue', F.attachmentOk('https://github.com/user-attachments/files/12345678/paper.pdf')
@@ -1012,6 +1012,36 @@ console.log('\n28. Sophaxis ids are never reused, and DOIs of its own are ready'
   const sayNone = says.every((x) => { const i = x.indexOf(':'); return read(path.join(ROOT, x.slice(0, i))).includes(x.slice(i + 1)); });
   ok('the pages say that Sophaxis assigns no DOIs exactly while site.json gives no prefix, and no record page shows a record DOI before then',
     sayNone === !site.doi.prefix && (site.doi.prefix || !fs.readdirSync(path.join(ROOT, 'site', 'abs')).some((f) => read(path.join(ROOT, 'site', 'abs', f)).includes('Record DOI'))));
+}
+
+/* ------------------------------------------------------------ 29 */
+console.log('\n29. Lawful use: licences, liability, takedown, and the services Sophaxis relies on');
+{
+  const cp = read(path.join(ROOT, 'policies', 'copyright.md'));
+  ok('the Copyright Policy says how Sophaxis meets the licences: credit, no changes, no added terms, no endorsement',
+    ['- Credit:', '- No changes:', '- No added terms:', '- No endorsement:'].every((x) => cp.includes(x)) && cp.includes('The abstract is shown as plain text, with formatting tags removed and its words unchanged.'));
+  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
+  ok('every record page credits the abstract to its authors under the licence, with a link to it',
+    a.includes('<p class="meta">Abstract by Jane Doe, Taro Yamada, from the DOI metadata, shown as plain text without other changes, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>'));
+  const terms = read(path.join(ROOT, 'policies', 'terms.md'));
+  const dis = read(path.join(ROOT, 'disclaimer.md'));
+  ok('no limit of liability reaches intent, gross negligence, or what the Consumer Contract Act or another law forbids to limit',
+    terms.includes("nothing in them excludes or limits liability for intent or gross negligence, or any liability that Japan's Consumer Contract Act or another law does not allow to be excluded or limited.")
+    && dis.includes('This does not exclude or limit liability for intent or gross negligence'));
+  ok('the takedown procedure lets the person concerned answer before a decision, except for serious harm',
+    read(path.join(ROOT, 'policies', 'takedown.md')).includes('the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.'));
+  const rp = read(path.join(ROOT, 'repositories.md'));
+  const page = read(path.join(ROOT, 'site', 'repositories.html'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  ok('the page for repositories disclaims for them: not responsible for Sophaxis, its records or its errors; no logos; their terms prevail',
+    rp.includes('They are not responsible for Sophaxis, for its records, for its moderation, or for any error that Sophaxis introduces when it shows their metadata.')
+    && rp.includes('Sophaxis shows none of their logos') && rp.includes('where a service says otherwise, Sophaxis follows the service.')
+    && dis.includes('They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces'));
+  ok('the acknowledgements thank every repository of site.json and every agency and service Sophaxis uses, with the thanks arXiv asks for',
+    Object.values(site.repositories).every((n) => page.includes('>' + n + '</a>, for keeping the deposits and their DOIs</li>'))
+    && ['DataCite', 'Crossref', 'Japan Link Center (JaLC)', 'ORCID', 'the Internet Archive', 'GitHub', 'Vercel'].every((n) => page.includes('>' + n + '</a>, for '))
+    && page.includes('Thank you to arXiv for use of its open access interoperability.'));
+  ok('scripts fetch arXiv files from export.arxiv.org, as arXiv asks', read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes('https://export.arxiv.org/pdf/') && !read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes("'https://arxiv.org/pdf/"));
 }
 
 console.log('\n' + '-'.repeat(60));
