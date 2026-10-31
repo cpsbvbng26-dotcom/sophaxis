@@ -763,6 +763,27 @@ console.log('\n19. The authors bear full responsibility');
     read(path.join(FIX, 'abs', '2026.0001.html')).includes('does not guarantee its quality. The authors bear full responsibility for its content.</div>'));
 }
 
+/* ------------------------------------------------------------ 20 */
+console.log('\n20. Operator and contact');
+{
+  const c = read(path.join(ROOT, 'site', 'contact.html'));
+  const src = read(path.join(ROOT, 'contact.md'));
+  ok('the contact page names the operator with an ORCID iD, says it is one person in Japan, and has a date of last change',
+    src.includes('Sophaxis is operated by one person, Takuya Nemoto, in Japan.') && c.includes('href="https://orcid.org/0009-0000-1406-0547"') && /Last updated: \d{4}-\d{2}-\d{2}\./.test(src));
+  const forms = fs.readdirSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE')).filter((f) => f !== 'config.yml');
+  ok('the contact page links every issue form there is, and private requests go only to the ORCID record',
+    forms.length === 4 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
+    && src.includes("email to the address on the operator's [ORCID record]") && !/@[a-z0-9-]+\.[a-z]/i.test(src));
+  ok('the postal address is not published, and is given on request without delay',
+    src.includes('The operator\'s postal address is not published.') && src.includes('It is given on request, without delay, as Japan\'s Act on the Protection of Personal Information provides.'));
+  ok('the contact page promises the same 7 days as the Takedown and Privacy policies', src.includes('within 7 days')
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('within 7 days') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('within 7 days'));
+  ok('every page links the contact page from its footer, and the sitemap lists it',
+    fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+      .every((f) => /<footer>[\s\S]*href="(\.\/|\.\.\/|\/)contact\.html">Contact<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
+    && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/contact.html</loc>'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
