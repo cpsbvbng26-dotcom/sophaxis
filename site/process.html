@@ -73,20 +73,26 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>You need four things.</p>
 <ol><li>A preprint deposited in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI.</li><li>CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.</li><li>An <a href="https://orcid.org">ORCID</a> iD. Registration is free.</li><li>A <a href="https://github.com">GitHub</a> account. Registration is free.</li></ol>
 <p>Every author of the work must agree to the listing. If you used language models or other generative models, note which tools you used and what for.</p>
-<h2>Step 1. Link your ORCID record to GitHub</h2>
-<p>In your ORCID record, add <code>https://github.com/&lt;your username&gt;</code> under &quot;Websites &amp; social links&quot;, and make it public. This is how Sophaxis confirms that the person who opens the submission is an author of the work. Sophaxis reads only the name, the links and the works in your ORCID record; your email address is never read.</p>
-<h2>Step 2. Open a submission issue</h2>
-<p>Open the <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml">submission form</a> while signed in to GitHub. Give the DOI, your ORCID iD, the category and the statement on generative models, and tick the confirmations. The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.</p>
-<p>The issue is public. Your GitHub username and everything you write in it can be read by anyone.</p>
-<h2>Step 3. The automatic check answers</h2>
+<h2>Step 1. Find your GitHub username</h2>
+<p>A submission is a GitHub issue: a public post in the Sophaxis repository, with comments below it. If you have no GitHub account, create one at <a href="https://github.com/signup">github.com/signup</a>.</p>
+<p>Your username is the last part of the address of your GitHub profile, <code>https://github.com/&lt;your username&gt;</code>. After you sign in, it also appears in the menu under your picture at the top right.</p>
+<h2>Step 2. Link your ORCID record to GitHub</h2>
+<ol><li>Sign in at <a href="https://orcid.org">orcid.org</a>. Your ORCID record opens; your ORCID iD is the 16-digit number under your name.</li><li>Find the section &quot;Websites &amp; social links&quot; and click its edit button (the pencil).</li><li>Choose &quot;Add link&quot;. Give a title, such as GitHub, and the address <code>https://github.com/&lt;your username&gt;</code>.</li><li>Set its visibility to &quot;Everyone&quot;, then save.</li></ol>
+<p>This is how Sophaxis confirms that the person who opens the submission is an author of the work. Sophaxis reads only the name, the links and the works in your ORCID record; your email address is never read.</p>
+<h2>Step 3. Open a submission issue</h2>
+<ol><li>Open the <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml">submission form</a>. If GitHub asks you to sign in, do so; the form then opens.</li><li>After &quot;[Submission]&quot; in the title, add a few words, such as the title of your work.</li><li>Give the DOI, your ORCID iD, the category and the statement on generative models, and tick the confirmations.</li><li>Press the button at the bottom of the form to create the issue.</li></ol>
+<p>The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.</p>
+<p>The issue is public. Your GitHub username and everything you write in it can be read by anyone. GitHub tells you about each new comment on an issue you opened, on github.com and, by default, by email.</p>
+<h2>Step 4. The automatic check answers</h2>
 <p>Usually within a few minutes, a comment titled &quot;Automatic checks&quot; appears in the issue. It shows each check as pass or fail: the repository, the licence, the DOI metadata, the link from your ORCID record and your authorship. The issue receives the label <code>verified</code> or <code>unverified</code>.</p>
-<p>If a check fails, the comment says why. Fix the cause, for example the link in your ORCID record, then edit the issue; the check runs again.</p>
-<p>If the repository does not let Sophaxis fetch the PDF (OSF Preprints, Preprints.org, SSRN), the comment asks you to attach the deposited PDF to the issue. This is optional, and the file must be at most 20 MB.</p>
+<p>If a check fails, the comment says why. Fix the cause, for example the link in your ORCID record, then edit the issue; the check runs again. To edit the issue, open the menu (⋯) at the top right of your first post, choose &quot;Edit&quot;, change what is needed and save. An edit that changes nothing does not start the check.</p>
+<p>If the repository does not let Sophaxis fetch the PDF (OSF Preprints, Preprints.org, SSRN), the comment asks you to attach the deposited PDF to the issue. This is optional, and the file must be at most 20 MB. To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.</p>
 <p>A pass is not acceptance.</p>
-<h2>Step 4. A moderator reads the submission</h2>
+<p>The buttons on GitHub and ORCID may be renamed over time; the steps stay the same.</p>
+<h2>Step 5. A moderator reads the submission</h2>
 <p>A moderator reads the verified submission against the <a href="./policies/moderation.html">Moderation Policy</a>: the scope, the form of a scholarly paper, the statement on generative models, and the absence of spam, abuse and personal data of third parties. Moderation is not peer review. It does not check proofs, arguments or data.</p>
 <p>The operator aims to respond within 14 days. The decision is written in the issue.</p>
-<h2>Step 5. The decision</h2>
+<h2>Step 6. The decision</h2>
 <p>If the submission is accepted, its record page is published with a Sophaxis id, such as 2026.0001, and the issue is closed. Where the repository allows, an unmodified copy of the PDF is added afterwards.</p>
 <p>If it is declined, the moderator gives a short reason in the issue. You can answer there. The operator then looks at the submission once more, and that decision is final.</p>
 <h2>After listing</h2>
