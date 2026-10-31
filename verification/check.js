@@ -11,7 +11,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
-const { build, validate, orcidOk, loadPapers, pdfLimits } = require('../build.js');
+const { build, validate, orcidOk, loadPapers, pdfLimits, ris, cslJson, related } = require('../build.js');
 
 const ROOT = path.join(__dirname, '..');
 let pass = 0;
@@ -616,6 +616,40 @@ console.log('\n14. The weekly check and the Internet Archive');
     && urls.includes('https://sophaxis.vercel.app/pdf/2026.0001v2.pdf') && !urls.some((u) => u.includes('2026.0003')));
   const wf = read(path.join(ROOT, '.github', 'workflows', 'watch.yml'));
   ok('the weekly check runs on a schedule, may only read the code and write issues', /schedule:\n\s+- cron: '\d+ \d+ \* \* \d'/.test(wf) && /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
+}
+
+/* ------------------------------------------------------------ 15 */
+console.log('\n15. Citation files, related records, reporting an error');
+{
+  const p = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const r = ris(p);
+  ok('RIS: one line per field, CR LF throughout, every author family-first, the latest DOI, closed by ER',
+    r.startsWith('TY  - UNPB\r\n') && r.endsWith('ER  -\r\n') && !/[^\r]\n/.test(r)
+    && r.includes('AU  - Doe, Jane\r\nAU  - Yamada, Taro\r\n') && r.includes('DO  - 10.5281/zenodo.1234999\r\n') && r.includes('KW  - modal logic\r\n'));
+  const c = JSON.parse(cslJson(p))[0];
+  ok('CSL-JSON: names split into family and given, the date of the latest version, the DOI, marked as a preprint',
+    c.author[0].family === 'Doe' && c.author[1].given === 'Taro' && c.issued['date-parts'][0].join('-') === '2026-12-1'
+    && c.DOI === '10.5281/zenodo.1234999' && c.genre === 'Preprint' && c.note.includes('not peer-reviewed'));
+  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
+  ok('the record page offers BibTeX, RIS and CSL-JSON files, and the build writes them for shown records only',
+    a.includes('<a href="../cite/2026.0001.bib">BibTeX</a> · <a href="../cite/2026.0001.ris">RIS</a> · <a href="../cite/2026.0001.json">CSL-JSON</a>')
+    && ['bib', 'ris', 'json'].every((x) => fs.existsSync(path.join(FIX, 'cite', '2026.0001.' + x)) && fs.existsSync(path.join(FIX, 'cite', '2026.0002.' + x)))
+    && !fs.readdirSync(path.join(FIX, 'cite')).some((f) => f.startsWith('2026.0003')));
+  const rec = (id, orcid, kw, status = 'listed', date = '2026-11-01') => ({ id, status, keywords: kw, authors: [{ name: 'A B', orcid }], versions: [{ version: 1, doi: '10.5281/zenodo.' + id.slice(5), date }] });
+  const me = rec('2026.0010', '0000-0002-1825-0097', ['Modal logic']);
+  const all = [me, rec('2026.0011', '0000-0002-1825-0097', []), rec('2026.0012', null, ['modal LOGIC']), rec('2026.0013', '0000-0002-1825-0097', [], 'withdrawn'),
+    rec('2026.0014', null, ['ethics']), rec('2026.0015', '0000-0002-1825-0097', ['modal logic'], 'listed', '2026-12-01')];
+  const rel = related(me, all);
+  ok('related records: a shared ORCID iD, then a shared keyword ignoring case; newest first; withdrawn and unrelated records left out',
+    rel.byAuthors.map((x) => x.id).join() === '2026.0015,2026.0011' && rel.onTopic.map((x) => x.id).join() === '2026.0012');
+  ok('a record with nothing related shows no related section', !read(path.join(FIX, 'abs', '2026.0002.html')).includes('Related records'));
+  ok('every record page links a correction issue for its id and its saved copies at the Internet Archive',
+    a.includes('href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml&amp;id=2026.0001">Report an error in this record</a>')
+    && a.includes('href="https://web.archive.org/web/https://sophaxis.vercel.app/abs/2026.0001.html">Saved copies at the Internet Archive</a>'));
+  const t = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'correction.yml'));
+  ok('the correction form takes the id from the link, asks for no personal data, and the Moderation Policy names it',
+    /- type: input\n    id: id\n/.test(t) && t.includes('labels: ["correction"]') && t.includes('- label: This issue contains no personal data.\n          required: true')
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('Anyone can report an error in a record through the link on its page, which opens a public correction issue.'));
 }
 
 console.log('\n' + '-'.repeat(60));
