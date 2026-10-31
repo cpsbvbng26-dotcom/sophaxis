@@ -87,6 +87,15 @@ The operator's address is given on request, as the [Operator and contact](../con
 This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
 Nothing in this section stops anyone from asking a court for urgent relief, or from using the [Takedown Policy](./takedown.html).
 
+## People outside Japan
+
+Sophaxis is run from Japan and can be read from anywhere.
+
+- The same steps apply. Talks and mediation can be held in writing or online, in English or Japanese, so that no one has to travel to Japan to settle a dispute.
+- These terms are governed by the laws of Japan. Where the law of a person's own country gives them protection that cannot be set aside by agreement, such as the protection of consumers, that protection still applies.
+- A person outside Japan who may sue in the courts of their own country under that country's law keeps that right; the agreement on the court above does not take it away.
+- These terms are written in English. If a translation is ever published and differs from the English text, the English text applies.
+
 ## Contact
 
 The operator and every way to reach the operator are on the [Operator and contact](../contact.html) page.

@@ -15,6 +15,10 @@ Do not include personal data in the issue.
 Describe where the problem is, without repeating the material itself.
 Say how you are concerned: as an author, as the rights holder, as the person whose data appears, or on their behalf.
 
+Requests are welcome from any country, in English or Japanese.
+A request may rest on the law of the requester's country, such as a copyright notice under the law of the United States or a request under the data protection law of the European Union.
+The operator considers it under this policy and under Japanese law, and takes the material offline when either requires it.
+
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The address is kept there, not on this site.
 The operator then takes the abstract and the PDF copy offline while the request is reviewed.

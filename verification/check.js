@@ -1074,6 +1074,22 @@ console.log('\n31. Disputes: agreement first, then the court named in the Terms'
     && read(path.join(ROOT, 'disclaimer.md')).includes('Disputes are settled by agreement first'));
 }
 
+/* ------------------------------------------------------------ 32 */
+console.log('\n32. People outside Japan');
+{
+  const terms = read(path.join(ROOT, 'policies', 'terms.md'));
+  const o = (/## People outside Japan\n([\s\S]*?)\n## /.exec(terms) || [, ''])[1];
+  ok('people outside Japan: the same steps, in writing or online, in English or Japanese; Japanese law, without taking away protection their own law will not let them give up',
+    o.includes('Talks and mediation can be held in writing or online, in English or Japanese, so that no one has to travel to Japan to settle a dispute.')
+    && o.includes('Where the law of a person\'s own country gives them protection that cannot be set aside by agreement, such as the protection of consumers, that protection still applies.')
+    && o.includes('keeps that right; the agreement on the court above does not take it away.') && o.includes('If a translation is ever published and differs from the English text, the English text applies.'));
+  ok('takedown requests may come from any country and rest on its law; personal-data rights are open to everyone, with more where their own law gives more',
+    read(path.join(ROOT, 'policies', 'takedown.md')).includes('Requests are welcome from any country, in English or Japanese.')
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('takes the material offline when either requires it.')
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('These rights are open to everyone, wherever they live.')
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('the operator honours those rights as far as they apply to Sophaxis.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
