@@ -24,6 +24,7 @@ It will not start charging.
 ## Operator and conflicts of interest
 
 Sophaxis is operated by Takuya Nemoto, an independent researcher in Japan.
+The [Operator and contact](./contact.html) page says how to reach the operator.
 Submissions by the operator are moderated under the same rules
 and are marked on their record pages as the operator's own.
 
