@@ -21,7 +21,7 @@ If you used language models or other generative models, note which tools you use
 
 In your ORCID record, add `https://github.com/<your username>` under "Websites & social links", and make it public.
 This is how Sophaxis confirms that the person who opens the submission is an author of the work.
-Nothing else in your ORCID record is read, and your email address is never read.
+Sophaxis reads only the name, the links and the works in your ORCID record; your email address is never read.
 
 ## Step 2. Open a submission issue
 
