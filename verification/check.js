@@ -934,6 +934,30 @@ console.log('\n26. One operator: decisions, continuity, dependencies and statist
     && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/stats.html</loc>'));
 }
 
+/* ------------------------------------------------------------ 27 */
+console.log('\n27. Examples of what is not accepted');
+{
+  const I = require('../tools/intake.js');
+  const { repoPrefix } = require('../build.js');
+  const sub = read(path.join(ROOT, 'policies', 'submission.md'));
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
+  const ex = (/## Examples of what is not accepted\n([\s\S]*?)\n## /.exec(sub) || [, ''])[1];
+  const groups = [...ex.matchAll(/^([A-Z][^\n:.]*)[:.]( [^\n]*)?$/gm)].map((m) => m[1]).filter((g) => !/^These|^Each/.test(g));
+  const reasons = ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Spam or abuse'];
+  ok('the examples come in groups, and every reason for declining in the Moderation Policy has a group of its own',
+    ['Authorship', 'Licence', 'Scope', 'Form', 'Disclosure', 'Rights or personal data', 'Spam or abuse'].every((g) => groups.includes(g)) && reasons.every((r) => mod.includes('- ' + r + ':') || mod.includes('- ' + r + '.'))
+    && (ex.match(/^- /gm) || []).length >= 40, groups.join(' | ') + ' / ' + (ex.match(/^- /gm) || []).length + ' examples');
+  ok('the licences the examples refuse are the ones the automatic check refuses',
+    ['https://creativecommons.org/licenses/by-nc/4.0/', 'https://creativecommons.org/licenses/by-nd/4.0/', 'https://creativecommons.org/licenses/by-nc-sa/4.0/', 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+      'https://creativecommons.org/licenses/by/3.0/', 'https://creativecommons.org/licenses/by/2.0/', 'http://arxiv.org/licenses/nonexclusive-distrib/1.0/', 'cc-by-nc-4.0', 'cc-by-3.0']
+      .every((l) => I.licenceOf(l) === null) && I.licenceOf('https://creativecommons.org/licenses/by/4.0/') === 'CC-BY-4.0');
+  ok('the DOIs the examples refuse are refused by the check: a SciELO journal, and repositories that give no DOI or are not accepted',
+    !repoPrefix('10.1590/s0100-512x2026000100001') && !repoPrefix('10.13140/rg.2.2.34728.33286') && ex.includes('ResearchGate') && ex.includes('The DOI of a peer review report'));
+  const cp = read(path.join(ROOT, 'policies', 'copyright.md'));
+  ok('the Copyright Policy gives examples of the version shared, material from others and requests',
+    /## Examples of what is not allowed\n[\s\S]*The version that is shared:[\s\S]*Material from others:[\s\S]*Requests:/.test(cp) && (cp.match(/^- /gm) || []).length >= 13);
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
