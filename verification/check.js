@@ -1090,6 +1090,24 @@ console.log('\n32. People outside Japan');
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('the operator honours those rights as far as they apply to Sophaxis.'));
 }
 
+/* ------------------------------------------------------------ 33 */
+console.log('\n33. GitHub and Vercel: their terms apply alongside, and these terms do not bind them');
+{
+  const terms = read(path.join(ROOT, 'policies', 'terms.md'));
+  const g = (/## GitHub and Vercel\n([\s\S]*?)\n## /.exec(terms) || [, ''])[1];
+  ok('the Terms say that GitHub and Vercel are in the United States and that their own terms govern submitting and reading',
+    g.includes('Sophaxis runs on two services based in the United States') && g.includes("governed by GitHub's Terms of Service and Privacy Statement, between the user and GitHub.")
+    && g.includes('possibly in countries other than Japan or the reader\'s own.'));
+  ok('the Terms do not bind GitHub or Vercel, a dispute with them follows their terms, and their removals may not be undone',
+    g.includes('They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel') && g.includes('A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court.')
+    && g.includes('Sophaxis may not be able to restore it.'));
+  const td = read(path.join(ROOT, 'policies', 'takedown.md'));
+  const pv = read(path.join(ROOT, 'policies', 'privacy.md'));
+  ok('a takedown request may also go to GitHub or Vercel, and the operator decides on Sophaxis whatever they decide; their own users\' data is theirs',
+    td.includes('A request can also go to GitHub, for example as a copyright notice under its own process, or to Vercel.') && td.includes('the operator decides on Sophaxis under this policy, whatever they decide.')
+    && pv.includes('Personal data that GitHub or Vercel hold about their own users') && pv.includes('Vercel (United States)') && pv.includes('GitHub (United States)'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
