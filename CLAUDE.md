@@ -22,6 +22,8 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
 8. PDF の写しは `tools/fetch_pdf.js` が預け先から取る（`.github/workflows/pdf.yml`、手で起動）。`data/pdf/` に置き、
    記録の `pdfs` に sha256 と取得元を書く。写しは変えない。手で PDF を足さない。預け先が取らせない場合は、
    著者が投稿の issue に添付した PDF だけを `--from` で取り、`provided_by: "authors"` を付ける。
+   写しは 1 本 20 MB まで、合計 1 GB まで（`site.json` の `pdfLimits`）。超える版は写しを置かず、預け先へのリンクだけにする。
+   `fetch_pdf.js` と `build.js` が同じ値で止め、著作権の規程にも同じ数を書いてある。
 9. `assets/favicon.svg` と `assets/og.png` は手で置いたもので、生成物ではない。`build.js` がそのまま `site/` へ写す。
    ロゴは文字のフォントを使わず、長方形だけで組んである。`og.png` はロゴを角を丸めずに 600 × 600 の PNG にしたもの。
    `favicon.ico`（16・32・48 px の PNG を収めたもの）、`favicon-192.png`、`apple-touch-icon.png`（180 px、角を丸めない）も

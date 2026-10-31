@@ -11,7 +11,8 @@
  * Only repositories that let a script fetch the file are used. Where the repository does not, the
  * authors can attach the deposited PDF to their submission issue; --from takes that attachment,
  * and the copy is marked as provided by the authors. Where the repository
- * publishes a checksum, the copy must match it. Every listed work carries CC BY 4.0,
+ * publishes a checksum, the copy must match it. A file over the limits of site.json is not kept;
+ * the record then links to the repository only. Every listed work carries CC BY 4.0,
  * CC BY-SA 4.0 or CC0 1.0, which allow an unmodified copy with credit and the licence.
  */
 'use strict';
@@ -22,7 +23,11 @@ const crypto = require('crypto');
 
 const ROOT = path.join(__dirname, '..');
 const UA = 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)';
-const MAX = 50 * 1024 * 1024;
+/* The limits are those of site.json, the same ones build.js enforces. */
+const LIMITS = (() => {
+  const l = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8')).pdfLimits;
+  return { file: l.fileMB * 1024 * 1024, total: l.totalGB * 1024 * 1024 * 1024 };
+})();
 
 /* Where the PDF of one version lives. Pure: no network. `n` is the version number in the record. */
 function sourceFor(doi, n) {
@@ -75,10 +80,11 @@ async function download(src) {
   return { bytes, source, md5 };
 }
 
-/* Pure: the checks a downloaded file must pass before it is kept. */
-function accept(bytes, md5) {
+/* Pure: the checks a downloaded file must pass before it is kept. `used` is the size of the copies already kept. */
+function accept(bytes, md5, used = 0, limits = LIMITS) {
   const problems = [];
-  if (bytes.length > MAX) problems.push('larger than 50 MB');
+  if (bytes.length > limits.file) problems.push('larger than ' + limits.file / 1024 / 1024 + ' MB');
+  else if (used + bytes.length > limits.total) problems.push('the copies together would be larger than ' + limits.total / 1024 / 1024 / 1024 + ' GB');
   if (bytes.subarray(0, 5).toString('latin1') !== '%PDF-') problems.push('not a PDF');
   if (md5 && crypto.createHash('md5').update(bytes).digest('hex') !== md5.toLowerCase()) problems.push('does not match the repository checksum');
   return problems;
@@ -103,7 +109,8 @@ async function main() {
     if (!src) { console.log('v' + v.version + ': this repository does not let a script fetch the file; the record links to it only'); continue; }
     try {
       const { bytes, source, md5 } = await download(src);
-      const problems = accept(bytes, md5);
+      const used = fs.readdirSync(dir).reduce((n, x) => n + fs.statSync(path.join(dir, x)).size, 0);
+      const problems = accept(bytes, md5, used);
       if (problems.length) { console.log('v' + v.version + ': not kept, ' + problems.join(', ')); continue; }
       const name = id + 'v' + v.version + '.pdf';
       fs.writeFileSync(path.join(dir, name), bytes);
@@ -119,6 +126,6 @@ async function main() {
   fs.writeFileSync(file, JSON.stringify(p, null, 2) + '\n');
 }
 
-module.exports = { sourceFor, accept, attachmentOk };
+module.exports = { sourceFor, accept, attachmentOk, LIMITS };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

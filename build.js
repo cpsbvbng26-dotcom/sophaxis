@@ -117,11 +117,17 @@ function validate(p, file) {
 /* The PDF copies sit beside the records: data/papers → data/pdf. */
 const pdfDir = (paperDir) => path.join(paperDir, '..', 'pdf');
 
-function loadPapers(dir) {
+/* How large the PDF copies may be, one by one and together. A larger file stays at its repository,
+ * and the record links to it; the limits keep the site and its repository small enough to serve for free. */
+const MB = 1024 * 1024;
+const pdfLimits = (l = SITE.pdfLimits) => ({ file: l.fileMB * MB, total: l.totalGB * 1024 * MB });
+
+function loadPapers(dir, limits = pdfLimits()) {
   if (!fs.existsSync(dir)) return { papers: [], problems: [] };
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort();
   const papers = [];
   const problems = [];
+  let total = 0;
   for (const f of files) {
     let p;
     try { p = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); }
@@ -130,10 +136,16 @@ function loadPapers(dir) {
     (p.pdfs || []).forEach((x) => {
       const at = path.join(pdfDir(dir), String(x.file));
       if (!fs.existsSync(at)) problems.push(f + ': the copy ' + x.file + ' is missing');
-      else if (crypto.createHash('sha256').update(fs.readFileSync(at)).digest('hex') !== x.sha256) problems.push(f + ': the copy ' + x.file + ' does not match its sha256');
+      else {
+        const bytes = fs.readFileSync(at);
+        if (crypto.createHash('sha256').update(bytes).digest('hex') !== x.sha256) problems.push(f + ': the copy ' + x.file + ' does not match its sha256');
+        if (bytes.length > limits.file) problems.push(f + ': the copy ' + x.file + ' is larger than ' + limits.file / MB + ' MB');
+        total += bytes.length;
+      }
     });
     papers.push(p);
   }
+  if (total > limits.total) problems.push('the PDF copies together are larger than ' + limits.total / 1024 / MB + ' GB');
   const ids = papers.map((p) => p.id);
   if (new Set(ids).size !== ids.length) problems.push('ids are not unique');
   /* One work, one record: a DOI may appear in only one record (a record may repeat it across versions, as arXiv does). */
@@ -684,7 +696,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, STYLE_HASH };
 
 if (require.main === module) {
   const r = build(OUT, PAPER_DIR);
