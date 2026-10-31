@@ -65,6 +65,7 @@ The record stays in the git history; where the law requires it, ask GitHub to re
 ## Operator and contact
 
 Sophaxis is operated by Takuya Nemoto. How to reach the operator is on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page.
+Short answers to common questions are in the [FAQ](https://sophaxis.vercel.app/faq.html); where they differ from a policy, the policy applies.
 
 ## Reusing the records
 
