@@ -60,6 +60,7 @@ The statement is shown on the record page.
 ## How long does moderation take?
 
 The operator aims to respond to each submission within 14 days.
+[From submission to listing](./process.html) follows a submission step by step.
 
 ## Who is responsible for a listed work?
 
