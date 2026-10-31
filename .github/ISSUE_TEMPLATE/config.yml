@@ -3,3 +3,6 @@ contact_links:
   - name: Policy
     url: https://sophaxis.vercel.app/policy.html
     about: Scope, moderation, language models, versions and privacy.
+  - name: Operator and contact
+    url: https://sophaxis.vercel.app/contact.html
+    about: Who operates Sophaxis, and how to reach the operator in private.
