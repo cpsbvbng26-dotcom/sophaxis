@@ -794,9 +794,9 @@ console.log('\n21. The FAQ agrees with the policies');
     faq.includes(list(Object.values(site.repositories), 'and') + '.') && faq.includes(list(Object.values(site.licenses), 'and') + ', as given in the DOI metadata.'));
   const scope = /Sophaxis accepts work in ([^.]+)\./.exec(read(path.join(ROOT, 'policies', 'submission.md')))[1];
   ok('the FAQ gives the scope in the words of the Submission Policy', faq.includes('An overlay preprint server for ' + scope + '.'));
-  const days = /respond to each submission within (\d+) days/.exec(read(path.join(ROOT, 'policies', 'moderation.md')))[1];
+  const time = (/^(As a guide, a decision can come [^\n]+)$/m.exec(read(path.join(ROOT, 'policies', 'moderation.md'))) || [, '(none)'])[1];
   ok('the FAQ gives the moderation time and the PDF limit that the policy and site.json set',
-    faq.includes('within ' + days + ' days.') && faq.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
+    faq.includes(time) && faq.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
   const links = [...faq.matchAll(/\]\(\.\/([^)]+)\)/g)].map((m) => m[1]);
   ok('every link in the FAQ leads to a page of the site', links.length >= 8 && links.every((l) => fs.existsSync(path.join(ROOT, 'site', l))), links.filter((l) => !fs.existsSync(path.join(ROOT, 'site', l))).join(', '));
   const qs = [...faq.matchAll(/^## (.*)$/gm)].map((m) => m[1]);
@@ -814,10 +814,13 @@ console.log('\n22. From submission to listing: the page agrees with the form, th
   const pr = read(path.join(ROOT, 'process.md'));
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
   const list = (xs, conj) => xs.slice(0, -1).join(', ') + ' ' + conj + ' ' + xs[xs.length - 1];
-  const days = /respond to each submission within (\d+) days/.exec(read(path.join(ROOT, 'policies', 'moderation.md')))[1];
+  const time = (/^(As a guide, a decision can come [^\n]+)$/m.exec(read(path.join(ROOT, 'policies', 'moderation.md'))) || [, '(none)'])[1];
   ok('the page names the repositories and licences of site.json, the moderation time and the PDF limit',
     pr.includes(list(Object.values(site.repositories), 'or') + ', with a DOI.') && pr.includes(list(Object.values(site.licenses), 'or') + ' on the deposit')
-    && pr.includes('within ' + days + ' days.') && pr.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
+    && pr.includes(time) && pr.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
+  ok('the moderation time is a guide from the same day to a few months, with no fixed number of days',
+    time === 'As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.'
+    && !/within \d+ days/.test(read(path.join(ROOT, 'policies', 'moderation.md'))));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   const intake = read(path.join(ROOT, 'tools', 'intake.js'));
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
