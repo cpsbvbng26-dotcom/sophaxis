@@ -529,7 +529,7 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
       japanese.join(', '));
   }
   ok('every page says in its footer that the site is hosted on Vercel, beside the link to the Privacy Policy that names what Vercel processes', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
-    .every((f) => /<footer>[\s\S]*Operated by Takuya Nemoto\. Hosted on Vercel\.[\s\S]*href="(\.\/|\.\.\/|\/)policies\/privacy\.html">Privacy<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
+    .every((f) => /<footer>[\s\S]*Operated by Takuya Nemoto\. [^<]*Hosted on Vercel\.[\s\S]*href="(\.\/|\.\.\/|\/)policies\/privacy\.html">Privacy<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('The site is hosted on Vercel.'));
   ok('every page links the Terms of Use, the Privacy Policy and the Takedown Policy', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
     .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./|/)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
@@ -1042,6 +1042,20 @@ console.log('\n29. Lawful use: licences, liability, takedown, and the services S
     && ['DataCite', 'Crossref', 'Japan Link Center (JaLC)', 'ORCID', 'the Internet Archive', 'GitHub', 'Vercel'].every((n) => page.includes('>' + n + '</a>, for '))
     && page.includes('Thank you to arXiv for use of its open access interoperability.'));
   ok('scripts fetch arXiv files from export.arxiv.org, as arXiv asks', read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes('https://export.arxiv.org/pdf/') && !read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes("'https://arxiv.org/pdf/"));
+}
+
+/* ------------------------------------------------------------ 30 */
+console.log('\n30. Sophaxis says that it was built with Claude Code');
+{
+  const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
+  const missing = pages.filter((f) => !/<footer>[\s\S]*Built with Claude Code \(Anthropic\); the operator is responsible for the site, and Claude is not an author\.[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))));
+  ok('every page says in its footer that the site was built with Claude Code, that the operator is responsible and that Claude is not an author', pages.length > 0 && missing.length === 0, missing.join(', '));
+  const dis = read(path.join(ROOT, 'disclaimer.md'));
+  ok('the disclaimer, the FAQ, the contact page and the policy index say so too, and that no language model decides on a submission',
+    dis.includes('## How Sophaxis was made') && dis.includes('No language model decides on a submission') && dis.includes('Sophaxis is not affiliated with or endorsed by Anthropic.')
+    && read(path.join(ROOT, 'faq.md')).includes('## Was Sophaxis made with a language model?') && read(path.join(ROOT, 'contact.md')).includes('built with Claude Code (Anthropic)')
+    && read(path.join(ROOT, 'policy.md')).includes('This site and its code were built with Claude Code (Anthropic).') && read(path.join(ROOT, 'README.md')).includes('Claude is not an author.'));
+  ok('the automatic check calls no language model', !/anthropic|openai|api\.claude|generativelanguage/i.test(['intake.js', 'withdraw.js', 'watch.js', 'fetch_pdf.js'].map((f) => read(path.join(ROOT, 'tools', f))).join('\n')));
 }
 
 console.log('\n' + '-'.repeat(60));
