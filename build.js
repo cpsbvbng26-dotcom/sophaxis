@@ -171,6 +171,10 @@ const CSS = `
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
 .wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
 header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
 header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
@@ -243,11 +247,12 @@ ${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-ve
 <style>${CSS}</style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap"${site}
 <a class="brand" ${brand}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
 <nav><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a><a href="${up}faq.html">FAQ</a></nav>
 </div></header>
-<main class="wrap">
+<main class="wrap" id="main">
 ${body}
 </main>
 <footer><div class="wrap">
@@ -869,6 +874,7 @@ function build(out, paperDir) {
   fs.mkdirSync(path.join(out, 'author'), { recursive: true });
   fs.mkdirSync(path.join(out, 'policies'), { recursive: true });
   fs.mkdirSync(path.join(out, 'cite'), { recursive: true });
+  fs.mkdirSync(path.join(out, '.well-known'), { recursive: true });
   const files = {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
@@ -884,6 +890,9 @@ function build(out, paperDir) {
     'feed.xml': feed(papers),
     'papers.json': papersJson(papers),
     'sitemap.xml': sitemap(papers),
+    /* RFC 9116: where to report a security problem. Expires must be renewed within a year; the check fails before it lapses. */
+    '.well-known/security.txt': ['Contact: ' + SITE.baseUrl + 'contact.html', 'Expires: ' + SITE.securityTxtExpires, 'Preferred-Languages: en, ja',
+      'Canonical: ' + SITE.baseUrl + '.well-known/security.txt', 'Policy: ' + SITE.baseUrl + 'contact.html'].join('\n') + '\n',
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
