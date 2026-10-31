@@ -1,18 +1,19 @@
 #!/usr/bin/env node
 /* Once a week: check that every listed DOI still resolves and keeps its licence,
+ * look for versions that the repository has and the record has not yet,
  * and ask the Internet Archive to save the pages and the PDF copies.
  *
  * Run by .github/workflows/watch.yml (GITHUB_TOKEN, GITHUB_REPOSITORY).
  *   node tools/watch.js --dry-run     # report only; open no issue, save nothing
  *
- * A problem is reported in one open issue labelled "watch"; when the problems are gone, that issue is closed.
+ * Problems and new versions are reported in one open issue labelled "watch"; when there are none, that issue is closed.
  * Saving to the Internet Archive is best effort and never fails the run.
  */
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
-const { lookUp, github } = require('./intake.js');
+const { lookUp, versionsOf, github } = require('./intake.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
@@ -37,6 +38,23 @@ function compare(p, found) {
   return out;
 }
 
+/* Pure: where a new version would show. figshare gives each version its own DOI (.v1, .v2, …),
+ * and arXiv keeps one DOI for all; other repositories are not followed. */
+function followed(p) {
+  if (p.status !== 'listed') return null;
+  const last = p.versions[p.versions.length - 1].doi;
+  const m = /^(10\.6084\/m9\.figshare\.\d+)\.v\d+$/i.exec(last);
+  if (m) return m[1];
+  if (/^10\.48550\/arxiv\./i.test(last)) return last;
+  return null;
+}
+
+/* Pure: a note when the repository has more versions than the record. */
+function newVersions(p, atRepository) {
+  if (!atRepository || atRepository <= p.versions.length) return [];
+  return [`${p.id}: the repository has ${atRepository} versions and the record lists ${p.versions.length}; the authors can submit the new version as an update`];
+}
+
 /* Pure: the addresses to save, without removed records. */
 function archiveUrls(list) {
   const shown = list.filter((p) => p.status !== 'removed');
@@ -45,13 +63,22 @@ function archiveUrls(list) {
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => SITE.baseUrl + 'pdf/' + x.file)));
 }
 
-function report(problems, when) {
+function report(problems, when, news = []) {
+  const list = (xs) => xs.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n');
   return `${MARK}
 **Weekly check, ${when}**
+${problems.length ? `
+${list(problems)}
 
-${problems.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n')}
+The operator looks into each problem under the Moderation Policy.
+` : ''}${news.length ? `
+New versions at the repository:
 
-The operator looks into each problem under the Moderation Policy. This issue closes itself when the next check finds nothing.
+${list(news)}
+
+Sophaxis does not add a version by itself: the authors submit it, and the same checks run again.
+` : ''}
+This issue closes itself when the next check finds nothing.
 `;
 }
 
@@ -68,6 +95,16 @@ async function main() {
   }
   const problems = list.flatMap((p) => compare(p, found));
   console.log(problems.length ? problems.join('\n') : 'every DOI resolves and keeps its licence');
+  const news = [];
+  for (const p of list) {
+    const doi = followed(p);
+    if (!doi) continue;
+    try {
+      const { meta, raw } = await lookUp(doi);
+      if (meta) news.push(...newVersions(p, (await versionsOf(doi, meta, raw)).length));
+    } catch (e) { console.log('could not look for new versions of ' + p.id + ': ' + e.message); }
+  }
+  console.log(news.length ? news.join('\n') : 'no new versions at the repositories');
 
   /* The Internet Archive answers 429 to saves that come too close together, and sometimes drops one:
    * space them, and retry once after either. */
@@ -88,15 +125,16 @@ async function main() {
 
   const open = ((await github('GET', '/issues?state=open&labels=watch&per_page=20')) || []).find((i) => (i.body || '').startsWith(MARK));
   const when = new Date().toISOString().slice(0, 10);
-  if (problems.length) {
-    if (open) await github('PATCH', '/issues/' + open.number, { body: report(problems, when) });
-    else await github('POST', '/issues', { title: 'Weekly check: problems found', body: report(problems, when), labels: ['watch'] });
+  if (problems.length || news.length) {
+    const body = report(problems, when, news);
+    if (open) await github('PATCH', '/issues/' + open.number, { body });
+    else await github('POST', '/issues', { title: problems.length ? 'Weekly check: problems found' : 'Weekly check: new versions at the repository', body, labels: ['watch'] });
   } else if (open) {
     await github('POST', '/issues/' + open.number + '/comments', { body: `${MARK}\nThe check on ${when} found no problems. Closing.` });
     await github('PATCH', '/issues/' + open.number, { state: 'closed', state_reason: 'completed' });
   }
 }
 
-module.exports = { compare, archiveUrls, report, MARK };
+module.exports = { compare, followed, newVersions, archiveUrls, report, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

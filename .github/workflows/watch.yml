@@ -1,5 +1,5 @@
 name: watch
-# Once a week: every listed DOI still resolves and keeps its licence, and the pages are saved to the Internet Archive.
+# Once a week: every listed DOI still resolves and keeps its licence, new versions at figshare and arXiv are noted, and the pages are saved to the Internet Archive.
 on:
   schedule:
     - cron: '37 4 * * 1'
