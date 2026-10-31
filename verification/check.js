@@ -154,7 +154,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
     'Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.',
     'Authors can ask for the copy to be removed; the record then links to the repository only.',
-    'For OSF Preprints, Preprints.org and SSRN, the authors can attach the deposited PDF to their submission issue.',
+    'For any other repository, the authors can attach the deposited PDF to their submission issue.',
     'Sophaxis then keeps that file unmodified, and the record says that the authors provided it.',
     'When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.',
     'Sophaxis does not control whether or when a search engine indexes a page.',
@@ -868,6 +868,31 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
       .every((f) => /<footer>[\s\S]*href="(\.\/|\.\.\/|\/)disclaimer\.html">Disclaimer<\/a> · <a href="(\.\/|\.\.\/|\/)repositories\.html">For repositories<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
     && ['disclaimer.html', 'repositories.html'].every((f) => read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/' + f + '</loc>')));
+}
+
+/* ------------------------------------------------------------ 25 */
+console.log('\n25. More repositories: SocArXiv, MetaArXiv, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works, Jxiv');
+{
+  const I = require('../tools/intake.js');
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const names = Object.values(site.repositories);
+  ok('every accepted repository has an https home page, and no home page is left over',
+    names.every((n) => /^https:\/\/[a-z0-9.-]+(\/[a-z0-9\/-]*)?$/.test(site.repositoryHomes[n] || '')) && Object.keys(site.repositoryHomes).sort().join() === names.slice().sort().join());
+  const m = I.fromJaLC(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'jalc.json'))));
+  ok('a JaLC record (Jxiv) is read in English: title with subtitle, names, ORCID iD, licence, date, abstract, keywords',
+    m.agency === 'JaLC' && m.doi === '10.51094/jxiv.99999' && m.title === 'A Fixture Record from JaLC: For Testing the Intake'
+    && m.authors[0].name === 'Hanako Yamada' && m.authors[0].family === 'Yamada' && m.authors[0].orcid === '0000-0002-1825-0097' && m.authors[1].orcid === null
+    && m.licences.join() === 'CC-BY-4.0' && m.date === '2026-03-07' && m.abstract === 'An English abstract with tags & an entity.'
+    && m.keywords.join('|') === 'modal logic|structuralism', JSON.stringify(m).slice(0, 300));
+  const cr = JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'crossref.json')));
+  const review = I.fromCrossref(Object.assign({}, cr, { message: Object.assign({}, cr.message, { type: 'peer-review' }) }));
+  const failsOn = (meta) => I.check({ form: { doi: meta.doi, orcid: '0000-0002-1825-0097', category: 'logic', llm: 'No generative model was used in any way.' }, login: 'x', meta, person: null, works: null, listed: new Map() })
+    .checks.filter((c) => !c[1]).map((c) => c[0]);
+  ok('a Crossref DOI for a peer review (as Qeios and ScienceOpen register) is refused; a preprint is not', failsOn(review).includes('The DOI is for a work, not for a review of one')
+    && !failsOn(I.fromCrossref(cr)).includes('The DOI is for a work, not for a review of one'));
+  ok('the DOI prefixes of the new repositories are recognised, and a SciELO journal outside SciELO Preprints is not',
+    ['10.31235/osf.io/q4fp7_v3', '10.31222/osf.io/zjkd2_v2', '10.1590/scielopreprints.18633', '10.32388/tb0ffk', '10.14293/pr2199.004729.v1', '10.31124/advance.19380077', '10.17613/5kv23-39x46', '10.51094/jxiv.161']
+      .every((d) => require('../build.js').repoPrefix(d)) && !require('../build.js').repoPrefix('10.1590/s0100-512x2026000100001'));
 }
 
 console.log('\n' + '-'.repeat(60));
