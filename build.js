@@ -245,7 +245,7 @@ ${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-ve
 <body>
 <header class="top"><div class="wrap"${site}
 <a class="brand" ${brand}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
-<nav><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a></nav>
+<nav><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a><a href="${up}faq.html">FAQ</a></nav>
 </div></header>
 <main class="wrap">
 ${body}
@@ -588,6 +588,12 @@ function policyPage() {
   return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
 }
 
+/* Short answers, each drawn from a policy, which applies where they differ. */
+const faqSource = () => fs.readFileSync(path.join(ROOT, 'faq.md'), 'utf8');
+function faqPage() {
+  return page({ title: 'Frequently asked questions | ' + SITE.name, description: 'Short answers about ' + SITE.name + ': moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.', rel: false, canonical: 'faq.html', body: markdown(faqSource()) });
+}
+
 /* Who runs Sophaxis and how to reach the operator. The email address stays on the ORCID record. */
 const contactSource = () => fs.readFileSync(path.join(ROOT, 'contact.md'), 'utf8');
 function contactPage() {
@@ -703,7 +709,8 @@ function sitemap(papers) {
   const policyDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(policySource(slug)) || [, newest])[1];
   const latestPolicy = POLICIES.map(([slug]) => policyDate(slug)).sort().pop();
   const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest],
-    ['contact.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(contactSource()) || [, newest])[1]]]
+    ['contact.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(contactSource()) || [, newest])[1]],
+    ['faq.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(faqSource()) || [, newest])[1]]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -743,6 +750,7 @@ function build(out, paperDir) {
     'submit.html': submitPage(),
     'policy.html': policyPage(),
     'contact.html': contactPage(),
+    'faq.html': faqPage(),
     'search.html': searchPage(),
     '404.html': notFoundPage(),
     'feed.xml': feed(papers),

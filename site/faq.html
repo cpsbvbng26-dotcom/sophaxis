@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-BZgGosWkdwDD0oX+obCdwCUhHjXbbL0/UFKOvPoQtxI='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Frequently asked questions | Sophaxis</title>
+<meta name="description" content="Short answers about Sophaxis: moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.">
+<link rel="canonical" href="https://sophaxis.vercel.app/faq.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Frequently asked questions | Sophaxis">
+<meta property="og:description" content="Short answers about Sophaxis: moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.">
+<meta property="og:url" content="https://sophaxis.vercel.app/faq.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap">
+<h1>Frequently asked questions</h1>
+<p>Last updated: 2026-10-31.</p>
+<p>Each answer is a short form of a policy. Where they differ, the policy applies.</p>
+<h2>What is Sophaxis?</h2>
+<p>An overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. It does not host the work itself. It lists preprints that authors have already deposited in an open repository, and gives each one a stable record page.</p>
+<h2>Is it peer review?</h2>
+<p>No. Acceptance is moderation, not peer review. Moderation checks the submitter, the licence, the scope, the form of the paper and the statement on generative models. It does not check proofs, arguments or data, and Sophaxis does not guarantee the quality of any listed work. See the <a href="./policies/moderation.html">Moderation Policy</a>.</p>
+<h2>Does it cost anything?</h2>
+<p>No. Sophaxis charges nothing, to authors or to readers, and will not start charging.</p>
+<h2>Does Sophaxis give my work a DOI?</h2>
+<p>No. The DOI comes from the repository where you deposited the work, and it is the reference to cite. Sophaxis gives each record an id, such as 2026.0001, which never changes and is never reused.</p>
+<h2>Which repositories are accepted?</h2>
+<p>Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN and Research Square. The work must have a DOI from one of them.</p>
+<h2>Which licences are accepted?</h2>
+<p>CC BY 4.0, CC BY-SA 4.0 and CC0 1.0, as given in the DOI metadata. Licences with NonCommercial or NoDerivatives terms are not accepted, and neither is the arXiv non-exclusive licence. See the <a href="./policies/licences.html">Licence Policy</a>.</p>
+<h2>Who can submit?</h2>
+<p>Only an author of the work, with an ORCID iD. Your ORCID record must link to your GitHub account, and an automatic check confirms that your ORCID iD belongs to an author of the work. Every author must agree to the listing. See the <a href="./policies/submission.html">Submission Policy</a>.</p>
+<h2>Why GitHub?</h2>
+<p>Submissions are GitHub issues. This keeps every step public and lets the automatic check confirm that the account opening the issue belongs to an author. Sophaxis has no accounts of its own and no passwords.</p>
+<h2>Can I use language models?</h2>
+<p>Yes, if you disclose how. Name the tools and say what they were used for; this covers every generative model, including those that make images or code. A generative model cannot be an author. The statement is shown on the record page.</p>
+<h2>How long does moderation take?</h2>
+<p>The operator aims to respond to each submission within 14 days.</p>
+<h2>Who is responsible for a listed work?</h2>
+<p>The authors bear full responsibility for the work and its listing: its content, the rights to share it, material from others, personal data in it and the statement on generative models. See the <a href="./policies/terms.html">Terms of Use</a>.</p>
+<h2>How do I add a new version?</h2>
+<p>Deposit it in the repository, then submit it as an update and give the existing Sophaxis id. Earlier versions stay listed.</p>
+<h2>My work has been published in a journal. Can I submit it?</h2>
+<p>Only a version that you may share under an accepted licence. Give the DOI of the published version in the form, and the record links to it.</p>
+<h2>Does Sophaxis keep a copy of the PDF?</h2>
+<p>Where the repository allows a script to fetch it, Sophaxis keeps an unmodified copy, so that search engines can index the full text. For OSF Preprints, Preprints.org and SSRN, you can attach the deposited PDF to your submission issue. A copy is kept only if the file is at most 20 MB. See the <a href="./policies/copyright.html">Copyright Policy</a>.</p>
+<h2>Will my work appear in Google Scholar?</h2>
+<p>Each record page carries the tags that Google Scholar reads, and the sitemap lists every page. Sophaxis cannot promise that a search engine will index a page.</p>
+<h2>How do I cite a work listed here?</h2>
+<p>Cite the DOI of the version you read. Each record page gives the citation in APA, Chicago and BibTeX, and as BibTeX, RIS and CSL-JSON files.</p>
+<h2>How do I report an error in a record?</h2>
+<p>Use the link &quot;Report an error in this record&quot; on its page. Corrections are added to the record as dated notes.</p>
+<h2>Can I withdraw my work?</h2>
+<p>Yes. Any one author can withdraw a listed work. The record page stays with a withdrawal notice, so that citations do not break, and the PDF copies are taken off the site. See the <a href="./policies/withdrawal.html">Withdrawal Policy</a>.</p>
+<h2>How do I ask for material to be removed?</h2>
+<p>For copyright infringement, exposure of personal data or another legal reason, follow the <a href="./policies/takedown.html">Takedown Policy</a>.</p>
+<h2>What happens to the records if Sophaxis closes?</h2>
+<p>The repository with every record stays public, so that the records stay readable. Each week, Sophaxis also asks the Internet Archive to save its pages and the PDF copies.</p>
+<h2>Who runs Sophaxis, and how do I reach the operator?</h2>
+<p>See the <a href="./contact.html">Operator and contact</a> page.</p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

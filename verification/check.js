@@ -784,6 +784,30 @@ console.log('\n20. Operator and contact');
     && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/contact.html</loc>'));
 }
 
+/* ------------------------------------------------------------ 21 */
+console.log('\n21. The FAQ agrees with the policies');
+{
+  const faq = read(path.join(ROOT, 'faq.md'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const list = (xs, conj) => xs.slice(0, -1).join(', ') + ' ' + conj + ' ' + xs[xs.length - 1];
+  ok('the FAQ names the repositories and the licences of site.json, in the same order',
+    faq.includes(list(Object.values(site.repositories), 'and') + '.') && faq.includes(list(Object.values(site.licenses), 'and') + ', as given in the DOI metadata.'));
+  const scope = /Sophaxis accepts work in ([^.]+)\./.exec(read(path.join(ROOT, 'policies', 'submission.md')))[1];
+  ok('the FAQ gives the scope in the words of the Submission Policy', faq.includes('An overlay preprint server for ' + scope + '.'));
+  const days = /respond to each submission within (\d+) days/.exec(read(path.join(ROOT, 'policies', 'moderation.md')))[1];
+  ok('the FAQ gives the moderation time and the PDF limit that the policy and site.json set',
+    faq.includes('within ' + days + ' days.') && faq.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
+  const links = [...faq.matchAll(/\]\(\.\/([^)]+)\)/g)].map((m) => m[1]);
+  ok('every link in the FAQ leads to a page of the site', links.length >= 8 && links.every((l) => fs.existsSync(path.join(ROOT, 'site', l))), links.filter((l) => !fs.existsSync(path.join(ROOT, 'site', l))).join(', '));
+  const qs = [...faq.matchAll(/^## (.*)$/gm)].map((m) => m[1]);
+  ok('every heading of the FAQ is a question, and the page says that the policies apply where they differ',
+    qs.length >= 10 && qs.every((q) => q.endsWith('?')) && faq.includes('Where they differ, the policy applies.'));
+  ok('every page links the FAQ from its navigation, and the sitemap lists it',
+    fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+      .every((f) => /<nav>[^\n]*href="(\.\/|\.\.\/|\/)faq\.html">FAQ<\/a><\/nav>/.test(read(path.join(ROOT, 'site', f))))
+    && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/faq.html</loc>'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
