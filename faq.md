@@ -28,7 +28,7 @@ Sophaxis gives each record an id, such as 2026.0001, which never changes and is 
 
 ## Which repositories are accepted?
 
-Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN and Research Square.
+Zenodo, Figshare, OSF Preprints, arXiv, Preprints.org, SSRN and Research Square.
 The work must have a DOI from one of them.
 
 ## Which licences are accepted?

@@ -20,7 +20,7 @@ This confirms that the person who controls the ORCID record opened the issue. It
 Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 Work that belongs mainly to another field is out of scope, even if it uses mathematics.
 
-The work must already be deposited in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI.
+The work must already be deposited in Zenodo, Figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI.
 It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.html).
 It must have a title, an abstract and references, in the ordinary form of a scholarly paper.
 
@@ -39,7 +39,7 @@ The submitter gives the DOI of the published version in the form, and the record
 
 ## How to submit
 
-1. Deposit the preprint in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, under an accepted licence, and obtain its DOI.
+1. Deposit the preprint in Zenodo, Figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, under an accepted licence, and obtain its DOI.
 2. Link your ORCID record to your GitHub account: add `https://github.com/<your username>` under "Websites & social links".
 3. Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.
 4. An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.

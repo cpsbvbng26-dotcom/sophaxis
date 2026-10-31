@@ -9,7 +9,7 @@ The rules themselves are in the [Submission Policy](./policies/submission.html) 
 
 You need four things.
 
-1. A preprint deposited in Zenodo, figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI.
+1. A preprint deposited in Zenodo, Figshare, OSF Preprints, arXiv, Preprints.org, SSRN or Research Square, with a DOI.
 2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.
 3. An [ORCID](https://orcid.org) iD. Registration is free.
 4. A [GitHub](https://github.com) account. Registration is free.
