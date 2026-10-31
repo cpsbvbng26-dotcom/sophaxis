@@ -351,7 +351,58 @@ function removedPage(p) {
   return page({ title: SITE.name + ':' + p.id + ' | ' + SITE.name, description: 'A record removed under the Takedown Policy.', rel: true, canonical: 'abs/' + p.id + '.html', body, head: '<meta name="robots" content="noindex">\n' });
 }
 
-function recordPage(p) {
+/* RIS, for reference managers. Lines end in CR LF, as the format asks. */
+function ris(p) {
+  const v = latest(p);
+  const one = (s) => String(s).replace(/\s+/g, ' ').trim();
+  return [
+    ['TY', 'UNPB'],
+    ...p.authors.map((a) => ['AU', givenOf(a) ? familyOf(a) + ', ' + givenOf(a) : familyOf(a)]),
+    ['TI', p.title],
+    ['PY', v.date.slice(0, 4)],
+    ['DA', v.date.replace(/-/g, '/')],
+    ['PB', repoName(v.doi)],
+    ['DO', v.doi],
+    ['UR', 'https://doi.org/' + v.doi],
+    ['AB', p.abstract],
+    ...(p.keywords || []).map((k) => ['KW', k]),
+    ['N1', 'Preprint, not peer-reviewed. Listed on ' + SITE.name + ' as ' + p.id],
+    ['ER', ''],
+  ].map(([k, x]) => (k + '  - ' + one(x)).trimEnd()).join('\r\n') + '\r\n';
+}
+
+/* CSL-JSON, which Zotero, Pandoc and citeproc read. */
+function cslJson(p) {
+  const v = latest(p);
+  return JSON.stringify([{
+    id: 'sophaxis-' + p.id,
+    type: 'article',
+    genre: 'Preprint',
+    title: p.title,
+    author: p.authors.map((a) => (givenOf(a) ? { family: familyOf(a), given: givenOf(a) } : { literal: a.name })),
+    issued: { 'date-parts': [v.date.split('-').map(Number)] },
+    publisher: repoName(v.doi),
+    DOI: v.doi,
+    URL: 'https://doi.org/' + v.doi,
+    abstract: p.abstract,
+    ...((p.keywords || []).length ? { keyword: p.keywords.join(', ') } : {}),
+    note: 'Preprint, not peer-reviewed. Listed on ' + SITE.name + ' as ' + p.id,
+  }], null, 2) + '\n';
+}
+
+/* Other listed records by the same authors (a shared ORCID iD) or on the same topics (a shared keyword).
+ * Nothing is judged: the links follow from the records themselves. */
+function related(p, all) {
+  const others = all.filter((x) => x.id !== p.id && x.status === 'listed')
+    .sort((a, b) => latest(b).date.localeCompare(latest(a).date) || b.id.localeCompare(a.id));
+  const ids = new Set(p.authors.map((a) => a.orcid).filter(Boolean));
+  const words = new Set((p.keywords || []).map((k) => k.toLowerCase()));
+  const byAuthors = others.filter((x) => x.authors.some((a) => a.orcid && ids.has(a.orcid))).slice(0, 5);
+  const onTopic = others.filter((x) => !byAuthors.includes(x) && (x.keywords || []).some((k) => words.has(k.toLowerCase()))).slice(0, 5);
+  return { byAuthors, onTopic };
+}
+
+function recordPage(p, all = [p]) {
   if (p.status === 'removed') return removedPage(p);
   const v = latest(p);
   /* schema.org ScholarlyArticle in microdata: Google reads it, and no script is needed. */
@@ -388,6 +439,10 @@ function recordPage(p) {
 <p class="meta">${pdfs.some((x) => x.provided_by === 'authors')
     ? `Unmodified copies of the PDF that the authors provided in their submission issue, because ${esc(repoName(v.doi))} does not let a script fetch its files`
     : `Unmodified copies of the files the authors deposited at ${esc(repoName(v.doi))}`}, kept so that search engines can index the full text. They are shared under ${esc(SITE.licenses[p.license])}, by ${esc(authorsText(p))}. Cite the DOI.</p>` : '';
+  const rel = related(p, all);
+  const relList = (xs) => '<ul>' + xs.map((x) => `<li><a href="./${esc(x.id)}.html">${esc(x.title)}</a> <span class="meta">${esc(authorsText(x))}, ${esc(latest(x).date.slice(0, 4))}</span></li>`).join('') + '</ul>';
+  const relatedHtml = rel.byAuthors.length || rel.onTopic.length ? `<h2>Related records</h2>
+${rel.byAuthors.length ? '<p class="meta">By the same authors</p>\n' + relList(rel.byAuthors) + '\n' : ''}${rel.onTopic.length ? '<p class="meta">Sharing a keyword</p>\n' + relList(rel.onTopic) + '\n' : ''}` : '';
   const withdrawn = p.status === 'withdrawn'
     ? `<div class="notice"><b>Withdrawn.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break.</div>` : '';
   const body = `
@@ -418,9 +473,10 @@ ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <p class="cite">${esc(chicago(p))}</p>
 <p class="meta">BibTeX</p>
 <pre>${esc(bibtex(p))}</pre>
-<h2>Share</h2>
+<p class="meta">Download: <a href="../cite/${esc(p.id)}.bib">BibTeX</a> · <a href="../cite/${esc(p.id)}.ris">RIS</a> · <a href="../cite/${esc(p.id)}.json">CSL-JSON</a></p>
+${relatedHtml}<h2>Share</h2>
 <p class="share">${share}</p>
-<p class="meta">Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a></p>
+<p class="meta">Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a> · <a href="${esc(SITE.repo)}/issues/new?template=correction.yml&amp;id=${esc(p.id)}">Report an error in this record</a> · <a href="https://web.archive.org/web/${esc(url)}">Saved copies at the Internet Archive</a></p>
 `;
   return page({
     title: p.title + ' | ' + SITE.name,
@@ -669,6 +725,7 @@ function build(out, paperDir) {
   fs.mkdirSync(path.join(out, 'pdf'), { recursive: true });
   fs.mkdirSync(path.join(out, 'author'), { recursive: true });
   fs.mkdirSync(path.join(out, 'policies'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'cite'), { recursive: true });
   const files = {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
@@ -681,7 +738,13 @@ function build(out, paperDir) {
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
-  all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p); });
+  all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p, all); });
+  /* Citation files for reference managers, one set per record that is shown. */
+  papers.forEach((p) => {
+    files['cite/' + p.id + '.bib'] = bibtex(p) + '\n';
+    files['cite/' + p.id + '.ris'] = ris(p);
+    files['cite/' + p.id + '.json'] = cslJson(p);
+  });
   POLICIES.forEach(([slug]) => { files['policies/' + slug + '.html'] = onePolicyPage(slug); });
   files['policies/privacy.ja.html'] = privacyJaPage();
   authorIds(papers).forEach((o) => { files['author/' + o + '.html'] = authorPage(papers, o); });
@@ -696,7 +759,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, STYLE_HASH };
 
 if (require.main === module) {
   const r = build(OUT, PAPER_DIR);
