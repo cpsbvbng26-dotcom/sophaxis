@@ -43,6 +43,32 @@ If it may not, the work cannot be listed.
 Figures, tables, long quotations and other material from others need permission, or must be used in a way the law allows, such as quotation.
 The authors are responsible for this.
 
+## Examples of what is not allowed
+
+These examples show how this policy applies. They are not a complete list.
+
+The version that is shared:
+
+- Depositing the publisher's typeset version under CC BY when the copyright went to the publisher. The authors can no longer license it.
+- Depositing an accepted manuscript before the embargo that the publisher sets has ended.
+- Attaching to the submission issue a PDF that differs from the deposited file, such as a newer draft, an edited copy or the journal layout. The copy must be the deposited file, unmodified.
+- Asking Sophaxis to change its PDF copy. A change is a new version in the repository.
+
+Material from others:
+
+- A figure, a table, a map or a photograph copied from a book, a paper or a website without permission, beyond quotation.
+- A long passage of another work, quoted at a length that the law of quotation does not cover.
+- The full text of a poem, a song or a short story by someone else.
+- A translation of someone else's paper, deposited as the authors' own work, or without the permission of the original's rights holder.
+- Images from an archive whose terms forbid publishing them again.
+- Material under a NonCommercial or NoDerivatives licence, placed inside a work that carries CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 as though it were under that licence.
+- A screenshot of software, a web page or a video, reproduced beyond what quotation allows.
+
+Requests:
+
+- Repeating the infringing material itself in a public removal issue. Describe where it is instead.
+- Asking Sophaxis to remove a deposit from its repository. Sophaxis cannot; the request goes to the repository.
+
 ## Infringement
 
 A rights holder who believes that a listed work infringes their rights can ask for its removal under the [Takedown Policy](./takedown.html).

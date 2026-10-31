@@ -76,6 +76,84 @@ Most repositories give each version its own DOI.
 arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version.
 Submit it as an update to the existing record; earlier versions stay listed.
 
+## Examples of what is not accepted
+
+These examples show how the rules above apply. They are not a complete list; the rules decide.
+Each group matches a reason that a moderator names when declining, under the [Moderation Policy](./moderation.html).
+
+Authorship: the submitter must be an author, and every author must agree.
+
+- Submitting a colleague's paper for them, even with their permission. Only an author can submit.
+- Submitting a paper by a teacher, a supervisor or a famous author because it deserves to be read.
+- Opening the issue from a GitHub account that the ORCID record does not link to, such as a lab account or a second personal account.
+- Giving the ORCID iD of a co-author, or of anyone other than the person who opens the issue.
+- Giving an ORCID iD that neither the DOI metadata nor the ORCID record connects to the work.
+- Submitting a work when a co-author has not agreed, or has said no.
+- Opening a new GitHub account to submit a declined work again under another name.
+
+Repository and DOI: the work must have its own DOI from an accepted repository.
+
+- A PDF on a personal website, a university page, Google Drive, Dropbox, Academia.edu or ResearchGate.
+- A work on PhilArchive, PhilSci-Archive or HAL alone, which give no DOI of their own. Deposit it also in an accepted repository.
+- The DOI of the version a journal published, given as the DOI of the deposit.
+- The DOI of an article in a SciELO journal, rather than in SciELO Preprints.
+- The DOI of a peer review report, as Qeios and ScienceOpen also register.
+- A DOI that does not resolve, or that leads to a different work.
+
+Licence: the DOI metadata must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
+
+- CC BY-NC 4.0, CC BY-ND 4.0, CC BY-NC-SA 4.0 or CC BY-NC-ND 4.0.
+- CC BY 3.0, CC BY 2.0 or any other earlier version of a Creative Commons licence.
+- The arXiv non-exclusive licence (arXiv.org perpetual, non-exclusive license).
+- "All rights reserved", or no licence in the DOI metadata at all.
+- A licence written only in the PDF or on the repository page, but not in the DOI metadata.
+- A licence changed after listing to one that is not accepted. The weekly check reports it, and the operator looks into it.
+
+Scope: the work must belong mainly to philosophy, mathematics, logic, the philosophy of mathematics or the philosophy of science.
+
+- A paper in physics, economics, computer science, engineering, biology or psychology that uses mathematics as a tool.
+- A machine-learning benchmark, a software description or a data set.
+- Literary criticism, history or political commentary that does not argue a philosophical or mathematical question.
+- Self-help, spiritual guidance, a manifesto or campaigning.
+
+Form: the work must have a title, an abstract and references, in the ordinary form of a scholarly paper.
+
+- Slides, a poster, lecture notes or a recorded talk.
+- A blog post or an essay without references.
+- An abstract alone, or a title page without the full text.
+- Several unrelated papers in one deposit.
+- Fiction, poetry or a diary.
+
+Disclosure: the statement on generative models must name the tools and say what they were used for.
+
+- "None" when a language model drafted, translated or edited any part of the text.
+- A statement that says only that a language model was used, without naming the tool or saying what it did.
+- Figures or images made with a generative model that the statement leaves out.
+- A language model or another generative model listed as an author in the DOI metadata or in the paper.
+
+Rights or personal data: the authors must be free to share everything in the work, and it must not expose others.
+
+- A figure, a table or a photograph copied from a book, a paper or a website without permission, beyond what quotation allows. Citing the source does not replace permission.
+- The publisher's typeset version of a journal article, when the publisher allows only the authors' manuscript to be shared.
+- Names, email addresses, postal addresses or photographs of private persons who have not agreed.
+- Survey or interview answers from which a participant can be identified.
+- Screenshots of private messages, emails or chats.
+- Unpublished material of another researcher, shared without their consent.
+
+Spam or abuse.
+
+- The same work submitted again and again, or under several titles.
+- Many submissions opened at once to flood the issues.
+- Advertising, links to paid services, or text written to sell something.
+- Text that harasses, threatens or defames a named person.
+- Attempts to break the form, the automatic check or the site, for example by placing code or markup in the fields.
+- Pretending to be another person, an institution or a journal.
+
+Versions.
+
+- A new version submitted as a new work, instead of as an update to the existing Sophaxis id.
+- A new version of a withdrawn record. A withdrawn record takes no new versions.
+
 ## Withdrawal
 
 Any one author can withdraw a listed work under the [Withdrawal Policy](./withdrawal.html).
