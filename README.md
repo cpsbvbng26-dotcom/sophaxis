@@ -62,6 +62,10 @@ Follow the [Takedown Policy](policies/takedown.md). Replace the record with only
 The page keeps its address with a notice; the record leaves every list, the feed, the JSON and the sitemap.
 The record stays in the git history; where the law requires it, ask GitHub to remove it from there too.
 
+## Operator and contact
+
+Sophaxis is operated by Takuya Nemoto. How to reach the operator is on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page.
+
 ## Reusing the records
 
 Every shown record is in `papers.json`, newest first. The fields:
