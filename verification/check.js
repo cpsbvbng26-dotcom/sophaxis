@@ -412,11 +412,11 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   ok('a missing copy stops the build', build(fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), path.join(tampered, 'papers')).problems.some((x) => x.includes('is missing')));
 
   const F = require('../tools/fetch_pdf.js');
-  ok('figshare: the version DOI leads to that version in its API', F.sourceFor('10.6084/m9.figshare.34419198.v2', 2).api === 'https://api.figshare.com/v2/articles/34419198/versions/2');
+  ok('Figshare: the version DOI leads to that version in its API', F.sourceFor('10.6084/m9.figshare.34419198.v2', 2).api === 'https://api.figshare.com/v2/articles/34419198/versions/2');
   ok('Zenodo: the DOI leads to its record in the API', F.sourceFor('10.5281/zenodo.1234567', 1).api === 'https://zenodo.org/api/records/1234567');
   ok('arXiv: one DOI, the version number picks the file', F.sourceFor('10.48550/arXiv.2508.15126', 2).url === 'https://arxiv.org/pdf/2508.15126v2');
   ok('Research Square: the version DOI leads to its PDF', F.sourceFor('10.21203/rs.3.rs-39251/v1', 1).url === 'https://www.researchsquare.com/article/rs-39251/v1.pdf');
-  ok('no copy is attempted from OSF Preprints, Preprints.org or SSRN, or from a figshare DOI without a version', ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.2139/ssrn.7537983', '10.6084/m9.figshare.34419198'].every((d) => F.sourceFor(d, 1) === null));
+  ok('no copy is attempted from OSF Preprints, Preprints.org or SSRN, or from a Figshare DOI without a version', ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.2139/ssrn.7537983', '10.6084/m9.figshare.34419198'].every((d) => F.sourceFor(d, 1) === null));
   ok('an author-provided PDF is taken only from an attachment of a GitHub issue', F.attachmentOk('https://github.com/user-attachments/files/12345678/paper.pdf')
     && !F.attachmentOk('https://example.org/paper.pdf') && !F.attachmentOk('https://github.com.evil.example/user-attachments/files/1/p.pdf') && !F.attachmentOk('http://github.com/user-attachments/files/1/p.pdf'));
   const byAuthors = JSON.parse(JSON.stringify(good));
@@ -613,7 +613,7 @@ console.log('\n14. The weekly check and the Internet Archive');
   ok('a DOI that could not be checked this week is not reported as broken', Wt.compare(p, {}).length === 0);
   const fig = { id: '2026.0005', status: 'listed', versions: [{ version: 1, doi: '10.6084/m9.figshare.34419198.v1' }, { version: 2, doi: '10.6084/m9.figshare.34419198.v2' }] };
   const arx = { id: '2026.0006', status: 'listed', versions: [{ version: 1, doi: '10.48550/arXiv.2508.15126' }] };
-  ok('new versions are looked for at figshare and arXiv only, and only for listed records', Wt.followed(fig) === '10.6084/m9.figshare.34419198'
+  ok('new versions are looked for at Figshare and arXiv only, and only for listed records', Wt.followed(fig) === '10.6084/m9.figshare.34419198'
     && Wt.followed(arx) === '10.48550/arXiv.2508.15126' && Wt.followed(p) === null && Wt.followed(Object.assign({}, fig, { status: 'withdrawn' })) === null);
   ok('a version at the repository that the record lacks is reported, and nothing else', Wt.newVersions(fig, 3).join().includes('2026.0005: the repository has 3 versions and the record lists 2')
     && Wt.newVersions(fig, 2).length === 0 && Wt.newVersions(fig, null).length === 0);
@@ -832,6 +832,18 @@ console.log('\n22. From submission to listing: the page agrees with the form, th
     pr.includes('where this page differs, they apply.') && [...pr.matchAll(/\]\(\.\/([^)]+)\)/g)].every((m) => fs.existsSync(path.join(ROOT, 'site', m[1]))));
   ok('the submit page and the FAQ lead to it, and the sitemap lists it', read(path.join(ROOT, 'site', 'submit.html')).includes('<a href="./process.html">From submission to listing</a>')
     && read(path.join(ROOT, 'site', 'faq.html')).includes('href="./process.html"') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/process.html</loc>'));
+}
+
+/* ------------------------------------------------------------ 23 */
+console.log('\n23. Names of the repositories');
+{
+  /* Figshare writes its name with a capital F. DOIs, addresses and code keep the lower case. */
+  const lower = /(?<![./\w-])figshare(?![.\w])/;
+  const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => /\.(html|xml|json)$/.test(f));
+  const sources = ['README.md', 'faq.md', 'process.md', 'contact.md', 'policy.md', 'site.json', '.github/ISSUE_TEMPLATE/submission.yml']
+    .concat(fs.readdirSync(path.join(ROOT, 'policies')).map((f) => 'policies/' + f));
+  const bad = pages.map((f) => 'site/' + f).concat(sources).filter((f) => lower.test(read(path.join(ROOT, f))));
+  ok('Figshare is written with a capital F in every page, policy and form', bad.length === 0 && JSON.parse(read(path.join(ROOT, 'site.json'))).repositories['10.6084/m9.figshare.'] === 'Figshare', bad.join(', '));
 }
 
 console.log('\n' + '-'.repeat(60));
