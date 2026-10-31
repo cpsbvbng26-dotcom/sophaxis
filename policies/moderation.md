@@ -27,17 +27,35 @@ It does not compare the work with the literature.
 
 ## Decisions
 
-A moderator accepts or declines a submission in its issue.
-A moderator who declines a submission gives a short reason in the issue.
+A moderator accepts or declines a submission in its issue, and labels the issue `accepted` or `declined`.
+Every decision stays public in its issue.
 The operator aims to respond to each submission within 14 days.
+
+A moderator who declines a submission names one or more of these reasons, with a short explanation:
+
+- Out of scope: the work belongs mainly to a field outside philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
+- Not in the form of a scholarly paper: it lacks a title, an abstract or references.
+- Licence: the DOI metadata does not carry an accepted licence.
+- Authorship: the submitter could not be confirmed as an author, or not every author agrees.
+- Disclosure: the statement on generative models is missing or does not say how they were used.
+- Rights or personal data: the work contains material that the authors may not share, or personal data of third parties.
+- Spam or abuse.
 
 The submitter can answer in the issue.
 The operator then looks at the submission once more, and that decision is final.
+
+## Moderators
+
+The operator is at present the only moderator.
+Other moderators may be invited.
+Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
 
 ## Conflicts of interest
 
 Submissions by the operator are moderated under the same rules and are marked on their record pages.
 The automatic check applies to them without exception.
+While the operator is the only moderator, the operator also decides on their own submissions; the mark on the record page says so.
+Once there is another moderator, no moderator decides on their own submission or on one by a close collaborator.
 
 ## After listing
 

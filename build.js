@@ -253,7 +253,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}contact.html">Contact</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>
@@ -517,10 +517,15 @@ function fields(papers, current, up) {
   return `<ul class="fields" aria-label="Fields">${[all].concat(each).join('')}</ul>`;
 }
 
+/* Continuity in the Terms of Use: when the operator cannot handle submissions, the top page and the submit page say so. */
+function pausedNotice(paused = SITE.submissionsPaused) {
+  return paused ? `<div class="notice"><b>New submissions are paused.</b> The operator cannot handle submissions for now. Listed records stay online, and submissions open again when this notice goes.</div>\n` : '';
+}
+
 function indexPage(papers) {
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
-<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
+${pausedNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <h2>Listing</h2>
 ${fields(papers, '', './')}
@@ -555,7 +560,7 @@ ${listing(mine, '../', 'No preprints are listed in this field yet.')}
 function submitPage() {
   const body = `
 <h1>Submit a preprint</h1>
-<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation.</p>
+${pausedNotice()}<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation.</p>
 <ol>
 <li>Deposit your preprint in ${andOr(Object.values(SITE.repositories).map((n) => `<a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>`), 'or')} under ${andOr(Object.values(SITE.licenses).map(esc), 'or')}, and note its DOI.</li>
 <li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
@@ -589,6 +594,37 @@ function policyPage() {
 <ul>${POLICIES.map(([slug, what]) => `<li><a href="./policies/${slug}.html">${esc(policyTitle(slug))}</a>: ${esc(what)}</li>`).join('')}</ul>`;
   const html = markdown(md).replace('<h2>What Sophaxis is not</h2>', list + '\n<h2>What Sophaxis is not</h2>');
   return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
+}
+
+/* Counts taken from the records each time the site is built, and links to every public decision. */
+function statsPage(all) {
+  const count = (f) => all.filter(f).length;
+  const shown = all.filter((p) => p.status !== 'removed');
+  const row = (k, n) => `<tr><td>${esc(k)}</td><td>${n}</td></tr>`;
+  const table = (head, rows) => `<div class="table"><table><tr><th scope="col">${esc(head)}</th><th scope="col">Records</th></tr>${rows.join('')}</table></div>`;
+  const issues = (label, text) => `<li><a href="${esc(SITE.repo)}/issues?q=${encodeURIComponent('label:' + label)}">${esc(text)}</a></li>`;
+  const body = `
+<h1>Statistics</h1>
+<p>These counts are taken from the records each time the site is built. Every decision behind them is public in its GitHub issue.</p>
+<h2>Records</h2>
+${table('Status', [row('Listed', count((p) => p.status === 'listed')), row('Withdrawn', count((p) => p.status === 'withdrawn')), row('Removed', count((p) => p.status === 'removed')), row('All', all.length)])}
+<h2>By field</h2>
+<p>A record listed in more than one field is counted in each.</p>
+${table('Field', Object.entries(SITE.categories).map(([slug, name]) => row(name, shown.filter((p) => cats(p).includes(slug)).length)))}
+<h2>By repository</h2>
+<p>The repository of the latest version.</p>
+${table('Repository', [...new Set(Object.values(SITE.repositories))].map((name) => row(name, shown.filter((p) => repoName(latest(p).doi) === name).length)).filter((r) => !/<td>0<\/td><\/tr>$/.test(r)))}
+<h2>Decisions and requests</h2>
+<ul>
+${issues('accepted', 'Accepted submissions')}
+${issues('declined', 'Declined submissions')}
+${issues('withdrawal', 'Withdrawal requests')}
+${issues('correction', 'Error reports')}
+${issues('removal', 'Removal requests made in public')}
+</ul>
+<p class="meta">Removal requests sent by email are not public. The record of a removed work keeps only its id, the date and the kind of reason.</p>
+`;
+  return page({ title: 'Statistics | ' + SITE.name, description: 'How many records ' + SITE.name + ' lists, by status, field and repository, with links to every public decision.', rel: false, canonical: 'stats.html', body });
 }
 
 /* What Sophaxis does not promise, in one place. The Terms of Use apply where they differ. */
@@ -737,7 +773,8 @@ function sitemap(papers) {
     ['faq.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(faqSource()) || [, newest])[1]],
     ['process.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(processSource()) || [, newest])[1]],
     ['disclaimer.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(disclaimerSource()) || [, newest])[1]],
-    ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]]]
+    ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
+    ['stats.html', newest]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -781,6 +818,7 @@ function build(out, paperDir) {
     'process.html': processPage(),
     'disclaimer.html': disclaimerPage(),
     'repositories.html': repositoriesPage(),
+    'stats.html': statsPage(all),
     'search.html': searchPage(),
     '404.html': notFoundPage(),
     'feed.xml': feed(papers),
@@ -810,7 +848,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, STYLE_HASH };
 
 if (require.main === module) {
   const r = build(OUT, PAPER_DIR);

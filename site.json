@@ -6,6 +6,7 @@
   "googleSiteVerification": "UEPpX5mfnLlhOBTBTETu-PmRO_Y4L2SmjEiaq_U1Zf8",
   "repo": "https://github.com/cpsbvbng26-dotcom/sophaxis",
   "pdfLimits": { "fileMB": 20, "totalGB": 1 },
+  "submissionsPaused": false,
   "operator": {
     "name": "Takuya Nemoto",
     "orcid": "0009-0000-1406-0547",

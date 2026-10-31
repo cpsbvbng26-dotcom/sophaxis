@@ -11,7 +11,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
-const { build, validate, orcidOk, loadPapers, pdfLimits, ris, cslJson, related } = require('../build.js');
+const { build, validate, orcidOk, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice } = require('../build.js');
 
 const ROOT = path.join(__dirname, '..');
 let pass = 0;
@@ -893,6 +893,45 @@ console.log('\n25. More repositories: SocArXiv, MetaArXiv, SciELO Preprints, Qei
   ok('the DOI prefixes of the new repositories are recognised, and a SciELO journal outside SciELO Preprints is not',
     ['10.31235/osf.io/q4fp7_v3', '10.31222/osf.io/zjkd2_v2', '10.1590/scielopreprints.18633', '10.32388/tb0ffk', '10.14293/pr2199.004729.v1', '10.31124/advance.19380077', '10.17613/5kv23-39x46', '10.51094/jxiv.161']
       .every((d) => require('../build.js').repoPrefix(d)) && !require('../build.js').repoPrefix('10.1590/s0100-512x2026000100001'));
+}
+
+/* ------------------------------------------------------------ 26 */
+console.log('\n26. One operator: decisions, continuity, dependencies and statistics');
+{
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
+  const reasons = (/A moderator who declines a submission names one or more of these reasons[^\n]*\n\n((?:- [^\n]+\n)+)/.exec(mod) || [, ''])[1].trim().split('\n');
+  ok('every decision is labelled and stays public, and a decline names one of seven fixed reasons',
+    mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 7
+    && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
+  ok('the policy says the operator is the only moderator for now, how others are named, and who may not decide on what',
+    mod.includes('The operator is at present the only moderator.') && mod.includes('Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision')
+    && mod.includes('While the operator is the only moderator, the operator also decides on their own submissions') && mod.includes('no moderator decides on their own submission or on one by a close collaborator.'));
+  const terms = read(path.join(ROOT, 'policies', 'terms.md'));
+  const lic = read(path.join(ROOT, 'policies', 'licences.md'));
+  ok('Continuity: a pause after 30 days, the records kept public, a hand-over announced first, anyone may continue under the licences the Licence Policy names',
+    terms.includes('## Continuity') && terms.includes('for more than 30 days, the top page says that new submissions are paused.')
+    && terms.includes('A hand-over is announced on the site first') && terms.includes('CC BY 4.0 for the text and MIT for the code.')
+    && lic.includes('The text of this site is licensed under CC BY 4.0.') && lic.includes('The code is licensed under MIT.'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  ok('the pause is one switch in site.json; the top page and the submit page show the notice exactly when it is on',
+    typeof site.submissionsPaused === 'boolean' && pausedNotice(true).includes('New submissions are paused.') && pausedNotice(false) === ''
+    && ['index.html', 'submit.html'].every((f) => read(path.join(ROOT, 'site', f)).includes('New submissions are paused.') === site.submissionsPaused));
+  const dis = read(path.join(ROOT, 'disclaimer.md'));
+  ok('the disclaimer says what stops if Vercel, GitHub, the registration agencies or a repository stop',
+    ['If Vercel stops', 'If GitHub stops', 'If DataCite, Crossref or JaLC cannot be reached', 'If a repository removes a deposit'].every((x) => dis.includes('- ' + x)));
+  ok('the contact page sends complaints, legal matters and personal data to email first',
+    read(path.join(ROOT, 'contact.md')).includes('Complaints, legal matters and anything about personal data go by email, not to a public issue'));
+  const recs = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  const st = read(path.join(ROOT, 'site', 'stats.html'));
+  const cell = (k) => (new RegExp('<tr><td>' + k + '</td><td>(\\d+)</td></tr>').exec(st) || [, '-'])[1];
+  ok('the statistics page counts the records as data/papers holds them',
+    cell('Listed') === String(recs.filter((p) => p.status === 'listed').length) && cell('Withdrawn') === String(recs.filter((p) => p.status === 'withdrawn').length)
+    && cell('Removed') === String(recs.filter((p) => p.status === 'removed').length) && cell('All') === String(recs.length)
+    && Object.entries(site.categories).every(([slug, name]) => cell(name) === String(recs.filter((p) => p.status !== 'removed' && [p.category].concat(p.categories || []).includes(slug)).length)));
+  ok('the statistics page links the public decisions by the labels the policies use, and every footer and the sitemap lead to it',
+    ['accepted', 'declined', 'withdrawal', 'correction', 'removal'].every((l) => st.includes('issues?q=label%3A' + l + '"'))
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).every((f) => /<footer>[\s\S]*href="(\.\/|\.\.\/|\/)stats\.html">Statistics<\/a>/.test(read(path.join(ROOT, 'site', f))))
+    && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/stats.html</loc>'));
 }
 
 console.log('\n' + '-'.repeat(60));

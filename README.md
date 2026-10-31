@@ -49,6 +49,11 @@ Where the repository does not let a script fetch the file (OSF Preprints, Prepri
 and run the workflow with `from` set to that attachment and `version` to the version it is.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
 
+### Pausing submissions
+
+When the operator cannot handle submissions for more than 30 days, set `"submissionsPaused": true` in `site.json`, rebuild and open a pull request.
+The top page and the submit page then say that new submissions are paused. Set it back to `false` to reopen.
+
 ### Withdrawing a record
 
 Follow the [Withdrawal Policy](policies/withdrawal.md). A withdrawal issue runs `tools/withdraw.js`, which checks that the account asking belongs to an author

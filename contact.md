@@ -17,6 +17,8 @@ Submissions by the operator are moderated under the same rules and are marked as
 
 ## Contact
 
+Complaints, legal matters and anything about personal data go by email, not to a public issue: use the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+
 - Questions, suggestions and problems with the site: [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
 - Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml).
 - An error in a record: [the correction form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml).
