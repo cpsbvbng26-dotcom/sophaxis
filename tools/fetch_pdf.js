@@ -39,7 +39,8 @@ function sourceFor(doi, n) {
     return { kind: 'zenodo', api: `https://zenodo.org/api/records/${m[1]}` };
   }
   if ((m = /^10\.48550\/arxiv\.(\d{4}\.\d{4,5})$/i.exec(doi))) {
-    return { kind: 'direct', url: `https://arxiv.org/pdf/${m[1]}v${n}` };
+    /* arXiv asks scripts to use export.arxiv.org, not the site that people read. */
+    return { kind: 'direct', url: `https://export.arxiv.org/pdf/${m[1]}v${n}` };
   }
   if ((m = /^10\.21203\/rs\.3\.rs-(\d+)\/v(\d+)$/i.exec(doi))) {
     return { kind: 'direct', url: `https://www.researchsquare.com/article/rs-${m[1]}/v${m[2]}.pdf` };
