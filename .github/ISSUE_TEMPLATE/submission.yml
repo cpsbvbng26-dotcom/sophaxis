@@ -93,5 +93,7 @@ body:
           required: true
         - label: The work contains no material that the authors may not share, and no personal data of third parties.
           required: true
+        - label: The authors bear full responsibility for the work and its listing, as the Terms of Use set out.
+          required: true
         - label: I understand that listing is moderation, not peer review.
           required: true

@@ -460,7 +460,7 @@ ${facts}
 <div class="abstract"><p itemprop="abstract">${esc(p.abstract)}</p></div>
 </article>
 ${keywords}
-<div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality.</div>
+<div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality. The authors bear full responsibility for its content.</div>
 <h2>Read</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a></p>
 ${copies}
