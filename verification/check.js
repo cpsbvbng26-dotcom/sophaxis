@@ -823,7 +823,8 @@ console.log('\n22. From submission to listing: the page agrees with the form, th
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   ok('what the page tells the submitter to do and to expect is what the form and the automatic check do',
     ['label: DOI of the deposited preprint', 'label: Your ORCID iD', 'label: Category', 'label: Use of language models and other generative models', 'under "Websites & social links"'].every((x) => form.includes(x))
-    && pr.includes('under "Websites & social links"') && intake.includes('**Automatic checks**') && pr.includes('a comment titled "Automatic checks"')
+    && pr.includes('under "Websites & social links"') && intake.includes('**Automatic checks**')
+    && pr.includes('reads only the name, the links and the works in your ORCID record') && intake.includes('the name, the websites and the works of the public ORCID record') && pr.includes('a comment titled "Automatic checks"')
     && intake.includes("verified ? 'verified' : 'unverified'") && pr.includes('the label `verified` or `unverified`')
     && /types: \[[^\]]*edited/.test(wf) && pr.includes('then edit the issue; the check runs again.'));
   ok('the page sends the reader to the policies, which apply where it differs, and every link leads to a page of the site',
