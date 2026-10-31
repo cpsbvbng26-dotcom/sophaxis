@@ -11,7 +11,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
-const { build, validate, orcidOk, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice } = require('../build.js');
+const { build, validate, orcidOk, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, recordDoi, dataciteRecord } = require('../build.js');
 
 const ROOT = path.join(__dirname, '..');
 let pass = 0;
@@ -962,6 +962,56 @@ console.log('\n27. Examples of what is not accepted');
   const cp = read(path.join(ROOT, 'policies', 'copyright.md'));
   ok('the Copyright Policy gives examples of the version shared, material from others and requests',
     /## Examples of what is not allowed\n[\s\S]*The version that is shared:[\s\S]*Material from others:[\s\S]*Requests:/.test(cp) && (cp.match(/^- /gm) || []).length >= 13);
+}
+
+/* ------------------------------------------------------------ 28 */
+console.log('\n28. Sophaxis ids are never reused, and DOIs of its own are ready');
+{
+  const { execFileSync } = require('child_process');
+  const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' });
+  let shallow = 'true';
+  try { shallow = git('rev-parse', '--is-shallow-repository').trim(); } catch (e) { shallow = 'no git'; }
+  const changed = [];
+  if (shallow === 'false') {
+    /* Every record file ever added, at the commit that added it. */
+    const log = git('log', '--diff-filter=A', '--name-only', '--format=@%H', '--', 'data/papers').split('\n');
+    let commit = '';
+    for (const line of log) {
+      if (line.startsWith('@')) { commit = line.slice(1); continue; }
+      const m = /^data\/papers\/(\d{4}\.\d{4})\.json$/.exec(line.trim());
+      if (!m) continue;
+      const then = JSON.parse(git('show', commit + ':' + line.trim()));
+      const file = path.join(ROOT, 'data', 'papers', m[1] + '.json');
+      if (!fs.existsSync(file)) { changed.push(m[1] + ' has disappeared'); continue; }
+      const now = JSON.parse(read(file));
+      const first = (r) => String(((r.versions || [])[0] || {}).doi || '').toLowerCase();
+      if (now.status !== 'removed' && first(now) !== first(then)) changed.push(m[1] + ' was ' + first(then) + ' and is now ' + first(now));
+    }
+  }
+  ok('every id ever given in the git history still names the same work (the DOI of its first version), or its removal notice',
+    shallow === 'false' && changed.length === 0, shallow !== 'false' ? 'the history is not available (' + shallow + ')' : changed.join('; '));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'check.yml'));
+  ok('the check in CI reads the whole history', /actions\/checkout@v4\n\s+with:\n\s+fetch-depth: 0/.test(wf));
+  ok('the draft says that its id is provisional', read(path.join(ROOT, 'tools', 'intake.js')).includes('The id is provisional: if another record takes it first, the record is listed under the next free id.'));
+
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const conf = { prefix: '10.99999', suffix: site.doi.suffix };
+  const recs = fs.readdirSync(path.join(__dirname, 'fixtures', 'papers')).map((f) => JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', f))));
+  const dois = recs.map((p) => recordDoi(p, conf));
+  ok('with a prefix, every record gets one DOI made from its id, and no two records share one; without, none',
+    site.doi && 'prefix' in site.doi && site.doi.suffix === 'sophaxis.{id}' && dois[0] === '10.99999/sophaxis.2026.0001' && new Set(dois).size === recs.length
+    && recordDoi(recs[0], { prefix: null, suffix: 'sophaxis.{id}' }) === null);
+  const [listed, withdrawn, removed] = ['2026.0001', '2026.0002', '2026.0003'].map((id) => dataciteRecord(recs.find((p) => p.id === id), conf).data.attributes);
+  ok('the DataCite metadata names the authors with ORCID iDs, the licence, the Preprint type and each version DOI; a withdrawal is noted; a removed record is hidden, not deleted',
+    listed.event === 'publish' && listed.url === 'https://sophaxis.vercel.app/abs/2026.0001.html' && listed.types.resourceTypeGeneral === 'Preprint'
+    && listed.creators[0].nameIdentifiers[0].nameIdentifier === 'https://orcid.org/0000-0002-1825-0097' && listed.rightsList[0].rightsIdentifier === 'cc-by-4.0'
+    && listed.relatedIdentifiers.map((r) => r.relatedIdentifier + ' ' + r.relationType).join() === '10.5281/zenodo.1234567 IsVersionOf,10.5281/zenodo.1234999 IsVersionOf'
+    && withdrawn.descriptions.some((d) => d.descriptionType === 'Other' && d.description.startsWith('Withdrawn on 2026-11-20.'))
+    && removed.event === 'hide' && Object.keys(removed).join() === 'doi,event,url');
+  const says = ['policy.md:It does not assign DOIs.', 'repositories.md:Sophaxis gives no DOIs of its own.', 'faq.md:## Does Sophaxis give my work a DOI?\n\nNo.'];
+  const sayNone = says.every((x) => { const i = x.indexOf(':'); return read(path.join(ROOT, x.slice(0, i))).includes(x.slice(i + 1)); });
+  ok('the pages say that Sophaxis assigns no DOIs exactly while site.json gives no prefix, and no record page shows a record DOI before then',
+    sayNone === !site.doi.prefix && (site.doi.prefix || !fs.readdirSync(path.join(ROOT, 'site', 'abs')).some((f) => read(path.join(ROOT, 'site', 'abs', f)).includes('Record DOI'))));
 }
 
 console.log('\n' + '-'.repeat(60));
