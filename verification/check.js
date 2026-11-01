@@ -11,7 +11,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
-const { build, validate, orcidOk, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, recordDoi, dataciteRecord } = require('../build.js');
+const { build, validate, orcidOk, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, termsNotice, recordDoi, dataciteRecord } = require('../build.js');
 
 const ROOT = path.join(__dirname, '..');
 let pass = 0;
@@ -1134,6 +1134,27 @@ console.log('\n34. Accessibility of every page, and the security contact');
     /^Contact: https:\/\/sophaxis\.vercel\.app\/contact\.html$/m.test(sec) && /^Policy: /m.test(sec) && /^Canonical: https:\/\/sophaxis\.vercel\.app\/\.well-known\/security\.txt$/m.test(sec)
     && days > 0 && days <= 366, 'expires in ' + Math.floor(days) + ' days');
   ok('the contact page sends security problems to email, not to a public issue', read(path.join(ROOT, 'contact.md')).includes('A security problem goes by email, not to a public issue'));
+}
+
+/* ------------------------------------------------------------ 35 */
+console.log('\n35. General terms: notice of changes, precedence, severability, waiver, minors');
+{
+  const terms = read(path.join(ROOT, 'policies', 'terms.md'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  ok('a change against authors or readers is announced on the top page at least 14 days ahead, with what changes and from when; others take effect when published',
+    terms.includes('is announced on the top page before it takes effect, with what changes and from which date.') && terms.includes('The announcement comes at least 14 days ahead')
+    && terms.includes('Other changes, such as clearer wording or new examples, take effect when they are published.') && terms.includes('a person who does not accept it can stop using Sophaxis'));
+  ok('the announcement is one setting in site.json, and the top page shows it exactly when it is set',
+    'termsNotice' in site && termsNotice({ text: 'Fees stay at zero.', from: '2027-01-15' }).includes('<b>Change to the policies from 2027-01-15.</b> Fees stay at zero.')
+    && termsNotice(null) === '' && read(path.join(ROOT, 'site', 'index.html')).includes('Change to the policies from') === !!(site.termsNotice && site.termsNotice.text));
+  const g = (/## General\n([\s\S]*?)\n## /.exec(terms) || [, ''])[1];
+  ok('General: which text prevails, severability, no waiver, minors, how notices are given',
+    g.includes('Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply.')
+    && g.includes('The FAQ, the step-by-step page and the Disclaimer explain these terms and do not change them.')
+    && g.includes('If a part of these terms is held invalid or unenforceable, the rest stays in force') && g.includes('that does not waive it.')
+    && g.includes('A person under 18 may submit only with the consent of a parent or guardian.')
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('A submitter under 18 needs the consent of a parent or guardian.'));
+  ok('the pause notice uses the words of the Terms: the operator cannot work on Sophaxis', pausedNotice(true).includes('The operator cannot work on Sophaxis for now.') && terms.includes('cannot work on Sophaxis at all'));
 }
 
 console.log('\n' + '-'.repeat(60));
