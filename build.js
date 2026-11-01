@@ -201,6 +201,7 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
 .cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
 .search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
 .search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
@@ -493,6 +494,9 @@ function recordPage(p, all = [p]) {
 <p class="meta">${pdfs.some((x) => x.provided_by === 'authors')
     ? `Unmodified copies of the PDF that the authors provided in their submission issue, because ${esc(repoName(v.doi))} does not let a script fetch its files`
     : `Unmodified copies of the files the authors deposited at ${esc(repoName(v.doi))}`}, kept so that search engines can index the full text. They are shared under ${esc(SITE.licenses[p.license])}, by ${esc(authorsText(p))}. Cite the DOI.</p>` : '';
+  /* As arXiv does: the ways to read the work, at the top, before the abstract. */
+  const lastPdf = pdfs.slice(-1)[0];
+  const access = `<p class="access"><b>Access:</b> ${lastPdf ? `<a href="../pdf/${esc(lastPdf.file)}" type="application/pdf">PDF (v${lastPdf.version})</a> · ` : ''}<a href="https://doi.org/${esc(v.doi)}">${esc(repoName(v.doi))} (v${v.version})</a> · <a href="../cite/${esc(p.id)}.bib">BibTeX</a></p>`;
   const rel = related(p, all);
   const relList = (xs) => '<ul>' + xs.map((x) => `<li><a href="./${esc(x.id)}.html">${esc(x.title)}</a> <span class="meta">${esc(authorsText(x))}, ${esc(latest(x).date.slice(0, 4))}</span></li>`).join('') + '</ul>';
   const relatedHtml = rel.byAuthors.length || rel.onTopic.length ? `<h2>Related records</h2>
@@ -506,6 +510,7 @@ ${withdrawn}
 ${facts}
 <h1 itemprop="headline">${esc(p.title)}</h1>
 <p>${authors}</p>
+${p.status === 'withdrawn' ? '' : access}
 <h2>Abstract</h2>
 <div class="abstract"><p itemprop="abstract">${esc(p.abstract)}</p></div>
 <p class="meta">Abstract by ${esc(authorsText(p))}, from the DOI metadata, shown as plain text without other changes, under <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>.</p>
@@ -928,7 +933,17 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, STYLE_HASH };
+
+/* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
+ * They redirect to the files; the record page keeps its .html address as the canonical one. */
+function vercelConfig(papers) {
+  const shown = papers.filter((p) => p.status !== 'removed');
+  const redirects = shown.map((p) => ({ source: '/abs/' + p.id, destination: '/abs/' + p.id + '.html', permanent: true }))
+    .concat(shown.filter((p) => (p.pdfs || []).length).map((p) => ({ source: '/pdf/' + p.id, destination: '/pdf/' + p.pdfs[p.pdfs.length - 1].file, permanent: false })))
+    .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/pdf/' + p.id + 'v' + x.version, destination: '/pdf/' + x.file, permanent: true }))));
+  return JSON.stringify({ outputDirectory: 'site', redirects }, null, 2) + '\n';
+}
 
 if (require.main === module) {
   const r = build(OUT, PAPER_DIR);
@@ -936,5 +951,7 @@ if (require.main === module) {
     console.error(r.problems.join('\n'));
     process.exit(1);
   }
+  /* vercel.json sits at the root of the repository, where Vercel reads it; it is generated with the site. */
+  if (path.resolve(OUT) === path.join(ROOT, 'site')) fs.writeFileSync(path.join(ROOT, 'vercel.json'), vercelConfig(r.papers));
   console.log('wrote ' + r.files.length + ' files to ' + path.relative(process.cwd(), OUT) + ' (' + r.papers.length + ' preprints)');
 }
