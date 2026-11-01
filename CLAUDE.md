@@ -5,7 +5,7 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
 ## 決めごと
 
 1. `site/` は生成物。`site.json`・`policy.md`・`policies/*.md`・`data/papers/*.json` を直して `node build.js`。手で直さない。
-   ルートの `vercel.json` も生成物（`/abs/<id>`・`/pdf/<id>` の短い URL）。`node build.js` が `site/` と一緒に書く。
+   `site/vercel.json`（`/abs/<id>`・`/pdf/<id>` の短い URL）も同じく生成物。Vercel のプロジェクトのルートが `site/` なので、設定はそこに置く。
    規約（`policies/*.md`）を変えたら、その頁の「Last updated」の日付も変える。
 2. 掲載を決めるのは運営者（根本卓哉）。受理された Issue の中身から `data/papers/<id>.json` を作り、PR で入れる。勝手に受理しない。
 3. 規約の約束（査読ではない、質を保証しない、費用を取らない、言語モデルは開示で受ける・著者にしない、記録を消さない、
