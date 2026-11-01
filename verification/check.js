@@ -1207,6 +1207,25 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
   ok('the README says that site/vercel.json is generated', read(path.join(ROOT, 'README.md')).includes('`site/vercel.json` is generated with the rest of `site/`'));
 }
 
+/* ------------------------------------------------------------ 38 */
+console.log('\n38. The JOSS plan');
+{
+  const readme = read(path.join(ROOT, 'README.md'));
+  /* Six months and one day from the first commit, as the JOSS gate is "more than six months". */
+  let first = '';
+  try { first = require('child_process').execFileSync('git', ['log', '--reverse', '--format=%as'], { cwd: ROOT, encoding: 'utf8' }).split('\n')[0].trim(); } catch (e) { first = ''; }
+  const d = new Date(first + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + 6); d.setUTCDate(d.getUTCDate() + 1);
+  const earliest = first ? d.toISOString().slice(0, 10) : '';
+  ok('the README says, in English and Japanese, that a JOSS submission is planned and nothing has been submitted',
+    readme.includes('Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned.') && readme.includes('Nothing has been submitted yet.')
+    && readme.includes('投稿することを計画しています。') && readme.includes('まだ投稿していません。'));
+  ok('the first commit and the earliest submission date in the README match git (' + first + ', ' + earliest + ')',
+    first !== '' && readme.includes('The first commit here is from ' + first + ', so the earliest possible submission is ' + earliest + '.')
+    && readme.includes('ここの最初のコミットは ' + first + ' なので、最短で ' + earliest + ' です。'));
+  ok('the scope is left to JOSS, and the plan stays in the README: no site page mentions JOSS', readme.includes('Whether a preprint server is within the scope of JOSS is for JOSS to decide.')
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /JOSS|Journal of Open Source Software/.test(read(path.join(ROOT, 'site', f)))));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
