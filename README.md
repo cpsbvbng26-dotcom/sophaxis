@@ -62,6 +62,12 @@ The build then gives every record the DOI `<prefix>/sophaxis.<id>`, shows it on 
 When the operator cannot work on Sophaxis at all for more than 30 days, set `"submissionsPaused": true` in `site.json`, rebuild and open a pull request.
 The top page and the submit page then say that new submissions are paused. Set it back to `false` to reopen.
 
+### Announcing a change to the policies
+
+A change that takes away or narrows a right of authors or readers, or adds a duty, is announced at least 14 days before it takes effect.
+Set `"termsNotice": { "text": "What changes, in one or two sentences.", "from": "YYYY-MM-DD" }` in `site.json`, rebuild and open a pull request; the top page shows it.
+Merge the change itself on or after that date, then set `termsNotice` back to `null`.
+
 ### Withdrawing a record
 
 Follow the [Withdrawal Policy](policies/withdrawal.md). A withdrawal issue runs `tools/withdraw.js`, which checks that the account asking belongs to an author
