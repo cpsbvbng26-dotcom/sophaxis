@@ -84,6 +84,8 @@ The record stays in the git history; where the law requires it, ask GitHub to re
 ## Operator and contact
 
 Sophaxis is operated by Takuya Nemoto. How to reach the operator is on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page.
+Sophaxis has a project page on OSF: <https://osf.io/mq7za/>, DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
+On 2026-11-01 the operator applied for Sophaxis to be listed in DOAPR, the Directory of Open Access Preprint Repositories run by COAR. Whether it is listed is DOAPR's decision.
 Short answers to common questions are in the [FAQ](https://sophaxis.vercel.app/faq.html); where they differ from a policy, the policy applies.
 What Sophaxis does not promise is in the [Disclaimer](https://sophaxis.vercel.app/disclaimer.html). Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of their own](https://sophaxis.vercel.app/repositories.html).
 
@@ -138,3 +140,4 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
 運営は根本卓哉です。
+OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)）。2026-11-01 に、COAR が運営する DOAPR（Directory of Open Access Preprint Repositories）への掲載を申請しました。掲載するかどうかは DOAPR が決めます。
