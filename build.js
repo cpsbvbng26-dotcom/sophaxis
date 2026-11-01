@@ -568,13 +568,19 @@ function fields(papers, current, up) {
 
 /* Continuity in the Terms of Use: when the operator cannot handle submissions, the top page and the submit page say so. */
 function pausedNotice(paused = SITE.submissionsPaused) {
-  return paused ? `<div class="notice"><b>New submissions are paused.</b> The operator cannot handle submissions for now. Listed records stay online, and submissions open again when this notice goes.</div>\n` : '';
+  return paused ? `<div class="notice"><b>New submissions are paused.</b> The operator cannot work on Sophaxis for now. Listed records stay online, and submissions open again when this notice goes.</div>\n` : '';
+}
+
+/* Changes and closure in the Terms of Use: a change against users is announced on the top page before it takes effect.
+ * site.json "termsNotice": { "text": "...", "from": "YYYY-MM-DD" } or null. */
+function termsNotice(n = SITE.termsNotice) {
+  return n && n.text && n.from ? `<div class="notice"><b>Change to the policies from ${esc(n.from)}.</b> ${esc(n.text)} See the <a href="./policy.html">policies</a>.</div>\n` : '';
 }
 
 function indexPage(papers) {
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
-${pausedNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
+${pausedNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <h2>Listing</h2>
 ${fields(papers, '', './')}
@@ -922,7 +928,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, recordDoi, dataciteRecord, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, STYLE_HASH };
 
 if (require.main === module) {
   const r = build(OUT, PAPER_DIR);

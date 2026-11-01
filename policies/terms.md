@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-01.
 
 ## Who these terms apply to
 
@@ -58,6 +58,11 @@ These terms and the other policies may change.
 The date on each page shows its last change, and earlier versions stay in the public repository.
 No change will introduce fees.
 
+A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.
+The announcement comes at least 14 days ahead, unless the law or an urgent problem, such as a security or legal risk, requires the change sooner.
+Other changes, such as clearer wording or new examples, take effect when they are published.
+Continuing to use Sophaxis after a change takes effect means accepting it; a person who does not accept it can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
+
 ## Continuity
 
 Sophaxis is run by one person, and is planned so that it can stop without loss.
@@ -106,6 +111,14 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 - A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court. The steps in Disputes above cover only the operator and Sophaxis.
 - Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](./takedown.html) whether or not GitHub or Vercel has acted.
 - If GitHub or Vercel removes, limits or blocks something on their side, for example under the law of the United States, Sophaxis may not be able to restore it.
+
+## General
+
+- The other policies are part of these terms. Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply. The FAQ, the step-by-step page and the Disclaimer explain these terms and do not change them.
+- If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows.
+- If the operator does not enforce a part of these terms at one time, that does not waive it.
+- A person under 18 may submit only with the consent of a parent or guardian.
+- A notice to the operator is given by email to the address on the ORCID record, or in an issue. A notice to an author is given in their submission issue.
 
 ## Contact
 

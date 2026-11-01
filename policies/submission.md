@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-01.
 
 ## Who can submit
 
@@ -12,6 +12,7 @@ Sophaxis confirms this through ORCID, before a moderator reads the work.
 
 A submission that does not pass both is not listed.
 Authors without an ORCID iD cannot submit.
+A submitter under 18 needs the consent of a parent or guardian.
 
 This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 
