@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-01.
 
 ## Operator
 
@@ -31,6 +31,11 @@ Issues are public. Do not put personal data in them.
 The email address is kept on the ORCID record, not on this site.
 Write in English or Japanese.
 The operator aims to answer within 7 days.
+
+## Sophaxis elsewhere
+
+- OSF: the project page [Sophaxis: An Independent Overlay Preprint Server](https://osf.io/mq7za/), with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The DOI names the project, not a listed work.
+- GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
 
 ## Security
 

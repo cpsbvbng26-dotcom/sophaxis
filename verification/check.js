@@ -270,7 +270,7 @@ console.log('\n7. Search engines see the site as Sophaxis');
   ok('the top page carries the Google Search Console verification tag, and no other page does', i.includes('<meta name="google-site-verification" content="UEPpX5mfnLlhOBTBTETu-PmRO_Y4L2SmjEiaq_U1Zf8">')
     && !read(path.join(ROOT, 'site', 'submit.html')).includes('google-site-verification'));
   ok('the top page is titled Sophaxis', i.includes('<title>Sophaxis</title>') && i.includes('<meta property="og:title" content="Sophaxis">'));
-  ok('the top page names the site in WebSite microdata', /itemscope itemtype="https:\/\/schema\.org\/WebSite"><meta itemprop="name" content="Sophaxis">\s*<a class="brand" href="\.\/" itemprop="url">/.test(i));
+  ok('the top page names the site in WebSite microdata', /itemscope itemtype="https:\/\/schema\.org\/WebSite"><meta itemprop="name" content="Sophaxis">(<link itemprop="sameAs" href="https:\/\/[^"]+">)*\s*<a class="brand" href="\.\/" itemprop="url">/.test(i));
   const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
   const missing = pages.filter((f) => !read(path.join(ROOT, 'site', f)).includes('<meta property="og:site_name" content="Sophaxis">'));
   ok('every page gives Sophaxis as the site name', pages.length > 0 && missing.length === 0, missing.join(', '));
@@ -1155,6 +1155,20 @@ console.log('\n35. General terms: notice of changes, precedence, severability, w
     && g.includes('A person under 18 may submit only with the consent of a parent or guardian.')
     && read(path.join(ROOT, 'policies', 'submission.md')).includes('A submitter under 18 needs the consent of a parent or guardian.'));
   ok('the pause notice uses the words of the Terms: the operator cannot work on Sophaxis', pausedNotice(true).includes('The operator cannot work on Sophaxis for now.') && terms.includes('cannot work on Sophaxis at all'));
+}
+
+/* ------------------------------------------------------------ 36 */
+console.log('\n36. Sophaxis elsewhere: the OSF project');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const c = read(path.join(ROOT, 'contact.md'));
+  ok('the OSF project and its DOI are in site.json, on the contact page and in the README, and the DOI is said to name the project, not a listed work',
+    site.osf && site.osf.url === 'https://osf.io/mq7za/' && site.osf.doi === '10.17605/OSF.IO/MQ7ZA'
+    && c.includes('(https://osf.io/mq7za/)') && c.includes('[10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)') && c.includes('The DOI names the project, not a listed work.')
+    && read(path.join(ROOT, 'README.md')).includes('DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)'));
+  ok('the top page links the OSF project and its DOI as sameAs of the site', read(path.join(ROOT, 'site', 'index.html')).includes('<link itemprop="sameAs" href="https://osf.io/mq7za/"><link itemprop="sameAs" href="https://doi.org/10.17605/OSF.IO/MQ7ZA">'));
+  ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /listed in DOAPR|DOAPR-listed/i.test(read(path.join(ROOT, 'site', f)))));
 }
 
 console.log('\n' + '-'.repeat(60));

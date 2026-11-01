@@ -221,7 +221,7 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang 
   const up = root ? '/' : rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
   const home = canonical === '';
-  const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">` : '>';
+  const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">${SITE.osf ? `<link itemprop="sameAs" href="${esc(SITE.osf.url)}"><link itemprop="sameAs" href="https://doi.org/${esc(SITE.osf.doi)}">` : ''}` : '>';
   const brand = home ? 'href="./" itemprop="url"' : `href="${up}index.html"`;
   return `<!doctype html>
 <html lang="${lang || 'en'}">
