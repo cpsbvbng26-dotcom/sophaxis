@@ -905,6 +905,8 @@ function build(out, paperDir) {
     '.well-known/security.txt': ['Contact: ' + SITE.baseUrl + 'contact.html', 'Expires: ' + SITE.securityTxtExpires, 'Preferred-Languages: en, ja',
       'Canonical: ' + SITE.baseUrl + '.well-known/security.txt', 'Policy: ' + SITE.baseUrl + 'contact.html'].join('\n') + '\n',
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
+    /* The Vercel project's root directory is site/, so Vercel reads its configuration from here. */
+    'vercel.json': vercelConfig(all),
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
   all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p, all); });
@@ -942,7 +944,7 @@ function vercelConfig(papers) {
   const redirects = shown.map((p) => ({ source: '/abs/' + p.id, destination: '/abs/' + p.id + '.html', permanent: true }))
     .concat(shown.filter((p) => (p.pdfs || []).length).map((p) => ({ source: '/pdf/' + p.id, destination: '/pdf/' + p.pdfs[p.pdfs.length - 1].file, permanent: false })))
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/pdf/' + p.id + 'v' + x.version, destination: '/pdf/' + x.file, permanent: true }))));
-  return JSON.stringify({ outputDirectory: 'site', redirects }, null, 2) + '\n';
+  return JSON.stringify({ redirects }, null, 2) + '\n';
 }
 
 if (require.main === module) {
@@ -951,7 +953,5 @@ if (require.main === module) {
     console.error(r.problems.join('\n'));
     process.exit(1);
   }
-  /* vercel.json sits at the root of the repository, where Vercel reads it; it is generated with the site. */
-  if (path.resolve(OUT) === path.join(ROOT, 'site')) fs.writeFileSync(path.join(ROOT, 'vercel.json'), vercelConfig(r.papers));
   console.log('wrote ' + r.files.length + ' files to ' + path.relative(process.cwd(), OUT) + ' (' + r.papers.length + ' preprints)');
 }
