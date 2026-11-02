@@ -451,6 +451,8 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   const wf = read(path.join(ROOT, '.github', 'workflows', 'pdf.yml'));
   ok('the PDF workflow is started by hand, may only write contents, and passes the id through the environment', /on:\n  workflow_dispatch:/.test(wf)
     && /permissions:\n  contents: write\n(?!  \w)/.test(wf) && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')));
+  ok('a PDF is asked for with */* as well, since Zenodo answers 406 to application/pdf alone', /^application\/pdf, \*\/\*;q=0\.\d$/.test(F.PDF_ACCEPT)
+    && read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes('await get(url, PDF_ACCEPT)'));
   ok('the PDF workflow pushes only to a branch of its own, never to main', wf.includes('git push origin "claude/pdf-$ID"') && !/git push[^\n]*main/.test(wf));
 }
 
@@ -992,8 +994,9 @@ console.log('\n28. Sophaxis ids are never reused, and DOIs of its own are ready'
   }
   ok('every id ever given in the git history still names the same work (the DOI of its first version), or its removal notice',
     shallow === 'false' && changed.length === 0, shallow !== 'false' ? 'the history is not available (' + shallow + ')' : changed.join('; '));
-  const wf = read(path.join(ROOT, '.github', 'workflows', 'check.yml'));
-  ok('the check in CI reads the whole history', /actions\/checkout@v4\n\s+with:\n\s+fetch-depth: 0/.test(wf));
+  const runsCheck = fs.readdirSync(path.join(ROOT, '.github', 'workflows')).filter((f) => read(path.join(ROOT, '.github', 'workflows', f)).includes('node verification/check.js'));
+  ok('every workflow that runs the checks reads the whole history (check and pdf)', runsCheck.includes('check.yml') && runsCheck.includes('pdf.yml')
+    && runsCheck.every((f) => /actions\/checkout@v4\n\s+with:\n\s+fetch-depth: 0/.test(read(path.join(ROOT, '.github', 'workflows', f)))), runsCheck.join(', '));
   ok('the draft says that its id is provisional', read(path.join(ROOT, 'tools', 'intake.js')).includes('The id is provisional: if another record takes it first, the record is listed under the next free id.'));
 
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
@@ -1024,7 +1027,7 @@ console.log('\n29. Lawful use: licences, liability, takedown, and the services S
     ['- Credit:', '- No changes:', '- No added terms:', '- No endorsement:'].every((x) => cp.includes(x)) && cp.includes('The abstract is shown as plain text, with formatting tags removed and its words unchanged.'));
   const a = read(path.join(FIX, 'abs', '2026.0001.html'));
   ok('every record page credits the abstract to its authors under the licence, with a link to it',
-    a.includes('<p class="meta">Abstract by Jane Doe, Taro Yamada, from the DOI metadata, shown as plain text without other changes, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>'));
+    a.includes('<p class="meta">Abstract by Jane Doe, Taro Yamada, given by the authors in the submission issue, because the DOI metadata has none, shown as plain text without other changes, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>'));
   const terms = read(path.join(ROOT, 'policies', 'terms.md'));
   const dis = read(path.join(ROOT, 'disclaimer.md'));
   ok('no limit of liability reaches intent, gross negligence, or what the Consumer Contract Act or another law forbids to limit',
@@ -1311,6 +1314,11 @@ console.log('\n42. The weekly watch says why a save failed, and whether a copy e
   ok('saves to the Internet Archive are a minute apart, and a refused save is tried twice more, after longer waits',
     Wsp.SAVE_GAP_MS >= 60000 && Wsp.RETRY_WAITS_MS.length === 2 && Wsp.RETRY_WAITS_MS[0] >= 120000 && Wsp.RETRY_WAITS_MS[1] > Wsp.RETRY_WAITS_MS[0]
     && read(path.join(ROOT, 'tools', 'watch.js')).includes('await pause(SAVE_GAP_MS);'));
+  ok('a save is tried again on any answer other than success, not only on 429 (the archive once answered 404 for a served PDF)',
+    w.includes('if (r.ok) break;') && !w.includes('if (r.status !== 429) break;'));
+  ok('lookups of a published version are spaced, and one refused with 429 is tried twice more, after longer waits, without adding anything twice',
+    Wsp.LOOKUP_GAP_MS >= 1000 && Wsp.LOOKUP_RETRY_WAITS_MS.length === 2 && Wsp.LOOKUP_RETRY_WAITS_MS[0] >= 30000 && Wsp.LOOKUP_RETRY_WAITS_MS[1] > Wsp.LOOKUP_RETRY_WAITS_MS[0]
+    && w.includes('await pause(LOOKUP_GAP_MS);') && w.includes('pubs.push(...found);') && /HTTP 429\/\.test\(e\.message\) && attempt < LOOKUP_RETRY_WAITS_MS\.length/.test(w));
   ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
 }
 
@@ -1444,6 +1452,60 @@ console.log('\n43. The published version of a listed preprint');
   ok('the FAQ, the steps, the contact page, CONTRIBUTING and the Withdrawal Policy point to the published-version form',
     ['faq.md', 'process.md', 'contact.md', 'CONTRIBUTING.md'].every((f) => read(path.join(ROOT, f)).includes('issues/new?template=published.yml'))
     && read(path.join(ROOT, 'policies', 'withdrawal.md')).includes('## Withdrawal on publication'));
+}
+
+/* ------------------------------------------------------------ 44 */
+console.log('\n44. Where the abstract comes from');
+{
+  const I = require('../tools/intake.js');
+  const rec = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const meta = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const form = Object.assign(I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md'))), { published: '', abstract: 'An abstract that the authors give in the issue, because the metadata has none.' });
+  const base = { form, login: 'jcarberry', issue: 9, versions: [{ doi: '10.6084/m9.figshare.1234567.v1', date: '2026-11-03' }], result: { licence: 'CC-BY-4.0' }, paperDir: fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), today: '2026-11-10' };
+  const without = I.draft(Object.assign({}, base, { meta: Object.assign({}, meta, { abstract: '' }) })).record;
+  const withAbs = I.draft(Object.assign({}, base, { meta })).record;
+  ok('an abstract given in the issue is marked as given by the authors; one from the metadata is not marked',
+    without.abstract_source === 'authors' && without.abstract === form.abstract && !('abstract_source' in withAbs));
+  ok('the record page says where its abstract came from', read(path.join(FIX, 'abs', '2026.0001.html')).includes('given by the authors in the submission issue, because the DOI metadata has none')
+    && read(path.join(FIX, 'abs', '2026.0002.html')).includes(', from the DOI metadata, shown as plain text')
+    && JSON.parse(read(path.join(FIX, 'papers.json'))).find((x) => x.id === '2026.0001').abstract_source === 'authors');
+  ok('abstract_source takes no other value', validate(Object.assign({}, rec, { abstract_source: 'moderator' }), '2026.0001.json').length > 0);
+}
+
+/* ------------------------------------------------------------ 45 */
+console.log('\n45. Telling search engines what changed (IndexNow)');
+{
+  const I = require('../tools/indexnow.js');
+  const S = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = 'https://sophaxis.vercel.app/';
+  ok('the key has the IndexNow form, and the site serves it at the root as <key>.txt, with the key alone',
+    I.KEY_FORM.test(S.indexNowKey) && read(path.join(ROOT, 'site', S.indexNowKey + '.txt')) === S.indexNowKey);
+  const before = '<urlset>\n  <url><loc>' + B + '</loc><lastmod>2026-11-01</lastmod></url>\n  <url><loc>' + B + 'abs/2026.0001.html</loc><lastmod>2026-11-01</lastmod></url>\n'
+    + '  <url><loc>' + B + 'abs/2026.0002.html</loc><lastmod>2026-11-01</lastmod></url>\n  <url><loc>' + B + 'faq.html</loc><lastmod>2026-11-01</lastmod></url>\n</urlset>\n';
+  const after = before.replace(B + 'abs/2026.0002.html</loc><lastmod>2026-11-01', B + 'abs/2026.0002.html</loc><lastmod>2026-11-02')
+    .replace(B + '</loc><lastmod>2026-11-01', B + '</loc><lastmod>2026-11-02').replace(B + 'faq.html</loc><lastmod>2026-11-01', B + 'faq.html</loc><lastmod>2026-11-02')
+    .replace('</urlset>', '  <url><loc>' + B + 'abs/2026.0003.html</loc><lastmod>2026-11-02</lastmod></url>\n  <url><loc>' + B + 'pdf/2026.0003v1.pdf</loc><lastmod>2026-11-02</lastmod></url>\n'
+      + '  <url><loc>' + B + 'author/0009-0000-1406-0547.html</loc><lastmod>2026-11-02</lastmod></url>\n</urlset>');
+  ok('only new or re-dated record pages, PDF copies and the home page are sent; an unchanged record, other pages and author pages are not',
+    I.changed(before, after, B).join(' ') === [B, B + 'abs/2026.0002.html', B + 'abs/2026.0003.html', B + 'pdf/2026.0003v1.pdf'].join(' '),
+    I.changed(before, after, B).join(' '));
+  ok('sending everything sends every record page and PDF copy of the real sitemap, and no author page',
+    (() => { const { papers } = loadPapers(path.join(ROOT, 'data', 'papers')); const e = I.every(read(path.join(ROOT, 'site', 'sitemap.xml'))); return e.length === 1 + papers.filter((p) => p.status !== 'removed').length + papers.reduce((n, p) => n + (p.pdfs || []).length, 0) && !e.some((u) => u.includes('/author/')); })());
+  const body = I.request([B + 'abs/2026.0001.html'], S);
+  ok('the request names the host, the key and where the key file is', body.host === 'sophaxis.vercel.app' && body.key === S.indexNowKey
+    && body.keyLocation === S.baseUrl + S.indexNowKey + '.txt' && body.urlList.length === 1 && I.ENDPOINT === 'https://api.indexnow.org/indexnow');
+  ok('200 and 202 are taken as received, anything else as refused', /^received/.test(I.meaning(200)) && /^received/.test(I.meaning(202)) && /^refused/.test(I.meaning(403)) && /^refused/.test(I.meaning(422)));
+  const src = read(path.join(ROOT, 'tools', 'indexnow.js'));
+  ok('nothing is sent until the live sitemap is the one in the commit, and the key file is served', /live = \(await text\(SITE\.baseUrl \+ 'sitemap\.xml'\)\) === now/.test(src)
+    && src.indexOf("!== SITE.indexNowKey") < src.indexOf('await fetch(ENDPOINT'));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'indexnow.yml'));
+  ok('the workflow runs when a push to main changes the sitemap, or by hand, reads only, and passes its inputs through the environment',
+    /on:\n  push:\n    branches: \[main\]\n    paths: \[site\/sitemap\.xml\]\n  workflow_dispatch:/.test(wf) && /permissions:\n  contents: read\n(?!  \w)/.test(wf)
+    && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')) && /fetch-depth: 0/.test(wf));
+  const readme = read(path.join(ROOT, 'README.md'));
+  ok('the README and the FAQ say what is sent, that author pages are not, and that Google reads the sitemap instead',
+    readme.includes('Author pages, whose address carries an ORCID iD, are not.') && readme.includes('Google does not take IndexNow.')
+    && readme.includes('ORCID iD を含む著者の頁の URL は送りません。') && read(path.join(ROOT, 'faq.md')).includes('Google reads the sitemap instead.'));
 }
 
 console.log('\n' + '-'.repeat(60));

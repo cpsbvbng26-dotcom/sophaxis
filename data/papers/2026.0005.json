@@ -1,0 +1,41 @@
+{
+  "id": "2026.0005",
+  "title": "Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy",
+  "authors": [
+    {
+      "name": "Takuya Nemoto",
+      "orcid": "0009-0000-1406-0547",
+      "given": "Takuya",
+      "family": "Nemoto"
+    }
+  ],
+  "abstract": "This paper develops Fragmentarian Spiritual Individualism, a philosophical framework that treats life, faith, society, ideas, and eschatology not as continuous narratives but as discrete, self-contained fragments. Rather than treating discontinuity as a problem to be repaired through narrative reconstruction or communal reintegration, the framework takes fragmentation as an ontological starting point and builds outward from it an ethic of internal discipline and spiritual autonomy. Synthesizing existentialist philosophy (Kierkegaard, Nietzsche, Sartre, Heidegger), Christian mysticism (Eckhart, Boehme), the Japanese warrior ethic of Bushido, and postwar Japanese critical thought (Yoshimoto Takaaki, Karatani Kojin), the paper develops six interlocking fragments — existential solitude, institutional detachment in matters of faith, the fusion of intellectual and disciplinary “combat,” an anti-modern aesthetics of work and form, an eschatology of finitude and glory, and a philosophical genealogy situating the framework within its sources — before turning to its contemporary significance and limitations. Throughout, the paper argues that modern rationalism, institutional religion, narrative selfhood, and capitalist self-realization share a structural flaw: each subordinates the singular, discontinuous individual to an external logic of continuity, whether bureaucratic, doctrinal, biographical, or economic. Fragmentarian Spiritual Individualism proposes the fragment itself as the basic unit of ethical and spiritual life, offering a disciplined stance — neither nostalgic re-institutionalization nor nihilistic dissolution — for individuals navigating post-capitalist, post-community conditions marked by institutional distrust and the erosion of shared metanarratives.",
+  "abstract_source": "authors",
+  "category": "philosophy",
+  "license": "CC-BY-4.0",
+  "versions": [
+    {
+      "version": 1,
+      "doi": "10.5281/zenodo.22064241",
+      "date": "2026-08-23"
+    }
+  ],
+  "llm_disclosure": "In preparing this manuscript, the author used Claude (Claude Sonnet 5; Anthropic, PBC), a large language model, as a drafting and structuring aid. The tool assisted in expanding the author’s original conceptual outline into full prose, proposing connective structure between sections, and checking selected bibliographic details for accuracy. The philosophical framework, its central claims, the selection and interpretation of source material, and all argumentative decisions originate with and remain the sole responsibility of the author. The author reviewed, revised, and takes full responsibility for the accuracy and content of this publication. This statement is provided in the interest of transparency regarding the use of generative AI tools in scholarly writing, consistent with emerging disclosure norms for AI-assisted academic work, including ICMJE- and COPE-aligned author guidelines.",
+  "issue": 74,
+  "status": "listed",
+  "operator_own": true,
+  "notes": [
+    {
+      "date": "2026-11-02",
+      "text": "The author's errata for the three philosophy papers (https://github.com/cpsbvbng26-dotcom/autonomy-and-self-cultivation/blob/main/ERRATA.md) record that the statement on language models leaves out two things: the manuscript was written in Japanese and the published English text is a translation by a language model, and the tools used for the translation are not named (E5)."
+    }
+  ],
+  "pdfs": [
+    {
+      "version": 1,
+      "file": "2026.0005v1.pdf",
+      "sha256": "58dbe84b2be8fe7fe6a785419ca7223415dcb1c199764f9eaf65305d41b2bb71",
+      "source": "https://zenodo.org/api/records/22064241/files/Fragmentarian%20Spiritual%20Individualism%20Preprint.pdf/content"
+    }
+  ]
+}

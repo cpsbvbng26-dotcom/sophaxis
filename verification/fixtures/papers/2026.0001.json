@@ -13,6 +13,7 @@
     }
   ],
   "abstract": "This record exists only to test the build. It is not a real preprint and is never published.",
+  "abstract_source": "authors",
   "category": "philosophy-of-mathematics",
   "license": "CC-BY-4.0",
   "versions": [

@@ -11,6 +11,36 @@
       "permanent": true
     },
     {
+      "source": "/abs/2026.0003",
+      "destination": "/abs/2026.0003.html",
+      "permanent": true
+    },
+    {
+      "source": "/abs/2026.0004",
+      "destination": "/abs/2026.0004.html",
+      "permanent": true
+    },
+    {
+      "source": "/abs/2026.0005",
+      "destination": "/abs/2026.0005.html",
+      "permanent": true
+    },
+    {
+      "source": "/abs/2026.0006",
+      "destination": "/abs/2026.0006.html",
+      "permanent": true
+    },
+    {
+      "source": "/abs/2026.0007",
+      "destination": "/abs/2026.0007.html",
+      "permanent": true
+    },
+    {
+      "source": "/abs/2026.0008",
+      "destination": "/abs/2026.0008.html",
+      "permanent": true
+    },
+    {
       "source": "/pdf/2026.0001",
       "destination": "/pdf/2026.0001v2.pdf",
       "permanent": false
@@ -18,6 +48,36 @@
     {
       "source": "/pdf/2026.0002",
       "destination": "/pdf/2026.0002v1.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/pdf/2026.0003",
+      "destination": "/pdf/2026.0003v1.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/pdf/2026.0004",
+      "destination": "/pdf/2026.0004v1.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/pdf/2026.0005",
+      "destination": "/pdf/2026.0005v1.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/pdf/2026.0006",
+      "destination": "/pdf/2026.0006v1.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/pdf/2026.0007",
+      "destination": "/pdf/2026.0007v1.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/pdf/2026.0008",
+      "destination": "/pdf/2026.0008v1.pdf",
       "permanent": false
     },
     {
@@ -33,6 +93,36 @@
     {
       "source": "/pdf/2026.0002v1",
       "destination": "/pdf/2026.0002v1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/2026.0003v1",
+      "destination": "/pdf/2026.0003v1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/2026.0004v1",
+      "destination": "/pdf/2026.0004v1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/2026.0005v1",
+      "destination": "/pdf/2026.0005v1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/2026.0006v1",
+      "destination": "/pdf/2026.0006v1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/2026.0007v1",
+      "destination": "/pdf/2026.0007v1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/2026.0008v1",
+      "destination": "/pdf/2026.0008v1.pdf",
       "permanent": true
     }
   ]

@@ -30,6 +30,11 @@ Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis c
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies.
 It also looks in Crossref and DataCite for a published version linked to a listed preprint, and for retraction or correction notices on a recorded one; it records nothing by itself.
 
+When a push to main changes the sitemap (`tools/indexnow.js`, run by `.github/workflows/indexnow.yml`), Sophaxis waits until the new pages are live,
+then tells the search engines that take IndexNow (Bing, Yandex, Naver, Seznam and others) which record pages and PDF copies are new or changed.
+Only those addresses and the home page are sent. Author pages, whose address carries an ORCID iD, are not.
+Google does not take IndexNow. It reads the sitemap, which `robots.txt` names and which is registered in Google Search Console.
+
 ## How the site is made
 
 ```
@@ -110,6 +115,7 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `title` | The title, from the DOI metadata. |
 | `authors` | Each author's `name`, and `orcid` where the metadata gives one. |
 | `abstract` | The abstract. It is part of the work and stays under the work's licence. |
+| `abstract_source` | `"authors"` when the DOI metadata has no abstract and the authors gave it in the submission issue; absent when the abstract comes from the DOI metadata. |
 | `keywords` | The keywords from the DOI metadata, possibly empty. |
 | `categories` | The fields of `site.json` the record is listed in, the main one first. |
 | `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
@@ -150,6 +156,8 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 検索、分野ごとの一覧、著者ごとの頁（ORCID iD のある著者）、新着の Atom フィード、記録の JSON、APA・Chicago・BibTeX の引用形式があります。
 - 引用は BibTeX・RIS・CSL-JSON のファイルでも取り出せます。記録の JSON の項目は、上の英語の節に書いてあります。
 - 論文の頁には、関連する記録、誤りを報告する窓口、Internet Archive の保存版へのリンクがあります。
+- main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁を知らせます（`tools/indexnow.js`）。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
+- Google は IndexNow を受けません。Google には、`robots.txt` が示し、Google Search Console に登録した sitemap から読ませます。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
