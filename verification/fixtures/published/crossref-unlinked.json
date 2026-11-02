@@ -1,0 +1,25 @@
+{
+  "message": {
+    "DOI": "10.1000/fixture.journal.3",
+    "type": "journal-article",
+    "title": [
+      "Another Title"
+    ],
+    "container-title": [
+      "Annals of Fixtures"
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2027
+        ]
+      ]
+    },
+    "author": [
+      {
+        "given": "T.",
+        "family": "Yamada"
+      }
+    ]
+  }
+}

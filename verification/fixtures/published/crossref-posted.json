@@ -1,0 +1,24 @@
+{
+  "message": {
+    "DOI": "10.31219/osf.io/zzzzz",
+    "type": "posted-content",
+    "title": [
+      "A preprint, not a published version"
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2027,
+          1,
+          2
+        ]
+      ]
+    },
+    "author": [
+      {
+        "given": "Jane",
+        "family": "Doe"
+      }
+    ]
+  }
+}

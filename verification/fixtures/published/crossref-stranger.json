@@ -1,0 +1,27 @@
+{
+  "message": {
+    "DOI": "10.1000/fixture.journal.9",
+    "type": "journal-article",
+    "title": [
+      "Unrelated"
+    ],
+    "container-title": [
+      "Annals of Fixtures"
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2027,
+          1,
+          2
+        ]
+      ]
+    },
+    "author": [
+      {
+        "given": "Ana",
+        "family": "Silva"
+      }
+    ]
+  }
+}

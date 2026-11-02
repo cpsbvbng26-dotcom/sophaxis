@@ -1,0 +1,66 @@
+{
+  "message": {
+    "DOI": "10.1000/fixture.journal.1",
+    "type": "journal-article",
+    "title": [
+      "A Fixture Record, <i>Revised</i>"
+    ],
+    "container-title": [
+      "Journal of Fixture Studies"
+    ],
+    "publisher": "Fixture Press",
+    "published-print": {
+      "date-parts": [
+        [
+          2027,
+          3,
+          15
+        ]
+      ]
+    },
+    "issued": {
+      "date-parts": [
+        [
+          2027,
+          3
+        ]
+      ]
+    },
+    "author": [
+      {
+        "given": "Jane",
+        "family": "Doe",
+        "ORCID": "https://orcid.org/0000-0002-1825-0097"
+      },
+      {
+        "given": "Taro",
+        "family": "Yamada"
+      }
+    ],
+    "relation": {
+      "has-preprint": [
+        {
+          "id-type": "doi",
+          "id": "10.5281/zenodo.1234999",
+          "asserted-by": "object"
+        }
+      ]
+    },
+    "updated-by": [
+      {
+        "DOI": "10.1000/fixture.journal.retraction",
+        "type": "retraction",
+        "updated": {
+          "date-parts": [
+            [
+              2027,
+              6,
+              1
+            ]
+          ]
+        },
+        "source": "publisher"
+      }
+    ]
+  }
+}

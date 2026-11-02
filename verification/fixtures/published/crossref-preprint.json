@@ -1,0 +1,14 @@
+{
+  "message": {
+    "DOI": "10.31219/osf.io/abcde",
+    "type": "posted-content",
+    "relation": {
+      "is-preprint-of": [
+        {
+          "id-type": "doi",
+          "id": "10.1000/Fixture.Journal.1"
+        }
+      ]
+    }
+  }
+}
