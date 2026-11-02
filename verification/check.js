@@ -1186,7 +1186,8 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
   ok('vercel.json is what the build makes from the records, not edited by hand', vj === vercelConfig(papers));
   const cfg = JSON.parse(vj);
   const has = (s, d) => cfg.redirects.some((r) => r.source === s && r.destination === d);
-  ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'redirects');
+  ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'redirects,rewrites'
+    && JSON.stringify(cfg.rewrites) === JSON.stringify([{ source: '/oai', destination: '/api/oai' }]));
   ok('every listed record has /abs/<id>, and every PDF copy has /pdf/<id> for the latest and /pdf/<id>v<n> for each version',
     shown.every((p) => has('/abs/' + p.id, '/abs/' + p.id + '.html')
       && (!(p.pdfs || []).length || has('/pdf/' + p.id, '/pdf/' + p.pdfs[p.pdfs.length - 1].file))
@@ -1544,6 +1545,99 @@ console.log('\n46. Advice on the DOI metadata (deposit-check)');
     && wf.indexOf('repository: cpsbvbng26-dotcom/deposit-check') < wf.indexOf('node tools/intake.js'));
   ok('the README and the steps say that the advice does not decide the listing', read(path.join(ROOT, 'README.md')).includes('The advice does not decide the listing.')
     && read(path.join(ROOT, 'process.md')).includes('It does not decide the listing.'));
+}
+
+/* ------------------------------------------------------------ 47 */
+console.log('\n47. OAI-PMH');
+{
+  const O = require('../tools/oai.js');
+  const B = require('../build.js');
+  const S = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const fixPapers = B.loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers;
+  const data = B.oaiData(fixPapers);
+  const now = new Date('2026-12-31T12:00:00.000Z');
+  const ask = (q) => O.handle(O.argsOf(q), data, now);
+  /* Well-formed: every tag closed in order (a small check; the schema is not read here). */
+  const balanced = (xml) => {
+    const stack = [];
+    for (const m of xml.replace(/<\?xml[^>]*\?>/, '').matchAll(/<(\/?)([A-Za-z_][\w:.-]*)[^>]*?(\/?)>/g)) {
+      if (m[3]) continue;
+      if (!m[1]) stack.push(m[2]); else if (stack.pop() !== m[2]) return false;
+    }
+    return stack.length === 0;
+  };
+  const id1 = 'oai:sophaxis.vercel.app:2026.0001';
+  const answers = ['verb=Identify', 'verb=ListMetadataFormats', 'verb=ListSets', 'verb=ListIdentifiers&metadataPrefix=oai_dc', 'verb=ListRecords&metadataPrefix=oai_dc',
+    'verb=GetRecord&identifier=' + id1 + '&metadataPrefix=oai_dc', 'verb=Nope', 'verb=ListRecords'].map(ask);
+  ok('every answer is well-formed XML in the OAI-PMH namespace, with the time of the answer', answers.every((a) => balanced(a) && a.includes('<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"')
+    && a.includes('<responseDate>2026-12-31T12:00:00Z</responseDate>')), answers.filter((a) => !balanced(a)).length + ' not balanced');
+  const idf = ask('verb=Identify');
+  ok('Identify: the name, the base URL at /oai, protocol 2.0, the earliest datestamp, deleted records kept, days as granularity, the identifier scheme',
+    ['<repositoryName>Sophaxis</repositoryName>', '<baseURL>https://sophaxis.vercel.app/oai</baseURL>', '<protocolVersion>2.0</protocolVersion>',
+      '<earliestDatestamp>' + data.records.map((r) => r.datestamp).sort()[0] + '</earliestDatestamp>', '<deletedRecord>persistent</deletedRecord>',
+      '<granularity>YYYY-MM-DD</granularity>', '<repositoryIdentifier>sophaxis.vercel.app</repositoryIdentifier>', '<sampleIdentifier>' + id1 + '</sampleIdentifier>'].every((t) => idf.includes(t)));
+  ok('the errors of the protocol: bad verb (with no attributes echoed), repeated or unknown argument, missing prefix, unknown format and id, a resumption token',
+    ask('verb=Nope').includes('<request>https://sophaxis.vercel.app/oai</request>') && ask('verb=Nope').includes('code="badVerb"')
+    && ask('verb=Identify&verb=Identify').includes('code="badVerb"') && ask('verb=ListSets&x=1').includes('code="badArgument"')
+    && ask('verb=ListRecords&metadataPrefix=oai_dc&set=logic&set=logic').includes('code="badArgument"') && ask('verb=ListRecords').includes('code="badArgument"')
+    && ask('verb=ListRecords&metadataPrefix=marc21').includes('code="cannotDisseminateFormat"') && ask('verb=GetRecord&identifier=oai:x:1&metadataPrefix=oai_dc').includes('code="idDoesNotExist"')
+    && ask('verb=ListMetadataFormats&identifier=oai:x:1').includes('code="idDoesNotExist"') && ask('verb=ListRecords&resumptionToken=abc').includes('code="badResumptionToken"')
+    && ask('verb=ListRecords&resumptionToken=abc&metadataPrefix=oai_dc').includes('code="badArgument"'));
+  const ids = (q) => [...ask(q).matchAll(/<identifier>([^<]+)<\/identifier>/g)].map((m) => m[1]).join();
+  ok('from and until select by datestamp, both days included; a finer date or from after until is refused; nothing in range is noRecordsMatch',
+    ids('verb=ListIdentifiers&metadataPrefix=oai_dc&from=2027-03-20') === id1 && ids('verb=ListIdentifiers&metadataPrefix=oai_dc&until=2027-03-20').split(',').length === data.records.length
+    && !ids('verb=ListIdentifiers&metadataPrefix=oai_dc&until=2027-03-19').includes(id1)
+    && ask('verb=ListIdentifiers&metadataPrefix=oai_dc&from=2026-12-02T00:00:00Z').includes('code="badArgument"')
+    && ask('verb=ListIdentifiers&metadataPrefix=oai_dc&from=2026-12-03&until=2026-12-02').includes('code="badArgument"')
+    && ask('verb=ListIdentifiers&metadataPrefix=oai_dc&from=2027-03-21').includes('code="noRecordsMatch"'));
+  ok('the fields are the sets, and a set selects its records', ask('verb=ListSets').split('<set>').length - 1 === Object.keys(S.categories).length
+    && ids('verb=ListIdentifiers&metadataPrefix=oai_dc&set=logic') === data.records.filter((r) => r.sets.includes('logic')).map((r) => r.identifier).join());
+  const r1 = data.records.find((r) => r.identifier === id1);
+  const stamp = (patch) => B.oaiData(fixPapers.map((p) => (p.id === '2026.0001' ? Object.assign({}, p, patch) : p))).records.find((r) => r.identifier === id1).datestamp;
+  ok('the datestamp is the latest of the last change (here a reported published version), the day of listing and the day of update',
+    r1.datestamp === '2027-03-20' && stamp({ updated: '2027-04-01' }) === '2027-04-01' && stamp({ listed: '2027-05-01', updated: undefined }) === '2027-05-01');
+  const rec = ask('verb=GetRecord&identifier=' + id1 + '&metadataPrefix=oai_dc');
+  const p1 = fixPapers.find((p) => p.id === '2026.0001');
+  ok('a record in Dublin Core: title, creators as “Family, Given”, abstract, the record page, the DOI, the PDF copy, the licence, open access, a preprint',
+    rec.includes('<dc:title>' + O.x(p1.title) + '</dc:title>') && rec.includes('<dc:creator>Doe, Jane</dc:creator>') && rec.includes('<dc:description>' + O.x(p1.abstract) + '</dc:description>')
+    && rec.includes('<dc:identifier>https://sophaxis.vercel.app/abs/2026.0001.html</dc:identifier>') && rec.includes('<dc:identifier>https://doi.org/' + p1.versions[p1.versions.length - 1].doi + '</dc:identifier>')
+    && rec.includes('<dc:identifier>https://sophaxis.vercel.app/pdf/' + p1.pdfs[p1.pdfs.length - 1].file + '</dc:identifier>')
+    && rec.includes('<dc:rights>https://creativecommons.org/licenses/by/4.0/</dc:rights>') && rec.includes('<dc:rights>info:eu-repo/semantics/openAccess</dc:rights>')
+    && rec.includes('<dc:type>info:eu-repo/semantics/preprint</dc:type>'), rec.slice(0, 200));
+  const removed = fixPapers.find((p) => p.status === 'removed');
+  const del = ask('verb=GetRecord&identifier=oai:sophaxis.vercel.app:' + removed.id + '&metadataPrefix=oai_dc');
+  ok('a removed record stays, marked deleted, with the day of removal and no metadata', del.includes('<header status="deleted">') && del.includes('<datestamp>' + removed.removal_date + '</datestamp>') && !del.includes('<metadata>'));
+  ok('text is escaped, and characters XML forbids are left out', O.x('a & b < c "d" \u0001e') === 'a &amp; b &lt; c &quot;d&quot; e');
+  const fn = read(path.join(ROOT, 'site', 'api', 'oai.js'));
+  ok('site/api/oai.js is tools/oai.js with the records, and asks no other server', fn.includes(read(path.join(ROOT, 'tools', 'oai.js')))
+    && /\nmodule\.exports = handler\(\{.*\}\);\n$/.test(fn) && !/\bfetch\(|require\('https?'\)|require\('net'\)/.test(fn));
+  /* For GET, and for POST with the body already read, the function answers before it returns. */
+  const call = (method, url, body) => { let out = null; const res = { h: {}, setHeader(k, v) { this.h[k] = v; }, end(t) { out = { h: this.h, t }; } }; require(path.join(ROOT, 'site', 'api', 'oai.js'))({ method, url, body }, res); return out || { h: {}, t: '' }; };
+  const g = call('GET', '/oai?verb=Identify');
+  const po = call('POST', '/oai', 'verb=ListSets');
+  ok('the function answers GET and POST, as text/xml', g.h['Content-Type'] === 'text/xml; charset=utf-8' && g.t.includes('<Identify>') && po.t.includes('<ListSets>'));
+  const base = JSON.parse(read(path.join(ROOT, 'data', 'papers', '2026.0001.json')));
+  const v = (patch) => B.validate(Object.assign({}, base, patch), '2026.0001.json').join(' ');
+  ok('a record needs listed, not earlier than its first version; updated, if given, is not earlier than listed',
+    v({}) === '' && v({ listed: undefined }).includes('listed is missing') && v({ listed: '2020-01-01' }).includes('listed is earlier than the first version')
+    && v({ updated: '2026-10-01' }).includes('updated must be a date') && v({ updated: '2026-12-01' }) === '');
+  /* A record cannot say it was listed before the commit that added it. */
+  const late = [];
+  for (const f of fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((x) => x.endsWith('.json'))) {
+    const rec = JSON.parse(read(path.join(ROOT, 'data', 'papers', f)));
+    if (rec.status === 'removed') continue;
+    let added = '';
+    try { added = require('child_process').execFileSync('git', ['log', '--diff-filter=A', '--format=%as', '--', 'data/papers/' + f], { cwd: ROOT, encoding: 'utf8' }).trim().split('\n').pop(); } catch (e) { added = ''; }
+    if (added && rec.listed < added) late.push(f + ' listed ' + rec.listed + ', added ' + added);
+  }
+  ok('no record is listed before the commit that added it', late.length === 0, late.join('; '));
+  const drafted = require('../tools/intake.js').draft({ form: { doi: '10.5281/zenodo.1', orcid: S.operator.orcid, category: 'philosophy', llm: 'No generative model was used in this work at all.' },
+    login: 'someone', issue: 1, meta: { title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', date: '2026-11-01', keywords: [] }, versions: [{ doi: '10.5281/zenodo.1', date: '2026-11-01' }],
+    result: { licence: 'CC-BY-4.0' }, paperDir: path.join(__dirname, 'fixtures', 'papers'), today: '2026-11-05' }).record;
+  ok('a draft is listed on the day of the draft, for the moderator to change to the day of merging', drafted.listed === '2026-11-05');
+  const readme = read(path.join(ROOT, 'README.md'));
+  ok('the README gives the base URL, and says whether Identify gives an address yet', readme.includes('https://sophaxis.vercel.app/oai?verb=Identify')
+    && ((S.oai.adminEmails.length === 0) === readme.includes('Identify gives no `adminEmail` yet')));
 }
 
 console.log('\n' + '-'.repeat(60));
