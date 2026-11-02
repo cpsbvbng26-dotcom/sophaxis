@@ -49,7 +49,7 @@ function run() {
       const li = document.createElement('li');
       const meta = document.createElement('p');
       meta.className = 'meta';
-      meta.textContent = p.id + ' · ' + p.versions[0].date + (p.status === 'withdrawn' ? ' · withdrawn' : '');
+      meta.textContent = p.id + ' · ' + p.versions[0].date + (p.status === 'withdrawn' ? ' · withdrawn' : '') + (p.published ? ' · published' : '');
       const a = document.createElement('a');
       a.href = './abs/' + encodeURIComponent(p.id) + '.html';
       const b = document.createElement('b');

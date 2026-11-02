@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /* Once a week: check that every listed DOI still resolves and keeps its licence,
  * look for versions that the repository has and the record has not yet,
+ * look for a published version that the publisher's metadata links to a listed preprint,
+ * check that a recorded published version still resolves and has no new retraction or correction notice,
  * and ask the Internet Archive to save the pages and the PDF copies.
  *
  * Run by .github/workflows/watch.yml (GITHUB_TOKEN, GITHUB_REPOSITORY).
@@ -14,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const { lookUp, versionsOf, github } = require('./intake.js');
+const P = require('./published.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
@@ -55,6 +58,22 @@ function newVersions(p, atRepository) {
   return [`${p.id}: the repository has ${atRepository} versions and the record lists ${p.versions.length}; the authors can submit the new version as an update`];
 }
 
+/* Pure: what to say about a candidate for the published version of a record. Only a candidate that is a
+ * journal article, a conference paper, a book chapter or a book, and shares an author, is worth the authors' time. */
+function candidateNote(p, desc) {
+  if (!desc || !desc.kind || !desc.venue || !P.sharesAuthor(p, desc)) return [];
+  return [`${p.id}: a possible published version, ${desc.title} (${desc.venue}, ${desc.date}), https://doi.org/${desc.doi}; its metadata or the preprint's links them. The authors can report it with the published-version form`];
+}
+
+/* Pure: the problems of a recorded published version, given what its DOI says now (null if it no longer resolves). */
+function publishedProblems(p, desc) {
+  if (!p.published || p.status === 'removed') return [];
+  if (!desc) return [`${p.id}: the published version ${p.published.doi} no longer resolves in Crossref or DataCite`];
+  const known = new Set((p.published.updates || []).map((u) => u.doi.toLowerCase()));
+  return desc.updates.filter((u) => !known.has(u.doi.toLowerCase()))
+    .map((u) => `${p.id}: the published version ${p.published.doi} has a new ${u.type.replace(/_/g, ' ')} notice of ${u.date}, https://doi.org/${u.doi}; add it to the record`);
+}
+
 /* Pure: the addresses to save, without removed records. */
 /* fetch() says only "fetch failed"; the reason is in its cause (a timeout, a reset connection, a DNS error). */
 function describe(e) {
@@ -69,7 +88,7 @@ function archiveUrls(list) {
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => SITE.baseUrl + 'pdf/' + x.file)));
 }
 
-function report(problems, when, news = []) {
+function report(problems, when, news = [], pubs = []) {
   const list = (xs) => xs.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n');
   return `${MARK}
 **Weekly check, ${when}**
@@ -83,6 +102,12 @@ New versions at the repository:
 ${list(news)}
 
 Sophaxis does not add a version by itself: the authors submit it, and the same checks run again.
+` : ''}${pubs.length ? `
+Possible published versions:
+
+${list(pubs)}
+
+Sophaxis does not record a published version by itself: an author reports it, and the same checks run again.
 ` : ''}
 This issue closes itself when the next check finds nothing.
 `;
@@ -112,6 +137,19 @@ async function main() {
   }
   console.log(news.length ? news.join('\n') : 'no new versions at the repositories');
 
+  /* Published versions: a recorded one must still resolve; for the others, look for one the metadata links. */
+  const pubs = [];
+  for (const p of list.filter((x) => x.status === 'listed')) {
+    try {
+      if (p.published) {
+        problems.push(...publishedProblems(p, await P.lookUpPublished(p.published.doi)));
+        continue;
+      }
+      for (const d of await P.candidates(p)) pubs.push(...candidateNote(p, await P.lookUpPublished(d)));
+    } catch (e) { console.log('could not look for the published version of ' + p.id + ': ' + describe(e)); }
+  }
+  console.log(pubs.length ? pubs.join('\n') : 'no published version found that is not recorded');
+
   /* The Internet Archive answers 429 to saves that come too close together, and sometimes drops one:
    * space them, and retry once after either. */
   const pause = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -140,16 +178,16 @@ async function main() {
 
   const open = ((await github('GET', '/issues?state=open&labels=watch&per_page=20')) || []).find((i) => (i.body || '').startsWith(MARK));
   const when = new Date().toISOString().slice(0, 10);
-  if (problems.length || news.length) {
-    const body = report(problems, when, news);
+  if (problems.length || news.length || pubs.length) {
+    const body = report(problems, when, news, pubs);
     if (open) await github('PATCH', '/issues/' + open.number, { body });
-    else await github('POST', '/issues', { title: problems.length ? 'Weekly check: problems found' : 'Weekly check: new versions at the repository', body, labels: ['watch'] });
+    else await github('POST', '/issues', { title: problems.length ? 'Weekly check: problems found' : news.length ? 'Weekly check: new versions at the repository' : 'Weekly check: possible published versions', body, labels: ['watch'] });
   } else if (open) {
     await github('POST', '/issues/' + open.number + '/comments', { body: `${MARK}\nThe check on ${when} found no problems. Closing.` });
     await github('PATCH', '/issues/' + open.number, { state: 'closed', state_reason: 'completed' });
   }
 }
 
-module.exports = { compare, followed, newVersions, archiveUrls, report, describe, MARK };
+module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
