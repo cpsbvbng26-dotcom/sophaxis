@@ -1024,7 +1024,7 @@ console.log('\n29. Lawful use: licences, liability, takedown, and the services S
     ['- Credit:', '- No changes:', '- No added terms:', '- No endorsement:'].every((x) => cp.includes(x)) && cp.includes('The abstract is shown as plain text, with formatting tags removed and its words unchanged.'));
   const a = read(path.join(FIX, 'abs', '2026.0001.html'));
   ok('every record page credits the abstract to its authors under the licence, with a link to it',
-    a.includes('<p class="meta">Abstract by Jane Doe, Taro Yamada, from the DOI metadata, shown as plain text without other changes, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>'));
+    a.includes('<p class="meta">Abstract by Jane Doe, Taro Yamada, given by the authors in the submission issue, because the DOI metadata has none, shown as plain text without other changes, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>'));
   const terms = read(path.join(ROOT, 'policies', 'terms.md'));
   const dis = read(path.join(ROOT, 'disclaimer.md'));
   ok('no limit of liability reaches intent, gross negligence, or what the Consumer Contract Act or another law forbids to limit',
@@ -1444,6 +1444,24 @@ console.log('\n43. The published version of a listed preprint');
   ok('the FAQ, the steps, the contact page, CONTRIBUTING and the Withdrawal Policy point to the published-version form',
     ['faq.md', 'process.md', 'contact.md', 'CONTRIBUTING.md'].every((f) => read(path.join(ROOT, f)).includes('issues/new?template=published.yml'))
     && read(path.join(ROOT, 'policies', 'withdrawal.md')).includes('## Withdrawal on publication'));
+}
+
+/* ------------------------------------------------------------ 44 */
+console.log('\n44. Where the abstract comes from');
+{
+  const I = require('../tools/intake.js');
+  const rec = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const meta = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const form = Object.assign(I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md'))), { published: '', abstract: 'An abstract that the authors give in the issue, because the metadata has none.' });
+  const base = { form, login: 'jcarberry', issue: 9, versions: [{ doi: '10.6084/m9.figshare.1234567.v1', date: '2026-11-03' }], result: { licence: 'CC-BY-4.0' }, paperDir: fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), today: '2026-11-10' };
+  const without = I.draft(Object.assign({}, base, { meta: Object.assign({}, meta, { abstract: '' }) })).record;
+  const withAbs = I.draft(Object.assign({}, base, { meta })).record;
+  ok('an abstract given in the issue is marked as given by the authors; one from the metadata is not marked',
+    without.abstract_source === 'authors' && without.abstract === form.abstract && !('abstract_source' in withAbs));
+  ok('the record page says where its abstract came from', read(path.join(FIX, 'abs', '2026.0001.html')).includes('given by the authors in the submission issue, because the DOI metadata has none')
+    && read(path.join(FIX, 'abs', '2026.0002.html')).includes(', from the DOI metadata, shown as plain text')
+    && JSON.parse(read(path.join(FIX, 'papers.json'))).find((x) => x.id === '2026.0001').abstract_source === 'authors');
+  ok('abstract_source takes no other value', validate(Object.assign({}, rec, { abstract_source: 'moderator' }), '2026.0001.json').length > 0);
 }
 
 console.log('\n' + '-'.repeat(60));

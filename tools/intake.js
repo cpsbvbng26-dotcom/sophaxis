@@ -302,6 +302,8 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     title: meta.title,
     authors: meta.authors.map((a) => Object.assign({ name: a.name }, a.orcid ? { orcid: a.orcid } : {}, a.family ? { given: a.given, family: a.family } : {})),
     abstract: meta.abstract || plain(form.abstract),
+    /* Where the DOI metadata has no abstract, the authors give it in the issue, and the record page says so. */
+    ...(meta.abstract ? {} : { abstract_source: 'authors' }),
     category: form.category,
     ...(form.others && form.others.length ? { categories: form.others } : {}),
     ...(meta.keywords && meta.keywords.length ? { keywords: meta.keywords } : {}),

@@ -101,6 +101,7 @@ function validate(p, file) {
     e.push(file + ': the language-model statement is too short');
   }
   if (!['listed', 'withdrawn'].includes(p.status)) e.push(file + ': status must be listed, withdrawn or removed');
+  if (p.abstract_source !== undefined && p.abstract_source !== 'authors') e.push(file + ': abstract_source can only be "authors", for an abstract given in the submission issue');
   if (p.published_doi !== undefined) e.push(file + ': published_doi was replaced by published, an object with the DOI, the title, the venue, the date and how it was confirmed');
   if (p.published !== undefined) {
     const q = p.published || {};
@@ -563,7 +564,7 @@ ${facts}
 ${p.status === 'withdrawn' ? '' : access}
 <h2>Abstract</h2>
 <div class="abstract"><p itemprop="abstract">${esc(p.abstract)}</p></div>
-<p class="meta">Abstract by ${esc(authorsText(p))}, from the DOI metadata, shown as plain text without other changes, under <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>.</p>
+<p class="meta">Abstract by ${esc(authorsText(p))}, ${p.abstract_source === 'authors' ? 'given by the authors in the submission issue, because the DOI metadata has none' : 'from the DOI metadata'}, shown as plain text without other changes, under <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>.</p>
 </article>
 ${keywords}
 <div class="notice">${p.published ? `This page lists the preprint, the version before publication. ${esc(SITE.name)} did not review it, and the published version is the version of record.` : 'This is a preprint. It has not been peer-reviewed.'} Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality. The authors bear full responsibility for its content.</div>
@@ -864,6 +865,7 @@ function papersJson(papers) {
     title: p.title,
     authors: p.authors.map((a) => (a.orcid ? { name: a.name, orcid: a.orcid } : { name: a.name })),
     abstract: p.abstract,
+    ...(p.abstract_source ? { abstract_source: p.abstract_source } : {}),
     keywords: p.keywords || [],
     categories: cats(p),
     license: p.license,
