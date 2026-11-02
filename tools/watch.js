@@ -21,6 +21,12 @@ const P = require('./published.js');
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
 const MARK = '<!-- sophaxis-watch -->';
+/* Saves to the Internet Archive. On 2026-11-02 five saves 20 seconds apart went through and the sixth could not
+ * even connect (UND_ERR_CONNECT_TIMEOUT), twice, a minute apart; the sixth address had never been saved.
+ * The archive limits saves that come close together, so they are spaced a minute apart, and a refused save
+ * is tried again after two minutes and then after five. */
+const SAVE_GAP_MS = 60 * 1000;
+const RETRY_WAITS_MS = [2 * 60 * 1000, 5 * 60 * 1000];
 
 function records(dir) {
   return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
@@ -150,20 +156,20 @@ async function main() {
   }
   console.log(pubs.length ? pubs.join('\n') : 'no published version found that is not recorded');
 
-  /* The Internet Archive answers 429 to saves that come too close together, and sometimes drops one:
-   * space them, and retry once after either. */
+  /* The Internet Archive answers 429 to saves that come too close together, or refuses the connection:
+   * space them, and retry after a longer wait each time (SAVE_GAP_MS, RETRY_WAITS_MS). */
   const pause = (ms) => new Promise((r) => setTimeout(r, ms));
   for (const u of archiveUrls(list)) {
     if (dry) { console.log('would save ' + u); continue; }
-    for (let attempt = 1; attempt <= 2; attempt++) {
+    for (let attempt = 0; attempt <= RETRY_WAITS_MS.length; attempt++) {
+      if (attempt) await pause(RETRY_WAITS_MS[attempt - 1]);
       try {
         const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
         console.log('archive ' + r.status + ' ' + u);
         if (r.status !== 429) break;
       } catch (e) { console.log('archive failed ' + u + ': ' + describe(e)); }
-      await pause(60000);
     }
-    await pause(20000);
+    await pause(SAVE_GAP_MS);
   }
   /* A save can fail while an earlier copy exists. Say which, so a failure is not read as "never saved". */
   for (const u of archiveUrls(list)) {
@@ -188,6 +194,6 @@ async function main() {
   }
 }
 
-module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, MARK };
+module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, SAVE_GAP_MS, RETRY_WAITS_MS, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
