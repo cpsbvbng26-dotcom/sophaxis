@@ -55,6 +55,10 @@ function attachmentOk(url) {
   return /^https:\/\/github\.com\/user-attachments\/(files|assets)\/[A-Za-z0-9._\/-]+$/.test(String(url || ''));
 }
 
+/* Zenodo's file endpoint answers 406 to a request that accepts only application/pdf, since it serves the file as
+   application/octet-stream. The bytes are checked for the PDF signature and the repository's checksum in any case. */
+const PDF_ACCEPT = 'application/pdf, */*;q=0.8';
+
 async function get(url, accept) {
   const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: accept || '*/*' }, redirect: 'follow' });
   if (!r.ok) throw new Error(url + ': HTTP ' + r.status);
@@ -77,7 +81,7 @@ async function download(src) {
   } else {
     url = src.url; source = src.url;
   }
-  const bytes = Buffer.from(await (await get(url, 'application/pdf')).arrayBuffer());
+  const bytes = Buffer.from(await (await get(url, PDF_ACCEPT)).arrayBuffer());
   return { bytes, source, md5 };
 }
 
@@ -127,6 +131,6 @@ async function main() {
   fs.writeFileSync(file, JSON.stringify(p, null, 2) + '\n');
 }
 
-module.exports = { sourceFor, accept, attachmentOk, LIMITS };
+module.exports = { sourceFor, accept, attachmentOk, LIMITS, PDF_ACCEPT };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

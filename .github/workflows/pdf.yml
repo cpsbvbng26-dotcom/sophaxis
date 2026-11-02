@@ -20,7 +20,10 @@ jobs:
     name: Copy the PDFs of one record
     runs-on: ubuntu-latest
     steps:
+      # The checks read the git history: the ids, the first commit and the changelog.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
