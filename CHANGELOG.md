@@ -9,7 +9,8 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 - Zenodo and `CITATION.cff` metadata, ready for a release DOI later (#63).
 - `CONTRIBUTING.md` and this changelog (#64).
 - A draft of the JOSS paper, `paper/paper.md` and `paper/paper.bib` (#65).
-- The weekly watch logs why a save to the Internet Archive failed, and looks up the latest copy of each address.
+- The weekly watch logs why a save to the Internet Archive failed, and looks up the latest copy of each address (#66).
+- The published version of a listed preprint: a form for authors to report it, checked through ORCID and the DOI metadata; a notice at the top of the record page, with the peer review the authors state; a flag in the lists and search; a note in the citation files; counts on the statistics page; and a weekly search of Crossref and DataCite for a published version linked to a listed preprint, and for retraction and correction notices.
 
 ## 2026-11-01
 

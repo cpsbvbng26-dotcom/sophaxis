@@ -45,6 +45,10 @@ const REMOVAL_REASONS = {
   'under-review': 'The abstract and the PDF copy are offline while a removal request is reviewed.',
 };
 
+/* What a published version can be, by the words the site shows. tools/published.js maps the Crossref and DataCite types to these. */
+const PUBLISHED_KINDS = ['journal article', 'conference paper', 'book chapter', 'book'];
+const PUBLISHED_DATE = /^\d{4}(-\d{2}(-\d{2})?)?$/;
+
 function validate(p, file) {
   const e = [];
   /* A removed record keeps only its id, the date and the kind of reason (Takedown Policy). */
@@ -97,7 +101,27 @@ function validate(p, file) {
     e.push(file + ': the language-model statement is too short');
   }
   if (!['listed', 'withdrawn'].includes(p.status)) e.push(file + ': status must be listed, withdrawn or removed');
-  if (p.published_doi !== undefined && !DOI.test(p.published_doi)) e.push(file + ': published_doi is not a DOI');
+  if (p.published_doi !== undefined) e.push(file + ': published_doi was replaced by published, an object with the DOI, the title, the venue, the date and how it was confirmed');
+  if (p.published !== undefined) {
+    const q = p.published || {};
+    const where = file + ': published';
+    if (!DOI.test(q.doi || '')) e.push(where + ' needs the DOI of the published version');
+    else {
+      if ((p.versions || []).some((v) => (v.doi || '').toLowerCase() === q.doi.toLowerCase())) e.push(where + ' is one of the listed versions, not a published version');
+      if (repoPrefix(q.doi)) e.push(where + ' is in a preprint repository, not a journal or a book');
+    }
+    if (!q.title || typeof q.title !== 'string') e.push(where + ' needs the title of the published version');
+    if (!q.venue || typeof q.venue !== 'string') e.push(where + ' needs the journal, the proceedings or the book it appeared in');
+    if (!PUBLISHED_DATE.test(q.date || '')) e.push(where + ' needs a date: YYYY, YYYY-MM or YYYY-MM-DD');
+    if (!PUBLISHED_KINDS.includes(q.type)) e.push(where + ' must be one of: ' + PUBLISHED_KINDS.join(', '));
+    if (![true, false, null].includes(q.peer_reviewed)) e.push(where + ': peer_reviewed is true, false or null (not stated)');
+    if (!['publisher', 'authors'].includes(q.evidence)) e.push(where + ': evidence is "publisher" or "authors"');
+    if (!DATE.test(q.reported || '')) e.push(where + ' needs the date it was reported');
+    if (q.issue !== undefined && (!Number.isInteger(q.issue) || q.issue < 1)) e.push(where + ': issue is the number of the issue that reported it');
+    (q.updates || []).forEach((u, i) => {
+      if (!/^[a-z_]+$/.test(u.type || '') || !DOI.test(u.doi || '') || !DATE.test(u.date || '')) e.push(where + ': update ' + (i + 1) + ' needs a type, the DOI of the notice and a date');
+    });
+  }
   if (p.status === 'withdrawn') {
     if (!DATE.test(p.withdrawal_date || '')) e.push(file + ': a withdrawn record needs its withdrawal_date');
     if (!p.withdrawal_note) e.push(file + ': a withdrawn record needs a note');
@@ -312,7 +336,7 @@ function bibtex(p) {
   year         = {${v.date.slice(0, 4)}},
   howpublished = {${repoName(v.doi)}},
   doi          = {${v.doi}},
-  note         = {Preprint, not peer-reviewed. Listed on ${SITE.name} as ${p.id}}
+  note         = {Preprint, not peer-reviewed. Listed on ${SITE.name} as ${p.id}${p.published ? '. Published version: https://doi.org/' + p.published.doi : ''}}
 }`;
 }
 
@@ -378,7 +402,7 @@ function ris(p) {
     ['UR', 'https://doi.org/' + v.doi],
     ['AB', p.abstract],
     ...(p.keywords || []).map((k) => ['KW', k]),
-    ['N1', 'Preprint, not peer-reviewed. Listed on ' + SITE.name + ' as ' + p.id],
+    ['N1', 'Preprint, not peer-reviewed. Listed on ' + SITE.name + ' as ' + p.id + (p.published ? '. Published version: https://doi.org/' + p.published.doi : '')],
     ['ER', ''],
   ].map(([k, x]) => (k + '  - ' + one(x)).trimEnd()).join('\r\n') + '\r\n';
 }
@@ -398,7 +422,7 @@ function cslJson(p) {
     URL: 'https://doi.org/' + v.doi,
     abstract: p.abstract,
     ...((p.keywords || []).length ? { keyword: p.keywords.join(', ') } : {}),
-    note: 'Preprint, not peer-reviewed. Listed on ' + SITE.name + ' as ' + p.id,
+    note: 'Preprint, not peer-reviewed. Listed on ' + SITE.name + ' as ' + p.id + (p.published ? '. Published version: https://doi.org/' + p.published.doi : ''),
   }], null, 2) + '\n';
 }
 
@@ -449,12 +473,33 @@ function dataciteRecord(p, conf = SITE.doi) {
         types: { resourceTypeGeneral: 'Preprint', resourceType: 'Overlay record' },
         subjects: (p.keywords || []).map((k) => ({ subject: k })),
         dates: [{ date: p.versions[0].date, dateType: 'Issued' }, { date: v.date, dateType: 'Updated' }],
-        relatedIdentifiers: p.versions.map((x) => ({ relatedIdentifier: x.doi, relatedIdentifierType: 'DOI', relationType: 'IsVersionOf' })),
+        relatedIdentifiers: p.versions.map((x) => ({ relatedIdentifier: x.doi, relatedIdentifierType: 'DOI', relationType: 'IsVersionOf' }))
+          /* DataCite has no IsPreprintOf. The published version is a later version of the work. */
+          .concat(p.published ? [{ relatedIdentifier: p.published.doi, relatedIdentifierType: 'DOI', relationType: 'IsPreviousVersionOf' }] : []),
         rightsList: [{ rightsIdentifier: p.license.toLowerCase(), rightsIdentifierScheme: 'SPDX', rightsUri: LICENCE_URL[p.license] }],
         descriptions: [{ description: p.abstract, descriptionType: 'Abstract' }].concat(p.status === 'withdrawn' ? [{ description: 'Withdrawn on ' + p.withdrawal_date + '. ' + p.withdrawal_note, descriptionType: 'Other' }] : []),
       },
     },
   };
+}
+
+/* The published version of a record, said as the site says it: what it is, where, when, and on whose word.
+ * Sophaxis does not judge the peer review of a journal; it repeats what the authors state, and says that it does. */
+const publishedYear = (q) => q.date.slice(0, 4);
+function publishedNotice(p) {
+  const q = p.published;
+  if (!q) return '';
+  const peer = q.peer_reviewed === true ? 'The authors state that it was peer-reviewed.'
+    : q.peer_reviewed === false ? 'The authors state that it was not peer-reviewed.' : 'Whether it was peer-reviewed is not stated.';
+  const how = q.evidence === 'publisher' ? 'The publisher’s metadata links it to this preprint.'
+    : 'An author reported it; the publisher’s metadata does not link it to this preprint.';
+  const upd = (q.updates || []).map((u) => `It has a ${esc(u.type.replace(/_/g, ' '))} notice of ${esc(u.date)}: <a href="https://doi.org/${esc(u.doi)}">${esc(u.doi)}</a>.`).join(' ');
+  return `<div class="notice"><b>Published.</b> A later version of this work appeared as a ${esc(q.type)} in <i>${esc(q.venue)}</i> (${esc(publishedYear(q))}): <a href="https://doi.org/${esc(q.doi)}">${esc(q.doi)}</a>. ${peer} ${how}${upd ? ' ' + upd : ''} Cite the published version.</div>`;
+}
+/* APA 7 for the published version: the authors of the record, since the published version shares them, and the venue from its metadata. */
+function publishedCite(p) {
+  const names = p.authors.map((a) => (givenOf(a) ? familyOf(a) + ', ' + initials(givenOf(a)) : familyOf(a)));
+  return `${andList(names, '&')} (${publishedYear(p.published)}). ${p.published.title}. ${p.published.venue}. https://doi.org/${p.published.doi}`;
 }
 
 function recordPage(p, all = [p]) {
@@ -496,7 +541,7 @@ function recordPage(p, all = [p]) {
     : `Unmodified copies of the files the authors deposited at ${esc(repoName(v.doi))}`}, kept so that search engines can index the full text. They are shared under ${esc(SITE.licenses[p.license])}, by ${esc(authorsText(p))}. Cite the DOI.</p>` : '';
   /* As arXiv does: the ways to read the work, at the top, before the abstract. */
   const lastPdf = pdfs.slice(-1)[0];
-  const access = `<p class="access"><b>Access:</b> ${lastPdf ? `<a href="../pdf/${esc(lastPdf.file)}" type="application/pdf">PDF (v${lastPdf.version})</a> · ` : ''}<a href="https://doi.org/${esc(v.doi)}">${esc(repoName(v.doi))} (v${v.version})</a> · <a href="../cite/${esc(p.id)}.bib">BibTeX</a></p>`;
+  const access = `<p class="access"><b>Access:</b> ${p.published ? `<a href="https://doi.org/${esc(p.published.doi)}">Published version (${esc(p.published.venue)})</a> · ` : ''}${lastPdf ? `<a href="../pdf/${esc(lastPdf.file)}" type="application/pdf">PDF (v${lastPdf.version})</a> · ` : ''}<a href="https://doi.org/${esc(v.doi)}">${esc(repoName(v.doi))} (v${v.version})</a> · <a href="../cite/${esc(p.id)}.bib">BibTeX</a></p>`;
   const rel = related(p, all);
   const relList = (xs) => '<ul>' + xs.map((x) => `<li><a href="./${esc(x.id)}.html">${esc(x.title)}</a> <span class="meta">${esc(authorsText(x))}, ${esc(latest(x).date.slice(0, 4))}</span></li>`).join('') + '</ul>';
   const relatedHtml = rel.byAuthors.length || rel.onTopic.length ? `<h2>Related records</h2>
@@ -506,6 +551,7 @@ ${rel.byAuthors.length ? '<p class="meta">By the same authors</p>\n' + relList(r
   const body = `
 <p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 ${withdrawn}
+${publishedNotice(p)}
 <article itemscope itemtype="https://schema.org/ScholarlyArticle">
 ${facts}
 <h1 itemprop="headline">${esc(p.title)}</h1>
@@ -516,18 +562,19 @@ ${p.status === 'withdrawn' ? '' : access}
 <p class="meta">Abstract by ${esc(authorsText(p))}, from the DOI metadata, shown as plain text without other changes, under <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>.</p>
 </article>
 ${keywords}
-<div class="notice">This is a preprint. It has not been peer-reviewed. Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality. The authors bear full responsibility for its content.</div>
+<div class="notice">${p.published ? `This page lists the preprint, the version before publication. ${esc(SITE.name)} did not review it, and the published version is the version of record.` : 'This is a preprint. It has not been peer-reviewed.'} Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality. The authors bear full responsibility for its content.</div>
 <h2>Read</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a></p>
 ${copies}
-${p.published_doi ? `<p>Published version: <a href="https://doi.org/${esc(p.published_doi)}">${esc(p.published_doi)}</a> (not on ${esc(SITE.name)})</p>` : ''}
 <h2>Versions</h2>
 <div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th></tr>${versions}</table></div>
 <h2>Use of language models and other generative models</h2>
 <p>${esc(p.llm_disclosure)}</p>
 ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <h2>Cite</h2>
-<p class="meta">APA</p>
+${p.published ? `<p class="meta">Published version</p>
+<p class="cite">${esc(publishedCite(p))}</p>
+<p class="meta">This preprint, APA</p>` : '<p class="meta">APA</p>'}
 <p class="cite">${esc(apa(p))}</p>
 <p class="meta">Chicago (author-date)</p>
 <p class="cite">${esc(chicago(p))}</p>
@@ -555,7 +602,7 @@ function sortListing(papers) {
 function listing(papers, up, empty) {
   if (!papers.length) return `<p class="meta">${empty}</p>`;
   const items = sortListing(papers).map((p) => `<li>
-<p class="meta"><span class="id">${esc(p.id)}</span> · ${esc(SITE.categories[p.category])} · ${esc(p.versions[0].date)}${p.status === 'withdrawn' ? '<span class="flag">withdrawn</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(p.id)}</span> · ${esc(SITE.categories[p.category])} · ${esc(p.versions[0].date)}${p.status === 'withdrawn' ? '<span class="flag">withdrawn</span>' : ''}${p.published ? '<span class="flag">published</span>' : ''}</p>
 <a href="${up}abs/${esc(p.id)}.html"><b>${esc(p.title)}</b></a>
 <p class="meta">${esc(authorsText(p))}</p>
 </li>`).join('\n');
@@ -668,6 +715,9 @@ function statsPage(all) {
 <p>These counts are taken from the records each time the site is built. Every decision behind them is public in its GitHub issue.</p>
 <h2>Records</h2>
 ${table('Status', [row('Listed', count((p) => p.status === 'listed')), row('Withdrawn', count((p) => p.status === 'withdrawn')), row('Removed', count((p) => p.status === 'removed')), row('All', all.length)])}
+<h2>Published versions</h2>
+<p>A listed preprint stays listed when a later version is published. Whether it was peer-reviewed is what the authors state.</p>
+${table('Published version', [row('Published', count((p) => p.status !== 'removed' && p.published)), row('Peer-reviewed, as the authors state', count((p) => p.status !== 'removed' && p.published && p.published.peer_reviewed === true)), row('Linked by the publisher’s metadata', count((p) => p.status !== 'removed' && p.published && p.published.evidence === 'publisher'))])}
 <h2>By field</h2>
 <p>A record listed in more than one field is counted in each.</p>
 ${table('Field', Object.entries(SITE.categories).map(([slug, name]) => row(name, shown.filter((p) => cats(p).includes(slug)).length)))}
@@ -679,6 +729,7 @@ ${table('Repository', [...new Set(Object.values(SITE.repositories))].map((name) 
 ${issues('accepted', 'Accepted submissions')}
 ${issues('declined', 'Declined submissions')}
 ${issues('withdrawal', 'Withdrawal requests')}
+${issues('published', 'Published versions reported')}
 ${issues('correction', 'Error reports')}
 ${issues('removal', 'Removal requests made in public')}
 </ul>
@@ -814,7 +865,7 @@ function papersJson(papers) {
     license: p.license,
     versions: p.versions.map((v) => ({ version: v.version, doi: v.doi, date: v.date })),
     pdfs: (p.pdfs || []).map((x) => ({ version: x.version, url: SITE.baseUrl + 'pdf/' + x.file })),
-    ...(p.published_doi ? { published_doi: p.published_doi } : {}),
+    ...(p.published ? { published: p.published } : {}),
     status: p.status,
     llm_disclosure: p.llm_disclosure,
   })), null, 2) + '\n';
@@ -935,7 +986,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

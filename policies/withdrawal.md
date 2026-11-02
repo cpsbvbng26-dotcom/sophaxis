@@ -1,6 +1,6 @@
 # Withdrawal Policy
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-02.
 
 ## Who can withdraw
 
@@ -33,6 +33,13 @@ A withdrawn record takes no new versions.
 Withdrawal on Sophaxis does not touch the deposit.
 Sophaxis cannot withdraw or delete a work at Zenodo, Figshare or any other repository; a request about the deposit goes to that repository.
 If the repository withdraws or deletes the deposit, the weekly check finds that the DOI no longer resolves, and the operator withdraws the record with a note that says so.
+
+## Withdrawal on publication
+
+Some publishers ask authors to remove a preprint when the work is published.
+Any one author can then withdraw the listing as above.
+If the published version is recorded, the record page keeps the link to it, so that a reader who follows a citation of the preprint finds the published version.
+The authors can report the published version before they ask for withdrawal; a withdrawn record takes no new report.
 
 ## Withdrawal and removal
 

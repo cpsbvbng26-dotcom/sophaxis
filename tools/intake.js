@@ -35,6 +35,7 @@ const FIELDS = {
   'Your ORCID iD': 'orcid',
   'Existing Sophaxis id (only for a new version)': 'update',
   'DOI of the published version (only if a journal has published the work)': 'published',
+  'Was the published version peer-reviewed?': 'peer',
   'Category': 'category',
   'Other categories (optional)': 'others',
   'Abstract (only if the DOI metadata has none)': 'abstract',
@@ -242,7 +243,7 @@ function listedDois(paperDir) {
   return out;
 }
 
-function check({ form, login, meta, person, works, listed }) {
+function check({ form, login, meta, person, works, listed, pub }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
   const pre = repoPrefix(form.doi || '');
@@ -252,10 +253,14 @@ function check({ form, login, meta, person, works, listed }) {
   const already = listedAs(form.doi, listed);
   if (form.update) add('The record to update exists and lists this work', already === form.update || (already === null && listed && [...listed.values()].includes(form.update)), form.update);
   else add('The work is not listed yet', !already, already ? 'already listed as ' + already + '; give that id to add a new version' : '');
-  if (form.published) add('The published version is given as a DOI', /^10\.\d{4,9}\/\S+$/.test(form.published), form.published);
+  if (form.published && pub === undefined) add('The published version is given as a DOI', /^10\.\d{4,9}\/\S+$/.test(form.published), form.published);
   add('The statement on generative models is given', (form.llm || '').trim().length >= 20);
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
+  /* A published version given at submission gets the same checks as one reported later (tools/published.js). */
+  if (form.published && pub !== undefined) {
+    checks.push(...require('./published.js').checkPublished({ versions: [{ doi: meta.doi || form.doi }], authors: meta.authors }, form.published, pub));
+  }
   add('The DOI is for a work, not for a review of one', meta.type !== 'peer-review', meta.type || '');
   const lic = meta.licences.find((l) => SITE.licenses[l]);
   add('The work carries an accepted licence', lic, lic ? SITE.licenses[lic] : 'none of CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in the metadata');
@@ -280,7 +285,7 @@ function nextId(paperDir, year) {
   return year + '.' + String((seq.length ? Math.max(...seq) : 0) + 1).padStart(4, '0');
 }
 
-function draft({ form, login, issue, meta, versions, result, paperDir, today }) {
+function draft({ form, login, issue, meta, versions, result, paperDir, today, pub }) {
   const dir = paperDir || path.join(ROOT, 'data', 'papers');
   if (form.update) {
     const file = path.join(dir, form.update + '.json');
@@ -300,7 +305,6 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today }) 
     category: form.category,
     ...(form.others && form.others.length ? { categories: form.others } : {}),
     ...(meta.keywords && meta.keywords.length ? { keywords: meta.keywords } : {}),
-    ...(form.published ? { published_doi: form.published } : {}),
     license: result.licence,
     versions: versions.map((v, i) => ({ version: i + 1, doi: v.doi, date: v.date })),
     llm_disclosure: form.llm.trim(),
@@ -308,6 +312,10 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today }) 
     status: 'listed',
   };
   if (SITE.operator.github && login.toLowerCase() === SITE.operator.github.toLowerCase()) p.operator_own = true;
+  if (form.published && pub) {
+    const P = require('./published.js');
+    p.published = P.toPublished(p, pub, { peer: P.PEER[String(form.peer || '').trim()], today: (today || new Date().toISOString()).slice(0, 10), issue });
+  }
   return { record: p, problems: validate(p, id + '.json') };
 }
 
@@ -404,7 +412,12 @@ async function run(form, login) {
       works = w ? orcidDois(w) : new Set();
     }
   } catch (e) { console.error(e.message); person = null; }
-  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')) }), meta, versions };
+  let pub;
+  if (form.published) {
+    pub = null;
+    try { if (/^10\.\d{4,9}\/\S+$/.test(form.published)) pub = await require('./published.js').lookUpPublished(form.published); } catch (e) { console.error(e.message); }
+  }
+  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub }), meta, versions, pub };
 }
 
 async function github(method, url, body) {
@@ -431,8 +444,8 @@ async function main() {
   const n = process.env.ISSUE_NUMBER;
   const login = process.env.ISSUE_AUTHOR;
   const form = parseIssue(process.env.ISSUE_BODY);
-  const { result, meta, versions } = await run(form, login);
-  const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result }) : null;
+  const { result, meta, versions, pub } = await run(form, login);
+  const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub }) : null;
   const body = comment(result, d);
   const mine = ((await github('GET', '/issues/' + n + '/comments?per_page=100')) || []).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await github('PATCH', '/issues/comments/' + mine.id, { body });

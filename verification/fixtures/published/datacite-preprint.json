@@ -1,0 +1,24 @@
+{
+  "data": {
+    "attributes": {
+      "doi": "10.5281/zenodo.1234999",
+      "relatedIdentifiers": [
+        {
+          "relationType": "IsPreviousVersionOf",
+          "relatedIdentifier": "10.1000/fixture.journal.2",
+          "relatedIdentifierType": "DOI"
+        },
+        {
+          "relationType": "IsPreviousVersionOf",
+          "relatedIdentifier": "10.5281/zenodo.1235000",
+          "relatedIdentifierType": "DOI"
+        },
+        {
+          "relationType": "IsPublishedIn",
+          "relatedIdentifier": "10.1000/fixture.journal.4",
+          "relatedIdentifierType": "DOI"
+        }
+      ]
+    }
+  }
+}

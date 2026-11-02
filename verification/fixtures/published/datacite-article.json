@@ -1,0 +1,46 @@
+{
+  "data": {
+    "attributes": {
+      "doi": "10.9999/dc.article.1",
+      "types": {
+        "resourceTypeGeneral": "JournalArticle"
+      },
+      "titles": [
+        {
+          "title": "A Fixture Record in DataCite"
+        }
+      ],
+      "container": {
+        "title": "DataCite Journal of Fixtures"
+      },
+      "publisher": {
+        "name": "Fixture Press"
+      },
+      "publicationYear": 2027,
+      "creators": [
+        {
+          "name": "Doe, Jane",
+          "familyName": "Doe",
+          "nameIdentifiers": [
+            {
+              "nameIdentifier": "https://orcid.org/0000-0002-1825-0097",
+              "nameIdentifierScheme": "ORCID"
+            }
+          ]
+        }
+      ],
+      "relatedIdentifiers": [
+        {
+          "relationType": "IsNewVersionOf",
+          "relatedIdentifier": "10.5281/zenodo.1234567",
+          "relatedIdentifierType": "DOI"
+        },
+        {
+          "relationType": "Cites",
+          "relatedIdentifier": "10.1000/cited",
+          "relatedIdentifierType": "DOI"
+        }
+      ]
+    }
+  }
+}

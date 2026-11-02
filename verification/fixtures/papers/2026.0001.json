@@ -52,5 +52,15 @@
     "structuralism",
     "modal logic"
   ],
-  "published_doi": "10.1000/fixture.journal.1"
+  "published": {
+    "doi": "10.1000/fixture.journal.1",
+    "title": "A Fixture Record, Revised",
+    "venue": "Journal of Fixture Studies",
+    "date": "2027-03-15",
+    "type": "journal article",
+    "peer_reviewed": true,
+    "evidence": "publisher",
+    "reported": "2027-03-20",
+    "issue": 5
+  }
 }

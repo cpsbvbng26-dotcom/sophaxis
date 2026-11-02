@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-01.
+Last updated: 2026-11-02.
 
 ## Who can submit
 
@@ -27,7 +27,7 @@ It must have a title, an abstract and references, in the ordinary form of a scho
 
 Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.
 Publishers set different terms for this.
-The submitter gives the DOI of the published version in the form, and the record links to it.
+The submitter gives the DOI of the published version in the form, as set out under "When the work is published" below.
 
 ## What the submitter confirms
 
@@ -77,6 +77,32 @@ Most repositories give each version its own DOI.
 arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version.
 Submit it as an update to the existing record; earlier versions stay listed.
 
+## When the work is published
+
+A listed preprint stays listed when a later version is published in a journal, in proceedings or in a book.
+The record page then shows the published version at the top: what it is, where and when it appeared, and its DOI.
+It asks readers to cite the published version, and it names the listed version as the preprint.
+
+Any one author reports the published version with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml), from the GitHub account that the author's ORCID record links.
+An automatic check confirms that the report comes from an author, and reads the metadata of the published DOI.
+The published version must be a journal article, a conference paper, a book chapter or a book.
+It must not be in one of the accepted repositories, and it must share an author with the record.
+A moderator then records it, and the decision is public in the issue.
+A published version can also be given at submission, and the same checks run on it.
+
+Sophaxis does not judge the peer review of a journal.
+The record repeats what the authors state: that the published version was peer-reviewed, that it was not, or nothing.
+It also says whether the publisher's metadata links the published version to the preprint, or whether only an author reported it.
+
+Each week Sophaxis looks in the metadata of Crossref and DataCite for a published version that is linked to a listed preprint and shares an author with it.
+It records nothing by itself: it asks the authors to report it.
+The same weekly check confirms that a recorded published version still resolves.
+When the publisher adds a retraction, a correction or another notice to the published version, the record page shows it.
+
+Some publishers ask authors to remove or change a preprint on publication.
+The authors check the publisher's terms.
+If the listing must go, any one author can withdraw it under the [Withdrawal Policy](./withdrawal.html), and the record page keeps the link to the published version.
+
 ## Examples of what is not accepted
 
 These examples show how the rules above apply. They are not a complete list; the rules decide.
@@ -97,6 +123,7 @@ Repository and DOI: the work must have its own DOI from an accepted repository.
 - A PDF on a personal website, a university page, Google Drive, Dropbox, Academia.edu or ResearchGate.
 - A work on PhilArchive, PhilSci-Archive or HAL alone, which give no DOI of their own. Deposit it also in an accepted repository.
 - The DOI of the version a journal published, given as the DOI of the deposit.
+- A different work given as the published version of a listed preprint.
 - The DOI of an article in a SciELO journal, rather than in SciELO Preprints.
 - The DOI of a peer review report, as Qeios and ScienceOpen also register.
 - A DOI that does not resolve, or that leads to a different work.

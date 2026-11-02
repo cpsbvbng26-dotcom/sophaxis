@@ -34,6 +34,15 @@ body:
       label: DOI of the published version (only if a journal has published the work)
       description: The record links to it. The deposited version must be one that you may share under its licence.
       placeholder: 10.1000/journal.0000
+  - type: dropdown
+    id: peer
+    attributes:
+      label: Was the published version peer-reviewed?
+      description: Only if you gave a published version above. Sophaxis repeats your answer as your statement.
+      options:
+        - Yes, the journal or the publisher peer-reviewed it
+        - No, it was not peer-reviewed
+        - I do not know
   - type: input
     id: update
     attributes:
