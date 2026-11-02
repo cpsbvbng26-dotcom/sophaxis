@@ -6,15 +6,18 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 ## 2026-11-02
 
 - Six of the operator's own preprints are listed after moderation, as 2026.0003 to 2026.0008: three papers in philosophy and the three Trinity-Infinity papers in mathematics. Each record notes the author's errata (#78).
-- PDF copies can be taken from Zenodo: its file endpoint refused a request that accepted only `application/pdf`. The PDF workflow reads the whole git history, as the checks need.
+- PDF copies can be taken from Zenodo: its file endpoint refused a request that accepted only `application/pdf`. The PDF workflow reads the whole git history, as the checks need (#79).
+- The PDFs of the six are copied from Zenodo: 2026.0003 (#80), 2026.0004 (#81), 2026.0005 (#82), 2026.0006 (#83), 2026.0007 (#84) and 2026.0008 (#85).
 - The README records that a submission of the code to the Journal of Open Source Software (JOSS) is planned (#62).
 - Zenodo and `CITATION.cff` metadata, ready for a release DOI later (#63).
 - `CONTRIBUTING.md` and this changelog (#64).
 - A draft of the JOSS paper, `paper/paper.md` and `paper/paper.bib` (#65).
 - The weekly watch logs why a save to the Internet Archive failed, and looks up the latest copy of each address (#66).
 - The published version of a listed preprint: a form for authors to report it, checked through ORCID and the DOI metadata; a notice at the top of the record page, with the peer review the authors state; a flag in the lists and search; a note in the citation files; counts on the statistics page; and a weekly search of Crossref and DataCite for a published version linked to a listed preprint, and for retraction and correction notices (#67).
-- The draft JOSS paper describes the published-version mechanism.
-- Saves to the Internet Archive are a minute apart, with two longer retries: the sixth save of a run could not connect, and one PDF copy had never been saved.
+- A record is dated by its last change, a published version included, in the sitemap, the author pages and the feed; the feed links the published version, and the draft JOSS paper describes the mechanism (#68).
+- The README tells the moderator how to record a published version (#69).
+- Saves to the Internet Archive are a minute apart, with two longer retries: the sixth save of a run could not connect, and one PDF copy had never been saved (#70).
+- A record page says where its abstract came from: an abstract the authors gave in the submission issue, because the DOI metadata has none, is marked so (#71).
 
 ## 2026-11-01
 
