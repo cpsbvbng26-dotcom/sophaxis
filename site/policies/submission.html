@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-JRJdsF0DkWfQvruSvohr/ZPzmkuNkrWXEXJz66hXCTY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Submission Policy | Sophaxis</title>
 <meta name="description" content="Submission Policy of Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/submission.html">
@@ -55,6 +55,7 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
 .cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
 .search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
 .search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
@@ -72,7 +73,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Submission Policy</h1>
-<p>Last updated: 2026-11-01.</p>
+<p>Last updated: 2026-11-02.</p>
 <h2>Who can submit</h2>
 <p>Only an author of a work can submit it. Sophaxis confirms this through ORCID, before a moderator reads the work.</p>
 <ul><li>The ORCID record given in the form links to the GitHub account that opened the issue.</li><li>The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.</li></ul>
@@ -81,7 +82,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>What can be submitted</h2>
 <p>Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Work that belongs mainly to another field is out of scope, even if it uses mathematics.</p>
 <p>The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI. It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the <a href="./licences.html">Licence Policy</a>. It must have a title, an abstract and references, in the ordinary form of a scholarly paper.</p>
-<p>Work that a journal has already published may be submitted only in a version that the authors may share under such a licence. Publishers set different terms for this. The submitter gives the DOI of the published version in the form, and the record links to it.</p>
+<p>Work that a journal has already published may be submitted only in a version that the authors may share under such a licence. Publishers set different terms for this. The submitter gives the DOI of the published version in the form, as set out under &quot;When the work is published&quot; below.</p>
 <h2>What the submitter confirms</h2>
 <ul><li>The submitter is an author of the work.</li><li>Every author of the work agrees to its listing on Sophaxis.</li><li>The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.</li><li>The work contains no material, such as figures or long quotations, that the authors may not share, and no personal data of third parties.</li><li>The statement on generative models is complete and true.</li><li>The authors bear full responsibility for the work and its listing, as the <a href="./terms.html">Terms of Use</a> set out.</li></ul>
 <h2>How to submit</h2>
@@ -96,12 +97,18 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>Versions and updates</h2>
 <p>A work is listed once, under one Sophaxis id. That id is never given to another work, even after a record is withdrawn or removed.</p>
 <p>A new version is a new version in the repository. Most repositories give each version its own DOI. arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version. Submit it as an update to the existing record; earlier versions stay listed.</p>
+<h2>When the work is published</h2>
+<p>A listed preprint stays listed when a later version is published in a journal, in proceedings or in a book. The record page then shows the published version at the top: what it is, where and when it appeared, and its DOI. It asks readers to cite the published version, and it names the listed version as the preprint.</p>
+<p>Any one author reports the published version with the <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml">published-version form</a>, from the GitHub account that the author's ORCID record links. An automatic check confirms that the report comes from an author, and reads the metadata of the published DOI. The published version must be a journal article, a conference paper, a book chapter or a book. It must not be in one of the accepted repositories, and it must share an author with the record. A moderator then records it, and the decision is public in the issue. A published version can also be given at submission, and the same checks run on it.</p>
+<p>Sophaxis does not judge the peer review of a journal. The record repeats what the authors state: that the published version was peer-reviewed, that it was not, or nothing. It also says whether the publisher's metadata links the published version to the preprint, or whether only an author reported it.</p>
+<p>Each week Sophaxis looks in the metadata of Crossref and DataCite for a published version that is linked to a listed preprint and shares an author with it. It records nothing by itself: it asks the authors to report it. The same weekly check confirms that a recorded published version still resolves. When the publisher adds a retraction, a correction or another notice to the published version, the record page shows it.</p>
+<p>Some publishers ask authors to remove or change a preprint on publication. The authors check the publisher's terms. If the listing must go, any one author can withdraw it under the <a href="./withdrawal.html">Withdrawal Policy</a>, and the record page keeps the link to the published version.</p>
 <h2>Examples of what is not accepted</h2>
 <p>These examples show how the rules above apply. They are not a complete list; the rules decide. Each group matches a reason that a moderator names when declining, under the <a href="./moderation.html">Moderation Policy</a>.</p>
 <p>Authorship: the submitter must be an author, and every author must agree.</p>
 <ul><li>Submitting a colleague's paper for them, even with their permission. Only an author can submit.</li><li>Submitting a paper by a teacher, a supervisor or a famous author because it deserves to be read.</li><li>Opening the issue from a GitHub account that the ORCID record does not link to, such as a lab account or a second personal account.</li><li>Giving the ORCID iD of a co-author, or of anyone other than the person who opens the issue.</li><li>Giving an ORCID iD that neither the DOI metadata nor the ORCID record connects to the work.</li><li>Submitting a work when a co-author has not agreed, or has said no.</li><li>Opening a new GitHub account to submit a declined work again under another name.</li></ul>
 <p>Repository and DOI: the work must have its own DOI from an accepted repository.</p>
-<ul><li>A PDF on a personal website, a university page, Google Drive, Dropbox, Academia.edu or ResearchGate.</li><li>A work on PhilArchive, PhilSci-Archive or HAL alone, which give no DOI of their own. Deposit it also in an accepted repository.</li><li>The DOI of the version a journal published, given as the DOI of the deposit.</li><li>The DOI of an article in a SciELO journal, rather than in SciELO Preprints.</li><li>The DOI of a peer review report, as Qeios and ScienceOpen also register.</li><li>A DOI that does not resolve, or that leads to a different work.</li></ul>
+<ul><li>A PDF on a personal website, a university page, Google Drive, Dropbox, Academia.edu or ResearchGate.</li><li>A work on PhilArchive, PhilSci-Archive or HAL alone, which give no DOI of their own. Deposit it also in an accepted repository.</li><li>The DOI of the version a journal published, given as the DOI of the deposit.</li><li>A different work given as the published version of a listed preprint.</li><li>The DOI of an article in a SciELO journal, rather than in SciELO Preprints.</li><li>The DOI of a peer review report, as Qeios and ScienceOpen also register.</li><li>A DOI that does not resolve, or that leads to a different work.</li></ul>
 <p>Licence: the DOI metadata must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.</p>
 <ul><li>CC BY-NC 4.0, CC BY-ND 4.0, CC BY-NC-SA 4.0 or CC BY-NC-ND 4.0.</li><li>CC BY 3.0, CC BY 2.0 or any other earlier version of a Creative Commons licence.</li><li>The arXiv non-exclusive licence (arXiv.org perpetual, non-exclusive license).</li><li>&quot;All rights reserved&quot;, or no licence in the DOI metadata at all.</li><li>A licence written only in the PDF or on the repository page, but not in the DOI metadata.</li><li>A licence changed after listing to one that is not accepted. The weekly check reports it, and the operator looks into it.</li></ul>
 <p>Scope: the work must belong mainly to philosophy, mathematics, logic, the philosophy of mathematics or the philosophy of science.</p>

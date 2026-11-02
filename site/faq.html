@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-JRJdsF0DkWfQvruSvohr/ZPzmkuNkrWXEXJz66hXCTY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Frequently asked questions | Sophaxis</title>
 <meta name="description" content="Short answers about Sophaxis: moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.">
 <link rel="canonical" href="https://sophaxis.vercel.app/faq.html">
@@ -55,6 +55,7 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
 .cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
 .search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
 .search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
@@ -72,7 +73,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Frequently asked questions</h1>
-<p>Last updated: 2026-10-31.</p>
+<p>Last updated: 2026-11-02.</p>
 <p>Each answer is a short form of a policy. Where they differ, the policy applies.</p>
 <h2>What is Sophaxis?</h2>
 <p>An overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. It does not host the work itself. It lists preprints that authors have already deposited in an open repository, and gives each one a stable record page.</p>
@@ -103,7 +104,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>How do I add a new version?</h2>
 <p>Deposit it in the repository, then submit it as an update and give the existing Sophaxis id. Earlier versions stay listed.</p>
 <h2>My work has been published in a journal. Can I submit it?</h2>
-<p>Only a version that you may share under an accepted licence. Give the DOI of the published version in the form, and the record links to it.</p>
+<p>Only a version that you may share under an accepted licence. Give the DOI of the published version in the form, and the record shows it.</p>
+<h2>My listed preprint has been published. What do I do?</h2>
+<p>Report it with the <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml">published-version form</a>, as one of its authors. The preprint stays listed, and its record page shows the published version at the top and asks readers to cite it. Sophaxis does not judge peer review: the record repeats what you state about it. The details are in the <a href="./policies/submission.html">Submission Policy</a>, under &quot;When the work is published&quot;.</p>
 <h2>Does Sophaxis keep a copy of the PDF?</h2>
 <p>Where the repository allows a script to fetch it, Sophaxis keeps an unmodified copy, so that search engines can index the full text. For any other repository, you can attach the deposited PDF to your submission issue. A copy is kept only if the file is at most 20 MB. See the <a href="./policies/copyright.html">Copyright Policy</a>.</p>
 <h2>Will my work appear in Google Scholar?</h2>

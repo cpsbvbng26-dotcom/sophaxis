@@ -28,6 +28,7 @@ Where the repository does not let Sophaxis fetch the PDF (every repository excep
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies.
+It also looks in Crossref and DataCite for a published version linked to a listed preprint, and for retraction or correction notices on a recorded one; it records nothing by itself.
 
 ## How the site is made
 
@@ -38,6 +39,7 @@ node verification/check.js   # checks the records, the site and the policies
 
 No dependencies. The site loads nothing from other servers. The only script is `assets/search.js`, on the search page, which reads `papers.json` from the site itself.
 `site/` is generated; edit `site.json`, `policy.md`, `policies/` or `data/papers/` and run `node build.js`.
+`site/vercel.json` is generated with the rest of `site/`, because the Vercel project's root directory is `site/`. It gives the short addresses that arXiv also has: `/abs/<id>` leads to the record page, `/pdf/<id>` to its latest PDF copy, and `/pdf/<id>v<n>` to the copy of version n.
 When a policy changes, change its "Last updated" date too.
 
 ### Moderating
@@ -73,6 +75,13 @@ Merge the change itself on or after that date, then set `termsNotice` back to `n
 Follow the [Withdrawal Policy](policies/withdrawal.md). A withdrawal issue runs `tools/withdraw.js`, which checks that the account asking belongs to an author
 and posts the record as it is after withdrawal. Replace the record with it, delete its files in `data/pdf/`, rebuild and open a pull request that closes the issue.
 
+### Recording a published version
+
+Follow "When the work is published" in the [Submission Policy](policies/submission.md). A published-version issue runs `tools/published.js`, which checks that the account reporting belongs to an author
+and that the DOI is a journal article, a conference paper, a book chapter or a book that shares an author with the record, and posts the record with its `published` object.
+Replace the record with it, rebuild and open a pull request that closes the issue. The preprint stays listed.
+When the weekly check reports a new retraction or correction notice on a published version, add it to `published.updates` with its type, DOI and date.
+
 ### Removing a record
 
 Follow the [Takedown Policy](policies/takedown.md). Replace the record with only
@@ -84,6 +93,9 @@ The record stays in the git history; where the law requires it, ask GitHub to re
 ## Operator and contact
 
 Sophaxis is operated by Takuya Nemoto. How to reach the operator is on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page.
+Sophaxis has a project page on OSF: <https://osf.io/mq7za/>, DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
+On 2026-11-01 the operator applied for Sophaxis to be listed in DOAPR, the Directory of Open Access Preprint Repositories run by COAR. Whether it is listed is DOAPR's decision.
+Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned. JOSS asks for a repository that has been public for more than six months. The first commit here is from 2026-10-30, so the earliest possible submission is 2027-05-01. Nothing has been submitted yet. Whether a preprint server is within the scope of JOSS is for JOSS to decide.
 Short answers to common questions are in the [FAQ](https://sophaxis.vercel.app/faq.html); where they differ from a policy, the policy applies.
 What Sophaxis does not promise is in the [Disclaimer](https://sophaxis.vercel.app/disclaimer.html). Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of their own](https://sophaxis.vercel.app/repositories.html).
 
@@ -103,11 +115,15 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
 | `versions` | Each `version` with its `doi` and `date` (YYYY-MM-DD), oldest first. |
 | `pdfs` | The `version` and `url` of each PDF copy kept on Sophaxis, possibly empty. |
-| `published_doi` | The DOI of the version a journal published, only when there is one. |
+| `published` | Only when a later version has been published: its `doi`, `title`, `venue` (journal, proceedings or book), `date` (YYYY, YYYY-MM or YYYY-MM-DD) and `type` (journal article, conference paper, book chapter or book); `peer_reviewed` as the authors state it (true, false, or null for not stated); `evidence`, "publisher" when the publisher's metadata links the preprint and "authors" when only an author reported it; the date it was `reported`, the `issue` that reported it, and any `updates` (retraction, correction and other notices) with their type, DOI and date. |
 | `status` | `listed` or `withdrawn`. Removed records are left out. |
 | `llm_disclosure` | The authors' statement on the use of generative models. |
 
 `feed.xml` is an Atom feed of the same records, and `cite/<id>.bib`, `cite/<id>.ris` and `cite/<id>.json` (CSL-JSON) hold the citation of each one.
+
+## Contributing
+
+Where each kind of contribution goes, and how to build and check a change, is in [CONTRIBUTING.md](CONTRIBUTING.md). The changes so far are in [CHANGELOG.md](CHANGELOG.md).
 
 ## Licence
 
@@ -137,4 +153,8 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
+貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
+
 運営は根本卓哉です。
+OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)）。2026-11-01 に、COAR が運営する DOAPR（Directory of Open Access Preprint Repositories）への掲載を申請しました。掲載するかどうかは DOAPR が決めます。
+Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。

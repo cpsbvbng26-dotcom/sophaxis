@@ -46,7 +46,7 @@ const FIX = tmp();
   const r = build(FIX, path.join(__dirname, 'fixtures', 'papers'));
   ok('the fixtures are valid', r.problems.length === 0, r.problems.join(' / '));
   const a = read(path.join(FIX, 'abs', '2026.0001.html'));
-  ok('the record page says it has not been peer-reviewed', a.includes('It has not been peer-reviewed.'));
+  ok('a record page with no published version says it has not been peer-reviewed', read(path.join(FIX, 'abs', '2026.0002.html')).includes('It has not been peer-reviewed.'));
   ok('the record page says its quality is not guaranteed', a.includes('does not guarantee its quality.'));
   ok('the record page links the latest version by DOI', a.includes('href="https://doi.org/10.5281/zenodo.1234999"'));
   ok('the record page lists every version', a.includes('>v1<') && a.includes('>v2<'));
@@ -270,7 +270,7 @@ console.log('\n7. Search engines see the site as Sophaxis');
   ok('the top page carries the Google Search Console verification tag, and no other page does', i.includes('<meta name="google-site-verification" content="UEPpX5mfnLlhOBTBTETu-PmRO_Y4L2SmjEiaq_U1Zf8">')
     && !read(path.join(ROOT, 'site', 'submit.html')).includes('google-site-verification'));
   ok('the top page is titled Sophaxis', i.includes('<title>Sophaxis</title>') && i.includes('<meta property="og:title" content="Sophaxis">'));
-  ok('the top page names the site in WebSite microdata', /itemscope itemtype="https:\/\/schema\.org\/WebSite"><meta itemprop="name" content="Sophaxis">\s*<a class="brand" href="\.\/" itemprop="url">/.test(i));
+  ok('the top page names the site in WebSite microdata', /itemscope itemtype="https:\/\/schema\.org\/WebSite"><meta itemprop="name" content="Sophaxis">(<link itemprop="sameAs" href="https:\/\/[^"]+">)*\s*<a class="brand" href="\.\/" itemprop="url">/.test(i));
   const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
   const missing = pages.filter((f) => !read(path.join(ROOT, 'site', f)).includes('<meta property="og:site_name" content="Sophaxis">'));
   ok('every page gives Sophaxis as the site name', pages.length > 0 && missing.length === 0, missing.join(', '));
@@ -366,11 +366,12 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
-  ok('the workflow passes the issue text through the environment, never into the shell', runs.join() === 'node tools/intake.js,node tools/withdraw.js'
-    && (wf.match(/ISSUE_BODY: \$\{\{ github\.event\.issue\.body \}\}/g) || []).length === 2);
+  ok('the workflow passes the issue text through the environment, never into the shell', runs.join() === 'node tools/intake.js,node tools/withdraw.js,node tools/published.js'
+    && (wf.match(/ISSUE_BODY: \$\{\{ github\.event\.issue\.body \}\}/g) || []).length === 3);
   ok('the workflow may only read the code and write to issues', /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
-  ok('each job of the workflow runs only on its own kind of issue: submission or withdrawal', (wf.match(/^    if: /gm) || []).length === 2
-    && wf.includes("if: contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: contains(github.event.issue.labels.*.name, 'withdrawal')"));
+  ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version', (wf.match(/^    if: /gm) || []).length === 3
+    && wf.includes("if: contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: contains(github.event.issue.labels.*.name, 'withdrawal')")
+    && wf.includes("if: contains(github.event.issue.labels.*.name, 'published')"));
   const src = read(path.join(ROOT, 'tools', 'intake.js'));
   ok('the intake reads only the ORCID person and works, not emails or addresses', !/\/(email|address|addresses|record)\b'?/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')) && src.includes("'/person'") && src.includes("'/works'"));
 }
@@ -563,17 +564,18 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
     ok('refuses ' + label, validate(p, '2026.0003.json').length > 0);
   });
 
-  const a = read(path.join(FIX, 'abs', '2026.0001.html'));
-  ok('a record links the published version, outside Sophaxis', a.includes('Published version: <a href="https://doi.org/10.1000/fixture.journal.1">10.1000/fixture.journal.1</a> (not on Sophaxis)')
-    && JSON.parse(read(path.join(FIX, 'papers.json')))[0].published_doi === '10.1000/fixture.journal.1');
-  const good = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
-  ok('refuses a published version that is not a DOI', validate(Object.assign({}, good, { published_doi: 'journal.org/x' }), '2026.0001.json').length > 0);
-
   const I = require('../tools/intake.js');
+  const P0 = require('../tools/published.js');
   const f = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
-  ok('the intake reads the published version and puts it in the draft', f.published === '10.1000/fixture.journal.1'
-    && I.draft({ form: f, login: 'jcarberry', issue: 9, meta: I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json')))),
-      versions: [{ doi: '10.6084/m9.figshare.1234567.v1', date: '2026-11-03' }], result: { licence: 'CC-BY-4.0' }, paperDir: fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), today: '2026-11-10' }).record.published_doi === '10.1000/fixture.journal.1');
+  const pubDesc = P0.describe(JSON.parse(read(path.join(__dirname, 'fixtures', 'published', 'crossref-article.json'))));
+  const d0 = I.draft({ form: f, login: 'jcarberry', issue: 9, meta: I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json')))),
+    versions: [{ doi: '10.6084/m9.figshare.1234567.v1', date: '2026-11-03' }], result: { licence: 'CC-BY-4.0' }, paperDir: fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), today: '2026-11-10', pub: pubDesc });
+  ok('the intake reads the published version at submission, and the draft records it with its metadata, as reported by the authors',
+    f.published === '10.1000/fixture.journal.1' && d0.problems.length === 0 && d0.record.published.doi === '10.1000/fixture.journal.1'
+    && d0.record.published.venue === 'Journal of Fixture Studies' && d0.record.published.evidence === 'authors' && d0.record.published.peer_reviewed === null
+    && d0.record.published.reported === '2026-11-10' && d0.record.published.issue === 9 && !('published_doi' in d0.record));
+  const good = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  ok('refuses the old published_doi field', validate(Object.assign({}, good, { published_doi: '10.1000/x' }), '2026.0001.json').some((x) => x.includes('published_doi was replaced')));
 }
 
 /* ------------------------------------------------------------ 13 */
@@ -592,7 +594,7 @@ console.log('\n13. Structured data, share links, sitemap dates and the 404 page'
   ok('share links are plain links to X, Bluesky, Facebook, LinkedIn and email, each carrying the record address', ['https://x.com/intent/post?', 'https://bsky.app/intent/compose?', 'https://www.facebook.com/sharer/sharer.php?u=', 'https://www.linkedin.com/sharing/share-offsite/?url=', 'mailto:?subject=']
     .every((u) => share.includes('href="' + u)) && (share.match(/https%3A%2F%2Fsophaxis\.vercel\.app%2Fabs%2F2026\.0001\.html/g) || []).length === 5 && !/<script|<img|<iframe/.test(share));
   const sm = read(path.join(FIX, 'sitemap.xml'));
-  ok('the sitemap gives each address the date it last changed', sm.includes('<loc>https://sophaxis.vercel.app/abs/2026.0001.html</loc><lastmod>2026-12-01</lastmod>')
+  ok('the sitemap gives each address the date it last changed', sm.includes('<loc>https://sophaxis.vercel.app/abs/2026.0001.html</loc><lastmod>2027-03-20</lastmod>')
     && sm.includes('<loc>https://sophaxis.vercel.app/pdf/2026.0001v2.pdf</loc><lastmod>2026-12-01</lastmod>')
     && sm.includes('<loc>https://sophaxis.vercel.app/policies/terms.html</loc><lastmod>') && (sm.match(/<url>/g) || []).length === (sm.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || []).length);
   const nf = read(path.join(ROOT, 'site', '404.html'));
@@ -772,7 +774,7 @@ console.log('\n20. Operator and contact');
     src.includes('Sophaxis is operated by one person, Takuya Nemoto, in Japan.') && c.includes('href="https://orcid.org/0009-0000-1406-0547"') && /Last updated: \d{4}-\d{2}-\d{2}\./.test(src));
   const forms = fs.readdirSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE')).filter((f) => f !== 'config.yml');
   ok('the contact page links every issue form there is, and private requests go only to the ORCID record',
-    forms.length === 4 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
+    forms.length === 5 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
     && src.includes("email to the address on the operator's [ORCID record]") && !/@[a-z0-9-]+\.[a-z]/i.test(src));
   ok('the postal address is not published, and is given on request without delay',
     src.includes('The operator\'s postal address is not published.') && src.includes('It is given on request, without delay, as Japan\'s Act on the Protection of Personal Information provides.'));
@@ -1005,7 +1007,7 @@ console.log('\n28. Sophaxis ids are never reused, and DOIs of its own are ready'
   ok('the DataCite metadata names the authors with ORCID iDs, the licence, the Preprint type and each version DOI; a withdrawal is noted; a removed record is hidden, not deleted',
     listed.event === 'publish' && listed.url === 'https://sophaxis.vercel.app/abs/2026.0001.html' && listed.types.resourceTypeGeneral === 'Preprint'
     && listed.creators[0].nameIdentifiers[0].nameIdentifier === 'https://orcid.org/0000-0002-1825-0097' && listed.rightsList[0].rightsIdentifier === 'cc-by-4.0'
-    && listed.relatedIdentifiers.map((r) => r.relatedIdentifier + ' ' + r.relationType).join() === '10.5281/zenodo.1234567 IsVersionOf,10.5281/zenodo.1234999 IsVersionOf'
+    && listed.relatedIdentifiers.map((r) => r.relatedIdentifier + ' ' + r.relationType).join() === '10.5281/zenodo.1234567 IsVersionOf,10.5281/zenodo.1234999 IsVersionOf,10.1000/fixture.journal.1 IsPreviousVersionOf'
     && withdrawn.descriptions.some((d) => d.descriptionType === 'Other' && d.description.startsWith('Withdrawn on 2026-11-20.'))
     && removed.event === 'hide' && Object.keys(removed).join() === 'doi,event,url');
   const says = ['policy.md:It does not assign DOIs.', 'repositories.md:Sophaxis gives no DOIs of its own.', 'faq.md:## Does Sophaxis give my work a DOI?\n\nNo.'];
@@ -1155,6 +1157,293 @@ console.log('\n35. General terms: notice of changes, precedence, severability, w
     && g.includes('A person under 18 may submit only with the consent of a parent or guardian.')
     && read(path.join(ROOT, 'policies', 'submission.md')).includes('A submitter under 18 needs the consent of a parent or guardian.'));
   ok('the pause notice uses the words of the Terms: the operator cannot work on Sophaxis', pausedNotice(true).includes('The operator cannot work on Sophaxis for now.') && terms.includes('cannot work on Sophaxis at all'));
+}
+
+/* ------------------------------------------------------------ 36 */
+console.log('\n36. Sophaxis elsewhere: the OSF project');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const c = read(path.join(ROOT, 'contact.md'));
+  ok('the OSF project and its DOI are in site.json, on the contact page and in the README, and the DOI is said to name the project, not a listed work',
+    site.osf && site.osf.url === 'https://osf.io/mq7za/' && site.osf.doi === '10.17605/OSF.IO/MQ7ZA'
+    && c.includes('(https://osf.io/mq7za/)') && c.includes('[10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)') && c.includes('The DOI names the project, not a listed work.')
+    && read(path.join(ROOT, 'README.md')).includes('DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)'));
+  ok('the top page links the OSF project and its DOI as sameAs of the site', read(path.join(ROOT, 'site', 'index.html')).includes('<link itemprop="sameAs" href="https://osf.io/mq7za/"><link itemprop="sameAs" href="https://doi.org/10.17605/OSF.IO/MQ7ZA">'));
+  ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /listed in DOAPR|DOAPR-listed/i.test(read(path.join(ROOT, 'site', f)))));
+}
+
+/* ------------------------------------------------------------ 37 */
+console.log('\n37. Short addresses and the Access line, as arXiv has them');
+{
+  const { vercelConfig } = require('../build.js');
+  const { papers } = loadPapers(path.join(ROOT, 'data', 'papers'));
+  const shown = papers.filter((p) => p.status !== 'removed');
+  const vj = read(path.join(ROOT, 'site', 'vercel.json'));
+  ok('vercel.json is what the build makes from the records, not edited by hand', vj === vercelConfig(papers));
+  const cfg = JSON.parse(vj);
+  const has = (s, d) => cfg.redirects.some((r) => r.source === s && r.destination === d);
+  ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'redirects');
+  ok('every listed record has /abs/<id>, and every PDF copy has /pdf/<id> for the latest and /pdf/<id>v<n> for each version',
+    shown.every((p) => has('/abs/' + p.id, '/abs/' + p.id + '.html')
+      && (!(p.pdfs || []).length || has('/pdf/' + p.id, '/pdf/' + p.pdfs[p.pdfs.length - 1].file))
+      && (p.pdfs || []).every((x) => has('/pdf/' + p.id + 'v' + x.version, '/pdf/' + x.file))));
+  ok('every redirect leads to a file the build wrote', cfg.redirects.every((r) => fs.existsSync(path.join(ROOT, 'site', r.destination))));
+  ok('the short address of the latest PDF is temporary, because a new version moves it; the others are permanent',
+    cfg.redirects.every((r) => r.permanent === !/^\/pdf\/[0-9.]+$/.test(r.source)));
+  const fixCfg = JSON.parse(vercelConfig(loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers));
+  ok('a removed record gets no short address', loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers.filter((p) => p.status === 'removed')
+    .every((p) => !fixCfg.redirects.some((r) => r.source.includes(p.id))));
+  ok('each listed record page shows the Access line under the authors, with the latest PDF copy first',
+    shown.filter((p) => p.status !== 'withdrawn').every((p) => {
+      const h = read(path.join(ROOT, 'site', 'abs', p.id + '.html'));
+      const last = (p.pdfs || []).slice(-1)[0];
+      const a = (/<p class="access">([\s\S]*?)<\/p>/.exec(h) || [, ''])[1];
+      return a.startsWith('<b>Access:</b> ') && a.includes('<a href="../cite/' + p.id + '.bib">BibTeX</a>')
+        && (!last || a.startsWith('<b>Access:</b> <a href="../pdf/' + last.file + '" type="application/pdf">PDF (v' + last.version + ')</a>'))
+        && h.indexOf('<p class="access">') < h.indexOf('<h2>Abstract</h2>');
+    }));
+  ok('a withdrawn record page has no Access line', loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers.filter((p) => p.status === 'withdrawn')
+    .every((p) => !read(path.join(FIX, 'abs', p.id + '.html')).includes('<p class="access">'))
+    && loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers.some((p) => p.status === 'withdrawn'));
+  ok('the README says that site/vercel.json is generated', read(path.join(ROOT, 'README.md')).includes('`site/vercel.json` is generated with the rest of `site/`'));
+}
+
+/* ------------------------------------------------------------ 38 */
+console.log('\n38. The JOSS plan');
+{
+  const readme = read(path.join(ROOT, 'README.md'));
+  /* Six months and one day from the first commit, as the JOSS gate is "more than six months". */
+  let first = '';
+  try { first = require('child_process').execFileSync('git', ['log', '--reverse', '--format=%as'], { cwd: ROOT, encoding: 'utf8' }).split('\n')[0].trim(); } catch (e) { first = ''; }
+  const d = new Date(first + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + 6); d.setUTCDate(d.getUTCDate() + 1);
+  const earliest = first ? d.toISOString().slice(0, 10) : '';
+  ok('the README says, in English and Japanese, that a JOSS submission is planned and nothing has been submitted',
+    readme.includes('Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned.') && readme.includes('Nothing has been submitted yet.')
+    && readme.includes('投稿することを計画しています。') && readme.includes('まだ投稿していません。'));
+  ok('the first commit and the earliest submission date in the README match git (' + first + ', ' + earliest + ')',
+    first !== '' && readme.includes('The first commit here is from ' + first + ', so the earliest possible submission is ' + earliest + '.')
+    && readme.includes('ここの最初のコミットは ' + first + ' なので、最短で ' + earliest + ' です。'));
+  ok('the scope is left to JOSS, and the plan stays in the README: no site page mentions JOSS', readme.includes('Whether a preprint server is within the scope of JOSS is for JOSS to decide.')
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /JOSS|Journal of Open Source Software/.test(read(path.join(ROOT, 'site', f)))));
+}
+
+/* ------------------------------------------------------------ 39 */
+console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
+{
+  const z = JSON.parse(read(path.join(ROOT, '.zenodo.json')));
+  const cff = read(path.join(ROOT, 'CITATION.cff'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  ok('.zenodo.json and CITATION.cff give the same title, the operator as the only creator with the ORCID iD, and the MIT licence of LICENSE',
+    cff.includes('title: "' + z.title + '"') && z.creators.length === 1 && z.creators[0].orcid === '0009-0000-1406-0547'
+    && cff.includes('orcid: "https://orcid.org/0009-0000-1406-0547"') && z.license === 'mit' && cff.includes('license: MIT')
+    && /^MIT License/.test(read(path.join(ROOT, 'LICENSE'))));
+  ok('the code is tied to the OSF project, with the DOI from site.json, and that DOI is said to name the project',
+    z.related_identifiers.some((r) => r.identifier === site.osf.doi && r.relation === 'isPartOf')
+    && cff.includes('value: ' + site.osf.doi) && cff.includes('the project, not this code release'));
+  ok('the language-model disclosure is in both, and Claude is not an author',
+    z.notes.includes('Built with Claude Code (Anthropic)') && z.notes.includes('Claude is not an author.') && cff.includes('Claude is not an author.')
+    && !/Claude/.test(JSON.stringify(z.creators)) && !/name: Claude|family-names: Claude/.test(cff));
+  ok('a listed work is cited by its own DOI, not by Sophaxis', cff.includes('To cite a listed work, use the DOI of that work, not Sophaxis.'));
+}
+
+/* ------------------------------------------------------------ 40 */
+console.log('\n40. CONTRIBUTING.md and CHANGELOG.md (the JOSS gate on open development)');
+{
+  const contrib = read(path.join(ROOT, 'CONTRIBUTING.md'));
+  const log = read(path.join(ROOT, 'CHANGELOG.md'));
+  const readme = read(path.join(ROOT, 'README.md'));
+  ok('CONTRIBUTING.md says where each kind of contribution goes, how to build and check, the licences, the disclosure, conduct and support',
+    ['## Which way to go', '## Changing the code or the pages', 'node build.js', 'node verification/check.js', '## Language models and other generative models',
+      'A generative model is never listed as an author or a contributor.', '## Licence', '## Conduct', '## Support'].every((x) => contrib.includes(x))
+    && ['submission.yml', 'correction.yml', 'withdrawal.yml', 'removal.yml'].every((t) => contrib.includes('template=' + t) && fs.existsSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', t))));
+  ok('CONTRIBUTING.md gives the same reply time as the contact page', contrib.includes('aims to answer within 7 days') && read(path.join(ROOT, 'contact.md')).includes('aims to answer within 7 days'));
+  /* The pull requests are read from the merge commits on the first-parent line, as GitHub writes them: "Title (#N)". */
+  let merged = [];
+  try {
+    merged = require('child_process').execFileSync('git', ['log', '--first-parent', '--format=%as %s', 'HEAD'], { cwd: ROOT, encoding: 'utf8' })
+      .split('\n').map((l) => /^(\d{4}-\d{2}-\d{2}) .*\(#(\d+)\)$/.exec(l)).filter(Boolean).map((m) => ({ date: m[1], n: m[2] }));
+  } catch (e) { merged = []; }
+  const cited = new Set([...log.matchAll(/\(#(\d+)(?:, #(\d+))?\)/g)].flatMap((m) => [m[1], m[2]]).filter(Boolean));
+  const dates = [...log.matchAll(/^## (\d{4}-\d{2}-\d{2})$/gm)].map((m) => m[1]);
+  const newest = dates[0] || '';
+  const unknown = [...cited].filter((n) => !merged.some((m) => m.n === n));
+  const missing = merged.filter((m) => m.date < newest && !cited.has(m.n)).map((m) => '#' + m.n);
+  ok('every pull request the changelog cites was merged, and every one merged before its newest date is cited (' + merged.length + ' merged, ' + cited.size + ' cited)',
+    merged.length > 0 && unknown.length === 0 && missing.length === 0 && dates.join() === [...dates].sort().reverse().join(),
+    (unknown.length ? 'not merged: #' + unknown.join(', #') + ' ' : '') + (missing.length ? 'not cited: ' + missing.join(', ') : ''));
+  ok('the README points to CONTRIBUTING.md and CHANGELOG.md', readme.includes('(CONTRIBUTING.md)') && readme.includes('(CHANGELOG.md)'));
+}
+
+/* ------------------------------------------------------------ 41 */
+console.log('\n41. The draft JOSS paper');
+{
+  const md = read(path.join(ROOT, 'paper', 'paper.md'));
+  const bib = read(path.join(ROOT, 'paper', 'paper.bib'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const body = md.replace(/^---[\s\S]*?\n---\n/, '').replace(/<!--[\s\S]*?-->/g, '');
+  const words = (body.match(/[A-Za-z0-9][A-Za-z0-9'’.-]*/g) || []).length;
+  ok('the body is within the JOSS length of 250 to 1000 words (' + words + ')', words >= 250 && words <= 1000);
+  ok('the sections JOSS asks for are there, with the AI usage disclosure, and Claude is not an author',
+    ['# Summary', '# Statement of need', '# State of the field', '# Software design', '# Research impact statement', '# AI usage disclosure', '# References'].every((h) => body.includes('\n' + h + '\n'))
+    && body.includes('Claude is not an author.') && !/name: .*Claude/.test(md));
+  ok('the one author is the operator, with the ORCID iD', /authors:\n  - name: Takuya Nemoto\n    orcid: 0009-0000-1406-0547\n/.test(md) && (md.match(/^  - name:/gm) || []).length === 2);
+  const keys = [...bib.matchAll(/^@\w+\{([^,]+),/gm)].map((m) => m[1]);
+  const cited = [...new Set([...body.matchAll(/@([a-z]+)/g)].map((m) => m[1]))];
+  ok('every citation is in paper.bib, and every entry is cited', cited.length > 0 && cited.every((k) => keys.includes(k)) && keys.every((k) => cited.includes(k)),
+    'cited ' + cited.join(',') + ' / bib ' + keys.join(','));
+  const n = Object.keys(site.repositories).length;
+  const words10 = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+  ok('the number of repositories in the paper is the number in site.json (' + n + ')', body.includes('in any of ' + words10[n] + ' repositories'));
+  ok('no DOI in paper.bib until one is checked at its source', !/\bdoi\s*=/i.test(bib));
+  ok('the paper says the research impact as it is: no use by other authors yet', body.includes('There is no record yet of use by other authors.'));
+}
+
+/* ------------------------------------------------------------ 42 */
+console.log('\n42. The weekly watch says why a save failed, and whether a copy exists');
+{
+  const { describe } = require('../tools/watch.js');
+  const e = new TypeError('fetch failed');
+  e.cause = Object.assign(new Error('Connect Timeout Error'), { code: 'UND_ERR_CONNECT_TIMEOUT' });
+  ok('a failed fetch is logged with the code and the message of its cause', describe(e) === 'fetch failed (UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error)' && describe(new Error('plain')) === 'plain');
+  const w = read(path.join(ROOT, 'tools', 'watch.js'));
+  const Wsp = require('../tools/watch.js');
+  ok('saves to the Internet Archive are a minute apart, and a refused save is tried twice more, after longer waits',
+    Wsp.SAVE_GAP_MS >= 60000 && Wsp.RETRY_WAITS_MS.length === 2 && Wsp.RETRY_WAITS_MS[0] >= 120000 && Wsp.RETRY_WAITS_MS[1] > Wsp.RETRY_WAITS_MS[0]
+    && read(path.join(ROOT, 'tools', 'watch.js')).includes('await pause(SAVE_GAP_MS);'));
+  ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
+}
+
+/* ------------------------------------------------------------ 43 */
+console.log('\n43. The published version of a listed preprint');
+{
+  const P = require('../tools/published.js');
+  const Wt = require('../tools/watch.js');
+  const B = require('../build.js');
+  const fx = (n) => JSON.parse(read(path.join(__dirname, 'fixtures', 'published', n)));
+  const rec = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const bare = JSON.parse(JSON.stringify(rec)); delete bare.published;
+
+  /* Metadata */
+  const art = P.describe(fx('crossref-article.json'));
+  ok('Crossref: a journal article is read with its title, journal, full date, authors and the preprint it links',
+    art.kind === 'journal article' && art.title === 'A Fixture Record, Revised' && art.venue === 'Journal of Fixture Studies' && art.date === '2027-03-15'
+    && art.authors[0].orcid === '0000-0002-1825-0097' && art.back.join() === '10.5281/zenodo.1234999' && art.updates.length === 0);
+  const dc = P.describe(fx('datacite-article.json'));
+  ok('DataCite: a journal article is read with its container, year and a relation back to the preprint (DataCite has no preprint relation)',
+    dc.kind === 'journal article' && dc.venue === 'DataCite Journal of Fixtures' && dc.date === '2027' && dc.back.join() === '10.5281/zenodo.1234567');
+  ok('a preprint is not a published version: posted content has no kind', P.describe(fx('crossref-posted.json')).kind === null);
+  const ret = P.describe(fx('crossref-retracted.json'));
+  ok('a retraction notice of the publisher is read with its DOI and date', ret.updates.length === 1 && ret.updates[0].type === 'retraction'
+    && ret.updates[0].doi === '10.1000/fixture.journal.retraction' && ret.updates[0].date === '2027-06-01');
+  ok('the preprint\'s own metadata names its published version: Crossref is-preprint-of, DataCite IsPreviousVersionOf and IsPublishedIn, but never a version in a preprint repository',
+    P.forward(fx('crossref-preprint.json')).join() === '10.1000/fixture.journal.1'
+    && P.forward(fx('datacite-preprint.json')).join() === '10.1000/fixture.journal.2,10.1000/fixture.journal.4');
+  ok('a Crossref search by relation.object keeps only the works that have this preprint', P.backFromSearch(fx('crossref-search.json'), ['10.5281/zenodo.1234999']).join() === '10.1000/fixture.journal.1');
+
+  /* The checks on a report */
+  const form = P.parse(read(path.join(__dirname, 'fixtures', 'published', 'report-issue.md')));
+  ok('the report form is read: id, DOI without the resolver, peer review as stated, ORCID iD',
+    form.id === '2026.0001' && form.doi === '10.1000/fixture.journal.1' && form.peer === true && form.orcid === '0000-0002-1825-0097');
+  const person = { given: 'Jane', family: 'Doe', urls: ['https://github.com/jdoe'] };
+  const works = new Set(['10.5281/zenodo.1234567']);
+  const run = (over) => P.check(Object.assign({ form, login: 'jdoe', record: bare, person, works, desc: art }, over));
+  const okRun = run({});
+  ok('an author reporting a linked journal article passes, and the moderator sees both titles and the publisher\'s link', okRun.ok
+    && okRun.info.some(([k, v]) => k === 'The publisher’s metadata links this preprint' && v === 'yes') && okRun.info.some(([k]) => k === 'Title of the record'));
+  const fails = (label, over) => ok('a report fails when ' + label, !run(over).ok);
+  fails('the account is not linked from the ORCID record', { login: 'someone-else' });
+  fails('the ORCID iD is not an author of the record', { form: Object.assign({}, form, { orcid: '0000-0001-5109-3700' }), works: new Set() });
+  fails('the DOI is one of the listed versions', { form: Object.assign({}, form, { doi: '10.5281/zenodo.1234999' }), desc: P.describe(fx('crossref-posted.json')) });
+  fails('the DOI is in a preprint repository', { form: Object.assign({}, form, { doi: '10.31219/osf.io/zzzzz' }), desc: P.describe(fx('crossref-posted.json')) });
+  fails('the published version shares no author with the record', { form: Object.assign({}, form, { doi: '10.1000/fixture.journal.9' }), desc: P.describe(fx('crossref-stranger.json')) });
+  fails('the metadata cannot be read', { desc: null });
+  fails('the record already has a published version', { record: rec });
+  fails('the record is withdrawn', { record: Object.assign({}, bare, { status: 'withdrawn', withdrawal_date: '2027-01-01', withdrawal_note: 'Withdrawn for a test.' }) });
+  ok('a published version that shares only a family name, and that the publisher does not link, passes as reported by the authors',
+    P.check({ form: Object.assign({}, form, { doi: '10.1000/fixture.journal.3' }), login: 'jdoe', record: bare, person, works, desc: P.describe(fx('crossref-unlinked.json')) }).ok
+    && P.toPublished(bare, P.describe(fx('crossref-unlinked.json')), { peer: null, today: '2027-04-01' }).evidence === 'authors');
+
+  /* The draft and the record */
+  const dr = P.draft(bare, form, art, 12, '2027-03-20');
+  ok('the draft adds the published version and changes nothing else; it validates', dr.problems.length === 0 && dr.record.status === 'listed'
+    && JSON.stringify(Object.assign({}, dr.record, { published: undefined })) === JSON.stringify(Object.assign({}, bare, { published: undefined }))
+    && dr.record.published.evidence === 'publisher' && dr.record.published.peer_reviewed === true && dr.record.published.issue === 12);
+  const bad = (label, change) => ok('refuses a published version ' + label, validate(Object.assign({}, rec, { published: Object.assign({}, rec.published, change) }), '2026.0001.json').length > 0);
+  bad('that is one of the listed versions', { doi: '10.5281/zenodo.1234999' });
+  bad('in a preprint repository', { doi: '10.31219/osf.io/zzzzz' });
+  bad('of another kind', { type: 'preprint' });
+  bad('without a venue', { venue: '' });
+  bad('with a date in another form', { date: '15 March 2027' });
+  bad('with peer review given as text', { peer_reviewed: 'yes' });
+  bad('with other evidence', { evidence: 'moderator' });
+  bad('with an update that has no DOI', { updates: [{ type: 'retraction', date: '2027-06-01' }] });
+  ok('the comment shows the checks, the information for the moderator, and the record to commit', P.comment(okRun, dr).startsWith(P.MARK)
+    && P.comment(okRun, dr).includes('the preprint stays listed') && P.comment(okRun, dr).includes('"venue": "Journal of Fixture Studies"'));
+
+  /* The site */
+  const page = read(path.join(FIX, 'abs', '2026.0001.html'));
+  ok('the record page says at the top that a later version was published, where and when, with peer review as the authors state and the publisher\'s link, and asks to cite it',
+    page.includes('<b>Published.</b> A later version of this work appeared as a journal article in <i>Journal of Fixture Studies</i> (2027): <a href="https://doi.org/10.1000/fixture.journal.1">10.1000/fixture.journal.1</a>. The authors state that it was peer-reviewed. The publisher’s metadata links it to this preprint. Cite the published version.')
+    && page.indexOf('<b>Published.</b>') < page.indexOf('<h1'));
+  ok('the Access line leads with the published version, and the lower notice names the listed version as the preprint',
+    page.includes('<b>Access:</b> <a href="https://doi.org/10.1000/fixture.journal.1">Published version (Journal of Fixture Studies)</a> · ')
+    && page.includes('This page lists the preprint, the version before publication. Sophaxis did not review it, and the published version is the version of record.')
+    && !page.includes('This is a preprint. It has not been peer-reviewed.'));
+  ok('the Cite section gives the published version first', page.includes('<p class="meta">Published version</p>\n<p class="cite">Doe, J., &amp; Yamada, T. (2027). A Fixture Record, Revised. Journal of Fixture Studies. https://doi.org/10.1000/fixture.journal.1</p>\n<p class="meta">This preprint, APA</p>'));
+  const other = read(path.join(FIX, 'abs', '2026.0002.html'));
+  ok('a record without a published version keeps the plain preprint notice', other.includes('This is a preprint. It has not been peer-reviewed.') && !other.includes('<b>Published.</b>'));
+  ok('the citation files name the published version', B.bibtex(rec).includes('Published version: https://doi.org/10.1000/fixture.journal.1}')
+    && B.ris(rec).includes('N1  - Preprint, not peer-reviewed. Listed on Sophaxis as 2026.0001. Published version: https://doi.org/10.1000/fixture.journal.1')
+    && JSON.parse(B.cslJson(rec))[0].note.endsWith('Published version: https://doi.org/10.1000/fixture.journal.1'));
+  const pj = JSON.parse(read(path.join(FIX, 'papers.json'))).find((x) => x.id === '2026.0001');
+  ok('papers.json carries the published object, and the lists and search flag it', pj.published && pj.published.venue === 'Journal of Fixture Studies'
+    && read(path.join(FIX, 'index.html')).includes('<span class="flag">published</span>') && read(path.join(FIX, 'search.js')).includes("(p.published ? ' · published' : '')"));
+  const feed = read(path.join(FIX, 'feed.xml'));
+  const entry = (/<entry>\s*<id>[^<]*2026\.0001\.html<\/id>[\s\S]*?<\/entry>/.exec(feed) || [''])[0];
+  ok('the feed links the published version, and a report is an update of the entry', entry.includes('<link rel="related" href="https://doi.org/10.1000/fixture.journal.1" title="Published version: Journal of Fixture Studies"/>')
+    && entry.includes('<updated>2027-03-20T00:00:00Z</updated>'));
+  const sm = read(path.join(FIX, 'sitemap.xml'));
+  ok('the sitemap and the feed date a record by its last change: a version, a note, a withdrawal or a reported published version',
+    sm.includes('abs/2026.0001.html</loc><lastmod>2027-03-20</lastmod>') && feed.includes('  <updated>2027-03-20T00:00:00Z</updated>\n<entry>') === false
+    && /<link href="[^"]+"\/>\n  <updated>2027-03-20T00:00:00Z<\/updated>/.test(feed)
+    && sm.includes('abs/2026.0002.html</loc><lastmod>' + [JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0002.json')))].map((p) => [p.versions[p.versions.length - 1].date, p.withdrawal_date].concat((p.notes || []).map((n) => n.date)).filter(Boolean).sort().pop())[0] + '</lastmod>'));
+  ok('the statistics count published versions, those the authors state were peer-reviewed, and those the publisher links',
+    /<tr><td>Published<\/td><td>1<\/td><\/tr><tr><td>Peer-reviewed, as the authors state<\/td><td>1<\/td><\/tr><tr><td>Linked by the publisher’s metadata<\/td><td>1<\/td><\/tr>/.test(read(path.join(FIX, 'stats.html'))));
+  const dcr = B.dataciteRecord(rec, { prefix: '10.99999', suffix: 'sophaxis.{id}' });
+  ok('a Sophaxis DOI would point to the published version as a later version (IsPreviousVersionOf)', dcr.data.attributes.relatedIdentifiers.some((r) => r.relatedIdentifier === '10.1000/fixture.journal.1' && r.relationType === 'IsPreviousVersionOf'));
+  const withUpd = Object.assign({}, rec, { published: Object.assign({}, rec.published, { updates: [{ type: 'retraction', doi: '10.1000/fixture.journal.retraction', date: '2027-06-01' }] }) });
+  ok('a notice of the publisher, such as a retraction, is shown with the published version', B.publishedNotice(withUpd).includes('It has a retraction notice of 2027-06-01: <a href="https://doi.org/10.1000/fixture.journal.retraction">'));
+
+  /* The weekly watch */
+  ok('the watch proposes a candidate only when it is a published kind with a venue and a shared author',
+    Wt.candidateNote(bare, art).length === 1 && Wt.candidateNote(bare, P.describe(fx('crossref-stranger.json'))).length === 0
+    && Wt.candidateNote(bare, P.describe(fx('crossref-posted.json'))).length === 0 && Wt.candidateNote(bare, null).length === 0);
+  ok('the watch reports a recorded published version that no longer resolves, and a new retraction notice once',
+    Wt.publishedProblems(rec, null).length === 1 && Wt.publishedProblems(rec, ret).some((x) => x.includes('new retraction notice of 2027-06-01'))
+    && Wt.publishedProblems(withUpd, ret).length === 0 && Wt.publishedProblems(bare, ret).length === 0);
+  ok('the weekly report lists candidates apart from problems, and says that Sophaxis records nothing by itself',
+    Wt.report([], '2027-04-01', [], ['2026.0001: a possible published version']).includes('Possible published versions:')
+    && Wt.report([], '2027-04-01', [], ['x']).includes('Sophaxis does not record a published version by itself'));
+
+  /* The forms, the workflow and the policies */
+  const form1 = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'published.yml'));
+  ok('the report form asks for the four fields the tool reads, with the peer-review answers it knows, and labels the issue',
+    Object.keys(P.FIELDS).every((label) => form1.includes('label: ' + label)) && Object.keys(P.PEER).every((x) => form1.includes('- ' + x)) && form1.includes('labels: ["published"]'));
+  ok('the submission form offers the same peer-review answers', Object.keys(P.PEER).every((x) => read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('- ' + x)));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
+  ok('a labelled report runs tools/published.js, with the issue text only in the environment', wf.includes("contains(github.event.issue.labels.*.name, 'published')") && wf.includes('- run: node tools/published.js'));
+  const pol = read(path.join(ROOT, 'policies', 'submission.md'));
+  ok('the Submission Policy says the preprint stays listed, who reports and how it is checked, that Sophaxis does not judge peer review, and what the weekly check does',
+    ['A listed preprint stays listed when a later version is published', 'Any one author reports the published version', 'Sophaxis does not judge the peer review of a journal.',
+      'It records nothing by itself: it asks the authors to report it.', 'When the publisher adds a retraction, a correction or another notice to the published version, the record page shows it.']
+      .every((x) => pol.includes(x)));
+  ok('the README tells the moderator how to record a published version and its later notices, and says what the weekly check looks for',
+    read(path.join(ROOT, 'README.md')).includes('### Recording a published version') && read(path.join(ROOT, 'README.md')).includes('A published-version issue runs `tools/published.js`')
+    && read(path.join(ROOT, 'README.md')).includes('add it to `published.updates`') && read(path.join(ROOT, 'README.md')).includes('it records nothing by itself'));
+  ok('the FAQ, the steps, the contact page, CONTRIBUTING and the Withdrawal Policy point to the published-version form',
+    ['faq.md', 'process.md', 'contact.md', 'CONTRIBUTING.md'].every((f) => read(path.join(ROOT, f)).includes('issues/new?template=published.yml'))
+    && read(path.join(ROOT, 'policies', 'withdrawal.md')).includes('## Withdrawal on publication'));
 }
 
 console.log('\n' + '-'.repeat(60));

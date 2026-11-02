@@ -1,0 +1,30 @@
+{
+  "message": {
+    "items": [
+      {
+        "DOI": "10.1000/fixture.journal.1",
+        "type": "journal-article",
+        "relation": {
+          "has-preprint": [
+            {
+              "id-type": "doi",
+              "id": "10.5281/zenodo.1234999"
+            }
+          ]
+        }
+      },
+      {
+        "DOI": "10.1000/elsewhere",
+        "type": "journal-article",
+        "relation": {
+          "has-preprint": [
+            {
+              "id-type": "doi",
+              "id": "10.5281/zenodo.7777777"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

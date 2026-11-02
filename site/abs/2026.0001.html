@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-JRJdsF0DkWfQvruSvohr/ZPzmkuNkrWXEXJz66hXCTY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture | Sophaxis</title>
 <meta name="description" content="In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses t">
 <link rel="canonical" href="https://sophaxis.vercel.app/abs/2026.0001.html">
@@ -62,6 +62,7 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
 .cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
 .search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
 .search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
@@ -81,6 +82,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 
 <p class="meta"><span class="id">Sophaxis:2026.0001</span> · <a href="../list/mathematics.html">Mathematics</a><span class="flag">operator’s own submission</span></p>
 
+
 <article itemscope itemtype="https://schema.org/ScholarlyArticle">
 <meta itemprop="datePublished" content="2026-10-13">
 <meta itemprop="dateModified" content="2026-10-15">
@@ -92,6 +94,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <span itemprop="encoding" itemscope itemtype="https://schema.org/MediaObject"><link itemprop="contentUrl" href="https://sophaxis.vercel.app/pdf/2026.0001v2.pdf"><meta itemprop="encodingFormat" content="application/pdf"></span>
 <h1 itemprop="headline">Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</h1>
 <p><span itemprop="author" itemscope itemtype="https://schema.org/Person"><a href="../author/0009-0000-1406-0547.html"><span itemprop="name">Takuya Nemoto</span></a> <a class="id" href="https://orcid.org/0009-0000-1406-0547" itemprop="sameAs">ORCID 0009-0000-1406-0547</a></span></p>
+<p class="access"><b>Access:</b> <a href="../pdf/2026.0001v2.pdf" type="application/pdf">PDF (v2)</a> · <a href="https://doi.org/10.6084/m9.figshare.34419198.v2">Figshare (v2)</a> · <a href="../cite/2026.0001.bib">BibTeX</a></p>
 <h2>Abstract</h2>
 <div class="abstract"><p itemprop="abstract">In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses that identity to study the symmetric n-player game in which a player whose k co-players cooperate earns k + 1 by cooperating and k + 2 by defecting. Main results: 1. The three-player rotation scheme, in which exactly one player defects in each period, is a subgame-perfect equilibrium path if and only if δ ≥ 1/φ ≈ 0.618, where φ is the golden ratio. For n players the threshold lies in (1/(n−2) − 2/(n−2)^n, 1/(n−2)). 2. The payoff vector (2, 4, 2) is never an equilibrium payoff. This corrects an example in the author's earlier preprint (https://doi.org/10.5281/zenodo.22058777). 3. With public randomization, (2+t, 4−t, 2+t) is an equilibrium payoff if and only if δ ≥ max(1/2, 1−t). 4. Without randomization, the set of sustainable t passes through three regimes: two points for 1/2 ≤ δ &lt; 1/φ, a countably infinite set at δ = 1/φ, and the full segment for δ ≥ 2/3. Inside the window 1/φ &lt; δ &lt; 2/3 it has positive Hausdorff dimension, with an explicit lower bound. 5. Golden-window conjecture: inside the window the set has Lebesgue measure zero, and its dimension increases continuously from 0 to 1. Numerical evidence is reported. 6. In the linear dilemma with benefit b and cost c, the rotation is sustainable exactly when cooperation is efficient, the three-player threshold is (√(1 + 4c/b) − 1)/2, and the rotation always needs more patience than cooperation by everyone. The literature has not been searched systematically, and some of the results may be known. All proofs are given in full. This is a preprint and has not been peer-reviewed. Every number in the paper is produced by games/games.py and checked by verification/check_games.py in https://github.com/cpsbvbng26-dotcom/trinity-operator (MIT licence). Generative AI disclosure: the author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.Version 2: author line changed to &quot;Independent Researcher&quot; (with a note); wording of the language-model declaration revised. Mathematical content unchanged.</p></div>
 <p class="meta">Abstract by Takuya Nemoto, from the DOI metadata, shown as plain text without other changes, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
@@ -102,7 +105,6 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p><a href="https://doi.org/10.6084/m9.figshare.34419198.v2">Latest version (v2) at Figshare</a> · licence <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
 <p>PDF on Sophaxis: <a href="../pdf/2026.0001v1.pdf">v1</a> · <a href="../pdf/2026.0001v2.pdf">v2</a></p>
 <p class="meta">Unmodified copies of the files the authors deposited at Figshare, kept so that search engines can index the full text. They are shared under CC BY 4.0, by Takuya Nemoto. Cite the DOI.</p>
-
 <h2>Versions</h2>
 <div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th></tr><tr><td>v1</td><td>2026-10-13</td><td><a href="https://doi.org/10.6084/m9.figshare.34419198.v1">10.6084/m9.figshare.34419198.v1</a></td><td>Figshare</td></tr><tr><td>v2</td><td>2026-10-15</td><td><a href="https://doi.org/10.6084/m9.figshare.34419198.v2">10.6084/m9.figshare.34419198.v2</a></td><td>Figshare</td></tr></table></div>
 <h2>Use of language models and other generative models</h2>
