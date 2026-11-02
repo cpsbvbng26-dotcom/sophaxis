@@ -33,5 +33,13 @@
       "date": "2026-11-02",
       "text": "The same errata record that the statement on language models covers only the revision. The mathematical content of the first draft, published in October 2025, came from a language model (ChatGPT, OpenAI), and the paper does not say so (E4)."
     }
+  ],
+  "pdfs": [
+    {
+      "version": 1,
+      "file": "2026.0008v1.pdf",
+      "sha256": "a1c588ccb98f0c581d055d724341f9305f02e919c9f0ad55031ebe16670dd6c6",
+      "source": "https://zenodo.org/api/records/22058964/files/Trinity_Infinity_Series_III.pdf/content"
+    }
   ]
 }
