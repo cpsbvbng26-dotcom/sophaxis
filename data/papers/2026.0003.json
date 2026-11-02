@@ -1,0 +1,33 @@
+{
+  "id": "2026.0003",
+  "title": "Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence",
+  "authors": [
+    {
+      "name": "Takuya Nemoto",
+      "orcid": "0009-0000-1406-0547",
+      "given": "Takuya",
+      "family": "Nemoto"
+    }
+  ],
+  "abstract": "This essay develops personal imperialism as a heuristic framework for thinking about the integration of selfhood under conditions of late-modern fragmentation. The term does not denote empire as a form of state, still less any claim to dominion over other persons; it names a strictly reflexive project — the individual's cultivation of an internally sovereign order — assembled from three philosophically heterogeneous sources. From Immanuel Kant's Kingdom of Ends, the essay draws a legislative register: the self as simultaneously the author and the subject of its own governing law. From Friedrich Nietzsche's will to power, read cautiously and with attention to the contested editorial status of that phrase within his corpus, it draws an evaluative register: the ceaseless re-creation of the values that legislation alone cannot supply. From Ernst Jünger's Gestalt of the Worker, it draws a mobilizational register: the total absorption of the self's capacities into lived, actual form. Rather than presenting these three registers as smoothly compatible layers, the essay argues that their real philosophical tensions — Kantian universalism against Nietzschean perspectivism, legislated stability against perpetual revaluation — are constitutive of the concept rather than defects to be resolved away. It closes by confronting the central risk of its own vocabulary: that a rhetoric of empire, however reflexively bounded, imports the historical freight of conquest and domination. The essay is offered as an exploratory and programmatic contribution, not a completed doctrine.",
+  "abstract_source": "authors",
+  "category": "philosophy",
+  "license": "CC-BY-4.0",
+  "versions": [
+    {
+      "version": 1,
+      "doi": "10.5281/zenodo.22057583",
+      "date": "2026-08-22"
+    }
+  ],
+  "llm_disclosure": "This revised version of the essay was prepared with the assistance of Claude, a large language model developed by Anthropic (Claude Sonnet model family; used in August 2026). The author's original draft set out the core proposal — personal imperialism as a tripartite structure combining Kantian legislation, Nietzschean revaluation, and Jüngerian mobilization — in a considerably shorter and more schematic form. The AI system was used to: expand the exposition of each philosophical source with additional textual and historical detail; identify and verify the bibliographic citations listed in the References section against publicly available sources; draft the discussion of adjacent discourses in Section 4 and the objections in Section 5; and restructure and copyedit the whole into its present form, including the Abstract. The author reviewed the resulting text, made editorial revisions, and takes full responsibility for all interpretive claims, citations, and any remaining errors. No data, quotations, or sources were fabricated by the AI system in the course of this revision. Readers with questions about the division of labor between author and AI system on any specific passage are welcome to contact the author directly.",
+  "issue": 72,
+  "status": "listed",
+  "operator_own": true,
+  "notes": [
+    {
+      "date": "2026-11-02",
+      "text": "The author's errata for the three philosophy papers (https://github.com/cpsbvbng26-dotcom/autonomy-and-self-cultivation/blob/main/ERRATA.md) record that the statement on language models leaves out two things: the manuscript was written in Japanese and the published English text is a translation by a language model, and the tools used for the translation are not named (E5)."
+    }
+  ]
+}
