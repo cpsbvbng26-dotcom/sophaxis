@@ -125,5 +125,11 @@
       "destination": "/pdf/2026.0008v1.pdf",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/oai",
+      "destination": "/api/oai"
+    }
   ]
 }
