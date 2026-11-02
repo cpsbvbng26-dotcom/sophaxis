@@ -72,5 +72,172 @@
     ],
     "status": "listed",
     "llm_disclosure": "The author used Claude Code (Anthropic) to draft and revise the text. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author."
+  },
+  {
+    "id": "2026.0005",
+    "url": "https://sophaxis.vercel.app/abs/2026.0005.html",
+    "title": "Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy",
+    "authors": [
+      {
+        "name": "Takuya Nemoto",
+        "orcid": "0009-0000-1406-0547"
+      }
+    ],
+    "abstract": "This paper develops Fragmentarian Spiritual Individualism, a philosophical framework that treats life, faith, society, ideas, and eschatology not as continuous narratives but as discrete, self-contained fragments. Rather than treating discontinuity as a problem to be repaired through narrative reconstruction or communal reintegration, the framework takes fragmentation as an ontological starting point and builds outward from it an ethic of internal discipline and spiritual autonomy. Synthesizing existentialist philosophy (Kierkegaard, Nietzsche, Sartre, Heidegger), Christian mysticism (Eckhart, Boehme), the Japanese warrior ethic of Bushido, and postwar Japanese critical thought (Yoshimoto Takaaki, Karatani Kojin), the paper develops six interlocking fragments — existential solitude, institutional detachment in matters of faith, the fusion of intellectual and disciplinary “combat,” an anti-modern aesthetics of work and form, an eschatology of finitude and glory, and a philosophical genealogy situating the framework within its sources — before turning to its contemporary significance and limitations. Throughout, the paper argues that modern rationalism, institutional religion, narrative selfhood, and capitalist self-realization share a structural flaw: each subordinates the singular, discontinuous individual to an external logic of continuity, whether bureaucratic, doctrinal, biographical, or economic. Fragmentarian Spiritual Individualism proposes the fragment itself as the basic unit of ethical and spiritual life, offering a disciplined stance — neither nostalgic re-institutionalization nor nihilistic dissolution — for individuals navigating post-capitalist, post-community conditions marked by institutional distrust and the erosion of shared metanarratives.",
+    "abstract_source": "authors",
+    "keywords": [],
+    "categories": [
+      "philosophy"
+    ],
+    "license": "CC-BY-4.0",
+    "versions": [
+      {
+        "version": 1,
+        "doi": "10.5281/zenodo.22064241",
+        "date": "2026-08-23"
+      }
+    ],
+    "pdfs": [],
+    "status": "listed",
+    "llm_disclosure": "In preparing this manuscript, the author used Claude (Claude Sonnet 5; Anthropic, PBC), a large language model, as a drafting and structuring aid. The tool assisted in expanding the author’s original conceptual outline into full prose, proposing connective structure between sections, and checking selected bibliographic details for accuracy. The philosophical framework, its central claims, the selection and interpretation of source material, and all argumentative decisions originate with and remain the sole responsibility of the author. The author reviewed, revised, and takes full responsibility for the accuracy and content of this publication. This statement is provided in the interest of transparency regarding the use of generative AI tools in scholarly writing, consistent with emerging disclosure norms for AI-assisted academic work, including ICMJE- and COPE-aligned author guidelines."
+  },
+  {
+    "id": "2026.0008",
+    "url": "https://sophaxis.vercel.app/abs/2026.0008.html",
+    "title": "The Trinity-Infinity Framework, Series III: Beyond Three — A Generalization and Retrospective",
+    "authors": [
+      {
+        "name": "Takuya Nemoto",
+        "orcid": "0009-0000-1406-0547"
+      }
+    ],
+    "abstract": "The first two series of the Trinity-Infinity framework prove that a recursion combining a cyclic permutation of three elements with integration toward a fixed anchor converges geometrically to a unique fixed point. We show this result never depended on there being three elements: the identical argument holds for any number of elements n ≥ 2 (Theorem 1), which we verify computationally for n=2 through 8. We then identify precisely the one respect in which n=3 is structurally distinguished — it is the smallest n for which the cyclic permutation is not its own inverse — and are explicit that this is a narrow structural fact, not a justification for the broader cultural or philosophical resonance of triads invoked in Series I's introduction. We close with a retrospective distinguishing what this series has actually proven and verified from what the original preprints claimed but did not establish.",
+    "abstract_source": "authors",
+    "keywords": [],
+    "categories": [
+      "mathematics"
+    ],
+    "license": "CC-BY-4.0",
+    "versions": [
+      {
+        "version": 1,
+        "doi": "10.5281/zenodo.22058964",
+        "date": "2026-08-22"
+      }
+    ],
+    "pdfs": [],
+    "status": "listed",
+    "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical claim in Section 3 was computed by executing the operators exactly as defined in the text; the verification script (series3_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims."
+  },
+  {
+    "id": "2026.0007",
+    "url": "https://sophaxis.vercel.app/abs/2026.0007.html",
+    "title": "The Trinity-Infinity Framework, Series II: Extended Formalization and Further Illustrative Applications",
+    "authors": [
+      {
+        "name": "Takuya Nemoto",
+        "orcid": "0009-0000-1406-0547"
+      }
+    ],
+    "abstract": "This paper extends the triadic recursion operator introduced in the revised first series of the Trinity-Infinity framework (Nemoto, 2026). We generalize the operator to allow independent blending strength per coordinate and prove this generalized operator retains a unique fixed point, with contraction rate equal to the largest coordinate-wise blend parameter (Theorem 1). We give a direct discrete-time stability argument as an immediate corollary, correcting an earlier continuous-time formulation. We extend the game-theoretic illustration by characterizing, via the folk theorem, the feasible, individually-rational set of payoffs sustainable as subgame-perfect equilibria as the discount factor approaches one, and extend the engineering illustration with a fully worked three-node spring-network example verified against its closed-form Neumann series. All numerical claims are computed and included as a companion script. We close by discussing, explicitly as unproven speculation rather than established results, directions in which this kind of triadic recursive structure might be relevant to governance and AI alignment.",
+    "abstract_source": "authors",
+    "keywords": [],
+    "categories": [
+      "mathematics"
+    ],
+    "license": "CC-BY-4.0",
+    "versions": [
+      {
+        "version": 1,
+        "doi": "10.5281/zenodo.22058777",
+        "date": "2026-08-22"
+      }
+    ],
+    "pdfs": [],
+    "status": "listed",
+    "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical and closed-form claim in Sections 3.1, 4, and 6 was computed by executing the operators and matrices exactly as defined in the text; the verification script (series2_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims."
+  },
+  {
+    "id": "2026.0006",
+    "url": "https://sophaxis.vercel.app/abs/2026.0006.html",
+    "title": "The Trinity-Infinity Framework: A Conceptual Model with Illustrative Applications in Game Theory, Mathematical Logic, and Mechanical Engineering",
+    "authors": [
+      {
+        "name": "Takuya Nemoto",
+        "orcid": "0009-0000-1406-0547"
+      }
+    ],
+    "abstract": "This paper introduces the Trinity-Infinity (III∞) framework, a conceptual model where three finite elements (Trinity) interact recursively to generate infinite dynamics (Infinity). The framework is applied to game theory, mathematical logic, and mechanical engineering, demonstrating how finite structures under recursion yield unbounded systemic behaviors.",
+    "keywords": [],
+    "categories": [
+      "mathematics"
+    ],
+    "license": "CC-BY-4.0",
+    "versions": [
+      {
+        "version": 1,
+        "doi": "10.5281/zenodo.22058624",
+        "date": "2026-08-22"
+      }
+    ],
+    "pdfs": [],
+    "status": "listed",
+    "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical and closed-form claim in Section 2 (Remark 1) was computed by executing the operators exactly as defined in the text; the verification script (series1_verification.py) is distributed together with this PDF so the two results can be reproduced independently. The author reviewed all content and is responsible for its claims."
+  },
+  {
+    "id": "2026.0004",
+    "url": "https://sophaxis.vercel.app/abs/2026.0004.html",
+    "title": "The Nobility and Exemplarity of the Celibate Individual: An Antinatalist and Ascetic Reconsideration of Autonomy and Quality of Life",
+    "authors": [
+      {
+        "name": "Takuya Nemoto",
+        "orcid": "0009-0000-1406-0547"
+      }
+    ],
+    "abstract": "This paper reconsiders celibacy not as a mere absence of sexual activity but as a substantive ethical and existential stance with a long history in Buddhist, Christian, and classical philosophical traditions. Drawing on antinatalist ethics, Epicurean hedonology, and Schopenhauerian pessimism, I argue that the conventional justification of sexual activity as a societal necessity — grounded in concerns about reproduction and demographic continuity — conflates descriptive biological function with normative ethical value. Once this conflation is set aside, I argue, the ethical evaluation of one's mode of living can be grounded instead in individual autonomy and self-sustaining quality of life (QOL) rather than reproductive obligation. Engaging with David Benatar's asymmetry argument, I suggest that the moral status of humanity's demographic continuity need not be treated as self-evidently overriding individual self-determination. I then draw on Epicurus's distinction between stable and transient pleasure, and on Schopenhauer's account of sexual desire as an expression of a species-oriented will-to-live, to argue that celibacy can constitute a coherent discipline of autonomous, self-sustained flourishing. Finally, I consider four objections — from relational psychology, from the alleged self-undermining character of universalized antinatalism, from the charge of theological parochialism, and from the subjectivity of QOL judgments — and offer replies. I conclude that celibacy, properly understood, merits recognition as one exemplary and defensible path of ethical self-cultivation, rather than as a deficiency to be explained away.",
+    "abstract_source": "authors",
+    "keywords": [],
+    "categories": [
+      "philosophy"
+    ],
+    "license": "CC-BY-4.0",
+    "versions": [
+      {
+        "version": 1,
+        "doi": "10.5281/zenodo.22058254",
+        "date": "2026-08-22"
+      }
+    ],
+    "pdfs": [],
+    "status": "listed",
+    "llm_disclosure": "This revised version of the manuscript was prepared with the assistance of Claude (Claude Sonnet 5), a large language model AI system developed by Anthropic, PBC, in August 2026. AI assistance was used to: (i) restructure the argument into discrete, numbered sections; (ii) situate the paper's claims within existing philosophical literature, including Buddhist, Christian, Epicurean, Schopenhauerian, and Kantian sources; (iii) draft an objections-and-replies section addressing relational, self-undermining, parochialism, and subjectivity objections to the paper's central argument; and (iv) expand and copyedit the prose of the original manuscript. The author reviewed, revised, and takes full intellectual responsibility for all claims, arguments, and citations herein. AI assistance was not used to generate original empirical data, and this paper makes no empirical claims beyond what is explicitly cited. The AI system does not qualify as an author of this work; this disclosure is provided in the interest of transparency regarding the drafting process."
+  },
+  {
+    "id": "2026.0003",
+    "url": "https://sophaxis.vercel.app/abs/2026.0003.html",
+    "title": "Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence",
+    "authors": [
+      {
+        "name": "Takuya Nemoto",
+        "orcid": "0009-0000-1406-0547"
+      }
+    ],
+    "abstract": "This essay develops personal imperialism as a heuristic framework for thinking about the integration of selfhood under conditions of late-modern fragmentation. The term does not denote empire as a form of state, still less any claim to dominion over other persons; it names a strictly reflexive project — the individual's cultivation of an internally sovereign order — assembled from three philosophically heterogeneous sources. From Immanuel Kant's Kingdom of Ends, the essay draws a legislative register: the self as simultaneously the author and the subject of its own governing law. From Friedrich Nietzsche's will to power, read cautiously and with attention to the contested editorial status of that phrase within his corpus, it draws an evaluative register: the ceaseless re-creation of the values that legislation alone cannot supply. From Ernst Jünger's Gestalt of the Worker, it draws a mobilizational register: the total absorption of the self's capacities into lived, actual form. Rather than presenting these three registers as smoothly compatible layers, the essay argues that their real philosophical tensions — Kantian universalism against Nietzschean perspectivism, legislated stability against perpetual revaluation — are constitutive of the concept rather than defects to be resolved away. It closes by confronting the central risk of its own vocabulary: that a rhetoric of empire, however reflexively bounded, imports the historical freight of conquest and domination. The essay is offered as an exploratory and programmatic contribution, not a completed doctrine.",
+    "abstract_source": "authors",
+    "keywords": [],
+    "categories": [
+      "philosophy"
+    ],
+    "license": "CC-BY-4.0",
+    "versions": [
+      {
+        "version": 1,
+        "doi": "10.5281/zenodo.22057583",
+        "date": "2026-08-22"
+      }
+    ],
+    "pdfs": [],
+    "status": "listed",
+    "llm_disclosure": "This revised version of the essay was prepared with the assistance of Claude, a large language model developed by Anthropic (Claude Sonnet model family; used in August 2026). The author's original draft set out the core proposal — personal imperialism as a tripartite structure combining Kantian legislation, Nietzschean revaluation, and Jüngerian mobilization — in a considerably shorter and more schematic form. The AI system was used to: expand the exposition of each philosophical source with additional textual and historical detail; identify and verify the bibliographic citations listed in the References section against publicly available sources; draft the discussion of adjacent discourses in Section 4 and the objections in Section 5; and restructure and copyedit the whole into its present form, including the Abstract. The author reviewed the resulting text, made editorial revisions, and takes full responsibility for all interpretive claims, citations, and any remaining errors. No data, quotations, or sources were fabricated by the AI system in the course of this revision. Readers with questions about the division of labor between author and AI system on any specific passage are welcome to contact the author directly."
   }
 ]

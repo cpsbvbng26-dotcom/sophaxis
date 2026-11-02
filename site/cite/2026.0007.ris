@@ -1,0 +1,11 @@
+TY  - UNPB
+AU  - Nemoto, Takuya
+TI  - The Trinity-Infinity Framework, Series II: Extended Formalization and Further Illustrative Applications
+PY  - 2026
+DA  - 2026/08/22
+PB  - Zenodo
+DO  - 10.5281/zenodo.22058777
+UR  - https://doi.org/10.5281/zenodo.22058777
+AB  - This paper extends the triadic recursion operator introduced in the revised first series of the Trinity-Infinity framework (Nemoto, 2026). We generalize the operator to allow independent blending strength per coordinate and prove this generalized operator retains a unique fixed point, with contraction rate equal to the largest coordinate-wise blend parameter (Theorem 1). We give a direct discrete-time stability argument as an immediate corollary, correcting an earlier continuous-time formulation. We extend the game-theoretic illustration by characterizing, via the folk theorem, the feasible, individually-rational set of payoffs sustainable as subgame-perfect equilibria as the discount factor approaches one, and extend the engineering illustration with a fully worked three-node spring-network example verified against its closed-form Neumann series. All numerical claims are computed and included as a companion script. We close by discussing, explicitly as unproven speculation rather than established results, directions in which this kind of triadic recursive structure might be relevant to governance and AI alignment.
+N1  - Preprint, not peer-reviewed. Listed on Sophaxis as 2026.0007
+ER  -
