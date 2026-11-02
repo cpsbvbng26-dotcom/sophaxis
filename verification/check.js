@@ -451,6 +451,8 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   const wf = read(path.join(ROOT, '.github', 'workflows', 'pdf.yml'));
   ok('the PDF workflow is started by hand, may only write contents, and passes the id through the environment', /on:\n  workflow_dispatch:/.test(wf)
     && /permissions:\n  contents: write\n(?!  \w)/.test(wf) && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')));
+  ok('a PDF is asked for with */* as well, since Zenodo answers 406 to application/pdf alone', /^application\/pdf, \*\/\*;q=0\.\d$/.test(F.PDF_ACCEPT)
+    && read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes('await get(url, PDF_ACCEPT)'));
   ok('the PDF workflow pushes only to a branch of its own, never to main', wf.includes('git push origin "claude/pdf-$ID"') && !/git push[^\n]*main/.test(wf));
 }
 
@@ -992,8 +994,9 @@ console.log('\n28. Sophaxis ids are never reused, and DOIs of its own are ready'
   }
   ok('every id ever given in the git history still names the same work (the DOI of its first version), or its removal notice',
     shallow === 'false' && changed.length === 0, shallow !== 'false' ? 'the history is not available (' + shallow + ')' : changed.join('; '));
-  const wf = read(path.join(ROOT, '.github', 'workflows', 'check.yml'));
-  ok('the check in CI reads the whole history', /actions\/checkout@v4\n\s+with:\n\s+fetch-depth: 0/.test(wf));
+  const runsCheck = fs.readdirSync(path.join(ROOT, '.github', 'workflows')).filter((f) => read(path.join(ROOT, '.github', 'workflows', f)).includes('node verification/check.js'));
+  ok('every workflow that runs the checks reads the whole history (check and pdf)', runsCheck.includes('check.yml') && runsCheck.includes('pdf.yml')
+    && runsCheck.every((f) => /actions\/checkout@v4\n\s+with:\n\s+fetch-depth: 0/.test(read(path.join(ROOT, '.github', 'workflows', f)))), runsCheck.join(', '));
   ok('the draft says that its id is provisional', read(path.join(ROOT, 'tools', 'intake.js')).includes('The id is provisional: if another record takes it first, the record is listed under the next free id.'));
 
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
