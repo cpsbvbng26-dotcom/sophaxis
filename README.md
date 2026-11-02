@@ -110,6 +110,7 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `title` | The title, from the DOI metadata. |
 | `authors` | Each author's `name`, and `orcid` where the metadata gives one. |
 | `abstract` | The abstract. It is part of the work and stays under the work's licence. |
+| `abstract_source` | `"authors"` when the DOI metadata has no abstract and the authors gave it in the submission issue; absent when the abstract comes from the DOI metadata. |
 | `keywords` | The keywords from the DOI metadata, possibly empty. |
 | `categories` | The fields of `site.json` the record is listed in, the main one first. |
 | `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
