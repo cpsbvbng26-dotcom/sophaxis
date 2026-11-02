@@ -63,6 +63,9 @@ It checks that the ORCID record links to the GitHub account of the submitter and
 A human then moderates the submission, and a merged pull request lists it.
 
 A weekly workflow checks that each DOI still resolves, looks for new versions, and saves the record pages to the Internet Archive [@wayback].
+When a listed preprint is later published, an author reports the published version, and the same ORCID check applies.
+The record page then leads with the published version and gives peer review only as the authors state it.
+The weekly workflow also looks in Crossref and DataCite for a published version that is linked to a listed preprint, and for retraction or correction notices on a recorded one.
 Every page sets a Content-Security-Policy with `default-src 'none'`, so the pages make no requests to other servers.
 The checks cover the records, the generated site, the policies and the colour contrast of the pages.
 
