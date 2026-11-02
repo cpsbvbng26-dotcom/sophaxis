@@ -1245,6 +1245,34 @@ console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
   ok('a listed work is cited by its own DOI, not by Sophaxis', cff.includes('To cite a listed work, use the DOI of that work, not Sophaxis.'));
 }
 
+/* ------------------------------------------------------------ 40 */
+console.log('\n40. CONTRIBUTING.md and CHANGELOG.md (the JOSS gate on open development)');
+{
+  const contrib = read(path.join(ROOT, 'CONTRIBUTING.md'));
+  const log = read(path.join(ROOT, 'CHANGELOG.md'));
+  const readme = read(path.join(ROOT, 'README.md'));
+  ok('CONTRIBUTING.md says where each kind of contribution goes, how to build and check, the licences, the disclosure, conduct and support',
+    ['## Which way to go', '## Changing the code or the pages', 'node build.js', 'node verification/check.js', '## Language models and other generative models',
+      'A generative model is never listed as an author or a contributor.', '## Licence', '## Conduct', '## Support'].every((x) => contrib.includes(x))
+    && ['submission.yml', 'correction.yml', 'withdrawal.yml', 'removal.yml'].every((t) => contrib.includes('template=' + t) && fs.existsSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', t))));
+  ok('CONTRIBUTING.md gives the same reply time as the contact page', contrib.includes('aims to answer within 7 days') && read(path.join(ROOT, 'contact.md')).includes('aims to answer within 7 days'));
+  /* The pull requests are read from the merge commits on the first-parent line, as GitHub writes them: "Title (#N)". */
+  let merged = [];
+  try {
+    merged = require('child_process').execFileSync('git', ['log', '--first-parent', '--format=%as %s', 'HEAD'], { cwd: ROOT, encoding: 'utf8' })
+      .split('\n').map((l) => /^(\d{4}-\d{2}-\d{2}) .*\(#(\d+)\)$/.exec(l)).filter(Boolean).map((m) => ({ date: m[1], n: m[2] }));
+  } catch (e) { merged = []; }
+  const cited = new Set([...log.matchAll(/\(#(\d+)(?:, #(\d+))?\)/g)].flatMap((m) => [m[1], m[2]]).filter(Boolean));
+  const dates = [...log.matchAll(/^## (\d{4}-\d{2}-\d{2})$/gm)].map((m) => m[1]);
+  const newest = dates[0] || '';
+  const unknown = [...cited].filter((n) => !merged.some((m) => m.n === n));
+  const missing = merged.filter((m) => m.date < newest && !cited.has(m.n)).map((m) => '#' + m.n);
+  ok('every pull request the changelog cites was merged, and every one merged before its newest date is cited (' + merged.length + ' merged, ' + cited.size + ' cited)',
+    merged.length > 0 && unknown.length === 0 && missing.length === 0 && dates.join() === [...dates].sort().reverse().join(),
+    (unknown.length ? 'not merged: #' + unknown.join(', #') + ' ' : '') + (missing.length ? 'not cited: ' + missing.join(', ') : ''));
+  ok('the README points to CONTRIBUTING.md and CHANGELOG.md', readme.includes('(CONTRIBUTING.md)') && readme.includes('(CHANGELOG.md)'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
