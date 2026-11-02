@@ -1,0 +1,31 @@
+name: indexnow
+# Tell the search engines that take IndexNow which record pages and PDF copies are new or changed, once they are live.
+# Google does not take IndexNow; it reads the sitemap.
+on:
+  push:
+    branches: [main]
+    paths: [site/sitemap.xml]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Send every record page and PDF copy, not only those changed by the last push (yes or no)
+        required: false
+        default: 'no'
+permissions:
+  contents: read
+jobs:
+  indexnow:
+    name: Tell IndexNow what changed
+    runs-on: ubuntu-latest
+    steps:
+      # The sitemap of the previous head is read from the history.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/indexnow.js
+        env:
+          BEFORE: ${{ github.event.before }}
+          ALL: ${{ inputs.all }}

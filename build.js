@@ -962,6 +962,8 @@ function build(out, paperDir) {
     '.well-known/security.txt': ['Contact: ' + SITE.baseUrl + 'contact.html', 'Expires: ' + SITE.securityTxtExpires, 'Preferred-Languages: en, ja',
       'Canonical: ' + SITE.baseUrl + '.well-known/security.txt', 'Policy: ' + SITE.baseUrl + 'contact.html'].join('\n') + '\n',
     'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
+    /* IndexNow reads the key from a file of that name at the root (tools/indexnow.js). The key is public by design. */
+    [SITE.indexNowKey + '.txt']: SITE.indexNowKey,
     /* The Vercel project's root directory is site/, so Vercel reads its configuration from here. */
     'vercel.json': vercelConfig(all),
   };
