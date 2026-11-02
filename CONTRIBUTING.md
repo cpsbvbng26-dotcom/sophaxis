@@ -9,6 +9,7 @@ Sophaxis is run by one person, Takuya Nemoto. Contributions are welcome, and thi
 | Submit a preprint or a new version | [The submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). The steps are on [From submission to listing](https://sophaxis.vercel.app/process.html). |
 | An error in a record | [The correction form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml), or the link at the foot of the record page |
 | Withdraw a work, as one of its authors | [The withdrawal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml) |
+| Report the published version of a listed work, as one of its authors | [The published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml) |
 | Removal for legal reasons | [The removal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml) |
 | A bug, a question or a suggestion | [An issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) |
 | A security problem, or anything that should not be public | Email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), not an issue |

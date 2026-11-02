@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-01.
+Last updated: 2026-11-02.
 
 ## Operator
 
@@ -24,6 +24,7 @@ Complaints, legal matters and anything about personal data go by email, not to a
 - Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml).
 - An error in a record: [the correction form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml).
 - Withdrawing a work, as one of its authors: [the withdrawal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml).
+- Reporting the published version of a listed work, as one of its authors: [the published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml).
 - Removal for legal reasons: [the removal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml).
 - Anything that should not be public: email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 

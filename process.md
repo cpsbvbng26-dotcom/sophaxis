@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-02.
 
 This page follows one submission from start to finish.
 The rules themselves are in the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html); where this page differs, they apply.
@@ -90,5 +90,6 @@ The operator then looks at the submission once more, and that decision is final.
 - A new version: deposit it in the repository, then open a submission issue that gives the existing Sophaxis id.
 - An error in the record: use "Report an error in this record" on its page.
 - Withdrawal: any one author can withdraw the work under the [Withdrawal Policy](./policies/withdrawal.html).
+- Publication: when a later version is published in a journal, in proceedings or in a book, any one author reports it with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml). The preprint stays listed.
 
 Short answers to other questions are in the [FAQ](./faq.html).

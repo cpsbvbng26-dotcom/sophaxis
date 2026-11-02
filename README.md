@@ -107,7 +107,7 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
 | `versions` | Each `version` with its `doi` and `date` (YYYY-MM-DD), oldest first. |
 | `pdfs` | The `version` and `url` of each PDF copy kept on Sophaxis, possibly empty. |
-| `published_doi` | The DOI of the version a journal published, only when there is one. |
+| `published` | Only when a later version has been published: its `doi`, `title`, `venue` (journal, proceedings or book), `date` (YYYY, YYYY-MM or YYYY-MM-DD) and `type` (journal article, conference paper, book chapter or book); `peer_reviewed` as the authors state it (true, false, or null for not stated); `evidence`, "publisher" when the publisher's metadata links the preprint and "authors" when only an author reported it; the date it was `reported`, the `issue` that reported it, and any `updates` (retraction, correction and other notices) with their type, DOI and date. |
 | `status` | `listed` or `withdrawn`. Removed records are left out. |
 | `llm_disclosure` | The authors' statement on the use of generative models. |
 

@@ -1,6 +1,6 @@
 # Frequently asked questions
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-02.
 
 Each answer is a short form of a policy. Where they differ, the policy applies.
 
@@ -90,7 +90,14 @@ Earlier versions stay listed.
 ## My work has been published in a journal. Can I submit it?
 
 Only a version that you may share under an accepted licence.
-Give the DOI of the published version in the form, and the record links to it.
+Give the DOI of the published version in the form, and the record shows it.
+
+## My listed preprint has been published. What do I do?
+
+Report it with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml), as one of its authors.
+The preprint stays listed, and its record page shows the published version at the top and asks readers to cite it.
+Sophaxis does not judge peer review: the record repeats what you state about it.
+The details are in the [Submission Policy](./policies/submission.html), under "When the work is published".
 
 ## Does Sophaxis keep a copy of the PDF?
 
