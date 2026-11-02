@@ -12,6 +12,7 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 - The weekly watch logs why a save to the Internet Archive failed, and looks up the latest copy of each address (#66).
 - The published version of a listed preprint: a form for authors to report it, checked through ORCID and the DOI metadata; a notice at the top of the record page, with the peer review the authors state; a flag in the lists and search; a note in the citation files; counts on the statistics page; and a weekly search of Crossref and DataCite for a published version linked to a listed preprint, and for retraction and correction notices (#67).
 - The draft JOSS paper describes the published-version mechanism.
+- Saves to the Internet Archive are a minute apart, with two longer retries: the sixth save of a run could not connect, and one PDF copy had never been saved.
 
 ## 2026-11-01
 
