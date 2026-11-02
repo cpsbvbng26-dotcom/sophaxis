@@ -330,7 +330,44 @@ The repository of this work does not let Sophaxis fetch the PDF. To have an unmo
 `;
 }
 
-function comment(result, d) {
+/* ------------------------------------------------------------ advice on the metadata */
+
+/* deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check) reads the DOI metadata against its rules. Its errors and
+ * warnings are given to the authors as advice: fixing the metadata at the repository helps indexes and readers.
+ * The advice does not decide the listing, and does not change the checks above. Rules about the ORCID record are left out:
+ * they concern the author's other works, not this submission. */
+const ADVICE_SKIP = new Set(['not-on-orcid', 'unresolved', 'same-title']);
+function adviceFrom(report) {
+  return ((report && report.findings) || []).filter((f) => (f.severity === 'error' || f.severity === 'warning') && !ADVICE_SKIP.has(f.rule));
+}
+
+function adviceNote(advice) {
+  if (!advice || !advice.length) return '';
+  const safe = (s) => String(s).replace(/[`|<>]/g, '');
+  return `
+**Advice on the metadata at the repository.** This does not decide the listing. [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) found in the DOI metadata:
+
+${advice.map((f) => '- ' + safe(f.title || f.rule) + ' (`' + f.rule + '`): ' + safe(f.detail)).join('\n')}
+
+Indexes such as Google Scholar and OpenAlex read this metadata, not the PDF. Most repositories let you correct it without making a new version.
+`;
+}
+
+/* Run deposit-check on one DOI, if it is checked out beside the site (intake.yml does so). Any failure gives no advice. */
+function metadataAdvice(doi, dir = path.join(ROOT, 'deposit-check')) {
+  const bin = path.join(dir, 'bin', 'deposit-check.js');
+  if (!fs.existsSync(bin) || !/^10\.\d{4,9}\/\S+$/.test(String(doi || ''))) return [];
+  try {
+    const out = require('child_process').execFileSync('node', [bin, '--doi', doi, '--format', 'json', '--fail-on', 'never'], { encoding: 'utf8', timeout: 120000, stdio: ['ignore', 'pipe', 'ignore'] });
+    const rules = require(path.join(dir, 'src', 'rules.js'));
+    return adviceFrom(JSON.parse(out)).map((f) => Object.assign({ title: (rules.byId(f.rule) || {}).title }, f));
+  } catch (e) {
+    console.error('deposit-check: ' + e.message);
+    return [];
+  }
+}
+
+function comment(result, d, advice = []) {
   const safe = (s) => String(s).replace(/[`|<>]/g, '');
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
   let out = `${MARK}
@@ -349,7 +386,7 @@ Draft record \`data/papers/${d.record.id}.json\`. The id is provisional: if anot
 ~~~~json
 ${JSON.stringify(d.record, null, 2).replace(/~~~~/g, '~ ~ ~ ~')}
 ~~~~
-` + pdfNote(d.record.versions[d.record.versions.length - 1].doi);
+` + pdfNote(d.record.versions[d.record.versions.length - 1].doi) + adviceNote(advice);
   } else if (d && d.problems && d.problems.length) {
     out += '\nThe draft record does not validate: ' + safe(d.problems.join('; ')) + '\n';
   } else {
@@ -439,7 +476,7 @@ async function main() {
     const form = { doi: arg('--doi'), orcid: arg('--orcid'), category: arg('--category') || 'mathematics', llm: 'Dry run: no statement is given here.' };
     const { result, meta, versions } = await run(form, arg('--login'));
     const d = meta && result.ok ? draft({ form, login: arg('--login'), issue: 0, meta, versions, result }) : null;
-    console.log(comment(result, d));
+    console.log(comment(result, d, meta ? metadataAdvice(form.doi) : []));
     if (meta) console.log('versions: ' + JSON.stringify(versions));
     return;
   }
@@ -448,7 +485,7 @@ async function main() {
   const form = parseIssue(process.env.ISSUE_BODY);
   const { result, meta, versions, pub } = await run(form, login);
   const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub }) : null;
-  const body = comment(result, d);
+  const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : []);
   const mine = ((await github('GET', '/issues/' + n + '/comments?per_page=100')) || []).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await github('PATCH', '/issues/comments/' + mine.id, { body });
   else await github('POST', '/issues/' + n + '/comments', { body });
@@ -458,6 +495,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, MARK };
+module.exports = { lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

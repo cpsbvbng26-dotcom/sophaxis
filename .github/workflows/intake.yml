@@ -15,6 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # deposit-check reads the DOI metadata and gives advice in the comment. It is pinned to a commit, and it does not decide the listing.
+      - uses: actions/checkout@v4
+        with:
+          repository: cpsbvbng26-dotcom/deposit-check
+          ref: 780899e3ae97a4330e037ba8096fac7178066f69
+          path: deposit-check
       - uses: actions/setup-node@v4
         with:
           node-version: 22
