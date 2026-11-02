@@ -136,7 +136,7 @@ The records can also be harvested with OAI-PMH 2.0, at the base URL `https://sop
 - Lists are answered whole, with no resumption token.
 - `tools/oai.js` makes the answers; the build writes it with the records to `site/api/oai.js`, which Vercel runs as a function.
 
-Identify gives no `adminEmail` yet. OAI-PMH asks for one, and the operator has not chosen an address to publish, so Sophaxis has not asked any harvester to harvest it.
+Identify gives an `adminEmail`, set in `site.json`, for the administrators of harvesters. It is an address the operator made for this use. Other requests go as the [contact page](https://sophaxis.vercel.app/contact.html) says.
 
 `feed.xml` is an Atom feed of the same records, and `cite/<id>.bib`, `cite/<id>.ris` and `cite/<id>.json` (CSL-JSON) hold the citation of each one.
 
