@@ -1508,6 +1508,44 @@ console.log('\n45. Telling search engines what changed (IndexNow)');
     && readme.includes('ORCID iD を含む著者の頁の URL は送りません。') && read(path.join(ROOT, 'faq.md')).includes('Google reads the sitemap instead.'));
 }
 
+/* ------------------------------------------------------------ 46 */
+console.log('\n46. Advice on the DOI metadata (deposit-check)');
+{
+  const I = require('../tools/intake.js');
+  const report = { findings: [
+    { rule: 'abstract-missing', severity: 'error', doi: '10.5281/zenodo.1', detail: 'no description of the type Abstract' },
+    { rule: 'keywords-missing', severity: 'warning', doi: '10.5281/zenodo.1', detail: 'no subjects' },
+    { rule: 'language-missing', severity: 'info', doi: '10.5281/zenodo.1', detail: 'no language' },
+    { rule: 'not-on-orcid', severity: 'warning', doi: '10.5281/zenodo.1', detail: 'x' },
+  ] };
+  ok('the advice keeps errors and warnings about this work, and leaves out notes and rules about the ORCID record',
+    I.adviceFrom(report).map((f) => f.rule).join() === 'abstract-missing,keywords-missing' && I.adviceFrom(null).length === 0);
+  const result = { ok: true, checks: [['the DOI resolves', true, '10.5281/zenodo.1']] };
+  const d = { record: { id: '2026.0099', versions: [{ doi: '10.5281/zenodo.1' }] }, problems: [] };
+  const withAdvice = I.comment(result, d, I.adviceFrom(report).map((f) => Object.assign({ title: 'T ' + f.rule }, f)));
+  ok('a verified submission is given the advice after the draft record, and told that it does not decide the listing',
+    withAdvice.indexOf('**Advice on the metadata at the repository.** This does not decide the listing.') > withAdvice.indexOf('~~~~json')
+    && withAdvice.includes('- T abstract-missing (`abstract-missing`): no description of the type Abstract'));
+  ok('without advice the comment is as before; a submission that is not verified gets none',
+    I.comment(result, d) === I.comment(result, d, []) && !I.comment({ ok: false, checks: result.checks }, null, I.adviceFrom(report)).includes('Advice on the metadata'));
+  const fake = fs.mkdtempSync(path.join(os.tmpdir(), 'deposit-check-'));
+  fs.mkdirSync(path.join(fake, 'bin')); fs.mkdirSync(path.join(fake, 'src'));
+  fs.writeFileSync(path.join(fake, 'bin', 'deposit-check.js'), 'process.stdout.write(JSON.stringify(' + JSON.stringify(report) + '));');
+  fs.writeFileSync(path.join(fake, 'src', 'rules.js'), "module.exports = { byId: (id) => ({ title: 'Title of ' + id }) };");
+  const got = I.metadataAdvice('10.5281/zenodo.1', fake);
+  ok('deposit-check is run on the DOI, and its titles are given with the findings', got.map((f) => f.title).join() === 'Title of abstract-missing,Title of keywords-missing');
+  ok('no deposit-check beside the site, or not a DOI: no advice, and no error', I.metadataAdvice('10.5281/zenodo.1', path.join(fake, 'none')).length === 0 && I.metadataAdvice('not a doi', fake).length === 0);
+  fs.writeFileSync(path.join(fake, 'bin', 'deposit-check.js'), 'process.exit(2);');
+  ok('deposit-check failing gives no advice, and does not stop the intake', I.metadataAdvice('10.5281/zenodo.1', fake).length === 0);
+  fs.rmSync(fake, { recursive: true, force: true });
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
+  ok('the intake checks out deposit-check at a pinned commit, beside the site, before it runs',
+    /- uses: actions\/checkout@v4\n        with:\n          repository: cpsbvbng26-dotcom\/deposit-check\n          ref: [0-9a-f]{40}\n          path: deposit-check\n/.test(wf)
+    && wf.indexOf('repository: cpsbvbng26-dotcom/deposit-check') < wf.indexOf('node tools/intake.js'));
+  ok('the README and the steps say that the advice does not decide the listing', read(path.join(ROOT, 'README.md')).includes('The advice does not decide the listing.')
+    && read(path.join(ROOT, 'process.md')).includes('It does not decide the listing.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
