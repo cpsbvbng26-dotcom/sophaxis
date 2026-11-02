@@ -61,6 +61,11 @@
       "permanent": false
     },
     {
+      "source": "/pdf/2026.0005",
+      "destination": "/pdf/2026.0005v1.pdf",
+      "permanent": false
+    },
+    {
       "source": "/pdf/2026.0001v1",
       "destination": "/pdf/2026.0001v1.pdf",
       "permanent": true
@@ -83,6 +88,11 @@
     {
       "source": "/pdf/2026.0004v1",
       "destination": "/pdf/2026.0004v1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/2026.0005v1",
+      "destination": "/pdf/2026.0005v1.pdf",
       "permanent": true
     }
   ]
