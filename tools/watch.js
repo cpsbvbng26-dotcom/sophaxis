@@ -56,6 +56,12 @@ function newVersions(p, atRepository) {
 }
 
 /* Pure: the addresses to save, without removed records. */
+/* fetch() says only "fetch failed"; the reason is in its cause (a timeout, a reset connection, a DNS error). */
+function describe(e) {
+  const c = e && e.cause;
+  return e.message + (c ? ' (' + [c.code, c.message].filter(Boolean).join(': ') + ')' : '');
+}
+
 function archiveUrls(list) {
   const shown = list.filter((p) => p.status !== 'removed');
   return [SITE.baseUrl]
@@ -116,10 +122,19 @@ async function main() {
         const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
         console.log('archive ' + r.status + ' ' + u);
         if (r.status !== 429) break;
-      } catch (e) { console.log('archive failed ' + u + ': ' + e.message); }
+      } catch (e) { console.log('archive failed ' + u + ': ' + describe(e)); }
       await pause(60000);
     }
     await pause(20000);
+  }
+  /* A save can fail while an earlier copy exists. Say which, so a failure is not read as "never saved". */
+  for (const u of archiveUrls(list)) {
+    if (dry) break;
+    try {
+      const r = await fetch('https://archive.org/wayback/available?url=' + encodeURIComponent(u), { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' }, signal: AbortSignal.timeout(60000) });
+      const c = ((await r.json()).archived_snapshots || {}).closest;
+      console.log('latest copy ' + (c && c.available ? c.timestamp + ' ' + c.url : 'none') + ' for ' + u);
+    } catch (e) { console.log('latest copy unknown for ' + u + ': ' + describe(e)); }
   }
   if (dry) return;
 
@@ -135,6 +150,6 @@ async function main() {
   }
 }
 
-module.exports = { compare, followed, newVersions, archiveUrls, report, MARK };
+module.exports = { compare, followed, newVersions, archiveUrls, report, describe, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
