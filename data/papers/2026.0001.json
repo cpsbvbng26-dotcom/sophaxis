@@ -26,6 +26,7 @@
   ],
   "llm_disclosure": "The author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.",
   "issue": 8,
+  "listed": "2026-10-31",
   "status": "listed",
   "operator_own": true,
   "pdfs": [
