@@ -1172,6 +1172,14 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     && c.includes('(https://osf.io/mq7za/)') && c.includes('[10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)') && c.includes('The DOI names the project, not a listed work.')
     && read(path.join(ROOT, 'README.md')).includes('DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)'));
   ok('the top page links the OSF project and its DOI as sameAs of the site', read(path.join(ROOT, 'site', 'index.html')).includes('<link itemprop="sameAs" href="https://osf.io/mq7za/"><link itemprop="sameAs" href="https://doi.org/10.17605/OSF.IO/MQ7ZA">'));
+  {
+    const rd = read(path.join(ROOT, 'README.md'));
+    ok('the FAIRsharing record is recorded as not yet reviewed, and the OAI-PMH validation as a validation, not a listing, in both languages',
+      rd.includes('<https://fairsharing.org/9430>. It has not been reviewed yet.') && rd.includes("Whether the record is approved is FAIRsharing's decision.")
+      && rd.includes('so this is a validation, not a listing.') && rd.includes('まだ審査を受けていません。') && rd.includes('これは検証であって、一覧への掲載ではありません。')
+      && !/approved (by|in) FAIRsharing|registered (with|in) the Open Archives|FAIRsharing-approved/i.test(rd)
+      && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /FAIRsharing|openarchives\.org\/Register/i.test(read(path.join(ROOT, 'site', f)))));
+  }
   ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /listed in DOAPR|DOAPR-listed/i.test(read(path.join(ROOT, 'site', f)))));
 }
