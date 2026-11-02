@@ -1637,7 +1637,10 @@ console.log('\n47. OAI-PMH');
   ok('a draft is listed on the day of the draft, for the moderator to change to the day of merging', drafted.listed === '2026-11-05');
   const readme = read(path.join(ROOT, 'README.md'));
   ok('the README gives the base URL, and says whether Identify gives an address yet', readme.includes('https://sophaxis.vercel.app/oai?verb=Identify')
-    && ((S.oai.adminEmails.length === 0) === readme.includes('Identify gives no `adminEmail` yet')));
+    && ((S.oai.adminEmails.length === 0) === readme.includes('Identify gives no `adminEmail` yet'))
+    && (S.oai.adminEmails.length === 0 || readme.includes('Identify gives an `adminEmail`, set in `site.json`')));
+  ok('each address in Identify is an e-mail address, given in Identify, and written nowhere else in the README',
+    S.oai.adminEmails.every((e) => /^[^\s@<>"]+@[^\s@<>"]+\.[a-z]{2,}$/i.test(e) && O.handle(O.argsOf('verb=Identify'), B.oaiData(fixPapers), now).includes('<adminEmail>' + e + '</adminEmail>') && !readme.includes(e)));
 }
 
 console.log('\n' + '-'.repeat(60));
