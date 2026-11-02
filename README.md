@@ -50,8 +50,9 @@ When a policy changes, change its "Last updated" date too.
 
 ### Moderating
 
-When a verified submission passes moderation, add the draft record from the issue as `data/papers/<id>.json`,
+When a verified submission passes moderation, add the draft record from the issue as `data/papers/<id>.json`, set `listed` to the day it is merged,
 run `node build.js` and `node verification/check.js`, and open a pull request that closes the issue.
+When a record changes later (a new version, a note, a published version), set `updated` to that day. OAI-PMH harvesters read the later of the two as the day the record changed.
 After it is merged, run the `pdf` workflow with the record id. It copies the PDFs onto a branch `claude/pdf-<id>`; open a pull request from it.
 Where the repository does not let a script fetch the file (OSF Preprints, Preprints.org, SSRN), ask the authors to attach the PDF to their submission issue,
 and run the workflow with `from` set to that attachment and `version` to the version it is.
@@ -121,10 +122,21 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `categories` | The fields of `site.json` the record is listed in, the main one first. |
 | `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
 | `versions` | Each `version` with its `doi` and `date` (YYYY-MM-DD), oldest first. |
+| `listed` | The day the record was added to Sophaxis (YYYY-MM-DD). |
+| `updated` | Only when the record changed later: the day of its last change on Sophaxis. |
 | `pdfs` | The `version` and `url` of each PDF copy kept on Sophaxis, possibly empty. |
 | `published` | Only when a later version has been published: its `doi`, `title`, `venue` (journal, proceedings or book), `date` (YYYY, YYYY-MM or YYYY-MM-DD) and `type` (journal article, conference paper, book chapter or book); `peer_reviewed` as the authors state it (true, false, or null for not stated); `evidence`, "publisher" when the publisher's metadata links the preprint and "authors" when only an author reported it; the date it was `reported`, the `issue` that reported it, and any `updates` (retraction, correction and other notices) with their type, DOI and date. |
 | `status` | `listed` or `withdrawn`. Removed records are left out. |
 | `llm_disclosure` | The authors' statement on the use of generative models. |
+
+The records can also be harvested with OAI-PMH 2.0, at the base URL `https://sophaxis.vercel.app/oai` (for example https://sophaxis.vercel.app/oai?verb=Identify).
+- Metadata: Dublin Core (`oai_dc`). The record page, the DOI and the PDF copy are among its identifiers.
+- Sets: the fields. Identifiers: `oai:sophaxis.vercel.app:<id>`.
+- Datestamp: the later of `listed`, `updated` and the last change of the record, in days. A removed record stays, marked deleted.
+- Lists are answered whole, with no resumption token.
+- `tools/oai.js` makes the answers; the build writes it with the records to `site/api/oai.js`, which Vercel runs as a function.
+
+Identify gives no `adminEmail` yet. OAI-PMH asks for one, and the operator has not chosen an address to publish, so Sophaxis has not asked any harvester to harvest it.
 
 `feed.xml` is an Atom feed of the same records, and `cite/<id>.bib`, `cite/<id>.ris` and `cite/<id>.json` (CSL-JSON) hold the citation of each one.
 
