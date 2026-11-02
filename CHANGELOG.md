@@ -7,7 +7,8 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 - The README records that a submission of the code to the Journal of Open Source Software (JOSS) is planned (#62).
 - Zenodo and `CITATION.cff` metadata, ready for a release DOI later (#63).
-- `CONTRIBUTING.md` and this changelog.
+- `CONTRIBUTING.md` and this changelog (#64).
+- A draft of the JOSS paper, `paper/paper.md` and `paper/paper.bib`.
 
 ## 2026-11-01
 
