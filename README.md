@@ -28,6 +28,7 @@ Where the repository does not let Sophaxis fetch the PDF (every repository excep
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies.
+It also looks in Crossref and DataCite for a published version linked to a listed preprint, and for retraction or correction notices on a recorded one; it records nothing by itself.
 
 ## How the site is made
 
@@ -73,6 +74,13 @@ Merge the change itself on or after that date, then set `termsNotice` back to `n
 
 Follow the [Withdrawal Policy](policies/withdrawal.md). A withdrawal issue runs `tools/withdraw.js`, which checks that the account asking belongs to an author
 and posts the record as it is after withdrawal. Replace the record with it, delete its files in `data/pdf/`, rebuild and open a pull request that closes the issue.
+
+### Recording a published version
+
+Follow "When the work is published" in the [Submission Policy](policies/submission.md). A published-version issue runs `tools/published.js`, which checks that the account reporting belongs to an author
+and that the DOI is a journal article, a conference paper, a book chapter or a book that shares an author with the record, and posts the record with its `published` object.
+Replace the record with it, rebuild and open a pull request that closes the issue. The preprint stays listed.
+When the weekly check reports a new retraction or correction notice on a published version, add it to `published.updates` with its type, DOI and date.
 
 ### Removing a record
 
