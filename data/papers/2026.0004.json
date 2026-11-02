@@ -29,5 +29,13 @@
       "date": "2026-11-02",
       "text": "The author's errata for the three philosophy papers (https://github.com/cpsbvbng26-dotcom/autonomy-and-self-cultivation/blob/main/ERRATA.md) record that the statement on language models leaves out two things: the manuscript was written in Japanese and the published English text is a translation by a language model, and the tools used for the translation are not named (E5)."
     }
+  ],
+  "pdfs": [
+    {
+      "version": 1,
+      "file": "2026.0004v1.pdf",
+      "sha256": "fba3eb679eb247cbb6d51d9df203f7d6b84547bef68108d5ee2775560a8a28db",
+      "source": "https://zenodo.org/api/records/22058254/files/The%20Nobility%20and%20Exemplarity%20of%20the%20Celibate%20Individual%20v2.pdf/content"
+    }
   ]
 }
