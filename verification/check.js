@@ -594,7 +594,7 @@ console.log('\n13. Structured data, share links, sitemap dates and the 404 page'
   ok('share links are plain links to X, Bluesky, Facebook, LinkedIn and email, each carrying the record address', ['https://x.com/intent/post?', 'https://bsky.app/intent/compose?', 'https://www.facebook.com/sharer/sharer.php?u=', 'https://www.linkedin.com/sharing/share-offsite/?url=', 'mailto:?subject=']
     .every((u) => share.includes('href="' + u)) && (share.match(/https%3A%2F%2Fsophaxis\.vercel\.app%2Fabs%2F2026\.0001\.html/g) || []).length === 5 && !/<script|<img|<iframe/.test(share));
   const sm = read(path.join(FIX, 'sitemap.xml'));
-  ok('the sitemap gives each address the date it last changed', sm.includes('<loc>https://sophaxis.vercel.app/abs/2026.0001.html</loc><lastmod>2026-12-01</lastmod>')
+  ok('the sitemap gives each address the date it last changed', sm.includes('<loc>https://sophaxis.vercel.app/abs/2026.0001.html</loc><lastmod>2027-03-20</lastmod>')
     && sm.includes('<loc>https://sophaxis.vercel.app/pdf/2026.0001v2.pdf</loc><lastmod>2026-12-01</lastmod>')
     && sm.includes('<loc>https://sophaxis.vercel.app/policies/terms.html</loc><lastmod>') && (sm.match(/<url>/g) || []).length === (sm.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || []).length);
   const nf = read(path.join(ROOT, 'site', '404.html'));
@@ -1395,6 +1395,15 @@ console.log('\n43. The published version of a listed preprint');
   const pj = JSON.parse(read(path.join(FIX, 'papers.json'))).find((x) => x.id === '2026.0001');
   ok('papers.json carries the published object, and the lists and search flag it', pj.published && pj.published.venue === 'Journal of Fixture Studies'
     && read(path.join(FIX, 'index.html')).includes('<span class="flag">published</span>') && read(path.join(FIX, 'search.js')).includes("(p.published ? ' · published' : '')"));
+  const feed = read(path.join(FIX, 'feed.xml'));
+  const entry = (/<entry>\s*<id>[^<]*2026\.0001\.html<\/id>[\s\S]*?<\/entry>/.exec(feed) || [''])[0];
+  ok('the feed links the published version, and a report is an update of the entry', entry.includes('<link rel="related" href="https://doi.org/10.1000/fixture.journal.1" title="Published version: Journal of Fixture Studies"/>')
+    && entry.includes('<updated>2027-03-20T00:00:00Z</updated>'));
+  const sm = read(path.join(FIX, 'sitemap.xml'));
+  ok('the sitemap and the feed date a record by its last change: a version, a note, a withdrawal or a reported published version',
+    sm.includes('abs/2026.0001.html</loc><lastmod>2027-03-20</lastmod>') && feed.includes('  <updated>2027-03-20T00:00:00Z</updated>\n<entry>') === false
+    && /<link href="[^"]+"\/>\n  <updated>2027-03-20T00:00:00Z<\/updated>/.test(feed)
+    && sm.includes('abs/2026.0002.html</loc><lastmod>' + [JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0002.json')))].map((p) => [p.versions[p.versions.length - 1].date, p.withdrawal_date].concat((p.notes || []).map((n) => n.date)).filter(Boolean).sort().pop())[0] + '</lastmod>'));
   ok('the statistics count published versions, those the authors state were peer-reviewed, and those the publisher links',
     /<tr><td>Published<\/td><td>1<\/td><\/tr><tr><td>Peer-reviewed, as the authors state<\/td><td>1<\/td><\/tr><tr><td>Linked by the publisher’s metadata<\/td><td>1<\/td><\/tr>/.test(read(path.join(FIX, 'stats.html'))));
   const dcr = B.dataciteRecord(rec, { prefix: '10.99999', suffix: 'sophaxis.{id}' });

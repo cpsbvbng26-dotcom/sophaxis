@@ -323,6 +323,10 @@ const initials = (g) => g.split(/[\s-]+/).filter(Boolean).map((w) => w[0].toUppe
 /* Both styles put a comma before the last "&" or "and", even with two authors. */
 const andList = (xs, conj) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ', ' + conj + ' ' + xs[xs.length - 1]);
 const latest = (p) => p.versions[p.versions.length - 1];
+/* The last day a record page changed: a new version, a note, a withdrawal, or a reported published version.
+ * The sitemap and the feed use it, so a search engine and a feed reader see each of these changes. */
+const changed = (p) => [latest(p).date, p.withdrawal_date, p.published && p.published.reported]
+  .concat((p.notes || []).map((n) => n.date)).filter(Boolean).sort().pop();
 const repoName = (doi) => SITE.repositories[repoPrefix(doi)];
 /* "A, B or C": a list in running text, with no comma before the last word. */
 const andOr = (xs, conj) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' ' + conj + ' ' + xs[xs.length - 1]);
@@ -825,15 +829,15 @@ ${listing(mine, '../', '')}
 function feed(papers) {
   const sorted = sortListing(papers);
   const stamp = (d) => d + 'T00:00:00Z';
-  const updated = sorted.length ? stamp(latest(sorted[0]).date) : stamp(SITE.since);
+  const updated = stamp([SITE.since].concat(sorted.map(changed)).sort().pop());
   const entries = sorted.map((p) => {
     const url = SITE.baseUrl + 'abs/' + p.id + '.html';
     return `  <entry>
     <id>${url}</id>
     <title>${esc(p.title)}</title>
     <link href="${url}"/>
-    <published>${stamp(p.versions[0].date)}</published>
-    <updated>${stamp(latest(p).date)}</updated>
+${p.published ? `    <link rel="related" href="https://doi.org/${esc(p.published.doi)}" title="Published version: ${esc(p.published.venue)}"/>\n` : ''}    <published>${stamp(p.versions[0].date)}</published>
+    <updated>${stamp(changed(p))}</updated>
 ${p.authors.map((a) => `    <author><name>${esc(a.name)}</name>${a.orcid ? `<uri>https://orcid.org/${esc(a.orcid)}</uri>` : ''}</author>`).join('\n')}
 ${cats(p).map((c) => `    <category term="${esc(c)}" label="${esc(SITE.categories[c])}"/>`).join('\n')}
     <summary>${esc(p.abstract)}</summary>
@@ -892,7 +896,7 @@ function searchPage() {
 /* Each address with the date it last changed: a record with its latest version, a copy with its version,
  * a policy with its "Last updated" date, and the lists with the newest record. */
 function sitemap(papers) {
-  const newest = [SITE.since].concat(papers.map((p) => latest(p).date)).sort().pop();
+  const newest = [SITE.since].concat(papers.map(changed)).sort().pop();
   const policyDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(policySource(slug)) || [, newest])[1];
   const latestPolicy = POLICIES.map(([slug]) => policyDate(slug)).sort().pop();
   const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest],
@@ -905,8 +909,8 @@ function sitemap(papers) {
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
-    .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map((p) => latest(p).date).sort().pop()]))
-    .concat(papers.map((p) => ['abs/' + p.id + '.html', latest(p).date]))
+    .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map(changed).sort().pop()]))
+    .concat(papers.map((p) => ['abs/' + p.id + '.html', changed(p)]))
     .concat(papers.flatMap((p) => (p.pdfs || []).map((x) => ['pdf/' + x.file, p.versions.find((v) => v.version === x.version).date])));
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + urls.map(([u, d]) => '  <url><loc>' + SITE.baseUrl + u + '</loc><lastmod>' + d + '</lastmod></url>').join('\n') + '\n</urlset>\n';
