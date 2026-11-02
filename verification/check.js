@@ -1226,6 +1226,25 @@ console.log('\n38. The JOSS plan');
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /JOSS|Journal of Open Source Software/.test(read(path.join(ROOT, 'site', f)))));
 }
 
+/* ------------------------------------------------------------ 39 */
+console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
+{
+  const z = JSON.parse(read(path.join(ROOT, '.zenodo.json')));
+  const cff = read(path.join(ROOT, 'CITATION.cff'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  ok('.zenodo.json and CITATION.cff give the same title, the operator as the only creator with the ORCID iD, and the MIT licence of LICENSE',
+    cff.includes('title: "' + z.title + '"') && z.creators.length === 1 && z.creators[0].orcid === '0009-0000-1406-0547'
+    && cff.includes('orcid: "https://orcid.org/0009-0000-1406-0547"') && z.license === 'mit' && cff.includes('license: MIT')
+    && /^MIT License/.test(read(path.join(ROOT, 'LICENSE'))));
+  ok('the code is tied to the OSF project, with the DOI from site.json, and that DOI is said to name the project',
+    z.related_identifiers.some((r) => r.identifier === site.osf.doi && r.relation === 'isPartOf')
+    && cff.includes('value: ' + site.osf.doi) && cff.includes('the project, not this code release'));
+  ok('the language-model disclosure is in both, and Claude is not an author',
+    z.notes.includes('Built with Claude Code (Anthropic)') && z.notes.includes('Claude is not an author.') && cff.includes('Claude is not an author.')
+    && !/Claude/.test(JSON.stringify(z.creators)) && !/name: Claude|family-names: Claude/.test(cff));
+  ok('a listed work is cited by its own DOI, not by Sophaxis', cff.includes('To cite a listed work, use the DOI of that work, not Sophaxis.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

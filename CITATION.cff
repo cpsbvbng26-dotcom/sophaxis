@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: >-
+  To cite the code of Sophaxis, use this record.
+  To cite a listed work, use the DOI of that work, not Sophaxis.
+title: "Sophaxis: an overlay preprint server for philosophy and mathematics"
+type: software
+authors:
+  - family-names: Nemoto
+    given-names: Takuya
+    orcid: "https://orcid.org/0009-0000-1406-0547"
+repository-code: "https://github.com/cpsbvbng26-dotcom/sophaxis"
+url: "https://sophaxis.vercel.app/"
+abstract: >-
+  An overlay preprint server for philosophy, mathematics, logic, the philosophy of
+  mathematics and the philosophy of science. Authors submit a preprint deposited in a
+  repository by its DOI and their ORCID iD; after moderation it is listed with a stable
+  record page. Acceptance is moderation, not peer review. Built with Claude Code
+  (Anthropic) at the author's request; Claude is not an author.
+keywords:
+  - preprint server
+  - overlay journal
+  - philosophy
+  - mathematics
+  - logic
+  - open access
+license: MIT
+identifiers:
+  - type: doi
+    value: 10.17605/OSF.IO/MQ7ZA
+    description: The OSF project page of Sophaxis (the project, not this code release)
