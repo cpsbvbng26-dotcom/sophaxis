@@ -1273,6 +1273,30 @@ console.log('\n40. CONTRIBUTING.md and CHANGELOG.md (the JOSS gate on open devel
   ok('the README points to CONTRIBUTING.md and CHANGELOG.md', readme.includes('(CONTRIBUTING.md)') && readme.includes('(CHANGELOG.md)'));
 }
 
+/* ------------------------------------------------------------ 41 */
+console.log('\n41. The draft JOSS paper');
+{
+  const md = read(path.join(ROOT, 'paper', 'paper.md'));
+  const bib = read(path.join(ROOT, 'paper', 'paper.bib'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const body = md.replace(/^---[\s\S]*?\n---\n/, '').replace(/<!--[\s\S]*?-->/g, '');
+  const words = (body.match(/[A-Za-z0-9][A-Za-z0-9'’.-]*/g) || []).length;
+  ok('the body is within the JOSS length of 250 to 1000 words (' + words + ')', words >= 250 && words <= 1000);
+  ok('the sections JOSS asks for are there, with the AI usage disclosure, and Claude is not an author',
+    ['# Summary', '# Statement of need', '# State of the field', '# Software design', '# Research impact statement', '# AI usage disclosure', '# References'].every((h) => body.includes('\n' + h + '\n'))
+    && body.includes('Claude is not an author.') && !/name: .*Claude/.test(md));
+  ok('the one author is the operator, with the ORCID iD', /authors:\n  - name: Takuya Nemoto\n    orcid: 0009-0000-1406-0547\n/.test(md) && (md.match(/^  - name:/gm) || []).length === 2);
+  const keys = [...bib.matchAll(/^@\w+\{([^,]+),/gm)].map((m) => m[1]);
+  const cited = [...new Set([...body.matchAll(/@([a-z]+)/g)].map((m) => m[1]))];
+  ok('every citation is in paper.bib, and every entry is cited', cited.length > 0 && cited.every((k) => keys.includes(k)) && keys.every((k) => cited.includes(k)),
+    'cited ' + cited.join(',') + ' / bib ' + keys.join(','));
+  const n = Object.keys(site.repositories).length;
+  const words10 = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+  ok('the number of repositories in the paper is the number in site.json (' + n + ')', body.includes('in any of ' + words10[n] + ' repositories'));
+  ok('no DOI in paper.bib until one is checked at its source', !/\bdoi\s*=/i.test(bib));
+  ok('the paper says the research impact as it is: no use by other authors yet', body.includes('There is no record yet of use by other authors.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
