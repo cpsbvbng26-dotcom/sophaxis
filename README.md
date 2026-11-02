@@ -113,6 +113,10 @@ Every shown record is in `papers.json`, newest first. The fields:
 
 `feed.xml` is an Atom feed of the same records, and `cite/<id>.bib`, `cite/<id>.ris` and `cite/<id>.json` (CSL-JSON) hold the citation of each one.
 
+## Contributing
+
+Where each kind of contribution goes, and how to build and check a change, is in [CONTRIBUTING.md](CONTRIBUTING.md). The changes so far are in [CHANGELOG.md](CHANGELOG.md).
+
 ## Licence
 
 Text: CC BY 4.0. Code: MIT ([LICENSE](LICENSE)). Each listed work keeps its own licence.
@@ -140,6 +144,8 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 論文の頁には、関連する記録、誤りを報告する窓口、Internet Archive の保存版へのリンクがあります。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
+
+貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
 
 運営は根本卓哉です。
 OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)）。2026-11-01 に、COAR が運営する DOAPR（Directory of Open Access Preprint Repositories）への掲載を申請しました。掲載するかどうかは DOAPR が決めます。
