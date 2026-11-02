@@ -63,7 +63,14 @@ function validate(p, file) {
     return e;
   }
   const need = (k) => { if (p[k] === undefined || p[k] === '') e.push(file + ': ' + k + ' is missing'); };
-  ['id', 'title', 'authors', 'abstract', 'category', 'license', 'versions', 'llm_disclosure', 'issue', 'status'].forEach(need);
+  ['id', 'title', 'authors', 'abstract', 'category', 'license', 'versions', 'llm_disclosure', 'issue', 'listed', 'status'].forEach(need);
+  /* The day the record was added, and the day it last changed on Sophaxis. OAI-PMH harvesters ask for what changed
+   * since their last visit; a record listed long after its version was deposited would be missed by the version date. */
+  if (p.listed !== undefined && !DATE.test(p.listed)) e.push(file + ': listed must be a date (YYYY-MM-DD)');
+  if (DATE.test(p.listed || '') && Array.isArray(p.versions) && p.versions[0] && DATE.test(p.versions[0].date || '') && p.listed < p.versions[0].date) {
+    e.push(file + ': listed is earlier than the first version');
+  }
+  if (p.updated !== undefined && (!DATE.test(p.updated) || (DATE.test(p.listed || '') && p.updated < p.listed))) e.push(file + ': updated must be a date (YYYY-MM-DD), not earlier than listed');
   if (p.id && !ID.test(p.id)) e.push(file + ': id must look like 2026.0001');
   if (p.id && path.basename(file, '.json') !== p.id) e.push(file + ': file name must be the id');
   if (p.category && !SITE.categories[p.category]) e.push(file + ': unknown category ' + p.category);
@@ -870,6 +877,8 @@ function papersJson(papers) {
     categories: cats(p),
     license: p.license,
     versions: p.versions.map((v) => ({ version: v.version, doi: v.doi, date: v.date })),
+    listed: p.listed,
+    ...(p.updated ? { updated: p.updated } : {}),
     pdfs: (p.pdfs || []).map((x) => ({ version: x.version, url: SITE.baseUrl + 'pdf/' + x.file })),
     ...(p.published ? { published: p.published } : {}),
     status: p.status,
@@ -943,6 +952,7 @@ function build(out, paperDir) {
   fs.mkdirSync(path.join(out, 'policies'), { recursive: true });
   fs.mkdirSync(path.join(out, 'cite'), { recursive: true });
   fs.mkdirSync(path.join(out, '.well-known'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'api'), { recursive: true });
   const files = {
     'index.html': indexPage(papers),
     'submit.html': submitPage(),
@@ -966,6 +976,7 @@ function build(out, paperDir) {
     [SITE.indexNowKey + '.txt']: SITE.indexNowKey,
     /* The Vercel project's root directory is site/, so Vercel reads its configuration from here. */
     'vercel.json': vercelConfig(all),
+    'api/oai.js': oaiFunction(all),
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
   all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p, all); });
@@ -994,16 +1005,65 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
+/* What the OAI-PMH function answers from (tools/oai.js): one entry per record, removed ones marked deleted.
+ * The datestamp is the day the record last changed, as in the sitemap. */
+function oaiData(all) {
+  const host = new URL(SITE.baseUrl).host;
+  const idOf = (p) => 'oai:' + host + ':' + p.id;
+  const records = all.slice().sort((a, b) => (a.id < b.id ? -1 : 1)).map((p) => {
+    if (p.status === 'removed') return { identifier: idOf(p), datestamp: p.removal_date, sets: [], deleted: true };
+    const v = latest(p);
+    const lic = LICENCE_URL[p.license];
+    return {
+      identifier: idOf(p),
+      datestamp: [changed(p), p.listed, p.updated].filter(Boolean).sort().pop(),
+      sets: cats(p),
+      deleted: false,
+      dc: {
+        title: p.title,
+        creators: p.authors.map((a) => [familyOf(a), givenOf(a)].filter(Boolean).join(', ')),
+        subjects: cats(p).map((c) => SITE.categories[c]).concat(p.keywords || []),
+        description: p.abstract,
+        publisher: repoName(v.doi),
+        date: p.versions[0].date,
+        types: ['Text', 'info:eu-repo/semantics/preprint'],
+        formats: (p.pdfs || []).length ? ['application/pdf'] : [],
+        identifiers: [SITE.baseUrl + 'abs/' + p.id + '.html', 'https://doi.org/' + v.doi].concat((p.pdfs || []).length ? [SITE.baseUrl + 'pdf/' + p.pdfs[p.pdfs.length - 1].file] : []),
+        relations: p.published ? ['https://doi.org/' + p.published.doi] : [],
+        rights: [lic || p.license, 'info:eu-repo/semantics/openAccess'],
+      },
+    };
+  });
+  return {
+    repositoryName: SITE.name,
+    baseURL: SITE.baseUrl + 'oai',
+    adminEmails: (SITE.oai && SITE.oai.adminEmails) || [],
+    earliestDatestamp: records.map((r) => r.datestamp).sort()[0] || SITE.since,
+    repositoryIdentifier: host,
+    sampleIdentifier: 'oai:' + host + ':2026.0001',
+    sets: Object.entries(SITE.categories).map(([spec, name]) => ({ spec, name })),
+    records,
+  };
+}
+
+/* site/api/oai.js: tools/oai.js with the records. Vercel runs it as a function; /oai is rewritten to it. */
+function oaiFunction(all) {
+  return '/* Generated by build.js from tools/oai.js and data/papers. Do not edit. */\n'
+    + fs.readFileSync(path.join(__dirname, 'tools', 'oai.js'), 'utf8')
+    + '\nmodule.exports = handler(' + JSON.stringify(oaiData(all)) + ');\n';
+}
+
 function vercelConfig(papers) {
   const shown = papers.filter((p) => p.status !== 'removed');
   const redirects = shown.map((p) => ({ source: '/abs/' + p.id, destination: '/abs/' + p.id + '.html', permanent: true }))
     .concat(shown.filter((p) => (p.pdfs || []).length).map((p) => ({ source: '/pdf/' + p.id, destination: '/pdf/' + p.pdfs[p.pdfs.length - 1].file, permanent: false })))
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/pdf/' + p.id + 'v' + x.version, destination: '/pdf/' + x.file, permanent: true }))));
-  return JSON.stringify({ redirects }, null, 2) + '\n';
+  /* The OAI-PMH base URL is /oai; the function answers it (tools/oai.js). */
+  return JSON.stringify({ redirects, rewrites: [{ source: '/oai', destination: '/api/oai' }] }, null, 2) + '\n';
 }
 
 if (require.main === module) {

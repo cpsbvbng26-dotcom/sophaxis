@@ -7,7 +7,8 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 - Six of the operator's own preprints are listed after moderation, as 2026.0003 to 2026.0008: three papers in philosophy and the three Trinity-Infinity papers in mathematics. Each record notes the author's errata (#78).
 - PDF copies can be taken from Zenodo: its file endpoint refused a request that accepted only `application/pdf`. The PDF workflow reads the whole git history, as the checks need (#79).
-- A verified submission is given advice on its DOI metadata by deposit-check, pinned to a commit: a missing abstract, licence or keywords, for example. The advice does not decide the listing.
+- OAI-PMH 2.0 at `/oai`, so that BASE, CORE, OpenDOAR, OpenAIRE and PhilPapers can harvest the records: Dublin Core, the fields as sets, selection by day, removed records kept as deleted. Each record gains `listed`, the day it was added, and may gain `updated`; the datestamp is the latest of these and the last change.
+- A verified submission is given advice on its DOI metadata (#89) by deposit-check, pinned to a commit: a missing abstract, licence or keywords, for example. The advice does not decide the listing.
 - New and changed record pages and PDF copies are sent to IndexNow once they are live, for Bing and the other search engines that take it. Google reads the sitemap (#87).
 - The weekly watch tries a save to the Internet Archive again on any answer other than success: the archive once answered 404 for a PDF copy that was served. Lookups of a published version are spaced, and one refused by Crossref with 429 is tried again.
 - The changelog cites every pull request of the day (#86).

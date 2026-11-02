@@ -311,6 +311,8 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     versions: versions.map((v, i) => ({ version: i + 1, doi: v.doi, date: v.date })),
     llm_disclosure: form.llm.trim(),
     issue: Number(issue),
+    /* The day of the draft. The moderator sets it to the day the record is merged. */
+    listed: (today || new Date().toISOString()).slice(0, 10),
     status: 'listed',
   };
   if (SITE.operator.github && login.toLowerCase() === SITE.operator.github.toLowerCase()) p.operator_own = true;

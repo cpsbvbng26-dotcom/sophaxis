@@ -22,6 +22,7 @@
   ],
   "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical and closed-form claim in Sections 3.1, 4, and 6 was computed by executing the operators and matrices exactly as defined in the text; the verification script (series2_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims.",
   "issue": 76,
+  "listed": "2026-11-02",
   "status": "listed",
   "operator_own": true,
   "notes": [
