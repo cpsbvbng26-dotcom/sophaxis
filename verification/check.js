@@ -1307,6 +1307,10 @@ console.log('\n42. The weekly watch says why a save failed, and whether a copy e
   e.cause = Object.assign(new Error('Connect Timeout Error'), { code: 'UND_ERR_CONNECT_TIMEOUT' });
   ok('a failed fetch is logged with the code and the message of its cause', describe(e) === 'fetch failed (UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error)' && describe(new Error('plain')) === 'plain');
   const w = read(path.join(ROOT, 'tools', 'watch.js'));
+  const Wsp = require('../tools/watch.js');
+  ok('saves to the Internet Archive are a minute apart, and a refused save is tried twice more, after longer waits',
+    Wsp.SAVE_GAP_MS >= 60000 && Wsp.RETRY_WAITS_MS.length === 2 && Wsp.RETRY_WAITS_MS[0] >= 120000 && Wsp.RETRY_WAITS_MS[1] > Wsp.RETRY_WAITS_MS[0]
+    && read(path.join(ROOT, 'tools', 'watch.js')).includes('await pause(SAVE_GAP_MS);'));
   ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
 }
 
