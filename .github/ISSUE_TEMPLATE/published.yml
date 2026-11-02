@@ -1,0 +1,57 @@
+name: Report the published version
+description: A listed preprint was published in a journal, in proceedings or in a book. Report it, as one of its authors.
+title: "[Published] "
+labels: ["published"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read "When the work is published" in the Submission Policy first: https://sophaxis.vercel.app/policies/submission.html
+
+        This issue is public. Any one author can report the published version of a listed work. The preprint stays listed; its record page then shows the published version at the top, and asks readers to cite it.
+        Open this issue from your own GitHub account. As at submission, your ORCID record must link to it, and an automatic check confirms that your ORCID iD belongs to an author of the work.
+        The check also reads the metadata of the published DOI: it must be a journal article, a conference paper, a book chapter or a book, and share an author with the record.
+  - type: input
+    id: id
+    attributes:
+      label: Sophaxis id
+      placeholder: 2026.0001
+    validations:
+      required: true
+  - type: input
+    id: doi
+    attributes:
+      label: DOI of the published version
+      description: The DOI that the journal or the publisher gave the published version, not the DOI of the preprint.
+      placeholder: 10.1000/journal.2027.123
+    validations:
+      required: true
+  - type: dropdown
+    id: peer
+    attributes:
+      label: Was the published version peer-reviewed?
+      description: Sophaxis repeats your answer on the record page, as your statement. It does not judge the review of a journal.
+      options:
+        - Yes, the journal or the publisher peer-reviewed it
+        - No, it was not peer-reviewed
+        - I do not know
+    validations:
+      required: true
+  - type: input
+    id: orcid
+    attributes:
+      label: Your ORCID iD
+      placeholder: 0000-0002-1825-0097
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: I am an author of this work.
+          required: true
+        - label: The published version is this work, possibly revised, and not a different work.
+          required: true
+        - label: I have checked that the publisher's policy allows the preprint to stay listed, or I will ask for withdrawal if it does not.
+          required: true
