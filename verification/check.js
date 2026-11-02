@@ -1297,6 +1297,17 @@ console.log('\n41. The draft JOSS paper');
   ok('the paper says the research impact as it is: no use by other authors yet', body.includes('There is no record yet of use by other authors.'));
 }
 
+/* ------------------------------------------------------------ 42 */
+console.log('\n42. The weekly watch says why a save failed, and whether a copy exists');
+{
+  const { describe } = require('../tools/watch.js');
+  const e = new TypeError('fetch failed');
+  e.cause = Object.assign(new Error('Connect Timeout Error'), { code: 'UND_ERR_CONNECT_TIMEOUT' });
+  ok('a failed fetch is logged with the code and the message of its cause', describe(e) === 'fetch failed (UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error)' && describe(new Error('plain')) === 'plain');
+  const w = read(path.join(ROOT, 'tools', 'watch.js'));
+  ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
