@@ -27,6 +27,11 @@ const MARK = '<!-- sophaxis-watch -->';
  * is tried again after two minutes and then after five. */
 const SAVE_GAP_MS = 60 * 1000;
 const RETRY_WAITS_MS = [2 * 60 * 1000, 5 * 60 * 1000];
+/* Lookups of a published version. On 2026-11-02 Crossref answered 429 to three of eight records looked up one
+ * after another. They are spaced two seconds apart, and a refused lookup is tried again after 30 and 60 seconds. */
+const LOOKUP_GAP_MS = 2 * 1000;
+const LOOKUP_RETRY_WAITS_MS = [30 * 1000, 60 * 1000];
+const pause = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function records(dir) {
   return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
@@ -146,19 +151,34 @@ async function main() {
   /* Published versions: a recorded one must still resolve; for the others, look for one the metadata links. */
   const pubs = [];
   for (const p of list.filter((x) => x.status === 'listed')) {
-    try {
-      if (p.published) {
-        problems.push(...publishedProblems(p, await P.lookUpPublished(p.published.doi)));
-        continue;
+    /* What one record yields is kept only once its lookups all went through, so a retry adds nothing twice. */
+    for (let attempt = 0; ; attempt++) {
+      try {
+        if (p.published) {
+          problems.push(...publishedProblems(p, await P.lookUpPublished(p.published.doi)));
+        } else {
+          const found = [];
+          for (const d of await P.candidates(p)) found.push(...candidateNote(p, await P.lookUpPublished(d)));
+          pubs.push(...found);
+        }
+        break;
+      } catch (e) {
+        if (/HTTP 429/.test(e.message) && attempt < LOOKUP_RETRY_WAITS_MS.length) {
+          console.log('the published version of ' + p.id + ': HTTP 429, trying again in ' + LOOKUP_RETRY_WAITS_MS[attempt] / 1000 + ' s');
+          await pause(LOOKUP_RETRY_WAITS_MS[attempt]);
+          continue;
+        }
+        console.log('could not look for the published version of ' + p.id + ': ' + describe(e));
+        break;
       }
-      for (const d of await P.candidates(p)) pubs.push(...candidateNote(p, await P.lookUpPublished(d)));
-    } catch (e) { console.log('could not look for the published version of ' + p.id + ': ' + describe(e)); }
+    }
+    await pause(LOOKUP_GAP_MS);
   }
   console.log(pubs.length ? pubs.join('\n') : 'no published version found that is not recorded');
 
   /* The Internet Archive answers 429 to saves that come too close together, or refuses the connection:
-   * space them, and retry after a longer wait each time (SAVE_GAP_MS, RETRY_WAITS_MS). */
-  const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+   * space them, and retry after a longer wait each time (SAVE_GAP_MS, RETRY_WAITS_MS).
+   * Any answer other than success is tried again: on 2026-11-02 it answered 404 for a PDF copy that was served. */
   for (const u of archiveUrls(list)) {
     if (dry) { console.log('would save ' + u); continue; }
     for (let attempt = 0; attempt <= RETRY_WAITS_MS.length; attempt++) {
@@ -166,7 +186,7 @@ async function main() {
       try {
         const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
         console.log('archive ' + r.status + ' ' + u);
-        if (r.status !== 429) break;
+        if (r.ok) break;
       } catch (e) { console.log('archive failed ' + u + ': ' + describe(e)); }
     }
     await pause(SAVE_GAP_MS);
@@ -194,6 +214,6 @@ async function main() {
   }
 }
 
-module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, SAVE_GAP_MS, RETRY_WAITS_MS, MARK };
+module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
