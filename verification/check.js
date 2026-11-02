@@ -1434,6 +1434,9 @@ console.log('\n43. The published version of a listed preprint');
     ['A listed preprint stays listed when a later version is published', 'Any one author reports the published version', 'Sophaxis does not judge the peer review of a journal.',
       'It records nothing by itself: it asks the authors to report it.', 'When the publisher adds a retraction, a correction or another notice to the published version, the record page shows it.']
       .every((x) => pol.includes(x)));
+  ok('the README tells the moderator how to record a published version and its later notices, and says what the weekly check looks for',
+    read(path.join(ROOT, 'README.md')).includes('### Recording a published version') && read(path.join(ROOT, 'README.md')).includes('A published-version issue runs `tools/published.js`')
+    && read(path.join(ROOT, 'README.md')).includes('add it to `published.updates`') && read(path.join(ROOT, 'README.md')).includes('it records nothing by itself'));
   ok('the FAQ, the steps, the contact page, CONTRIBUTING and the Withdrawal Policy point to the published-version form',
     ['faq.md', 'process.md', 'contact.md', 'CONTRIBUTING.md'].every((f) => read(path.join(ROOT, f)).includes('issues/new?template=published.yml'))
     && read(path.join(ROOT, 'policies', 'withdrawal.md')).includes('## Withdrawal on publication'));
