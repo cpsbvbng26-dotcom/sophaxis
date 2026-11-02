@@ -1314,6 +1314,11 @@ console.log('\n42. The weekly watch says why a save failed, and whether a copy e
   ok('saves to the Internet Archive are a minute apart, and a refused save is tried twice more, after longer waits',
     Wsp.SAVE_GAP_MS >= 60000 && Wsp.RETRY_WAITS_MS.length === 2 && Wsp.RETRY_WAITS_MS[0] >= 120000 && Wsp.RETRY_WAITS_MS[1] > Wsp.RETRY_WAITS_MS[0]
     && read(path.join(ROOT, 'tools', 'watch.js')).includes('await pause(SAVE_GAP_MS);'));
+  ok('a save is tried again on any answer other than success, not only on 429 (the archive once answered 404 for a served PDF)',
+    w.includes('if (r.ok) break;') && !w.includes('if (r.status !== 429) break;'));
+  ok('lookups of a published version are spaced, and one refused with 429 is tried twice more, after longer waits, without adding anything twice',
+    Wsp.LOOKUP_GAP_MS >= 1000 && Wsp.LOOKUP_RETRY_WAITS_MS.length === 2 && Wsp.LOOKUP_RETRY_WAITS_MS[0] >= 30000 && Wsp.LOOKUP_RETRY_WAITS_MS[1] > Wsp.LOOKUP_RETRY_WAITS_MS[0]
+    && w.includes('await pause(LOOKUP_GAP_MS);') && w.includes('pubs.push(...found);') && /HTTP 429\/\.test\(e\.message\) && attempt < LOOKUP_RETRY_WAITS_MS\.length/.test(w));
   ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
 }
 
