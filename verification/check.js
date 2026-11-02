@@ -1467,6 +1467,42 @@ console.log('\n44. Where the abstract comes from');
   ok('abstract_source takes no other value', validate(Object.assign({}, rec, { abstract_source: 'moderator' }), '2026.0001.json').length > 0);
 }
 
+/* ------------------------------------------------------------ 45 */
+console.log('\n45. Telling search engines what changed (IndexNow)');
+{
+  const I = require('../tools/indexnow.js');
+  const S = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = 'https://sophaxis.vercel.app/';
+  ok('the key has the IndexNow form, and the site serves it at the root as <key>.txt, with the key alone',
+    I.KEY_FORM.test(S.indexNowKey) && read(path.join(ROOT, 'site', S.indexNowKey + '.txt')) === S.indexNowKey);
+  const before = '<urlset>\n  <url><loc>' + B + '</loc><lastmod>2026-11-01</lastmod></url>\n  <url><loc>' + B + 'abs/2026.0001.html</loc><lastmod>2026-11-01</lastmod></url>\n'
+    + '  <url><loc>' + B + 'abs/2026.0002.html</loc><lastmod>2026-11-01</lastmod></url>\n  <url><loc>' + B + 'faq.html</loc><lastmod>2026-11-01</lastmod></url>\n</urlset>\n';
+  const after = before.replace(B + 'abs/2026.0002.html</loc><lastmod>2026-11-01', B + 'abs/2026.0002.html</loc><lastmod>2026-11-02')
+    .replace(B + '</loc><lastmod>2026-11-01', B + '</loc><lastmod>2026-11-02').replace(B + 'faq.html</loc><lastmod>2026-11-01', B + 'faq.html</loc><lastmod>2026-11-02')
+    .replace('</urlset>', '  <url><loc>' + B + 'abs/2026.0003.html</loc><lastmod>2026-11-02</lastmod></url>\n  <url><loc>' + B + 'pdf/2026.0003v1.pdf</loc><lastmod>2026-11-02</lastmod></url>\n'
+      + '  <url><loc>' + B + 'author/0009-0000-1406-0547.html</loc><lastmod>2026-11-02</lastmod></url>\n</urlset>');
+  ok('only new or re-dated record pages, PDF copies and the home page are sent; an unchanged record, other pages and author pages are not',
+    I.changed(before, after, B).join(' ') === [B, B + 'abs/2026.0002.html', B + 'abs/2026.0003.html', B + 'pdf/2026.0003v1.pdf'].join(' '),
+    I.changed(before, after, B).join(' '));
+  ok('sending everything sends every record page and PDF copy of the real sitemap, and no author page',
+    (() => { const { papers } = loadPapers(path.join(ROOT, 'data', 'papers')); const e = I.every(read(path.join(ROOT, 'site', 'sitemap.xml'))); return e.length === 1 + papers.filter((p) => p.status !== 'removed').length + papers.reduce((n, p) => n + (p.pdfs || []).length, 0) && !e.some((u) => u.includes('/author/')); })());
+  const body = I.request([B + 'abs/2026.0001.html'], S);
+  ok('the request names the host, the key and where the key file is', body.host === 'sophaxis.vercel.app' && body.key === S.indexNowKey
+    && body.keyLocation === S.baseUrl + S.indexNowKey + '.txt' && body.urlList.length === 1 && I.ENDPOINT === 'https://api.indexnow.org/indexnow');
+  ok('200 and 202 are taken as received, anything else as refused', /^received/.test(I.meaning(200)) && /^received/.test(I.meaning(202)) && /^refused/.test(I.meaning(403)) && /^refused/.test(I.meaning(422)));
+  const src = read(path.join(ROOT, 'tools', 'indexnow.js'));
+  ok('nothing is sent until the live sitemap is the one in the commit, and the key file is served', /live = \(await text\(SITE\.baseUrl \+ 'sitemap\.xml'\)\) === now/.test(src)
+    && src.indexOf("!== SITE.indexNowKey") < src.indexOf('await fetch(ENDPOINT'));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'indexnow.yml'));
+  ok('the workflow runs when a push to main changes the sitemap, or by hand, reads only, and passes its inputs through the environment',
+    /on:\n  push:\n    branches: \[main\]\n    paths: \[site\/sitemap\.xml\]\n  workflow_dispatch:/.test(wf) && /permissions:\n  contents: read\n(?!  \w)/.test(wf)
+    && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')) && /fetch-depth: 0/.test(wf));
+  const readme = read(path.join(ROOT, 'README.md'));
+  ok('the README and the FAQ say what is sent, that author pages are not, and that Google reads the sitemap instead',
+    readme.includes('Author pages, whose address carries an ORCID iD, are not.') && readme.includes('Google does not take IndexNow.')
+    && readme.includes('ORCID iD を含む著者の頁の URL は送りません。') && read(path.join(ROOT, 'faq.md')).includes('Google reads the sitemap instead.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
