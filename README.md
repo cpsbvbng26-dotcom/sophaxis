@@ -24,6 +24,7 @@ Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.
 The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata.
 An automatic check (`tools/intake.js`, run by `.github/workflows/intake.yml`) confirms that the GitHub account belongs to an author of the work,
 and posts the result and a draft record in the issue. Only verified submissions are listed.
+For a verified submission the comment also gives advice on the DOI metadata from [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), checked out at a pinned commit: its errors and warnings, such as a missing abstract or licence. The advice does not decide the listing.
 Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, Figshare, arXiv and Research Square), the comment asks the authors to attach the deposited PDF to the issue.
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
@@ -159,6 +160,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁を知らせます（`tools/indexnow.js`）。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
 - Google は IndexNow を受けません。Google には、`robots.txt` が示し、Google Search Console に登録した sitemap から読ませます。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
+- 確かめが通った投稿には、預け先の登録情報についての助言も返します（[deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) による、要旨やライセンスの欠けなど）。助言は掲載の可否を決めません。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。

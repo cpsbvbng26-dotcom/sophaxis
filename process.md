@@ -63,6 +63,10 @@ If the repository does not let Sophaxis fetch the PDF (every repository except Z
 This is optional, and the file must be at most 20 MB.
 To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 
+When the submission is verified, the comment may also give advice on the DOI metadata at the repository, for example a missing abstract, licence or keywords.
+The advice comes from [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check). It does not decide the listing.
+Search engines and indexes read this metadata rather than the PDF, and most repositories let you correct it without making a new version.
+
 A pass is not acceptance.
 
 The buttons on GitHub and ORCID may be renamed over time; the steps stay the same.
