@@ -7,6 +7,7 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 - Six of the operator's own preprints are listed after moderation, as 2026.0003 to 2026.0008: three papers in philosophy and the three Trinity-Infinity papers in mathematics. Each record notes the author's errata (#78).
 - PDF copies can be taken from Zenodo: its file endpoint refused a request that accepted only `application/pdf`. The PDF workflow reads the whole git history, as the checks need (#79).
+- New and changed record pages and PDF copies are sent to IndexNow once they are live, for Bing and the other search engines that take it. Google reads the sitemap.
 - The PDFs of the six are copied from Zenodo: 2026.0003 (#80), 2026.0004 (#81), 2026.0005 (#82), 2026.0006 (#83), 2026.0007 (#84) and 2026.0008 (#85).
 - The README records that a submission of the code to the Journal of Open Source Software (JOSS) is planned (#62).
 - Zenodo and `CITATION.cff` metadata, ready for a release DOI later (#63).

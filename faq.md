@@ -109,6 +109,7 @@ See the [Copyright Policy](./policies/copyright.html).
 ## Will my work appear in Google Scholar?
 
 Each record page carries the tags that Google Scholar reads, and the sitemap lists every page.
+When a record page or a PDF copy is new or changed, the search engines that take IndexNow, such as Bing, are told as soon as it is live. Google reads the sitemap instead.
 Sophaxis cannot promise that a search engine will index a page.
 
 ## How do I cite a work listed here?
