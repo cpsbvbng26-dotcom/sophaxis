@@ -5,7 +5,8 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 ## 2026-11-02
 
-- Six of the operator's own preprints are listed after moderation, as 2026.0003 to 2026.0008: three papers in philosophy and the three Trinity-Infinity papers in mathematics. Each record notes the author's errata.
+- Six of the operator's own preprints are listed after moderation, as 2026.0003 to 2026.0008: three papers in philosophy and the three Trinity-Infinity papers in mathematics. Each record notes the author's errata (#78).
+- PDF copies can be taken from Zenodo: its file endpoint refused a request that accepted only `application/pdf`. The PDF workflow reads the whole git history, as the checks need.
 - The README records that a submission of the code to the Journal of Open Source Software (JOSS) is planned (#62).
 - Zenodo and `CITATION.cff` metadata, ready for a release DOI later (#63).
 - `CONTRIBUTING.md` and this changelog (#64).
