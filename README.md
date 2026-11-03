@@ -106,6 +106,7 @@ The record stays in the git history; where the law requires it, ask GitHub to re
 ## Operator and contact
 
 Sophaxis is operated by Takuya Nemoto. How to reach the operator is on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page.
+The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf. Only the authors of a work can submit it, and the operator does not list a work by someone else because the operator has read it; see the [Disclaimer](https://sophaxis.vercel.app/disclaimer.html).
 Sophaxis has a project page on OSF: <https://osf.io/mq7za/>, DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
 On 2026-11-01 the operator applied for Sophaxis to be listed in DOAPR, the Directory of Open Access Preprint Repositories run by COAR. Whether it is listed is DOAPR's decision.
 On 2026-11-03 (Japan time) the operator created a record of Sophaxis in FAIRsharing, the registry of research standards, databases and policies: <https://fairsharing.org/9430>. It has not been reviewed yet, and the page is not public until it is. FAIRsharing asks for an organisation and Sophaxis has none, so the operator has asked FAIRsharing what to enter. Whether the record is approved is FAIRsharing's decision.
@@ -190,6 +191,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
 
 運営は根本卓哉です。
+運営者は、趣味の読書棚の延長として Sophaxis を使っています。載せるのは、著者本人が投稿した論文だけです。運営者が読んだからといって、他人の論文を載せることはありません。営利ではなく、費用も広告もありません。詳しくは [Disclaimer](https://sophaxis.vercel.app/disclaimer.html) にあります（英語）。
 OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)）。2026-11-01 に、COAR が運営する DOAPR（Directory of Open Access Preprint Repositories）への掲載を申請しました。掲載するかどうかは DOAPR が決めます。
 2026-11-03（日本時間）に、研究の規格・データベース・方針の登録簿 FAIRsharing に Sophaxis の記録を作りました（<https://fairsharing.org/9430>）。まだ審査を受けていません。審査が済むまで、この頁は公開されません。FAIRsharing は組織の欄を求めますが、Sophaxis には組織がありません。何を入れるかを FAIRsharing に問い合わせています。承認するかどうかは FAIRsharing が決めます。
 同じ日に、OAI-PMH の入口（<https://sophaxis.vercel.app/oai>）が Open Archives Initiative の検証ツールの初期テストを通りました。この組織は 2025-07-18 にデータ提供者の登録を終えています。これは検証であって、一覧への掲載ではありません。

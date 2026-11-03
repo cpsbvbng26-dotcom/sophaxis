@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-03.
 
 This page gathers in one place what Sophaxis does not promise.
 The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.
@@ -28,6 +28,21 @@ Sophaxis is an independent, personal project.
 It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.
 Their names are used only to identify their services, and belong to their owners.
 They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
+
+## The operator's own use
+
+The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf: a place to keep works in philosophy and mathematics at hand and to read them.
+This use does not change what is listed or how.
+
+- Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it; such a work stays on the operator's own shelf, outside Sophaxis.
+- Sophaxis is not a business. It charges no one, sells nothing, shows no advertising and earns nothing.
+- Sophaxis does not publish works. Each work is published by its repository under its DOI, and Sophaxis links to it.
+- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](./policies/copyright.html).
+- Sophaxis takes no copyright and no exclusive licence in any work.
+- A rights holder can ask for the removal of a work under the [Takedown Policy](./policies/takedown.html).
+
+These choices keep Sophaxis within what the authors and the licences allow.
+They are not legal advice, and they do not claim that no legal question can arise.
 
 ## GitHub and other services
 
