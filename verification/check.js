@@ -1677,6 +1677,29 @@ console.log('\n47. OAI-PMH');
     S.oai.adminEmails.every((e) => /^[^\s@<>"]+@[^\s@<>"]+\.[a-z]{2,}$/i.test(e) && O.handle(O.argsOf('verb=Identify'), B.oaiData(fixPapers), now).includes('<adminEmail>' + e + '</adminEmail>') && !readme.includes(e)));
 }
 
+/* ------------------------------------------------------------ 48 */
+console.log('\n48. The last update and the ISSN, as the ISSN Japan Centre asks of a database');
+{
+  const B = require('../build.js');
+  const S = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const recs = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  const dates = recs.flatMap((p) => (p.status === 'removed' ? [p.removal_date] : (p.versions || []).map((v) => v.date)
+    .concat([p.listed, p.updated, p.withdrawal_date, p.published && p.published.reported], (p.notes || []).map((n) => n.date))).filter(Boolean));
+  const last = dates.sort().pop();
+  const idx = read(path.join(ROOT, 'site', 'index.html'));
+  ok('the top page shows the day the records last changed (' + last + '), and how often they are updated',
+    idx.includes('Last updated: <time datetime="' + last + '">' + last + '</time>. Records are added as they are accepted, and every record is checked once a week.'));
+  const rec = (patch) => Object.assign({ id: '2026.0001', status: 'listed', listed: '2026-10-31', versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-10-01' }] }, patch);
+  ok('the last update is the latest of every change: a new version, an update, a note, a withdrawal, a removal, not only the day of listing',
+    B.lastUpdated([rec({})]) === '2026-10-31' && B.lastUpdated([rec({ versions: [{ version: 1, doi: 'x', date: '2026-10-01' }, { version: 2, doi: 'y', date: '2026-11-05' }] })]) === '2026-11-05'
+    && B.lastUpdated([rec({ updated: '2026-11-07' })]) === '2026-11-07' && B.lastUpdated([rec({ notes: [{ date: '2026-11-08', text: 'n' }] })]) === '2026-11-08'
+    && B.lastUpdated([rec({}), { id: '2026.0002', status: 'removed', removal_date: '2026-11-09' }]) === '2026-11-09');
+  ok('the weekly check that the top page names runs on a schedule', /schedule:\n\s+- cron: '[^']+'/.test(read(path.join(ROOT, '.github', 'workflows', 'watch.yml'))));
+  ok('an ISSN is valid only with its check digit (ISO 3297)', B.issnOk('0317-8471') && !B.issnOk('0317-8472') && !B.issnOk('03178471') && !B.issnOk('0317-847'));
+  ok('the ISSN is shown on the top page exactly when site.json has one, and only one given there',
+    S.issn === null ? !/ISSN \d{4}-\d{3}[\dX]/.test(idx) : (B.issnOk(S.issn) && idx.includes('ISSN ' + S.issn + ' (online).')));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

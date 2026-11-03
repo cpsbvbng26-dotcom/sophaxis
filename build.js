@@ -643,11 +643,29 @@ function termsNotice(n = SITE.termsNotice) {
   return n && n.text && n.from ? `<div class="notice"><b>Change to the policies from ${esc(n.from)}.</b> ${esc(n.text)} See the <a href="./policy.html">policies</a>.</div>\n` : '';
 }
 
-function indexPage(papers) {
+/* The day the records last changed: a record added, a new version, a note, an update, a withdrawal or a removal.
+ * The ISSN Japan Centre asks a database to show its last update and how often it is updated. */
+function lastUpdated(all) {
+  return all.map((p) => (p.status === 'removed' ? p.removal_date : [changed(p), p.listed, p.updated].filter(Boolean).sort().pop())).filter(Boolean).sort().pop() || SITE.since;
+}
+
+/* An ISSN is valid when its check digit (ISO 3297, modulus 11) matches. */
+function issnOk(s) {
+  const m = /^(\d{4})-(\d{3})([\dX])$/.exec(String(s || ''));
+  if (!m) return false;
+  const d = (m[1] + m[2]).split('').map(Number);
+  const sum = d.reduce((t, x, i) => t + x * (8 - i), 0);
+  const c = (11 - (sum % 11)) % 11;
+  return m[3] === (c === 10 ? 'X' : String(c));
+}
+
+function indexPage(papers, all = papers) {
+  const last = lastUpdated(all);
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
 ${pausedNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
+<p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
 <h2>Listing</h2>
 ${fields(papers, '', './')}
 ${listing(papers, './', 'No preprints are listed yet.')}
@@ -944,6 +962,7 @@ function notFoundPage() {
 
 function build(out, paperDir) {
   const { papers: all, problems } = loadPapers(paperDir);
+  if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
   if (problems.length) return { problems };
   /* Removed records keep only their notice page; they are left out of every list, feed and search. */
   const papers = all.filter((p) => p.status !== 'removed');
@@ -957,7 +976,7 @@ function build(out, paperDir) {
   fs.mkdirSync(path.join(out, '.well-known'), { recursive: true });
   fs.mkdirSync(path.join(out, 'api'), { recursive: true });
   const files = {
-    'index.html': indexPage(papers),
+    'index.html': indexPage(papers, all),
     'submit.html': submitPage(),
     'policy.html': policyPage(),
     'contact.html': contactPage(),
@@ -1008,7 +1027,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
