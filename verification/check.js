@@ -867,6 +867,18 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.')
     && dis.includes('Sophaxis does not use GitHub or ORCID sign-in')
     && dis.includes('through the public APIs of DataCite, Crossref, JaLC, ORCID and the repositories.'));
+  ok('the operator\'s own use is stated: a hobby reading shelf that changes nothing in the listing, authors only, no business, no publishing, licence-bound copies, no rights taken, takedown, and no claim of no legal risk',
+    dis.includes('## The operator\'s own use') && dis.includes('The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf')
+    && dis.includes('This use does not change what is listed or how.')
+    && dis.includes('Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it')
+    && dis.includes('Sophaxis is not a business. It charges no one, sells nothing, shows no advertising and earns nothing.')
+    && dis.includes('Sophaxis does not publish works.') && dis.includes('Sophaxis takes no copyright and no exclusive licence in any work.')
+    && dis.includes('(./policies/takedown.html)') && dis.includes('They are not legal advice, and they do not claim that no legal question can arise.')
+    && !/(no|free of|without) legal risk|legally safe|risk-free/i.test(dis)
+    && read(path.join(ROOT, 'contact.md')).includes('The operator keeps it as a hobby, as an extension of a personal reading shelf')
+    && read(path.join(ROOT, 'README.md')).includes('The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf.')
+    && read(path.join(ROOT, 'README.md')).includes('運営者は、趣味の読書棚の延長として Sophaxis を使っています。')
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('runs no analytics'));
   ok('the page for repositories lists every repository of site.json with its DOI prefix', Object.entries(site.repositories).every(([p, n]) => rep.includes('<li>' + n.replace(/&/g, '&amp;') + ': DOIs beginning <code>' + p + '</code></li>')));
   const ua = 'Sophaxis (' + site.repo + ')';
   ok('every request Sophaxis makes names itself with the User-Agent the page for repositories gives',
