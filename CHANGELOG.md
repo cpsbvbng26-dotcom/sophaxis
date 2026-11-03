@@ -5,8 +5,9 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 ## 2026-11-03
 
-- Google Scholar takes a PDF named in `citation_pdf_url` only from the directory of the abstract page. Each PDF copy is therefore also served at `/abs/<file>`, and the tag points there. `citation_online_date` is the day the record was listed, as Scholar asks, not the date of the latest version.
-- The README records the request to PhilPapers to add Sophaxis to its Open Access Gateway (a request, not an addition).
+- Google Scholar takes a PDF named in `citation_pdf_url` only from the directory of the abstract page. Each PDF copy is therefore also served at `/abs/<file>`, and the tag points there. `citation_online_date` is the day the record was listed, as Scholar asks, not the date of the latest version (#99).
+- The README records the request to PhilPapers to add Sophaxis to its Open Access Gateway (a request, not an addition) (#99).
+- The README records the submission of a record to ROAR (under review, not a listing).
 - The top page shows the day the records last changed and how often they are updated, and an ISSN when one is set in `site.json` (#98).
 - The draft record from the intake takes the language (#97) of the work from the DOI metadata, as ISO 639-3.
 - The weekly watch reads how OpenAlex holds each work shown (the work, its abstract, its locations, a Sophaxis page among them, its citations), for information (#96).
