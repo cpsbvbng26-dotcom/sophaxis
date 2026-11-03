@@ -1328,6 +1328,16 @@ console.log('\n42. The weekly watch says why a save failed, and whether a copy e
   ok('lookups of a published version are spaced, and one refused with 429 is tried twice more, after longer waits, without adding anything twice',
     Wsp.LOOKUP_GAP_MS >= 1000 && Wsp.LOOKUP_RETRY_WAITS_MS.length === 2 && Wsp.LOOKUP_RETRY_WAITS_MS[0] >= 30000 && Wsp.LOOKUP_RETRY_WAITS_MS[1] > Wsp.LOOKUP_RETRY_WAITS_MS[0]
     && w.includes('await pause(LOOKUP_GAP_MS);') && w.includes('pubs.push(...found);') && /HTTP 429\/\.test\(e\.message\) && attempt < LOOKUP_RETRY_WAITS_MS\.length/.test(w));
+  const oa = Wsp.fromOpenAlex({ id: 'https://openalex.org/W1', abstract_inverted_index: { a: [0] }, cited_by_count: 2, locations: [{ landing_page_url: 'https://zenodo.org/records/1' }, { landing_page_url: 'https://sophaxis.vercel.app/abs/2026.0001.html' }] });
+  ok('OpenAlex: whether it holds the work, its abstract, its locations, a Sophaxis page among them, and the citations',
+    oa.id === 'https://openalex.org/W1' && oa.abstract && oa.locations === 2 && oa.sophaxis && oa.cited === 2 && Wsp.fromOpenAlex(null) === null
+    && !Wsp.fromOpenAlex({ id: 'x', locations: [{ landing_page_url: 'https://zenodo.org/records/1' }] }).sophaxis);
+  const tbl = Wsp.indexTable([{ id: '2026.0001', doi: '10.1/a', oa }, { id: '2026.0002', doi: '10.1/b', oa: null }, { id: '2026.0003', doi: '10.1/c', oa: 'error' }]);
+  ok('the table has a row for each work: held, not held, or not read', tbl.includes('| 2026.0001 | 10.1/a | W1 | yes | 2 | yes | 2 |') && tbl.includes('| 2026.0002 | 10.1/b | not held |')
+    && tbl.includes('| 2026.0003 | 10.1/c | could not be read |'));
+  ok('the OpenAlex table is for information: it goes to the job summary and into the report, and does not open an issue by itself',
+    w.includes("if (problems.length || news.length || pubs.length) {") && w.includes('report(problems, when, news, pubs, index)') && w.includes('process.env.GITHUB_STEP_SUMMARY')
+    && Wsp.report([], '2026-11-10', [], [], tbl).includes('For information, how OpenAlex holds the works shown:') && !Wsp.report([], 'd').includes('OpenAlex'));
   ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
 }
 
