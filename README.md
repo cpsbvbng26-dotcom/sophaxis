@@ -30,6 +30,7 @@ Where the repository does not let Sophaxis fetch the PDF (every repository excep
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies.
 It also looks in Crossref and DataCite for a published version linked to a listed preprint, and for retraction or correction notices on a recorded one; it records nothing by itself.
+For information, it reads how OpenAlex holds each work shown: whether OpenAlex has the work and its abstract, and whether a Sophaxis record page is among its locations. It writes this to the summary of the run, and to the weekly issue when there is one; it does not open an issue by itself.
 
 When a push to main changes the sitemap (`tools/indexnow.js`, run by `.github/workflows/indexnow.yml`), Sophaxis waits until the new pages are live,
 then tells the search engines that take IndexNow (Bing, Yandex, Naver, Seznam and others) which record pages and PDF copies are new or changed.

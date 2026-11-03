@@ -32,6 +32,25 @@ const RETRY_WAITS_MS = [2 * 60 * 1000, 5 * 60 * 1000];
 const LOOKUP_GAP_MS = 2 * 1000;
 const LOOKUP_RETRY_WAITS_MS = [30 * 1000, 60 * 1000];
 const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+/* OpenAlex, the open index of scholarly works, is read for each work shown: whether it holds the work, whether it
+ * holds its abstract, and whether a Sophaxis record page is among its locations. For information only: it opens no issue. */
+const OPENALEX_GAP_MS = 200;
+
+/* Pure: what the weekly report says of one OpenAlex work (null when OpenAlex does not hold it). */
+function fromOpenAlex(w, base = SITE.baseUrl) {
+  if (!w) return null;
+  const locs = w.locations || [];
+  return { id: w.id, abstract: !!w.abstract_inverted_index, locations: locs.length, sophaxis: locs.some((l) => String(l.landing_page_url || '').startsWith(base)), cited: w.cited_by_count || 0 };
+}
+
+/* Pure: a table of the works shown, as OpenAlex holds them. Each row: { id, doi, oa } where oa is fromOpenAlex's result, null, or 'error'. */
+function indexTable(rows) {
+  const yes = (b) => (b ? 'yes' : 'no');
+  return '| Record | DOI | OpenAlex | Abstract | Locations | Sophaxis among them | Cited by |\n| --- | --- | --- | --- | --- | --- | --- |\n'
+    + rows.map((r) => '| ' + r.id + ' | ' + r.doi + ' | '
+      + (r.oa === 'error' ? 'could not be read | | | | |' : !r.oa ? 'not held | | | | |'
+        : r.oa.id.replace('https://openalex.org/', '') + ' | ' + yes(r.oa.abstract) + ' | ' + r.oa.locations + ' | ' + yes(r.oa.sophaxis) + ' | ' + r.oa.cited + ' |')).join('\n') + '\n';
+}
 
 function records(dir) {
   return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
@@ -99,7 +118,7 @@ function archiveUrls(list) {
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => SITE.baseUrl + 'pdf/' + x.file)));
 }
 
-function report(problems, when, news = [], pubs = []) {
+function report(problems, when, news = [], pubs = [], index = '') {
   const list = (xs) => xs.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n');
   return `${MARK}
 **Weekly check, ${when}**
@@ -119,6 +138,10 @@ Possible published versions:
 ${list(pubs)}
 
 Sophaxis does not record a published version by itself: an author reports it, and the same checks run again.
+` : ''}${index ? `
+For information, how OpenAlex holds the works shown:
+
+${index}
 ` : ''}
 This issue closes itself when the next check finds nothing.
 `;
@@ -176,6 +199,22 @@ async function main() {
   }
   console.log(pubs.length ? pubs.join('\n') : 'no published version found that is not recorded');
 
+  const rows = [];
+  for (const p of list.filter((x) => x.status !== 'removed')) {
+    const doi = p.versions[p.versions.length - 1].doi;
+    let oa = 'error';
+    try {
+      const r = await fetch('https://api.openalex.org/works/https://doi.org/' + doi, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
+      oa = r.status === 404 ? null : r.ok ? fromOpenAlex(await r.json()) : 'error';
+      if (oa === 'error') console.log('OpenAlex ' + doi + ': HTTP ' + r.status);
+    } catch (e) { console.log('OpenAlex ' + doi + ': ' + describe(e)); }
+    rows.push({ id: p.id, doi, oa });
+    await pause(OPENALEX_GAP_MS);
+  }
+  const index = indexTable(rows);
+  console.log(index);
+  if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## How OpenAlex holds the works shown\n\n' + index);
+
   /* The Internet Archive answers 429 to saves that come too close together, or refuses the connection:
    * space them, and retry after a longer wait each time (SAVE_GAP_MS, RETRY_WAITS_MS).
    * Any answer other than success is tried again: on 2026-11-02 it answered 404 for a PDF copy that was served. */
@@ -205,7 +244,7 @@ async function main() {
   const open = ((await github('GET', '/issues?state=open&labels=watch&per_page=20')) || []).find((i) => (i.body || '').startsWith(MARK));
   const when = new Date().toISOString().slice(0, 10);
   if (problems.length || news.length || pubs.length) {
-    const body = report(problems, when, news, pubs);
+    const body = report(problems, when, news, pubs, index);
     if (open) await github('PATCH', '/issues/' + open.number, { body });
     else await github('POST', '/issues', { title: problems.length ? 'Weekly check: problems found' : news.length ? 'Weekly check: new versions at the repository' : 'Weekly check: possible published versions', body, labels: ['watch'] });
   } else if (open) {
@@ -214,6 +253,6 @@ async function main() {
   }
 }
 
-module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, MARK };
+module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
