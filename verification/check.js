@@ -1598,8 +1598,15 @@ console.log('\n47. OAI-PMH');
     && ask('verb=ListIdentifiers&metadataPrefix=oai_dc&from=2026-12-02T00:00:00Z').includes('code="badArgument"')
     && ask('verb=ListIdentifiers&metadataPrefix=oai_dc&from=2026-12-03&until=2026-12-02').includes('code="badArgument"')
     && ask('verb=ListIdentifiers&metadataPrefix=oai_dc&from=2027-03-21').includes('code="noRecordsMatch"'));
-  ok('the fields are the sets, and a set selects its records', ask('verb=ListSets').split('<set>').length - 1 === Object.keys(S.categories).length
+  const specs = [...ask('verb=ListSets').matchAll(/<setSpec>([^<]+)<\/setSpec>/g)].map((m) => m[1]);
+  ok('the sets are the fields and openaire, and a set selects its records', specs.join() === Object.keys(S.categories).concat(['openaire']).join()
     && ids('verb=ListIdentifiers&metadataPrefix=oai_dc&set=logic') === data.records.filter((r) => r.sets.includes('logic')).map((r) => r.identifier).join());
+  ok('the openaire set holds every record shown, and no deleted one (OpenAIRE guidelines v3)',
+    ids('verb=ListIdentifiers&metadataPrefix=oai_dc&set=openaire') === data.records.filter((r) => !r.deleted).map((r) => r.identifier).join()
+    && data.records.filter((r) => r.deleted).every((r) => !r.sets.includes('openaire')));
+  ok('the language of a work is given as ISO 639-3 in dc:language, and a record may have only that form',
+    ask('verb=GetRecord&identifier=' + id1 + '&metadataPrefix=oai_dc').includes('<dc:language>eng</dc:language>')
+    && B.validate(Object.assign({}, JSON.parse(read(path.join(ROOT, 'data', 'papers', '2026.0001.json'))), { language: 'en' }), '2026.0001.json').some((e) => e.includes('ISO 639-3')));
   const r1 = data.records.find((r) => r.identifier === id1);
   const stamp = (patch) => B.oaiData(fixPapers.map((p) => (p.id === '2026.0001' ? Object.assign({}, p, patch) : p))).records.find((r) => r.identifier === id1).datestamp;
   ok('the datestamp is the latest of the last change (here a reported published version), the day of listing and the day of update',
