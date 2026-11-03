@@ -7,6 +7,7 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 - Six of the operator's own preprints are listed after moderation, as 2026.0003 to 2026.0008: three papers in philosophy and the three Trinity-Infinity papers in mathematics. Each record notes the author's errata (#78).
 - PDF copies can be taken from Zenodo: its file endpoint refused a request that accepted only `application/pdf`. The PDF workflow reads the whole git history, as the checks need (#79).
+- The draft record from the intake takes the language of the work from the DOI metadata, as ISO 639-3.
 - The weekly watch reads how OpenAlex holds each work shown (the work, its abstract, its locations, a Sophaxis page among them, its citations), for information.
 - OAI-PMH follows the OpenAIRE guidelines (#95) for literature repositories where they apply: an `openaire` set with every record shown, and the language of each work (a new field `language`, ISO 639-3).
 - The README records the FAIRsharing record (not yet reviewed) and the OAI-PMH validation (a validation, not a listing).

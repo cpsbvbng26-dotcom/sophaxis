@@ -124,7 +124,7 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `keywords` | The keywords from the DOI metadata, possibly empty. |
 | `categories` | The fields of `site.json` the record is listed in, the main one first. |
 | `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
-| `language` | Where known, the language of the work as ISO 639-3, such as `eng`. |
+| `language` | Where known, the language of the work as ISO 639-3, such as `eng`. The draft from the intake takes it from the DOI metadata. |
 | `versions` | Each `version` with its `doi` and `date` (YYYY-MM-DD), oldest first. |
 | `listed` | The day the record was added to Sophaxis (YYYY-MM-DD). |
 | `updated` | Only when the record changed later: the day of its last change on Sophaxis. |

@@ -1660,6 +1660,15 @@ console.log('\n47. OAI-PMH');
     login: 'someone', issue: 1, meta: { title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', date: '2026-11-01', keywords: [] }, versions: [{ doi: '10.5281/zenodo.1', date: '2026-11-01' }],
     result: { licence: 'CC-BY-4.0' }, paperDir: path.join(__dirname, 'fixtures', 'papers'), today: '2026-11-05' }).record;
   ok('a draft is listed on the day of the draft, for the moderator to change to the day of merging', drafted.listed === '2026-11-05');
+  const Iy = require('../tools/intake.js');
+  ok('the language from DOI metadata becomes ISO 639-3 (en, en-US and eng alike); an unknown code is left out',
+    Iy.iso3('en') === 'eng' && Iy.iso3('en-US') === 'eng' && Iy.iso3('eng') === 'eng' && Iy.iso3('ja') === 'jpn' && Iy.iso3('xx') === null && Iy.iso3(undefined) === null
+    && Iy.fromDataCite({ data: { attributes: { doi: '10.5281/zenodo.1', titles: [{ title: 'T' }], creators: [], language: 'en' } } }).language === 'eng'
+    && Iy.fromCrossref({ message: { DOI: '10.1/x', title: ['T'], language: 'de' } }).language === 'deu');
+  const withLang = Iy.draft({ form: { doi: '10.5281/zenodo.1', orcid: S.operator.orcid, category: 'philosophy', llm: 'No generative model was used in this work at all.' },
+    login: 'someone', issue: 1, meta: { title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', date: '2026-11-01', keywords: [], language: 'jpn' }, versions: [{ doi: '10.5281/zenodo.1', date: '2026-11-01' }],
+    result: { licence: 'CC-BY-4.0' }, paperDir: path.join(__dirname, 'fixtures', 'papers'), today: '2026-11-05' });
+  ok('a draft carries the language when the metadata gives one, and none otherwise', withLang.record.language === 'jpn' && withLang.problems.length === 0 && drafted.language === undefined);
   const readme = read(path.join(ROOT, 'README.md'));
   ok('the README gives the base URL, and says whether Identify gives an address yet', readme.includes('https://sophaxis.vercel.app/oai?verb=Identify')
     && ((S.oai.adminEmails.length === 0) === readme.includes('Identify gives no `adminEmail` yet'))
