@@ -3,20 +3,25 @@
 The notable changes to Sophaxis, newest first. Each entry names the pull request that made it.
 No version has been tagged yet, so the entries are grouped by the date of the merge.
 
+## 2026-11-03
+
+- Google Scholar takes a PDF named in `citation_pdf_url` only from the directory of the abstract page. Each PDF copy is therefore also served at `/abs/<file>`, and the tag points there. `citation_online_date` is the day the record was listed, as Scholar asks, not the date of the latest version.
+- The README records the request to PhilPapers to add Sophaxis to its Open Access Gateway (a request, not an addition).
+- The top page shows the day the records last changed and how often they are updated, and an ISSN when one is set in `site.json` (#98).
+- The draft record from the intake takes the language (#97) of the work from the DOI metadata, as ISO 639-3.
+- The weekly watch reads how OpenAlex holds each work shown (the work, its abstract, its locations, a Sophaxis page among them, its citations), for information (#96).
+- OAI-PMH follows the OpenAIRE guidelines (#95) for literature repositories where they apply: an `openaire` set with every record shown, and the language of each work (a new field `language`, ISO 639-3).
+- The README records the FAIRsharing record (not yet reviewed) and the OAI-PMH validation (a validation, not a listing) (#93, #94).
+- Identify gives an `adminEmail` for harvesters (#91, #92), an address made for this use.
+- OAI-PMH 2.0 at `/oai` (#90), so that BASE, CORE, OpenDOAR, OpenAIRE and PhilPapers can harvest the records: Dublin Core, the fields as sets, selection by day, removed records kept as deleted. Each record gains `listed`, the day it was added, and may gain `updated`; the datestamp is the latest of these and the last change.
+- A verified submission is given advice on its DOI metadata (#89) by deposit-check, pinned to a commit: a missing abstract, licence or keywords, for example. The advice does not decide the listing.
+
 ## 2026-11-02
 
 - Six of the operator's own preprints are listed after moderation, as 2026.0003 to 2026.0008: three papers in philosophy and the three Trinity-Infinity papers in mathematics. Each record notes the author's errata (#78).
 - PDF copies can be taken from Zenodo: its file endpoint refused a request that accepted only `application/pdf`. The PDF workflow reads the whole git history, as the checks need (#79).
-- The top page shows the day the records last changed and how often they are updated, and an ISSN when one is set in `site.json`.
-- The draft record from the intake takes the language (#97) of the work from the DOI metadata, as ISO 639-3.
-- The weekly watch reads how OpenAlex holds each work shown (the work, its abstract, its locations, a Sophaxis page among them, its citations), for information.
-- OAI-PMH follows the OpenAIRE guidelines (#95) for literature repositories where they apply: an `openaire` set with every record shown, and the language of each work (a new field `language`, ISO 639-3).
-- The README records the FAIRsharing record (not yet reviewed) and the OAI-PMH validation (a validation, not a listing).
-- Identify gives an `adminEmail` for harvesters (#91, #92), an address made for this use.
-- OAI-PMH 2.0 at `/oai` (#90), so that BASE, CORE, OpenDOAR, OpenAIRE and PhilPapers can harvest the records: Dublin Core, the fields as sets, selection by day, removed records kept as deleted. Each record gains `listed`, the day it was added, and may gain `updated`; the datestamp is the latest of these and the last change.
-- A verified submission is given advice on its DOI metadata (#89) by deposit-check, pinned to a commit: a missing abstract, licence or keywords, for example. The advice does not decide the listing.
 - New and changed record pages and PDF copies are sent to IndexNow once they are live, for Bing and the other search engines that take it. Google reads the sitemap (#87).
-- The weekly watch tries a save to the Internet Archive again on any answer other than success: the archive once answered 404 for a PDF copy that was served. Lookups of a published version are spaced, and one refused by Crossref with 429 is tried again.
+- The weekly watch tries a save to the Internet Archive again on any answer other than success: the archive once answered 404 for a PDF copy that was served. Lookups of a published version are spaced, and one refused by Crossref with 429 is tried again (#88).
 - The changelog cites every pull request of the day (#86).
 - The PDFs of the six are copied from Zenodo: 2026.0003 (#80), 2026.0004 (#81), 2026.0005 (#82), 2026.0006 (#83), 2026.0007 (#84) and 2026.0008 (#85).
 - The README records that a submission of the code to the Journal of Open Source Software (JOSS) is planned (#62).
