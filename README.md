@@ -16,6 +16,23 @@ Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, Met
 Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
 Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.md), [Submission](policies/submission.md), [Moderation](policies/moderation.md), [Copyright](policies/copyright.md), [Licences](policies/licences.md), [Privacy](policies/privacy.md) and [Takedown](policies/takedown.md).
 
+## Sophaxis itself: DOI and registrations under review
+
+The [OSF project page](https://osf.io/mq7za/) describes Sophaxis and gives it a DOI: [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
+The DOI names Sophaxis as a project, not a listed work. Cite it to refer to Sophaxis itself.
+
+Sophaxis has applied to the registries below. None of them has listed it yet, and each decides for itself. The dates are Japan time; the state is as of 2026-11-03.
+
+| Registry | What it is | Applied | State |
+| --- | --- | --- | --- |
+| DOAPR (COAR) | Directory of Open Access Preprint Repositories | 2026-11-01 | Under review |
+| FAIRsharing | Registry of research standards, databases and policies; record 9430 | 2026-11-03 | Under review; the page is not public until then |
+| PhilPapers | Open Access Gateway, the archives whose papers PhilPapers indexes | 2026-11-03 | Requested; each archive is vetted |
+| ROAR (University of Southampton) | Registry of Open Access Repositories | 2026-11-03 | Under editorial review |
+| Open Access Directory | Wiki list of disciplinary repositories | 2026-11-03 | Account requested; the entry is added once it is approved |
+
+Each application is described under [Operator and contact](#operator-and-contact).
+
 ## Submitting
 
 1. Add `https://github.com/<your username>` under "Websites & social links" in your ORCID record.
@@ -187,6 +204,21 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 確かめが通った投稿には、預け先の登録情報についての助言も返します（[deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) による、要旨やライセンスの欠けなど）。助言は掲載の可否を決めません。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
+
+### Sophaxis 自体の DOI と、審査中の登録
+
+[OSF のプロジェクトの頁](https://osf.io/mq7za/)が Sophaxis を説明し、DOI を与えています。DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。
+この DOI が指すのは、プロジェクトとしての Sophaxis です。載っている稿ではありません。Sophaxis そのものを挙げるときに引きます。
+
+次の登録簿に申請しています。まだどこにも載っていません。載せるかどうかは、それぞれが決めます。日付は日本時間です。状態は 2026-11-03 の時点のものです。
+
+| 登録先 | 何か | 申請日 | 状態 |
+| --- | --- | --- | --- |
+| DOAPR（COAR） | オープンアクセスのプレプリントリポジトリの一覧 | 2026-11-01 | 審査中 |
+| FAIRsharing | 研究の規格・データベース・方針の登録簿。記録 9430 | 2026-11-03 | 審査中。審査が済むまで頁は公開されない |
+| PhilPapers | Open Access Gateway。PhilPapers が論文を索引するアーカイブの一覧 | 2026-11-03 | 依頼済み。一件ずつ審査がある |
+| ROAR（サウサンプトン大学） | オープンアクセス・リポジトリの登録簿 | 2026-11-03 | 編集の審査中 |
+| Open Access Directory | 分野別リポジトリの一覧（ウィキ） | 2026-11-03 | アカウントを申請中。承認されたら項目を足す |
 
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
 
