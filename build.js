@@ -383,11 +383,14 @@ function scholarTags(p) {
     tag('citation_title', p.title),
     ...p.authors.map((a) => tag('citation_author', a.name)),
     tag('citation_publication_date', p.versions[0].date.replace(/-/g, '/')),
-    tag('citation_online_date', v.date.replace(/-/g, '/')),
+    /* The day the record entered Sophaxis, as Scholar asks; the publication date is the first version's. */
+    tag('citation_online_date', p.listed.replace(/-/g, '/')),
     tag('citation_doi', v.doi),
     tag('citation_abstract_html_url', SITE.baseUrl + 'abs/' + p.id + '.html'),
     ...((p.keywords || []).length ? [tag('citation_keywords', p.keywords.join('; '))] : []),
-    ...(copy ? [tag('citation_pdf_url', SITE.baseUrl + 'pdf/' + copy.file)] : []),
+    /* Scholar takes citation_pdf_url only for a file in the same directory as the abstract page, so the copy is
+     * also served under abs/ (a rewrite in vercel.json). */
+    ...(copy ? [tag('citation_pdf_url', SITE.baseUrl + 'abs/' + copy.file)] : []),
   ].join('\n') + '\n';
 }
 
@@ -1086,8 +1089,11 @@ function vercelConfig(papers) {
   const redirects = shown.map((p) => ({ source: '/abs/' + p.id, destination: '/abs/' + p.id + '.html', permanent: true }))
     .concat(shown.filter((p) => (p.pdfs || []).length).map((p) => ({ source: '/pdf/' + p.id, destination: '/pdf/' + p.pdfs[p.pdfs.length - 1].file, permanent: false })))
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/pdf/' + p.id + 'v' + x.version, destination: '/pdf/' + x.file, permanent: true }))));
-  /* The OAI-PMH base URL is /oai; the function answers it (tools/oai.js). */
-  return JSON.stringify({ redirects, rewrites: [{ source: '/oai', destination: '/api/oai' }] }, null, 2) + '\n';
+  /* The OAI-PMH base URL is /oai; the function answers it (tools/oai.js). Each PDF copy is also served beside the
+   * abstract page, at /abs/<file>, for Google Scholar (see scholarTags). */
+  const rewrites = [{ source: '/oai', destination: '/api/oai' }]
+    .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/abs/' + x.file, destination: '/pdf/' + x.file }))));
+  return JSON.stringify({ redirects, rewrites }, null, 2) + '\n';
 }
 
 if (require.main === module) {

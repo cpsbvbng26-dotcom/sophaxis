@@ -130,6 +130,42 @@
     {
       "source": "/oai",
       "destination": "/api/oai"
+    },
+    {
+      "source": "/abs/2026.0001v1.pdf",
+      "destination": "/pdf/2026.0001v1.pdf"
+    },
+    {
+      "source": "/abs/2026.0001v2.pdf",
+      "destination": "/pdf/2026.0001v2.pdf"
+    },
+    {
+      "source": "/abs/2026.0002v1.pdf",
+      "destination": "/pdf/2026.0002v1.pdf"
+    },
+    {
+      "source": "/abs/2026.0003v1.pdf",
+      "destination": "/pdf/2026.0003v1.pdf"
+    },
+    {
+      "source": "/abs/2026.0004v1.pdf",
+      "destination": "/pdf/2026.0004v1.pdf"
+    },
+    {
+      "source": "/abs/2026.0005v1.pdf",
+      "destination": "/pdf/2026.0005v1.pdf"
+    },
+    {
+      "source": "/abs/2026.0006v1.pdf",
+      "destination": "/pdf/2026.0006v1.pdf"
+    },
+    {
+      "source": "/abs/2026.0007v1.pdf",
+      "destination": "/pdf/2026.0007v1.pdf"
+    },
+    {
+      "source": "/abs/2026.0008v1.pdf",
+      "destination": "/pdf/2026.0008v1.pdf"
     }
   ]
 }

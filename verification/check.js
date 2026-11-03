@@ -381,11 +381,13 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
 {
   const a = read(path.join(FIX, 'abs', '2026.0001.html'));
   const tag = (n) => [...a.matchAll(new RegExp('<meta name="' + n + '" content="([^"]*)">', 'g'))].map((m) => m[1]);
-  ok('the record page carries citation_title, one citation_author per author and the dates', tag('citation_title')[0] === 'A Fixture Record for Testing the Build'
-    && tag('citation_author').join('|') === 'Jane Doe|Taro Yamada' && tag('citation_publication_date')[0] === '2026/11/01' && tag('citation_online_date')[0] === '2026/12/01');
+  ok('the record page carries citation_title, one citation_author per author and the dates: the first version as publication, the day listed as online',
+    tag('citation_title')[0] === 'A Fixture Record for Testing the Build'
+    && tag('citation_author').join('|') === 'Jane Doe|Taro Yamada' && tag('citation_publication_date')[0] === '2026/11/01' && tag('citation_online_date')[0] === '2026/11/02');
   ok('the record page gives the DOI of the latest version and its own address', tag('citation_doi')[0] === '10.5281/zenodo.1234999'
     && tag('citation_abstract_html_url')[0] === 'https://sophaxis.vercel.app/abs/2026.0001.html');
-  ok('citation_pdf_url points to the copy, by absolute address', tag('citation_pdf_url')[0] === 'https://sophaxis.vercel.app/pdf/2026.0001v2.pdf');
+  ok('citation_pdf_url points to the copy by absolute address, in the directory of the abstract page as Scholar requires', tag('citation_pdf_url')[0] === 'https://sophaxis.vercel.app/abs/2026.0001v2.pdf'
+    && tag('citation_pdf_url').length === 1 && tag('citation_pdf_url')[0].replace(/[^/]*$/, '') === tag('citation_abstract_html_url')[0].replace(/[^/]*$/, ''));
   ok('the copy is in the site byte for byte', fs.readFileSync(path.join(FIX, 'pdf', '2026.0001v2.pdf')).equals(fs.readFileSync(path.join(__dirname, 'fixtures', 'pdf', '2026.0001v2.pdf'))));
   ok('the record page links the copy and says it is unmodified, under the licence, with the authors', a.includes('href="../pdf/2026.0001v2.pdf"')
     && a.includes('Unmodified copies') && a.includes('shared under CC BY 4.0, by Jane Doe, Taro Yamada') && a.includes('href="https://creativecommons.org/licenses/by/4.0/"'));
@@ -1182,6 +1184,11 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
   }
   ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /listed in DOAPR|DOAPR-listed/i.test(read(path.join(ROOT, 'site', f)))));
+  ok('the PhilPapers request is recorded as a request, not as an addition, in both languages',
+    read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
+    && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
+    && !/(indexed|listed|harvested) (by|in|on) PhilPapers|added to (the )?(PhilPapers|Open Access Gateway)/i.test(read(path.join(ROOT, 'README.md')))
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /PhilPapers/i.test(read(path.join(ROOT, 'site', f)))));
 }
 
 /* ------------------------------------------------------------ 37 */
@@ -1195,7 +1202,14 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
   const cfg = JSON.parse(vj);
   const has = (s, d) => cfg.redirects.some((r) => r.source === s && r.destination === d);
   ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'redirects,rewrites'
-    && JSON.stringify(cfg.rewrites) === JSON.stringify([{ source: '/oai', destination: '/api/oai' }]));
+    && JSON.stringify(cfg.rewrites[0]) === JSON.stringify({ source: '/oai', destination: '/api/oai' }));
+  ok('every PDF copy of a listed record is also served at /abs/<file>, and nothing else is rewritten',
+    JSON.stringify(cfg.rewrites.slice(1)) === JSON.stringify(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/abs/' + x.file, destination: '/pdf/' + x.file }))))
+    && cfg.rewrites.slice(1).every((r) => fs.existsSync(path.join(ROOT, 'site', r.destination)) && !fs.existsSync(path.join(ROOT, 'site', r.source))));
+  ok('the citation_pdf_url of every listed record with a copy is served by a rewrite', shown.filter((p) => (p.pdfs || []).length).every((p) => {
+    const m = /<meta name="citation_pdf_url" content="https:\/\/sophaxis\.vercel\.app(\/abs\/[^"]+)">/.exec(read(path.join(ROOT, 'site', 'abs', p.id + '.html')));
+    return m && cfg.rewrites.some((r) => r.source === m[1]);
+  }));
   ok('every listed record has /abs/<id>, and every PDF copy has /pdf/<id> for the latest and /pdf/<id>v<n> for each version',
     shown.every((p) => has('/abs/' + p.id, '/abs/' + p.id + '.html')
       && (!(p.pdfs || []).length || has('/pdf/' + p.id, '/pdf/' + p.pdfs[p.pdfs.length - 1].file))
@@ -1204,8 +1218,8 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
   ok('the short address of the latest PDF is temporary, because a new version moves it; the others are permanent',
     cfg.redirects.every((r) => r.permanent === !/^\/pdf\/[0-9.]+$/.test(r.source)));
   const fixCfg = JSON.parse(vercelConfig(loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers));
-  ok('a removed record gets no short address', loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers.filter((p) => p.status === 'removed')
-    .every((p) => !fixCfg.redirects.some((r) => r.source.includes(p.id))));
+  ok('a removed record gets no short address and no rewrite', loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers.filter((p) => p.status === 'removed')
+    .every((p) => !fixCfg.redirects.concat(fixCfg.rewrites).some((r) => r.source.includes(p.id))));
   ok('each listed record page shows the Access line under the authors, with the latest PDF copy first',
     shown.filter((p) => p.status !== 'withdrawn').every((p) => {
       const h = read(path.join(ROOT, 'site', 'abs', p.id + '.html'));
