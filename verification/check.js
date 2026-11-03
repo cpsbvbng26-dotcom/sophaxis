@@ -1184,6 +1184,11 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
   }
   ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /listed in DOAPR|DOAPR-listed/i.test(read(path.join(ROOT, 'site', f)))));
+  ok('the ROAR submission is recorded as a submission under review, not as a listing, in both languages',
+    read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
+    && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。載る前に編集の審査があります。') && read(path.join(ROOT, 'README.md')).includes('載せるかどうかは ROAR が決めます。')
+    && !/(listed|registered|included) (in|by|on) ROAR|ROAR-listed/i.test(read(path.join(ROOT, 'README.md')))
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
   ok('the PhilPapers request is recorded as a request, not as an addition, in both languages',
     read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
     && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
