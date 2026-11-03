@@ -1175,8 +1175,8 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
   {
     const rd = read(path.join(ROOT, 'README.md'));
     ok('the FAIRsharing record is recorded as not yet reviewed, and the OAI-PMH validation as a validation, not a listing, in both languages',
-      rd.includes('<https://fairsharing.org/9430>. It has not been reviewed yet.') && rd.includes("Whether the record is approved is FAIRsharing's decision.")
-      && rd.includes('so this is a validation, not a listing.') && rd.includes('まだ審査を受けていません。') && rd.includes('これは検証であって、一覧への掲載ではありません。')
+      rd.includes('<https://fairsharing.org/9430>. It has not been reviewed yet, and the page is not public until it is.') && rd.includes("Whether the record is approved is FAIRsharing's decision.")
+      && rd.includes('so this is a validation, not a listing.') && rd.includes('まだ審査を受けていません。審査が済むまで、この頁は公開されません。') && rd.includes('これは検証であって、一覧への掲載ではありません。')
       && !/approved (by|in) FAIRsharing|registered (with|in) the Open Archives|FAIRsharing-approved/i.test(rd)
       && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /FAIRsharing|openarchives\.org\/Register/i.test(read(path.join(ROOT, 'site', f)))));
   }

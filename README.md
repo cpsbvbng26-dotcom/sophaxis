@@ -102,7 +102,7 @@ The record stays in the git history; where the law requires it, ask GitHub to re
 Sophaxis is operated by Takuya Nemoto. How to reach the operator is on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page.
 Sophaxis has a project page on OSF: <https://osf.io/mq7za/>, DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
 On 2026-11-01 the operator applied for Sophaxis to be listed in DOAPR, the Directory of Open Access Preprint Repositories run by COAR. Whether it is listed is DOAPR's decision.
-On 2026-11-03 (Japan time) the operator created a record of Sophaxis in FAIRsharing, the registry of research standards, databases and policies: <https://fairsharing.org/9430>. It has not been reviewed yet. FAIRsharing asks for an organisation and Sophaxis has none, so the operator has asked FAIRsharing what to enter. Whether the record is approved is FAIRsharing's decision.
+On 2026-11-03 (Japan time) the operator created a record of Sophaxis in FAIRsharing, the registry of research standards, databases and policies: <https://fairsharing.org/9430>. It has not been reviewed yet, and the page is not public until it is. FAIRsharing asks for an organisation and Sophaxis has none, so the operator has asked FAIRsharing what to enter. Whether the record is approved is FAIRsharing's decision.
 On the same day the OAI-PMH base URL, <https://sophaxis.vercel.app/oai>, passed the initial tests of the validator of the Open Archives Initiative. The Initiative stopped registering data providers on 2025-07-18, so this is a validation, not a listing.
 Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned. JOSS asks for a repository that has been public for more than six months. The first commit here is from 2026-10-30, so the earliest possible submission is 2027-05-01. Nothing has been submitted yet. Whether a preprint server is within the scope of JOSS is for JOSS to decide.
 Short answers to common questions are in the [FAQ](https://sophaxis.vercel.app/faq.html); where they differ from a policy, the policy applies.
@@ -181,6 +181,6 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 
 運営は根本卓哉です。
 OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)）。2026-11-01 に、COAR が運営する DOAPR（Directory of Open Access Preprint Repositories）への掲載を申請しました。掲載するかどうかは DOAPR が決めます。
-2026-11-03（日本時間）に、研究の規格・データベース・方針の登録簿 FAIRsharing に Sophaxis の記録を作りました（<https://fairsharing.org/9430>）。まだ審査を受けていません。FAIRsharing は組織の欄を求めますが、Sophaxis には組織がありません。何を入れるかを FAIRsharing に問い合わせています。承認するかどうかは FAIRsharing が決めます。
+2026-11-03（日本時間）に、研究の規格・データベース・方針の登録簿 FAIRsharing に Sophaxis の記録を作りました（<https://fairsharing.org/9430>）。まだ審査を受けていません。審査が済むまで、この頁は公開されません。FAIRsharing は組織の欄を求めますが、Sophaxis には組織がありません。何を入れるかを FAIRsharing に問い合わせています。承認するかどうかは FAIRsharing が決めます。
 同じ日に、OAI-PMH の入口（<https://sophaxis.vercel.app/oai>）が Open Archives Initiative の検証ツールの初期テストを通りました。この組織は 2025-07-18 にデータ提供者の登録を終えています。これは検証であって、一覧への掲載ではありません。
 Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。
