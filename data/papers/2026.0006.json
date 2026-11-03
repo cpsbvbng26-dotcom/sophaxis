@@ -12,6 +12,7 @@
   "abstract": "This paper introduces the Trinity-Infinity (III∞) framework, a conceptual model where three finite elements (Trinity) interact recursively to generate infinite dynamics (Infinity). The framework is applied to game theory, mathematical logic, and mechanical engineering, demonstrating how finite structures under recursion yield unbounded systemic behaviors.",
   "category": "mathematics",
   "license": "CC-BY-4.0",
+  "language": "eng",
   "versions": [
     {
       "version": 1,

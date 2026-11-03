@@ -6,7 +6,8 @@
  * build.js writes site/api/oai.js: this file, the records, and a handler that Vercel runs as a function at /oai.
  * The function reads nothing and asks no other server; it answers from the records it was built with.
  *
- * Metadata: Dublin Core (oai_dc). Sets: the fields of Sophaxis. Granularity: days.
+ * Metadata: Dublin Core (oai_dc), following the OpenAIRE guidelines for literature repositories (v3) where they apply.
+ * Sets: the fields of Sophaxis, and `openaire` with every record shown. Granularity: days.
  * Deleted records: persistent. A record removed under the Takedown Policy keeps its identifier, marked deleted.
  * No answer is split, so no resumption token is ever given; one that is sent is refused.
  */
@@ -60,7 +61,7 @@ function dc(r) {
     + ' xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">'
     + el('title', [m.title]) + el('creator', m.creators) + el('subject', m.subjects) + el('description', [m.description])
     + el('publisher', [m.publisher]) + el('date', [m.date]) + el('type', m.types) + el('format', m.formats)
-    + el('identifier', m.identifiers) + el('relation', m.relations) + el('rights', m.rights)
+    + el('identifier', m.identifiers) + el('language', m.languages) + el('relation', m.relations) + el('rights', m.rights)
     + '</oai_dc:dc></metadata>';
 }
 

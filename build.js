@@ -70,6 +70,8 @@ function validate(p, file) {
   if (DATE.test(p.listed || '') && Array.isArray(p.versions) && p.versions[0] && DATE.test(p.versions[0].date || '') && p.listed < p.versions[0].date) {
     e.push(file + ': listed is earlier than the first version');
   }
+  /* The language of the work, as ISO 639-3 (eng, jpn, …), which OpenAIRE asks for in dc:language. */
+  if (p.language !== undefined && !/^[a-z]{3}$/.test(p.language)) e.push(file + ': language must be an ISO 639-3 code, such as eng');
   if (p.updated !== undefined && (!DATE.test(p.updated) || (DATE.test(p.listed || '') && p.updated < p.listed))) e.push(file + ': updated must be a date (YYYY-MM-DD), not earlier than listed');
   if (p.id && !ID.test(p.id)) e.push(file + ': id must look like 2026.0001');
   if (p.id && path.basename(file, '.json') !== p.id) e.push(file + ': file name must be the id');
@@ -876,6 +878,7 @@ function papersJson(papers) {
     keywords: p.keywords || [],
     categories: cats(p),
     license: p.license,
+    ...(p.language ? { language: p.language } : {}),
     versions: p.versions.map((v) => ({ version: v.version, doi: v.doi, date: v.date })),
     listed: p.listed,
     ...(p.updated ? { updated: p.updated } : {}),
@@ -1021,7 +1024,8 @@ function oaiData(all) {
     return {
       identifier: idOf(p),
       datestamp: [changed(p), p.listed, p.updated].filter(Boolean).sort().pop(),
-      sets: cats(p),
+      /* Every record shown is open access, and is in the set that OpenAIRE harvests. */
+      sets: cats(p).concat(['openaire']),
       deleted: false,
       dc: {
         title: p.title,
@@ -1035,6 +1039,7 @@ function oaiData(all) {
         identifiers: [SITE.baseUrl + 'abs/' + p.id + '.html', 'https://doi.org/' + v.doi].concat((p.pdfs || []).length ? [SITE.baseUrl + 'pdf/' + p.pdfs[p.pdfs.length - 1].file] : []),
         relations: p.published ? ['https://doi.org/' + p.published.doi] : [],
         rights: [lic || p.license, 'info:eu-repo/semantics/openAccess'],
+        languages: p.language ? [p.language] : [],
       },
     };
   });
@@ -1045,7 +1050,7 @@ function oaiData(all) {
     earliestDatestamp: records.map((r) => r.datestamp).sort()[0] || SITE.since,
     repositoryIdentifier: host,
     sampleIdentifier: 'oai:' + host + ':2026.0001',
-    sets: Object.entries(SITE.categories).map(([spec, name]) => ({ spec, name })),
+    sets: Object.entries(SITE.categories).map(([spec, name]) => ({ spec, name })).concat([{ spec: 'openaire', name: 'OpenAIRE' }]),
     records,
   };
 }
