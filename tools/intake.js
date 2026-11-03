@@ -105,6 +105,15 @@ function licenceOf(s) {
   return null;
 }
 
+/* The language of a work as ISO 639-3, from the two-letter code (or a tag such as en-US) that DOI metadata gives.
+ * Only the codes below are mapped; any other is left out, for the moderator to add. */
+const ISO3 = { en: 'eng', ja: 'jpn', de: 'deu', fr: 'fra', es: 'spa', it: 'ita', pt: 'por', zh: 'zho', ru: 'rus', ko: 'kor', nl: 'nld', la: 'lat', el: 'ell', pl: 'pol', sv: 'swe' };
+function iso3(s) {
+  const t = String(s || '').trim().toLowerCase().split(/[-_]/)[0];
+  if (/^[a-z]{3}$/.test(t) && Object.values(ISO3).includes(t)) return t;
+  return ISO3[t] || null;
+}
+
 /* ------------------------------------------------------------ metadata */
 
 function fromDataCite(json) {
@@ -127,6 +136,7 @@ function fromDataCite(json) {
     abstract: abs ? plain(abs.description) : '',
     date: date ? date.slice(0, 10) : null,
     keywords: keywordsOf((a.subjects || []).filter((s) => !/fields of science|anzsrc|oecd/i.test(s.subjectScheme || '') && !/^FOS:/i.test(s.subject || '')).map((s) => s.subject)),
+    language: iso3(a.language),
   };
 }
 
@@ -148,6 +158,7 @@ function fromCrossref(json) {
     abstract: plain(m.abstract),
     date: full('posted') || full('published') || full('issued') || full('created'),
     keywords: keywordsOf(m.subject || []),
+    language: iso3(m.language),
   };
 }
 
@@ -308,6 +319,7 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     ...(form.others && form.others.length ? { categories: form.others } : {}),
     ...(meta.keywords && meta.keywords.length ? { keywords: meta.keywords } : {}),
     license: result.licence,
+    ...(meta.language ? { language: meta.language } : {}),
     versions: versions.map((v, i) => ({ version: i + 1, doi: v.doi, date: v.date })),
     llm_disclosure: form.llm.trim(),
     issue: Number(issue),
@@ -497,6 +509,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
