@@ -67,6 +67,11 @@ Sophaxis does not register DOIs today. If it becomes a DataCite member, set `"do
 The build then gives every record the DOI `<prefix>/sophaxis.<id>`, shows it on the record page and writes its DataCite metadata to `site/datacite/<id>.json`.
 `node tools/register_doi.js --dry-run`, then `--test`, then without a flag, registers them. The pages that say that Sophaxis assigns no DOIs must change in the same pull request; the check fails until they do.
 
+### ISSN
+
+The top page shows the day the records last changed and how often they are updated, as the ISSN Japan Centre asks of a database.
+If an ISSN is assigned, set `"issn": "NNNN-NNNC"` in `site.json`; the top page then shows it. The build refuses a number whose check digit does not match. No ISSN is set until one is assigned.
+
 ### Pausing submissions
 
 When the operator cannot work on Sophaxis at all for more than 30 days, set `"submissionsPaused": true` in `site.json`, rebuild and open a pull request.
