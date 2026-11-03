@@ -123,6 +123,7 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `keywords` | The keywords from the DOI metadata, possibly empty. |
 | `categories` | The fields of `site.json` the record is listed in, the main one first. |
 | `license` | The SPDX id of the work's licence: `CC-BY-4.0`, `CC-BY-SA-4.0` or `CC0-1.0`. |
+| `language` | Where known, the language of the work as ISO 639-3, such as `eng`. |
 | `versions` | Each `version` with its `doi` and `date` (YYYY-MM-DD), oldest first. |
 | `listed` | The day the record was added to Sophaxis (YYYY-MM-DD). |
 | `updated` | Only when the record changed later: the day of its last change on Sophaxis. |
@@ -133,7 +134,8 @@ Every shown record is in `papers.json`, newest first. The fields:
 
 The records can also be harvested with OAI-PMH 2.0, at the base URL `https://sophaxis.vercel.app/oai` (for example https://sophaxis.vercel.app/oai?verb=Identify).
 - Metadata: Dublin Core (`oai_dc`). The record page, the DOI and the PDF copy are among its identifiers.
-- Sets: the fields. Identifiers: `oai:sophaxis.vercel.app:<id>`.
+- Sets: the fields, and `openaire` with every record shown, as the OpenAIRE guidelines for literature repositories (v3) ask. The language is given as ISO 639-3 where the record has one. Sophaxis has not applied to OpenAIRE.
+- Identifiers: `oai:sophaxis.vercel.app:<id>`.
 - Datestamp: the later of `listed`, `updated` and the last change of the record, in days. A removed record stays, marked deleted.
 - Lists are answered whole, with no resumption token.
 - `tools/oai.js` makes the answers; the build writes it with the records to `site/api/oai.js`, which Vercel runs as a function.
