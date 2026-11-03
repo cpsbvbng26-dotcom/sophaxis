@@ -1,12 +1,14 @@
 'use strict';
-/* One-off probe, never merged (read only): whether shields.io still draws the LinkedIn and ORCID logos. */
-const urls = ['https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white', 'https://img.shields.io/badge/ORCID-A6CE39?logo=orcid&logoColor=white', 'https://img.shields.io/badge/X-000000?logo=x&logoColor=white'];
+/* One-off probe, never merged (read only): the English view of a researchmap page. */
+const urls = ['https://researchmap.jp/takuyanemoto?lang=en', 'https://researchmap.jp/takuyanemoto?lang=ja'];
 (async () => {
   for (const u of urls) {
     try {
-      const r = await fetch(u, { headers: { 'User-Agent': 'Sophaxis probe' } });
+      const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sophaxis probe)' } });
       const t = await r.text();
-      console.log('==== ' + u + ' -> ' + r.status + ' ' + r.headers.get('content-type') + ' logo:' + /<image|<path/.test(t) + ' len ' + t.length);
+      const title = (/<title>([^<]*)<\/title>/i.exec(t) || [])[1];
+      const lang = (/<html[^>]*lang="([^"]*)"/i.exec(t) || [])[1];
+      console.log('==== ' + u + ' -> ' + r.status + ' ' + r.url + ' | lang=' + lang + ' | ' + (title || '').trim() + ' | ' + /Research Interests|Research Areas|Papers/.test(t) + '/' + /研究分野|研究キーワード|論文/.test(t));
     } catch (e) { console.log('==== ' + u + ' error ' + e.message); }
   }
 })();
