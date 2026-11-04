@@ -1,10 +1,16 @@
 'use strict';
-/* One-off probe, never merged (read only): the PDF of Zenodo record 23114131, as base64, to read its abstract. */
+/* One-off probe, never merged (read only): the DOAPR list of preprint repositories. */
+const urls = ['https://doapr.coar-repositories.org/repositories/', 'https://doapr.coar-repositories.org/repositories/?page=2', 'https://doapr.coar-repositories.org/api/repositories/', 'https://doapr.coar-repositories.org/repositories.json'];
 (async () => {
-  const j = await (await fetch('https://zenodo.org/api/records/23114131', { headers: { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)', Accept: 'application/json' } })).json();
-  const f = j.files.find((x) => /\.pdf$/i.test(x.key));
-  const b = Buffer.from(await (await fetch(f.links.self, { headers: { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)', Accept: 'application/pdf, */*;q=0.8' } })).arrayBuffer());
-  console.log('SIZE ' + b.length + ' ' + f.checksum);
-  const s = b.toString('base64');
-  for (let i = 0; i < s.length; i += 4000) console.log('B64 ' + s.slice(i, i + 4000));
+  for (const u of urls) {
+    try {
+      const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36', Accept: 'text/html,application/json' } });
+      const t = await r.text();
+      const title = (/<title>([^<]*)<\/title>/i.exec(t) || [])[1];
+      console.log('==== ' + u + ' -> ' + r.status + ' | ' + (title || '').trim() + ' | len ' + t.length);
+      const links = [...t.matchAll(/href="(\/repositories\/[a-z0-9-]+\/)"[^>]*>([^<]{1,120})/gi)].map((m) => m[1] + ' | ' + m[2].trim());
+      console.log('  repos ' + links.length); links.forEach((l) => console.log('  ' + l));
+      const pages = [...t.matchAll(/href="([^"]*page=\d+[^"]*)"/g)].map((m) => m[1]); if (pages.length) console.log('  pages ' + [...new Set(pages)].join(' '));
+    } catch (e) { console.log('==== ' + u + ' error ' + e.message); }
+  }
 })();
