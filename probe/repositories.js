@@ -1,17 +1,15 @@
 'use strict';
-/* One-off probe, never merged (read only): the policies of Advance (Sage), from sagepub.com, as text. */
-const urls = ['https://www.sagepub.com/preprints-msg', 'https://journalssolutions.sagepub.com/support/solutions/articles/7000091052-what-is-advance-', 'https://www.sagepub.com/journals/publication-ethics-policies/artificial-intelligence-policy'];
+/* One-off probe, never merged (read only): what the OSF project of Sophaxis holds. */
+const H = { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)', Accept: 'application/vnd.api+json' };
+const get = async (u) => { const r = await fetch(u, { headers: H }); return [r.status, r.ok ? await r.json() : await r.text()]; };
 (async () => {
-  for (const u of urls) {
-    try {
-      const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sophaxis probe)' } });
-      const t = await r.text();
-      const title = (/<title>([^<]*)<\/title>/i.exec(t) || [])[1];
-      const plain = t.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&#8217;|&rsquo;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ');
-      console.log('==== ' + u + ' -> ' + r.status + ' ' + r.url + ' | ' + (title || '').trim());
-      for (const re of [/[^.]{0,200}(no longer|closed|discontinu|retir|sunset)[^.]{0,200}\./gi, /[^.]{0,200}(already (been )?(posted|published)|another preprint|elsewhere|previously)[^.]{0,250}\./gi, /[^.]{0,200}(generative|artificial intelligence|\bAI\b|large language)[^.]{0,250}\./gi, /[^.]{0,200}(humanities|philosoph|free|charge|fee|screen|moderat|DOI|eligib|anyone)[^.]{0,200}\./gi]) {
-        [...plain.matchAll(re)].slice(0, 4).forEach((m) => console.log('  text: ' + m[0].trim().slice(0, 450)));
-      }
-    } catch (e) { console.log('==== ' + u + ' error ' + e.message); }
+  const [s, n] = await get('https://api.osf.io/v2/nodes/mq7za/');
+  console.log('==== node ' + s);
+  if (s === 200) { const a = n.data.attributes; console.log(JSON.stringify({ title: a.title, description: a.description, category: a.category, tags: a.tags, public: a.public, date_created: a.date_created, date_modified: a.date_modified, wiki_enabled: a.wiki_enabled, node_license: a.node_license }, null, 1)); console.log('license rel: ' + JSON.stringify((n.data.relationships.license || {}).data)); }
+  for (const rel of ['files', 'wikis', 'children', 'linked_nodes', 'identifiers', 'contributors', 'preprints', 'addons']) {
+    const [st, j] = await get('https://api.osf.io/v2/nodes/mq7za/' + rel + '/');
+    console.log('==== ' + rel + ' ' + st + ' ' + (st === 200 ? (j.data || []).map((d) => (d.attributes && (d.attributes.name || d.attributes.title || d.attributes.value || d.attributes.full_name || d.attributes.provider)) || d.id).join(' | ') : String(j).slice(0, 120)));
   }
+  const [st2, f] = await get('https://api.osf.io/v2/nodes/mq7za/files/osfstorage/');
+  console.log('==== osfstorage ' + st2 + ' ' + (st2 === 200 ? (f.data || []).map((d) => d.attributes.name + ' (' + d.attributes.kind + ')').join(' | ') : ''));
 })();
