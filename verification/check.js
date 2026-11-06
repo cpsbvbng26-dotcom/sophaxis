@@ -1215,11 +1215,13 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && ja.every((r) => /\| 2026-\d\d-\d\d \| (審査中|編集の審査中|依頼済み|アカウントを申請中)/.test(r) && !/掲載済み|承認済み|載った/.test(r))
       && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
   }
-  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages',
+  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages, and on the contact page of the site and nowhere else on it',
     read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes('It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
     && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
     && !read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
-    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
+    && read(path.join(ROOT, 'contact.md')).includes('- ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).')
+    && read(path.join(ROOT, 'site', 'contact.html')).includes('<a href="https://roar.eprints.org/27422/">record 27422</a>')
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== 'contact.html').every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
   ok('the PhilPapers request is recorded as a request, not as an addition, in both languages',
     read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
     && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
