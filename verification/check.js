@@ -1197,26 +1197,28 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
   ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /listed in DOAPR|DOAPR-listed/i.test(read(path.join(ROOT, 'site', f)))));
   {
-    /* The table near the top of the README: the OSF DOI of Sophaxis, and every registration still under review, in both languages. */
+    /* Near the top of the README: the OSF DOI of Sophaxis, where it is listed, and every registration still under review, in both languages. */
     const rd = read(path.join(ROOT, 'README.md'));
     const rows = (head) => { const i = rd.indexOf(head); return i < 0 ? [] : rd.slice(i).split('\n\n').find((b) => b.startsWith('| ')).split('\n').slice(2); };
-    const en = rows('## Sophaxis itself: DOI and registrations under review');
-    const ja = rows('### Sophaxis 自体の DOI と、審査中の登録');
-    const names = ['DOAPR', 'FAIRsharing', 'PhilPapers', 'ROAR', 'Open Access Directory'];
-    ok('the README opens with the OSF DOI of Sophaxis and a table of the registrations under review, the same five in both languages, none of them shown as listed',
-      rd.indexOf('## Sophaxis itself: DOI and registrations under review') < rd.indexOf('## Submitting') && rd.indexOf('### Sophaxis 自体の DOI と、審査中の登録') < rd.indexOf('貢献の窓口')
+    const en = rows('## Sophaxis itself: DOI, listings and registrations under review');
+    const ja = rows('### Sophaxis 自体の DOI、掲載先と、審査中の登録');
+    const names = ['DOAPR', 'FAIRsharing', 'PhilPapers', 'Open Access Directory'];
+    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same four in both languages, none of them shown as listed',
+      rd.indexOf('## Sophaxis itself: DOI, listings and registrations under review') < rd.indexOf('## Submitting') && rd.indexOf('### Sophaxis 自体の DOI、掲載先と、審査中の登録') < rd.indexOf('貢献の窓口')
+      && rd.includes('Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
+      && rd.includes('サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
       && rd.includes('The DOI names Sophaxis as a project, not a listed work.') && rd.includes('この DOI が指すのは、プロジェクトとしての Sophaxis です。載っている稿ではありません。')
       && (rd.match(/\[10\.17605\/OSF\.IO\/MQ7ZA\]\(https:\/\/doi\.org\/10\.17605\/OSF\.IO\/MQ7ZA\)/g) || []).length >= 3
       && en.length === names.length && ja.length === names.length
       && names.every((n, i) => en[i].startsWith('| ' + n) && ja[i].startsWith('| ' + n))
       && en.every((r) => /\| 2026-\d\d-\d\d \| (Under review|Under editorial review|Requested|Account requested)/.test(r) && !/\bListed\b|Approved|Accepted/.test(r))
       && ja.every((r) => /\| 2026-\d\d-\d\d \| (審査中|編集の審査中|依頼済み|アカウントを申請中)/.test(r) && !/掲載済み|承認済み|載った/.test(r))
-      && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('まだどこにも載っていません。載せるかどうかは、それぞれが決めます。'));
+      && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
   }
-  ok('the ROAR submission is recorded as a submission under review, not as a listing, in both languages',
-    read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
-    && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。載る前に編集の審査があります。') && read(path.join(ROOT, 'README.md')).includes('載せるかどうかは ROAR が決めます。')
-    && !/(listed|registered|included) (in|by|on) ROAR|ROAR-listed/i.test(read(path.join(ROOT, 'README.md')))
+  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages',
+    read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes('It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
+    && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
+    && !read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
   ok('the PhilPapers request is recorded as a request, not as an addition, in both languages',
     read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
