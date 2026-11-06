@@ -16,19 +16,20 @@ Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, Met
 Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
 Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.md), [Submission](policies/submission.md), [Moderation](policies/moderation.md), [Copyright](policies/copyright.md), [Licences](policies/licences.md), [Privacy](policies/privacy.md) and [Takedown](policies/takedown.md).
 
-## Sophaxis itself: DOI and registrations under review
+## Sophaxis itself: DOI, listings and registrations under review
 
 The [OSF project page](https://osf.io/mq7za/) describes Sophaxis and gives it a DOI: [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
 The DOI names Sophaxis as a project, not a listed work. Cite it to refer to Sophaxis itself.
 
-Sophaxis has applied to the registries below. None of them has listed it yet, and each decides for itself. The dates are Japan time; the state is as of 2026-11-03.
+Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
+
+Sophaxis has also applied to the registries below. None of them has listed it yet, and each decides for itself. The dates are Japan time; the state is as of 2026-11-06.
 
 | Registry | What it is | Applied | State |
 | --- | --- | --- | --- |
 | DOAPR (COAR) | Directory of Open Access Preprint Repositories | 2026-11-01 | Under review |
 | FAIRsharing | Registry of research standards, databases and policies; record 9430 | 2026-11-03 | Under review; the page is not public until then |
 | PhilPapers | Open Access Gateway, the archives whose papers PhilPapers indexes | 2026-11-03 | Requested; each archive is vetted |
-| ROAR (University of Southampton) | Registry of Open Access Repositories | 2026-11-03 | Under editorial review |
 | Open Access Directory | Wiki list of disciplinary repositories | 2026-11-03 | Account requested; the entry is added once it is approved |
 
 Each application is described under [Operator and contact](#operator-and-contact).
@@ -129,7 +130,7 @@ On 2026-11-01 the operator applied for Sophaxis to be listed in DOAPR, the Direc
 On 2026-11-03 (Japan time) the operator created a record of Sophaxis in FAIRsharing, the registry of research standards, databases and policies: <https://fairsharing.org/9430>. It has not been reviewed yet, and the page is not public until it is. FAIRsharing asks for an organisation and Sophaxis has none, so the operator has asked FAIRsharing what to enter. Whether the record is approved is FAIRsharing's decision.
 On the same day the OAI-PMH base URL, <https://sophaxis.vercel.app/oai>, passed the initial tests of the validator of the Open Archives Initiative. The Initiative stopped registering data providers on 2025-07-18, so this is a validation, not a listing.
 On the same day the operator asked PhilPapers to add Sophaxis to its Open Access Gateway, the list of archives whose papers PhilPapers indexes. Each archive is vetted before it is added, so whether it is added is PhilPapers' decision.
-On the same day the operator submitted a record of Sophaxis to ROAR, the Registry of Open Access Repositories at the University of Southampton. The record goes to editorial review before it is listed, so whether it is listed is ROAR's decision.
+On the same day the operator submitted a record of Sophaxis to ROAR, the Registry of Open Access Repositories at the University of Southampton. It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
 Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned. JOSS asks for a repository that has been public for more than six months. The first commit here is from 2026-10-30, so the earliest possible submission is 2027-05-01. Nothing has been submitted yet. Whether a preprint server is within the scope of JOSS is for JOSS to decide.
 Short answers to common questions are in the [FAQ](https://sophaxis.vercel.app/faq.html); where they differ from a policy, the policy applies.
 What Sophaxis does not promise is in the [Disclaimer](https://sophaxis.vercel.app/disclaimer.html). Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of their own](https://sophaxis.vercel.app/repositories.html).
@@ -205,19 +206,20 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 確かめが通った投稿には、預け先の登録情報についての助言も返します（[deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) による、要旨やライセンスの欠けなど）。助言は掲載の可否を決めません。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
 
-### Sophaxis 自体の DOI と、審査中の登録
+### Sophaxis 自体の DOI、掲載先と、審査中の登録
 
 [OSF のプロジェクトの頁](https://osf.io/mq7za/)が Sophaxis を説明し、DOI を与えています。DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。
 この DOI が指すのは、プロジェクトとしての Sophaxis です。載っている稿ではありません。Sophaxis そのものを挙げるときに引きます。
 
-次の登録簿に申請しています。まだどこにも載っていません。載せるかどうかは、それぞれが決めます。日付は日本時間です。状態は 2026-11-03 の時点のものです。
+サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
+
+ほかに、次の登録簿に申請しています。こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。日付は日本時間です。状態は 2026-11-06 の時点のものです。
 
 | 登録先 | 何か | 申請日 | 状態 |
 | --- | --- | --- | --- |
 | DOAPR（COAR） | オープンアクセスのプレプリントリポジトリの一覧 | 2026-11-01 | 審査中 |
 | FAIRsharing | 研究の規格・データベース・方針の登録簿。記録 9430 | 2026-11-03 | 審査中。審査が済むまで頁は公開されない |
 | PhilPapers | Open Access Gateway。PhilPapers が論文を索引するアーカイブの一覧 | 2026-11-03 | 依頼済み。一件ずつ審査がある |
-| ROAR（サウサンプトン大学） | オープンアクセス・リポジトリの登録簿 | 2026-11-03 | 編集の審査中 |
 | Open Access Directory | 分野別リポジトリの一覧（ウィキ） | 2026-11-03 | アカウントを申請中。承認されたら項目を足す |
 
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
@@ -228,5 +230,5 @@ OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [
 2026-11-03（日本時間）に、研究の規格・データベース・方針の登録簿 FAIRsharing に Sophaxis の記録を作りました（<https://fairsharing.org/9430>）。まだ審査を受けていません。審査が済むまで、この頁は公開されません。FAIRsharing は組織の欄を求めますが、Sophaxis には組織がありません。何を入れるかを FAIRsharing に問い合わせています。承認するかどうかは FAIRsharing が決めます。
 同じ日に、OAI-PMH の入口（<https://sophaxis.vercel.app/oai>）が Open Archives Initiative の検証ツールの初期テストを通りました。この組織は 2025-07-18 にデータ提供者の登録を終えています。これは検証であって、一覧への掲載ではありません。
 同じ日に、PhilPapers に、Open Access Gateway へ Sophaxis を加えるよう依頼しました。PhilPapers が論文を索引するアーカイブの一覧です。加える前に一件ずつ審査があります。加えるかどうかは PhilPapers が決めます。
-同じ日に、サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、Sophaxis の記録を出しました。載る前に編集の審査があります。載せるかどうかは ROAR が決めます。
+同じ日に、サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
 Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。
