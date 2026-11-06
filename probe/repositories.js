@@ -1,15 +1,13 @@
 'use strict';
-/* One-off probe, never merged (read only): the operator's records in HAL, through the public API. */
-const UA = { headers: { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)' } };
-const F = 'fl=docid,halId_s,title_s,authFullName_s,authIdHal_s,authORCIDIdExt_id,submittedDate_s,uri_s,docType_s&wt=json';
-const urls = [
-  'https://api.archives-ouvertes.fr/search/?q=authFullName_t:%22Takuya%20Nemoto%22&' + F,
-  'https://api.archives-ouvertes.fr/search/?q=halId_s:hal-05759080&' + F,
-  'https://api.archives-ouvertes.fr/search/?q=authORCIDIdExt_id:0009-0000-1406-0547&' + F,
-];
+/* One-off probe, never merged (read only): the operator's CV page in HAL, and whether it links an X account. */
 (async () => {
-  for (const u of urls) {
-    try { const r = await fetch(u, UA); console.log('==== ' + u.slice(0, 110) + ' -> ' + r.status + '\n' + (await r.text()).slice(0, 2500)); }
-    catch (e) { console.log('==== ' + u + ' error ' + e.message); }
+  for (const u of ['https://cv.hal.science/nemoto-takuya', 'https://hal.science/hal-05759080v1']) {
+    try {
+      const r = await fetch(u, { headers: { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)' } });
+      const t = await r.text();
+      const title = (/<title>([^<]*)<\/title>/i.exec(t) || [])[1];
+      console.log('==== ' + u + ' -> ' + r.status + ' ' + r.url + ' | ' + (title || '').trim().replace(/\s+/g, ' '));
+      [...t.matchAll(/href="([^"]*(twitter\.com|x\.com|orcid\.org|linkedin|researchmap|idref|scholar\.google)[^"]*)"/gi)].map((m) => m[1]).filter((v, i, a) => a.indexOf(v) === i).forEach((l) => console.log('  ' + l));
+    } catch (e) { console.log('==== ' + u + ' error ' + e.message); }
   }
 })();
