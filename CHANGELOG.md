@@ -5,7 +5,8 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 ## 2026-11-06
 
-- ROAR, the Registry of Open Access Repositories at the University of Southampton, lists Sophaxis after editorial review: <https://roar.eprints.org/27422/>. The README records the listing in both languages, and the table of registrations under review keeps the other four.
+- ROAR, the Registry of Open Access Repositories at the University of Southampton, lists Sophaxis after editorial review: <https://roar.eprints.org/27422/>. The README records the listing in both languages, and the table of registrations under review keeps the other four (#103).
+- The contact page, under Sophaxis elsewhere, states that Sophaxis passed the editorial review of ROAR and links its record.
 
 ## 2026-11-03
 
