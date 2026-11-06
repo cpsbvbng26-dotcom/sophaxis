@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-03.
+Last updated: 2026-11-06.
 
 ## Operator
 
@@ -38,6 +38,7 @@ The operator aims to answer within 7 days.
 
 - OSF: the project page [Sophaxis: An Independent Overlay Preprint Server](https://osf.io/mq7za/), with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The DOI names the project, not a listed work.
 - GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
+- ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).
 
 ## Security
 
