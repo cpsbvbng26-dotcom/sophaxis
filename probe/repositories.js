@@ -1,9 +1,15 @@
 'use strict';
-/* One-off probe, never merged (read only): the wiki of the OSF project of Sophaxis, and the repository its GitHub add-on points to. */
-const H = { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)', Accept: 'application/vnd.api+json' };
+/* One-off probe, never merged (read only): a HAL record, through its page and its public API. */
+const UA = { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)' };
 (async () => {
-  const w = await (await fetch('https://api.osf.io/v2/nodes/mq7za/wikis/', { headers: H })).json();
-  for (const d of w.data) { const c = await (await fetch(d.links.download, { headers: { 'User-Agent': H['User-Agent'] } })).text(); console.log('==== wiki ' + d.attributes.name + ' len ' + c.length + '\n' + c.slice(0, 1500)); }
-  const a = await (await fetch('https://api.osf.io/v2/nodes/mq7za/addons/github/', { headers: H })).json();
-  console.log('==== github addon ' + JSON.stringify((a.data || {}).attributes || a).slice(0, 400));
+  for (const u of ['https://hal.science/view/index/docid/5768701', 'https://api.archives-ouvertes.fr/search/?q=docid:5768701&fl=halId_s,title_s,authFullName_s,authIdHal_s,authORCIDIdExt_id,docType_s,submittedDate_s,producedDate_s,uri_s,doiId_s,language_s,abstract_s,keyword_s,files_s,version_i,licence_s&wt=json']) {
+    try {
+      const r = await fetch(u, UA);
+      const t = await r.text();
+      const title = (/<title>([^<]*)<\/title>/i.exec(t) || [])[1];
+      console.log('==== ' + u + ' -> ' + r.status + ' ' + r.url + ' | ' + (title || '').trim());
+      if (!title) console.log(t.slice(0, 3000));
+      else { [...t.matchAll(/(twitter|x\.com|orcid\.org\/[0-9X-]+|idhal|\/cv\/[a-z0-9-]+)[^"' <]{0,60}/gi)].map((m) => m[0]).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20).forEach((l) => console.log('  ' + l)); }
+    } catch (e) { console.log('==== ' + u + ' error ' + e.message); }
+  }
 })();
