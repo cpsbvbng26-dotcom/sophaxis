@@ -662,6 +662,12 @@ function issnOk(s) {
   return m[3] === (c === 10 ? 'X' : String(c));
 }
 
+/* Registries that list Sophaxis itself, after their own review (site.json listedIn). Only a listing that can be
+ * opened goes here; an application under review stays in the README. */
+function listedIn() {
+  return (SITE.listedIn || []).map((x) => `<p class="meta">Listed in <a href="${esc(x.url)}">${esc(x.name)}</a>, ${esc(x.description)}, after its editorial review, since ${esc(x.since)} (Japan time).</p>\n`).join('');
+}
+
 function indexPage(papers, all = papers) {
   const last = lastUpdated(all);
   const body = `
@@ -669,7 +675,7 @@ function indexPage(papers, all = papers) {
 ${pausedNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
-<h2>Listing</h2>
+${listedIn()}<h2>Listing</h2>
 ${fields(papers, '', './')}
 ${listing(papers, './', 'No preprints are listed yet.')}
 `;
@@ -965,6 +971,9 @@ function notFoundPage() {
 
 function build(out, paperDir) {
   const { papers: all, problems } = loadPapers(paperDir);
+  (SITE.listedIn || []).forEach((x, i) => {
+    if (!x || !x.name || !x.description || !/^https:\/\//.test(x.url || '') || !DATE.test(x.since || '')) problems.push('site.json: listedIn[' + i + '] needs a name, a description, an https url and a since date (YYYY-MM-DD)');
+  });
   if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
   if (problems.length) return { problems };
   /* Removed records keep only their notice page; they are left out of every list, feed and search. */
