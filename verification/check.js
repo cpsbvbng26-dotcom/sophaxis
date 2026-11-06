@@ -1188,10 +1188,11 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
   ok('the top page links the OSF project and its DOI as sameAs of the site', read(path.join(ROOT, 'site', 'index.html')).includes('<link itemprop="sameAs" href="https://osf.io/mq7za/"><link itemprop="sameAs" href="https://doi.org/10.17605/OSF.IO/MQ7ZA">'));
   {
     const rd = read(path.join(ROOT, 'README.md'));
-    ok('the FAIRsharing record is recorded as not yet reviewed, and the OAI-PMH validation as a validation, not a listing, in both languages',
-      rd.includes('<https://fairsharing.org/9430>. It has not been reviewed yet, and the page is not public until it is.') && rd.includes("Whether the record is approved is FAIRsharing's decision.")
-      && rd.includes('so this is a validation, not a listing.') && rd.includes('まだ審査を受けていません。審査が済むまで、この頁は公開されません。') && rd.includes('これは検証であって、一覧への掲載ではありません。')
-      && !/approved (by|in) FAIRsharing|registered (with|in) the Open Archives|FAIRsharing-approved/i.test(rd)
+    /* FAIRsharing was dropped on 2026-11-06 as not worth keeping: it is named nowhere in the README or on the site. */
+    ok('the OAI-PMH validation is recorded as a validation, not a listing, in both languages, and FAIRsharing is named nowhere',
+      rd.includes('On 2026-11-03 (Japan time) the OAI-PMH base URL, <https://sophaxis.vercel.app/oai>, passed the initial tests')
+      && rd.includes('so this is a validation, not a listing.') && rd.includes('2026-11-03（日本時間）に、OAI-PMH の入口') && rd.includes('これは検証であって、一覧への掲載ではありません。')
+      && !/FAIRsharing|fairsharing\.org/i.test(rd) && !/registered (with|in) the Open Archives/i.test(rd)
       && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /FAIRsharing|openarchives\.org\/Register/i.test(read(path.join(ROOT, 'site', f)))));
   }
   ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
@@ -1202,8 +1203,8 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     const rows = (head) => { const i = rd.indexOf(head); return i < 0 ? [] : rd.slice(i).split('\n\n').find((b) => b.startsWith('| ')).split('\n').slice(2); };
     const en = rows('## Sophaxis itself: DOI, listings and registrations under review');
     const ja = rows('### Sophaxis 自体の DOI、掲載先と、審査中の登録');
-    const names = ['DOAPR', 'FAIRsharing', 'PhilPapers', 'Open Access Directory'];
-    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same four in both languages, none of them shown as listed',
+    const names = ['DOAPR', 'PhilPapers', 'Open Access Directory'];
+    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same three in both languages, none of them shown as listed',
       rd.indexOf('## Sophaxis itself: DOI, listings and registrations under review') < rd.indexOf('## Submitting') && rd.indexOf('### Sophaxis 自体の DOI、掲載先と、審査中の登録') < rd.indexOf('貢献の窓口')
       && rd.includes('Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
       && rd.includes('サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
