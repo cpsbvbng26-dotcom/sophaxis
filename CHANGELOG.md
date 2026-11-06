@@ -7,7 +7,8 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 - ROAR, the Registry of Open Access Repositories at the University of Southampton, lists Sophaxis after editorial review: <https://roar.eprints.org/27422/>. The README records the listing in both languages, and the table of registrations under review keeps the other four (#103).
 - The contact page, under Sophaxis elsewhere, states that Sophaxis passed the editorial review of ROAR and links its record (#104).
-- The top page states the ROAR listing too, with a link to the record. Registries that list Sophaxis itself after their own review are set in `site.json` (`listedIn`), and the build refuses an entry without a name, a description, an https address or a date.
+- The top page states the ROAR listing too, with a link to the record. Registries that list Sophaxis itself after their own review are set in `site.json` (`listedIn`), and the build refuses an entry without a name, a description, an https address or a date (#105).
+- FAIRsharing is dropped from the README, as not worth keeping. The table of registrations under review keeps DOAPR, PhilPapers and the Open Access Directory.
 
 ## 2026-11-03
 
