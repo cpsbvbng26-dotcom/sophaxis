@@ -175,6 +175,8 @@ console.log('\n4. The policy keeps its promises in writing');
     'Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan\'s Act on the Protection of Personal Information.',
     'If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan\'s Personal Information Protection Commission and tells the people concerned.',
     'Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).',
+    'The operator has decided not to appoint one.',
+    'The operator answers them, and the data protection authorities, directly, in place of a representative.',
     'Sophaxis applies that Act to readers and authors as if its operator were a business operator under it.',
     'From 2026-11-21, a work with more than one author is listed only after every other author confirms their own agreement.',
     'It is shown under the work\'s own licence, with its authors and a link to the work.',
@@ -187,6 +189,12 @@ console.log('\n4. The policy keeps its promises in writing');
     'Submissions by the operator are moderated under the same rules',
     'Claude is not an author.',
   ].forEach((s) => ok('policy says: ' + s.slice(0, 60), policy.includes(s)));
+  ok('the decision not to appoint an EU or UK representative, and its reason, are stated in both languages and under the Digital Services Act; no text says one will be appointed',
+    read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('置かないと決めています。') && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('代理人に代わって自ら応えます。')
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('and Sophaxis is run unpaid within free services.')
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('Sophaxis has no legal representative in the European Union (Article 13), and the operator has decided not to appoint one')
+    && read(path.join(ROOT, 'docs', 'records-of-processing.md')).includes('The operator has decided not to appoint one')
+    && !/Until one is appointed|置くまでのあいだ/.test(['privacy.md', 'privacy.ja.md', 'takedown.md'].map((f) => read(path.join(ROOT, 'policies', f))).join('\n')));
   ok('the record of processing is in the repository, names the controller, every purpose and that no EU or UK representative is appointed',
     fs.existsSync(path.join(ROOT, 'docs', 'records-of-processing.md'))
     && ['## Controller', '## Processing', '## Lawful basis', 'No representative in the European Union or the United Kingdom has been appointed.', 'Vercel (United States)', 'The Internet Archive (United States)']
