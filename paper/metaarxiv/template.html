@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="$lang$">
+<head>
+<meta charset="utf-8">
+<title>$title$</title>
+<style>
+@page { size: A4; margin: 22mm 22mm 24mm; }
+body { font-family: "DejaVu Serif", "Liberation Serif", Georgia, serif; font-size: 10.5pt; line-height: 1.5; color: #111; }
+h1.title { font-size: 17pt; line-height: 1.25; margin: 0 0 10pt; }
+.byline { margin: 0 0 2pt; font-size: 10.5pt; }
+.note, .date { margin: 0 0 2pt; font-size: 9.5pt; color: #333; }
+h1 { font-size: 12.5pt; margin: 16pt 0 4pt; }
+h2 { font-size: 11pt; margin: 12pt 0 3pt; }
+p { margin: 0 0 6pt; text-align: justify; hyphens: auto; }
+ol, ul { margin: 0 0 6pt; padding-left: 18pt; }
+li { margin: 0 0 3pt; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
+a { color: #111; }
+.csl-entry { margin: 0 0 4pt; padding-left: 18pt; text-indent: -18pt; font-size: 9.5pt; }
+header { border-bottom: 0.6pt solid #999; padding-bottom: 8pt; margin-bottom: 8pt; }
+</style>
+</head>
+<body>
+<header>
+<h1 class="title">$title$</h1>
+$for(author)$
+<p class="byline">$author.name$ · ORCID <a href="https://orcid.org/$author.orcid$">$author.orcid$</a></p>
+<p class="note">$author.note$</p>
+$endfor$
+<p class="date">$date$ · CC BY 4.0</p>
+</header>
+$body$
+</body>
+</html>
