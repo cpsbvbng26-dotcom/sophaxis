@@ -1,6 +1,6 @@
 'use strict';
 /* One-off probe, never merged (read only): which repositories already have a Zenodo archive, by the GitHub address in DataCite. */
-const repos = ['autonomy-and-self-cultivation', 'cpsbvbng26-dotcom', 'naval-gazette-notes', 'self-correction', 'sophaxis', 'trinity-infinity', 'trinity-operator'];
+const repos = ['deposit-check', 'errata-check', 'autonomy-and-self-cultivation', 'cpsbvbng26-dotcom', 'naval-gazette-notes', 'self-correction', 'sophaxis', 'trinity-infinity', 'trinity-operator'];
 (async () => {
   for (const r of repos) {
     try {
