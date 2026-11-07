@@ -2290,6 +2290,40 @@ console.log('\n60. The decision on an EU or UK representative is reviewed when a
   ok('the Privacy Policy still makes that promise', read(path.join(ROOT, 'policies', 'privacy.md')).includes('The operator reviews this decision when Sophaxis first lists a work by an author other than the operator'));
 }
 
+console.log('\n61. OAI-PMH also gives oai_openaire, the profile of the OpenAIRE Guidelines for Literature Repositories v4');
+{
+  const O = require('../tools/oai.js');
+  const src = read(path.join(ROOT, 'site', 'api', 'oai.js'));
+  const data = JSON.parse(src.match(/module\.exports = handler\((.*)\);\n$/s)[1]);
+  const ask = (args) => O.handle(args, data, new Date('2026-11-08T00:00:00Z'));
+  const formats = ask([['verb', 'ListMetadataFormats']]);
+  ok('ListMetadataFormats gives oai_dc and oai_openaire, with the schema and namespace of the guidelines (4.0)',
+    formats.includes('<metadataPrefix>oai_dc</metadataPrefix>') && formats.includes('<metadataPrefix>oai_openaire</metadataPrefix><schema>https://www.openaire.eu/schema/repo-lit/4.0/openaire.xsd</schema><metadataNamespace>http://namespace.openaire.eu/schema/oaire/</metadataNamespace>'));
+  const shown = data.records.filter((r) => !r.deleted);
+  const bad = shown.filter((r) => {
+    const g = ask([['verb', 'GetRecord'], ['identifier', r.identifier], ['metadataPrefix', 'oai_openaire']]);
+    const id = r.identifier.split(':').pop();
+    return !(g.includes('<oaire:resource ') && /<datacite:title>[^<]+<\/datacite:title>/.test(g) && /<datacite:creatorName>[^<]+<\/datacite:creatorName>/.test(g)
+      && g.includes('<datacite:identifier identifierType="URL">' + SITE_BASE() + 'abs/' + id + '.html</datacite:identifier>')
+      && g.includes('<datacite:rights rightsURI="http://purl.org/coar/access_right/c_abf2">open access</datacite:rights>')
+      && g.includes('<oaire:resourceType resourceTypeGeneral="literature" uri="http://purl.org/coar/resource_type/c_816b">preprint</oaire:resourceType>')
+      && /<datacite:date dateType="Issued">\d{4}-\d{2}-\d{2}<\/datacite:date>/.test(g)
+      && /<datacite:relatedIdentifier relatedIdentifierType="DOI" relationType="IsIdenticalTo">10\.[^<]+<\/datacite:relatedIdentifier>/.test(g)
+      && /<dc:publisher>[^<]+<\/dc:publisher>/.test(g)
+      && (!/<oaire:file /.test(g) || new RegExp('objectType="fulltext">' + SITE_BASE().replace(/[.]/g, '\\.') + 'pdf/' + id.replace('.', '\\.') + 'v\\d+\\.pdf</oaire:file>').test(g)));
+  }).map((r) => r.identifier);
+  ok('every shown record (' + shown.length + ') carries the mandatory fields: title, creator, the record page as identifier, open access, preprint, the issued date, the deposited DOI and its repository; a full text only on this site',
+    shown.length > 0 && bad.length === 0, bad.join(', '));
+  ok('an author with an ORCID iD is given it as a name identifier', ask([['verb', 'GetRecord'], ['identifier', 'oai:sophaxis.vercel.app:2026.0001'], ['metadataPrefix', 'oai_openaire']])
+    .includes('<datacite:nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://orcid.org">0009-0000-1406-0547</datacite:nameIdentifier>'));
+  const del = data.records.find((r) => r.deleted);
+  ok('a removed record is a header marked deleted, with no metadata, in oai_openaire too', !del
+    || /<record><header status="deleted">[\s\S]*?<\/header><\/record>/.test(ask([['verb', 'GetRecord'], ['identifier', del.identifier], ['metadataPrefix', 'oai_openaire']])));
+  ok('another format is refused with cannotDisseminateFormat', ask([['verb', 'ListRecords'], ['metadataPrefix', 'marc']]).includes('<error code="cannotDisseminateFormat">Only oai_dc and oai_openaire are given.</error>'));
+  ok('the README says what the format carries and that the records validate against the schema', read(path.join(ROOT, 'README.md')).includes('- Metadata: `oai_openaire`, the application profile of the OpenAIRE Guidelines for Literature Repositories v4.'));
+  function SITE_BASE() { return JSON.parse(read(path.join(ROOT, 'site.json'))).baseUrl; }
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
