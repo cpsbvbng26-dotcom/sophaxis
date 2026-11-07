@@ -1642,6 +1642,18 @@ console.log('\n45. Telling search engines what changed (IndexNow)');
     I.changed(before, after, B).join(' '));
   ok('sending everything sends every record page and PDF copy of the real sitemap, and no author page',
     (() => { const { papers } = loadPapers(path.join(ROOT, 'data', 'papers')); const e = I.every(read(path.join(ROOT, 'site', 'sitemap.xml'))); return e.length === 1 + papers.filter((p) => p.status !== 'removed').length + papers.reduce((n, p) => n + (p.pdfs || []).length, 0) && !e.some((u) => u.includes('/author/')); })());
+  const removedAfter = after.replace('  <url><loc>' + B + 'abs/2026.0001.html</loc><lastmod>2026-11-01</lastmod></url>\n', '').replace('  <url><loc>' + B + 'pdf/2026.0003v1.pdf</loc><lastmod>2026-11-02</lastmod></url>\n', '');
+  ok('a record page or PDF copy that left the sitemap is sent as gone; other pages that left are not, and nothing new is gone',
+    I.gone(after, removedAfter, B).join(' ') === [B + 'abs/2026.0001.html', B + 'pdf/2026.0003v1.pdf'].join(' ')
+    && I.gone(before, after, B).length === 0 && I.gone(after, after.replace(/  <url><loc>[^<]*faq\.html<\/loc>[^\n]*\n/, ''), B).length === 0);
+  const isrc = read(path.join(ROOT, 'tools', 'indexnow.js'));
+  ok('the gone pages are sent with the new and changed ones; after IndexNow takes them, the new and changed pages are saved to the Internet Archive, and a gone page never is',
+    isrc.includes('const urls = fresh.concat(left);') && isrc.includes("if (!all) await require('./watch.js').saveToArchive(fresh);") && !/saveToArchive\((urls|left)/.test(isrc)
+    && isrc.indexOf('saveToArchive(fresh)') > isrc.indexOf("throw new Error('IndexNow refused the request"));
+  const rwf = read(path.join(ROOT, '.github', 'workflows', 'removal.yml'));
+  ok('every job of the removal workflow that can push tells IndexNow afterwards, against the head it started from',
+    (rwf.match(/- run: node tools\/indexnow\.js\n\s+env:\n\s+BEFORE: \$\{\{ github\.sha \}\}/g) || []).length === 3
+    && ['intake', 'decide', 'manual'].every((j) => { const b = rwf.split('\n  ' + j + ':\n')[1].split(/\n  [a-z]+:\n/)[0]; return b.indexOf('node tools/removal.js') < b.indexOf('node tools/indexnow.js') && /fetch-depth: 0/.test(b); }));
   const body = I.request([B + 'abs/2026.0001.html'], S);
   ok('the request names the host, the key and where the key file is', body.host === 'sophaxis.vercel.app' && body.key === S.indexNowKey
     && body.keyLocation === S.baseUrl + S.indexNowKey + '.txt' && body.urlList.length === 1 && I.ENDPOINT === 'https://api.indexnow.org/indexnow');
@@ -1905,7 +1917,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   const src = read(path.join(ROOT, 'tools', 'removal.js'));
   ok('only the repository owner\'s labels "upheld" and "not-upheld" act on a decision; the issue text reaches the script only through the environment',
     wf.includes("&& github.event.sender.login == github.repository_owner") && wf.includes("(github.event.label.name == 'upheld' || github.event.label.name == 'not-upheld')")
-    && wf.includes("github.event.action != 'labeled'") && [...wf.matchAll(/^\s*- run: (.*)$/gm)].every((m) => m[1] === 'node tools/removal.js')
+    && wf.includes("github.event.action != 'labeled'") && [...wf.matchAll(/^\s*- run: (.*)$/gm)].every((m) => m[1] === 'node tools/removal.js' || m[1] === 'node tools/indexnow.js')
     && !/\$\{\{ github\.event\.issue\.body \}\}[^\n]*\n\s+run:/.test(wf));
   ok('changes to main go one at a time, and only after the site is built and every check passes',
     /concurrency:\n  group: removal\n  cancel-in-progress: false/.test(wf)
