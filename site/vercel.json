@@ -26,11 +26,6 @@
       "permanent": true
     },
     {
-      "source": "/abs/2026.0008",
-      "destination": "/abs/2026.0008.html",
-      "permanent": true
-    },
-    {
       "source": "/pdf/2026.0001",
       "destination": "/pdf/2026.0001v2.pdf",
       "permanent": false

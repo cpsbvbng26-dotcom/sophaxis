@@ -5,7 +5,7 @@
   <id>https://sophaxis.vercel.app/</id>
   <link rel="self" href="https://sophaxis.vercel.app/feed.xml"/>
   <link href="https://sophaxis.vercel.app/"/>
-  <updated>2026-11-07T00:00:00Z</updated>
+  <updated>2026-11-02T00:00:00Z</updated>
   <entry>
     <id>https://sophaxis.vercel.app/abs/2026.0001.html</id>
     <title>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</title>
@@ -36,16 +36,6 @@
     <author><name>Takuya Nemoto</name><uri>https://orcid.org/0009-0000-1406-0547</uri></author>
     <category term="philosophy" label="Philosophy"/>
     <summary>This paper develops Fragmentarian Spiritual Individualism, a philosophical framework that treats life, faith, society, ideas, and eschatology not as continuous narratives but as discrete, self-contained fragments. Rather than treating discontinuity as a problem to be repaired through narrative reconstruction or communal reintegration, the framework takes fragmentation as an ontological starting point and builds outward from it an ethic of internal discipline and spiritual autonomy. Synthesizing existentialist philosophy (Kierkegaard, Nietzsche, Sartre, Heidegger), Christian mysticism (Eckhart, Boehme), the Japanese warrior ethic of Bushido, and postwar Japanese critical thought (Yoshimoto Takaaki, Karatani Kojin), the paper develops six interlocking fragments — existential solitude, institutional detachment in matters of faith, the fusion of intellectual and disciplinary “combat,” an anti-modern aesthetics of work and form, an eschatology of finitude and glory, and a philosophical genealogy situating the framework within its sources — before turning to its contemporary significance and limitations. Throughout, the paper argues that modern rationalism, institutional religion, narrative selfhood, and capitalist self-realization share a structural flaw: each subordinates the singular, discontinuous individual to an external logic of continuity, whether bureaucratic, doctrinal, biographical, or economic. Fragmentarian Spiritual Individualism proposes the fragment itself as the basic unit of ethical and spiritual life, offering a disciplined stance — neither nostalgic re-institutionalization nor nihilistic dissolution — for individuals navigating post-capitalist, post-community conditions marked by institutional distrust and the erosion of shared metanarratives.</summary>
-  </entry>
-  <entry>
-    <id>https://sophaxis.vercel.app/abs/2026.0008.html</id>
-    <title>The Trinity-Infinity Framework, Series III: Beyond Three — A Generalization and Retrospective</title>
-    <link href="https://sophaxis.vercel.app/abs/2026.0008.html"/>
-    <published>2026-08-22T00:00:00Z</published>
-    <updated>2026-11-07T00:00:00Z</updated>
-    <author><name>Takuya Nemoto</name><uri>https://orcid.org/0009-0000-1406-0547</uri></author>
-    <category term="mathematics" label="Mathematics"/>
-    <summary>The first two series of the Trinity-Infinity framework prove that a recursion combining a cyclic permutation of three elements with integration toward a fixed anchor converges geometrically to a unique fixed point. We show this result never depended on there being three elements: the identical argument holds for any number of elements n ≥ 2 (Theorem 1), which we verify computationally for n=2 through 8. We then identify precisely the one respect in which n=3 is structurally distinguished — it is the smallest n for which the cyclic permutation is not its own inverse — and are explicit that this is a narrow structural fact, not a justification for the broader cultural or philosophical resonance of triads invoked in Series I's introduction. We close with a retrospective distinguishing what this series has actually proven and verified from what the original preprints claimed but did not establish.</summary>
   </entry>
   <entry>
     <id>https://sophaxis.vercel.app/abs/2026.0004.html</id>
