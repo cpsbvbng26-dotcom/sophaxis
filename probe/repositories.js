@@ -1,36 +1,31 @@
-// Which DOI registration agency does MetaArXiv use? Read only.
+// MetaArXiv as OSF describes it: scope, moderation, licences, submission settings. Read only.
 const UA = { 'User-Agent': 'sophaxis-probe (https://github.com/cpsbvbng26-dotcom/sophaxis)' };
 async function get(url) {
   const r = await fetch(url, { headers: UA });
-  const t = await r.text();
   console.log('\n### ' + url + '  [' + r.status + ']');
-  return t;
+  return r.text();
 }
+const strip = (s) => String(s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 (async () => {
-  // 1. MetaArXiv's own preprints, from the OSF API: the DOI each one carries.
-  const t = await get('https://api.osf.io/v2/preprints/?filter[provider]=metaarxiv&page[size]=5');
-  let dois = [];
-  try {
-    const j = JSON.parse(t);
-    for (const p of j.data || []) {
-      const links = p.links || {};
-      const d = (links.preprint_doi || '').replace(/^https?:\/\/doi\.org\//, '');
-      console.log(p.id, '|', (p.attributes || {}).title, '| preprint_doi:', links.preprint_doi, '| date_published:', (p.attributes || {}).date_published);
-      if (d) dois.push(d);
-    }
-  } catch (e) { console.log(t.slice(0, 1500)); }
-  // 2. The registration agency of each DOI, from doi.org.
-  for (const d of dois.slice(0, 3)) console.log(await get('https://doi.org/ra/' + d));
-  // 3. The agency of the prefix, and the Crossref member that owns it.
-  const prefixes = [...new Set(dois.map((d) => d.split('/')[0]))];
-  for (const p of prefixes) {
-    console.log(await get('https://doi.org/ra/' + p));
-    console.log((await get('https://api.crossref.org/prefixes/' + p)).slice(0, 800));
+  const p = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/'));
+  const a = p.data.attributes;
+  for (const k of Object.keys(a)) {
+    const v = a[k];
+    console.log('- ' + k + ': ' + (typeof v === 'string' ? strip(v) : JSON.stringify(v)).slice(0, 3000));
   }
-  // 4. One record as Crossref holds it.
-  if (dois[0]) {
-    const w = await get('https://api.crossref.org/works/' + dois[0]);
-    try { const m = JSON.parse(w).message; console.log({ type: m.type, subtype: m.subtype, publisher: m.publisher, institution: m.institution, member: m.member, prefix: m.prefix, 'group-title': m['group-title'] }); }
-    catch (e) { console.log(w.slice(0, 500)); }
+  console.log('relationships:', Object.keys(p.data.relationships || {}).join(', '));
+  const lic = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/licenses/?page[size]=50'));
+  for (const l of lic.data || []) console.log('  licence:', l.attributes.name);
+  const tax = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/subjects/highlighted/?page[size]=50'));
+  for (const s of tax.data || []) console.log('  subject:', s.attributes.text);
+  const tax2 = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/subjects/?page[size]=100'));
+  console.log('  top-level subjects:', (tax2.data || []).map((s) => s.attributes.text).join(' | '));
+  // Does it hold software / infrastructure papers? Search titles.
+  for (const q of ['repository', 'infrastructure', 'software', 'preprint server', 'philosophy']) {
+    const r = JSON.parse(await get('https://api.osf.io/v2/preprints/?filter[provider]=metaarxiv&filter[title][icontains]=' + encodeURIComponent(q) + '&page[size]=5'));
+    console.log('  [' + q + '] total ' + ((r.meta || r.links.meta || {}).total) + ': ' + (r.data || []).map((x) => x.attributes.title).join(' || '));
   }
+  // MetaROR: the review layer on MetaArXiv preprints.
+  const m = await get('https://metaror.org/');
+  console.log(strip(m).slice(0, 2500));
 })();
