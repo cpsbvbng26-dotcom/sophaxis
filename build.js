@@ -974,6 +974,16 @@ function notFoundPage() {
 
 /* ------------------------------------------------------------ write */
 
+/* robots.txt. Every crawler may read everything. The Internet Archive's crawlers are asked not to collect a removed
+ * record: its page and its PDF copies, by the prefix of its id. Whether this also hides earlier copies is the Archive's
+ * decision; the operator still asks it to exclude them (Takedown Policy). */
+function robots(all) {
+  const gone = all.filter((p) => p.status === 'removed').map((p) => p.id).sort();
+  const archive = gone.length ? '\nUser-agent: ia_archiver\nUser-agent: archive.org_bot\n'
+    + gone.map((id) => 'Disallow: /abs/' + id + '\nDisallow: /pdf/' + id + '\n').join('') + 'Allow: /\n' : '';
+  return 'User-agent: *\nAllow: /\n' + archive + '\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n';
+}
+
 function build(out, paperDir) {
   const { papers: all, problems } = loadPapers(paperDir);
   (SITE.listedIn || []).forEach((x, i) => {
@@ -1011,7 +1021,7 @@ function build(out, paperDir) {
     /* RFC 9116: where to report a security problem. Expires must be renewed within a year; the check fails before it lapses. */
     '.well-known/security.txt': ['Contact: ' + SITE.baseUrl + 'contact.html', 'Expires: ' + SITE.securityTxtExpires, 'Preferred-Languages: en, ja',
       'Canonical: ' + SITE.baseUrl + '.well-known/security.txt', 'Policy: ' + SITE.baseUrl + 'contact.html'].join('\n') + '\n',
-    'robots.txt': 'User-agent: *\nAllow: /\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n',
+    'robots.txt': robots(all),
     /* IndexNow reads the key from a file of that name at the root (tools/indexnow.js). The key is public by design. */
     [SITE.indexNowKey + '.txt']: SITE.indexNowKey,
     /* The Vercel project's root directory is site/, so Vercel reads its configuration from here. */
@@ -1045,7 +1055,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
