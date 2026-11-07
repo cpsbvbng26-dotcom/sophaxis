@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>投稿の規程（日本語訳） | Sophaxis</title>
+<meta name="description" content="Sophaxis の投稿の規程の日本語訳。">
+<link rel="canonical" href="https://sophaxis.vercel.app/policies/submission.ja.html">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="../feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="投稿の規程（日本語訳） | Sophaxis">
+<meta property="og:description" content="Sophaxis の投稿の規程の日本語訳。">
+<meta property="og:url" content="https://sophaxis.vercel.app/policies/submission.ja.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/submission.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/policies/submission.ja.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a><a href="../faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>投稿の規程（日本語訳）</h1>
+<p>最終更新：2026-11-07。</p>
+<p>これは英語の <a href="./submission.html">Submission Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
+<h2>投稿できる人</h2>
+<p>作品を投稿できるのは、その作品の著者だけです。Sophaxis は、モデレーターが作品を読む前に、ORCID を通してこれを確かめます。</p>
+<ul><li>様式に書かれた ORCID の記録が、issue を開いた GitHub のアカウントにリンクしている。</li><li>その ORCID iD が作品の著者のものである。DOI のメタデータがそれを著者の一人として挙げているか、ORCID の記録がその DOI を業績に挙げ、名前が著者の一人と合う。</li></ul>
+<p>この両方を通らない投稿は載せません。ORCID iD を持たない著者は投稿できません。18 歳未満の投稿者には、親または保護者の同意が要ります。</p>
+<p>これは、ORCID の記録を管理している人が issue を開いたことを確かめるものです。公的な本人確認ではありません。</p>
+<h2>投稿できるもの</h2>
+<p>Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作品を受け付けます。主に別の分野に属する作品は、数学を使っていても対象外です。</p>
+<p>作品は、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けてある必要があります。<a href="./licences.ja.html">ライセンスの規程</a>が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。学術論文の通常の形で、題・要旨・参考文献を備えている必要があります。</p>
+<p>すでに学術誌が出版した作品は、著者がそのようなライセンスで共有してよい版に限り投稿できます。その条件は出版者によって異なります。投稿者は、下の「作品が出版されたとき」に定めるとおり、出版された版の DOI を様式に書きます。</p>
+<h2>著者が複数いる作品</h2>
+<p>2026-11-21 から、著者が複数いる作品は、ほかの著者全員がそれぞれ自分の同意を確かめてから載せます。確かめ方は二通りです。一つは、投稿の issue へのコメントです。そのコメントは、その著者の ORCID の記録がリンクしている GitHub のアカウントから書きます。コメントには「I agree to the listing of this work on Sophaxis.」と書き、自分の ORCID iD を添えます。issue の自動の確認が、それぞれの確認を数えます。もう一つは、運営者へのメールです。その後、運営者がその人の ORCID の記録で本人であることを確かめます。この同意は、掲載と、<a href="./privacy.ja.html">個人情報の取り扱いについて</a>が定める個人データの提供に及びます。</p>
+<h2>投稿者が確認すること</h2>
+<ul><li>投稿者は、作品の著者である。</li><li>作品の著者全員が、Sophaxis への掲載に同意している。</li><li>著者は、この版をそのライセンスで共有する権利を持っている。学術誌が出版した作品なら、出版者がそれを許している。</li><li>作品には、図や長い引用のように著者が共有してはいけない素材も、第三者の個人データも含まれていない。</li><li>生成モデルについての申告は、完全で真実である。</li><li><a href="./terms.ja.html">利用規約</a>が定めるとおり、著者は作品とその掲載についてすべての責任を負う。</li></ul>
+<h2>投稿の手順</h2>
+<ol><li>Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、受け付けるライセンスでプレプリントを預け、DOI を得る。</li><li>ORCID の記録を GitHub のアカウントにリンクする。「Websites &amp; social links」に <code>https://github.com/&lt;your username&gt;</code> を足す。</li><li>Sophaxis のリポジトリで投稿の issue を開き、DOI、ORCID iD、分野、生成モデルについての申告を書く。</li><li>自動の確認が DOI のメタデータと ORCID の記録を読み、結果を issue に書く。</li><li>モデレーターが<a href="./moderation.ja.html">モデレーションの規程</a>に沿って投稿を確かめる。通れば記録の頁を公開する。</li></ol>
+<p>題・著者・要旨・ライセンス・版は、手で打ち込むのではなく、DOI のメタデータから取ります。</p>
+<p>投稿の issue は公開されます。GitHub のユーザー名と、様式に書いたことはすべて、誰でも見られます。</p>
+<h2>言語モデルとその他の生成モデル</h2>
+<p>言語モデルを使って書いた作品や開発した作品も、一つの条件で受け付けます。使ったことを申告することです。同じ条件は、画像・図・音声・コードを作るモデルを含め、ほかのすべての生成モデルに当てはまります。</p>
+<p>申告では、使った道具の名を挙げ、何に使ったかを書きます。たとえば、下書き、翻訳、証明、コード、文献探索、編集、図、画像です。生成モデルを使わなかった場合は、申告にそう書きます。</p>
+<p>2026-11-21 から、様式では使った程度も四段階で尋ねます。著者は、当てはまるうちで最も高い段階を選びます。</p>
+<ul><li>None: no generative model was used.（使っていない）</li><li>Editing: language editing, translation or proofreading only.（言葉の手直し・翻訳・校正だけ）</li><li>Assistance: structure, literature search or checking; the authors wrote the text.（構成・文献探索・確認の手助け。文は著者が書いた）</li><li>Drafting: a generative model drafted text, proofs, code or figures that the authors revised.（生成モデルが文・証明・コード・図の下書きを作り、著者が手を入れた）</li></ul>
+<p>記録の頁では、著者が選んだ段階を申告の上に示します。段階は申告の代わりにはなりません。申告では引き続き、道具の名と、それぞれが何をしたかを書きます。「None」の段階は、モデルの名を挙げる申告と並んで成り立ちません。</p>
+<p>言語モデルを著者に挙げることはできません。ほかの生成モデルも、著者に挙げることはできません。<a href="./terms.ja.html">利用規約</a>が定めるとおり、著者が作品についてすべての責任を負います。</p>
+<p>掲載の後に、申告されていない相当の使用が明らかになった場合、記録に注記を付け、著者に申告を足すよう求めます。</p>
+<h2>版と更新</h2>
+<p>作品は、一つの Sophaxis の番号のもとで一度だけ載せます。その番号は、記録を撤回したり削除したりした後も、ほかの作品に与えることはありません。</p>
+<p>新しい版とは、預け先での新しい版のことです。多くの預け先は、版ごとに別の DOI を与えます。arXiv はすべての版に一つの DOI を使い、その DOI は最新の版を指します。その場合、記録は同じ DOI を、版ごとの日付とともに挙げます。新しい版は、既存の記録の更新として投稿します。前の版も載ったままです。</p>
+<h2>作品が出版されたとき</h2>
+<p>載っているプレプリントは、後の版が学術誌、会議録、書籍で出版されても、載ったままです。その場合、記録の頁は出版された版を先頭に示します。何であるか、いつどこで出たか、その DOI です。読者には出版された版を引用するよう求め、載っている版をプレプリントとして示します。</p>
+<p>出版された版は、著者なら誰でも一人で、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml">出版された版の様式</a>で報告できます。報告は、その著者の ORCID の記録がリンクしている GitHub のアカウントから行います。自動の確認が、報告が著者からのものであることを確かめ、出版された版の DOI のメタデータを読みます。出版された版は、学術誌の論文、会議の論文、書籍の章、書籍のどれかでなければなりません。受け付ける預け先のどれかにあるものであってはならず、記録と共通の著者がいなければなりません。その後、モデレーターがそれを記録し、その判断は issue で公開します。出版された版は投稿のときに書くこともでき、そのときも同じ確認が走ります。</p>
+<p>Sophaxis は、学術誌の査読を評価しません。記録は、著者が述べるとおりに書きます。出版された版が査読を受けた、受けていない、または何も述べない、のどれかです。出版者のメタデータが出版された版をプレプリントにリンクしているか、著者が報告しただけかも書きます。</p>
+<p>Sophaxis は毎週、Crossref と DataCite のメタデータから、載っているプレプリントにリンクし、共通の著者を持つ出版された版を探します。自分では何も記録しません。著者に報告を求めます。同じ毎週の確認で、記録した出版された版がまだ解決するかも確かめます。出版者が出版された版に撤回、訂正その他の告知を付けた場合、記録の頁にそれを示します。</p>
+<p>出版者の中には、出版に際してプレプリントを外したり変えたりするよう著者に求めるものがあります。著者は出版者の条件を確かめます。掲載を終える必要がある場合、著者なら誰でも一人で、<a href="./withdrawal.ja.html">撤回の規程</a>に沿って撤回でき、記録の頁は出版された版へのリンクを保ちます。</p>
+<h2>受け付けないものの例</h2>
+<p>これらの例は、上の決まりの当てはめ方を示すものです。すべてを挙げたものではなく、決めるのは決まりのほうです。それぞれの組は、<a href="./moderation.ja.html">モデレーションの規程</a>に沿ってモデレーターが断るときに挙げる理由に対応しています。</p>
+<p>著者であること：投稿者は著者でなければならず、著者全員が同意していなければなりません。</p>
+<ul><li>同僚の論文を、本人の許しを得ていても、代わりに投稿すること。投稿できるのは著者だけです。</li><li>先生、指導教員、著名な著者の論文を、読まれる価値があるからと投稿すること。</li><li>研究室のアカウントや二つ目の個人アカウントのように、ORCID の記録がリンクしていない GitHub のアカウントから issue を開くこと。</li><li>共著者の ORCID iD や、issue を開く本人以外の ORCID iD を書くこと。</li><li>DOI のメタデータも ORCID の記録も作品と結び付けていない ORCID iD を書くこと。</li><li>共著者が同意していない、または断ったのに、作品を投稿すること。</li><li>断られた作品を、新しい GitHub のアカウントを作って別の名で投稿し直すこと。</li></ul>
+<p>預け先と DOI：作品は、受け付ける預け先から、自分自身の DOI を得ていなければなりません。</p>
+<ul><li>個人のウェブサイト、大学の頁、Google Drive、Dropbox、Academia.edu、ResearchGate にある PDF。</li><li>自身の DOI を与えない PhilArchive、PhilSci-Archive、HAL にだけある作品。受け付ける預け先にも預けてください。</li><li>学術誌が出版した版の DOI を、預けたものの DOI として書くこと。</li><li>別の作品を、載っているプレプリントの出版された版として書くこと。</li><li>SciELO Preprints ではなく、SciELO の学術誌の論文の DOI。</li><li>Qeios と ScienceOpen が登録する、査読報告の DOI。</li><li>解決しない DOI や、別の作品につながる DOI。</li></ul>
+<p>ライセンス：DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されていなければなりません。</p>
+<ul><li>CC BY-NC 4.0、CC BY-ND 4.0、CC BY-NC-SA 4.0、CC BY-NC-ND 4.0。</li><li>CC BY 3.0、CC BY 2.0 その他のクリエイティブ・コモンズのライセンスの古い版。</li><li>arXiv の非独占的ライセンス（arXiv.org perpetual, non-exclusive license）。</li><li>「All rights reserved」、または DOI のメタデータにライセンスがまったく無いもの。</li><li>PDF や預け先の頁にだけ書かれ、DOI のメタデータには無いライセンス。</li><li>掲載の後に、受け付けないライセンスへ変えられたもの。毎週の確認がそれを報告し、運営者が調べます。</li></ul>
+<p>対象：作品は、主に哲学・数学・論理学・数理哲学・科学哲学に属していなければなりません。</p>
+<ul><li>数学を道具として使う、物理学・経済学・計算機科学・工学・生物学・心理学の論文。</li><li>機械学習のベンチマーク、ソフトウェアの説明、データセット。</li><li>哲学や数学の問いを論じない、文芸批評・歴史・政治的な論評。</li><li>自己啓発、精神的な手引き、宣言文、運動の呼びかけ。</li></ul>
+<p>形：作品は、学術論文の通常の形で、題・要旨・参考文献を備えていなければなりません。</p>
+<ul><li>スライド、ポスター、講義ノート、録画した講演。</li><li>参考文献の無いブログの記事や随筆。</li><li>要旨だけ、または本文の無い表紙だけ。</li><li>互いに関係の無い複数の論文を一つにまとめた預け物。</li><li>小説、詩、日記。</li></ul>
+<p>申告：生成モデルについての申告は、道具の名を挙げ、何に使ったかを書いていなければなりません。</p>
+<ul><li>言語モデルが本文のどこかを下書きし、翻訳し、または編集したのに「None」とすること。</li><li>道具の名も、何をしたかも書かず、言語モデルを使ったとだけ述べる申告。</li><li>生成モデルで作った図や画像を、申告から漏らすこと。</li><li>DOI のメタデータや論文で、言語モデルやその他の生成モデルを著者に挙げること。</li></ul>
+<p>権利と個人データ：著者は作品の中のすべてを自由に共有できなければならず、作品は他人を晒すものであってはなりません。</p>
+<ul><li>書籍・論文・ウェブサイトから、許しを得ずに、引用として認められる範囲を超えて写した図・表・写真。出典を示しても、許しの代わりにはなりません。</li><li>出版者が著者の原稿だけの共有を許しているのに、学術誌の論文の出版者による組版の版を出すこと。</li><li>同意していない私人の名前、メールアドレス、住所、写真。</li><li>参加者を特定できる、調査や聞き取りへの回答。</li><li>私的なメッセージ、メール、チャットの画面写し。</li><li>ほかの研究者の未公開の素材を、その人の同意なく共有すること。</li></ul>
+<p>スパムと嫌がらせ。</p>
+<ul><li>同じ作品を何度も、または複数の題で投稿すること。</li><li>issue を埋めるために、多くの投稿を一度に開くこと。</li><li>広告、有料のサービスへのリンク、何かを売るために書かれた文。</li><li>名を挙げた人を、嫌がらせ、脅し、または中傷する文。</li><li>欄にコードやマークアップを置くなどして、様式・自動の確認・サイトを壊そうとすること。</li><li>ほかの人、機関、学術誌になりすますこと。</li></ul>
+<p>版。</p>
+<ul><li>新しい版を、既存の Sophaxis の番号の更新としてではなく、新しい作品として投稿すること。</li><li>撤回した記録の新しい版。撤回した記録には、新しい版を加えません。</li></ul>
+<h2>撤回</h2>
+<p>著者なら誰でも一人で、<a href="./withdrawal.ja.html">撤回の規程</a>に沿って、載っている作品を撤回できます。記録は消しません。撤回した作品は撤回の告知とともに記録の頁を保ち、その作品への引用は切れません。著者は代わりに記録を削除させることもでき、その場合は Sophaxis の番号だけが残ります。法的な理由による削除は、<a href="./takedown.ja.html">削除の規程</a>に従います。</p>
+<p class="meta"><a href="../policy.html">All policies</a></p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

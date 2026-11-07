@@ -811,8 +811,14 @@ ${issues('removal', 'Removal requests made in public')}
 
 /* What Sophaxis does not promise, in one place. The Terms of Use apply where they differ. */
 const disclaimerSource = () => fs.readFileSync(path.join(ROOT, 'disclaimer.md'), 'utf8');
+/* The Disclaimer and its Japanese translation point at each other, as the policy pages do. */
+const disclaimerJaSource = () => fs.readFileSync(path.join(ROOT, 'disclaimer.ja.md'), 'utf8');
+const disclaimerAlternates = () => `<link rel="alternate" hreflang="en" href="${esc(SITE.baseUrl)}disclaimer.html">\n<link rel="alternate" hreflang="ja" href="${esc(SITE.baseUrl)}disclaimer.ja.html">\n`;
 function disclaimerPage() {
-  return page({ title: 'Disclaimer | ' + SITE.name, description: 'What ' + SITE.name + ' does not promise: peer review, metadata, identity, affiliation, links, availability and liability.', rel: false, canonical: 'disclaimer.html', body: markdown(disclaimerSource()) });
+  return page({ title: 'Disclaimer | ' + SITE.name, description: 'What ' + SITE.name + ' does not promise: peer review, metadata, identity, affiliation, links, availability and liability.', rel: false, canonical: 'disclaimer.html', head: disclaimerAlternates(), body: markdown(disclaimerSource()) });
+}
+function disclaimerJaPage() {
+  return page({ title: '免責事項（日本語訳） | ' + SITE.name, description: SITE.name + ' の免責事項の日本語訳。', rel: false, canonical: 'disclaimer.ja.html', lang: 'ja', head: disclaimerAlternates(), body: markdown(disclaimerJaSource()) });
 }
 
 /* For the repositories and the DOI registration agencies: what Sophaxis reads from them and what it shows.
@@ -868,7 +874,7 @@ function contactPage() {
  * the others are translations, and the English text applies where they differ, as the Terms of Use say.
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
-const JA_POLICIES = { privacy: '個人情報の取り扱いについて', terms: '利用規約（日本語訳）', takedown: '削除の規程（日本語訳）', withdrawal: '撤回の規程（日本語訳）' };
+const JA_POLICIES = { privacy: '個人情報の取り扱いについて', terms: '利用規約（日本語訳）', submission: '投稿の規程（日本語訳）', moderation: 'モデレーションの規程（日本語訳）', copyright: '著作権の規程（日本語訳）', licences: 'ライセンスの規程（日本語訳）', takedown: '削除の規程（日本語訳）', withdrawal: '撤回の規程（日本語訳）' };
 const jaSource = (slug) => fs.readFileSync(path.join(ROOT, 'policies', slug + '.ja.md'), 'utf8');
 const privacyJa = () => jaSource('privacy');
 const jaTitle = (slug) => jaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -990,6 +996,7 @@ function sitemap(papers) {
     ['process.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(processSource()) || [, newest])[1]],
     ['automation.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(automationSource()) || [, newest])[1]],
     ['disclaimer.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(disclaimerSource()) || [, newest])[1]],
+    ['disclaimer.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(disclaimerJaSource()) || [, newest])[1]],
     ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
     ['stats.html', newest]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
@@ -1052,6 +1059,7 @@ function build(out, paperDir) {
     'process.html': processPage(),
     'automation.html': automationPage(),
     'disclaimer.html': disclaimerPage(),
+    'disclaimer.ja.html': disclaimerJaPage(),
     'repositories.html': repositoriesPage(),
     'stats.html': statsPage(all),
     'search.html': searchPage(),

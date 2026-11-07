@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## Who can submit
 
 Only an author of a work can submit it.

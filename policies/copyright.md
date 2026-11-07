@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [著作権の規程（日本語訳）](./copyright.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## Authors keep their copyright
 
 Sophaxis asks for no transfer of copyright and no exclusive licence.
