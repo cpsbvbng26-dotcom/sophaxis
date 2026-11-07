@@ -388,8 +388,11 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
     && (wf.match(/ISSUE_BODY: \$\{\{ github\.event\.issue\.body \}\}/g) || []).length === 3);
   ok('the workflow may only read the code and write to issues', /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
   ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version', (wf.match(/^    if: /gm) || []).length === 3
-    && wf.includes("if: contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: contains(github.event.issue.labels.*.name, 'withdrawal')")
-    && wf.includes("if: contains(github.event.issue.labels.*.name, 'published')"));
+    && wf.includes("if: >-\n      contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')")
+    && wf.includes("if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'published')"));
+  ok('a comment runs the submission check again only when it carries the words of a confirmation, never a bot\'s comment or one on a pull request',
+    /issue_comment:\n\s+types: \[created, edited, deleted\]/.test(wf) && wf.includes("!github.event.issue.pull_request && github.event.comment.user.type != 'Bot'")
+    && wf.includes("contains(github.event.comment.body, 'I agree to the listing of this work on Sophaxis')") && wf.includes("contains(github.event.comment.body, 'Confirmed by email through the ORCID record')"));
   const src = read(path.join(ROOT, 'tools', 'intake.js'));
   ok('the intake reads only the ORCID person and works, not emails or addresses', !/\/(email|address|addresses|record)\b'?/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')) && src.includes("'/person'") && src.includes("'/works'"));
 }
@@ -1689,7 +1692,7 @@ console.log('\n47. OAI-PMH');
     && data.records.filter((r) => r.deleted).every((r) => !r.sets.includes('openaire')));
   ok('the language of a work is given as ISO 639-3 in dc:language, and a record may have only that form',
     ask('verb=GetRecord&identifier=' + id1 + '&metadataPrefix=oai_dc').includes('<dc:language>eng</dc:language>')
-    && B.validate(Object.assign({}, JSON.parse(read(path.join(ROOT, 'data', 'papers', '2026.0001.json'))), { language: 'en' }), '2026.0001.json').some((e) => e.includes('ISO 639-3')));
+    && B.validate(Object.assign({}, JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json'))), { language: 'en' }), '2026.0001.json').some((e) => e.includes('ISO 639-3')));
   const r1 = data.records.find((r) => r.identifier === id1);
   const stamp = (patch) => B.oaiData(fixPapers.map((p) => (p.id === '2026.0001' ? Object.assign({}, p, patch) : p))).records.find((r) => r.identifier === id1).datestamp;
   ok('the datestamp is the latest of the last change (here a reported published version), the day of listing and the day of update',
@@ -1714,7 +1717,8 @@ console.log('\n47. OAI-PMH');
   const g = call('GET', '/oai?verb=Identify');
   const po = call('POST', '/oai', 'verb=ListSets');
   ok('the function answers GET and POST, as text/xml', g.h['Content-Type'] === 'text/xml; charset=utf-8' && g.t.includes('<Identify>') && po.t.includes('<ListSets>'));
-  const base = JSON.parse(read(path.join(ROOT, 'data', 'papers', '2026.0001.json')));
+  /* The fixture, not a live record: a live record may be removed, and then has no dates to test. */
+  const base = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
   const v = (patch) => B.validate(Object.assign({}, base, patch), '2026.0001.json').join(' ');
   ok('a record needs listed, not earlier than its first version; updated, if given, is not earlier than listed',
     v({}) === '' && v({ listed: undefined }).includes('listed is missing') && v({ listed: '2020-01-01' }).includes('listed is earlier than the first version')
@@ -1771,6 +1775,126 @@ console.log('\n48. The last update and the ISSN, as the ISSN Japan Centre asks o
   ok('an ISSN is valid only with its check digit (ISO 3297)', B.issnOk('0317-8471') && !B.issnOk('0317-8472') && !B.issnOk('03178471') && !B.issnOk('0317-847'));
   ok('the ISSN is shown on the top page exactly when site.json has one, and only one given there',
     S.issn === null ? !/ISSN \d{4}-\d{3}[\dX]/.test(idx) : (B.issnOk(S.issn) && idx.includes('ISSN ' + S.issn + ' (online).')));
+}
+
+/* ------------------------------------------------------------ 49 */
+console.log('\n49. Removal requests, handled at once and decided by the operator (tools/removal.js)');
+{
+  const R = require('../tools/removal.js');
+  const B = require('../build.js');
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'removal.yml'));
+  const kinds = (form.match(/id: reason[\s\S]*?options:\n((?:\s+- .*\n)+)/) || ['', ''])[1].split('\n').map((l) => l.replace(/^\s+- /, '').trim()).filter(Boolean);
+  ok('every kind of problem in the removal form is known to the script, and no other', kinds.length === 6 && kinds.every((k) => R.KINDS[k]) && Object.keys(R.KINDS).length === kinds.length);
+  ok('only a report of exposed personal data takes material offline before the decision, as the Takedown Policy says',
+    Object.entries(R.KINDS).filter(([, k]) => k.hold).map(([l]) => l).join() === 'Exposure of personal data'
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.'));
+  const body = '### Sophaxis id\n\n2026.0001\n\n### Kind of problem\n\nExposure of personal data\n\n### How you are concerned\n\nMy personal data appears in the record\n\n### Where the problem is\n\nThe abstract.';
+  const f = R.parse(body);
+  ok('the removal issue is read: the id, the kind and how the requester is concerned', f.id === '2026.0001' && f.kind.slug === 'personal-data' && f.relation === 'My personal data appears in the record');
+  const listed = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const h = R.plan('hold', listed, null, '2026-11-08');
+  ok('a hold turns the record into a notice under review that keeps only the id, the date, the reason and the issue, and drops its PDF copies',
+    h.problems.length === 0 && JSON.stringify(h.record) === JSON.stringify({ id: '2026.0001', status: 'removed', removal_date: '2026-11-08', removal_reason: 'under-review', issue: listed.issue })
+    && h.files.join() === '2026.0001v2.pdf' && R.isHeld(h.record));
+  ok('a record already offline or removed is not held again', !!R.plan('hold', h.record, null, '2026-11-09').skip
+    && !!R.plan('hold', JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0003.json'))), null, '2026-11-09').skip && !!R.plan('hold', null, null, '2026-11-09').skip);
+  const up = R.plan('remove', h.record, 'personal-data', '2026-11-12');
+  ok('an upheld request replaces the held record by its removal notice, with the kind of reason and the day of the decision',
+    up.problems.length === 0 && up.record.removal_reason === 'personal-data' && up.record.removal_date === '2026-11-12' && up.files.length === 0
+    && !!R.plan('remove', listed, null, '2026-11-12').skip && !!R.plan('remove', listed, 'under-review', '2026-11-12').skip);
+  const np = R.plan('remove-pdf', listed, null, '2026-11-12');
+  ok('an author\'s request for the PDF copy to be removed drops only the copies', np.problems.length === 0 && !('pdfs' in np.record) && np.files.join() === '2026.0001v2.pdf'
+    && (() => { const a = JSON.parse(JSON.stringify(listed)); delete a.pdfs; return JSON.stringify(a) === JSON.stringify(np.record); })());
+  ok('the answer is due 7 days after the request, counted in Japan time', R.DAYS === 7 && R.dueDay('2026-11-07T20:00:00Z') === '2026-11-15' && R.dueDay('2026-11-07T10:00:00Z') === '2026-11-14');
+  const issue = (n, labels, created, comments) => ({ number: n, state: 'open', labels: labels.map((name) => ({ name })), created_at: created, comments_list: comments });
+  const owner = { user: { login: 'cpsbvbng26-dotcom' }, body: 'Looking at it.' };
+  const due = R.dueReminders([
+    issue(1, ['removal'], '2026-11-01T01:00:00Z', []),
+    issue(2, ['removal'], '2026-11-06T01:00:00Z', []),
+    issue(3, ['removal'], '2026-11-01T01:00:00Z', [owner]),
+    issue(4, ['removal'], '2026-11-01T01:00:00Z', [{ user: { login: 'github-actions[bot]' }, body: R.reminder('2026-11-08') }]),
+    issue(5, ['withdrawal', 'verified'], '2026-11-01T01:00:00Z', []),
+    issue(6, ['withdrawal', 'unverified'], '2026-11-01T01:00:00Z', []),
+    issue(7, ['submission'], '2026-11-01T01:00:00Z', []),
+  ], 'cpsbvbng26-dotcom', '2026-11-07');
+  ok('a reminder goes once, from two days before the answer is due, to removal requests and verified withdrawals the operator has not answered',
+    due.map((r) => r.number).join() === '1,5' && due[0].due === '2026-11-08');
+  const rec = { id: '2026.0001', issue: 1 };
+  const said = [R.ack({ form: f, record: listed, held: true, due: '2026-11-15' }), R.ack({ form: f, record: listed, failed: true, due: '2026-11-15' }),
+    R.ack({ form: R.parse(body.replace('Exposure of personal data', 'Copyright infringement')), record: listed, due: '2026-11-15' }),
+    R.authorNotice({ id: '2026.0001', kind: f.kind, issue: 9, held: true }), R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: f.kind, today: '2026-11-12', done: true }),
+    R.decisionNote({ id: '2026.0001', decision: 'not-upheld', kind: f.kind, today: '2026-11-12', restored: true }), R.redacted(rec.id, '2026-11-12')];
+  ok('the acknowledgement gives the day the answer is due, says whether material went offline, and that it decides nothing',
+    said[0].startsWith(R.MARK) && said[0].includes('aims to answer by 2026-11-15 (Japan time)') && said[0].includes('taken offline at once, before the decision. This is not a decision on the request.')
+    && said[1].includes('the operator does it by hand') && said[2].includes('stays online while the request is reviewed') && said.slice(0, 3).every((t) => t.includes('It decides nothing; the operator decides.')));
+  ok('the authors are told and can respond; the operator\'s decision lists what is done and what is left by hand; a request not upheld puts material back',
+    said[3].includes('in #9') && said[3].includes('If the request is not upheld, they are put back.') && said[3].includes('can respond')
+    && said[4].includes('- [ ] ask the Internet Archive to exclude its earlier copies (by hand)') && said[4].includes('- [x] the automatic comments that repeat the record are edited')
+    && said[5].includes('put back') && said[6].includes('Its text is no longer shown.'));
+  const dr = R.parse(body.replace('Exposure of personal data', 'A request about my personal data (access, correction, suspension of use, deletion)'));
+  const drAck = R.ack({ form: dr, record: listed, due: '2026-11-15' });
+  ok('a request about the requester\'s own data is free, confirms who asks before acting, and is not told to the authors',
+    !R.tellsAuthors(dr.kind) && drAck.includes('Requests cost nothing.') && drAck.includes('the operator confirms who is asking') && !drAck.includes('The authors are told'));
+  ok('no automatic text names an email address or repeats the record', said.concat(drAck).every((t) => !/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]/.test(t) && !t.includes(listed.title) && !t.includes(listed.abstract)));
+  const page = B.removedPage(h.record);
+  ok('a record under review says so, and that it comes back if the request is not upheld; it is not called removed',
+    page.includes('<h1>Record under review</h1>') && page.includes('If it is not upheld, they are put back.') && !page.includes('Record removed') && page.includes('<meta name="robots" content="noindex">'));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'removal.yml'));
+  const src = read(path.join(ROOT, 'tools', 'removal.js'));
+  ok('only the repository owner\'s labels "upheld" and "not-upheld" act on a decision; the issue text reaches the script only through the environment',
+    wf.includes("&& github.event.sender.login == github.repository_owner") && wf.includes("(github.event.label.name == 'upheld' || github.event.label.name == 'not-upheld')")
+    && wf.includes("github.event.action != 'labeled'") && [...wf.matchAll(/^\s*- run: (.*)$/gm)].every((m) => m[1] === 'node tools/removal.js')
+    && !/\$\{\{ github\.event\.issue\.body \}\}[^\n]*\n\s+run:/.test(wf));
+  ok('changes to main go one at a time, and only after the site is built and every check passes',
+    /concurrency:\n  group: removal\n  cancel-in-progress: false/.test(wf)
+    && /\n  execFileSync\('node', \['build\.js'\], [^\n]*\);\n  execFileSync\('node', \['verification\/check\.js'\], [^\n]*\);\n[\s\S]*\n  git\('push', 'origin', 'HEAD:main'\);\n\}/.test(src));
+  ok('a hold is recorded in its commit, and putting back restores the record and its copies from just before that commit',
+    src.includes("'Sophaxis-Action: ' + action + ' ' + id") && src.includes("'--grep=^Sophaxis-Action: hold '") && src.includes("'--', 'data/papers/' + id + '.json')") && src.includes("sha + '^:data/papers/' + id + '.json'"));
+  ok('the Takedown Policy and the README say what runs by itself and what the operator decides',
+    read(path.join(ROOT, 'policies', 'takedown.md')).includes('A removal issue is acknowledged automatically, with the day by which the operator aims to answer.')
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('When a removal issue reports exposure of personal data, the abstract and the PDF copy are taken offline automatically, before the operator reads it.')
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('The automatic steps decide nothing; the operator decides every request.')
+    && read(path.join(ROOT, 'README.md')).includes('label the issue `upheld` or `not-upheld`'));
+}
+
+/* ------------------------------------------------------------ 50 */
+console.log('\n50. The other authors confirm their own agreement (Submission Policy)');
+{
+  const I = require('../tools/intake.js');
+  const meta = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const [carberry, roe] = meta.authors;
+  const sub = read(path.join(ROOT, 'policies', 'submission.md'));
+  ok('the check applies from the day the Submission Policy gives (' + I.COAUTHORS_FROM + ')', sub.includes('From ' + I.COAUTHORS_FROM + ', a work with more than one author is listed only after every other author confirms their own agreement.'));
+  ok('before that day there is no such check; from it, a work with one author passes',
+    I.coauthorCheck(meta.authors, carberry, [], '2026-11-20T23:59:00Z') === null && I.coauthorCheck([carberry], carberry, [], '2026-11-21')[1] === true);
+  const waiting = I.coauthorCheck(meta.authors, carberry, [], '2026-11-21');
+  ok('until every other author confirms, the check fails and names who is awaited; then it passes',
+    waiting[1] === false && waiting[2] === '1 of 2 authors; waiting for Jane Roe' && I.coauthorCheck(meta.authors, carberry, [roe], '2026-11-21')[1] === true
+    && I.coauthorCheck(meta.authors, carberry, [carberry], '2026-11-21')[1] === false);
+  const c = (login, body, type) => ({ user: { login, type: type || 'User' }, body });
+  const found = I.confirmationsIn([
+    c('jroe', 'I agree to the listing of this work on Sophaxis.\nORCID: 0000-0002-1694-233X'),
+    c('jroe', 'Looks good to me. 0000-0002-1694-233X'),
+    c('github-actions[bot]', 'I agree to the listing of this work on Sophaxis. ORCID: 0000-0002-1694-233X', 'Bot'),
+    c('someone', 'Confirmed by email through the ORCID record: 0000-0002-1694-233X'),
+    c('cpsbvbng26-dotcom', 'Confirmed by email through the ORCID record: 0000-0002-1694-233X'),
+  ], 'cpsbvbng26-dotcom');
+  ok('a confirmation needs the words and an ORCID iD; a bot\'s comment never counts, and only the operator records a confirmation by email',
+    found.length === 2 && found[0].login === 'jroe' && !found[0].byOperator && found[1].byOperator && found[1].orcid === '0000-0002-1694-233X');
+  const roeRecord = { given: 'Jane', family: 'Roe', urls: ['https://github.com/jroe'] };
+  const roeWorks = new Set(['10.6084/m9.figshare.1234567.v1']);
+  ok('a confirmation counts only from a GitHub account that the ORCID record links, for an ORCID record that is an author of the work',
+    I.confirmedAuthor(meta, meta.doi, found[0], roeRecord, roeWorks) === roe
+    && I.confirmedAuthor(meta, meta.doi, { login: 'mallory', orcid: found[0].orcid }, roeRecord, roeWorks) === null
+    && I.confirmedAuthor(meta, meta.doi, found[0], roeRecord, new Set()) === null
+    && I.confirmedAuthor(meta, meta.doi, found[1], { given: 'Jane', family: 'Roe', urls: [] }, roeWorks) === roe
+    && I.confirmedAuthor(meta, meta.doi, found[0], null, roeWorks) === null);
+  const result = { ok: false, checks: [['The DOI is in an accepted repository', true, ''], waiting] };
+  const said = I.comment(result, null);
+  ok('while only the other authors are awaited, the comment says how each confirms, in a comment or by email, and shows no draft',
+    said.includes(I.AGREE + ' ORCID: 0000-0000-0000-0000') && said.includes('from a GitHub account that their ORCID record links') && said.includes('writes by email to the address on the operator\'s ORCID record')
+    && !said.includes('Draft record') && !said.includes('Not verified.') && !/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]/.test(said));
+  ok('the Submission Policy gives the words of a confirmation', sub.includes('The comment says "' + I.AGREE + '" and gives their ORCID iD.'));
 }
 
 console.log('\n' + '-'.repeat(60));
