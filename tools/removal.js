@@ -67,6 +67,11 @@ const jstDay = (iso) => new Date(new Date(iso).getTime() + 9 * 3600 * 1000).toIS
 const addDays = (day, n) => new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
 const dueDay = (createdIso) => addDays(jstDay(createdIso), DAYS);
 
+/* Pure: a record put back after a hold, with today as its update. */
+function restored(p, today) {
+  return Object.assign({}, p, { updated: [p.updated, today].filter(Boolean).sort().pop() });
+}
+
 /* Held: the record is a notice with the reason "under-review". */
 /* A request about the requester's own data concerns that person, not the work, so the authors are not told of it. */
 const tellsAuthors = (kind) => !kind || kind.slug !== 'data-request';
@@ -185,11 +190,12 @@ function write(change) {
 }
 
 /* Put back what a hold took offline: the record and its PDF copies as they were just before the hold commit. */
-function restore(id) {
+function restore(id, today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10)) {
   /* The commit of the hold that changed the record itself, not the one that rebuilt the site. */
   const sha = git('log', '-1', '--format=%H', '--grep=^Sophaxis-Action: hold ' + id.replace('.', '\\.') + '$', '--', 'data/papers/' + id + '.json').trim();
   if (!sha) return false;
-  fs.writeFileSync(paperFile(id), git('show', sha + '^:data/papers/' + id + '.json'));
+  /* The record comes back with today as its update, so that OAI-PMH harvesters that ask for changes since a day pick it up again. */
+  fs.writeFileSync(paperFile(id), JSON.stringify(restored(JSON.parse(git('show', sha + '^:data/papers/' + id + '.json')), today), null, 2) + '\n');
   git('ls-tree', '--name-only', sha + '^', 'data/pdf/').split('\n').filter((f) => path.basename(f).startsWith(id + 'v'))
     .forEach((f) => fs.writeFileSync(path.join(ROOT, f), execFileSync('git', ['show', sha + '^:' + f], { cwd: ROOT })));
   return true;
@@ -355,7 +361,7 @@ async function remind() {
   for (const r of dueReminders(open, owner, day)) await I.github('POST', '/issues/' + r.number + '/comments', { body: reminder(r.due) });
 }
 
-module.exports = { write, restore, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];

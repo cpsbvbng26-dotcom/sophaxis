@@ -48,6 +48,7 @@ const FIELDS = {
   'Abstract (only if the DOI metadata has none)': 'abstract',
   'Use of language models and other generative models': 'llm',
   'Extent of use of generative models': 'llm_extent',
+  'Consent and agreement': 'consent',
 };
 
 /* GitHub renders an issue form as "### Label" followed by the answer. */
@@ -204,6 +205,14 @@ function fromJaLC(json) {
 
 /* ------------------------------------------------------------ ORCID */
 
+/* The public name and links of an ORCID record, read from the two sections that hold them, so that the email addresses and
+ * the country in the full person section are never received. Null if either cannot be read. */
+async function orcidPersonJson(orcid) {
+  const d = await getJson('https://pub.orcid.org/v3.0/' + orcid + '/personal-details');
+  const u = await getJson('https://pub.orcid.org/v3.0/' + orcid + '/researcher-urls');
+  return d && u ? { name: d.name, 'researcher-urls': u } : null;
+}
+
 function orcidPerson(json) {
   const n = json.name || {};
   const v = (x) => (x && x.value) || '';
@@ -262,6 +271,9 @@ function listedDois(paperDir) {
   return out;
 }
 
+/* The number of boxes in the "Consent and agreement" part of the submission form. */
+const CONSENTS = 3;
+
 function check({ form, login, meta, person, works, listed, pub, today }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
@@ -280,6 +292,12 @@ function check({ form, login, meta, person, works, listed, pub, today }) {
     if (key || String(today || new Date().toISOString()).slice(0, 10) >= SITE.llmExtentFrom) add('The extent of use of generative models is chosen', !!key, key || '');
     if (key === 'none') add('The extent "None" agrees with the statement', !MODEL_NAMES.test(form.llm || ''));
   }
+  /* From SITE.consentFrom, the form asks each author's consent to publication and to the services outside Japan,
+   * agreement to the policies, and the age. All CONSENTS boxes must be ticked. */
+  {
+    const ticked = (String(form.consent || '').match(/^- \[[xX]\] /gm) || []).length;
+    if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.consentFrom) add('Consent, agreement to the policies and age are confirmed', ticked === CONSENTS, ticked + ' of ' + CONSENTS);
+  }
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
   /* A published version given at submission gets the same checks as one reported later (tools/published.js). */
@@ -287,8 +305,11 @@ function check({ form, login, meta, person, works, listed, pub, today }) {
     checks.push(...require('./published.js').checkPublished({ versions: [{ doi: meta.doi || form.doi }], authors: meta.authors }, form.published, pub));
   }
   add('The DOI is for a work, not for a review of one', meta.type !== 'peer-review', meta.type || '');
-  const lic = meta.licences.find((l) => SITE.licenses[l]);
-  add('The work carries an accepted licence', lic, lic ? SITE.licenses[lic] : 'none of CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in the metadata');
+  /* Every licence entry must be the same accepted licence: Crossref may give one per version (vor, am, tdm), and a CC BY entry
+   * beside a non-free one does not allow a copy. Mixed entries go to the operator. */
+  const kinds = [...new Set(meta.licences)];
+  const lic = kinds.length === 1 && SITE.licenses[kinds[0]] ? kinds[0] : null;
+  add('The work carries an accepted licence', lic, lic ? SITE.licenses[lic] : kinds.length > 1 ? 'more than one licence in the metadata (' + kinds.join(', ') + '); the operator decides' : 'none of CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in the metadata');
   add('The DOI metadata has a title and a date', meta.title && meta.date);
   add('There is an abstract', meta.abstract || (form.abstract || '').trim(), meta.abstract ? 'from the DOI metadata' : 'from the form');
   if (!person) { add('The ORCID record could be read', false); return { ok: false, checks }; }
@@ -361,6 +382,7 @@ ${AGREE} ORCID: 0000-0000-0000-0000
 ~~~~
 
 An author who cannot comment here writes by email to the address on the operator's ORCID record (https://orcid.org/${SITE.operator.orcid}) instead.
+The agreement also covers the provision of the author's personal data that the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out, including to services in the United States.
 `;
 }
 
@@ -538,7 +560,7 @@ async function run(form, login) {
   } catch (e) { console.error(e.message); meta = null; }
   try {
     if (form.orcid && orcidOk(form.orcid)) {
-      const p = await getJson('https://pub.orcid.org/v3.0/' + form.orcid + '/person');
+      const p = await orcidPersonJson(form.orcid);
       const w = await getJson('https://pub.orcid.org/v3.0/' + form.orcid + '/works');
       person = p && orcidPerson(p);
       works = w ? orcidDois(w) : new Set();
@@ -582,7 +604,7 @@ async function main() {
     const confirmed = [];
     for (const c of confirmationsIn(all, SITE.operator.github)) {
       try {
-        const p = await getJson('https://pub.orcid.org/v3.0/' + c.orcid + '/person');
+        const p = await orcidPersonJson(c.orcid);
         const w = await getJson('https://pub.orcid.org/v3.0/' + c.orcid + '/works');
         const a = confirmedAuthor(meta, form.doi, c, p && orcidPerson(p), w ? orcidDois(w) : new Set());
         if (a) confirmed.push(a);
@@ -603,6 +625,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

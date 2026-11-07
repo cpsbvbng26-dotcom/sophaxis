@@ -64,8 +64,8 @@ function compare(p, found) {
     const meta = found[doi.toLowerCase()];
     if (meta === undefined) continue;
     if (meta === null) { out.push(`${p.id}: the DOI ${doi} no longer resolves in DataCite, Crossref or JaLC`); continue; }
-    if (!meta.licences.includes(p.license)) {
-      out.push(`${p.id}: the DOI ${doi} no longer carries ${SITE.licenses[p.license]} in its metadata (now: ${meta.licences.join(', ') || 'none'})`);
+    if (!meta.licences.includes(p.license) || meta.licences.some((l) => l !== p.license)) {
+      out.push(`${p.id}: the DOI ${doi} no longer carries only ${SITE.licenses[p.license]} in its metadata (now: ${meta.licences.join(', ') || 'none'})`);
     }
   }
   return out;

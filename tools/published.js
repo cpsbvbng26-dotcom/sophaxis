@@ -288,7 +288,7 @@ async function main() {
   try { if (record && /^10\.\d{4,9}\/\S+$/.test(form.doi)) desc = await lookUpPublished(form.doi); } catch (e) { console.error(e.message); }
   try {
     if (record && orcidOk(form.orcid)) {
-      const p = await I.getJson('https://pub.orcid.org/v3.0/' + form.orcid + '/person');
+      const p = await I.orcidPersonJson(form.orcid);
       const w = await I.getJson('https://pub.orcid.org/v3.0/' + form.orcid + '/works');
       person = p && I.orcidPerson(p);
       works = w ? I.orcidDois(w) : new Set();
