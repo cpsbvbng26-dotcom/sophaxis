@@ -770,6 +770,37 @@ console.log('\n18. Withdrawal: the policy, the form and the check');
   const t = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'withdrawal.yml'));
   ok('the withdrawal form asks for the fields the check reads, under the label the workflow runs on', Object.keys(W.FIELDS).every((l) => t.includes('label: ' + l)) && t.includes('labels: ["withdrawal"]'));
   const pol = read(path.join(ROOT, 'policies', 'withdrawal.md'));
+  const rb = body.replace('### Reason, shown on the record page', '### What should happen to the record\n\nRemove: only the Sophaxis id stays\n\n### Reason, shown on the record page');
+  const rf = W.parse(rb);
+  ok('the withdrawal form offers withdrawal or removal; an issue without the choice asks for withdrawal', rf.mode === 'remove' && form.mode === 'withdraw'
+    && Object.keys(W.MODES).every((m) => t.includes('- "' + m + '"')) && /label: What should happen to the record\n\s+options:[\s\S]*?required: true/.test(t));
+  const rp = W.check({ form: Object.assign({}, rf, { reason: '' }), login: 'janedoe', record: rec, person, works: new Set() });
+  ok('removal needs no reason, can follow a withdrawal, and is never asked of a removed record',
+    rp.ok && W.check({ form: rf, login: 'janedoe', record: Object.assign({}, rec, { status: 'withdrawn' }), person, works: new Set() }).ok
+    && !W.check({ form: rf, login: 'janedoe', record: { id: '2026.0001', status: 'removed', removal_date: '2026-11-07' }, person, works: new Set() }).ok
+    && !W.check({ form: Object.assign({}, form, { reason: '' }), login: 'janedoe', record: rec, person, works: new Set() }).ok);
+  const rc = W.comment(rp, null, rf);
+  ok('a verified request for removal says that the operator removes it by the label "upheld", that only the id stays, and posts no record',
+    rc.includes('labelling this issue `upheld`') && rc.includes('Only the Sophaxis id then stays') && !rc.includes('~~~~json'));
+  const rsrc = read(path.join(ROOT, 'tools', 'removal.js'));
+  const rwf = read(path.join(ROOT, '.github', 'workflows', 'removal.yml'));
+  ok('the owner\'s label "upheld" on a verified withdrawal issue that asks for removal removes the record, and only then',
+    rwf.includes("(contains(github.event.issue.labels.*.name, 'removal') || contains(github.event.issue.labels.*.name, 'withdrawal'))")
+    && rsrc.includes("if (labels.includes('withdrawal')) return decideWithdrawal(n, labels, decision);")
+    && rsrc.includes("if (form.mode !== 'remove') return say(") && rsrc.includes("if (!labels.includes('verified')) return say("));
+  ok('the Withdrawal Policy lets an author have the record removed, and points to what removal leaves',
+    ['## Removal at an author\'s request', 'An author can ask, in the same issue, for the record to be removed instead of withdrawn.', 'A record that is already withdrawn can still be removed.',
+      'Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.html) sets out.'].every((x) => pol.includes(x)));
+  const tk = read(path.join(ROOT, 'policies', 'takedown.md'));
+  ok('the Takedown Policy sets out exactly what a removed record leaves, for every reason, on the site, in the records, in the issues and outside',
+    ['A record is removed in three cases.', 'The third is when an author of the work asks for it in a withdrawal issue', '## What a removed record leaves', 'This section applies to every removed record, whatever the reason.',
+      'The record keeps only its Sophaxis id, the word "removed" and the day of removal.', 'Deleting an issue also deletes its edit history.',
+      'Until GitHub does so, earlier versions of the record stay in the history of the public repository.', 'The Sophaxis id of a removed record is never given to another work.'].every((x) => tk.includes(x))
+    && tk.indexOf('## What a removed record leaves') > tk.indexOf('## What happens'));
+  ok('the Privacy Policy, in both languages, and the Submission Policy say that an author can have a record removed and what it keeps',
+    read(path.join(ROOT, 'policies', 'privacy.md')).includes('A removed record keeps only its Sophaxis id and the day of removal')
+    && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('削除した記録に残るのは、Sophaxis の番号と削除の日だけです。')
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('An author can instead have the record removed, so that only its Sophaxis id stays.'));
   ok('the Withdrawal Policy says who may withdraw, that the record stays, that the PDF copies go, and how it differs from removal',
     ['Any one author of a listed work can withdraw it.', 'An automatic check confirms both and posts the result in the issue.', 'The PDF copies are taken off the site, and the record links to the repository only.',
       'A withdrawn record takes no new versions.', 'Withdrawal on Sophaxis does not touch the deposit.', 'It follows the [Takedown Policy](./takedown.html).'].every((x) => pol.includes(x))
@@ -1883,7 +1914,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
     src.includes("if (c.user.type === 'Bot') await I.github('DELETE', '/issues/comments/' + c.id)") && src.includes("body: EMPTIED, state: 'closed'")
     && src.includes("'/issues/' + n + '/lock'") && src.includes("!(i.labels || []).some((l) => l.name === 'removal')"));
   ok('the Takedown Policy says the notice gives no reason, that every trace in the issues goes, and that earlier versions on Vercel are not public',
-    ['If the request is upheld, the record page is replaced by a notice that says only that the record with that Sophaxis id was removed.', 'The notice gives no reason and no other detail.',
+    ['When a record is removed, its page is replaced by a notice that says only that the record with that Sophaxis id was removed.', 'The notice gives no reason and no other detail.',
       'Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.',
       'The operator also asks GitHub to remove the material from the repository history.', 'Earlier versions of the site that Vercel keeps are not open to the public.']
       .every((x) => read(path.join(ROOT, 'policies', 'takedown.md')).includes(x)));
