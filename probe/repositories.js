@@ -1,23 +1,22 @@
 'use strict';
-/* One-off probe, never merged (read only): the privacy statements of the services Sophaxis uses, and their DPF status. */
+/* One-off probe, never merged (read only): who can reach the production domain and the earlier deployments of Sophaxis. */
 const U = [
-  ['GitHub', 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement'],
-  ['Vercel', 'https://vercel.com/legal/privacy-policy'],
-  ['ORCID', 'https://info.orcid.org/privacy-policy/'],
-  ['Internet Archive', 'https://archive.org/about/terms'],
-  ['Crossref', 'https://www.crossref.org/operations-and-sustainability/privacy/'],
-  ['DataCite', 'https://datacite.org/privacy-policy/'],
-  ['DPF list GitHub', 'https://www.dataprivacyframework.gov/list?search=GitHub'],
+  ['production domain', 'https://sophaxis.vercel.app/abs/2026.0001.html'],
+  ['production domain, OAI', 'https://sophaxis.vercel.app/oai?verb=Identify'],
+  ['production domain, PDF', 'https://sophaxis.vercel.app/pdf/2026.0001'],
+  ['old production deployment (#108)', 'https://sophaxis-ftokz98qo-cpsbvbng26-dotcoms-projects.vercel.app/abs/2026.0001.html'],
+  ['old production deployment (#105)', 'https://sophaxis-3iznitw90-cpsbvbng26-dotcoms-projects.vercel.app/'],
+  ['git-main domain', 'https://sophaxis-git-main-cpsbvbng26-dotcoms-projects.vercel.app/'],
+  ['team domain', 'https://sophaxis-cpsbvbng26-dotcoms-projects.vercel.app/'],
+  ['preview deployment', 'https://sophaxis-lh9dkujsu-cpsbvbng26-dotcoms-projects.vercel.app/'],
 ];
 (async () => {
   for (const [n, u] of U) {
     try {
-      const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sophaxis probe)' }, signal: AbortSignal.timeout(25000) });
+      const r = await fetch(u, { redirect: 'manual', headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sophaxis probe)' }, signal: AbortSignal.timeout(25000) });
       const t = await r.text();
       const title = ((/<title>([^<]*)<\/title>/i.exec(t) || [])[1] || '').trim().replace(/\s+/g, ' ');
-      const dpf = [...t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').matchAll(/[^.]{0,160}Data Privacy Framework[^.]{0,160}\./g)].slice(0, 2).map((m) => m[0].trim());
-      console.log('==== ' + n + ' -> ' + r.status + ' ' + r.url + ' | ' + title.slice(0, 70));
-      dpf.forEach((d) => console.log('  DPF: ' + d.slice(0, 300)));
+      console.log('==== ' + n + ' -> ' + r.status + ' ' + (r.headers.get('location') || '').slice(0, 60) + ' | ' + title.slice(0, 70));
     } catch (e) { console.log('==== ' + n + ' error ' + (e.cause ? e.cause.code || e.cause.message : e.message)); }
   }
 })();
