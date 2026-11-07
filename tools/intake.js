@@ -279,13 +279,75 @@ function check({ form, login, meta, person, works, listed, pub }) {
   add('There is an abstract', meta.abstract || (form.abstract || '').trim(), meta.abstract ? 'from the DOI metadata' : 'from the form');
   if (!person) { add('The ORCID record could be read', false); return { ok: false, checks }; }
   add('The ORCID record links this GitHub account', linksGithub(person.urls, login), 'https://github.com/' + login);
-  const byId = meta.authors.find((a) => a.orcid === form.orcid);
-  const doi = String(meta.doi || form.doi).toLowerCase();
+  const m = authorOf(meta, form.doi, form.orcid, person, works);
+  add('The ORCID iD belongs to an author of the work', m.author,
+    m.how === 'id' ? 'the DOI metadata lists this ORCID iD' : m.how === 'name' ? 'the ORCID record lists this DOI and its name matches an author' : 'neither the DOI metadata nor the ORCID record connects them');
+  return { ok: checks.every((c) => c[1]), checks, author: m.author, licence: lic };
+}
+
+/* Pure: the author of the work that an ORCID record is, if any. Either the DOI metadata lists the ORCID iD,
+ * or the ORCID record lists the DOI and its name matches an author. */
+function authorOf(meta, doi0, orcid, person, works) {
+  const byId = meta.authors.find((a) => a.orcid && a.orcid === orcid);
+  if (byId) return { author: byId, how: 'id' };
+  const doi = String(meta.doi || doi0).toLowerCase();
   const claimed = works && [...works].some((w) => w === doi || w.startsWith(doi + '.v'));
-  const byName = claimed && meta.authors.find((a) => sameName(person, a));
-  add('The ORCID iD belongs to an author of the work', byId || byName,
-    byId ? 'the DOI metadata lists this ORCID iD' : byName ? 'the ORCID record lists this DOI and its name matches an author' : 'neither the DOI metadata nor the ORCID record connects them');
-  return { ok: checks.every((c) => c[1]), checks, author: byId || byName, licence: lic };
+  const byName = claimed && person && meta.authors.find((a) => sameName(person, a));
+  return byName ? { author: byName, how: 'name' } : { author: null, how: null };
+}
+
+/* ------------------------------------------------------------ the other authors (Submission Policy) */
+
+/* From this day, a work with more than one author is listed only after every other author confirms their own agreement. */
+const COAUTHORS_FROM = '2026-11-21';
+const AGREE = 'I agree to the listing of this work on Sophaxis.';
+const BY_EMAIL = 'Confirmed by email through the ORCID record:';
+const COAUTHOR_LABEL = 'Every other author has confirmed their own agreement';
+const squash = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+/* Pure: the confirmations in the comments of an issue. A co-author writes AGREE with their ORCID iD, from their own account;
+ * the operator writes BY_EMAIL with the ORCID iD of an author who confirmed by email. Comments by bots are ignored. */
+function confirmationsIn(comments, owner) {
+  const out = [];
+  for (const c of comments || []) {
+    if (!c.user || c.user.type === 'Bot') continue;
+    const body = squash(c.body);
+    const orcid = orcidOf(c.body);
+    if (!orcid) continue;
+    const byOperator = !!owner && c.user.login.toLowerCase() === owner.toLowerCase() && body.includes(squash(BY_EMAIL));
+    if (byOperator || body.includes(squash(AGREE))) out.push({ login: c.user.login, orcid, byOperator });
+  }
+  return out;
+}
+
+/* Pure: whether a confirmation holds. `person` and `works` come from the ORCID record it names.
+ * A comment counts only from a GitHub account that the ORCID record links; the operator's record of an email counts as it is. */
+function confirmedAuthor(meta, doi, conf, person, works) {
+  if (!person) return null;
+  if (!conf.byOperator && !linksGithub(person.urls, conf.login)) return null;
+  return authorOf(meta, doi, conf.orcid, person, works).author;
+}
+
+/* Pure: the check row, or null before COAUTHORS_FROM. `confirmed` are authors of the work, as confirmedAuthor gives them. */
+function coauthorCheck(authors, submitter, confirmed, today) {
+  if (String(today).slice(0, 10) < COAUTHORS_FROM) return null;
+  if (authors.length <= 1) return [COAUTHOR_LABEL, true, 'the work has one author'];
+  const missing = authors.filter((a) => a !== submitter && !confirmed.includes(a));
+  const n = authors.length - missing.length;
+  return [COAUTHOR_LABEL, missing.length === 0, n + ' of ' + authors.length + ' authors' + (missing.length ? '; waiting for ' + missing.map((a) => a.name).join(', ') : '')];
+}
+
+function coauthorNote() {
+  return `
+Identity and licence are verified for the account that opened this issue. The other authors have not all confirmed their own agreement yet, as the [Submission Policy](${SITE.baseUrl}policies/submission.html) asks.
+Each of them comments in this issue, from a GitHub account that their ORCID record links, with these words and their own ORCID iD:
+
+~~~~
+${AGREE} ORCID: 0000-0000-0000-0000
+~~~~
+
+An author who cannot comment here writes by email to the address on the operator's ORCID record (https://orcid.org/${SITE.operator.orcid}) instead.
+`;
 }
 
 /* ------------------------------------------------------------ the draft */
@@ -385,7 +447,7 @@ function comment(result, d, advice = []) {
   const safe = (s) => String(s).replace(/[`|<>]/g, '');
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
   let out = `${MARK}
-**Automatic checks** (run again whenever this issue is edited)
+**Automatic checks** (run again whenever this issue is edited, or an author confirms in a comment)
 
 | | check | detail |
 | --- | --- | --- |
@@ -403,6 +465,8 @@ ${JSON.stringify(d.record, null, 2).replace(/~~~~/g, '~ ~ ~ ~')}
 ` + pdfNote(d.record.versions[d.record.versions.length - 1].doi) + adviceNote(advice);
   } else if (d && d.problems && d.problems.length) {
     out += '\nThe draft record does not validate: ' + safe(d.problems.join('; ')) + '\n';
+  } else if (result.checks.some((c) => c[0] === COAUTHOR_LABEL) && result.checks.every((c) => c[1] || c[0] === COAUTHOR_LABEL)) {
+    out += coauthorNote();
   } else {
     out += `
 Not verified. Fix what failed, then edit this issue to run the checks again.
@@ -498,9 +562,24 @@ async function main() {
   const login = process.env.ISSUE_AUTHOR;
   const form = parseIssue(process.env.ISSUE_BODY);
   const { result, meta, versions, pub } = await run(form, login);
+  const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
+  if (meta && result.author) {
+    const confirmed = [];
+    for (const c of confirmationsIn(all, SITE.operator.github)) {
+      try {
+        const p = await getJson('https://pub.orcid.org/v3.0/' + c.orcid + '/person');
+        const w = await getJson('https://pub.orcid.org/v3.0/' + c.orcid + '/works');
+        const a = confirmedAuthor(meta, form.doi, c, p && orcidPerson(p), w ? orcidDois(w) : new Set());
+        if (a) confirmed.push(a);
+      } catch (e) { console.error(e.message); }
+    }
+    /* The policies give their dates in Japan time. */
+    const row = coauthorCheck(meta.authors, result.author, confirmed, new Date(Date.now() + 9 * 3600 * 1000).toISOString());
+    if (row) { result.checks.push(row); result.ok = result.ok && row[1]; }
+  }
   const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub }) : null;
   const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : []);
-  const mine = ((await github('GET', '/issues/' + n + '/comments?per_page=100')) || []).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
+  const mine = all.find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await github('PATCH', '/issues/comments/' + mine.id, { body });
   else await github('POST', '/issues/' + n + '/comments', { body });
   const verified = result.ok && d && !d.problems.length;
@@ -509,6 +588,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

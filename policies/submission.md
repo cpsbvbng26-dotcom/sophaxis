@@ -34,6 +34,8 @@ The submitter gives the DOI of the published version in the form, as set out und
 From 2026-11-21, a work with more than one author is listed only after every other author confirms their own agreement.
 Each confirms in one of two ways.
 One is a comment in the submission issue, from a GitHub account that their ORCID record links.
+The comment says "I agree to the listing of this work on Sophaxis." and gives their ORCID iD.
+The automatic check in the issue counts each confirmation.
 The other is an email to the operator, after which the operator confirms them through their ORCID record.
 This consent covers the listing, and the provision of their personal data that the [Privacy Policy](./privacy.html) sets out.
 

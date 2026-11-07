@@ -1,0 +1,107 @@
+name: removal
+# Removal requests under the Takedown Policy (tools/removal.js).
+# An issue is acknowledged at once; a report of exposed personal data takes the abstract and the PDF copy offline at once.
+# The decision is the operator's: only the repository owner's labels "upheld" and "not-upheld" act on a record.
+# A request sent by email is handled by running this workflow by hand.
+on:
+  issues:
+    types: [opened, edited, reopened, labeled]
+  workflow_dispatch:
+    inputs:
+      id:
+        description: Record id, such as 2026.0001
+        required: true
+      action:
+        description: hold (offline while reviewed), release (not upheld, put back), remove (upheld), remove-pdf (an author asks)
+        required: true
+        type: choice
+        options: [hold, release, remove, remove-pdf]
+      reason:
+        description: With remove — the kind of reason
+        required: false
+        type: choice
+        options: ['', copyright, personal-data, author-consent, legal]
+  schedule:
+    - cron: '17 0 * * *'
+permissions:
+  contents: write
+  issues: write
+# One change to main at a time.
+concurrency:
+  group: removal
+  cancel-in-progress: false
+jobs:
+  intake:
+    if: github.event_name == 'issues' && github.event.action != 'labeled' && contains(github.event.issue.labels.*.name, 'removal')
+    name: Acknowledge the request, and take personal data offline
+    runs-on: ubuntu-latest
+    steps:
+      # The checks read the git history: the ids, the first commit and the changelog.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # The issue text reaches the script only through the environment, never through the shell.
+      - run: node tools/removal.js
+        env:
+          MODE: intake
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  decide:
+    if: >-
+      github.event_name == 'issues' && github.event.action == 'labeled'
+      && contains(github.event.issue.labels.*.name, 'removal')
+      && (github.event.label.name == 'upheld' || github.event.label.name == 'not-upheld')
+      && github.event.sender.login == github.repository_owner
+    name: Carry out the operator's decision
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/removal.js
+        env:
+          MODE: decide
+          DECISION: ${{ github.event.label.name }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  manual:
+    if: github.event_name == 'workflow_dispatch'
+    name: Act on a request sent by email
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # The inputs reach the script only through the environment, and removal.js checks the id's form.
+      - run: node tools/removal.js
+        env:
+          MODE: manual
+          ID: ${{ inputs.id }}
+          ACTION: ${{ inputs.action }}
+          REASON: ${{ inputs.reason }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  remind:
+    if: github.event_name == 'schedule'
+    name: Remind of requests close to 7 days
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/removal.js
+        env:
+          MODE: remind
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
