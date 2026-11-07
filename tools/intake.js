@@ -30,6 +30,13 @@ const UA = 'Sophaxis (' + SITE.repo + ')';
 
 /* ------------------------------------------------------------ the issue */
 
+/* Pure: the key of the level chosen in the form ("drafting" for its label), or null. The labels live in site.json. */
+function extentKey(label) {
+  const t = String(label || '').trim();
+  return Object.keys(SITE.llmExtents).find((k) => SITE.llmExtents[k] === t) || null;
+}
+const MODEL_NAMES = /\b(claude|chatgpt|gpt-?\d|gemini|llama|copilot|deepseek|mistral|midjourney|dall-e|stable diffusion|firefly|language model)\b/i;
+
 const FIELDS = {
   'DOI of the deposited preprint': 'doi',
   'Your ORCID iD': 'orcid',
@@ -40,6 +47,7 @@ const FIELDS = {
   'Other categories (optional)': 'others',
   'Abstract (only if the DOI metadata has none)': 'abstract',
   'Use of language models and other generative models': 'llm',
+  'Extent of use of generative models': 'llm_extent',
 };
 
 /* GitHub renders an issue form as "### Label" followed by the answer. */
@@ -254,7 +262,7 @@ function listedDois(paperDir) {
   return out;
 }
 
-function check({ form, login, meta, person, works, listed, pub }) {
+function check({ form, login, meta, person, works, listed, pub, today }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
   const pre = repoPrefix(form.doi || '');
@@ -266,6 +274,12 @@ function check({ form, login, meta, person, works, listed, pub }) {
   else add('The work is not listed yet', !already, already ? 'already listed as ' + already + '; give that id to add a new version' : '');
   if (form.published && pub === undefined) add('The published version is given as a DOI', /^10\.\d{4,9}\/\S+$/.test(form.published), form.published);
   add('The statement on generative models is given', (form.llm || '').trim().length >= 20);
+  /* The extent, one of four levels, is asked from SITE.llmExtentFrom. "None" cannot stand beside a statement that names a model. */
+  {
+    const key = extentKey(form.llm_extent);
+    if (key || String(today || new Date().toISOString()).slice(0, 10) >= SITE.llmExtentFrom) add('The extent of use of generative models is chosen', !!key, key || '');
+    if (key === 'none') add('The extent "None" agrees with the statement', !MODEL_NAMES.test(form.llm || ''));
+  }
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
   /* A published version given at submission gets the same checks as one reported later (tools/published.js). */
@@ -384,6 +398,7 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     ...(meta.language ? { language: meta.language } : {}),
     versions: versions.map((v, i) => ({ version: i + 1, doi: v.doi, date: v.date })),
     llm_disclosure: form.llm.trim(),
+    ...(extentKey(form.llm_extent) ? { llm_extent: extentKey(form.llm_extent) } : {}),
     issue: Number(issue),
     /* The day of the draft. The moderator sets it to the day the record is merged. */
     listed: (today || new Date().toISOString()).slice(0, 10),
@@ -588,6 +603,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
