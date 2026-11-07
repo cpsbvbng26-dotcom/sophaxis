@@ -23,7 +23,7 @@ The operator considers it under this policy and under Japanese law, and takes th
 The site is served by Vercel, and the repository and its issues are kept on GitHub, both in the United States.
 A request can also go to GitHub, for example as a copyright notice under its own process, or to Vercel.
 They decide under their own terms; the operator decides on Sophaxis under this policy, whatever they decide.
-Where the operator removes material, it also asks GitHub to remove it from the repository history when the law requires it, as set out below.
+Where the operator removes material, it also asks GitHub to remove it from the repository history, as set out below.
 
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 That is the address for requests; the address in the OAI-PMH interface is for harvesters.
@@ -39,11 +39,13 @@ The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 
-If the request is upheld, the record page is replaced by a notice that keeps only the Sophaxis id, the date and the kind of reason.
+If the request is upheld, the record page is replaced by a notice that says only that the record with that Sophaxis id was removed.
+The notice gives no reason and no other detail.
 The address keeps working, so that citations lead to the notice instead of to nothing.
 The title, the authors, the abstract and the PDF copy are removed from the site.
-The operator also edits the automatic comments in the submission issue that repeat the record, and hides or deletes the issue where the request needs it.
-Where the law requires it, the operator also asks GitHub to remove the material from the repository history.
+Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
+The operator also asks GitHub to remove the material from the repository history.
+Earlier versions of the site that Vercel keeps are not open to the public.
 The operator also asks the Internet Archive to exclude its earlier copies of the record.
 The OAI-PMH interface marks the record as deleted, so that harvesters can remove it when they next visit.
 Copies that others have already taken are outside Sophaxis's control; the operator tells the ones it knows of.
