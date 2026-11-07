@@ -1,23 +1,35 @@
 'use strict';
-/* One-off probe, never merged (read only): who can reach the production domain and the earlier deployments of Sophaxis. */
-const U = [
-  ['production domain', 'https://sophaxis.vercel.app/abs/2026.0001.html'],
-  ['production domain, OAI', 'https://sophaxis.vercel.app/oai?verb=Identify'],
-  ['production domain, PDF', 'https://sophaxis.vercel.app/pdf/2026.0001'],
-  ['old production deployment (#108)', 'https://sophaxis-ftokz98qo-cpsbvbng26-dotcoms-projects.vercel.app/abs/2026.0001.html'],
-  ['old production deployment (#105)', 'https://sophaxis-3iznitw90-cpsbvbng26-dotcoms-projects.vercel.app/'],
-  ['git-main domain', 'https://sophaxis-git-main-cpsbvbng26-dotcoms-projects.vercel.app/'],
-  ['team domain', 'https://sophaxis-cpsbvbng26-dotcoms-projects.vercel.app/'],
-  ['preview deployment', 'https://sophaxis-lh9dkujsu-cpsbvbng26-dotcoms-projects.vercel.app/'],
+/* One-off probe, never merged (read only): whether the National Diet Library holds three Zenodo works. */
+const Q = [
+  ['celibate title', 'The Nobility and Exemplarity of the Celibate Individual'],
+  ['celibate doi', '10.5281/zenodo.22058254'],
+  ['imperial title', 'Manifesto of Imperial Selfhood'],
+  ['imperial doi', '10.5281/zenodo.22057583'],
+  ['otani title', 'A Naval Gazette Entry for Lieutenant Otani Tsune'],
+  ['otani doi', '10.5281/zenodo.22055709'],
+  ['otani kanji', '大谷恒 海軍'],
+  ['author ja', '根本卓哉'],
+  ['author en', 'Takuya Nemoto'],
 ];
+const e = encodeURIComponent;
+const get = async (u) => {
+  const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sophaxis probe)' }, signal: AbortSignal.timeout(30000) });
+  return [r.status, r.url, await r.text()];
+};
 (async () => {
-  for (const [n, u] of U) {
-    try {
-      const r = await fetch(u, { redirect: 'manual', headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sophaxis probe)' }, signal: AbortSignal.timeout(25000) });
-      const t = await r.text();
-      const title = ((/<title>([^<]*)<\/title>/i.exec(t) || [])[1] || '').trim().replace(/\s+/g, ' ');
-      console.log('==== ' + n + ' -> ' + r.status + ' ' + (r.headers.get('location') || '').slice(0, 60) + ' | ' + title.slice(0, 70));
-    } catch (e) { console.log('==== ' + n + ' error ' + (e.cause ? e.cause.code || e.cause.message : e.message)); }
+  for (const [n, q] of Q) {
+    for (const [k, u] of [['opensearch any', 'https://ndlsearch.ndl.go.jp/api/opensearch?cnt=10&any=' + e(q)], ['opensearch title', 'https://ndlsearch.ndl.go.jp/api/opensearch?cnt=10&title=' + e(q)]]) {
+      try {
+        const [s, url, t] = await get(u);
+        const total = (/<openSearch:totalResults>(\d+)/.exec(t) || [])[1];
+        const titles = [...t.matchAll(/<item>[\s\S]*?<title>([^<]*)<\/title>[\s\S]*?<link>([^<]*)<\/link>/g)].slice(0, 5).map((m) => m[1] + ' <' + m[2] + '>');
+        console.log('==== ' + n + ' | ' + k + ' -> ' + s + ' total=' + total);
+        titles.forEach((x) => console.log('  - ' + x.slice(0, 200)));
+      } catch (er) { console.log('==== ' + n + ' | ' + k + ' error ' + (er.cause ? er.cause.code || er.cause.message : er.message)); }
+    }
+  }
+  for (const u of ['https://ndlsearch.ndl.go.jp/search?cs=bib&keyword=' + e('根本卓哉'), 'https://dl.ndl.go.jp/search/searchResult?keyword=' + e('根本卓哉'), 'https://warp.ndl.go.jp/search/?keyword=' + e('sophaxis')]) {
+    try { const [s, url, t] = await get(u); console.log('==== page ' + u + ' -> ' + s + ' ' + url.slice(0, 90) + ' | ' + ((/<title>([^<]*)/i.exec(t) || [])[1] || '').trim().slice(0, 80)); }
+    catch (er) { console.log('==== page ' + u + ' error ' + (er.cause ? er.cause.code || er.cause.message : er.message)); }
   }
 })();
-// rerun after Standard Protection
