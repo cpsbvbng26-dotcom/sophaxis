@@ -319,7 +319,7 @@ async function manual() {
   const change = plan(action, record, today());
   if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
   write(change);
-  commit(action, id, SUMMARY[action](id) + '（メールでの依頼）');
+  commit(action, id, SUMMARY[action](id) + '（運営者の手で）');
   if (action === 'hold') await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id, kind: null, issue: null, held: true }) });
   if (action === 'remove') console.log('emptied: ' + (await erase(record)).map((x) => '#' + x).join(', '));
 }
