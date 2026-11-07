@@ -106,6 +106,9 @@ function validate(p, file) {
   if (typeof p.llm_disclosure === 'string' && p.llm_disclosure.trim().length < 20) {
     e.push(file + ': the language-model statement is too short');
   }
+  /* The extent of use, one of the levels in site.json. Required for records listed from SITE.llmExtentFrom. */
+  if (p.llm_extent !== undefined && !Object.prototype.hasOwnProperty.call(SITE.llmExtents, p.llm_extent)) e.push(file + ': llm_extent must be one of ' + Object.keys(SITE.llmExtents).join(', '));
+  if (p.llm_extent === undefined && DATE.test(p.listed || '') && p.listed >= SITE.llmExtentFrom) e.push(file + ': llm_extent is required for records listed from ' + SITE.llmExtentFrom);
   if (!['listed', 'withdrawn'].includes(p.status)) e.push(file + ': status must be listed, withdrawn or removed');
   if (p.abstract_source !== undefined && p.abstract_source !== 'authors') e.push(file + ': abstract_source can only be "authors", for an abstract given in the submission issue');
   if (p.published_doi !== undefined) e.push(file + ': published_doi was replaced by published, an object with the DOI, the title, the venue, the date and how it was confirmed');
@@ -584,7 +587,8 @@ ${copies}
 <h2>Versions</h2>
 <div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th></tr>${versions}</table></div>
 <h2>Use of language models and other generative models</h2>
-<p>${esc(p.llm_disclosure)}</p>
+${p.llm_extent ? `<p class="meta">Extent, as the authors state it: ${esc(SITE.llmExtents[p.llm_extent])}</p>
+` : ''}<p>${esc(p.llm_disclosure)}</p>
 ${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <h2>Cite</h2>
 ${p.published ? `<p class="meta">Published version</p>
@@ -763,6 +767,9 @@ ${table('Field', Object.entries(SITE.categories).map(([slug, name]) => row(name,
 <h2>By repository</h2>
 <p>The repository of the latest version.</p>
 ${table('Repository', [...new Set(Object.values(SITE.repositories))].map((name) => row(name, shown.filter((p) => repoName(latest(p).doi) === name).length)).filter((r) => !/<td>0<\/td><\/tr>$/.test(r)))}
+<h2>Use of generative models</h2>
+<p>The extent that the authors state, at one of the levels the submission form offers. Records listed before ${esc(SITE.llmExtentFrom)} may not state one.</p>
+${table('Extent', Object.entries(SITE.llmExtents).map(([k, label]) => row(label, shown.filter((p) => p.llm_extent === k).length)).concat([row('Not stated', shown.filter((p) => !p.llm_extent).length)]))}
 <h2>Decisions and requests</h2>
 <ul>
 ${issues('accepted', 'Accepted submissions')}
@@ -917,6 +924,7 @@ function papersJson(papers) {
     ...(p.published ? { published: p.published } : {}),
     status: p.status,
     llm_disclosure: p.llm_disclosure,
+    ...(p.llm_extent ? { llm_extent: p.llm_extent } : {}),
   })), null, 2) + '\n';
 }
 

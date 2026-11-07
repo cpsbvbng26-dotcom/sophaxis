@@ -96,3 +96,5 @@ The operator reviews this decision when Sophaxis first lists a work by an author
 Each review and its outcome are recorded in the public repository.
 Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
 The operator does not use the curator's access in the Zenodo community to change the metadata or the files of any record; changes stay with the record's authors.
+Unless the operator cannot act, a closure is announced on the top page at least 30 days ahead, and new submissions stop first.
+The record page shows the level the authors chose, above their statement.

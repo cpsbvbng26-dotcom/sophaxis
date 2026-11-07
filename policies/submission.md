@@ -70,6 +70,16 @@ The disclosure must name the tools used and say what they were used for,
 for example drafting, translation, proofs, code, literature search, editing, figures or images.
 If no generative model was used, the statement says so.
 
+From 2026-11-21, the form also asks for the extent of use, at one of four levels. The authors choose the highest level that applies:
+
+- None: no generative model was used.
+- Editing: language editing, translation or proofreading only.
+- Assistance: structure, literature search or checking; the authors wrote the text.
+- Drafting: a generative model drafted text, proofs, code or figures that the authors revised.
+
+The record page shows the level the authors chose, above their statement. The level does not replace the statement; the statement still names the tools and what each did.
+A level of "None" cannot stand beside a statement that names a model.
+
 A language model cannot be listed as an author.
 No other generative model can be listed as an author either.
 The authors bear full responsibility for the work, as the [Terms of Use](./terms.html) set out.

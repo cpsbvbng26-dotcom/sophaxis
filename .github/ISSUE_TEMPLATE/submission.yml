@@ -89,6 +89,18 @@ body:
         Claude (Anthropic) wrote the code in the appendix and suggested literature; the author checked each reference.
     validations:
       required: true
+  - type: dropdown
+    id: llm_extent
+    attributes:
+      label: Extent of use of generative models
+      description: Choose the highest level that applies. The statement above says which tools did what. Required from 2026-11-21.
+      options:
+        - "None: no generative model was used"
+        - "Editing: language editing, translation or proofreading only"
+        - "Assistance: structure, literature search or checking; the authors wrote the text"
+        - "Drafting: a generative model drafted text, proofs, code or figures that the authors revised"
+    validations:
+      required: false
   - type: checkboxes
     id: confirm
     attributes:

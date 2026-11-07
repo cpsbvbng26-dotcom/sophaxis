@@ -341,7 +341,8 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
 
   const person = I.orcidPerson(json('orcid-person.json'));
   const works = I.orcidDois(json('orcid-works.json'));
-  const base = { form, login: 'jcarberry', meta: dc, person, works };
+  /* A fixed day before SITE.llmExtentFrom, so that these checks do not change meaning on that day; section 55 checks the day after. */
+  const base = { form, login: 'jcarberry', meta: dc, person, works, today: '2026-11-10' };
   const run = (o) => I.check(Object.assign({}, base, o));
   const failed = (r) => r.checks.filter((c) => !c[1]).map((c) => c[0]);
   ok('verified: the DOI metadata lists the ORCID iD, and the ORCID record links the GitHub account', run({}).ok, failed(run({})).join('; '));
@@ -986,7 +987,7 @@ console.log('\n25. More repositories: SocArXiv, MetaArXiv, SciELO Preprints, Qei
     && m.keywords.join('|') === 'modal logic|structuralism', JSON.stringify(m).slice(0, 300));
   const cr = JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'crossref.json')));
   const review = I.fromCrossref(Object.assign({}, cr, { message: Object.assign({}, cr.message, { type: 'peer-review' }) }));
-  const failsOn = (meta) => I.check({ form: { doi: meta.doi, orcid: '0000-0002-1825-0097', category: 'logic', llm: 'No generative model was used in any way.' }, login: 'x', meta, person: null, works: null, listed: new Map() })
+  const failsOn = (meta) => I.check({ form: { doi: meta.doi, orcid: '0000-0002-1825-0097', category: 'logic', llm: 'No generative model was used in any way.' }, login: 'x', meta, person: null, works: null, listed: new Map(), today: '2026-11-10' })
     .checks.filter((c) => !c[1]).map((c) => c[0]);
   ok('a Crossref DOI for a peer review (as Qeios and ScienceOpen register) is refused; a preprint is not', failsOn(review).includes('The DOI is for a work, not for a review of one')
     && !failsOn(I.fromCrossref(cr)).includes('The DOI is for a work, not for a review of one'));
@@ -2109,6 +2110,52 @@ console.log('\n54. The Zenodo community is named as what it is, not as a partner
     }
   }
   ok('no page claims a partnership, an endorsement or an affiliation; such words appear only in denials', claims.length === 0, claims.join(' / '));
+}
+
+/* ------------------------------------------------------------ 55 */
+console.log('\n55. The extent of use of generative models, at one of the levels in site.json');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const L = site.llmExtents;
+  const keys = Object.keys(L);
+  const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six'];
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  const sub = read(path.join(ROOT, 'policies', 'submission.md'));
+  ok('the form offers exactly the levels of site.json, in order, and does not require one before ' + site.llmExtentFrom,
+    keys.join() === 'none,editing,assistance,drafting'
+    && form.includes('id: llm_extent') && form.includes('Required from ' + site.llmExtentFrom + '.')
+    && /id: llm_extent[\s\S]*?options:\n((?:        - "[^"\n]+"\n)+)    validations:\n      required: false\n/.test(form)
+    && /id: llm_extent[\s\S]*?options:\n((?:        - "[^"\n]+"\n)+)/.exec(form)[1].split('\n').filter(Boolean).map((l) => l.replace(/^        - "|"$/g, '')).join('|') === Object.values(L).join('|'));
+  ok('the Submission Policy and the notice name the same levels and their number, from the same day',
+    sub.includes('From ' + site.llmExtentFrom + ', the form also asks for the extent of use, at one of ' + W[keys.length] + ' levels.')
+    && Object.values(L).every((v) => sub.includes('- ' + v + '.\n'))
+    && site.termsNotice.from === site.llmExtentFrom && site.termsNotice.text.includes('at one of ' + W[keys.length] + ' levels: ' + keys.join(', ').replace(/, (\w+)$/, ' or $1') + '.'));
+  const I = require('../tools/intake.js');
+  ok('the form label maps to its key, and nothing else does', keys.every((k) => I.extentKey(L[k]) === k) && I.extentKey('drafting') === null && I.extentKey('') === null);
+  const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
+  const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const person = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
+  const works = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
+  const run = (form, today) => I.check({ form, login: 'jcarberry', meta: dc, person, works, today });
+  ok('before the day the level may be left out; from the day it is required', run(ix, '2026-11-20').ok && !run(ix, '2026-11-21').ok
+    && run(Object.assign({}, ix, { llm_extent: L.drafting }), '2026-11-21').ok);
+  ok('"None" beside a statement that names a model is refused; beside a statement of no use it passes',
+    !run(Object.assign({}, ix, { llm_extent: L.none, llm: 'Claude (Anthropic) edited the English of the introduction.' }), '2026-11-21').ok
+    && run(Object.assign({}, ix, { llm_extent: L.none, llm: 'No generative model was used for any part of this work.' }), '2026-11-21').ok);
+  const B = require('../build.js');
+  const good = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  ok('a record with an unknown level is refused; a record listed from the day without a level is refused',
+    B.validate(Object.assign({}, good, { llm_extent: 'heavy' }), '2026.0001.json').some((x) => x.includes('llm_extent must be one of'))
+    && B.validate(Object.assign({}, good, { listed: site.llmExtentFrom, llm_extent: undefined }), '2026.0001.json').some((x) => x.includes('llm_extent is required'))
+    && B.validate(Object.assign({}, good, { llm_extent: 'editing' }), '2026.0001.json').length === 0);
+  const page = read(path.join(ROOT, 'site', 'abs', '2026.0001.html'));
+  const stats = read(path.join(ROOT, 'site', 'stats.html'));
+  const pj = JSON.parse(read(path.join(ROOT, 'site', 'papers.json')));
+  ok('the record page shows the level above the statement, and papers.json and the statistics carry it',
+    page.includes('<p class="meta">Extent, as the authors state it: ' + L.drafting.replace(/'/g, '&#39;') + '</p>')
+    && page.indexOf('Extent, as the authors state it') < page.indexOf('The author used Claude Code')
+    && pj.find((x) => x.id === '2026.0001').llm_extent === 'drafting'
+    && stats.includes('<h2>Use of generative models</h2>') && Object.values(L).every((v) => stats.includes(v.replace(/'/g, '&#39;'))));
 }
 
 console.log('\n' + '-'.repeat(60));

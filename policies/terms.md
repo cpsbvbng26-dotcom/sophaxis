@@ -74,8 +74,10 @@ Continuing to use Sophaxis after a change takes effect means accepting it; a per
 Sophaxis is run by one person, and is planned so that it can stop without loss.
 
 - A slow decision is not a pause: moderation can take several weeks or a few months. A pause is for when the operator cannot work on Sophaxis at all, for example because of illness. If that lasts for more than 30 days, the top page says that new submissions are paused. Listed records stay online.
+- Unless the operator cannot act, a closure is announced on the top page at least 30 days ahead, and new submissions stop first.
 - If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive.
-- The operator may hand Sophaxis over to another person or to an institution. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
+- The code and the records are archived at Zenodo with each release, under a DOI that resolves to the latest version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371).
+- The operator may hand Sophaxis over to another person, to an institution or to a legal entity. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
 - Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
 - The DOIs stay with the repositories that issued them, whatever happens to Sophaxis.
 

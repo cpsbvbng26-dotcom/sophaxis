@@ -29,6 +29,7 @@
       }
     ],
     "listed": "2026-10-31",
+    "updated": "2026-11-07",
     "pdfs": [
       {
         "version": 1,
@@ -40,7 +41,8 @@
       }
     ],
     "status": "listed",
-    "llm_disclosure": "The author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author."
+    "llm_disclosure": "The author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.",
+    "llm_extent": "drafting"
   },
   {
     "id": "2026.0002",
@@ -68,6 +70,7 @@
       }
     ],
     "listed": "2026-10-31",
+    "updated": "2026-11-07",
     "pdfs": [
       {
         "version": 1,
@@ -75,7 +78,8 @@
       }
     ],
     "status": "listed",
-    "llm_disclosure": "The author used Claude Code (Anthropic) to draft and revise the text. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author."
+    "llm_disclosure": "The author used Claude Code (Anthropic) to draft and revise the text. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.",
+    "llm_extent": "drafting"
   },
   {
     "id": "2026.0005",
@@ -103,6 +107,7 @@
       }
     ],
     "listed": "2026-11-02",
+    "updated": "2026-11-07",
     "pdfs": [
       {
         "version": 1,
@@ -110,7 +115,8 @@
       }
     ],
     "status": "listed",
-    "llm_disclosure": "In preparing this manuscript, the author used Claude (Claude Sonnet 5; Anthropic, PBC), a large language model, as a drafting and structuring aid. The tool assisted in expanding the author’s original conceptual outline into full prose, proposing connective structure between sections, and checking selected bibliographic details for accuracy. The philosophical framework, its central claims, the selection and interpretation of source material, and all argumentative decisions originate with and remain the sole responsibility of the author. The author reviewed, revised, and takes full responsibility for the accuracy and content of this publication. This statement is provided in the interest of transparency regarding the use of generative AI tools in scholarly writing, consistent with emerging disclosure norms for AI-assisted academic work, including ICMJE- and COPE-aligned author guidelines."
+    "llm_disclosure": "In preparing this manuscript, the author used Claude (Claude Sonnet 5; Anthropic, PBC), a large language model, as a drafting and structuring aid. The tool assisted in expanding the author’s original conceptual outline into full prose, proposing connective structure between sections, and checking selected bibliographic details for accuracy. The philosophical framework, its central claims, the selection and interpretation of source material, and all argumentative decisions originate with and remain the sole responsibility of the author. The author reviewed, revised, and takes full responsibility for the accuracy and content of this publication. This statement is provided in the interest of transparency regarding the use of generative AI tools in scholarly writing, consistent with emerging disclosure norms for AI-assisted academic work, including ICMJE- and COPE-aligned author guidelines.",
+    "llm_extent": "drafting"
   },
   {
     "id": "2026.0004",
@@ -138,6 +144,7 @@
       }
     ],
     "listed": "2026-11-02",
+    "updated": "2026-11-07",
     "pdfs": [
       {
         "version": 1,
@@ -145,7 +152,8 @@
       }
     ],
     "status": "listed",
-    "llm_disclosure": "This revised version of the manuscript was prepared with the assistance of Claude (Claude Sonnet 5), a large language model AI system developed by Anthropic, PBC, in August 2026. AI assistance was used to: (i) restructure the argument into discrete, numbered sections; (ii) situate the paper's claims within existing philosophical literature, including Buddhist, Christian, Epicurean, Schopenhauerian, and Kantian sources; (iii) draft an objections-and-replies section addressing relational, self-undermining, parochialism, and subjectivity objections to the paper's central argument; and (iv) expand and copyedit the prose of the original manuscript. The author reviewed, revised, and takes full intellectual responsibility for all claims, arguments, and citations herein. AI assistance was not used to generate original empirical data, and this paper makes no empirical claims beyond what is explicitly cited. The AI system does not qualify as an author of this work; this disclosure is provided in the interest of transparency regarding the drafting process."
+    "llm_disclosure": "This revised version of the manuscript was prepared with the assistance of Claude (Claude Sonnet 5), a large language model AI system developed by Anthropic, PBC, in August 2026. AI assistance was used to: (i) restructure the argument into discrete, numbered sections; (ii) situate the paper's claims within existing philosophical literature, including Buddhist, Christian, Epicurean, Schopenhauerian, and Kantian sources; (iii) draft an objections-and-replies section addressing relational, self-undermining, parochialism, and subjectivity objections to the paper's central argument; and (iv) expand and copyedit the prose of the original manuscript. The author reviewed, revised, and takes full intellectual responsibility for all claims, arguments, and citations herein. AI assistance was not used to generate original empirical data, and this paper makes no empirical claims beyond what is explicitly cited. The AI system does not qualify as an author of this work; this disclosure is provided in the interest of transparency regarding the drafting process.",
+    "llm_extent": "drafting"
   },
   {
     "id": "2026.0003",
@@ -173,6 +181,7 @@
       }
     ],
     "listed": "2026-11-02",
+    "updated": "2026-11-07",
     "pdfs": [
       {
         "version": 1,
@@ -180,6 +189,7 @@
       }
     ],
     "status": "listed",
-    "llm_disclosure": "This revised version of the essay was prepared with the assistance of Claude, a large language model developed by Anthropic (Claude Sonnet model family; used in August 2026). The author's original draft set out the core proposal — personal imperialism as a tripartite structure combining Kantian legislation, Nietzschean revaluation, and Jüngerian mobilization — in a considerably shorter and more schematic form. The AI system was used to: expand the exposition of each philosophical source with additional textual and historical detail; identify and verify the bibliographic citations listed in the References section against publicly available sources; draft the discussion of adjacent discourses in Section 4 and the objections in Section 5; and restructure and copyedit the whole into its present form, including the Abstract. The author reviewed the resulting text, made editorial revisions, and takes full responsibility for all interpretive claims, citations, and any remaining errors. No data, quotations, or sources were fabricated by the AI system in the course of this revision. Readers with questions about the division of labor between author and AI system on any specific passage are welcome to contact the author directly."
+    "llm_disclosure": "This revised version of the essay was prepared with the assistance of Claude, a large language model developed by Anthropic (Claude Sonnet model family; used in August 2026). The author's original draft set out the core proposal — personal imperialism as a tripartite structure combining Kantian legislation, Nietzschean revaluation, and Jüngerian mobilization — in a considerably shorter and more schematic form. The AI system was used to: expand the exposition of each philosophical source with additional textual and historical detail; identify and verify the bibliographic citations listed in the References section against publicly available sources; draft the discussion of adjacent discourses in Section 4 and the objections in Section 5; and restructure and copyedit the whole into its present form, including the Abstract. The author reviewed the resulting text, made editorial revisions, and takes full responsibility for all interpretive claims, citations, and any remaining errors. No data, quotations, or sources were fabricated by the AI system in the course of this revision. Readers with questions about the division of labor between author and AI system on any specific passage are welcome to contact the author directly.",
+    "llm_extent": "drafting"
   }
 ]
