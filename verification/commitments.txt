@@ -95,3 +95,4 @@ No step uses a language model. The steps are ordinary code.
 The operator reviews this decision when Sophaxis first lists a work by an author other than the operator, and whenever a data protection authority or a person in the European Union or the United Kingdom asks for a representative.
 Each review and its outcome are recorded in the public repository.
 Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
+The operator does not use the curator's access in the Zenodo community to change the metadata or the files of any record; changes stay with the record's authors.

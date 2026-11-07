@@ -6,7 +6,7 @@ This record follows Article 30 of the General Data Protection Regulation and the
 
 ## Controller
 
-Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly.
+Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. The decision is reviewed as the Privacy Policy sets out.
 
 ## Processing
 
@@ -21,6 +21,7 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 | Answer requests about records and personal data | Requesters | What the request contains | The issue or the email | Apple (iCloud Mail, United States), for email | As long as needed to answer and to show the answer |
 | Act on removal requests by automatic steps: acknowledge, tell the authors, take exposed personal data offline at once, carry out the operator's decision | Requesters; authors | The Sophaxis id, the kind of request, GitHub usernames | The issues; the records | GitHub (issue comments, commits) | As long as the issues and the git history exist |
 | Serve the site and find faults | Readers | IP address and request details | The request | Vercel (United States) | As Vercel keeps its logs |
+| Gather the Zenodo records of listed works in the Zenodo community https://zenodo.org/communities/sophaxis | Authors | Nothing is copied; as curator, the operator can view and edit the metadata and files of each record submitted to the community, including names and ORCID iDs | Zenodo (an author's submission to the community) | Zenodo (CERN, Switzerland) | As long as the record stays in the community |
 
 ## Lawful basis
 
@@ -28,10 +29,12 @@ Legitimate interest in checking authorship and in keeping a public scholarly rec
 
 ## Transfers outside Japan and the European Union
 
-GitHub, Vercel, ORCID, Crossref and the Internet Archive are in the United States; DataCite is in Germany. What each says about its own measures is linked from the Privacy Policy.
+GitHub, Vercel, ORCID, Crossref and the Internet Archive are in the United States; DataCite is in Germany. Zenodo is run by CERN, in Switzerland. What each says about its own measures is linked from the Privacy Policy.
 
 ## Security
 
 Every automatic step is listed at https://sophaxis.vercel.app/automation.html. No decision with legal or similarly significant effects on a person is made solely by automated means.
 
 Records hold only information that is public already. The automatic checks keep nothing from an ORCID record except the name, the websites and the works, and run with the least permissions they need. Only the operator can change the records, except that the automatic step of the Takedown Policy takes an abstract and a PDF copy offline when a removal issue reports exposure of personal data.
+
+The operator does not use the curator's access in the Zenodo community to change the metadata or the files of any record; changes stay with the record's authors.
