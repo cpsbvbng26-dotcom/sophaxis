@@ -71,6 +71,9 @@ The site, its code, its policies and these pages were written with Claude Code, 
 The operator reviewed them and is responsible for them; Claude is not an author of Sophaxis or of any listed work.
 No language model decides on a submission: the automatic check is ordinary code, and every decision is made by a moderator.
 Sophaxis is not affiliated with or endorsed by Anthropic.
+Claude Code is named as a disclosure of how the site was made, not as an endorsement or an advertisement.
+The operator is an ordinary paying user of it.
+Sophaxis has no arrangement with Anthropic, receives nothing from it, and does not link to its products.
 
 ## Links
 
