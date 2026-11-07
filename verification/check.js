@@ -1390,6 +1390,12 @@ console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
     cff.includes('title: "' + z.title + '"') && z.creators.length === 1 && z.creators[0].orcid === '0009-0000-1406-0547'
     && cff.includes('orcid: "https://orcid.org/0009-0000-1406-0547"') && z.license === 'mit' && cff.includes('license: MIT')
     && /^MIT License/.test(read(path.join(ROOT, 'LICENSE'))));
+  /* The DOIs that Zenodo gave on release (DataCite: 24033372 is v1.0.0 and IsVersionOf 24033371). */
+  const rd = read(path.join(ROOT, 'README.md'));
+  ok('CITATION.cff, the README in both languages and the contact page give the Zenodo DOI of version 1.0.0 and the DOI of every version',
+    ['10.5281/zenodo.24033372', '10.5281/zenodo.24033371'].every((d) => cff.includes('value: "' + d + '"') && (rd.split('(https://doi.org/' + d + ')').length - 1) === 2
+      && read(path.join(ROOT, 'contact.md')).includes('(https://doi.org/' + d + ')'))
+    && cff.includes('doi: "10.5281/zenodo.24033371"') && cff.includes('version: "1.0.0"') && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.0.0 was released on 2026-11-07'));
   ok('the code is tied to the OSF project, with the DOI from site.json, and that DOI is said to name the project',
     z.related_identifiers.some((r) => r.identifier === site.osf.doi && r.relation === 'isPartOf')
     && cff.includes('value: ' + site.osf.doi) && cff.includes('the project, not this code release'));
