@@ -73,6 +73,9 @@ Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the 
 The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
 Requests about personal data go to the address on the operator's ORCID record, as below.
 The pages and the PDF copies are saved to the Internet Archive.
+Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
+An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
+Sophaxis copies nothing from the community, and the operator does not change the records in it.
 When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
 Copies that others have already taken are outside Sophaxis's control.
 
