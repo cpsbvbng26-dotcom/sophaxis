@@ -1094,7 +1094,7 @@ console.log('\n28. Sophaxis ids are never reused, and DOIs of its own are ready'
     shallow === 'false' && changed.length === 0, shallow !== 'false' ? 'the history is not available (' + shallow + ')' : changed.join('; '));
   const runsCheck = fs.readdirSync(path.join(ROOT, '.github', 'workflows')).filter((f) => read(path.join(ROOT, '.github', 'workflows', f)).includes('node verification/check.js'));
   ok('every workflow that runs the checks reads the whole history (check and pdf)', runsCheck.includes('check.yml') && runsCheck.includes('pdf.yml')
-    && runsCheck.every((f) => /actions\/checkout@v4\n\s+with:\n\s+fetch-depth: 0/.test(read(path.join(ROOT, '.github', 'workflows', f)))), runsCheck.join(', '));
+    && runsCheck.every((f) => /actions\/checkout@v7\n\s+with:\n\s+fetch-depth: 0/.test(read(path.join(ROOT, '.github', 'workflows', f)))), runsCheck.join(', '));
   ok('the draft says that its id is provisional', read(path.join(ROOT, 'tools', 'intake.js')).includes('The id is provisional: if another record takes it first, the record is listed under the next free id.'));
 
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
@@ -1723,7 +1723,7 @@ console.log('\n46. Advice on the DOI metadata (deposit-check)');
   fs.rmSync(fake, { recursive: true, force: true });
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   ok('the intake checks out deposit-check at a pinned commit, beside the site, before it runs',
-    /- uses: actions\/checkout@v4\n        with:\n          repository: cpsbvbng26-dotcom\/deposit-check\n          ref: [0-9a-f]{40}\n          path: deposit-check\n/.test(wf)
+    /- uses: actions\/checkout@v7\n        with:\n          repository: cpsbvbng26-dotcom\/deposit-check\n          ref: [0-9a-f]{40}\n          path: deposit-check\n/.test(wf)
     && wf.indexOf('repository: cpsbvbng26-dotcom/deposit-check') < wf.indexOf('node tools/intake.js'));
   ok('the README and the steps say that the advice does not decide the listing', read(path.join(ROOT, 'README.md')).includes('The advice does not decide the listing.')
     && read(path.join(ROOT, 'process.md')).includes('It does not decide the listing.'));
@@ -2322,6 +2322,15 @@ console.log('\n61. OAI-PMH also gives oai_openaire, the profile of the OpenAIRE 
   ok('another format is refused with cannotDisseminateFormat', ask([['verb', 'ListRecords'], ['metadataPrefix', 'marc']]).includes('<error code="cannotDisseminateFormat">Only oai_dc and oai_openaire are given.</error>'));
   ok('the README says what the format carries and that the records validate against the schema', read(path.join(ROOT, 'README.md')).includes('- Metadata: `oai_openaire`, the application profile of the OpenAIRE Guidelines for Literature Repositories v4.'));
   function SITE_BASE() { return JSON.parse(read(path.join(ROOT, 'site.json'))).baseUrl; }
+}
+
+console.log('\n62. The workflows use actions that run on Node.js 24, and Dependabot watches their versions');
+{
+  const dir = path.join(ROOT, '.github', 'workflows');
+  const uses = fs.readdirSync(dir).flatMap((f) => [...read(path.join(dir, f)).matchAll(/uses: (actions\/(?:checkout|setup-node))@v(\d+)/g)].map((m) => ({ f, a: m[1], v: Number(m[2]) })));
+  const old = uses.filter((u) => u.v < 5).map((u) => u.f + ': ' + u.a + '@v' + u.v);
+  ok('every checkout and setup-node (' + uses.length + ') is v5 or later, which runs on Node.js 24', uses.length > 0 && old.length === 0, old.join(', '));
+  ok('Dependabot watches the versions of the GitHub Actions, monthly', /package-ecosystem: github-actions[\s\S]*interval: monthly/.test(read(path.join(ROOT, '.github', 'dependabot.yml'))));
 }
 
 console.log('\n' + '-'.repeat(60));
