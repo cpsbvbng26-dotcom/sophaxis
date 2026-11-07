@@ -1106,8 +1106,15 @@ console.log('\n29. Lawful use: licences, liability, takedown, and the services S
 console.log('\n30. Sophaxis says that it was built with Claude Code');
 {
   const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
-  const missing = pages.filter((f) => !/<footer>[\s\S]*Built with Claude Code \(Anthropic\); the operator is responsible for the site, and Claude is not an author\.[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))));
-  ok('every page says in its footer that the site was built with Claude Code, that the operator is responsible and that Claude is not an author', pages.length > 0 && missing.length === 0, missing.join(', '));
+  const missing = pages.filter((f) => !/<footer>[\s\S]*Written with Claude Code \(Anthropic\), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author\.[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))));
+  ok('every page says in its footer that the site was written with Claude Code, named as a disclosure and not an endorsement, that the operator is responsible and that Claude is not an author', pages.length > 0 && missing.length === 0, missing.join(', '));
+  /* Naming the tool is a disclosure. The site never links to the maker's products, so that the disclosure does not become an advertisement. */
+  const linked = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => /\.(html|xml|json|txt)$/.test(f))
+    .filter((f) => /href="https?:\/\/([a-z0-9-]+\.)*(anthropic\.com|claude\.ai|claude\.com)/i.test(read(path.join(ROOT, 'site', f))));
+  ok('no page links to Anthropic or to Claude', linked.length === 0, linked.join(', '));
+  ok('the Disclaimer says the name is a disclosure, not an advertisement, by an ordinary paying user with no arrangement, nothing received and no link',
+    ['Claude Code is named as a disclosure of how the site was made, not as an endorsement or an advertisement.', 'The operator is an ordinary paying user of it.',
+      'Sophaxis has no arrangement with Anthropic, receives nothing from it, and does not link to its products.'].every((x) => read(path.join(ROOT, 'disclaimer.md')).includes(x)));
   const dis = read(path.join(ROOT, 'disclaimer.md'));
   ok('the disclaimer, the FAQ, the contact page and the policy index say so too, and that no language model decides on a submission',
     dis.includes('## How Sophaxis was made') && dis.includes('No language model decides on a submission') && dis.includes('Sophaxis is not affiliated with or endorsed by Anthropic.')
