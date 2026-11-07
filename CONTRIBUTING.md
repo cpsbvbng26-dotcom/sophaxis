@@ -36,6 +36,13 @@ A change to a policy also changes its "Last updated" date.
 A check is never loosened to make a change pass. If a check fails, fix the change, or explain in the pull request why the check is wrong.
 The site loads nothing from other servers, and every page forbids scripts except the search page. Keep it that way.
 
+## Changing a policy
+
+Every commitment in the policies is listed in `verification/commitments.txt`, word for word.
+A change that drops or rewords one fails the checks, unless `verification/superseded.txt` names the old line and the line that replaces it, and the new line is in the list.
+The list only grows: a line it ever held cannot leave it any other way.
+A change that adds a duty for readers or authors is announced in advance, as the Terms of Use set out.
+
 ## Language models and other generative models
 
 Sophaxis was built with Claude Code (Anthropic), and this is disclosed on every page.

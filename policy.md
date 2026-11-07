@@ -21,6 +21,13 @@ Sophaxis charges nothing, to authors or to readers.
 There are no submission fees, no listing fees and no paid tiers.
 It will not start charging.
 
+## Commitments are never dropped silently
+
+A commitment in these policies is never dropped silently.
+The public repository keeps the list of commitments in `verification/commitments.txt`.
+The automatic check fails if one disappears from the policies or from the list, unless the text that replaces it is named in `verification/superseded.txt`.
+A change to a commitment that adds a duty for readers or authors is still announced in advance, as the [Terms of Use](./policies/terms.html) set out.
+
 ## Operator and conflicts of interest
 
 Sophaxis is operated by Takuya Nemoto, an independent researcher in Japan.

@@ -14,16 +14,17 @@ Sophaxis applies Japan's Act on the Protection of Personal Information in full, 
 
 Personal data is used only for these purposes:
 
-- to confirm that a person who submits, withdraws or reports a published version is an author of the work;
+- to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
-- to check the listed DOIs and licences each week, and to save the pages and the PDF copies to the Internet Archive;
-- to tell search engines which addresses are new or changed;
+- to check the listed DOIs and licences each week, and to save the pages and the PDF copies to the Internet Archive each week and when they change;
+- to tell search engines which addresses are new, changed or removed;
 - to answer requests to withdraw, correct or remove a record, and requests about personal data.
 
 ## The site
 
 The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.
+Its pages contain no code or tag that sends information about a reader to anyone else, so nothing falls under the rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12).
 The search page runs one script, served by Sophaxis itself.
 It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
 No other page runs a script.
@@ -50,6 +51,11 @@ The check asks ORCID for the person section and the works section of the record.
 ORCID returns everything that is public there, which can include public email addresses and the country.
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
+From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
+
+Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
+Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
+Nothing else is asked of anyone.
 
 ## Records
 
@@ -127,6 +133,7 @@ A person can ask for access to, correction of, suspension of the use of, or dele
 The operator aims to answer within 7 days.
 Requests cost nothing.
 A complaint about how personal data is handled goes to the same email address.
+A person can also consult Japan's [Personal Information Protection Commission](https://www.ppc.go.jp/).
 
 These rights are open to everyone, wherever they live.
 Where a person's own law gives them more rights over their personal data, such as the General Data Protection Regulation in the European Union, the operator honours those rights as far as they apply to Sophaxis.
@@ -136,6 +143,7 @@ Personal data that GitHub or Vercel hold about their own users, such as GitHub a
 
 For people in the European Union and the United Kingdom, the basis for this use is a legitimate interest: checking who the authors are, and keeping a public scholarly record.
 Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).
+Where a transfer outside the European Union has no adequacy decision or other safeguard, as for the Internet Archive, it rests on the author's explicit consent (Article 49(1)(a)).
 A person can object to the use of their personal data, and can complain to the data protection authority of their country.
 An objection is handled through the [Takedown Policy](./takedown.html).
 Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
