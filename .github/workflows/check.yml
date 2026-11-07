@@ -6,10 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # The whole history: the check confirms that no Sophaxis id was ever given to a second work.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: node verification/check.js
@@ -20,8 +20,8 @@ jobs:
     # playwright 1.56.1 cannot install Chromium on ubuntu 26.04; the profile site moved to 24.04 for the same reason.
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install playwright and Chromium
