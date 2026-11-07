@@ -256,7 +256,7 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang 
   const up = root ? '/' : rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
   const home = canonical === '';
-  const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">${SITE.osf ? `<link itemprop="sameAs" href="${esc(SITE.osf.url)}"><link itemprop="sameAs" href="https://doi.org/${esc(SITE.osf.doi)}">` : ''}` : '>';
+  const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">${SITE.osf ? `<link itemprop="sameAs" href="${esc(SITE.osf.url)}"><link itemprop="sameAs" href="https://doi.org/${esc(SITE.osf.doi)}">` : ''}${SITE.zenodo ? `<link itemprop="sameAs" href="https://doi.org/${esc(SITE.zenodo.doi)}">` : ''}` : '>';
   const brand = home ? 'href="./" itemprop="url"' : `href="${up}index.html"`;
   return `<!doctype html>
 <html lang="${lang || 'en'}">
@@ -670,6 +670,15 @@ function listedIn() {
   return (SITE.listedIn || []).map((x) => `<p class="meta">Listed in <a href="${esc(x.url)}">${esc(x.name)}</a>, ${esc(x.description)}, after its editorial review, since ${esc(x.since)} (Japan time).</p>\n`).join('');
 }
 
+/* The identifiers of Sophaxis itself, side by side: the OSF project and the archive of the code and records at Zenodo.
+ * Neither names a listed work. */
+function ownIdentifiers() {
+  const parts = [];
+  if (SITE.osf) parts.push(`OSF project DOI <a href="https://doi.org/${esc(SITE.osf.doi)}">${esc(SITE.osf.doi)}</a>`);
+  if (SITE.zenodo) parts.push(`Zenodo DOI <a href="https://doi.org/${esc(SITE.zenodo.doi)}">${esc(SITE.zenodo.doi)}</a> (the code and the records, every version)`);
+  return parts.length ? `<p class="meta">${esc(SITE.name)} itself: ${parts.join(' · ')}. Neither names a listed work; cite a work by its own DOI.</p>\n` : '';
+}
+
 function indexPage(papers, all = papers) {
   const last = lastUpdated(all);
   const body = `
@@ -677,7 +686,7 @@ function indexPage(papers, all = papers) {
 ${pausedNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
-${listedIn()}<h2>Listing</h2>
+${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
 ${fields(papers, '', './')}
 ${listing(papers, './', 'No preprints are listed yet.')}
 `;
@@ -994,6 +1003,7 @@ function robots(all) {
 
 function build(out, paperDir) {
   const { papers: all, problems } = loadPapers(paperDir);
+  if (SITE.zenodo && (!/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.doi || '') || !/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.version || '') || !/^https:\/\/zenodo\.org\/communities\//.test(SITE.zenodo.community || ''))) problems.push('site.json: zenodo needs a concept DOI, a version DOI and the community URL');
   (SITE.listedIn || []).forEach((x, i) => {
     if (!x || !x.name || !x.description || !/^https:\/\//.test(x.url || '') || !DATE.test(x.since || '')) problems.push('site.json: listedIn[' + i + '] needs a name, a description, an https url and a since date (YYYY-MM-DD)');
   });

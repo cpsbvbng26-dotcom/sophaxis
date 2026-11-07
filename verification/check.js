@@ -2158,6 +2158,30 @@ console.log('\n55. The extent of use of generative models, at one of the levels 
     && stats.includes('<h2>Use of generative models</h2>') && Object.values(L).every((v) => stats.includes(v.replace(/'/g, '&#39;'))));
 }
 
+/* ------------------------------------------------------------ 56 */
+console.log('\n56. The Zenodo DOI of Sophaxis stands beside its OSF project DOI');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const cff = read(path.join(ROOT, 'CITATION.cff'));
+  const home = read(path.join(ROOT, 'site', 'index.html'));
+  const contact = read(path.join(ROOT, 'contact.md'));
+  ok('the Zenodo DOIs in site.json are those of CITATION.cff, and the community is the one the README names',
+    cff.includes('value: "' + site.zenodo.doi + '"') && cff.includes('value: "' + site.zenodo.version + '"') && cff.includes('doi: "' + site.zenodo.doi + '"')
+    && read(path.join(ROOT, 'README.md')).includes('<' + site.zenodo.community + '>'));
+  const line = (/<p class="meta">Sophaxis itself: [^\n]*<\/p>/.exec(home) || [''])[0];
+  ok('the top page shows the OSF project DOI and the Zenodo DOI in one line, each as a link, and says neither names a listed work',
+    line.includes('OSF project DOI <a href="https://doi.org/' + site.osf.doi + '">' + site.osf.doi + '</a>')
+    && line.includes('Zenodo DOI <a href="https://doi.org/' + site.zenodo.doi + '">' + site.zenodo.doi + '</a>')
+    && line.indexOf('OSF project DOI') < line.indexOf('Zenodo DOI') && line.includes('Neither names a listed work'));
+  ok('the top page names both DOIs as sameAs for the site', home.includes('<link itemprop="sameAs" href="https://doi.org/' + site.osf.doi + '">')
+    && home.includes('<link itemprop="sameAs" href="https://doi.org/' + site.zenodo.doi + '">'));
+  const items = contact.split('\n').filter((l) => l.startsWith('- '));
+  const osfAt = items.findIndex((l) => l.startsWith('- OSF:'));
+  ok('on the contact page the Zenodo line comes right after the OSF line, with both DOIs and the community',
+    osfAt >= 0 && items[osfAt + 1].startsWith('- Zenodo:') && items[osfAt + 1].includes(site.zenodo.doi) && items[osfAt + 1].includes(site.zenodo.version)
+    && items[osfAt + 1].includes(site.zenodo.community) && items[osfAt + 1].includes('it is not an affiliation with Zenodo.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
