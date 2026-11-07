@@ -1,17 +1,13 @@
 'use strict';
-/* One-off probe, never merged (read only): the DataCite record of the deposit-check DOI. */
+/* One-off probe, never merged (read only): which repositories already have a Zenodo archive, by the GitHub address in DataCite. */
+const repos = ['autonomy-and-self-cultivation', 'cpsbvbng26-dotcom', 'naval-gazette-notes', 'self-correction', 'sophaxis', 'trinity-infinity', 'trinity-operator'];
 (async () => {
-  for (const d of ['10.5281/zenodo.24033082']) {
+  for (const r of repos) {
     try {
-      const r = await fetch('https://api.datacite.org/dois/' + encodeURIComponent(d), { headers: { 'User-Agent': 'Sophaxis probe (https://github.com/cpsbvbng26-dotcom/sophaxis)' }, signal: AbortSignal.timeout(40000) });
-      const a = (await r.json()).data.attributes;
-      console.log('==== ' + d + ' -> ' + r.status);
-      console.log('  title: ' + (a.titles || []).map((t) => t.title).join(' | '));
-      console.log('  version: ' + a.version + ' | type: ' + (a.types || {}).resourceTypeGeneral + ' | published: ' + a.publicationYear + ' | state: ' + a.state);
-      console.log('  creators: ' + (a.creators || []).map((c) => c.name + ' ' + ((c.nameIdentifiers || [])[0] || {}).nameIdentifier).join('; '));
-      console.log('  rights: ' + (a.rightsList || []).map((x) => x.rightsIdentifier || x.rights).join(', '));
-      (a.relatedIdentifiers || []).forEach((x) => console.log('  related: ' + x.relationType + ' ' + x.relatedIdentifier));
-      console.log('  url: ' + a.url);
-    } catch (e) { console.log('==== ' + d + ' error ' + e.message); }
+      const q = encodeURIComponent('relatedIdentifiers.relatedIdentifier:*github.com\\/cpsbvbng26-dotcom\\/' + r.replace(/-/g, '\\-') + '*');
+      const res = await fetch('https://api.datacite.org/dois?query=' + q + '&page[size]=10', { headers: { 'User-Agent': 'Sophaxis probe (https://github.com/cpsbvbng26-dotcom/sophaxis)' }, signal: AbortSignal.timeout(40000) });
+      const j = await res.json();
+      console.log('==== ' + r + ' -> ' + res.status + ' ' + (j.data || []).length + ' ' + (j.data || []).map((d) => d.id + ' [' + (d.attributes.version || '') + '] ' + (((d.attributes.titles || [])[0] || {}).title || '').slice(0, 40)).join(' ; '));
+    } catch (e) { console.log('==== ' + r + ' error ' + e.message); }
   }
 })();
