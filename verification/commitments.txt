@@ -23,12 +23,11 @@ Sophaxis asks for no transfer of copyright and no exclusive licence.
 It does not run plagiarism checks.
 The operator then looks at the submission once more, and that decision is final.
 These terms are governed by the laws of Japan.
-The operator is not liable for the content of listed works, which their authors write.
-Where Japan's Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.
-Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
+The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
 If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
-For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.
+For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.
 The address keeps working, so that citations lead to the notice instead of to nothing.
 Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.
 The operator's address is not published; it is given on request, without delay.
@@ -43,7 +42,7 @@ Sophaxis does not guarantee the quality of any listed work.
 Only an author of a work can submit it.
 A submission that does not pass both is not listed.
 It is not an official identity check.
-ORCID returns everything that is public there, which can include public email addresses and the country.
+It does not ask for the person section as a whole, so public email addresses and the country are never received.
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
 Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).
 The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
@@ -56,7 +55,7 @@ If personal data leaks in a way that the law requires to be reported, the operat
 Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
 The operator has decided not to appoint one.
 The operator answers them, and the data protection authorities, directly, in place of a representative.
-Sophaxis applies that Act to readers and authors as if its operator were a business operator under it.
+Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
 From 2026-11-21, a work with more than one author is listed only after every other author confirms their own agreement.
 It is shown under the work's own licence, with its authors and a link to the work.
 On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.
@@ -98,3 +97,6 @@ Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
 The operator does not use the curator's access in the Zenodo community to change the metadata or the files of any record; changes stay with the record's authors.
 Unless the operator cannot act, a closure is announced on the top page at least 30 days ahead, and new submissions stop first.
 The record page shows the level the authors chose, above their statement.
+Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
+Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
+For anyone else, the court that the law sets has jurisdiction.
