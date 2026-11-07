@@ -1,40 +1,5 @@
 {
   "id": "2026.0006",
-  "title": "The Trinity-Infinity Framework: A Conceptual Model with Illustrative Applications in Game Theory, Mathematical Logic, and Mechanical Engineering",
-  "authors": [
-    {
-      "name": "Takuya Nemoto",
-      "orcid": "0009-0000-1406-0547",
-      "given": "Takuya",
-      "family": "Nemoto"
-    }
-  ],
-  "abstract": "This paper introduces the Trinity-Infinity (III∞) framework, a conceptual model where three finite elements (Trinity) interact recursively to generate infinite dynamics (Infinity). The framework is applied to game theory, mathematical logic, and mechanical engineering, demonstrating how finite structures under recursion yield unbounded systemic behaviors.",
-  "category": "mathematics",
-  "license": "CC-BY-4.0",
-  "language": "eng",
-  "versions": [
-    {
-      "version": 1,
-      "doi": "10.5281/zenodo.22058624",
-      "date": "2026-08-22"
-    }
-  ],
-  "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical and closed-form claim in Section 2 (Remark 1) was computed by executing the operators exactly as defined in the text; the verification script (series1_verification.py) is distributed together with this PDF so the two results can be reproduced independently. The author reviewed all content and is responsible for its claims.",
-  "issue": 75,
-  "listed": "2026-11-02",
-  "status": "withdrawn",
-  "operator_own": true,
-  "notes": [
-    {
-      "date": "2026-11-02",
-      "text": "The author's errata for this series (https://github.com/cpsbvbng26-dotcom/trinity-infinity/blob/main/ERRATA.md) record that the verification script that this paper says is distributed with the PDF does not exist (E3)."
-    },
-    {
-      "date": "2026-11-02",
-      "text": "The same errata record that the statement on language models covers only the revision. The mathematical content of the first draft, published in October 2025, came from a language model (ChatGPT, OpenAI), and the paper does not say so (E4)."
-    }
-  ],
-  "withdrawal_date": "2026-11-07",
-  "withdrawal_note": "Withdrawn by the author."
+  "status": "removed",
+  "removal_date": "2026-11-07"
 }
