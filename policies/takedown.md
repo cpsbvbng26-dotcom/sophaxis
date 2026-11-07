@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -32,16 +32,17 @@ Where the operator removes material, it also asks GitHub to remove it from the r
 
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 That is the address for requests; the address in the OAI-PMH interface is for harvesters.
-The operator then takes the abstract and the PDF copy offline while the request is reviewed; authors agree to this in the [Terms of Use](./terms.html).
+For personal data and other serious harm, the operator then takes the record page (its title, authors, abstract and PDF copy) offline while the request is reviewed; authors agree to this in the [Terms of Use](./terms.html).
 
 ## What happens
 
 The operator aims to answer each request within 7 days.
-For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.
+For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.
 A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
-When a removal issue reports exposure of personal data, the abstract and the PDF copy are taken offline automatically, before the operator reads it.
+When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
 The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
+Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 
 If the request is upheld, the record is removed, as the next section sets out.

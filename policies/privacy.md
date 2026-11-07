@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -47,8 +47,8 @@ It reads the metadata of the DOI from DataCite, Crossref or JaLC (Japan Link Cen
 It reads the name, the websites and the works of the ORCID record given in the form.
 It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
 The same check runs when a withdrawal issue or a published-version issue is opened or edited.
-The check asks ORCID for the person section and the works section of the record.
-ORCID returns everything that is public there, which can include public email addresses and the country.
+The check asks ORCID only for the personal details (the name), the websites and the works sections of the record.
+It does not ask for the person section as a whole, so public email addresses and the country are never received.
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
@@ -83,7 +83,8 @@ Copies that others have already taken are outside Sophaxis's control.
 
 Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies.
 Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
-It asks for each author's consent to this, after giving the information below.
+The submission form asks for each author's consent to this, after giving the information below; the confirmation is required from 2026-11-21.
+Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
 
 The countries:
 
@@ -125,7 +126,7 @@ The measures, under the headings that Japan's Personal Information Protection Co
 
 The automatic checks compare public records and post the result in the issue. They make no decision about a person.
 No decision with legal or similarly significant effects on a person is made solely by automated means.
-One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the abstract and the PDF copy offline. It protects the person concerned, and is undone if the request is not upheld.
+One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.
 Every automatic step is listed on the page [What runs by itself](../automation.html).
 
 ## Your choices

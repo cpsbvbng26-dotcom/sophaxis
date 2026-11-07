@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-02.
+Last updated: 2026-11-08.
 
 This page follows one submission from start to finish.
 The rules themselves are in the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html); where this page differs, they apply.
@@ -33,7 +33,7 @@ After you sign in, it also appears in the menu under your picture at the top rig
 4. Set its visibility to "Everyone", then save.
 
 This is how Sophaxis confirms that the person who opens the submission is an author of the work.
-Sophaxis reads only the name, the links and the works in your ORCID record; your email address is never read.
+Sophaxis reads only the name, the links and the works in your ORCID record; it never asks ORCID for your email address or your country.
 
 ## Step 3. Open a submission issue
 

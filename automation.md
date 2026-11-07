@@ -1,13 +1,13 @@
 # What runs by itself
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel.
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
 The code of each step is public, and each section links to it.
 
 - No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
-- One step acts before the operator decides: when a removal issue reports exposure of personal data, the abstract and the PDF copy are taken offline at once. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
+- One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
 - No step uses a language model. The steps are ordinary code.
 - No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.
 - A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.
@@ -39,7 +39,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the record and the issues of the repository.
 - Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
-- When the issue reports exposure of personal data, it also takes the abstract and the PDF copy offline at once, as the [Takedown Policy](./policies/takedown.html) says.
+- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](./policies/takedown.html) says.
 - Leaves to the operator: the decision.
 - Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
 

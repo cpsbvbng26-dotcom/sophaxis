@@ -25,7 +25,7 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 
 ## Lawful basis
 
-Legitimate interest in checking authorship and in keeping a public scholarly record (GDPR Article 6(1)(f)). Records are kept under Article 17(3). Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of the Act).
+Legitimate interest in checking authorship and in keeping a public scholarly record (GDPR Article 6(1)(f)). Records are kept under Article 17(3). Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of the Act): in the submission form, required from 2026-11-21, and until then in the submission issue before a work by an author other than the operator is listed.
 
 ## Transfers outside Japan and the European Union
 

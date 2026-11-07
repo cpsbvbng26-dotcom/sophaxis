@@ -131,7 +131,7 @@ No automatic step decides on a request, uses a language model or holds a key oth
 
 Follow the [Takedown Policy](policies/takedown.md). A removal issue runs `tools/removal.js` (`.github/workflows/removal.yml`).
 It acknowledges the request with the day the answer is due, tells the authors in their submission issue, and, where the issue reports exposure of personal data,
-takes the abstract and the PDF copy offline at once by making the record a notice under review.
+takes the record page (title, authors, abstract and PDF copy) offline at once by making the record a notice under review.
 To decide, label the issue `upheld` or `not-upheld`; only the repository owner's label acts.
 Upheld, the record becomes a notice that says only that it was removed, every automatic comment about it is deleted, and the issues that name it are emptied, closed and locked, for the owner to delete; not upheld, what was taken offline is put back from the git history.
 Every change is built and checked before it is pushed to `main`. A request sent by email is handled by running the workflow by hand with the id.
