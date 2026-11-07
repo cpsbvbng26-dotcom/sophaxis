@@ -24,7 +24,7 @@
   "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical claim in Section 3 was computed by executing the operators exactly as defined in the text; the verification script (series3_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims.",
   "issue": 77,
   "listed": "2026-11-02",
-  "status": "listed",
+  "status": "withdrawn",
   "operator_own": true,
   "notes": [
     {
@@ -36,12 +36,6 @@
       "text": "The same errata record that the statement on language models covers only the revision. The mathematical content of the first draft, published in October 2025, came from a language model (ChatGPT, OpenAI), and the paper does not say so (E4)."
     }
   ],
-  "pdfs": [
-    {
-      "version": 1,
-      "file": "2026.0008v1.pdf",
-      "sha256": "a1c588ccb98f0c581d055d724341f9305f02e919c9f0ad55031ebe16670dd6c6",
-      "source": "https://zenodo.org/api/records/22058964/files/Trinity_Infinity_Series_III.pdf/content"
-    }
-  ]
+  "withdrawal_date": "2026-11-07",
+  "withdrawal_note": "Withdrawn by the author."
 }
