@@ -118,3 +118,15 @@ body:
           required: true
         - label: I understand that listing is moderation, not peer review.
           required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Consent and agreement
+      description: Required from 2026-11-21. The Privacy Policy, under "Services outside Japan", gives the information on these services and their countries.
+      options:
+        - label: Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel, ORCID and the Internet Archive in the United States, as the Privacy Policy (https://sophaxis.vercel.app/policies/privacy.html) sets out.
+          required: false
+        - label: I have read and agree to the Terms of Use and the other policies (https://sophaxis.vercel.app/policies/terms.html), in their version on the day of submission.
+          required: false
+        - label: I am 13 or older, and if I am under 18, a parent or guardian consents to this submission.
+          required: false
