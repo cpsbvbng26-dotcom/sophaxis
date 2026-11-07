@@ -138,7 +138,8 @@ function decisionNote({ id, decision, kind, today, done, restored }) {
       '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)',
       '- [ ] where the law requires it, ask GitHub to remove the material from the repository history (by hand)',
       '- [ ] where the request needs it, hide or delete the submission issue (by hand)'];
-  return [MARK, '**Upheld** (' + today + ').', '', ...(done ? steps : ['The record could not be changed automatically. The operator does it by hand.'])].join('\n');
+  const auto = kind && (kind.reason || kind.slug === 'pdf-copy');
+  return [MARK, '**Upheld** (' + today + ').', '', ...(done ? steps : [auto ? 'The record could not be changed automatically. The operator does it by hand.' : 'This kind of request changes nothing automatically. The operator carries it out by hand.'])].join('\n');
 }
 
 const redacted = (id, today) => '*This automatic comment repeated the record ' + id + ', which was removed on ' + today + ' under the Takedown Policy. Its text is no longer shown.*';
