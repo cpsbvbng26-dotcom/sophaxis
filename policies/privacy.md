@@ -97,7 +97,7 @@ The operator can see them, and uses them only to find and fix faults.
 Records are built only from information that is public already.
 The automatic checks keep nothing from an ORCID record except the name, the websites and the works.
 The automatic checks run with the least permissions they need.
-Only the operator can change the records.
+Only the operator can change the records, except that the automatic step of the [Takedown Policy](./takedown.html) takes an abstract and a PDF copy offline when a removal issue reports exposure of personal data.
 If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned.
 
 ## Your choices

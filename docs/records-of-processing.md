@@ -12,7 +12,7 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 
 | Purpose | People | Personal data | Source | Recipients | Retention |
 | --- | --- | --- | --- | --- | --- |
-| Confirm that a submitter, a person who withdraws, or a person who reports a published version is an author | Submitters | GitHub username; ORCID iD; name, websites and works from the public ORCID record | The issue; ORCID | GitHub (issue comments) | As long as the issue exists |
+| Confirm that a submitter, a co-author who confirms their agreement, a person who withdraws, or a person who reports a published version is an author | Submitters and co-authors | GitHub username; ORCID iD; name, websites and works from the public ORCID record | The issue; ORCID | GitHub (issue comments) | As long as the issue exists |
 | Publish record pages, author pages, lists and search | Authors | Names, ORCID iDs, abstracts, statements on generative models, notes | DOI metadata (DataCite, Crossref, JaLC); the issues | Vercel (serving); the public | Without a time limit, so that citations do not break |
 | Offer records for reuse | Authors | As above | The records | Readers of `feed.xml` and `papers.json`; OAI-PMH harvesters | As above; copies taken by others are outside Sophaxis's control |
 | Preserve the pages and the PDF copies | Authors | As above | The site | The Internet Archive (United States) | As the Internet Archive keeps them |
@@ -31,4 +31,4 @@ GitHub, Vercel, ORCID, Crossref and the Internet Archive are in the United State
 
 ## Security
 
-Records hold only information that is public already. The automatic checks keep nothing from an ORCID record except the name, the websites and the works, and run with the least permissions they need. Only the operator can change the records.
+Records hold only information that is public already. The automatic checks keep nothing from an ORCID record except the name, the websites and the works, and run with the least permissions they need. Only the operator can change the records, except that the automatic step of the Takedown Policy takes an abstract and a PDF copy offline when a removal issue reports exposure of personal data.

@@ -33,6 +33,9 @@ The operator then takes the abstract and the PDF copy offline while the request 
 
 The operator aims to answer each request within 7 days.
 For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.
+A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
+When a removal issue reports exposure of personal data, the abstract and the PDF copy are taken offline automatically, before the operator reads it.
+The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 
