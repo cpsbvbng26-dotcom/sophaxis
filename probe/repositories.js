@@ -1,35 +1,20 @@
 'use strict';
-/* One-off probe, never merged (read only): further places that may list or hold Sophaxis without an application. Plain requests to public APIs only. */
+/* One-off probe, never merged (read only): the HAL deposits and the FAIRsharing record that were deleted or dropped. */
 const UA = { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)', Accept: 'application/json, text/html;q=0.9' };
-const get = async (u, opt = {}) => { const r = await fetch(u, Object.assign({ headers: UA, signal: AbortSignal.timeout(30000) }, opt)); return [r.status, await r.text()]; };
-const line = (n, s, extra) => console.log('==== ' + n + ' -> ' + s + ' | ' + extra);
+const ids = ['hal-05758942', 'hal-05758968', 'hal-05759064', 'hal-05759080', 'hal-05759279', 'hal-05759325', 'hal-05759296', 'hal-05759717', 'hal-05759721'];
 (async () => {
-  // Common Crawl: the latest crawls, and whether they hold pages of the site.
-  try {
-    const [s, t] = await get('https://index.commoncrawl.org/collinfo.json');
-    const cols = s === 200 ? JSON.parse(t).slice(0, 3) : [];
-    line('Common Crawl collections', s, cols.map((c) => c.id).join(','));
-    for (const c of cols) {
-      const [s2, t2] = await get(c['cdx-api'] + '?url=sophaxis.vercel.app/*&output=json&limit=50');
-      const n = s2 === 200 ? t2.trim().split('\n').filter(Boolean).length : 0;
-      line('Common Crawl ' + c.id, s2, 'pages=' + n + (n ? ' e.g. ' + JSON.parse(t2.trim().split('\n')[0]).url : ''));
-    }
-  } catch (e) { line('Common Crawl', 'error', e.message); }
-  // Semantic Scholar: papers whose landing page is on the site.
-  try { const [s, t] = await get('https://api.semanticscholar.org/graph/v1/paper/search?query=sophaxis&fields=title,url,externalIds'); line('Semantic Scholar search', s, t.slice(0, 200)); } catch (e) { line('Semantic Scholar', 'error', e.message); }
-  // Internet Archive Scholar / fatcat.
-  try { const [s, t] = await get('https://scholar.archive.org/search?q=sophaxis'); line('IA Scholar', s, 'sophaxis ' + (t.match(/sophaxis/gi) || []).length + ' | ' + ((/(\d[\d,]*)\s+results?/i.exec(t) || ['no count'])[0])); } catch (e) { line('IA Scholar', 'error', e.message); }
-  try { const [s, t] = await get('https://api.fatcat.wiki/v0/container/lookup?issnl=0000-0000'); line('fatcat api reachable', s, t.slice(0, 80)); } catch (e) { line('fatcat', 'error', e.message); }
-  // re3data (data repositories; Sophaxis is not one, checked for completeness).
-  try { const [s, t] = await get('https://www.re3data.org/api/beta/repositories?query=sophaxis'); line('re3data', s, 'sophaxis ' + (t.match(/sophaxis/gi) || []).length); } catch (e) { line('re3data', 'error', e.message); }
-  // DOAPR data in its public repository: does any file name Sophaxis?
-  try {
-    const [s, t] = await get('https://api.github.com/repos/antleaf/doapr/git/trees/HEAD?recursive=1', { headers: Object.assign({}, UA, { Accept: 'application/vnd.github+json' }) });
-    const tree = s === 200 ? JSON.parse(t).tree.map((x) => x.path) : [];
-    line('DOAPR repo tree', s, 'files=' + tree.length + ' sophaxis-named=' + tree.filter((p) => /sophaxis/i.test(p)).join(','));
-  } catch (e) { line('DOAPR repo', 'error', e.message); }
-  // Scilit and Lens: plain pages, recorded as they answer.
-  for (const [n, u] of [['Scilit', 'https://www.scilit.com/publications?q=sophaxis'], ['Lens', 'https://www.lens.org/lens/search/scholar/list?q=sophaxis'], ['Dimensions', 'https://app.dimensions.ai/discover/publication?search_text=sophaxis']]) {
-    try { const [s, t] = await get(u); line(n, s, ((/<title>([^<]*)<\/title>/i.exec(t) || [])[1] || '').trim().slice(0, 60) + ' | sophaxis ' + (t.match(/sophaxis/gi) || []).length); } catch (e) { line(n, 'error', e.message); }
-  }
+  const q = async (n, u) => { try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(30000) }); const t = await r.text(); return [r.status, t]; } catch (e) { return ['error ' + e.message, '']; } };
+  let [s, t] = await q('HAL idhal', 'https://api.archives-ouvertes.fr/search/?q=authIdHal_s:nemoto-takuya&fl=halId_s,title_s,submittedDate_s&rows=50&wt=json');
+  console.log('==== HAL by IdHAL -> ' + s + ' | ' + (s === 200 ? JSON.parse(t).response.numFound + ' ' + JSON.parse(t).response.docs.map((d) => d.halId_s + ' ' + d.submittedDate_s + ' ' + d.title_s[0].slice(0, 40)).join(' ; ') : ''));
+  [s, t] = await q('HAL orcid', 'https://api.archives-ouvertes.fr/search/?q=authORCIDIdExt_id:0009-0000-1406-0547&fl=halId_s&wt=json');
+  console.log('==== HAL by ORCID -> ' + s + ' | ' + (s === 200 ? JSON.parse(t).response.numFound : ''));
+  [s, t] = await q('HAL name', 'https://api.archives-ouvertes.fr/search/?q=authFullName_t:%22Takuya%20Nemoto%22&fl=halId_s,submittedDate_s&wt=json');
+  console.log('==== HAL by name -> ' + s + ' | ' + (s === 200 ? JSON.parse(t).response.numFound + ' ' + JSON.parse(t).response.docs.map((d) => d.halId_s).join(',') : ''));
+  for (const id of ids) { [s, t] = await q(id, 'https://hal.science/' + id); console.log('==== ' + id + ' -> ' + s + ' | ' + (((/<title>([^<]*)<\/title>/i.exec(t) || [])[1]) || '').trim().replace(/\s+/g, ' ').slice(0, 70)); }
+  [s, t] = await q('CV', 'https://cv.hal.science/nemoto-takuya');
+  console.log('==== CV HAL -> ' + s + ' | ' + (((/<title>([^<]*)<\/title>/i.exec(t) || [])[1]) || '').trim() + ' | docs listed: ' + (t.match(/hal-0\d{7}/g) || []).filter((v, i, a) => a.indexOf(v) === i).join(','));
+  [s, t] = await q('FAIRsharing', 'https://fairsharing.org/9430');
+  console.log('==== FAIRsharing page -> ' + s + ' | sophaxis ' + (t.match(/sophaxis/gi) || []).length);
+  [s, t] = await q('FAIRsharing api', 'https://api.fairsharing.org/fairsharing_records/9430');
+  console.log('==== FAIRsharing api -> ' + s + ' | ' + t.replace(/\s+/g, ' ').slice(0, 200));
 })();
