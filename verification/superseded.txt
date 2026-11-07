@@ -1,0 +1,2 @@
+# A commitment replaced by another: the old line, a tab, and the new line, which must be in commitments.txt.
+# Only this file lets a line leave commitments.txt. Lines starting with # are notes.
