@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## Moderation is not peer review
 
 Acceptance is moderation, not peer review.

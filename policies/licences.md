@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [ライセンスの規程（日本語訳）](./licences.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## Accepted licences
 
 Sophaxis lists only work under one of these licences:

@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
+
 This page gathers in one place what Sophaxis does not promise.
 The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.
 
