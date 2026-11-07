@@ -26,6 +26,7 @@ body:
         - Exposure of personal data
         - An author did not agree to the listing
         - An author asks for the PDF copy to be removed
+        - A request about my personal data (access, correction, suspension of use, deletion)
         - Another legal reason
     validations:
       required: true
