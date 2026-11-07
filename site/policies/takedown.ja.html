@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>削除の規程（日本語訳） | Sophaxis</title>
+<meta name="description" content="Sophaxis の削除の規程の日本語訳。">
+<link rel="canonical" href="https://sophaxis.vercel.app/policies/takedown.ja.html">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="../feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="削除の規程（日本語訳） | Sophaxis">
+<meta property="og:description" content="Sophaxis の削除の規程の日本語訳。">
+<meta property="og:url" content="https://sophaxis.vercel.app/policies/takedown.ja.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/takedown.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/policies/takedown.ja.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a><a href="../faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>削除の規程（日本語訳）</h1>
+<p>最終更新：2026-11-07。</p>
+<p>これは英語の <a href="./takedown.html">Takedown Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
+<h2>記録を削除するとき</h2>
+<p>記録は消しません。記録を削除しても、Sophaxis の番号はすべて残ります。記録を削除するのは、三つの場合です。一つ目は、著作権の侵害や個人データの露出のように、法令が削除を求める場合です。二つ目は、著者が掲載に同意していなかったことを示し、その作品を<a href="./withdrawal.ja.html">撤回の規程</a>で撤回できない場合です。三つ目は、<a href="./withdrawal.ja.html">撤回の規程</a>が定めるとおり、作品の著者が撤回の issue で削除を求めた場合です。削除した記録に残るのは、下の「削除した記録に残るもの」の節に挙げるものだけです。</p>
+<h2>求め方</h2>
+<p>法的な理由で削除を求めるときは、削除の issue を開きます。issue に個人データを書かないでください。問題の素材そのものを繰り返さずに、問題がどこにあるかを書きます。著者として、権利者として、データが載っている本人として、またはその代理として、のどの立場で関わっているかを書きます。</p>
+<p>求めは、どの国からでも、英語か日本語で受け付けます。求めは、求める人の国の法令に基づくものでも構いません。たとえば米国の法令に基づく著作権の通知や、欧州連合のデータ保護法に基づく求めです。運営者は、この規程と日本法に沿って検討し、どちらかが求める場合は素材を公開から外します。</p>
+<p>サイトは Vercel が配信し、リポジトリとその issue は GitHub が保管しています。どちらも米国にあります。求めは、たとえば GitHub 自身の手続きでの著作権の通知として GitHub に、または Vercel に送ることもできます。GitHub と Vercel は、それぞれの規約で判断します。運営者は、それがどう判断しても、Sophaxis についてはこの規程で判断します。運営者が素材を削除する場合は、下に定めるとおり、リポジトリの履歴からの削除も GitHub に求めます。</p>
+<p>公開の場で行えない求めは、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるメールアドレスへメールで送ります。それが求めのための宛先です。OAI-PMH の口にある宛先は、収集者のためのものです。運営者は、求めを検討するあいだ、要旨と PDF の写しを公開から外します。著者は<a href="./terms.ja.html">利用規約</a>でこれに同意しています。</p>
+<h2>求めを受けた後</h2>
+<p>運営者は、それぞれの求めに 7 日以内に答えることを目指します。個人データやそのほかの重大な害については、判断の前に、要旨と PDF の写しをただちに公開から外します。削除の issue には、運営者が答える目安の日を添えた受領の知らせが自動で付きます。削除の issue が個人データの露出を報告している場合、運営者が読む前に、要旨と PDF の写しが自動で公開から外れます。自動の処理は何も決めません。どの求めも運営者が判断します。著者には、その投稿の issue で知らせ、著者は応答できます。この通知と応答の手続きは、インターネット上のサービスの提供者の責任に関する日本の法令の考え方に沿ったものです。素材に関わる人は、判断の前に求めを知り、答えることができます。ただし、重大な害のために素材をただちに公開から外す必要がある場合は除きます。</p>
+<p>求めが認められた場合、記録は次の節のとおり削除します。求めが認められなかった場合、運営者はその理由を issue で示します。検討のあいだ公開から外していた素材は、元に戻します。著者はいつでも求めに答えることができ、その答えから求めに根拠がないと分かった場合は、素材を元に戻します。</p>
+<h2>削除した記録に残るもの</h2>
+<p>この節は、理由にかかわらず、削除したすべての記録に適用されます。削除は、運営者の判断の後、公開のリポジトリにある <code>tools/removal.js</code> が行います。下の各段階は、公開する前に自動で確かめます。</p>
+<p>サイトでは:</p>
+<ul><li>記録を削除すると、その頁は、その Sophaxis の番号の記録を削除したことだけを述べる告知に置き換わります。</li><li>告知には、理由もほかの詳細も書きません。</li><li>引用が何もない所ではなく告知へ届くように、アドレスは働いたままにします。</li><li>題・著者・要旨・PDF の写しは、サイトから外します。</li><li>頁は検索エンジンに索引しないよう求め、記録はすべての一覧、検索、フィード、<code>papers.json</code>、サイトマップから外れます。統計では、削除した記録としてだけ数えます。</li><li>Vercel が保持しているサイトの過去の版は、公開しません。</li><li><code>robots.txt</code> で、Internet Archive のクローラーに、その頁と PDF の写しを再び集めないよう求めます。</li></ul>
+<p>記録と OAI-PMH の口では:</p>
+<ul><li>記録には、Sophaxis の番号、「removed」の語、削除の日だけが残ります。日を残すのは、OAI-PMH の口がそれを必要とするためです。</li><li>OAI-PMH の口は、その日を添え、メタデータなしで、記録を削除済みとして示します。収集者が次に訪れたときに取り除けるようにするためです。</li></ul>
+<p>issue では:</p>
+<ul><li>その記録についての自動のコメントはすべて消し、その記録を挙げる issue は中身を空にして閉じ、ロックします。その後、運営者がそれらを削除します。</li><li>issue を削除すると、その編集履歴も消えます。</li><li>削除の求めそのものは、それへの判断とともに残ります。削除を求めた撤回の issue は、ほかと同じように中身を空にします。</li></ul>
+<p>サイトの外では:</p>
+<ul><li>運営者は、リポジトリの履歴からの素材の削除も GitHub に求めます。</li><li>GitHub が削除するまで、記録の過去の版は公開のリポジトリの履歴に残ります。</li><li>運営者は、Internet Archive にも、その記録の過去の写しを除外するよう求めます。</li><li>ほかの者がすでに取った写しは、Sophaxis の手の外にあります。運営者は、知っているものには知らせます。</li></ul>
+<p>削除した記録の Sophaxis の番号は、ほかの作品に与えることはありません。</p>
+<h2>欧州連合のデジタルサービス法について</h2>
+<p>Sophaxis はここでも最も厳しい場合を想定し、その規模のサービスに当てはまりうる範囲で、欧州連合のデジタルサービス法に従います。</p>
+<ul><li>当局・欧州委員会・Sophaxis を使う人のための連絡窓口（第 11 条・第 12 条）は、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるメールアドレスで、英語か日本語で受け付けます。Sophaxis は欧州連合に法定代理人を置いておらず（第 13 条）、運営者は、<a href="./privacy.ja.html">個人情報の取り扱いについて</a>が示す理由により、置かないと決めています。当局はそのアドレスで運営者に直接連絡します。</li><li>違法なコンテンツの通知（第 16 条）は、削除の issue かメールで行います。メールでの通知には、送る人の名とメールアドレスを書きます。削除の issue は公開されるので、これらを書きません。代わりに、issue を開いた GitHub のアカウントがその役を果たします。受領の知らせは自動で付き、判断は issue かメールで知らせます。</li><li>判断の理由（第 17 条）は、運営者が、すべての判断について削除の issue かメールで示します。著者には、求めが届いた時点でその issue を知らせています。理由には、自動の処理が働いたかどうかを書きます。働くのは露出した個人データをただちに公開から外す処理だけで、それは求めが挙げた問題の種類に応じて働きます。</li><li>判断への異議（第 20 条）は、通知を送った人と著者が、六か月以内に、削除の issue での返答かメールで申し立てることができます。費用はかかりません。運営者が見直して答え、見直しを自動の処理に任せることはありません。</li><li>裁判所に訴えることも、第 21 条で認証された裁判外の紛争解決機関を使うこともできます。</li><li>載せてよいものを制限する決まりは、<a href="./terms.ja.html">利用規約</a>とこれらの規程に、平易な英語で書いてあります（第 14 条）。</li><li><a href="../stats.html">統計</a>は削除した記録を数え、公開の削除の求めのすべてへリンクしています。</li></ul>
+<h2>素材を送った人の開示の求め</h2>
+<p>素材を投稿した人の開示を求められた場合は、日本の法令が定めるとおりに扱います。運営者は、まず関係する人に意見を聴きます。運営者は、法令が求めないものは開示しません。</p>
+<h2>預け先にある作品</h2>
+<p>Sophaxis は、Zenodo、Figshare その他の預け先から作品を削除できません。預けたものそのものについての求めは、その預け先へ送ります。</p>
+<p class="meta"><a href="../policy.html">All policies</a></p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

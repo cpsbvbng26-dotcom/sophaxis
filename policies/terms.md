@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## Who these terms apply to
 
 These terms apply to everyone who reads Sophaxis or submits to it.

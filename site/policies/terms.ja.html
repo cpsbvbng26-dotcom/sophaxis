@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>利用規約（日本語訳） | Sophaxis</title>
+<meta name="description" content="Sophaxis の利用規約の日本語訳。">
+<link rel="canonical" href="https://sophaxis.vercel.app/policies/terms.ja.html">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="../feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="利用規約（日本語訳） | Sophaxis">
+<meta property="og:description" content="Sophaxis の利用規約の日本語訳。">
+<meta property="og:url" content="https://sophaxis.vercel.app/policies/terms.ja.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/terms.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/policies/terms.ja.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a><a href="../faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>利用規約（日本語訳）</h1>
+<p>最終更新：2026-11-07。</p>
+<p>これは英語の <a href="./terms.html">Terms of Use</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。</p>
+<h2>この規約が及ぶ人</h2>
+<p>この規約は、Sophaxis を読む人と、Sophaxis に投稿する人のすべてに及びます。サイトを使うことは、この規約を受け入れることを意味します。ほかの規程も、この規約の一部です。</p>
+<h2>Sophaxis が提供するもの</h2>
+<p>Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せます。載せた作品のそれぞれに、記録の頁、検索、フィードを与えます。預け先が許す場合は、PDF の写しも置きます。これらを無料で行います。</p>
+<h2>著者がすべての責任を負う</h2>
+<p>著者は、自分の作品と、それを Sophaxis に載せることについて、すべての責任を負います。次のものを含みます。</p>
+<ul><li>作品の内容。主張・証明・引用・計算・図のすべてを含みます。</li><li>その版をそのライセンスで共有する権利と、出版者の許諾。</li><li>作品の中の他人の素材と、著作権その他の権利の侵害。</li><li>作品の中の第三者の個人データ。</li><li>生成モデルについての申告と、そこに書かれていない使用。</li><li><a href="./submission.html">投稿の規程</a>で投稿者が確認する事柄が、すべて真実であること。</li></ul>
+<p>モデレーションによって、これらのどれかが運営者に移ることはありません。掲載が示すのは、投稿が<a href="./moderation.html">モデレーションの規程</a>の確認を通ったことだけです。投稿時に投稿者が確認した事柄が真実でなかったために、第三者が Sophaxis や運営者に請求をした場合、法令が許す範囲で、著者がその責任を負います。著者は、<a href="./takedown.ja.html">削除の規程</a>に沿って削除の求めを検討するあいだ、要旨と PDF の写しを公開から外すことに同意します。様式に書かれた文は、<a href="./licences.html">ライセンスの規程</a>が定めるとおりに共有します。運営者は、それでも<a href="./takedown.ja.html">削除の規程</a>に沿って求めに応じます。</p>
+<h2>読者ができること</h2>
+<p>読者は、載っている作品のそれぞれを、その作品自身のライセンスに沿って、読み、ダウンロードし、再利用できます。このサイトの文は、<a href="./licences.html">ライセンスの規程</a>が定めるとおり、CC BY 4.0 で再利用できます。</p>
+<h2>してはいけないこと</h2>
+<ul><li>自分が著者でない作品を投稿すること。</li><li>著作権その他の権利を侵害する素材を投稿すること。</li><li>法令上の根拠なく、第三者の個人データを投稿すること。</li><li>スパム、嫌がらせ、サイトや投稿の手続きを妨げようとすること。</li></ul>
+<p>運営者は、これらの決まりに反する投稿を、断り、または削除することがあります。</p>
+<h2>保証しないこと</h2>
+<p>Sophaxis は、現状のまま提供します。載っている作品の質・正しさ・完全さを保証しません。サイトにいつでも届くことも保証しません。載っている作品の内容は著者が書いたもので、運営者はその内容について責任を負いません。日本の消費者契約法が適用される場合、運営者は、自らの過失で生じさせた損害について、同法の定めるとおり責任を負います。Sophaxis は、運営者を同法の事業者であるものとみなして、読者と著者に同法を適用します。それ以外の場合、法令が許す範囲で、運営者は、サイトの利用や載っている作品への依拠から生じた損害について責任を負いません。</p>
+<h2>変更と終了</h2>
+<p>この規約とほかの規程は、変わることがあります。各頁の日付が最後の変更を示し、過去の版は公開のリポジトリに残ります。どの変更によっても、料金は生じません。</p>
+<p>著者や読者の権利を奪い、または狭める変更と、義務を加える変更は、効力を持つ前に、変わる中身とその開始日を添えて、トップの頁で告知します。告知は少なくとも 14 日前に行います。ただし、法令や、安全や法的なリスクのような差し迫った問題が、より早い変更を求める場合は、この限りではありません。その場合でも、変更は効力を持つ前に告知します。文をわかりやすくすることや、例を足すことのようなほかの変更は、公開した時点で効力を持ちます。変更が効力を持った後も Sophaxis を使い続けることは、その変更を受け入れることを意味します。受け入れない人は Sophaxis の利用をやめることができ、著者は<a href="./withdrawal.ja.html">撤回の規程</a>に沿って自分の作品を撤回できます。</p>
+<h2>続けるための備え</h2>
+<p>Sophaxis は一人で運営しており、失うものなく止められるように組んでいます。</p>
+<ul><li>判断が遅いことは、休止ではありません。モデレーションには数週間から数か月かかることがあります。休止とは、病気などのために、運営者が Sophaxis の作業をまったくできないときのことです。それが 30 日を超えて続く場合、トップの頁で新しい投稿の受け付けを休止していることを示します。載っている記録は公開したままです。</li><li>運営者が行動できない場合を除き、閉鎖は少なくとも 30 日前にトップの頁で告知し、先に新しい投稿の受け付けを止めます。</li><li>Sophaxis を閉じる場合、運営者は、すべての記録を収めたリポジトリを公開のまま残し、記録を読めるようにします。頁と PDF の写しは、毎週 Internet Archive にも保存しています。</li><li>コードと記録は、版を出すたびに Zenodo に保存しています。いちばん新しい版を指す DOI は <a href="https://doi.org/10.5281/zenodo.24033371">10.5281/zenodo.24033371</a> です。</li><li>運営者は、Sophaxis をほかの人、機関、または法人に引き継ぐことがあります。引き継ぎは先にサイトで告知し、新しい運営者が通常の手続きで変えるまで、この規約は効力を保ちます。</li><li>誰でも、リポジトリを写し、そのライセンスのもとで、ほかの場所で作業を続けられます。文は CC BY 4.0、コードは MIT です。載っている作品は、それぞれ自身のライセンスを保ちます。</li><li>DOI は、Sophaxis に何があっても、それを発行した預け先に残ります。</li></ul>
+<h2>準拠法</h2>
+<p>この規約は、日本法に準拠します。この規約のどの定めも、法令が制限を認めない権利を制限しません。特に、故意または重大な過失による責任や、日本の消費者契約法その他の法令が免除や制限を認めない責任を、免除したり制限したりしません。</p>
+<h2>紛争</h2>
+<p>Sophaxis や載っている作品についての紛争は、できるかぎり合意で解決します。</p>
+<ol><li>まず運営者に連絡します。運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるメールアドレスへ送るか、公開してよい事柄なら issue に書きます。何についての紛争か、何があれば解決するかを書きます。</li><li>その後、双方が誠実に話し合い、合意を目指します。運営者は 7 日以内に答え、紛争を返事のないまま放置しません。</li><li>話し合いで 60 日以内に解決しない場合、どちらの側も、裁判の前に、日本の簡易裁判所の民事調停のような調停を申し出ることができます。</li></ol>
+<p>これらの方法で解決しない紛争は、運営者の住所地を管轄する地方裁判所または簡易裁判所を、第一審の合意管轄裁判所とします。運営者の住所は、<a href="../contact.html">運営者と連絡先</a>の頁にあるとおり、求めがあれば知らせます。これは、消費者や日本国外の人が、法令によって別の裁判所で訴えを起こし、または応じる権利を奪うものではありません。この節のどの定めも、誰かが裁判所に緊急の救済を求めることや、<a href="./takedown.ja.html">削除の規程</a>を使うことを妨げません。</p>
+<h2>日本国外の方へ</h2>
+<p>Sophaxis は日本から運営しており、どこからでも読めます。</p>
+<ul><li>同じ手順が適用されます。話し合いと調停は、書面やオンラインで、英語か日本語で行えます。紛争を解決するために、誰も日本へ来る必要はありません。</li><li>この規約は日本法に準拠します。その人自身の国の法令が、合意で排除できない保護、たとえば消費者の保護を与えている場合、その保護は引き続き適用されます。</li><li>日本国外の人が、自国の法令に基づいて自国の裁判所に訴えることができる場合、その権利は残ります。上の裁判所についての合意が、それを奪うことはありません。</li><li>この規約は英語で書かれています。訳を公開し、それが英語の文と食い違う場合は、英語の文が適用されます。</li></ul>
+<h2>GitHub と Vercel</h2>
+<p>Sophaxis は、米国に拠点を置く二つのサービスの上で動いており、それぞれの規約もこの規約と並んで適用されます。</p>
+<ul><li>Sophaxis に投稿することは、GitHub を使うことを意味します。issue を開くこと、コメントすること、ファイルを添付することは、利用者と GitHub とのあいだで、GitHub の利用規約とプライバシーステートメントに従います。</li><li>Sophaxis を読むことは、Vercel から頁を受け取ることを意味します。Vercel は、IP アドレスを含むそれぞれの要求を、自らの規約と個人情報の方針に沿って、日本や読者の国以外の国で処理することがあります。</li><li>この規約が拘束するのは、運営者と Sophaxis を使う人です。GitHub や Vercel を拘束せず、GitHub や Vercel に対する請求権も、GitHub や Vercel が行ったことについての運営者に対する請求権も、誰にも与えません。</li><li>GitHub や Vercel そのものとの紛争は、それぞれの準拠法と裁判所の定めを含め、それぞれの規約に従います。上の「紛争」の手順が扱うのは、運営者と Sophaxis だけです。</li><li>Sophaxis のリポジトリや issue の中の素材は、GitHub 自身の手続きで GitHub に通報することもでき、サイトの素材は Vercel に通報することもできます。運営者は、GitHub や Vercel が対応したかどうかにかかわらず、<a href="./takedown.ja.html">削除の規程</a>に沿って求めに応じます。</li><li>GitHub や Vercel が、たとえば米国の法令に基づいて、自らの側で何かを削除し、制限し、または遮断した場合、Sophaxis はそれを元に戻せないことがあります。</li></ul>
+<h2>一般</h2>
+<ul><li>ほかの規程は、この規約の一部です。ある規程がある事柄をより詳しく扱う場合は、その事柄についてはその規程が適用されます。それ以外で両者が食い違う場合は、この規約が適用されます。FAQ、手順を順に示す頁、免責事項は、この規約を説明するもので、この規約を変えるものではありません。</li><li>この規約の一部が無効または執行できないとされた場合も、残りは効力を保ち、その部分は法令が許す範囲で適用されます。</li><li>運営者がある時点でこの規約の一部を執行しなくても、それによってその部分を放棄したことにはなりません。</li><li>2026-11-21 から、13 歳未満の人は投稿できません。</li><li>18 歳未満の人は、親または保護者の同意がある場合に限り投稿できます。</li><li>未成年として投稿した人に、法令が掲載の削除を求める権利を与えている場合は、<a href="./takedown.ja.html">削除の規程</a>が適用されます。</li><li>運営者への通知は、ORCID の記録にあるメールアドレスへのメールか、issue で行います。著者への通知は、その著者の投稿の issue で行います。</li></ul>
+<h2>連絡先</h2>
+<p>運営者と、運営者に連絡するすべての方法は、<a href="../contact.html">運営者と連絡先</a>の頁にあります。質問は<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues">リポジトリの issue</a> へどうぞ。公開すべきでない事柄は、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるメールアドレスへメールで送ります。素材の削除の求めは、<a href="./takedown.ja.html">削除の規程</a>に沿って行います。</p>
+<p class="meta"><a href="../policy.html">All policies</a></p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>
