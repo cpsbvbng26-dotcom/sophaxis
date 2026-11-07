@@ -114,7 +114,7 @@ async function main() {
   let person = null, works = null;
   try {
     if (record && orcidOk(form.orcid)) {
-      const p = await I.getJson('https://pub.orcid.org/v3.0/' + form.orcid + '/person');
+      const p = await I.orcidPersonJson(form.orcid);
       const w = await I.getJson('https://pub.orcid.org/v3.0/' + form.orcid + '/works');
       person = p && I.orcidPerson(p);
       works = w ? I.orcidDois(w) : new Set();

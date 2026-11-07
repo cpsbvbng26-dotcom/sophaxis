@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -15,7 +15,7 @@ The authors bear full responsibility for their work, including its statement on 
 
 ## Metadata
 
-Titles, authors, abstracts, licences, versions and dates come from the DOI metadata held by DataCite, Crossref and JaLC, and are shown as received.
+Titles, authors, abstracts, licences, versions and dates come from the DOI metadata held by DataCite, Crossref and JaLC, and are shown as received; an abstract that the metadata does not have comes from the submission form.
 An error there can appear here.
 Errors can be reported through the link on each record page.
 
@@ -27,7 +27,7 @@ It is not an official identity check.
 ## No affiliation
 
 Sophaxis is an independent, personal project.
-It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.
+It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.
 Their names are used only to identify their services, and belong to their owners.
 They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
 
@@ -64,7 +64,7 @@ They are not legal advice, and they do not claim that no legal question can aris
 
 Sophaxis runs on GitHub: its code, its records and its submissions (GitHub issues) are kept there, and its automatic checks run as GitHub Actions in the public repository.
 The site is built from that repository and served by Vercel.
-Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, JaLC, ORCID and the repositories.
+Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, JaLC, OpenAlex, ORCID and the repositories.
 Using GitHub to submit is subject to GitHub's own terms and privacy statement.
 
 ## How Sophaxis was made
@@ -101,9 +101,9 @@ They are not legal or professional advice.
 
 ## Liability
 
-The operator is not liable for the content of listed works, which their authors write.
-Where Japan's Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.
-Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
+The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
 This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
 Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.html) sets out.

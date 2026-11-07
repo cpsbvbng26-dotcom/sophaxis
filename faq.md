@@ -1,13 +1,13 @@
 # Frequently asked questions
 
-Last updated: 2026-11-03.
+Last updated: 2026-11-08.
 
 Each answer is a short form of a policy. Where they differ, the policy applies.
 
 ## What is Sophaxis?
 
 An overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
-It does not host the work itself.
+The work itself is published by its repository; Sophaxis keeps an unmodified PDF copy only where the licence allows.
 It lists preprints that authors have already deposited in an open repository, and gives each one a stable record page.
 
 ## Is it peer review?

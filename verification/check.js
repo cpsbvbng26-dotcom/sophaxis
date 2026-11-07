@@ -144,12 +144,14 @@ console.log('\n4. The policy keeps its promises in writing');
     'It does not run plagiarism checks.',
     'The operator then looks at the submission once more, and that decision is final.',
     'These terms are governed by the laws of Japan.',
-    'The operator is not liable for the content of listed works, which their authors write.',
-    'Where Japan\'s Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.',
-    'Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.',
+    'The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.',
+    'The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.',
+    'For anyone else, the court that the law sets has jurisdiction.',
+    'Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.',
+    'Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.',
     'If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.',
     'A request that cannot be made in public goes by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
-    'For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.',
+    'For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.',
     'The address keeps working, so that citations lead to the notice instead of to nothing.',
     'Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.',
     'The operator\'s address is not published; it is given on request, without delay.',
@@ -164,7 +166,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'Only an author of a work can submit it.',
     'A submission that does not pass both is not listed.',
     'It is not an official identity check.',
-    'ORCID returns everything that is public there, which can include public email addresses and the country.',
+    'It does not ask for the person section as a whole, so public email addresses and the country are never received.',
     'The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.',
     'Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).',
     'The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.',
@@ -177,7 +179,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).',
     'The operator has decided not to appoint one.',
     'The operator answers them, and the data protection authorities, directly, in place of a representative.',
-    'Sophaxis applies that Act to readers and authors as if its operator were a business operator under it.',
+    'Sophaxis applies Japan\'s Consumer Contract Act to readers and authors as if its operator were a business operator under it.',
     'From 2026-11-21, a work with more than one author is listed only after every other author confirms their own agreement.',
     'It is shown under the work\'s own licence, with its authors and a link to the work.',
     'On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.',
@@ -403,7 +405,9 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
     /issue_comment:\n\s+types: \[created, edited, deleted\]/.test(wf) && wf.includes("!github.event.issue.pull_request && github.event.comment.user.type != 'Bot'")
     && wf.includes("contains(github.event.comment.body, 'I agree to the listing of this work on Sophaxis')") && wf.includes("contains(github.event.comment.body, 'Confirmed by email through the ORCID record')"));
   const src = read(path.join(ROOT, 'tools', 'intake.js'));
-  ok('the intake reads only the ORCID person and works, not emails or addresses', !/\/(email|address|addresses|record)\b'?/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')) && src.includes("'/person'") && src.includes("'/works'"));
+  const orcidSrc = ['intake.js', 'published.js', 'withdraw.js'].map((f) => read(path.join(ROOT, 'tools', f)).replace(/\/\*[\s\S]*?\*\//g, '')).join('\n');
+  ok('the intake reads only the public name, links and works of an ORCID record, never the person section that holds emails and the country',
+    !/\/(email|emails|address|addresses|record|person)'/.test(orcidSrc) && src.includes("'/personal-details'") && src.includes("'/researcher-urls'") && src.includes("'/works'"));
 }
 
 /* ------------------------------------------------------------ 10 */
@@ -651,7 +655,8 @@ console.log('\n14. The weekly check and the Internet Archive');
   const ok1 = { licences: ['CC-BY-4.0'] };
   ok('no problem when every DOI resolves with its licence', Wt.compare(p, { '10.5281/zenodo.1234567': ok1, '10.5281/zenodo.1234999': ok1 }).length === 0);
   ok('a DOI that no longer resolves is reported', Wt.compare(p, { '10.5281/zenodo.1234567': ok1, '10.5281/zenodo.1234999': null }).join().includes('2026.0001: the DOI 10.5281/zenodo.1234999 no longer resolves'));
-  ok('a changed licence is reported', Wt.compare(p, { '10.5281/zenodo.1234567': { licences: ['CC-BY-NC-4.0'] } }).join().includes('no longer carries CC BY 4.0'));
+  ok('a changed licence is reported', Wt.compare(p, { '10.5281/zenodo.1234567': { licences: ['CC-BY-NC-4.0'] } }).join().includes('no longer carries only CC BY 4.0'));
+  ok('a licence that now sits beside another is reported', Wt.compare(p, { '10.5281/zenodo.1234567': { licences: ['CC-BY-4.0', 'CC-BY-NC-4.0'] } }).join().includes('no longer carries only CC BY 4.0'));
   ok('a DOI that could not be checked this week is not reported as broken', Wt.compare(p, {}).length === 0);
   const fig = { id: '2026.0005', status: 'listed', versions: [{ version: 1, doi: '10.6084/m9.figshare.34419198.v1' }, { version: 2, doi: '10.6084/m9.figshare.34419198.v2' }] };
   const arx = { id: '2026.0006', status: 'listed', versions: [{ version: 1, doi: '10.48550/arXiv.2508.15126' }] };
@@ -824,9 +829,9 @@ console.log('\n19. The authors bear full responsibility');
     terms.includes('The authors bear full responsibility for their work and for its listing on Sophaxis.')
     && ['the content of the work', 'the right to share the version', 'material from others', 'personal data of third parties', 'the statement on generative models', 'the truth of everything the submitter confirms']
       .every((x) => terms.includes('- ' + x)));
-  ok('moderation moves none of it to the operator; a claim from a third party is the authors\u2019, only as far as the law allows; takedown still applies',
+  ok('moderation moves none of it to the operator; a claim from a third party is the authors\u2019, as the law provides; takedown still applies',
     terms.includes('Moderation does not move any of this to the operator.')
-    && terms.includes('the authors are responsible for it, to the extent the law allows.') && terms.includes('Nothing in them limits a right that the law does not allow to be limited.')
+    && terms.includes('the authors are responsible for it, as the law provides.') && terms.includes('Nothing in them limits a right that the law does not allow to be limited.')
     && terms.includes('The operator still acts on requests under the [Takedown Policy](./takedown.html).'));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   ok('the submitter confirms it in the form and in the Submission Policy',
@@ -931,9 +936,9 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
   ok('the disclaimer covers peer review, metadata, the identity check, affiliation, GitHub, links, availability, advice and liability, and defers to the Terms',
     ['## Listed work', '## Metadata', '## The identity check', '## No affiliation', '## GitHub and other services', '## Links', '## Availability', '## Not advice', '## Liability'].every((h) => dis.includes(h))
     && dis.includes('The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.')
-    && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.')
+    && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.')
     && dis.includes('Sophaxis does not use GitHub or ORCID sign-in')
-    && dis.includes('through the public APIs of DataCite, Crossref, JaLC, ORCID and the repositories.'));
+    && dis.includes('through the public APIs of DataCite, Crossref, JaLC, OpenAlex, ORCID and the repositories.'));
   ok('who runs Sophaxis and why: an unpaid volunteer who is the only moderator, served within free services, Claude Code paid by the operator, duties unchanged, a reason that judges no other archive',
     ['The operator, who is at present also the only moderator, runs Sophaxis as an unpaid volunteer.', 'No one is paid for work on Sophaxis, and no one pays to submit or to read.',
       'Sophaxis is served only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and has no domain or hosting to pay for.',
@@ -1171,8 +1176,8 @@ console.log('\n31. Disputes: agreement first, then the court named in the Terms'
   ok('a dispute goes first to the operator, then to good-faith talks, then to mediation, and only then to court',
     d.includes('settled by agreement wherever possible') && /1\. Write to the operator first/.test(d) && /2\. Both sides then try, in good faith, to reach an agreement by talking\./.test(d)
     && /3\. If talking does not settle it within 60 days, either side may propose mediation/.test(d) && d.indexOf('mediation') < d.indexOf('district court'));
-  ok('the court of first instance is the district or summary court of the operator\'s place of residence, without taking away the rights of consumers or of people outside Japan',
-    d.includes("the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement.")
+  ok('the court of first instance is the district or summary court of the operator\'s place of residence, by a non-exclusive agreement made in a form, without taking away the rights of consumers or of people outside Japan',
+    d.includes("the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.")
     && d.includes('This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.')
     && d.includes('urgent relief') && terms.includes('These terms are governed by the laws of Japan.'));
   ok('the reply time in a dispute is the 7 days the contact page promises', d.includes('The operator answers within 7 days') && read(path.join(ROOT, 'contact.md')).includes('The operator aims to answer within 7 days.')
@@ -1187,7 +1192,7 @@ console.log('\n32. People outside Japan');
   ok('people outside Japan: the same steps, in writing or online, in English or Japanese; Japanese law, without taking away protection their own law will not let them give up',
     o.includes('Talks and mediation can be held in writing or online, in English or Japanese, so that no one has to travel to Japan to settle a dispute.')
     && o.includes('Where the law of a person\'s own country gives them protection that cannot be set aside by agreement, such as the protection of consumers, that protection still applies.')
-    && o.includes('keeps that right; the agreement on the court above does not take it away.') && o.includes('If a translation is ever published and differs from the English text, the English text applies.'));
+    && o.includes('keeps that right; the agreement on the court above does not take it away.') && o.includes('Where the translation differs from the English text, the English text applies.'));
   ok('takedown requests may come from any country and rest on its law; personal-data rights are open to everyone, with more where their own law gives more',
     read(path.join(ROOT, 'policies', 'takedown.md')).includes('Requests are welcome from any country, in English or Japanese.')
     && read(path.join(ROOT, 'policies', 'takedown.md')).includes('takes the material offline when either requires it.')
@@ -1870,7 +1875,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   ok('every kind of problem in the removal form is known to the script, and no other', kinds.length === 6 && kinds.every((k) => R.KINDS[k]) && Object.keys(R.KINDS).length === kinds.length);
   ok('only a report of exposed personal data takes material offline before the decision, as the Takedown Policy says',
     Object.entries(R.KINDS).filter(([, k]) => k.hold).map(([l]) => l).join() === 'Exposure of personal data'
-    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.'));
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision'));
   const body = '### Sophaxis id\n\n2026.0001\n\n### Kind of problem\n\nExposure of personal data\n\n### How you are concerned\n\nMy personal data appears in the record\n\n### Where the problem is\n\nThe abstract.';
   const f = R.parse(body);
   ok('the removal issue is read: the id, the kind and how the requester is concerned', f.id === '2026.0001' && f.kind.slug === 'personal-data' && f.relation === 'My personal data appears in the record');
@@ -1949,7 +1954,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
     src.includes("'Sophaxis-Action: ' + action + ' ' + id") && src.includes("'--grep=^Sophaxis-Action: hold '") && src.includes("'--', 'data/papers/' + id + '.json')") && src.includes("sha + '^:data/papers/' + id + '.json'"));
   ok('the Takedown Policy and the README say what runs by itself and what the operator decides',
     read(path.join(ROOT, 'policies', 'takedown.md')).includes('A removal issue is acknowledged automatically, with the day by which the operator aims to answer.')
-    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('When a removal issue reports exposure of personal data, the abstract and the PDF copy are taken offline automatically, before the operator reads it.')
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.')
     && read(path.join(ROOT, 'policies', 'takedown.md')).includes('The automatic steps decide nothing; the operator decides every request.')
     && read(path.join(ROOT, 'README.md')).includes('label the issue `upheld` or `not-upheld`'));
 }
@@ -2136,7 +2141,7 @@ console.log('\n55. The extent of use of generative models, at one of the levels 
   const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
   const person = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
   const works = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
-  const run = (form, today) => I.check({ form, login: 'jcarberry', meta: dc, person, works, today });
+  const run = (form, today) => I.check({ form: Object.assign({ consent: '- [X] a\n- [X] b\n- [X] c' }, form), login: 'jcarberry', meta: dc, person, works, today });
   ok('before the day the level may be left out; from the day it is required', run(ix, '2026-11-20').ok && !run(ix, '2026-11-21').ok
     && run(Object.assign({}, ix, { llm_extent: L.drafting }), '2026-11-21').ok);
   ok('"None" beside a statement that names a model is refused; beside a statement of no use it passes',
@@ -2217,7 +2222,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
       && enHtml.includes(pair) && jaHtml.includes(pair) && /<html lang="ja"/.test(jaHtml)
       && sitemap.includes(dir + slug + '.ja.html</loc><lastmod>' + jaDate + '</lastmod>'));
   }
-  ok('the Terms say that the English text applies where a translation differs', read(path.join(ROOT, 'policies', 'terms.md')).includes('If a translation is ever published and differs from the English text, the English text applies.'));
+  ok('the Terms say that the English text applies where a translation differs', read(path.join(ROOT, 'policies', 'terms.md')).includes('These terms are written in English, and a Japanese translation is published. Where the translation differs from the English text, the English text applies.'));
 }
 
 /* ------------------------------------------------------------ 58 */
@@ -2236,6 +2241,51 @@ console.log('\n58. Security headers that a <meta> element cannot give');
     && get('Cross-Origin-Opener-Policy').join() === 'same-origin' && /^max-age=\d{8,}/.test(get('Strict-Transport-Security').join()));
   const page = read(path.join(ROOT, 'site', 'index.html'));
   ok('each page still carries its own policy, with default-src none', /<meta http-equiv="Content-Security-Policy" content="default-src 'none'/.test(page));
+}
+
+console.log('\n59. Consent to publication and to services outside Japan, agreement to the policies, and age, asked in the form');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const I = require('../tools/intake.js');
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  const part = (/id: consent[\s\S]*?options:\n([\s\S]*?)(?:\n  - type:|$)/.exec(form) || [])[1] || '';
+  const opts = [...part.matchAll(/^        - label: (.+)$/gm)].map((m) => m[1]);
+  ok('the form has ' + I.CONSENTS + ' boxes under "Consent and agreement", not required by the form itself before ' + site.consentFrom,
+    form.includes('label: Consent and agreement') && form.includes('Required from ' + site.consentFrom + '.') && opts.length === I.CONSENTS
+    && (part.match(/required: false/g) || []).length === I.CONSENTS);
+  ok('the boxes name the services in the United States, the policies and their version, and the age',
+    /provided to GitHub, Vercel, ORCID and the Internet Archive in the United States/.test(opts[0] || '') && /agree to the Terms of Use and the other policies .*version on the day of submission/.test(opts[1] || '')
+    && /13 or older, and if I am under 18, a parent or guardian consents/.test(opts[2] || ''));
+  ok('the day is the day of the notice of the change', site.consentFrom === site.termsNotice.from);
+  const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
+  const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const person = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
+  const works = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
+  const ext = { llm_extent: site.llmExtents.assistance };
+  const run = (consent, today) => I.check({ form: Object.assign({}, ix, ext, consent === null ? {} : { consent }), login: 'jcarberry', meta: dc, person, works, today });
+  const row = (r) => r.checks.find((c) => c[0] === 'Consent, agreement to the policies and age are confirmed');
+  ok('before the day the boxes may be left empty; from the day all of them are needed',
+    run(null, '2026-11-20').ok && !row(run(null, '2026-11-20')) && !run(null, '2026-11-21').ok && !run('- [X] a\n- [ ] b\n- [X] c', '2026-11-21').ok
+    && run('- [X] a\n- [X] b\n- [X] c', '2026-11-21').ok && !run('- [X] a', '2026-11-20').ok);
+  ok('the form label is read into the consent field', I.parseIssue('### Consent and agreement\n\n- [X] a\n- [X] b\n- [X] c\n').consent === '- [X] a\n- [X] b\n- [X] c');
+  const lic = (licences) => I.check({ form: Object.assign({}, ix, ext, { consent: '- [X] a\n- [X] b\n- [X] c' }), login: 'jcarberry', meta: Object.assign({}, dc, { licences }), person, works, today: '2026-11-21' })
+    .checks.find((c) => c[0] === 'The work carries an accepted licence');
+  const Rm = require('../tools/removal.js');
+  ok('a record put back after a hold takes today as its update, so that harvesters pick it up again',
+    Rm.restored({ id: 'x', listed: '2026-11-01' }, '2026-11-30').updated === '2026-11-30' && Rm.restored({ id: 'x', listed: '2026-11-01', updated: '2026-12-05' }, '2026-11-30').updated === '2026-12-05');
+  ok('a licence is accepted only when every entry in the metadata is the same accepted licence; mixed entries go to the operator',
+    lic(['CC-BY-4.0'])[1] && lic(['CC-BY-4.0', 'CC-BY-4.0'])[1] && !lic(['CC-BY-4.0', 'CC-BY-NC-4.0'])[1] && lic(['CC-BY-4.0', 'CC-BY-NC-4.0'])[2].includes('the operator decides') && !lic([])[1]);
+}
+
+console.log('\n60. The decision on an EU or UK representative is reviewed when a work by another author is first listed');
+{
+  const recs = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  const others = recs.filter((p) => p.status !== 'removed' && p.operator_own !== true).map((p) => p.id).sort();
+  const file = path.join(ROOT, 'docs', 'representative-reviews.md');
+  const reviews = fs.existsSync(file) ? read(file) : '';
+  ok('every listed work by an author other than the operator (' + others.length + ' now) has a recorded review of the decision, as the Privacy Policy promises',
+    others.length === 0 || (others[0] && reviews.includes(others[0])), others.join(', '));
+  ok('the Privacy Policy still makes that promise', read(path.join(ROOT, 'policies', 'privacy.md')).includes('The operator reviews this decision when Sophaxis first lists a work by an author other than the operator'));
 }
 
 console.log('\n' + '-'.repeat(60));

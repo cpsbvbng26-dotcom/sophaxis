@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -30,8 +30,8 @@ This covers:
 
 Moderation does not move any of this to the operator.
 A listing says only that a submission passed the checks in the [Moderation Policy](./moderation.html).
-If a third party makes a claim against Sophaxis or its operator because something the submitter confirmed at submission is untrue, the authors are responsible for it, to the extent the law allows.
-Authors agree that the abstract and the PDF copy may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.html).
+If a third party makes a claim against Sophaxis or its operator because something the submitter confirmed at submission is untrue, the authors are responsible for it, as the law provides.
+Authors agree that the record page (its title, authors, abstract and PDF copy) may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.html), and that OAI-PMH then reports the record as deleted until it is put back.
 Text written in the forms is shared as the [Licence Policy](./licences.html) sets out.
 The operator still acts on requests under the [Takedown Policy](./takedown.html).
 
@@ -54,10 +54,9 @@ The operator may decline or remove a submission that breaks these rules.
 Sophaxis is provided as it is.
 It does not guarantee the quality, correctness or completeness of listed work.
 It does not guarantee that the site will always be reachable.
-The operator is not liable for the content of listed works, which their authors write.
-Where Japan's Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.
-Sophaxis applies that Act to readers and authors as if its operator were a business operator under it.
-Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
+The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
 
 ## Changes and closure
 
@@ -97,7 +96,8 @@ A dispute about Sophaxis or a listed work is settled by agreement wherever possi
 2. Both sides then try, in good faith, to reach an agreement by talking. The operator answers within 7 days and does not leave a dispute without reply.
 3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
 
-If a dispute is not settled in these ways, it goes to the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement.
+If a dispute is not settled in these ways, it goes to the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
+For anyone else, the court that the law sets has jurisdiction.
 The operator's address is given on request, as the [Operator and contact](../contact.html) page says.
 This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
 Nothing in this section stops anyone from asking a court for urgent relief, or from using the [Takedown Policy](./takedown.html).
@@ -109,7 +109,7 @@ Sophaxis is run from Japan and can be read from anywhere.
 - The same steps apply. Talks and mediation can be held in writing or online, in English or Japanese, so that no one has to travel to Japan to settle a dispute.
 - These terms are governed by the laws of Japan. Where the law of a person's own country gives them protection that cannot be set aside by agreement, such as the protection of consumers, that protection still applies.
 - A person outside Japan who may sue in the courts of their own country under that country's law keeps that right; the agreement on the court above does not take it away.
-- These terms are written in English. If a translation is ever published and differs from the English text, the English text applies.
+- These terms are written in English, and a Japanese translation is published. Where the translation differs from the English text, the English text applies.
 
 ## GitHub and Vercel
 

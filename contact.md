@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 ## Operator
 
@@ -34,7 +34,7 @@ Issues are public. Do not put personal data in them.
 The email address for requests is kept on the ORCID record, not on this site.
 The OAI-PMH interface at `/oai` gives a separate address made for harvesters, because the protocol requires one.
 Write in English or Japanese.
-This address is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
+The email address on the operator's ORCID record, not the one for harvesters, is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
 The operator aims to answer within 7 days.
 
 ## Sophaxis elsewhere
