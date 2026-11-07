@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-06.
+Last updated: 2026-11-07.
 
 ## Operator
 
@@ -30,7 +30,8 @@ Complaints, legal matters and anything about personal data go by email, not to a
 - Anything that should not be public: email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 
 Issues are public. Do not put personal data in them.
-The email address is kept on the ORCID record, not on this site.
+The email address for requests is kept on the ORCID record, not on this site.
+The OAI-PMH interface at `/oai` gives a separate address made for harvesters, because the protocol requires one.
 Write in English or Japanese.
 The operator aims to answer within 7 days.
 
@@ -52,6 +53,7 @@ The site gives the same contact in the standard file [security.txt](./.well-know
 Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.
 Its checks confirm the contrast of every text colour in the light and dark schemes, a link to skip to the content, a visible focus for keyboard users, the language of every page, one main heading per page, and headers for every table.
 A barrier can be reported in an issue with the label `accessibility`, or by email.
+If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
 
 ## Postal address
 

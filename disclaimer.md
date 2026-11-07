@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-03.
+Last updated: 2026-11-07.
 
 This page gathers in one place what Sophaxis does not promise.
 The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.
@@ -35,7 +35,7 @@ The operator keeps Sophaxis as a hobby, as an extension of a personal reading sh
 This use does not change what is listed or how.
 
 - Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it; such a work stays on the operator's own shelf, outside Sophaxis.
-- Sophaxis is not a business. It charges no one, sells nothing, shows no advertising and earns nothing.
+- Sophaxis is not run for profit. It charges no one, sells nothing, shows no advertising and earns nothing.
 - Sophaxis does not publish works. Each work is published by its repository under its DOI, and Sophaxis links to it.
 - A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](./policies/copyright.html).
 - Sophaxis takes no copyright and no exclusive licence in any work.
@@ -82,7 +82,9 @@ They are not legal or professional advice.
 
 ## Liability
 
-To the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
+The operator is not liable for the content of listed works, which their authors write.
+Where Japan's Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.
+Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
 This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
 Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.html) sets out.

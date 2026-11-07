@@ -1,6 +1,6 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-02.
+Last updated: 2026-11-07.
 
 ## Who can withdraw
 
@@ -18,6 +18,7 @@ The reason is shown on the record page, so it must not contain personal data.
 The issue is public.
 
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator then confirms the author through the ORCID record, as the check does in the issue.
 
 ## What happens
 
@@ -27,6 +28,12 @@ A notice at the top gives the date of withdrawal and the reason.
 The record stays in the lists, the search, the feed and `papers.json`, marked as withdrawn.
 The PDF copies are taken off the site, and the record links to the repository only.
 A withdrawn record takes no new versions.
+Earlier copies stay in the history of the public repository and in the Internet Archive, and harvesters of the OAI-PMH interface keep what they took.
+
+## An author's name
+
+As the Creative Commons licences provide, an author can ask for their name to be taken off a record.
+The operator does so as far as is reasonably practicable, and the record stays.
 
 ## The work in its repository
 

@@ -1,6 +1,6 @@
 # Copyright Policy
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-07.
 
 ## Authors keep their copyright
 
@@ -35,7 +35,8 @@ Sophaxis does not control whether or when a search engine indexes a page.
 ## How Sophaxis meets the licences
 
 Sophaxis shares a listed work only under the work's own licence, and only as that licence allows.
-The three accepted licences permit copying and sharing for any purpose, provided the work is credited.
+The three accepted licences permit copying and sharing for any purpose.
+CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credits the authors anyway.
 
 - Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI.
 - No changes: the PDF copy is the deposited file, byte for byte, with every notice it carries. The abstract is shown as plain text, with formatting tags removed and its words unchanged.

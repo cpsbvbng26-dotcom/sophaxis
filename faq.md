@@ -1,6 +1,6 @@
 # Frequently asked questions
 
-Last updated: 2026-11-02.
+Last updated: 2026-11-03.
 
 Each answer is a short form of a policy. Where they differ, the policy applies.
 
