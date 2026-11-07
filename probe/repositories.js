@@ -1,47 +1,35 @@
 'use strict';
-/* One-off probe, never merged (read only): whether Sophaxis has been listed anywhere new. Plain requests only. */
+/* One-off probe, never merged (read only): further places that may list or hold Sophaxis without an application. Plain requests to public APIs only. */
 const UA = { 'User-Agent': 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)', Accept: 'application/json, text/html;q=0.9' };
-const T = [
-  ['ROAR record', 'https://roar.eprints.org/27422/'],
-  ['DOAPR issue', 'https://api.github.com/repos/antleaf/doapr/issues/105'],
-  ['DOAPR record', 'https://doapr.coar-repositories.org/repositories/sophaxis/'],
-  ['PhilPapers archives', 'https://philpapers.org/archives/list.html'],
-  ['OAD wiki', 'https://oad.simmons.edu/oadwiki/Disciplinary_repositories'],
-  ['OpenAlex sources', 'https://api.openalex.org/sources?search=sophaxis'],
-  ['OpenAlex works by ORCID', 'https://api.openalex.org/works?filter=author.orcid:0009-0000-1406-0547&per-page=50&select=id,locations'],
-  ['Wikidata', 'https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Sophaxis&language=en&format=json'],
-  ['DataCite', 'https://api.datacite.org/dois?query=sophaxis&page[size]=10'],
-  ['Wayback captures', 'https://web.archive.org/cdx/search/cdx?url=sophaxis.vercel.app*&output=json&fl=original&collapse=urlkey&limit=500'],
-  ['SWH sophaxis', 'https://archive.softwareheritage.org/api/1/origin/https://github.com/cpsbvbng26-dotcom/sophaxis/visits/?per_page=1'],
-  ['SWH deposit-check', 'https://archive.softwareheritage.org/api/1/origin/https://github.com/cpsbvbng26-dotcom/deposit-check/visits/?per_page=1'],
-  ['SWH profile', 'https://archive.softwareheritage.org/api/1/origin/https://github.com/cpsbvbng26-dotcom/cpsbvbng26-dotcom/visits/?per_page=1'],
-  ['ORCID websites', 'https://pub.orcid.org/v3.0/0009-0000-1406-0547/researcher-urls'],
-  ['ORCID works', 'https://pub.orcid.org/v3.0/0009-0000-1406-0547/works'],
-  ['HAL by ORCID', 'https://api.archives-ouvertes.fr/search/?q=authORCIDIdExt_id:0009-0000-1406-0547&fl=halId_s,title_s,submittedDate_s&wt=json'],
-  ['BASE', 'https://www.base-search.net/Search/Results?lookfor=sophaxis'],
-  ['CORE', 'https://core.ac.uk/search?q=sophaxis'],
-];
+const get = async (u, opt = {}) => { const r = await fetch(u, Object.assign({ headers: UA, signal: AbortSignal.timeout(30000) }, opt)); return [r.status, await r.text()]; };
+const line = (n, s, extra) => console.log('==== ' + n + ' -> ' + s + ' | ' + extra);
 (async () => {
-  for (const [name, u] of T) {
-    try {
-      const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(25000) });
-      const t = await r.text();
-      const title = ((/<title>([^<]*)<\/title>/i.exec(t) || [])[1] || '').trim().replace(/\s+/g, ' ');
-      let x = '';
-      try {
-        const j = JSON.parse(t);
-        if (name === 'DOAPR issue') x = ' state=' + j.state + ' comments=' + j.comments + ' labels=' + (j.labels || []).map((l) => l.name).join(',') + ' updated=' + j.updated_at;
-        if (j.meta && 'count' in j.meta) x += ' count=' + j.meta.count;
-        if (j.data && Array.isArray(j.data)) x += ' data=' + j.data.map((d) => d.id).join(',');
-        if (j.search) x = ' wikidata=' + j.search.map((s) => s.id + ':' + s.label).join(',');
-        if (Array.isArray(j) && name.startsWith('Wayback')) x = ' captures=' + Math.max(0, j.length - 1);
-        if (name === 'OpenAlex works by ORCID') x += ' with sophaxis location=' + j.results.filter((w) => JSON.stringify(w.locations).includes('sophaxis')).length + '/' + j.results.length;
-        if (name.startsWith('SWH') && Array.isArray(j)) x = ' visits=' + j.length + ' ' + (j[0] ? j[0].date + ' ' + j[0].status : '');
-        if (j['researcher-url']) x = ' urls=' + j['researcher-url'].map((u2) => u2.url.value).join(' , ');
-        if (j.group) x = ' works=' + j.group.length + ' titles=' + j.group.map((g) => g['work-summary'][0].title.title.value.slice(0, 40)).join(' | ');
-        if (j.response) x = ' hal=' + j.response.numFound + ' ' + (j.response.docs || []).map((d) => d.halId_s + ' ' + d.submittedDate_s).join(' , ');
-      } catch (e) { /* not JSON */ }
-      console.log('==== ' + name + ' -> ' + r.status + ' | ' + title.slice(0, 60) + ' | sophaxis ' + (t.match(/sophaxis/gi) || []).length + x);
-    } catch (e) { console.log('==== ' + name + ' error ' + (e.cause ? e.cause.code || e.cause.message : e.message)); }
+  // Common Crawl: the latest crawls, and whether they hold pages of the site.
+  try {
+    const [s, t] = await get('https://index.commoncrawl.org/collinfo.json');
+    const cols = s === 200 ? JSON.parse(t).slice(0, 3) : [];
+    line('Common Crawl collections', s, cols.map((c) => c.id).join(','));
+    for (const c of cols) {
+      const [s2, t2] = await get(c['cdx-api'] + '?url=sophaxis.vercel.app/*&output=json&limit=50');
+      const n = s2 === 200 ? t2.trim().split('\n').filter(Boolean).length : 0;
+      line('Common Crawl ' + c.id, s2, 'pages=' + n + (n ? ' e.g. ' + JSON.parse(t2.trim().split('\n')[0]).url : ''));
+    }
+  } catch (e) { line('Common Crawl', 'error', e.message); }
+  // Semantic Scholar: papers whose landing page is on the site.
+  try { const [s, t] = await get('https://api.semanticscholar.org/graph/v1/paper/search?query=sophaxis&fields=title,url,externalIds'); line('Semantic Scholar search', s, t.slice(0, 200)); } catch (e) { line('Semantic Scholar', 'error', e.message); }
+  // Internet Archive Scholar / fatcat.
+  try { const [s, t] = await get('https://scholar.archive.org/search?q=sophaxis'); line('IA Scholar', s, 'sophaxis ' + (t.match(/sophaxis/gi) || []).length + ' | ' + ((/(\d[\d,]*)\s+results?/i.exec(t) || ['no count'])[0])); } catch (e) { line('IA Scholar', 'error', e.message); }
+  try { const [s, t] = await get('https://api.fatcat.wiki/v0/container/lookup?issnl=0000-0000'); line('fatcat api reachable', s, t.slice(0, 80)); } catch (e) { line('fatcat', 'error', e.message); }
+  // re3data (data repositories; Sophaxis is not one, checked for completeness).
+  try { const [s, t] = await get('https://www.re3data.org/api/beta/repositories?query=sophaxis'); line('re3data', s, 'sophaxis ' + (t.match(/sophaxis/gi) || []).length); } catch (e) { line('re3data', 'error', e.message); }
+  // DOAPR data in its public repository: does any file name Sophaxis?
+  try {
+    const [s, t] = await get('https://api.github.com/repos/antleaf/doapr/git/trees/HEAD?recursive=1', { headers: Object.assign({}, UA, { Accept: 'application/vnd.github+json' }) });
+    const tree = s === 200 ? JSON.parse(t).tree.map((x) => x.path) : [];
+    line('DOAPR repo tree', s, 'files=' + tree.length + ' sophaxis-named=' + tree.filter((p) => /sophaxis/i.test(p)).join(','));
+  } catch (e) { line('DOAPR repo', 'error', e.message); }
+  // Scilit and Lens: plain pages, recorded as they answer.
+  for (const [n, u] of [['Scilit', 'https://www.scilit.com/publications?q=sophaxis'], ['Lens', 'https://www.lens.org/lens/search/scholar/list?q=sophaxis'], ['Dimensions', 'https://app.dimensions.ai/discover/publication?search_text=sophaxis']]) {
+    try { const [s, t] = await get(u); line(n, s, ((/<title>([^<]*)<\/title>/i.exec(t) || [])[1] || '').trim().slice(0, 60) + ' | sophaxis ' + (t.match(/sophaxis/gi) || []).length); } catch (e) { line(n, 'error', e.message); }
   }
 })();
