@@ -209,7 +209,7 @@ function commit(action, id, summary) {
 const SUMMARY = {
   hold: (id) => id + ' の要旨と PDF を、削除依頼の審査中は下げる',
   release: (id) => id + ' を戻す（削除依頼は認められなかった）',
-  remove: (id) => id + ' を削除の告知に替える（削除依頼を認めた）',
+  remove: (id) => id + ' を削除の告知に替える',
   'remove-pdf': (id) => id + ' の PDF の写しを外す（著者の依頼）',
 };
 
@@ -275,9 +275,28 @@ async function intake() {
   console.log(held ? 'held' : 'acknowledged');
 }
 
+/* An author's request in a withdrawal issue to remove the record (Withdrawal Policy). Only a verified request
+ * that asks for removal is carried out; withdrawal itself is done by a pull request, as before. */
+async function decideWithdrawal(n, labels, decision) {
+  const W = require('./withdraw.js');
+  const form = W.parse(process.env.ISSUE_BODY);
+  const say = (body) => I.github('POST', '/issues/' + n + '/comments', { body: MARK + '\n' + body });
+  if (decision !== 'upheld') return say('The operator does not remove the record. The operator gives the reasons in this issue.');
+  if (form.mode !== 'remove') return say('This issue asks for withdrawal, not removal. The operator withdraws the record by a pull request.');
+  if (!labels.includes('verified')) return say('The request is not verified, so nothing is removed.');
+  const record = readRecord(form.id);
+  const change = plan('remove', record, today());
+  if (change.skip || change.problems.length) return say('The record could not be removed automatically (' + (change.skip || change.problems.join('; ')) + '). The operator does it by hand.');
+  write(change);
+  commit('remove', form.id, SUMMARY.remove(form.id) + '（#' + n + '、著者の求め）');
+  console.log('emptied: ' + (await erase(record)).map((x) => '#' + x).join(', '));
+}
+
 async function decide() {
   const n = process.env.ISSUE_NUMBER;
   const decision = process.env.DECISION;
+  const labels = (((await I.github('GET', '/issues/' + n)) || {}).labels || []).map((l) => l.name);
+  if (labels.includes('withdrawal')) return decideWithdrawal(n, labels, decision);
   const form = parse(process.env.ISSUE_BODY);
   const record = readRecord(form.id);
   const day = today();
@@ -297,7 +316,7 @@ async function decide() {
     try {
       if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
       write(change);
-      commit(action, form.id, SUMMARY[action](form.id) + '（#' + n + '）');
+      commit(action, form.id, SUMMARY[action](form.id) + '（#' + n + '、削除依頼を認めた）');
       if (action === 'remove') emptied = await erase(record);
       done = true;
     } catch (e) { console.error(action + ': ' + e.message); }

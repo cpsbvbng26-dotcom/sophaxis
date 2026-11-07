@@ -2,6 +2,7 @@ name: removal
 # Removal requests under the Takedown Policy (tools/removal.js).
 # An issue is acknowledged at once; a report of exposed personal data takes the abstract and the PDF copy offline at once.
 # The decision is the operator's: only the repository owner's labels "upheld" and "not-upheld" act on a record.
+# The same label on a verified withdrawal issue that asks for removal removes the record (Withdrawal Policy).
 # A request sent by email is handled by running this workflow by hand.
 on:
   issues:
@@ -49,7 +50,7 @@ jobs:
   decide:
     if: >-
       github.event_name == 'issues' && github.event.action == 'labeled'
-      && contains(github.event.issue.labels.*.name, 'removal')
+      && (contains(github.event.issue.labels.*.name, 'removal') || contains(github.event.issue.labels.*.name, 'withdrawal'))
       && (github.event.label.name == 'upheld' || github.event.label.name == 'not-upheld')
       && github.event.sender.login == github.repository_owner
     name: Carry out the operator's decision

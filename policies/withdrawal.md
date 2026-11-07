@@ -30,6 +30,16 @@ The PDF copies are taken off the site, and the record links to the repository on
 A withdrawn record takes no new versions.
 Earlier copies stay in the history of the public repository and in the Internet Archive, and harvesters of the OAI-PMH interface keep what they took.
 
+## Removal at an author's request
+
+An author can ask, in the same issue, for the record to be removed instead of withdrawn.
+The form asks which of the two the author wants.
+The same check confirms that the account asking belongs to an author of the work.
+A record that is already withdrawn can still be removed.
+The operator removes the record by labelling the verified issue `upheld`, and aims to do so within 7 days.
+Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.html) sets out.
+No reason is shown, and the withdrawal issue itself is emptied, closed and locked.
+
 ## An author's name
 
 As the Creative Commons licences provide, an author can ask for their name to be taken off a record.

@@ -5,9 +5,12 @@ Last updated: 2026-11-07.
 ## When a record is removed
 
 Records are not deleted.
-There are two exceptions.
+Every Sophaxis id stays, even when its record is removed.
+A record is removed in three cases.
 The first is removal required by law, such as copyright infringement or exposure of personal data.
 The second is when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](./withdrawal.html).
+The third is when an author of the work asks for it in a withdrawal issue, as the [Withdrawal Policy](./withdrawal.html) sets out.
+A removed record leaves only what the section "What a removed record leaves" below lists.
 
 ## How to ask
 
@@ -39,20 +42,44 @@ The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 
-If the request is upheld, the record page is replaced by a notice that says only that the record with that Sophaxis id was removed.
-The notice gives no reason and no other detail.
-The address keeps working, so that citations lead to the notice instead of to nothing.
-The title, the authors, the abstract and the PDF copy are removed from the site.
-Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
-The operator also asks GitHub to remove the material from the repository history.
-Earlier versions of the site that Vercel keeps are not open to the public.
-The operator also asks the Internet Archive to exclude its earlier copies of the record.
-The OAI-PMH interface marks the record as deleted, so that harvesters can remove it when they next visit.
-Copies that others have already taken are outside Sophaxis's control; the operator tells the ones it knows of.
-
+If the request is upheld, the record is removed, as the next section sets out.
 If the request is not upheld, the operator says why in the issue.
 Material that was taken offline while the request was reviewed is put back.
 An author can answer a request at any time; if the answer shows that the request has no ground, the material is put back.
+
+## What a removed record leaves
+
+This section applies to every removed record, whatever the reason.
+The removal is carried out by `tools/removal.js` in the public repository, after the operator's decision, and every step below is checked automatically before it is published.
+
+On the site:
+
+- When a record is removed, its page is replaced by a notice that says only that the record with that Sophaxis id was removed.
+- The notice gives no reason and no other detail.
+- The address keeps working, so that citations lead to the notice instead of to nothing.
+- The title, the authors, the abstract and the PDF copy are removed from the site.
+- The page asks search engines not to index it, and the record leaves every list, the search, the feed, `papers.json` and the sitemap. The statistics count it only among removed records.
+- Earlier versions of the site that Vercel keeps are not open to the public.
+
+In the records and the OAI-PMH interface:
+
+- The record keeps only its Sophaxis id, the word "removed" and the day of removal. The day is kept because the OAI-PMH interface needs it.
+- The OAI-PMH interface marks the record as deleted, with that day and no metadata, so that harvesters can remove it when they next visit.
+
+In the issues:
+
+- Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
+- Deleting an issue also deletes its edit history.
+- A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
+
+Outside the site:
+
+- The operator also asks GitHub to remove the material from the repository history.
+- Until GitHub does so, earlier versions of the record stay in the history of the public repository.
+- The operator also asks the Internet Archive to exclude its earlier copies of the record.
+- Copies that others have already taken are outside Sophaxis's control; the operator tells the ones it knows of.
+
+The Sophaxis id of a removed record is never given to another work.
 
 ## Requests to disclose who sent material
 
