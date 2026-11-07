@@ -135,7 +135,7 @@ function authorNotice({ id, kind, issue, held }) {
 
 function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
   if (decision === 'not-upheld') {
-    return [MARK, '**Not upheld** (' + today + '). The operator gives the reasons in this issue.', restored ? 'The abstract and the PDF copy of ' + id + ' are put back.' : 'Nothing of ' + id + ' was taken offline, so nothing is put back.'].join('\n');
+    return [MARK, '**Not upheld** (' + today + '). The operator gives the reasons in this issue.', restored ? 'The abstract and the PDF copy of ' + id + ' are put back.' : 'Nothing of ' + id + ' was taken offline, so nothing is put back.', CHALLENGE].join('\n');
   }
   const steps = kind && kind.slug === 'pdf-copy'
     ? ['- [x] the PDF copies of ' + id + ' are taken off the site; the record links to the repository only']
@@ -147,8 +147,11 @@ function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
       '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)',
       '- [ ] ask GitHub to remove the material from the repository history (by hand)'];
   const auto = kind && (kind.removes || kind.slug === 'pdf-copy');
-  return [MARK, '**Upheld** (' + today + ').', '', ...(done ? steps : [auto ? 'The record could not be changed automatically. The operator does it by hand.' : 'This kind of request changes nothing automatically. The operator carries it out by hand.'])].join('\n');
+  return [MARK, '**Upheld** (' + today + '). The operator gives the grounds in this issue.', CHALLENGE, '', ...(done ? steps : [auto ? 'The record could not be changed automatically. The operator does it by hand.' : 'This kind of request changes nothing automatically. The operator carries it out by hand.'])].join('\n');
 }
+
+/* Every decision says how to challenge it (Takedown Policy, the Digital Services Act, Article 20). */
+const CHALLENGE = 'The decision can be challenged within six months, free of charge, by answering in this issue or by email to the address on the operator\'s ORCID record. The operator reviews it; no automatic step does.';
 
 /* What an issue that named a removed record says afterwards. */
 const EMPTIED = 'Removed.';
@@ -352,7 +355,7 @@ async function remind() {
   for (const r of dueReminders(open, owner, day)) await I.github('POST', '/issues/' + r.number + '/comments', { body: reminder(r.due) });
 }
 
-module.exports = { write, restore, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { write, restore, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];
