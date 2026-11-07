@@ -1,27 +1,22 @@
 'use strict';
-/* One-off probe, never merged (read only): registries and aggregators that may take Sophaxis, and what they ask. */
+/* One-off probe, never merged (read only): where JOSS takes volunteer reviewers. */
 const U = [
-  ['BASE suggest', 'https://www.base-search.net/about/en/suggest.php'],
-  ['BASE content providers', 'https://www.base-search.net/about/en/about_sources_date.php'],
-  ['OpenDOAR', 'https://v2.sherpa.ac.uk/opendoar/'],
-  ['OpenDOAR policies', 'https://v2.sherpa.ac.uk/opendoar/policytool/'],
-  ['Jisc OpenDOAR inclusion', 'https://www.jisc.ac.uk/opendoar'],
-  ['CORE data providers', 'https://core.ac.uk/data-providers'],
-  ['CORE join', 'https://core.ac.uk/join'],
-  ['OpenAIRE PROVIDE', 'https://provide.openaire.eu/'],
-  ['re3data suggest', 'https://www.re3data.org/suggest'],
-  ['IA Scholar', 'https://scholar.archive.org/'],
-  ['Google Scholar inclusion', 'https://scholar.google.com/intl/en/scholar/inclusion.html'],
+  'https://reviewers.joss.theoj.org/',
+  'https://joss.readthedocs.io/en/latest/reviewer_guidelines.html',
+  'https://joss.theoj.org/',
+  'https://joss.readthedocs.io/en/latest/editorial_guide.html',
 ];
-const words = /(individual|personal|institution|organi[sz]ation|free of charge|no charge|criteria|must|OAI-PMH|eligib)[^.<]{0,140}/gi;
 (async () => {
-  for (const [n, u] of U) {
+  for (const u of U) {
     try {
       const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sophaxis probe)' }, signal: AbortSignal.timeout(30000) });
       const t = await r.text();
-      const text = t.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-      console.log('==== ' + n + ' -> ' + r.status + ' ' + r.url + ' | ' + ((/<title>([^<]*)/i.exec(t) || [])[1] || '').trim().slice(0, 70));
-      [...new Set([...text.matchAll(words)].map((m) => m[0].trim()))].slice(0, 6).forEach((x) => console.log('  - ' + x.slice(0, 200)));
-    } catch (e) { console.log('==== ' + n + ' error ' + (e.cause ? e.cause.code || e.cause.message : e.message)); }
+      console.log('==== ' + u + ' -> ' + r.status + ' ' + r.url + ' | ' + ((/<title>([^<]*)/i.exec(t) || [])[1] || '').trim().slice(0, 80));
+      const links = [...t.matchAll(/<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)].map((m) => [m[1], m[2].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()])
+        .filter(([h, x]) => /review|volunteer|sign ?up|join|register/i.test(h + ' ' + x));
+      [...new Map(links.map((l) => [l[0], l])).values()].slice(0, 12).forEach(([h, x]) => console.log('  - ' + x.slice(0, 60) + ' <' + h + '>'));
+      const said = [...t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').matchAll(/[^.]{0,120}(volunteer|sign up)[^.]{0,160}\./gi)].slice(0, 4).map((m) => m[0].trim());
+      said.forEach((s) => console.log('  > ' + s.slice(0, 280)));
+    } catch (e) { console.log('==== ' + u + ' error ' + (e.cause ? e.cause.code || e.cause.message : e.message)); }
   }
 })();
