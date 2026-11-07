@@ -1,3 +1,14 @@
 User-agent: *
 Allow: /
+
+User-agent: ia_archiver
+User-agent: archive.org_bot
+Disallow: /abs/2026.0006
+Disallow: /pdf/2026.0006
+Disallow: /abs/2026.0007
+Disallow: /pdf/2026.0007
+Disallow: /abs/2026.0008
+Disallow: /pdf/2026.0008
+Allow: /
+
 Sitemap: https://sophaxis.vercel.app/sitemap.xml
