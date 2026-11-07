@@ -2085,6 +2085,32 @@ console.log('\n53. robots.txt keeps the Internet Archive away from removed recor
   ok('without a removed record, robots.txt is the plain one', B.robots(fx.filter((p) => p.status !== 'removed')) === 'User-agent: *\nAllow: /\n\nSitemap: https://sophaxis.vercel.app/sitemap.xml\n');
 }
 
+/* ------------------------------------------------------------ 54 */
+console.log('\n54. The Zenodo community is named as what it is, not as a partnership');
+{
+  const URL = 'https://zenodo.org/communities/sophaxis';
+  const readme = read(path.join(ROOT, 'README.md'));
+  const forRepos = read(path.join(ROOT, 'repositories.md'));
+  ok('the README, in both languages, and the page for repositories give the community and say it is not an affiliation',
+    (readme.match(/<https:\/\/zenodo\.org\/communities\/sophaxis>/g) || []).length === 2 && forRepos.includes('<' + URL + '>')
+    && readme.includes('it is not an affiliation with Zenodo, and Zenodo does not endorse Sophaxis.') && readme.includes('Zenodo との提携ではありません。')
+    && forRepos.includes('it does not make Sophaxis part of Zenodo.'));
+  ok('the community takes only works listed on Sophaxis, and says so in both languages',
+    readme.includes('A record is added only when the same version is listed on Sophaxis, and every addition is reviewed.')
+    && readme.includes('入れるのは、同じ版が Sophaxis に載っているものだけです。'));
+  /* No page, record or policy claims a partnership, an endorsement or an affiliation with a repository; only the denials may name them. */
+  const files = ['README.md', 'policy.md', 'disclaimer.md', 'repositories.md', 'faq.md', 'contact.md', 'process.md', 'automation.md']
+    .concat(fs.readdirSync(path.join(ROOT, 'policies')).map((f) => path.join('policies', f)));
+  const claims = [];
+  for (const f of files) {
+    const t = read(path.join(ROOT, f));
+    for (const line of t.split('\n')) {
+      if (/partner|endorse|affiliat|提携|公認|推薦/i.test(line) && !/\bnot\b|\bno\b|\bnor\b|ではありません|ません/i.test(line)) claims.push(f + ': ' + line.slice(0, 80));
+    }
+  }
+  ok('no page claims a partnership, an endorsement or an affiliation; such words appear only in denials', claims.length === 0, claims.join(' / '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
