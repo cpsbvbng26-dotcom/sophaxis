@@ -40,8 +40,8 @@ The operator aims to answer within 7 days.
 ## Sophaxis elsewhere
 
 - OSF: the project page [Sophaxis: An Independent Overlay Preprint Server](https://osf.io/mq7za/), with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The DOI names the project, not a listed work.
+- Zenodo: the code and the records, archived with each release. Version 1.0.0 has the DOI [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372); [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) stands for every version. The community <https://zenodo.org/communities/sophaxis> gathers the Zenodo records of works listed on Sophaxis; it is not an affiliation with Zenodo.
 - GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
-- Zenodo: the code and the records, archived with each release. Version 1.0.0 has the DOI [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372); [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) stands for every version.
 - ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).
 
 ## Security
