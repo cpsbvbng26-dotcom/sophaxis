@@ -130,7 +130,7 @@ The record stays in the git history; where the law requires it, ask GitHub to re
 ## Operator and contact
 
 Sophaxis is operated by Takuya Nemoto. How to reach the operator is on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page.
-The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf. Only the authors of a work can submit it, and the operator does not list a work by someone else because the operator has read it; see the [Disclaimer](https://sophaxis.vercel.app/disclaimer.html).
+The operator, who is at present also the only moderator, runs Sophaxis as an unpaid volunteer, only within the free services of GitHub and Vercel. Sophaxis began because the operator looked for one place that lists open preprints in philosophy and in mathematics side by side, and did not find one; it is kept for the operator's own reading and for anyone who works on the same questions. The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf. Only the authors of a work can submit it, and the operator does not list a work by someone else because the operator has read it; see the [Disclaimer](https://sophaxis.vercel.app/disclaimer.html).
 Sophaxis has a project page on OSF: <https://osf.io/mq7za/>, DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
 On 2026-11-01 the operator applied for Sophaxis to be listed in DOAPR, the Directory of Open Access Preprint Repositories run by COAR. Whether it is listed is DOAPR's decision.
 On 2026-11-03 (Japan time) the OAI-PMH base URL, <https://sophaxis.vercel.app/oai>, passed the initial tests of the validator of the Open Archives Initiative. The Initiative stopped registering data providers on 2025-07-18, so this is a validation, not a listing.
@@ -229,7 +229,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
 
 運営は根本卓哉です。
-運営者は、趣味の読書棚の延長として Sophaxis を使っています。載せるのは、著者本人が投稿した論文だけです。運営者が読んだからといって、他人の論文を載せることはありません。営利ではなく、費用も広告もありません。詳しくは [Disclaimer](https://sophaxis.vercel.app/disclaimer.html) にあります（英語）。
+運営者は、現在ただ一人のモデレーターを兼ね、無報酬のボランティアとして運営しています。GitHub と Vercel の無料の範囲だけで動かしています。哲学と数学の公開済みのプレプリントを並べて載せる場を探し、見つからなかったことが始まりです。運営者自身が読むためであり、同じ問いを考える人のためでもあります。ほかのアーカイブを評価するものではありません。運営者は、趣味の読書棚の延長として Sophaxis を使っています。載せるのは、著者本人が投稿した論文だけです。運営者が読んだからといって、他人の論文を載せることはありません。営利ではなく、費用も広告もありません。詳しくは [Disclaimer](https://sophaxis.vercel.app/disclaimer.html) にあります（英語）。
 OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)）。2026-11-01 に、COAR が運営する DOAPR（Directory of Open Access Preprint Repositories）への掲載を申請しました。掲載するかどうかは DOAPR が決めます。
 2026-11-03（日本時間）に、OAI-PMH の入口（<https://sophaxis.vercel.app/oai>）が Open Archives Initiative の検証ツールの初期テストを通りました。この組織は 2025-07-18 にデータ提供者の登録を終えています。これは検証であって、一覧への掲載ではありません。
 同じ日に、PhilPapers に、Open Access Gateway へ Sophaxis を加えるよう依頼しました。PhilPapers が論文を索引するアーカイブの一覧です。加える前に一件ずつ審査があります。加えるかどうかは PhilPapers が決めます。

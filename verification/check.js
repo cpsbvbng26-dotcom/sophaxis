@@ -894,6 +894,16 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, ORCID, GitHub, Vercel or the Internet Archive.')
     && dis.includes('Sophaxis does not use GitHub or ORCID sign-in')
     && dis.includes('through the public APIs of DataCite, Crossref, JaLC, ORCID and the repositories.'));
+  ok('who runs Sophaxis and why: an unpaid volunteer who is the only moderator, free services only, duties unchanged, a reason that judges no other archive',
+    ['The operator, who is at present also the only moderator, runs Sophaxis as an unpaid volunteer.', 'No one is paid for work on Sophaxis, and no one pays to submit or to read.',
+      'Sophaxis runs only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and buys no domain or other service.',
+      'Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.html) and the [Privacy Policy](./policies/privacy.html).',
+      'This is the operator\'s reason, not a judgement on other archives.', 'Sophaxis does not replace them, and a work listed here stays in its own repository.'].every((x) => dis.includes(x))
+    && dis.indexOf('## Who runs Sophaxis, and why') < dis.indexOf('## The operator\'s own use')
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('moderates under this policy without pay')
+    && read(path.join(ROOT, 'contact.md')).includes('The operator runs it as an unpaid volunteer, only within free services, and is at present the only moderator.')
+    && read(path.join(ROOT, 'README.md')).includes('runs Sophaxis as an unpaid volunteer, only within the free services of GitHub and Vercel.')
+    && read(path.join(ROOT, 'README.md')).includes('無報酬のボランティアとして運営しています。GitHub と Vercel の無料の範囲だけで動かしています。'));
   ok('the operator\'s own use is stated: a hobby reading shelf that changes nothing in the listing, authors only, no business, no publishing, licence-bound copies, no rights taken, takedown, and no claim of no legal risk',
     dis.includes('## The operator\'s own use') && dis.includes('The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf')
     && dis.includes('This use does not change what is listed or how.')
