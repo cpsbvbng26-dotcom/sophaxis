@@ -49,6 +49,7 @@ The operator then looks at the submission once more, and that decision is final.
 
 The operator is at present the only moderator.
 Other moderators may be invited.
+A researcher in these fields who would like to moderate can write to the operator; the operator decides whom to invite.
 Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
 
 ## Conflicts of interest

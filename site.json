@@ -14,7 +14,14 @@
   "osf": { "url": "https://osf.io/mq7za/", "doi": "10.17605/OSF.IO/MQ7ZA" },
   "pdfLimits": { "fileMB": 20, "totalGB": 1 },
   "submissionsPaused": false,
-  "termsNotice": { "text": "A person under 13 can no longer submit. A work with more than one author is listed only after every other author confirms their own agreement. Text written in the forms is shared under CC0 1.0, and an abstract given in a form under the licence of the work. The submission form asks two more confirmations: that every author consents to the record being published, offered through OAI-PMH and provided to services in the United States, and agreement to the policies.", "from": "2026-11-21" },
+  "llmExtents": {
+    "none": "None: no generative model was used",
+    "editing": "Editing: language editing, translation or proofreading only",
+    "assistance": "Assistance: structure, literature search or checking; the authors wrote the text",
+    "drafting": "Drafting: a generative model drafted text, proofs, code or figures that the authors revised"
+  },
+  "llmExtentFrom": "2026-11-21",
+  "termsNotice": { "text": "A person under 13 can no longer submit. A work with more than one author is listed only after every other author confirms their own agreement. Text written in the forms is shared under CC0 1.0, and an abstract given in a form under the licence of the work. The submission form asks two more confirmations: that every author consents to the record being published, offered through OAI-PMH and provided to services in the United States, and agreement to the policies. The form also asks for the extent of use of generative models, at one of four levels: none, editing, assistance or drafting.", "from": "2026-11-21" },
   "securityTxtExpires": "2027-10-31T00:00:00.000Z",
   "doi": { "prefix": null, "suffix": "sophaxis.{id}" },
   "operator": {
