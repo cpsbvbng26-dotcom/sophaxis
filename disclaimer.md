@@ -29,6 +29,18 @@ It is not affiliated with, endorsed by or a partner of any repository it lists, 
 Their names are used only to identify their services, and belong to their owners.
 They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
 
+## Who runs Sophaxis, and why
+
+The operator, who is at present also the only moderator, runs Sophaxis as an unpaid volunteer.
+No one is paid for work on Sophaxis, and no one pays to submit or to read.
+Sophaxis runs only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and buys no domain or other service.
+Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.html) and the [Privacy Policy](./policies/privacy.html).
+
+Sophaxis began because the operator looked for one place that lists open preprints in philosophy and in mathematics side by side, and did not find one.
+It is kept for the operator's own reading, as the next section says, and for anyone who works on the same questions.
+This is the operator's reason, not a judgement on other archives.
+Sophaxis does not replace them, and a work listed here stays in its own repository.
+
 ## The operator's own use
 
 The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf: a place to keep works in philosophy and mathematics at hand and to read them.
