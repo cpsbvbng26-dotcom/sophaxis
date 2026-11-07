@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>What runs by itself | Sophaxis</title>
+<meta name="description" content="Every automatic step of Sophaxis: when it runs, what it reads and writes, and what it leaves to the operator.">
+<link rel="canonical" href="https://sophaxis.vercel.app/automation.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="What runs by itself | Sophaxis">
+<meta property="og:description" content="Every automatic step of Sophaxis: when it runs, what it reads and writes, and what it leaves to the operator.">
+<meta property="og:url" content="https://sophaxis.vercel.app/automation.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>What runs by itself</h1>
+<p>Last updated: 2026-11-07.</p>
+<p>Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel. This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator. The code of each step is public, and each section links to it.</p>
+<ul><li>No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.</li><li>One step acts before the operator decides: when a removal issue reports exposure of personal data, the abstract and the PDF copy are taken offline at once. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.</li><li>No step uses a language model. The steps are ordinary code.</li><li>No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.</li><li>A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.</li><li>The <a href="./policies/privacy.html">Privacy Policy</a> says what personal data these steps handle.</li></ul>
+<h2>When a submission issue is opened or edited, or an author confirms in a comment</h2>
+<ul><li>Reads: the DOI metadata from DataCite, Crossref or JaLC; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.</li><li>Writes: a comment with the result of each check and a draft record, and the label <code>verified</code> or <code>unverified</code>.</li><li>From 2026-11-21, it also counts each other author's confirmation, as the <a href="./policies/submission.html">Submission Policy</a> sets out.</li><li>Leaves to the operator: accepting or declining the submission.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js">tools/intake.js</a>, run by <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml">intake.yml</a>.</li></ul>
+<h2>When a withdrawal issue is opened or edited</h2>
+<ul><li>Reads: the record, and the public ORCID record given in the form.</li><li>Writes: a comment with the result of each check and, for a withdrawal, the record as it would be after it; the label <code>verified</code> or <code>unverified</code>.</li><li>Leaves to the operator: withdrawing the record by a pull request, or removing it by labelling the verified issue <code>upheld</code>.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/withdraw.js">tools/withdraw.js</a>.</li></ul>
+<h2>When a published version is reported</h2>
+<ul><li>Reads: the record, the DOI metadata of the published version, and the public ORCID record given in the form.</li><li>Writes: a comment with the result of each check and the record with its published version.</li><li>Leaves to the operator: recording the published version.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/published.js">tools/published.js</a>.</li></ul>
+<h2>When a removal issue is opened or edited</h2>
+<ul><li>Reads: the record and the issues of the repository.</li><li>Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.</li><li>When the issue reports exposure of personal data, it also takes the abstract and the PDF copy offline at once, as the <a href="./policies/takedown.html">Takedown Policy</a> says.</li><li>Leaves to the operator: the decision.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js">tools/removal.js</a>, run by <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml">removal.yml</a>.</li></ul>
+<h2>When the operator labels a request <code>upheld</code> or <code>not-upheld</code></h2>
+<ul><li>Acts only on the label of the repository owner.</li><li>Upheld: removes the record, as &quot;What a removed record leaves&quot; in the Takedown Policy sets out, deletes the automatic comments about it, and empties, closes and locks the issues that name it.</li><li>Not upheld: puts back what was taken offline, from the git history.</li><li>Leaves to the operator: the grounds of the decision, deleting the emptied issues, and asking GitHub and the Internet Archive to remove earlier copies.</li><li>A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id.</li></ul>
+<h2>Once a day, at 09:17 Japan time</h2>
+<ul><li>Reads: the open removal requests and the verified withdrawals.</li><li>Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.</li></ul>
+<h2>On every push and every pull request</h2>
+<ul><li>Runs every check of <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js">verification/check.js</a> against the records, the policies and the built site.</li><li>The operator merges a change only when the checks pass.</li></ul>
+<h2>When the site changes</h2>
+<ul><li>Vercel serves the files that the repository holds in <code>site/</code>, which <code>build.js</code> builds from the records. The OAI-PMH interface is a small function on Vercel that reads the same records.</li><li>Once the new pages are live, the search engines that take IndexNow are told which record pages and PDF copies are new, changed or gone, and the new and changed ones are saved to the Internet Archive. A gone page is never saved.</li><li>Earlier versions of the site that Vercel keeps are not open to the public.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js">tools/indexnow.js</a>, run by <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml">indexnow.yml</a> and after each push of the removal step.</li></ul>
+<h2>Once a week, on Monday at 13:37 Japan time</h2>
+<ul><li>Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work.</li><li>Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; a summary of the run; a save of every page and PDF copy to the Internet Archive.</li><li>Leaves to the operator: acting on what the issue reports.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js">tools/watch.js</a>.</li></ul>
+<h2>Only when the operator runs it</h2>
+<ul><li>Copies the PDF of a listed record from its repository onto a branch of its own, for a pull request that the operator reviews.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js">tools/fetch_pdf.js</a>.</li></ul>
+<h2>What stays by hand</h2>
+<ul><li>Every decision, and its grounds.</li><li>Deleting emptied issues.</li><li>Asking GitHub to remove material from the repository history, and the Internet Archive to exclude earlier copies.</li><li>Registering Sophaxis with indexes and registries.</li><li>Answering email.</li></ul>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

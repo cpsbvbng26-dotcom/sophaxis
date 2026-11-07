@@ -116,6 +116,12 @@ and that the DOI is a journal article, a conference paper, a book chapter or a b
 Replace the record with it, rebuild and open a pull request that closes the issue. The preprint stays listed.
 When the weekly check reports a new retraction or correction notice on a published version, add it to `published.updates` with its type, DOI and date.
 
+### What runs by itself
+
+Every automatic step is listed, with when it runs, what it reads and writes and what it leaves to the operator, on the page [What runs by itself](https://sophaxis.vercel.app/automation.html) (`automation.md`).
+In short: the checks of each submission, withdrawal and reported published version; the acknowledgement of removal requests, the authors' notice, and taking exposed personal data offline at once; the operator's decision carried out on the label `upheld` or `not-upheld`; a daily reminder of requests near 7 days; the checks on every push; IndexNow and the Internet Archive on every change; and the weekly watch.
+No automatic step decides on a request, uses a language model or holds a key other than the run's own GitHub token.
+
 ### Removing a record
 
 Follow the [Takedown Policy](policies/takedown.md). A removal issue runs `tools/removal.js` (`.github/workflows/removal.yml`).
@@ -210,6 +216,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 引用は BibTeX・RIS・CSL-JSON のファイルでも取り出せます。記録の JSON の項目は、上の英語の節に書いてあります。
 - 論文の頁には、関連する記録、誤りを報告する窓口、Internet Archive の保存版へのリンクがあります。
 - main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁、sitemap から外れた頁（削除した記録など）を知らせます（`tools/indexnow.js`）。新しい頁と変わった頁は、その場で Internet Archive にも保存します。外れた頁は保存しません。削除の自動処理が push したときも、同じことをその場で行います。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
+- 自動で動く手順は、いつ動き、何を読み、何を書き、何を運営者に残すかとともに、[What runs by itself](https://sophaxis.vercel.app/automation.html) の頁にすべて挙げています。どの手順も依頼の判断はせず、言語モデルを使わず、実行ごとに GitHub が渡すトークンのほかに鍵を持ちません。
 - Google は IndexNow を受けません。Google には、`robots.txt` が示し、Google Search Console に登録した sitemap から読ませます。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 確かめが通った投稿には、預け先の登録情報についての助言も返します（[deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) による、要旨やライセンスの欠けなど）。助言は掲載の可否を決めません。

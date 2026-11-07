@@ -93,9 +93,14 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>それぞれの事業者の個人情報の扱いは、各社の規約によります。米国には、個人情報についての連邦の一般法がありません。州ごとの法律があります。ドイツは欧州連合の国で、一般データ保護規則（GDPR）が適用されます。各国の個人情報の保護の制度については、個人情報保護委員会が情報を公表しています。</p>
 <p>各事業者が個人情報を守るために講じている措置は、それぞれの方針にあります。</p>
 <ul><li>GitHub：<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>。EU-米国データプライバシーフレームワークに従うと述べています。</li><li>Vercel：<a href="https://vercel.com/legal/privacy-notice">Vercel Privacy Notice</a>。EU-米国データプライバシーフレームワークに従うと述べています。</li><li>ORCID：<a href="https://info.orcid.org/privacy-policy/">ORCID Privacy Policy</a>。毎年、EU-米国データプライバシーフレームワークの基準で評価を受けていると述べています。</li><li>Crossref：<a href="https://www.crossref.org/operations-and-sustainability/privacy/">Crossref privacy</a></li><li>Internet Archive：<a href="https://archive.org/about/terms">Terms of Use</a></li></ul>
+<p>メールでの求めは、Apple のメールの受信箱（iCloud メール、米国）に届きます。応えることと、応えたことを示すのに要る間だけ、そこに置きます。Apple が講じている措置は、<a href="https://www.apple.com/legal/privacy/">Apple のプライバシーポリシー</a>にあります。</p>
 <p>Vercel は、Sophaxis への閲覧の要求の記録（IP アドレスを含みます）を持っています。運営者はこれを見ることができ、不具合を見つけて直すためだけに使います。</p>
 <h2>安全のための措置</h2>
 <p>記録は、DOI の登録情報など、すでに公開されている情報だけで作ります。投稿の自動の検査は、読むものを ORCID の氏名・ウェブサイト・業績に限り、ほかを書き写しません。検査に与える権限は、必要な最小限にしています。記録を変えられるのは、運営者だけです。ただし、削除依頼が個人情報の露出を報告したときは、<a href="./takedown.html">削除の方針</a>の自動の手順が要旨と PDF の写しを下げます。法令が報告を求める漏えいが起きたときは、個人情報保護委員会に報告し、本人に知らせます。</p>
+<p>講じている措置を、個人情報保護委員会の区分で示します。</p>
+<ul><li>組織的な措置：個人データを扱うのは運営者一人で、運営者が責任を負います。記録の変更は、どれも公開のコミットかプルリクエストとして残ります。</li><li>人的な措置：運営者のほかに、Sophaxis の個人データを扱う人はいません。</li><li>物理的な措置：Sophaxis は、自前のサーバーも紙の記録も持ちません。記録は GitHub のリポジトリに、サイトは Vercel にあります。</li><li>技術的な措置：自動の手順が持つ鍵は、GitHub が実行ごとに渡す最小限の権限のトークンだけです。Vercel に残る以前の版のサイトは、公開していません。</li><li>外的環境の把握：「外国にある事業者の利用」に示したとおりです。</li></ul>
+<h2>自動の処理</h2>
+<p>自動の検査は、公開されている記録を照らし合わせ、その結果を issue に書くだけです。人についての判断はしません。人に法的な効果、またはそれに近い重大な影響を与える判断を、自動の処理だけで下すことはありません。運営者の判断の前に動く手順が一つだけあります。削除依頼が個人情報の露出を報告したとき、要旨と PDF の写しを下げる手順です。本人を守るためのもので、依頼が認められなければ元に戻します。自動の手順は、<a href="../automation.html">What runs by itself</a> の頁にすべて挙げています。</p>
 <h2>保存の期間</h2>
 <p>記録は、引用が壊れないよう、期限を設けずに保ちます。削除の求めがあれば、<a href="./takedown.html">削除の規程</a>に沿って記録を削除します。著者の求めでも削除します。削除した記録に残るのは、Sophaxis の番号と削除の日だけです。公開のリポジトリの履歴と、Internet Archive の保存には、以前の版が残ります。運営者は、GitHub と Internet Archive にその削除を頼みます。</p>
 <h2>開示・訂正・利用停止・削除の求め</h2>
@@ -109,7 +114,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
-<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../stats.html">Statistics</a> · <a href="../contact.html">Contact</a></p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>

@@ -1979,6 +1979,54 @@ console.log('\n50. The other authors confirm their own agreement (Submission Pol
   ok('the Submission Policy gives the words of a confirmation', sub.includes('The comment says "' + I.AGREE + '" and gives their ORCID iD.'));
 }
 
+/* ------------------------------------------------------------ 51 */
+console.log('\n51. What runs by itself, said on the site and in the README');
+{
+  const auto = read(path.join(ROOT, 'automation.md'));
+  const page = read(path.join(ROOT, 'site', 'automation.html'));
+  ok('the site has the page, every page links it from the footer, and the sitemap lists it',
+    page.includes('<h1>What runs by itself</h1>') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/automation.html</loc>')
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).every((f) => /<footer>[\s\S]*automation\.html">What runs by itself<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f)))));
+  /* Every workflow on main and every script a workflow runs is named on the page, so that nothing runs unsaid. */
+  const wfs = fs.readdirSync(path.join(ROOT, '.github', 'workflows')).filter((f) => f.endsWith('.yml'));
+  const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
+  const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
+  ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
+  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml' };
+  ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml'].includes(f)), wfs.join(', '));
+  /* The times on the page are the schedules of the workflows, in Japan time. */
+  const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
+  const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
+  ok('the daily and weekly times on the page are those of the schedules (' + jst(cronOf('removal.yml')) + ', Monday ' + jst(cronOf('watch.yml')) + ' Japan time)',
+    auto.includes('## Once a day, at ' + jst(cronOf('removal.yml')) + ' Japan time') && auto.includes('## Once a week, on Monday at ' + jst(cronOf('watch.yml')) + ' Japan time')
+    && cronOf('watch.yml').endsWith(' * * 1') && cronOf('removal.yml').endsWith(' * * *') && (Number(cronOf('watch.yml').split(' ')[1]) + 9) < 24);
+  ok('the page says that no step decides, uses a language model or holds another key, and names the one step that acts before a decision',
+    ['No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.', 'No step uses a language model. The steps are ordinary code.',
+      'No step signs in to any account.', 'One step acts before the operator decides: when a removal issue reports exposure of personal data'].every((x) => auto.includes(x)));
+  const readme = read(path.join(ROOT, 'README.md'));
+  ok('the README, in both languages, points to the page', readme.includes('### What runs by itself') && readme.includes('(https://sophaxis.vercel.app/automation.html) (`automation.md`)')
+    && readme.includes('[What runs by itself](https://sophaxis.vercel.app/automation.html) の頁にすべて挙げています。'));
+  const pv = read(path.join(ROOT, 'policies', 'privacy.md'));
+  const pj = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  ok('the Privacy Policy, in both languages, says that no significant decision is made solely by automated means, names the mailbox at Apple, and gives the measures under the Commission\'s headings',
+    pv.includes('## Automated processing') && pv.includes('No decision with legal or similarly significant effects on a person is made solely by automated means.')
+    && pv.includes('Apple (iCloud Mail, United States)') && ['- Organisation:', '- People:', '- Physical:', '- Technical:', '- The countries where data is kept:'].every((x) => pv.includes(x))
+    && pj.includes('## 自動の処理') && pj.includes('自動の処理だけで下すことはありません。') && pj.includes('iCloud メール、米国')
+    && ['- 組織的な措置：', '- 人的な措置：', '- 物理的な措置：', '- 技術的な措置：', '- 外的環境の把握：'].every((x) => pj.includes(x))
+    && read(path.join(ROOT, 'docs', 'records-of-processing.md')).includes('Apple (iCloud Mail, United States), for email'));
+  const tk = read(path.join(ROOT, 'policies', 'takedown.md'));
+  ok('the Takedown Policy follows the Digital Services Act: a point of contact, notices, reasons, a free challenge within six months, courts and certified bodies, and the terms',
+    ['## For the European Union: the Digital Services Act', '(Articles 11 and 12)', 'Notices of illegal content (Article 16)', 'Reasons for a decision (Article 17)',
+      'Challenging a decision (Article 20)', 'within six months', 'the review is never left to an automatic step', 'certified under Article 21', '(Article 14)'].every((x) => tk.includes(x))
+    && read(path.join(ROOT, 'contact.md')).includes('single point of contact under the Digital Services Act of the European Union (Articles 11 and 12)'));
+  const R = require('../tools/removal.js');
+  const k = R.KINDS['Exposure of personal data'];
+  ok('every decision note gives the grounds and says how to challenge it',
+    [R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: k, today: '2026-11-12', done: true }), R.decisionNote({ id: '2026.0001', decision: 'not-upheld', kind: k, today: '2026-11-12' })]
+      .every((t) => t.includes(R.CHALLENGE) && /grounds|reasons/.test(t)) && R.CHALLENGE.includes('within six months, free of charge'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

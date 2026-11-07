@@ -81,6 +81,18 @@ Outside the site:
 
 The Sophaxis id of a removed record is never given to another work.
 
+## For the European Union: the Digital Services Act
+
+Sophaxis takes the worst case here too, and follows the Digital Services Act of the European Union as far as it can apply to a service of its size.
+
+- Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12): the email address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), in English or Japanese. Sophaxis has no legal representative in the European Union.
+- Notices of illegal content (Article 16): a removal issue, or an email. A notice by email names who sends it and gives an email address. A removal issue does not, because it is public; the GitHub account that opens it stands in their place. The acknowledgement is automatic, and the decision is told in the issue or by email.
+- Reasons for a decision (Article 17): the operator gives the grounds of every decision in the removal issue, or by email. The authors were pointed to that issue when the request arrived. The grounds say whether an automatic step acted: only the step that takes exposed personal data offline at once ever does, and it acts on the kind of problem that the request names.
+- Challenging a decision (Article 20): the person who sent the notice and the authors can challenge a decision within six months, by answering in the removal issue or by email. It costs nothing. The operator reviews it and answers, and the review is never left to an automatic step.
+- A person can also go to a court, or to an out-of-court dispute settlement body certified under Article 21.
+- The rules that limit what may be listed are in the [Terms of Use](./terms.html) and these policies, in plain English (Article 14).
+- The [statistics](../stats.html) count the removed records and link to every public removal request.
+
 ## Requests to disclose who sent material
 
 A request to disclose who submitted material is handled as Japanese law provides.
