@@ -60,6 +60,7 @@ On the site:
 - The title, the authors, the abstract and the PDF copy are removed from the site.
 - The page asks search engines not to index it, and the record leaves every list, the search, the feed, `papers.json` and the sitemap. The statistics count it only among removed records.
 - Earlier versions of the site that Vercel keeps are not open to the public.
+- `robots.txt` asks the Internet Archive's crawlers not to collect the page or its PDF copies again.
 
 In the records and the OAI-PMH interface:
 

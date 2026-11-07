@@ -91,3 +91,4 @@ Claude Code is named as a disclosure of how the site was made, not as an endorse
 Sophaxis has no arrangement with Anthropic, receives nothing from it, and does not link to its products.
 No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
 No step uses a language model. The steps are ordinary code.
+`robots.txt` asks the Internet Archive's crawlers not to collect the page or its PDF copies again.

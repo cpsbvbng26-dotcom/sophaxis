@@ -66,6 +66,7 @@ The code of each step is public, and each section links to it.
 - Vercel serves the files that the repository holds in `site/`, which `build.js` builds from the records. The OAI-PMH interface is a small function on Vercel that reads the same records.
 - Once the new pages are live, the search engines that take IndexNow are told which record pages and PDF copies are new, changed or gone, and the new and changed ones are saved to the Internet Archive. A gone page is never saved.
 - Earlier versions of the site that Vercel keeps are not open to the public.
+- `robots.txt` is built with the rest of the site, and asks the Internet Archive's crawlers not to collect any removed record.
 - Code: [tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js), run by [indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) and after each push of the removal step.
 
 ## Once a week, on Monday at 13:37 Japan time
