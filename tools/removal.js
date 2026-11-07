@@ -7,7 +7,8 @@
  *     before the decision, as the policy says. The record becomes a notice with the reason "under-review".
  *   - The authors are told in their submission issue, and can respond.
  *   - The decision is the operator's. The operator labels the issue "upheld" or "not-upheld".
- *     Upheld: the record is replaced by its removal notice, and the automatic comments that repeat it are edited.
+ *     Upheld: the record is replaced by a notice that says only that the record with that id was removed.
+ *     Every automatic comment about it is deleted, and the issues that name it are emptied, closed and locked.
  *     Not upheld: material taken offline while the request was reviewed is put back from the git history.
  *   - A request sent by email is handled the same way, by running the workflow by hand with the id.
  *   - Once a day, open requests that are close to the 7 days and that the operator has not answered get a reminder.
@@ -15,7 +16,7 @@
  * Modes, from the environment (MODE):
  *   intake   ISSUE_NUMBER, ISSUE_AUTHOR, ISSUE_BODY            a removal issue was opened or edited
  *   decide   ISSUE_NUMBER, ISSUE_BODY, DECISION                 the operator labelled it upheld or not-upheld
- *   manual   ID, ACTION (hold | release | remove | remove-pdf), REASON   a request that came by email
+ *   manual   ID, ACTION (hold | release | remove | remove-pdf)  a request that came by email
  *   remind                                                      the daily reminder
  *
  * It reads the records in data/papers and the issues of this repository, and nothing else.
@@ -42,14 +43,15 @@ const FIELDS = {
   'How you are concerned': 'relation',
 };
 
-/* The kinds of the form. `reason` is the removal_reason when the request is upheld; `hold` takes material offline at once. */
+/* The kinds of the form. `removes`: an upheld request removes the record; `hold` takes material offline at once.
+ * The kind is never written into the record: a removed record says only that it was removed. */
 const KINDS = {
-  'Copyright infringement': { slug: 'copyright', reason: 'copyright', hold: false },
-  'Exposure of personal data': { slug: 'personal-data', reason: 'personal-data', hold: true },
-  'An author did not agree to the listing': { slug: 'author-consent', reason: 'author-consent', hold: false },
-  'An author asks for the PDF copy to be removed': { slug: 'pdf-copy', reason: null, hold: false },
-  'A request about my personal data (access, correction, suspension of use, deletion)': { slug: 'data-request', reason: null, hold: false },
-  'Another legal reason': { slug: 'legal', reason: 'legal', hold: false },
+  'Copyright infringement': { slug: 'copyright', removes: true, hold: false },
+  'Exposure of personal data': { slug: 'personal-data', removes: true, hold: true },
+  'An author did not agree to the listing': { slug: 'author-consent', removes: true, hold: false },
+  'An author asks for the PDF copy to be removed': { slug: 'pdf-copy', removes: false, hold: false },
+  'A request about my personal data (access, correction, suspension of use, deletion)': { slug: 'data-request', removes: false, hold: false },
+  'Another legal reason': { slug: 'legal', removes: true, hold: false },
 };
 
 /* ------------------------------------------------------------ pure */
@@ -71,9 +73,15 @@ const tellsAuthors = (kind) => !kind || kind.slug !== 'data-request';
 const isHeld = (p) => !!p && p.status === 'removed' && p.removal_reason === 'under-review';
 const pdfFiles = (p) => ((p && p.pdfs) || []).map((x) => x.file);
 
-/* The record as a removal notice. It keeps only what the Takedown Policy lets it keep. */
-function toNotice(p, reason, today) {
-  const n = { id: p.id, status: 'removed', removal_date: today, removal_reason: reason, issue: p.issue };
+/* The record while a request is reviewed: it keeps its submission issue, so that the authors can be told the outcome. */
+function toHeld(p, today) {
+  const n = { id: p.id, status: 'removed', removal_date: today, removal_reason: 'under-review', issue: p.issue };
+  return { record: n, files: pdfFiles(p), problems: validate(n, p.id + '.json') };
+}
+
+/* The record once removed: the id, the fact and the day (which OAI-PMH needs for the deleted record). Nothing else. */
+function toRemoved(p, today) {
+  const n = { id: p.id, status: 'removed', removal_date: today };
   return { record: n, files: pdfFiles(p), problems: validate(n, p.id + '.json') };
 }
 
@@ -85,16 +93,15 @@ function withoutPdfs(p) {
 }
 
 /* What a decision does to a record. Returns { record, files } or { skip: why }. */
-function plan(action, p, reason, today) {
+function plan(action, p, today) {
   if (!p) return { skip: 'there is no such record' };
   if (action === 'hold') {
     if (p.status === 'removed') return { skip: 'the record is already ' + (isHeld(p) ? 'offline while a request is reviewed' : 'removed') };
-    return toNotice(p, 'under-review', today);
+    return toHeld(p, today);
   }
   if (action === 'remove') {
-    if (!reason || reason === 'under-review') return { skip: 'no reason for removal is given' };
     if (p.status === 'removed' && !isHeld(p)) return { skip: 'the record is already removed' };
-    return toNotice(p, reason, today);
+    return toRemoved(p, today);
   }
   if (action === 'remove-pdf') {
     if (p.status === 'removed') return { skip: 'the record is removed' };
@@ -126,23 +133,26 @@ function authorNotice({ id, kind, issue, held }) {
   ].join('\n');
 }
 
-function decisionNote({ id, decision, kind, today, done, restored }) {
+function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
   if (decision === 'not-upheld') {
     return [MARK, '**Not upheld** (' + today + '). The operator gives the reasons in this issue.', restored ? 'The abstract and the PDF copy of ' + id + ' are put back.' : 'Nothing of ' + id + ' was taken offline, so nothing is put back.'].join('\n');
   }
   const steps = kind && kind.slug === 'pdf-copy'
     ? ['- [x] the PDF copies of ' + id + ' are taken off the site; the record links to the repository only']
-    : ['- [x] the record page of ' + id + ' is replaced by a notice with the id, the date and the kind of reason',
-      '- [x] the automatic comments that repeat the record are edited',
+    : ['- [x] the record page of ' + id + ' says only that the record was removed',
+      '- [x] every automatic comment about the record is deleted',
+      '- [x] the issues that name it are emptied, closed and locked' + (emptied && emptied.length ? ': ' + emptied.map((x) => '#' + x).join(', ') : ''),
       '- [x] the OAI-PMH interface marks the record as deleted',
+      '- [ ] delete those issues, so that their edit history goes too (by hand; only the owner can)',
       '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)',
-      '- [ ] where the law requires it, ask GitHub to remove the material from the repository history (by hand)',
-      '- [ ] where the request needs it, hide or delete the submission issue (by hand)'];
-  const auto = kind && (kind.reason || kind.slug === 'pdf-copy');
+      '- [ ] ask GitHub to remove the material from the repository history (by hand)'];
+  const auto = kind && (kind.removes || kind.slug === 'pdf-copy');
   return [MARK, '**Upheld** (' + today + ').', '', ...(done ? steps : [auto ? 'The record could not be changed automatically. The operator does it by hand.' : 'This kind of request changes nothing automatically. The operator carries it out by hand.'])].join('\n');
 }
 
-const redacted = (id, today) => '*This automatic comment repeated the record ' + id + ', which was removed on ' + today + ' under the Takedown Policy. Its text is no longer shown.*';
+/* What an issue that named a removed record says afterwards. */
+const EMPTIED = 'Removed.';
+const emptiedTitle = (title) => (String(title || '').match(/^\[[A-Za-z ]+\]/) || ['[Removed]'])[0] + ' removed';
 
 /* Pure: the open requests that need a reminder today. `issues` carry their comments. */
 function dueReminders(issues, owner, today) {
@@ -213,9 +223,10 @@ async function upsert(n, mark, body) {
   else await I.github('POST', '/issues/' + n + '/comments', { body });
 }
 
-/* Edit every automatic comment that repeats the record: in its submission issue, and in issues that name its id. */
-async function redactAll(record, today) {
-  const marks = ['<!-- sophaxis-intake -->', '<!-- sophaxis-published -->', '<!-- sophaxis-withdrawal -->'];
+/* Leave no trace of a removed record in the issues: its submission issue, and every other issue that names its id
+ * (withdrawal, published version, correction), except the removal requests. Every comment of the bot there is deleted,
+ * and each issue is emptied, closed and locked. Returns the issues, for the operator to delete. */
+async function erase(record) {
   const issues = new Set([record.issue]);
   for (let page = 1; page <= 10; page++) {
     const list = (await I.github('GET', '/issues?state=all&per_page=100&page=' + page)) || [];
@@ -223,12 +234,13 @@ async function redactAll(record, today) {
     if (list.length < 100) break;
   }
   for (const n of issues) {
-    for (const c of await comments(n)) {
-      const mark = marks.find((m) => c.user.type === 'Bot' && c.body.startsWith(m));
-      if (mark) await I.github('PATCH', '/issues/comments/' + c.id, { body: mark + '\n' + redacted(record.id, today) });
-    }
+    for (const c of await comments(n)) if (c.user.type === 'Bot') await I.github('DELETE', '/issues/comments/' + c.id);
+    const issue = await I.github('GET', '/issues/' + n);
+    if (!issue) continue;
+    await I.github('PATCH', '/issues/' + n, { title: emptiedTitle(issue.title), body: EMPTIED, state: 'closed', state_reason: 'not_planned' });
+    await I.github('PUT', '/issues/' + n + '/lock', { lock_reason: 'resolved' });
   }
-  await I.github('PATCH', '/issues/' + record.issue, { title: '[Submission] ' + record.id + ' (removed)' });
+  return [...issues].sort((a, b) => a - b);
 }
 
 async function label(n, add, remove) {
@@ -249,7 +261,7 @@ async function intake() {
   let held = false, failed = false;
   /* One hold per issue: an edit that names another id is left to the operator. */
   if (form.kind && form.kind.hold && record && record.status !== 'removed' && !before) {
-    const change = plan('hold', record, null, today());
+    const change = plan('hold', record, today());
     try {
       if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
       write(change);
@@ -278,24 +290,24 @@ async function decide() {
     return;
   }
   if (decision !== 'upheld') throw new Error('unknown decision ' + decision);
-  let done = false;
-  if (form.kind && (form.kind.reason || form.kind.slug === 'pdf-copy')) {
+  let done = false, emptied = [];
+  if (form.kind && (form.kind.removes || form.kind.slug === 'pdf-copy')) {
     const action = form.kind.slug === 'pdf-copy' ? 'remove-pdf' : 'remove';
-    const change = plan(action, record, form.kind.reason, day);
+    const change = plan(action, record, day);
     try {
       if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
       write(change);
       commit(action, form.id, SUMMARY[action](form.id) + '（#' + n + '）');
-      if (action === 'remove') await redactAll(record, day);
+      if (action === 'remove') emptied = await erase(record);
       done = true;
     } catch (e) { console.error(action + ': ' + e.message); }
   }
-  await I.github('POST', '/issues/' + n + '/comments', { body: decisionNote({ id: form.id, decision, kind: form.kind, today: day, done }) });
+  await I.github('POST', '/issues/' + n + '/comments', { body: decisionNote({ id: form.id, decision, kind: form.kind, today: day, done, emptied }) });
   await label(n, [], ['held']);
 }
 
 async function manual() {
-  const id = process.env.ID, action = process.env.ACTION, reason = process.env.REASON || null;
+  const id = process.env.ID, action = process.env.ACTION;
   if (!ID.test(id || '')) throw new Error('the id must look like 2026.0001');
   const record = readRecord(id);
   if (action === 'release') {
@@ -304,12 +316,12 @@ async function manual() {
     await I.github('POST', '/issues/' + record.issue + '/comments', { body: NOTICE + '\nThe removal request about ' + id + ' was not upheld. The abstract and the PDF copy are back.' });
     return;
   }
-  const change = plan(action, record, reason, today());
+  const change = plan(action, record, today());
   if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
   write(change);
   commit(action, id, SUMMARY[action](id) + '（メールでの依頼）');
-  if (action === 'hold') await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id, kind: Object.values(KINDS).find((k) => k.reason === reason) || null, issue: null, held: true }) });
-  if (action === 'remove') await redactAll(record, today());
+  if (action === 'hold') await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id, kind: null, issue: null, held: true }) });
+  if (action === 'remove') console.log('emptied: ' + (await erase(record)).map((x) => '#' + x).join(', '));
 }
 
 async function remind() {
@@ -321,7 +333,7 @@ async function remind() {
   for (const r of dueReminders(open, owner, day)) await I.github('POST', '/issues/' + r.number + '/comments', { body: reminder(r.due) });
 }
 
-module.exports = { write, restore, commit, parse, plan, ack, authorNotice, decisionNote, redacted, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { write, restore, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];

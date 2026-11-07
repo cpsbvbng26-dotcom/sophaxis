@@ -36,14 +36,11 @@ function orcidOk(o) {
 const repoPrefix = (doi) => Object.keys(SITE.repositories).find((pre) => String(doi).toLowerCase().startsWith(pre.toLowerCase()));
 
 /* Returns a list of problems. An empty list means the record is valid. */
-const REMOVED_KEEP = ['id', 'status', 'removal_date', 'removal_reason', 'issue'];
-const REMOVAL_REASONS = {
-  'copyright': 'Removed because of a copyright claim.',
-  'personal-data': 'Removed because it exposed personal data.',
-  'author-consent': 'Removed because an author had not agreed to the listing.',
-  'legal': 'Removed for another legal reason.',
-  'under-review': 'The abstract and the PDF copy are offline while a removal request is reviewed.',
-};
+/* A removed record keeps its id, the fact and the day, and no reason (Takedown Policy).
+ * While a removal request is reviewed, it also keeps the reason "under-review" and its submission issue, so that it can be put back. */
+const REMOVED_KEEP = ['id', 'status', 'removal_date'];
+const HELD_KEEP = REMOVED_KEEP.concat(['removal_reason', 'issue']);
+const UNDER_REVIEW = 'The abstract and the PDF copy are offline while a removal request is reviewed.';
 
 /* What a published version can be, by the words the site shows. tools/published.js maps the Crossref and DataCite types to these. */
 const PUBLISHED_KINDS = ['journal article', 'conference paper', 'book chapter', 'book'];
@@ -51,14 +48,14 @@ const PUBLISHED_DATE = /^\d{4}(-\d{2}(-\d{2})?)?$/;
 
 function validate(p, file) {
   const e = [];
-  /* A removed record keeps only its id, the date and the kind of reason (Takedown Policy). */
   if (p.status === 'removed') {
     if (!p.id || !ID.test(p.id)) e.push(file + ': id must look like 2026.0001');
     if (p.id && path.basename(file, '.json') !== p.id) e.push(file + ': file name must be the id');
     if (!DATE.test(p.removal_date || '')) e.push(file + ': a removed record needs removal_date');
-    if (!REMOVAL_REASONS[p.removal_reason]) e.push(file + ': removal_reason must be one of ' + Object.keys(REMOVAL_REASONS).join(', '));
-    if (!Number.isInteger(p.issue) || p.issue < 1) e.push(file + ': issue must be the submission issue number');
-    const extra = Object.keys(p).filter((k) => !REMOVED_KEEP.includes(k));
+    const held = 'removal_reason' in p;
+    if (held && p.removal_reason !== 'under-review') e.push(file + ': a removed record keeps no reason; removal_reason can only be "under-review", while a request is reviewed');
+    if (held && (!Number.isInteger(p.issue) || p.issue < 1)) e.push(file + ': a record under review keeps its submission issue number');
+    const extra = Object.keys(p).filter((k) => !(held ? HELD_KEEP : REMOVED_KEEP).includes(k));
     if (extra.length) e.push(file + ': a removed record keeps nothing else: ' + extra.join(', '));
     return e;
   }
@@ -398,12 +395,11 @@ function removedPage(p) {
   const body = `
 <p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span></p>
 ${p.removal_reason === 'under-review' ? `<h1>Record under review</h1>
-<div class="notice">${esc(REMOVAL_REASONS[p.removal_reason])} Since: ${esc(p.removal_date)}.</div>
+<div class="notice">${esc(UNDER_REVIEW)} Since: ${esc(p.removal_date)}.</div>
 <p>This address is kept so that citations lead here. The title, the authors, the abstract and the PDF copy are not shown while the request is reviewed. If it is not upheld, they are put back. See the <a href="../policies/takedown.html">Takedown Policy</a>.</p>` : `<h1>Record removed</h1>
-<div class="notice">${esc(REMOVAL_REASONS[p.removal_reason])} Date: ${esc(p.removal_date)}.</div>
-<p>This address is kept so that citations lead here. The title, the authors, the abstract and the PDF copy are no longer shown. See the <a href="../policies/takedown.html">Takedown Policy</a>.</p>`}
+<div class="notice">This record (${esc(SITE.name)}:${esc(p.id)}) has been removed.</div>`}
 `;
-  return page({ title: SITE.name + ':' + p.id + ' | ' + SITE.name, description: 'A record removed under the Takedown Policy.', rel: true, canonical: 'abs/' + p.id + '.html', body, head: '<meta name="robots" content="noindex">\n' });
+  return page({ title: SITE.name + ':' + p.id + ' | ' + SITE.name, description: 'A removed record.', rel: true, canonical: 'abs/' + p.id + '.html', body, head: '<meta name="robots" content="noindex">\n' });
 }
 
 /* RIS, for reference managers. Lines end in CR LF, as the format asks. */
@@ -776,7 +772,7 @@ ${issues('published', 'Published versions reported')}
 ${issues('correction', 'Error reports')}
 ${issues('removal', 'Removal requests made in public')}
 </ul>
-<p class="meta">Removal requests sent by email are not public. The record of a removed work keeps only its id, the date and the kind of reason.</p>
+<p class="meta">Removal requests sent by email are not public. The record of a removed work says only that it was removed.</p>
 `;
   return page({ title: 'Statistics | ' + SITE.name, description: 'How many records ' + SITE.name + ' lists, by status, field and repository, with links to every public decision.', rel: false, canonical: 'stats.html', body });
 }
@@ -1041,7 +1037,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { REMOVAL_REASONS, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
