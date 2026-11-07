@@ -8,7 +8,9 @@ body:
       value: |
         Read the Withdrawal Policy first: https://sophaxis.vercel.app/policies/withdrawal.html
 
-        This issue is public. Any one author can withdraw a listed work. The record page stays, with a withdrawal notice, so that citations do not break; the PDF copies are taken off the site.
+        This issue is public. Any one author can withdraw a listed work, or have its record removed.
+        Withdrawal: the record page stays, with a withdrawal notice and the reason, so that citations do not break; the PDF copies are taken off the site.
+        Removal: only the Sophaxis id stays, and its page says only that the record was removed. What removal leaves is set out in the Takedown Policy: https://sophaxis.vercel.app/policies/takedown.html
         Open this issue from your own GitHub account. As at submission, your ORCID record must link to it, and an automatic check confirms that your ORCID iD belongs to an author of the work.
         To ask for removal for legal reasons, use the removal form instead.
   - type: input
@@ -25,11 +27,20 @@ body:
       placeholder: 0000-0002-1825-0097
     validations:
       required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: What should happen to the record
+      options:
+        - "Withdraw: the record page stays, with a notice and the reason"
+        - "Remove: only the Sophaxis id stays"
+    validations:
+      required: true
   - type: textarea
     id: reason
     attributes:
       label: Reason, shown on the record page
-      description: One or two sentences. Do not include personal data.
+      description: One or two sentences, shown on the record page when it is withdrawn, and not shown anywhere when it is removed. Do not include personal data.
       placeholder: The authors found an error in the main proof.
     validations:
       required: true

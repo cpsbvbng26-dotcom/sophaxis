@@ -7,7 +7,9 @@
  *
  * It reads the record in data/papers and the name, the websites and the works of the public ORCID record
  * given in the form, as the submission check does, and nothing else.
- * The check decides nothing. The operator withdraws the record under the Withdrawal Policy.
+ * The author chooses withdrawal (the record page stays, with a notice) or removal (only the Sophaxis id stays).
+ * The check decides nothing. The operator withdraws the record by a pull request, or removes it by labelling the issue
+ * "upheld", which runs tools/removal.js under the Withdrawal Policy.
  */
 'use strict';
 
@@ -22,21 +24,29 @@ const FIELDS = {
   'Sophaxis id': 'id',
   'Your ORCID iD': 'orcid',
   'Reason, shown on the record page': 'reason',
+  'What should happen to the record': 'mode',
+};
+/* The answers of the form. An issue opened before the choice existed asks for withdrawal. */
+const MODES = {
+  'Withdraw: the record page stays, with a notice and the reason': 'withdraw',
+  'Remove: only the Sophaxis id stays': 'remove',
 };
 
 function parse(body) {
   const f = I.parseIssue(body, FIELDS);
-  return { id: (String(f.id || '').match(/\d{4}\.\d{4}/) || [''])[0], orcid: f.orcid || '', reason: I.plain(f.reason || '') };
+  return { id: (String(f.id || '').match(/\d{4}\.\d{4}/) || [''])[0], orcid: f.orcid || '', reason: I.plain(f.reason || ''), mode: MODES[String(f.mode || '').trim()] || 'withdraw' };
 }
 
 /* Pure: the checks. `record` is the record of that id, or null; `person` and `works` come from the ORCID record. */
 function check({ form, login, record, person, works }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
-  add('The record exists and is listed', record && record.status === 'listed', record ? form.id + ' is ' + record.status : 'no record ' + (form.id || '(no id)'));
+  /* A withdrawn record can still be removed; a removed one can be neither. */
+  const open = record && (record.status === 'listed' || (form.mode === 'remove' && record.status === 'withdrawn'));
+  add(form.mode === 'remove' ? 'The record exists and is not removed' : 'The record exists and is listed', open, record ? form.id + ' is ' + record.status : 'no record ' + (form.id || '(no id)'));
   add('The ORCID iD is valid', form.orcid && orcidOk(form.orcid));
-  add('A reason is given', form.reason.length >= 10);
-  if (!record || record.status !== 'listed') return { ok: false, checks };
+  if (form.mode !== 'remove') add('A reason is given', form.reason.length >= 10);
+  if (!open) return { ok: false, checks };
   if (!person) { add('The ORCID record could be read', false); return { ok: false, checks }; }
   add('The ORCID record links this GitHub account', I.linksGithub(person.urls, login), 'https://github.com/' + login);
   const byId = record.authors.find((a) => a.orcid && a.orcid === form.orcid);
@@ -59,7 +69,7 @@ function draft(record, form, today) {
   return { record: p, files, problems: validate(p, p.id + '.json') };
 }
 
-function comment(result, d) {
+function comment(result, d, form = { mode: 'withdraw' }) {
   const safe = (s) => String(s).replace(/[`|<>]/g, '');
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
   let out = `${MARK}
@@ -69,7 +79,12 @@ function comment(result, d) {
 | --- | --- | --- |
 ${rows}
 `;
-  if (result.ok && d && !d.problems.length) {
+  if (result.ok && form.mode === 'remove') {
+    out += `
+The account asking belongs to an author of the work, and asks for the record to be removed. The operator removes it under the Withdrawal Policy by labelling this issue \`upheld\`.
+Only the Sophaxis id then stays, as "What a removed record leaves" in the Takedown Policy sets out, and this issue is emptied, closed and locked.
+`;
+  } else if (result.ok && d && !d.problems.length) {
     out += `
 The account asking belongs to an author of the work. The operator withdraws the record under the Withdrawal Policy.
 
@@ -106,17 +121,17 @@ async function main() {
     }
   } catch (e) { console.error(e.message); person = null; }
   const result = check({ form, login, record, person, works });
-  const d = result.ok ? draft(record, form, new Date().toISOString().slice(0, 10)) : null;
-  const body = comment(result, d);
+  const d = result.ok && form.mode !== 'remove' ? draft(record, form, new Date().toISOString().slice(0, 10)) : null;
+  const body = comment(result, d, form);
   const mine = ((await I.github('GET', '/issues/' + n + '/comments?per_page=100')) || []).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await I.github('PATCH', '/issues/comments/' + mine.id, { body });
   else await I.github('POST', '/issues/' + n + '/comments', { body });
-  const verified = result.ok && d && !d.problems.length;
+  const verified = result.ok && (form.mode === 'remove' || (d && !d.problems.length));
   await I.github('DELETE', '/issues/' + n + '/labels/' + (verified ? 'unverified' : 'verified'));
   await I.github('POST', '/issues/' + n + '/labels', { labels: [verified ? 'verified' : 'unverified'] });
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { parse, check, draft, comment, MARK, FIELDS };
+module.exports = { parse, check, draft, comment, MARK, FIELDS, MODES };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
