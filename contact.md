@@ -7,7 +7,7 @@ Last updated: 2026-11-07.
 Sophaxis is operated by one person, Takuya Nemoto, in Japan.
 It is a personal, non-commercial project.
 It is not run by a company, a university or a publisher.
-The operator runs it as an unpaid volunteer, only within free services, and is at present the only moderator.
+The operator runs it as an unpaid volunteer, and is at present the only moderator. It is served only within free services; the operator pays personally for Claude Code, with which it is written.
 The operator keeps it as a hobby, as an extension of a personal reading shelf; why it exists and what that means for the records is in the [Disclaimer](./disclaimer.html).
 
 - ORCID iD: [0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
