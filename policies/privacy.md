@@ -149,6 +149,11 @@ An objection is handled through the [Takedown Policy](./takedown.html).
 Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
 The operator has decided not to appoint one.
 A representative would be a paid service, or a person in the European Union or the United Kingdom who takes on liability for Sophaxis, and Sophaxis is run unpaid within free services.
+The operator reviews this decision when Sophaxis first lists a work by an author other than the operator, and whenever a data protection authority or a person in the European Union or the United Kingdom asks for a representative.
+Each review and its outcome are recorded in the public repository.
+A review weighs two ways forward: appointing a representative, or running Sophaxis through a legal entity.
+A legal entity established in Japan would not by itself settle the question of a representative; only an establishment in the European Union or the United Kingdom would, and the General Data Protection Regulation would then apply to that establishment in full.
+Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
 People there write to the operator directly, in English or Japanese, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The operator answers them, and the data protection authorities, directly, in place of a representative.
 A record of the processing is kept in the public repository, in `docs/records-of-processing.md`.
