@@ -41,9 +41,9 @@ jobs:
           git checkout -b "claude/pdf-$ID"
           git add data
           git diff --cached --quiet && { echo 'nothing new to copy'; exit 0; }
-          git commit -q -m "$ID の PDF を預け先から写す（変更なし）" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" -m "Claude-Session: https://claude.ai/code/session_01QqWsm63g52W27jU94E5dfL"
+          git commit -q -m "$ID の PDF を預け先から写す（変更なし）" -m "Sophaxis-Action: pdf $ID"
           git add site
-          git commit -q -m "サイトを生成し直す（生成物、$ID の PDF）" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" -m "Claude-Session: https://claude.ai/code/session_01QqWsm63g52W27jU94E5dfL"
+          git commit -q -m "サイトを生成し直す（生成物、$ID の PDF）" -m "Sophaxis-Action: pdf $ID"
           git push origin "claude/pdf-$ID"
         env:
           ID: ${{ inputs.id }}

@@ -2285,6 +2285,8 @@ console.log('\n60. The decision on an EU or UK representative is reviewed when a
   const reviews = fs.existsSync(file) ? read(file) : '';
   ok('every listed work by an author other than the operator (' + others.length + ' now) has a recorded review of the decision, as the Privacy Policy promises',
     others.length === 0 || (others[0] && reviews.includes(others[0])), others.join(', '));
+  const auto = ['.github/workflows/pdf.yml', 'tools/removal.js'].map((x) => read(path.join(ROOT, x))).join('\n');
+  ok('commits made by the workflows name no model as co-author, and keep the Sophaxis-Action line', !/Co-Authored-By|Claude-Session/.test(auto) && auto.includes('Sophaxis-Action: pdf $ID'));
   ok('the Privacy Policy still makes that promise', read(path.join(ROOT, 'policies', 'privacy.md')).includes('The operator reviews this decision when Sophaxis first lists a work by an author other than the operator'));
 }
 

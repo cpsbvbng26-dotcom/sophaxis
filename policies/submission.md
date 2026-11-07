@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -164,7 +164,7 @@ Scope: the work must belong mainly to philosophy, mathematics, logic, the philos
 - A paper in physics, economics, computer science, engineering, biology or psychology that uses mathematics as a tool.
 - A machine-learning benchmark, a software description or a data set.
 - Literary criticism, history or political commentary that does not argue a philosophical or mathematical question.
-- Self-help, spiritual guidance, a manifesto or campaigning.
+- Self-help or spiritual guidance that gives advice or practice instead of arguing a philosophical question, or a political manifesto or campaign.
 
 Form: the work must have a title, an abstract and references, in the ordinary form of a scholarly paper.
 
