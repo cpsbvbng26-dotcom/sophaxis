@@ -2,6 +2,9 @@ name: intake
 on:
   issues:
     types: [opened, edited, reopened]
+  # A co-author confirms in a comment (Submission Policy); only comments that carry the words of a confirmation run the check again.
+  issue_comment:
+    types: [created, edited, deleted]
 permissions:
   contents: read
   issues: write
@@ -10,7 +13,11 @@ concurrency:
   cancel-in-progress: true
 jobs:
   intake:
-    if: contains(github.event.issue.labels.*.name, 'submission')
+    if: >-
+      contains(github.event.issue.labels.*.name, 'submission')
+      && (github.event_name == 'issues'
+        || (!github.event.issue.pull_request && github.event.comment.user.type != 'Bot'
+          && (contains(github.event.comment.body, 'I agree to the listing of this work on Sophaxis') || contains(github.event.comment.body, 'Confirmed by email through the ORCID record'))))
     name: Look up the DOI and check the submitter
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +39,7 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   withdrawal:
-    if: contains(github.event.issue.labels.*.name, 'withdrawal')
+    if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')
     name: Check that an author asks for withdrawal
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +55,7 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   published:
-    if: contains(github.event.issue.labels.*.name, 'published')
+    if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'published')
     name: Check a reported published version
     runs-on: ubuntu-latest
     steps:
