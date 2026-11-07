@@ -1,6 +1,6 @@
 # Licence Policy
 
-Last updated: 2026-10-30.
+Last updated: 2026-11-07.
 
 ## Accepted licences
 
@@ -27,5 +27,11 @@ The text of this site is licensed under CC BY 4.0.
 The code is licensed under MIT.
 Each listed work keeps its own licence.
 
-The record data in `feed.xml` and `papers.json` may be reused freely.
+The record data in `feed.xml`, `papers.json` and the OAI-PMH interface may be reused freely.
 Abstracts in them keep the licence of their work.
+
+## Text written in the forms
+
+From 2026-11-21, an abstract given in a form is shared under the licence of the work.
+From 2026-11-21, other text written in the forms, such as the statement on generative models, a reason for withdrawal or a correction, is shared under CC0 1.0 by the person who writes it.
+This lets Sophaxis show it with the record, and lets others reuse it with the record data.

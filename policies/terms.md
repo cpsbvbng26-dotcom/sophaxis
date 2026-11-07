@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-01.
+Last updated: 2026-11-07.
 
 ## Who these terms apply to
 
@@ -28,7 +28,9 @@ This covers:
 
 Moderation does not move any of this to the operator.
 A listing says only that a submission passed the checks in the [Moderation Policy](./moderation.html).
-If a third party makes a claim against Sophaxis or its operator because of a listed work, the authors are responsible for it, to the extent the law allows.
+If a third party makes a claim against Sophaxis or its operator because something the submitter confirmed at submission is untrue, the authors are responsible for it, to the extent the law allows.
+Authors agree that the abstract and the PDF copy may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.html).
+Text written in the forms is shared as the [Licence Policy](./licences.html) sets out.
 The operator still acts on requests under the [Takedown Policy](./takedown.html).
 
 ## What readers may do
@@ -50,7 +52,9 @@ The operator may decline or remove a submission that breaks these rules.
 Sophaxis is provided as it is.
 It does not guarantee the quality, correctness or completeness of listed work.
 It does not guarantee that the site will always be reachable.
-To the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
+The operator is not liable for the content of listed works, which their authors write.
+Where Japan's Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.
+Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
 
 ## Changes and closure
 
@@ -60,6 +64,7 @@ No change will introduce fees.
 
 A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.
 The announcement comes at least 14 days ahead, unless the law or an urgent problem, such as a security or legal risk, requires the change sooner.
+Even then, the change is announced before it takes effect.
 Other changes, such as clearer wording or new examples, take effect when they are published.
 Continuing to use Sophaxis after a change takes effect means accepting it; a person who does not accept it can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
 
@@ -117,7 +122,9 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 - The other policies are part of these terms. Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply. The FAQ, the step-by-step page and the Disclaimer explain these terms and do not change them.
 - If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows.
 - If the operator does not enforce a part of these terms at one time, that does not waive it.
+- From 2026-11-21, a person under 13 cannot submit.
 - A person under 18 may submit only with the consent of a parent or guardian.
+- Where the law gives a person who submitted as a minor a right to have the listing removed, the [Takedown Policy](./takedown.html) applies.
 - A notice to the operator is given by email to the address on the ORCID record, or in an issue. A notice to an author is given in their submission issue.
 
 ## Contact

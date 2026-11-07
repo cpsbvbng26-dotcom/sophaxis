@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-07.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -11,7 +11,14 @@ The operator's address is not published; it is given on request, without delay.
 
 ## Purposes
 
-Personal data is used only to confirm that a submitter is an author of the work, to publish record pages, and to answer requests to withdraw, correct or remove a record.
+Personal data is used only for these purposes:
+
+- to confirm that a person who submits, withdraws or reports a published version is an author of the work;
+- to publish record pages, author pages, the lists and the search;
+- to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
+- to check the listed DOIs and licences each week, and to save the pages and the PDF copies to the Internet Archive;
+- to tell search engines which addresses are new or changed;
+- to answer requests to withdraw, correct or remove a record, and requests about personal data.
 
 ## The site
 
@@ -37,19 +44,47 @@ When a submission issue is opened or edited, a GitHub Action reads two kinds of 
 It reads the metadata of the DOI from DataCite, Crossref or JaLC (Japan Link Center).
 It reads the name, the websites and the works of the ORCID record given in the form.
 It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
-When a withdrawal issue is opened or edited, the same check reads the same parts of the ORCID record, together with the record on Sophaxis.
-Email addresses and other details in an ORCID record are not read.
+The same check runs when a withdrawal issue or a published-version issue is opened or edited.
+The check asks ORCID for the person section and the works section of the record.
+ORCID returns everything that is public there, which can include public email addresses and the country.
+The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
+The automatic comment in a submission issue repeats the draft record, which is public already.
 
 ## Records
 
 A record holds the title, the names and ORCID iDs of the authors, the abstract, the licence, the DOIs and dates of the versions, and the statement on generative models.
-All of these are already public in the metadata of the deposit.
+Most of a record comes from the metadata of the deposit.
+The statement on generative models, an abstract given in the form, a reason for withdrawal and notes on corrections come from the issues, where they are public already.
+A record also gives the number of its submission issue, which shows the submitter's GitHub username.
 Sophaxis keeps records without a time limit, so that citations do not break.
+
+## Reuse and copies elsewhere
+
+The records are offered for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`.
+Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there.
+The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
+Requests about personal data go to the address on the operator's ORCID record, as below.
+The pages and the PDF copies are saved to the Internet Archive.
+When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
+Copies that others have already taken are outside Sophaxis's control.
 
 ## Services outside Japan
 
 Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies.
 Each handles personal data under its own terms.
+The United States has no general federal law on personal data; some states have their own laws.
+Germany is in the European Union, where the General Data Protection Regulation applies.
+Japan's Personal Information Protection Commission publishes information on the systems of other countries.
+
+Vercel keeps request logs for Sophaxis, including the IP address.
+The operator can see them, and uses them only to find and fix faults.
+
+## Security
+
+Records are built only from information that is public already.
+The automatic checks keep nothing from an ORCID record except the name, the websites and the works.
+The automatic checks run with the least permissions they need.
+Only the operator can change the records.
 
 ## Your choices
 
@@ -57,7 +92,21 @@ An author can withdraw a work, or ask for the PDF copy to be removed.
 A person whose personal data appears in a record can ask for its removal under the [Takedown Policy](./takedown.html).
 A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The operator aims to answer within 7 days.
+Requests cost nothing.
+A complaint about how personal data is handled goes to the same email address.
 
 These rights are open to everyone, wherever they live.
 Where a person's own law gives them more rights over their personal data, such as the General Data Protection Regulation in the European Union, the operator honours those rights as far as they apply to Sophaxis.
-Personal data that GitHub or Vercel hold about their own users, such as GitHub accounts or Vercel's request logs, is theirs to handle under their own privacy statements; a request about it goes to them.
+Personal data that GitHub or Vercel hold about their own users, such as GitHub accounts, is theirs to handle under their own privacy statements; a request about it goes to them.
+
+## People in the European Union and the United Kingdom
+
+For people in the European Union and the United Kingdom, the basis for this use is a legitimate interest: checking who the authors are, and keeping a public scholarly record.
+Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).
+A person can object to the use of their personal data, and can complain to the data protection authority of their country.
+An objection is handled through the [Takedown Policy](./takedown.html).
+
+## Changes to this policy
+
+When this policy changes, the date at the top changes.
+Earlier versions stay in the public repository.
