@@ -1328,7 +1328,7 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
   ok('vercel.json is what the build makes from the records, not edited by hand', vj === vercelConfig(papers));
   const cfg = JSON.parse(vj);
   const has = (s, d) => cfg.redirects.some((r) => r.source === s && r.destination === d);
-  ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'redirects,rewrites'
+  ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'headers,redirects,rewrites'
     && JSON.stringify(cfg.rewrites[0]) === JSON.stringify({ source: '/oai', destination: '/api/oai' }));
   ok('every PDF copy of a listed record is also served at /abs/<file>, and nothing else is rewritten',
     JSON.stringify(cfg.rewrites.slice(1)) === JSON.stringify(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/abs/' + x.file, destination: '/pdf/' + x.file }))))
@@ -2215,6 +2215,24 @@ console.log('\n57. The Japanese translations of the Terms, the Takedown Policy a
       && sitemap.includes('policies/' + slug + '.ja.html</loc><lastmod>' + jaDate + '</lastmod>'));
   }
   ok('the Terms say that the English text applies where a translation differs', read(path.join(ROOT, 'policies', 'terms.md')).includes('If a translation is ever published and differs from the English text, the English text applies.'));
+}
+
+/* ------------------------------------------------------------ 58 */
+console.log('\n58. Security headers that a <meta> element cannot give');
+{
+  const cfg = JSON.parse(read(path.join(ROOT, 'site', 'vercel.json')));
+  const all = (cfg.headers || []).find((h) => h.source === '/(.*)');
+  const get = (k) => ((all && all.headers) || []).filter((h) => h.key === k).map((h) => h.value);
+  ok('every path refuses framing, both ways: frame-ancestors none and X-Frame-Options DENY',
+    get('Content-Security-Policy').join() === "frame-ancestors 'none'" && get('X-Frame-Options').join() === 'DENY');
+  ok('the header policy names frame-ancestors only, so the policy in each page stays the one that limits loading',
+    get('Content-Security-Policy').every((v) => v.split(';').map((x) => x.trim()).filter(Boolean).every((d) => d.startsWith('frame-ancestors'))));
+  ok('no MIME sniffing, no referrer, no browser features, an isolated window, and HTTPS remembered',
+    get('X-Content-Type-Options').join() === 'nosniff' && get('Referrer-Policy').join() === 'no-referrer'
+    && /camera=\(\)/.test(get('Permissions-Policy').join()) && /geolocation=\(\)/.test(get('Permissions-Policy').join()) && /microphone=\(\)/.test(get('Permissions-Policy').join())
+    && get('Cross-Origin-Opener-Policy').join() === 'same-origin' && /^max-age=\d{8,}/.test(get('Strict-Transport-Security').join()));
+  const page = read(path.join(ROOT, 'site', 'index.html'));
+  ok('each page still carries its own policy, with default-src none', /<meta http-equiv="Content-Security-Policy" content="default-src 'none'/.test(page));
 }
 
 console.log('\n' + '-'.repeat(60));

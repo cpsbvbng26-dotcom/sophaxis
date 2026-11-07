@@ -15,6 +15,22 @@ const crypto = require('crypto');
 const ROOT = __dirname;
 const OUT = path.resolve(process.argv[2] || path.join(ROOT, 'site'));
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
+
+/* Headers that a <meta> element cannot give. frame-ancestors keeps the pages out of frames on other sites, which a
+ * Content-Security-Policy in <meta> cannot do; the rest of the policy stays in each page. A second policy only narrows
+ * the first, so this one names frame-ancestors alone. No referrer leaves the site, and no browser feature is asked for. */
+const SECURITY_HEADERS = [{
+  source: '/(.*)',
+  headers: [
+    { key: 'Content-Security-Policy', value: "frame-ancestors 'none'" },
+    { key: 'X-Frame-Options', value: 'DENY' },
+    { key: 'X-Content-Type-Options', value: 'nosniff' },
+    { key: 'Referrer-Policy', value: 'no-referrer' },
+    { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()' },
+    { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+    { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
+  ],
+}];
 const PAPER_DIR = path.join(ROOT, 'data', 'papers');
 
 /* ------------------------------------------------------------ records */
@@ -1080,7 +1096,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { SECURITY_HEADERS, robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
@@ -1143,7 +1159,7 @@ function vercelConfig(papers) {
    * abstract page, at /abs/<file>, for Google Scholar (see scholarTags). */
   const rewrites = [{ source: '/oai', destination: '/api/oai' }]
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/abs/' + x.file, destination: '/pdf/' + x.file }))));
-  return JSON.stringify({ redirects, rewrites }, null, 2) + '\n';
+  return JSON.stringify({ headers: SECURITY_HEADERS, redirects, rewrites }, null, 2) + '\n';
 }
 
 if (require.main === module) {
