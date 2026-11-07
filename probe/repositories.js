@@ -1,6 +1,6 @@
 'use strict';
 /* One-off probe, never merged (read only): the DataCite record of a DOI the author gave. */
-const DOIS = (process.env.DOIS || '10.5281/zenodo.24034131').split(' ');
+const DOIS = (process.env.DOIS || '10.5281/zenodo.24034360').split(' ');
 (async () => {
   for (const d of DOIS) {
     try {
