@@ -90,6 +90,9 @@ What each service does to protect personal data is set out in its own statement:
 - Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
 - The Internet Archive: [Terms of Use](https://archive.org/about/terms).
 
+Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States), and are kept there only as long as needed to answer them and to show the answer.
+What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).
+
 Vercel keeps request logs for Sophaxis, including the IP address.
 The operator can see them, and uses them only to find and fix faults.
 
@@ -100,6 +103,21 @@ The automatic checks keep nothing from an ORCID record except the name, the webs
 The automatic checks run with the least permissions they need.
 Only the operator can change the records, except that the automatic step of the [Takedown Policy](./takedown.html) takes an abstract and a PDF copy offline when a removal issue reports exposure of personal data.
 If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned.
+
+The measures, under the headings that Japan's Personal Information Protection Commission uses:
+
+- Organisation: one person, the operator, handles personal data and answers for it. Every change to the records is a public commit or pull request.
+- People: no one else handles personal data for Sophaxis.
+- Physical: Sophaxis has no servers or papers of its own. The records live in the GitHub repository and the site on Vercel.
+- Technical: the automatic steps hold no key but the token GitHub gives each run, with the least permissions they need. Earlier versions of the site on Vercel are not open to the public.
+- The countries where data is kept: as set out under "Services outside Japan" above.
+
+## Automated processing
+
+The automatic checks compare public records and post the result in the issue. They make no decision about a person.
+No decision with legal or similarly significant effects on a person is made solely by automated means.
+One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the abstract and the PDF copy offline. It protects the person concerned, and is undone if the request is not upheld.
+Every automatic step is listed on the page [What runs by itself](../automation.html).
 
 ## Your choices
 

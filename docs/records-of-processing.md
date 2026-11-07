@@ -18,7 +18,8 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 | Preserve the pages and the PDF copies | Authors | As above | The site | The Internet Archive (United States) | As the Internet Archive keeps them |
 | Tell search engines what changed | None (addresses only) | None | The sitemap | IndexNow | Not kept |
 | Check the listed DOIs and licences each week | Authors | DOIs and the metadata read with them | DataCite, Crossref, JaLC | GitHub (the run's log and summary) | As GitHub keeps the logs |
-| Answer requests about records and personal data | Requesters | What the request contains | The issue or the email | None | As long as needed to answer and to show the answer |
+| Answer requests about records and personal data | Requesters | What the request contains | The issue or the email | Apple (iCloud Mail, United States), for email | As long as needed to answer and to show the answer |
+| Act on removal requests by automatic steps: acknowledge, tell the authors, take exposed personal data offline at once, carry out the operator's decision | Requesters; authors | The Sophaxis id, the kind of request, GitHub usernames | The issues; the records | GitHub (issue comments, commits) | As long as the issues and the git history exist |
 | Serve the site and find faults | Readers | IP address and request details | The request | Vercel (United States) | As Vercel keeps its logs |
 
 ## Lawful basis
@@ -30,5 +31,7 @@ Legitimate interest in checking authorship and in keeping a public scholarly rec
 GitHub, Vercel, ORCID, Crossref and the Internet Archive are in the United States; DataCite is in Germany. What each says about its own measures is linked from the Privacy Policy.
 
 ## Security
+
+Every automatic step is listed at https://sophaxis.vercel.app/automation.html. No decision with legal or similarly significant effects on a person is made solely by automated means.
 
 Records hold only information that is public already. The automatic checks keep nothing from an ORCID record except the name, the websites and the works, and run with the least permissions they need. Only the operator can change the records, except that the automatic step of the Takedown Policy takes an abstract and a PDF copy offline when a removal issue reports exposure of personal data.
