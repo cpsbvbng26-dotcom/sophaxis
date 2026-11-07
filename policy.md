@@ -49,6 +49,7 @@ Abstracts in both keep the licence of their work.
 These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
+The Terms of Use, the Takedown Policy and the Withdrawal Policy have Japanese translations, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
 
 This site and its code were built with Claude Code (Anthropic).
 The operator is responsible for them. Claude is not an author.

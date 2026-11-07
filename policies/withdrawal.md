@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## Who can withdraw
 
 Any one author of a listed work can withdraw it.

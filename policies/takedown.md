@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-07.
 
+Japanese: [削除の規程（日本語訳）](./takedown.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## When a record is removed
 
 Records are not deleted.

@@ -848,20 +848,27 @@ function contactPage() {
   return page({ title: 'Operator and contact | ' + SITE.name, description: 'Who operates ' + SITE.name + ', and how to reach the operator.', rel: false, canonical: 'contact.html', body: markdown(contactSource()) });
 }
 
-/* The Japanese page on personal data, under the headings of Japan's Act on the Protection of Personal Information. */
-const privacyJa = () => fs.readFileSync(path.join(ROOT, 'policies', 'privacy.ja.md'), 'utf8');
-/* The site is in English; the Japanese page is reached from the Privacy Policy, not from every footer.
+/* Japanese pages. The page on personal data follows the headings of Japan's Act on the Protection of Personal Information;
+ * the others are translations, and the English text applies where they differ, as the Terms of Use say.
+ * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
-const privacyAlternates = () => ['en', 'privacy.html', 'ja', 'privacy.ja.html']
+const JA_POLICIES = { privacy: '個人情報の取り扱いについて', terms: '利用規約（日本語訳）', takedown: '削除の規程（日本語訳）', withdrawal: '撤回の規程（日本語訳）' };
+const jaSource = (slug) => fs.readFileSync(path.join(ROOT, 'policies', slug + '.ja.md'), 'utf8');
+const privacyJa = () => jaSource('privacy');
+const jaTitle = (slug) => jaSource(slug).split('\n')[0].replace(/^# /, '');
+const jaDate = (slug, fallback) => (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(jaSource(slug)) || [, fallback])[1];
+const jaAlternates = (slug) => ['en', slug + '.html', 'ja', slug + '.ja.html']
   .reduce((a, x, i, l) => (i % 2 ? a : a + `<link rel="alternate" hreflang="${x}" href="${esc(SITE.baseUrl)}policies/${l[i + 1]}">\n`), '');
-function privacyJaPage() {
-  return page({ title: '個人情報の取り扱いについて | ' + SITE.name, description: SITE.name + ' の個人情報の取り扱い。', rel: true, canonical: 'policies/privacy.ja.html', lang: 'ja', head: privacyAlternates(),
-    body: markdown(privacyJa()) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
+const privacyAlternates = () => jaAlternates('privacy');
+function jaPolicyPage(slug) {
+  return page({ title: jaTitle(slug) + ' | ' + SITE.name, description: slug === 'privacy' ? SITE.name + ' の個人情報の取り扱い。' : SITE.name + ' の' + jaTitle(slug).replace(/（日本語訳）$/, '') + 'の日本語訳。', rel: true, canonical: 'policies/' + slug + '.ja.html', lang: 'ja', head: jaAlternates(slug),
+    body: markdown(jaSource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
 }
+const privacyJaPage = () => jaPolicyPage('privacy');
 
 function onePolicyPage(slug) {
   return page({ title: policyTitle(slug) + ' | ' + SITE.name, description: policyTitle(slug) + ' of ' + SITE.name + '.', rel: true, canonical: 'policies/' + slug + '.html',
-    head: slug === 'privacy' ? privacyAlternates() : '',
+    head: JA_POLICIES[slug] ? jaAlternates(slug) : '',
     body: markdown(policySource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
 }
 
@@ -970,7 +977,7 @@ function sitemap(papers) {
     ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
     ['stats.html', newest]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
-    .concat([['policies/privacy.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(privacyJa()) || [, newest])[1]]])
+    .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
     .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map(changed).sort().pop()]))
     .concat(papers.map((p) => ['abs/' + p.id + '.html', changed(p)]))
@@ -1060,7 +1067,7 @@ function build(out, paperDir) {
     all.forEach((p) => { files['datacite/' + p.id + '.json'] = JSON.stringify(dataciteRecord(p), null, 2) + '\n'; });
   }
   POLICIES.forEach(([slug]) => { files['policies/' + slug + '.html'] = onePolicyPage(slug); });
-  files['policies/privacy.ja.html'] = privacyJaPage();
+  Object.keys(JA_POLICIES).forEach((slug) => { files['policies/' + slug + '.ja.html'] = jaPolicyPage(slug); });
   authorIds(papers).forEach((o) => { files['author/' + o + '.html'] = authorPage(papers, o); });
   /* The PDF copies are copied byte for byte; loadPapers has checked their sha256. */
   papers.forEach((p) => (p.pdfs || []).forEach((x) => { files['pdf/' + x.file] = fs.readFileSync(path.join(pdfDir(paperDir), x.file)); }));

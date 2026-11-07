@@ -2182,6 +2182,41 @@ console.log('\n56. The Zenodo DOI of Sophaxis stands beside its OSF project DOI'
     && items[osfAt + 1].includes(site.zenodo.community) && items[osfAt + 1].includes('it is not an affiliation with Zenodo.'));
 }
 
+/* ------------------------------------------------------------ 57 */
+console.log('\n57. The Japanese translations of the Terms, the Takedown Policy and the Withdrawal Policy keep step with the English');
+{
+  const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
+  for (const slug of ['terms', 'takedown', 'withdrawal']) {
+    const en = read(path.join(ROOT, 'policies', slug + '.md'));
+    const ja = read(path.join(ROOT, 'policies', slug + '.ja.md'));
+    const enDate = (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(en) || [])[1];
+    const jaDate = (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(ja) || [])[1];
+    const body = (t) => t.split('\n').filter((l) => !/^(Last updated:|最終更新：|Japanese: |これは英語の )/.test(l)).join('\n');
+    const nums = (t) => new Set((body(t).match(/\d+/g) || []));
+    const urls = (t) => new Set((t.match(/https:\/\/[^\s)>\]]+/g) || []));
+    const codes = (t) => new Set((t.match(/`[^`]+`/g) || []));
+    const heads = (t) => (t.match(/^## /gm) || []).length;
+    const same = (a, b) => a.size === b.size && [...a].every((x) => b.has(x));
+    const miss = (a, b) => [...a].filter((x) => !b.has(x));
+    ok(slug + '.ja.md: a translation that says the English applies, of the same day, with as many sections',
+      /^# .+（日本語訳）\n/.test(ja) && ja.includes('これは英語の [') && ja.includes('](./' + slug + '.html) の訳です。') && ja.includes('英語の文が適用されます。')
+      && enDate && enDate === jaDate && heads(en) === heads(ja),
+      'dates ' + enDate + ' / ' + jaDate + ', sections ' + heads(en) + ' / ' + heads(ja));
+    ok(slug + '.ja.md: the same numbers, addresses and code names as the English',
+      same(nums(en), nums(ja)) && same(urls(en), urls(ja)) && same(codes(en), codes(ja)),
+      'numbers missing ' + miss(nums(en), nums(ja)).join(',') + ' extra ' + miss(nums(ja), nums(en)).join(',')
+      + ' / urls ' + miss(urls(en), urls(ja)).concat(miss(urls(ja), urls(en))).join(',') + ' / code ' + miss(codes(en), codes(ja)).concat(miss(codes(ja), codes(en))).join(','));
+    const enHtml = read(path.join(ROOT, 'site', 'policies', slug + '.html'));
+    const jaHtml = read(path.join(ROOT, 'site', 'policies', slug + '.ja.html'));
+    const pair = '<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/' + slug + '.html">\n<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/policies/' + slug + '.ja.html">';
+    ok(slug + ': the English page links the translation, both pages name each other, and the sitemap has the translation with its day',
+      en.includes('Japanese: [') && en.includes('](./' + slug + '.ja.html). It is a translation; where the two differ, the English text applies.')
+      && enHtml.includes(pair) && jaHtml.includes(pair) && /<html lang="ja"/.test(jaHtml)
+      && sitemap.includes('policies/' + slug + '.ja.html</loc><lastmod>' + jaDate + '</lastmod>'));
+  }
+  ok('the Terms say that the English text applies where a translation differs', read(path.join(ROOT, 'policies', 'terms.md')).includes('If a translation is ever published and differs from the English text, the English text applies.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
