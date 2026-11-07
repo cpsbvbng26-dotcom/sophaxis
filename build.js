@@ -397,9 +397,11 @@ function scholarTags(p) {
 function removedPage(p) {
   const body = `
 <p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span></p>
-<h1>Record removed</h1>
+${p.removal_reason === 'under-review' ? `<h1>Record under review</h1>
+<div class="notice">${esc(REMOVAL_REASONS[p.removal_reason])} Since: ${esc(p.removal_date)}.</div>
+<p>This address is kept so that citations lead here. The title, the authors, the abstract and the PDF copy are not shown while the request is reviewed. If it is not upheld, they are put back. See the <a href="../policies/takedown.html">Takedown Policy</a>.</p>` : `<h1>Record removed</h1>
 <div class="notice">${esc(REMOVAL_REASONS[p.removal_reason])} Date: ${esc(p.removal_date)}.</div>
-<p>This address is kept so that citations lead here. The title, the authors, the abstract and the PDF copy are no longer shown. See the <a href="../policies/takedown.html">Takedown Policy</a>.</p>
+<p>This address is kept so that citations lead here. The title, the authors, the abstract and the PDF copy are no longer shown. See the <a href="../policies/takedown.html">Takedown Policy</a>.</p>`}
 `;
   return page({ title: SITE.name + ':' + p.id + ' | ' + SITE.name, description: 'A record removed under the Takedown Policy.', rel: true, canonical: 'abs/' + p.id + '.html', body, head: '<meta name="robots" content="noindex">\n' });
 }
@@ -1039,7 +1041,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { REMOVAL_REASONS, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
