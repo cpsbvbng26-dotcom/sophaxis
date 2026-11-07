@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-07.
 
 ## Moderation is not peer review
 
@@ -17,6 +17,7 @@ It does not judge whether the work is correct, original or important.
 - The work has a title, an abstract and references, in the ordinary form of a scholarly paper.
 - The submission includes a statement on the use of language models and other generative models.
 - The submitter has confirmed that every author agrees and that the version may be shared.
+- From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
 - The work is not spam, not abusive and does not expose personal data of third parties.
 
 ## What moderation does not check

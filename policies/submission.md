@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-02.
+Last updated: 2026-11-07.
 
 ## Who can submit
 
@@ -28,6 +28,14 @@ It must have a title, an abstract and references, in the ordinary form of a scho
 Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.
 Publishers set different terms for this.
 The submitter gives the DOI of the published version in the form, as set out under "When the work is published" below.
+
+## When a work has more than one author
+
+From 2026-11-21, a work with more than one author is listed only after every other author confirms their own agreement.
+Each confirms in one of two ways.
+One is a comment in the submission issue, from a GitHub account that their ORCID record links.
+The other is an email to the operator, after which the operator confirms them through their ORCID record.
+This consent covers the listing, and the provision of their personal data that the [Privacy Policy](./privacy.html) sets out.
 
 ## What the submitter confirms
 

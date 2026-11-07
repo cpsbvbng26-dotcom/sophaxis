@@ -54,6 +54,7 @@ It does not guarantee the quality, correctness or completeness of listed work.
 It does not guarantee that the site will always be reachable.
 The operator is not liable for the content of listed works, which their authors write.
 Where Japan's Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.
+Sophaxis applies that Act to readers and authors as if its operator were a business operator under it.
 Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.
 
 ## Changes and closure
