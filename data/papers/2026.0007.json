@@ -1,41 +1,5 @@
 {
   "id": "2026.0007",
-  "title": "The Trinity-Infinity Framework, Series II: Extended Formalization and Further Illustrative Applications",
-  "authors": [
-    {
-      "name": "Takuya Nemoto",
-      "orcid": "0009-0000-1406-0547",
-      "given": "Takuya",
-      "family": "Nemoto"
-    }
-  ],
-  "abstract": "This paper extends the triadic recursion operator introduced in the revised first series of the Trinity-Infinity framework (Nemoto, 2026). We generalize the operator to allow independent blending strength per coordinate and prove this generalized operator retains a unique fixed point, with contraction rate equal to the largest coordinate-wise blend parameter (Theorem 1). We give a direct discrete-time stability argument as an immediate corollary, correcting an earlier continuous-time formulation. We extend the game-theoretic illustration by characterizing, via the folk theorem, the feasible, individually-rational set of payoffs sustainable as subgame-perfect equilibria as the discount factor approaches one, and extend the engineering illustration with a fully worked three-node spring-network example verified against its closed-form Neumann series. All numerical claims are computed and included as a companion script. We close by discussing, explicitly as unproven speculation rather than established results, directions in which this kind of triadic recursive structure might be relevant to governance and AI alignment.",
-  "abstract_source": "authors",
-  "category": "mathematics",
-  "license": "CC-BY-4.0",
-  "language": "eng",
-  "versions": [
-    {
-      "version": 1,
-      "doi": "10.5281/zenodo.22058777",
-      "date": "2026-08-22"
-    }
-  ],
-  "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical and closed-form claim in Sections 3.1, 4, and 6 was computed by executing the operators and matrices exactly as defined in the text; the verification script (series2_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims.",
-  "issue": 76,
-  "listed": "2026-11-02",
-  "status": "withdrawn",
-  "operator_own": true,
-  "notes": [
-    {
-      "date": "2026-11-02",
-      "text": "The author's errata for this series (https://github.com/cpsbvbng26-dotcom/trinity-infinity/blob/main/ERRATA.md) record that the verification script that this paper says is distributed with the PDF does not exist (E3)."
-    },
-    {
-      "date": "2026-11-02",
-      "text": "The same errata record that the statement on language models covers only the revision. The mathematical content of the first draft, published in October 2025, came from a language model (ChatGPT, OpenAI), and the paper does not say so (E4)."
-    }
-  ],
-  "withdrawal_date": "2026-11-07",
-  "withdrawal_note": "Withdrawn by the author."
+  "status": "removed",
+  "removal_date": "2026-11-07"
 }
