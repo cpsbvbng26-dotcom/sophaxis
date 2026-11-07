@@ -2035,6 +2035,34 @@ console.log('\n51. What runs by itself, said on the site and in the README');
       .every((t) => t.includes(R.CHALLENGE) && /grounds|reasons/.test(t)) && R.CHALLENGE.includes('within six months, free of charge'));
 }
 
+/* ------------------------------------------------------------ 52 */
+console.log('\n52. No commitment is dropped silently');
+{
+  const lines = (t) => String(t || '').split('\n').map((l) => l.replace(/\r$/, '')).filter((l) => l.trim() && !l.startsWith('#'));
+  const now = lines(read(path.join(__dirname, 'commitments.txt')));
+  const superseded = new Map(lines(read(path.join(__dirname, 'superseded.txt'))).map((l) => l.split('\t')));
+  const corpus = [read(path.join(ROOT, 'policy.md'))].concat(fs.readdirSync(path.join(ROOT, 'policies')).sort().map((f) => read(path.join(ROOT, 'policies', f))),
+    ['disclaimer.md', 'automation.md', 'contact.md', 'faq.md', path.join('docs', 'records-of-processing.md')].map((f) => read(path.join(ROOT, f)))).join('\n');
+  const absent = now.filter((l) => !corpus.includes(l));
+  ok('every commitment in the list is in the policies word for word (' + now.length + ')', now.length >= 80 && absent.length === 0, absent.map((l) => l.slice(0, 60)).join(' | '));
+  ok('no commitment is listed twice, and every replacement named is itself in the list', new Set(now).size === now.length && [...superseded.values()].every((n) => now.includes(n)));
+  /* Every line the list ever held, in any commit, is still there or has a named replacement. */
+  let history = [];
+  try {
+    const commits = require('child_process').execFileSync('git', ['log', '--format=%H', '--', 'verification/commitments.txt'], { cwd: ROOT, encoding: 'utf8' }).split('\n').filter(Boolean);
+    for (const c of commits) history.push(...lines(require('child_process').execFileSync('git', ['show', c + ':verification/commitments.txt'], { cwd: ROOT, encoding: 'utf8' })));
+  } catch (e) { history = null; }
+  const dropped = history === null ? ['the git history could not be read'] : [...new Set(history)].filter((l) => !now.includes(l) && !superseded.has(l));
+  ok('no line that the list ever held is gone without its replacement being named', dropped.length === 0, dropped.map((l) => l.slice(0, 60)).join(' | '));
+  const pol = read(path.join(ROOT, 'policy.md'));
+  ok('the policy index says so, and names both files', pol.includes('## Commitments are never dropped silently') && pol.includes('`verification/commitments.txt`') && pol.includes('`verification/superseded.txt`'));
+  /* The pages send nothing about a reader anywhere: no script, style, image, frame or form from another host.
+   * A <link> that the browser does not fetch (canonical, alternate, microdata) is not a request. */
+  const ext = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
+    .filter((f) => /<(script|img|iframe|link|form|audio|video|source)\b[^>]*\b(src|href|action)="(https?:)?\/\//i.test(read(path.join(ROOT, 'site', f)).replace(/<link\b(?![^>]*\brel="(stylesheet|preload|prefetch|preconnect|dns-prefetch|modulepreload|icon|apple-touch-icon|manifest)")[^>]*>/gi, '')));
+  ok('no page loads or sends anything from or to another host', ext.length === 0, ext.join(', '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
