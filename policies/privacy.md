@@ -8,6 +8,7 @@ Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which fo
 
 The operator of Sophaxis, Takuya Nemoto, handles it.
 The operator's address is not published; it is given on request, without delay.
+Sophaxis applies Japan's Act on the Protection of Personal Information in full, as if its operator were a business operator under that Act.
 
 ## Purposes
 
@@ -71,10 +72,22 @@ Copies that others have already taken are outside Sophaxis's control.
 ## Services outside Japan
 
 Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies.
-Each handles personal data under its own terms.
-The United States has no general federal law on personal data; some states have their own laws.
-Germany is in the European Union, where the General Data Protection Regulation applies.
-Japan's Personal Information Protection Commission publishes information on the systems of other countries.
+Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
+It asks for each author's consent to this, after giving the information below.
+
+The countries:
+
+- The United States has no general federal law on personal data; some states have their own laws.
+- Germany is in the European Union, where the General Data Protection Regulation applies.
+- Japan's Personal Information Protection Commission publishes information on the systems of other countries.
+
+What each service does to protect personal data is set out in its own statement:
+
+- GitHub: [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement). GitHub says it complies with the EU-U.S. Data Privacy Framework.
+- Vercel: [Vercel Privacy Notice](https://vercel.com/legal/privacy-notice). Vercel says it complies with the EU-U.S. Data Privacy Framework.
+- ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
+- Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
+- The Internet Archive: [Terms of Use](https://archive.org/about/terms).
 
 Vercel keeps request logs for Sophaxis, including the IP address.
 The operator can see them, and uses them only to find and fix faults.
@@ -85,6 +98,7 @@ Records are built only from information that is public already.
 The automatic checks keep nothing from an ORCID record except the name, the websites and the works.
 The automatic checks run with the least permissions they need.
 Only the operator can change the records.
+If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned.
 
 ## Your choices
 
@@ -105,6 +119,9 @@ For people in the European Union and the United Kingdom, the basis for this use 
 Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).
 A person can object to the use of their personal data, and can complain to the data protection authority of their country.
 An objection is handled through the [Takedown Policy](./takedown.html).
+Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
+Until one is appointed, people there write to the operator directly.
+A record of the processing is kept in the public repository, in `docs/records-of-processing.md`.
 
 ## Changes to this policy
 

@@ -171,6 +171,12 @@ console.log('\n4. The policy keeps its promises in writing');
     'Material that was taken offline while the request was reviewed is put back.',
     'A request to disclose who submitted material is handled as Japanese law provides.',
     'Even then, the change is announced before it takes effect.',
+    'Sophaxis applies Japan\'s Act on the Protection of Personal Information in full, as if its operator were a business operator under that Act.',
+    'Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan\'s Act on the Protection of Personal Information.',
+    'If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan\'s Personal Information Protection Commission and tells the people concerned.',
+    'Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).',
+    'Sophaxis applies that Act to readers and authors as if its operator were a business operator under it.',
+    'From 2026-11-21, a work with more than one author is listed only after every other author confirms their own agreement.',
     'It is shown under the work\'s own licence, with its authors and a link to the work.',
     'On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.',
     'Work on SSRN is accepted only if it carries one of the accepted licences.',
@@ -181,6 +187,10 @@ console.log('\n4. The policy keeps its promises in writing');
     'Submissions by the operator are moderated under the same rules',
     'Claude is not an author.',
   ].forEach((s) => ok('policy says: ' + s.slice(0, 60), policy.includes(s)));
+  ok('the record of processing is in the repository, names the controller, every purpose and that no EU or UK representative is appointed',
+    fs.existsSync(path.join(ROOT, 'docs', 'records-of-processing.md'))
+    && ['## Controller', '## Processing', '## Lawful basis', 'No representative in the European Union or the United Kingdom has been appointed.', 'Vercel (United States)', 'The Internet Archive (United States)']
+      .every((x) => read(path.join(ROOT, 'docs', 'records-of-processing.md')).includes(x)));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   ok('the submission form requires the language-model statement', /id: llm[\s\S]*?required: true/.test(form));
   ok('the submission form asks about every generative model, not only language models', form.includes('label: Use of language models and other generative models') && form.includes('This covers every generative model, not only language models.'));
