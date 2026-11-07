@@ -138,13 +138,8 @@
       }
     ],
     "listed": "2026-11-02",
-    "pdfs": [
-      {
-        "version": 1,
-        "url": "https://sophaxis.vercel.app/pdf/2026.0008v1.pdf"
-      }
-    ],
-    "status": "listed",
+    "pdfs": [],
+    "status": "withdrawn",
     "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical claim in Section 3 was computed by executing the operators exactly as defined in the text; the verification script (series3_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims."
   },
   {
@@ -173,13 +168,8 @@
       }
     ],
     "listed": "2026-11-02",
-    "pdfs": [
-      {
-        "version": 1,
-        "url": "https://sophaxis.vercel.app/pdf/2026.0007v1.pdf"
-      }
-    ],
-    "status": "listed",
+    "pdfs": [],
+    "status": "withdrawn",
     "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical and closed-form claim in Sections 3.1, 4, and 6 was computed by executing the operators and matrices exactly as defined in the text; the verification script (series2_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims."
   },
   {
@@ -207,13 +197,8 @@
       }
     ],
     "listed": "2026-11-02",
-    "pdfs": [
-      {
-        "version": 1,
-        "url": "https://sophaxis.vercel.app/pdf/2026.0006v1.pdf"
-      }
-    ],
-    "status": "listed",
+    "pdfs": [],
+    "status": "withdrawn",
     "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical and closed-form claim in Section 2 (Remark 1) was computed by executing the operators exactly as defined in the text; the verification script (series1_verification.py) is distributed together with this PDF so the two results can be reproduced independently. The author reviewed all content and is responsible for its claims."
   },
   {
