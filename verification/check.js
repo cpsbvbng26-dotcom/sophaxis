@@ -573,7 +573,10 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
     && rem.includes('An author did not agree to the listing') && rem.includes('An author asks for the PDF copy to be removed') && rem.includes('policies/takedown.html'));
 
   const r = read(path.join(FIX, 'abs', '2026.0003.html'));
-  ok('a removed record keeps its address with a notice, and nothing else', r.includes('Record removed') && r.includes('Removed because it exposed personal data. Date: 2026-12-10.')
+  const main = r.slice(r.indexOf('<main'), r.indexOf('</main>'));
+  ok('a removed record keeps its address with a notice that says only that the record with that id was removed: no reason, no date, nothing else',
+    r.includes('<h1>Record removed</h1>') && main.includes('This record (Sophaxis:2026.0003) has been removed.')
+    && !/because|reason|copyright|personal data|2026-12-10|Takedown/i.test(main) && (main.match(/<(p|div|h1)\b/g) || []).length === 3
     && r.includes('<meta name="robots" content="noindex">') && !r.includes('citation_') && !r.includes('../pdf/'));
   const everywhere = ['index.html', 'feed.xml', 'papers.json', 'sitemap.xml', 'search.html', 'list/logic.html', 'list/mathematics.html'].map((f) => read(path.join(FIX, f))).join('\n');
   ok('a removed record is left out of the listing, the fields, the feed, the JSON and the sitemap', !everywhere.includes('2026.0003') && read(path.join(FIX, 'index.html')).includes('All fields (2)<'));
@@ -582,7 +585,10 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
     ['a removed record that keeps its title', (p) => { p.title = 'x'; }],
     ['a removed record that keeps a PDF copy', (p) => { p.pdfs = []; }],
     ['a removed record without a date', (p) => { delete p.removal_date; }],
-    ['a removed record with an unknown reason', (p) => { p.removal_reason = 'because'; }],
+    ['a removed record that keeps a reason', (p) => { p.removal_reason = 'personal-data'; }],
+    ['a removed record that keeps a reason and its issue', (p) => { p.removal_reason = 'copyright'; p.issue = 3; }],
+    ['a removed record that keeps its submission issue', (p) => { p.issue = 3; }],
+    ['a record under review without its submission issue', (p) => { p.removal_reason = 'under-review'; }],
   ].forEach(([label, spoil]) => {
     const p = JSON.parse(JSON.stringify(removed));
     spoil(p);
@@ -1792,17 +1798,20 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   const f = R.parse(body);
   ok('the removal issue is read: the id, the kind and how the requester is concerned', f.id === '2026.0001' && f.kind.slug === 'personal-data' && f.relation === 'My personal data appears in the record');
   const listed = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
-  const h = R.plan('hold', listed, null, '2026-11-08');
+  const h = R.plan('hold', listed, '2026-11-08');
   ok('a hold turns the record into a notice under review that keeps only the id, the date, the reason and the issue, and drops its PDF copies',
     h.problems.length === 0 && JSON.stringify(h.record) === JSON.stringify({ id: '2026.0001', status: 'removed', removal_date: '2026-11-08', removal_reason: 'under-review', issue: listed.issue })
     && h.files.join() === '2026.0001v2.pdf' && R.isHeld(h.record));
-  ok('a record already offline or removed is not held again', !!R.plan('hold', h.record, null, '2026-11-09').skip
-    && !!R.plan('hold', JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0003.json'))), null, '2026-11-09').skip && !!R.plan('hold', null, null, '2026-11-09').skip);
-  const up = R.plan('remove', h.record, 'personal-data', '2026-11-12');
-  ok('an upheld request replaces the held record by its removal notice, with the kind of reason and the day of the decision',
-    up.problems.length === 0 && up.record.removal_reason === 'personal-data' && up.record.removal_date === '2026-11-12' && up.files.length === 0
-    && !!R.plan('remove', listed, null, '2026-11-12').skip && !!R.plan('remove', listed, 'under-review', '2026-11-12').skip);
-  const np = R.plan('remove-pdf', listed, null, '2026-11-12');
+  ok('a record already offline or removed is not held again', !!R.plan('hold', h.record, '2026-11-09').skip
+    && !!R.plan('hold', JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0003.json'))), '2026-11-09').skip && !!R.plan('hold', null, '2026-11-09').skip);
+  const up = R.plan('remove', h.record, '2026-11-12');
+  const up2 = R.plan('remove', listed, '2026-11-12');
+  ok('an upheld request leaves only the id, the fact and the day of the decision: no reason, no issue, no PDF',
+    up.problems.length === 0 && JSON.stringify(up.record) === JSON.stringify({ id: '2026.0001', status: 'removed', removal_date: '2026-11-12' }) && up.files.length === 0
+    && up2.problems.length === 0 && JSON.stringify(up2.record) === JSON.stringify(up.record) && up2.files.join() === '2026.0001v2.pdf'
+    && !!R.plan('remove', up.record, '2026-11-13').skip
+    && Object.values(R.KINDS).every((k) => !('reason' in k)) && !read(path.join(ROOT, 'tools', 'removal.js')).includes('removal_reason: reason'));
+  const np = R.plan('remove-pdf', listed, '2026-11-12');
   ok('an author\'s request for the PDF copy to be removed drops only the copies', np.problems.length === 0 && !('pdfs' in np.record) && np.files.join() === '2026.0001v2.pdf'
     && (() => { const a = JSON.parse(JSON.stringify(listed)); delete a.pdfs; return JSON.stringify(a) === JSON.stringify(np.record); })());
   ok('the answer is due 7 days after the request, counted in Japan time', R.DAYS === 7 && R.dueDay('2026-11-07T20:00:00Z') === '2026-11-15' && R.dueDay('2026-11-07T10:00:00Z') === '2026-11-14');
@@ -1822,15 +1831,17 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   const rec = { id: '2026.0001', issue: 1 };
   const said = [R.ack({ form: f, record: listed, held: true, due: '2026-11-15' }), R.ack({ form: f, record: listed, failed: true, due: '2026-11-15' }),
     R.ack({ form: R.parse(body.replace('Exposure of personal data', 'Copyright infringement')), record: listed, due: '2026-11-15' }),
-    R.authorNotice({ id: '2026.0001', kind: f.kind, issue: 9, held: true }), R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: f.kind, today: '2026-11-12', done: true }),
-    R.decisionNote({ id: '2026.0001', decision: 'not-upheld', kind: f.kind, today: '2026-11-12', restored: true }), R.redacted(rec.id, '2026-11-12')];
+    R.authorNotice({ id: '2026.0001', kind: f.kind, issue: 9, held: true }), R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: f.kind, today: '2026-11-12', done: true, emptied: [3, 12] }),
+    R.decisionNote({ id: '2026.0001', decision: 'not-upheld', kind: f.kind, today: '2026-11-12', restored: true }), R.EMPTIED];
   ok('the acknowledgement gives the day the answer is due, says whether material went offline, and that it decides nothing',
     said[0].startsWith(R.MARK) && said[0].includes('aims to answer by 2026-11-15 (Japan time)') && said[0].includes('taken offline at once, before the decision. This is not a decision on the request.')
     && said[1].includes('the operator does it by hand') && said[2].includes('stays online while the request is reviewed') && said.slice(0, 3).every((t) => t.includes('It decides nothing; the operator decides.')));
   ok('the authors are told and can respond; the operator\'s decision lists what is done and what is left by hand; a request not upheld puts material back',
     said[3].includes('in #9') && said[3].includes('If the request is not upheld, they are put back.') && said[3].includes('can respond')
-    && said[4].includes('- [ ] ask the Internet Archive to exclude its earlier copies (by hand)') && said[4].includes('- [x] the automatic comments that repeat the record are edited')
-    && said[5].includes('put back') && said[6].includes('Its text is no longer shown.')
+    && said[4].includes('- [ ] ask the Internet Archive to exclude its earlier copies (by hand)') && said[4].includes('- [x] every automatic comment about the record is deleted')
+    && said[4].includes('- [x] the issues that name it are emptied, closed and locked: #3, #12') && said[4].includes('- [ ] delete those issues, so that their edit history goes too')
+    && said[5].includes('put back') && said[6] === 'Removed.'
+    && R.emptiedTitle('[Submission] A Title Naming the Work') === '[Submission] removed' && R.emptiedTitle('[Withdrawal] 2026.0001') === '[Withdrawal] removed' && R.emptiedTitle('Some title') === '[Removed] removed'
     && R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: R.KINDS['A request about my personal data (access, correction, suspension of use, deletion)'], today: '2026-11-12', done: false }).includes('The operator carries it out by hand.'));
   const dr = R.parse(body.replace('Exposure of personal data', 'A request about my personal data (access, correction, suspension of use, deletion)'));
   const drAck = R.ack({ form: dr, record: listed, due: '2026-11-15' });
@@ -1849,6 +1860,14 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   ok('changes to main go one at a time, and only after the site is built and every check passes',
     /concurrency:\n  group: removal\n  cancel-in-progress: false/.test(wf)
     && /\n  execFileSync\('node', \['build\.js'\], [^\n]*\);\n  execFileSync\('node', \['verification\/check\.js'\], [^\n]*\);\n[\s\S]*\n  git\('push', 'origin', 'HEAD:main'\);\n\}/.test(src));
+  ok('an upheld removal deletes every comment of the bot in the issues that name the record, and empties, closes and locks them; removal requests are left',
+    src.includes("if (c.user.type === 'Bot') await I.github('DELETE', '/issues/comments/' + c.id)") && src.includes("body: EMPTIED, state: 'closed'")
+    && src.includes("'/issues/' + n + '/lock'") && src.includes("!(i.labels || []).some((l) => l.name === 'removal')"));
+  ok('the Takedown Policy says the notice gives no reason, that every trace in the issues goes, and that earlier versions on Vercel are not public',
+    ['If the request is upheld, the record page is replaced by a notice that says only that the record with that Sophaxis id was removed.', 'The notice gives no reason and no other detail.',
+      'Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.',
+      'The operator also asks GitHub to remove the material from the repository history.', 'Earlier versions of the site that Vercel keeps are not open to the public.']
+      .every((x) => read(path.join(ROOT, 'policies', 'takedown.md')).includes(x)));
   ok('a hold is recorded in its commit, and putting back restores the record and its copies from just before that commit',
     src.includes("'Sophaxis-Action: ' + action + ' ' + id") && src.includes("'--grep=^Sophaxis-Action: hold '") && src.includes("'--', 'data/papers/' + id + '.json')") && src.includes("sha + '^:data/papers/' + id + '.json'"));
   ok('the Takedown Policy and the README say what runs by itself and what the operator decides',
