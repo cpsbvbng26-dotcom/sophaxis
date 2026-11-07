@@ -92,3 +92,6 @@ Sophaxis has no arrangement with Anthropic, receives nothing from it, and does n
 No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
 No step uses a language model. The steps are ordinary code.
 `robots.txt` asks the Internet Archive's crawlers not to collect the page or its PDF copies again.
+The operator reviews this decision when Sophaxis first lists a work by an author other than the operator, and whenever a data protection authority or a person in the European Union or the United Kingdom asks for a representative.
+Each review and its outcome are recorded in the public repository.
+Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
