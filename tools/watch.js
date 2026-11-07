@@ -118,6 +118,22 @@ function archiveUrls(list) {
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => SITE.baseUrl + 'pdf/' + x.file)));
 }
 
+/* Save addresses to the Internet Archive, spaced and retried as above. Used by the weekly watch and, for the pages
+ * a push changed, by tools/indexnow.js. A failure is logged and does not stop the others. */
+async function saveToArchive(urls) {
+  for (const u of urls) {
+    for (let attempt = 0; attempt <= RETRY_WAITS_MS.length; attempt++) {
+      if (attempt) await pause(RETRY_WAITS_MS[attempt - 1]);
+      try {
+        const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
+        console.log('archive ' + r.status + ' ' + u);
+        if (r.ok) break;
+      } catch (e) { console.log('archive failed ' + u + ': ' + describe(e)); }
+    }
+    await pause(SAVE_GAP_MS);
+  }
+}
+
 function report(problems, when, news = [], pubs = [], index = '') {
   const list = (xs) => xs.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n');
   return `${MARK}
@@ -218,18 +234,8 @@ async function main() {
   /* The Internet Archive answers 429 to saves that come too close together, or refuses the connection:
    * space them, and retry after a longer wait each time (SAVE_GAP_MS, RETRY_WAITS_MS).
    * Any answer other than success is tried again: on 2026-11-02 it answered 404 for a PDF copy that was served. */
-  for (const u of archiveUrls(list)) {
-    if (dry) { console.log('would save ' + u); continue; }
-    for (let attempt = 0; attempt <= RETRY_WAITS_MS.length; attempt++) {
-      if (attempt) await pause(RETRY_WAITS_MS[attempt - 1]);
-      try {
-        const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
-        console.log('archive ' + r.status + ' ' + u);
-        if (r.ok) break;
-      } catch (e) { console.log('archive failed ' + u + ': ' + describe(e)); }
-    }
-    await pause(SAVE_GAP_MS);
-  }
+  if (dry) archiveUrls(list).forEach((u) => console.log('would save ' + u));
+  else await saveToArchive(archiveUrls(list));
   /* A save can fail while an earlier copy exists. Say which, so a failure is not read as "never saved". */
   for (const u of archiveUrls(list)) {
     if (dry) break;
@@ -253,6 +259,6 @@ async function main() {
   }
 }
 
-module.exports = { compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };
+module.exports = { saveToArchive, compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

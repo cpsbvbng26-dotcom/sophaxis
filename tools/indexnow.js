@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 /* Tell the search engines that take IndexNow (Bing, Yandex, Naver, Seznam and others) which record pages and
- * PDF copies are new or changed, once the deployment that carries them is live.
+ * PDF copies are new, changed or gone, once the deployment that carries them is live, and save the new and changed
+ * ones to the Internet Archive at once (the weekly watch saves every one again).
+ * A gone address is one that left the sitemap: a removed record, or a PDF copy taken off the site. IndexNow asks to be
+ * told of these too, so that the engines visit them again and drop what they held.
  * Google does not take IndexNow; it reads the sitemap, which robots.txt names.
  *
- * Run by .github/workflows/indexnow.yml on each push to main that changes site/sitemap.xml.
+ * Run by .github/workflows/indexnow.yml on each push to main that changes site/sitemap.xml, and by
+ * .github/workflows/removal.yml after it pushes, since a push made by a workflow starts no other workflow.
  *   BEFORE=<commit>  compare the sitemap with the one at that commit (the push's previous head)
  *   ALL=yes          send every record page and PDF copy
  *   node tools/indexnow.js --dry-run   # print what would be sent; send nothing
@@ -45,6 +49,12 @@ function sendable(loc, base = SITE.baseUrl) {
 function changed(before, after, base = SITE.baseUrl) {
   const a = entries(before);
   return [...entries(after)].filter(([loc, d]) => sendable(loc, base) && a.get(loc) !== d).map(([loc]) => loc);
+}
+
+/* Pure: the addresses that left the sitemap, among those that are sent. They are told to IndexNow, never saved. */
+function gone(before, after, base = SITE.baseUrl) {
+  const a = entries(after);
+  return [...entries(before).keys()].filter((loc) => sendable(loc, base) && !a.has(loc));
 }
 
 /* Pure: every address of the sitemap that is sent. */
@@ -98,10 +108,14 @@ async function run() {
   if (!KEY_FORM.test(String(SITE.indexNowKey || ''))) throw new Error('site.json: indexNowKey is missing or not of the IndexNow form');
   const now = fs.readFileSync(path.join(ROOT, 'site', 'sitemap.xml'), 'utf8');
   const before = process.env.BEFORE || '';
+  if (before && !/^[0-9a-f]{7,40}$/.test(before)) throw new Error('BEFORE must be a commit id');
   const all = process.env.ALL === 'yes' || !before || /^0+$/.test(before);
-  const urls = all ? every(now) : changed(sitemapAt(before), now);
-  console.log((all ? 'every address' : 'changed since ' + before.slice(0, 7)) + ': ' + urls.length);
-  urls.forEach((u) => console.log('  ' + u));
+  const fresh = all ? every(now) : changed(sitemapAt(before), now);
+  const left = all ? [] : gone(sitemapAt(before), now);
+  const urls = fresh.concat(left);
+  console.log((all ? 'every address' : 'changed since ' + before.slice(0, 7)) + ': ' + fresh.length + ', gone: ' + left.length);
+  fresh.forEach((u) => console.log('  ' + u));
+  left.forEach((u) => console.log('  gone ' + u));
   if (!urls.length || dry) return;
 
   /* Send only once the deployment that carries these pages is live: the live sitemap is the one in this commit. */
@@ -117,8 +131,10 @@ async function run() {
   const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8', 'User-Agent': UA }, body: JSON.stringify(body) });
   console.log('IndexNow: HTTP ' + r.status + ', ' + meaning(r.status));
   if (r.status !== 200 && r.status !== 202) throw new Error('IndexNow refused the request: ' + (await r.text()).slice(0, 300));
+  /* The new and changed pages go to the Internet Archive too; a gone one never does. Sending everything leaves this to the weekly watch. */
+  if (!all) await require('./watch.js').saveToArchive(fresh);
 }
 
 if (require.main === module) run().catch((e) => { console.error(e.message); process.exit(1); });
 
-module.exports = { entries, sendable, changed, every, request, meaning, KEY_FORM, ENDPOINT };
+module.exports = { entries, sendable, changed, gone, every, request, meaning, KEY_FORM, ENDPOINT };

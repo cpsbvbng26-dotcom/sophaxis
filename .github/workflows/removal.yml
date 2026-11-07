@@ -47,6 +47,10 @@ jobs:
           ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # A push made by this workflow starts no other workflow, so the search engines are told here (tools/indexnow.js).
+      - run: node tools/indexnow.js
+        env:
+          BEFORE: ${{ github.sha }}
   decide:
     if: >-
       github.event_name == 'issues' && github.event.action == 'labeled'
@@ -69,6 +73,10 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # A push made by this workflow starts no other workflow, so the search engines are told here (tools/indexnow.js).
+      - run: node tools/indexnow.js
+        env:
+          BEFORE: ${{ github.sha }}
   manual:
     if: github.event_name == 'workflow_dispatch'
     name: Act on a request sent by email
@@ -87,6 +95,10 @@ jobs:
           ID: ${{ inputs.id }}
           ACTION: ${{ inputs.action }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # A push made by this workflow starts no other workflow, so the search engines are told here (tools/indexnow.js).
+      - run: node tools/indexnow.js
+        env:
+          BEFORE: ${{ github.sha }}
   remind:
     if: github.event_name == 'schedule'
     name: Remind of requests close to 7 days

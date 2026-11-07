@@ -1,6 +1,7 @@
 name: indexnow
-# Tell the search engines that take IndexNow which record pages and PDF copies are new or changed, once they are live.
-# Google does not take IndexNow; it reads the sitemap.
+# Tell the search engines that take IndexNow which record pages and PDF copies are new, changed or gone, once they are live,
+# and save the new and changed ones to the Internet Archive. Google does not take IndexNow; it reads the sitemap.
+# A push made by another workflow starts no workflow, so removal.yml runs tools/indexnow.js itself after it pushes.
 on:
   push:
     branches: [main]
@@ -11,11 +12,14 @@ on:
         description: Send every record page and PDF copy, not only those changed by the last push (yes or no)
         required: false
         default: 'no'
+      before:
+        description: Compare with the sitemap at this commit, to tell what changed or went since then (a full commit id)
+        required: false
 permissions:
   contents: read
 jobs:
   indexnow:
-    name: Tell IndexNow what changed
+    name: Tell IndexNow what changed, and save it to the Internet Archive
     runs-on: ubuntu-latest
     steps:
       # The sitemap of the previous head is read from the history.
@@ -27,5 +31,5 @@ jobs:
           node-version: 22
       - run: node tools/indexnow.js
         env:
-          BEFORE: ${{ github.event.before }}
+          BEFORE: ${{ inputs.before || github.event.before }}
           ALL: ${{ inputs.all }}

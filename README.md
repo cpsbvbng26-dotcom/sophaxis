@@ -50,7 +50,10 @@ It also looks in Crossref and DataCite for a published version linked to a liste
 For information, it reads how OpenAlex holds each work shown: whether OpenAlex has the work and its abstract, and whether a Sophaxis record page is among its locations. It writes this to the summary of the run, and to the weekly issue when there is one; it does not open an issue by itself.
 
 When a push to main changes the sitemap (`tools/indexnow.js`, run by `.github/workflows/indexnow.yml`), Sophaxis waits until the new pages are live,
-then tells the search engines that take IndexNow (Bing, Yandex, Naver, Seznam and others) which record pages and PDF copies are new or changed.
+then tells the search engines that take IndexNow (Bing, Yandex, Naver, Seznam and others) which record pages and PDF copies are new, changed or gone.
+A gone address is one that left the sitemap, such as a removed record, so that the engines visit it again and drop what they held.
+The new and changed pages are saved to the Internet Archive at once; a gone one never is. The weekly check saves every page again.
+A push made by the removal workflow starts no other workflow, so that workflow does the same itself after it pushes.
 Only those addresses and the home page are sent. Author pages, whose address carries an ORCID iD, are not.
 Google does not take IndexNow. It reads the sitemap, which `robots.txt` names and which is registered in Google Search Console.
 
@@ -206,7 +209,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 検索、分野ごとの一覧、著者ごとの頁（ORCID iD のある著者）、新着の Atom フィード、記録の JSON、APA・Chicago・BibTeX の引用形式があります。
 - 引用は BibTeX・RIS・CSL-JSON のファイルでも取り出せます。記録の JSON の項目は、上の英語の節に書いてあります。
 - 論文の頁には、関連する記録、誤りを報告する窓口、Internet Archive の保存版へのリンクがあります。
-- main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁を知らせます（`tools/indexnow.js`）。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
+- main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁、sitemap から外れた頁（削除した記録など）を知らせます（`tools/indexnow.js`）。新しい頁と変わった頁は、その場で Internet Archive にも保存します。外れた頁は保存しません。削除の自動処理が push したときも、同じことをその場で行います。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
 - Google は IndexNow を受けません。Google には、`robots.txt` が示し、Google Search Console に登録した sitemap から読ませます。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 確かめが通った投稿には、預け先の登録情報についての助言も返します（[deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) による、要旨やライセンスの欠けなど）。助言は掲載の可否を決めません。
