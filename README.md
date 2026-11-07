@@ -102,8 +102,9 @@ Merge the change itself on or after that date, then set `termsNotice` back to `n
 
 ### Withdrawing a record
 
-Follow the [Withdrawal Policy](policies/withdrawal.md). A withdrawal issue runs `tools/withdraw.js`, which checks that the account asking belongs to an author
-and posts the record as it is after withdrawal. Replace the record with it, delete its files in `data/pdf/`, rebuild and open a pull request that closes the issue.
+Follow the [Withdrawal Policy](policies/withdrawal.md). A withdrawal issue runs `tools/withdraw.js`, which checks that the account asking belongs to an author.
+The author chooses withdrawal or removal. For withdrawal, the check posts the record as it is after withdrawal: replace the record with it, delete its files in `data/pdf/`, rebuild and open a pull request that closes the issue.
+For removal, label the verified issue `upheld`: `tools/removal.js` removes the record as for an upheld removal request, and empties, closes and locks the withdrawal issue too.
 
 ### Recording a published version
 

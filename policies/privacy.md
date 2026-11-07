@@ -58,6 +58,7 @@ Most of a record comes from the metadata of the deposit.
 The statement on generative models, an abstract given in the form, a reason for withdrawal and notes on corrections come from the issues, where they are public already.
 A record also gives the number of its submission issue, which shows the submitter's GitHub username.
 Sophaxis keeps records without a time limit, so that citations do not break.
+A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](./takedown.html) sets out.
 
 ## Reuse and copies elsewhere
 
@@ -102,7 +103,7 @@ If personal data leaks in a way that the law requires to be reported, the operat
 
 ## Your choices
 
-An author can withdraw a work, or ask for the PDF copy to be removed.
+An author can withdraw a work, have its record removed so that only the Sophaxis id stays, or ask for the PDF copy to be removed.
 A person whose personal data appears in a record can ask for its removal under the [Takedown Policy](./takedown.html).
 A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The operator aims to answer within 7 days.

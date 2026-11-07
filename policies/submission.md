@@ -196,4 +196,5 @@ Versions.
 
 Any one author can withdraw a listed work under the [Withdrawal Policy](./withdrawal.html).
 Records are not deleted: a withdrawn work keeps its record page with a withdrawal notice, so that citations to it do not break.
+An author can instead have the record removed, so that only its Sophaxis id stays.
 Removal for legal reasons follows the [Takedown Policy](./takedown.html).
