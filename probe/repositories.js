@@ -1,28 +1,24 @@
 'use strict';
-/* One-off probe, never merged (read only): how far Sophaxis is indexed (OpenAlex, the Internet Archive, DOAPR, ROAR, OAD, PhilPapers). */
+/* One-off probe, never merged (read only): the exact titles of the author's Zenodo works at DataCite, and the files of each record at Zenodo. */
 const UA = { 'User-Agent': 'Sophaxis probe (https://github.com/cpsbvbng26-dotcom/sophaxis)' };
 const get = async (u) => { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(40000) }); return [r.status, await r.text()]; };
+const DOIS = ['10.5281/zenodo.17173703', '10.5281/zenodo.22055709', '10.5281/zenodo.22057583', '10.5281/zenodo.22058254', '10.5281/zenodo.22058624', '10.5281/zenodo.22058777',
+  '10.5281/zenodo.22058964', '10.5281/zenodo.22064241', '10.5281/zenodo.22335676', '10.5281/zenodo.22765695', '10.5281/zenodo.23114131'];
 (async () => {
-  try { const [s, t] = await get('https://api.openalex.org/sources?search=sophaxis'); const j = JSON.parse(t); console.log('==== OpenAlex sources "sophaxis" -> ' + s + ' count=' + j.meta.count + ' ' + j.results.map((x) => x.display_name).join(', ')); } catch (e) { console.log('==== OpenAlex sources error ' + e.message); }
-  try {
-    const [s, t] = await get('https://api.openalex.org/works?filter=author.orcid:0009-0000-1406-0547&per_page=50&select=id,title,locations');
-    const j = JSON.parse(t);
-    const withS = j.results.filter((w) => (w.locations || []).some((l) => /sophaxis/i.test((l.landing_page_url || '') + (l.pdf_url || ''))));
-    console.log('==== OpenAlex works by the ORCID -> ' + s + ' total=' + j.meta.count + ', with a Sophaxis location=' + withS.length);
-    withS.forEach((w) => console.log('  - ' + w.title.slice(0, 60)));
-  } catch (e) { console.log('==== OpenAlex works error ' + e.message); }
-  const pages = ['', 'abs/2026.0001.html', 'abs/2026.0002.html', 'abs/2026.0003.html', 'abs/2026.0004.html', 'abs/2026.0005.html', 'automation.html', 'policies/takedown.html'];
-  for (const p of pages) {
-    try { const [s, t] = await get('https://archive.org/wayback/available?url=' + encodeURIComponent('https://sophaxis.vercel.app/' + p)); const c = (JSON.parse(t).archived_snapshots || {}).closest; console.log('==== Wayback /' + p + ' -> ' + (c && c.available ? c.timestamp : 'none')); } catch (e) { console.log('==== Wayback /' + p + ' error ' + e.message); }
+  for (const d of DOIS) {
+    try {
+      const [s, t] = await get('https://api.datacite.org/dois/' + d);
+      const a = JSON.parse(t).data.attributes;
+      const isVer = (a.relatedIdentifiers || []).filter((r) => r.relationType === 'IsVersionOf').map((r) => r.relatedIdentifier).join(',');
+      const hasVer = (a.relatedIdentifiers || []).filter((r) => r.relationType === 'HasVersion').length;
+      console.log('==== ' + d + ' [' + s + '] ' + a.types.resourceTypeGeneral + ' ' + a.publicationYear + ' isVersionOf=' + isVer + ' hasVersions=' + hasVer + ' lang=' + a.language);
+      for (const x of a.titles) console.log('  TITLE' + (x.titleType ? '(' + x.titleType + ')' : '') + ': ' + x.title);
+    } catch (e) { console.log('==== ' + d + ' DataCite error ' + e.message); }
+    try {
+      const id = d.split('zenodo.')[1];
+      const [s, t] = await get('https://zenodo.org/api/records/' + id);
+      const j = JSON.parse(t);
+      console.log('  ZENODO [' + s + '] id=' + j.id + ' latest=' + ((j.links || {}).latest || '') + ' files=' + (j.files || []).map((f) => f.key + ' (' + f.size + ')').join(' | '));
+    } catch (e) { console.log('  ZENODO error ' + e.message); }
   }
-  try { const [s, t] = await get('https://web.archive.org/cdx/search/cdx?url=sophaxis.vercel.app*&output=json&fl=timestamp,original&collapse=urlkey&limit=500'); const rows = JSON.parse(t || '[]').slice(1); console.log('==== Wayback distinct addresses -> ' + s + ' ' + rows.length); } catch (e) { console.log('==== Wayback cdx error ' + e.message); }
-  for (const u of ['https://doapr.coar-repositories.org/repositories/', 'https://doapr.coar-repositories.org/repositories/?q=sophaxis']) {
-    try { const [s, t] = await get(u); console.log('==== DOAPR ' + u + ' -> ' + s + ' mentions Sophaxis: ' + /sophaxis/i.test(t) + ' | ' + ((/<title>([^<]*)/i.exec(t) || [])[1] || '').trim().slice(0, 60)); } catch (e) { console.log('==== DOAPR error ' + e.message); }
-  }
-  try { const [s, t] = await get('https://roar.eprints.org/27422/'); console.log('==== ROAR 27422 -> ' + s + ' mentions Sophaxis: ' + /sophaxis/i.test(t)); } catch (e) { console.log('==== ROAR error ' + e.message); }
-  for (const u of ['https://oad.simmons.edu/oadwiki/Disciplinary_repositories', 'https://oad.simmons.edu/oadwiki/Disciplinary_repositories#Philosophy', 'https://philpapers.org/archives/', 'https://philarchive.org/archives']) {
-    try { const [s, t] = await get(u); console.log('==== ' + u + ' -> ' + s + ' mentions Sophaxis: ' + /sophaxis/i.test(t)); } catch (e) { console.log('==== ' + u + ' error ' + e.message); }
-  }
-  try { const [s, t] = await get('https://api.openalex.org/works?search=sophaxis&per_page=10&select=id,title,locations'); const j = JSON.parse(t); console.log('==== OpenAlex works search "sophaxis" -> ' + s + ' count=' + j.meta.count); } catch (e) { console.log('==== OpenAlex search error ' + e.message); }
-  try { const [s, t] = await get('https://sophaxis.vercel.app/robots.txt'); console.log('==== robots.txt -> ' + s + '\n' + t); } catch (e) { console.log('==== robots error ' + e.message); }
 })();
