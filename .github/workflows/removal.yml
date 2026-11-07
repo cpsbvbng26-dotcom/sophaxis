@@ -16,11 +16,6 @@ on:
         required: true
         type: choice
         options: [hold, release, remove, remove-pdf]
-      reason:
-        description: With remove — the kind of reason
-        required: false
-        type: choice
-        options: ['', copyright, personal-data, author-consent, legal]
   schedule:
     - cron: '17 0 * * *'
 permissions:
@@ -90,7 +85,6 @@ jobs:
           MODE: manual
           ID: ${{ inputs.id }}
           ACTION: ${{ inputs.action }}
-          REASON: ${{ inputs.reason }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   remind:
     if: github.event_name == 'schedule'
