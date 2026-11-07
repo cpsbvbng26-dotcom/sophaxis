@@ -5,7 +5,8 @@ No version has been tagged yet, so the entries are grouped by the date of the me
 
 ## 2026-11-07
 
-- The three Trinity-Infinity papers (2026.0006, 2026.0007, 2026.0008) are withdrawn by their author under the Withdrawal Policy. The record pages stay with a notice, and the PDF copies are taken off the site.
+- The three Trinity-Infinity papers (2026.0006, 2026.0007, 2026.0008) are withdrawn by their author under the Withdrawal Policy. The record pages stay with a notice, and the PDF copies are taken off the site (#107).
+- The policies are made precise against Japanese, EU and US law, after a review of every policy against the code. The Privacy Policy now says what an ORCID lookup returns, every purpose (OAI-PMH, the Internet Archive, IndexNow, the weekly checks), the address that OAI-PMH gives harvesters, Vercel's request logs, security, the basis and rights for people in the EU and the UK, and that requests cost nothing; the Japanese version matches it. The Takedown Policy covers the automatic comments, harvesters, putting material back, and requests to disclose who sent material. The Withdrawal Policy says what stays in the history and lets an author have their name taken off. The Terms limit the authors' responsibility to what they confirmed, make the operator liable for negligence where the Consumer Contract Act applies, and announce even an urgent change before it takes effect. The removal form takes requests about personal data. Changes that add a duty take effect on 2026-11-21 and are announced on the top page.
 
 ## 2026-11-06
 
