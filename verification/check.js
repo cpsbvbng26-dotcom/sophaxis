@@ -144,7 +144,9 @@ console.log('\n4. The policy keeps its promises in writing');
     'It does not run plagiarism checks.',
     'The operator then looks at the submission once more, and that decision is final.',
     'These terms are governed by the laws of Japan.',
-    'To the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.',
+    'The operator is not liable for the content of listed works, which their authors write.',
+    'Where Japan\'s Consumer Contract Act applies, the operator is liable for loss that the operator causes by negligence, as that Act provides.',
+    'Otherwise, to the extent the law allows, the operator is not liable for loss that arises from using the site or relying on listed work.',
     'If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.',
     'A request that cannot be made in public goes by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
     'For personal data and other serious harm, the abstract and the PDF copy are taken offline at once, before the decision.',
@@ -162,7 +164,13 @@ console.log('\n4. The policy keeps its promises in writing');
     'Only an author of a work can submit it.',
     'A submission that does not pass both is not listed.',
     'It is not an official identity check.',
-    'Email addresses and other details in an ORCID record are not read.',
+    'ORCID returns everything that is public there, which can include public email addresses and the country.',
+    'The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.',
+    'Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).',
+    'The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.',
+    'Material that was taken offline while the request was reviewed is put back.',
+    'A request to disclose who submitted material is handled as Japanese law provides.',
+    'Even then, the change is announced before it takes effect.',
     'It is shown under the work\'s own licence, with its authors and a link to the work.',
     'On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.',
     'Work on SSRN is accepted only if it carries one of the accepted licences.',
@@ -521,7 +529,7 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
     && ['取り扱う者', '取り扱う個人情報', '利用目的', '公開と第三者への提供', '外国にある事業者の利用', '安全のための措置', '保存の期間', '開示・訂正・利用停止・削除の求め'].every((h) => ja.includes('<h2>' + h + '</h2>')));
   ok('the Japanese page names every foreign service the English policy names, and links back to it', ['GitHub（米国）', 'Vercel（米国）', 'DataCite（ドイツ）', 'Crossref（米国）', 'ORCID（米国）', 'Internet Archive（米国）'].every((s) => ja.includes(s))
     && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>' + /最終更新：(\d{4}-\d{2}-\d{2})。/.exec(read(path.join(ROOT, 'policies', 'privacy.ja.md')))[1]));
-  ok('Japanese lines join without a space, English lines with one', ja.includes('読みません。サイトは、閲覧者の個人情報を集めません。') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
+  ok('Japanese lines join without a space, English lines with one', ja.includes('どこにも書き写しません。サイトは、閲覧者の個人情報を集めません。') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
   {
     const en = read(path.join(ROOT, 'site', 'policies', 'privacy.html'));
     const pair = '<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/privacy.html">\n'
@@ -871,7 +879,7 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     dis.includes('## The operator\'s own use') && dis.includes('The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf')
     && dis.includes('This use does not change what is listed or how.')
     && dis.includes('Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it')
-    && dis.includes('Sophaxis is not a business. It charges no one, sells nothing, shows no advertising and earns nothing.')
+    && dis.includes('Sophaxis is not run for profit. It charges no one, sells nothing, shows no advertising and earns nothing.')
     && dis.includes('Sophaxis does not publish works.') && dis.includes('Sophaxis takes no copyright and no exclusive licence in any work.')
     && dis.includes('(./policies/takedown.html)') && dis.includes('They are not legal advice, and they do not claim that no legal question can arise.')
     && !/(no|free of|without) legal risk|legally safe|risk-free/i.test(dis)
