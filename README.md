@@ -66,6 +66,7 @@ Google does not take IndexNow. It reads the sitemap, which `robots.txt` names an
 ```
 node build.js                # writes site/ from site.json, policy.md, policies/*.md and data/papers/*.json
 node verification/check.js   # checks the records, the site and the policies
+node verification/check_keyboard.js   # Tab through every page and measure the layout (needs playwright and Chromium)
 ```
 
 No dependencies. The site loads nothing from other servers. The only script is `assets/search.js`, on the search page, which reads `papers.json` from the site itself.
