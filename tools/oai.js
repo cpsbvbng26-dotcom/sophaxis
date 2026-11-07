@@ -6,7 +6,8 @@
  * build.js writes site/api/oai.js: this file, the records, and a handler that Vercel runs as a function at /oai.
  * The function reads nothing and asks no other server; it answers from the records it was built with.
  *
- * Metadata: Dublin Core (oai_dc), following the OpenAIRE guidelines for literature repositories (v3) where they apply.
+ * Metadata: Dublin Core (oai_dc), following the OpenAIRE guidelines for literature repositories (v3) where they apply,
+ * and oai_openaire, the application profile of the OpenAIRE Guidelines for Literature Repositories v4.
  * Sets: the fields of Sophaxis, and `openaire` with every record shown. Granularity: days.
  * Deleted records: persistent. A record removed under the Takedown Policy keeps its identifier, marked deleted.
  * No answer is split, so no resumption token is ever given; one that is sent is refused.
@@ -65,7 +66,33 @@ function dc(r) {
     + '</oai_dc:dc></metadata>';
 }
 
-const record = (r) => '<record>' + header(r) + (r.deleted ? '' : dc(r)) + '</record>\n';
+/* oai_openaire: https://openaire-guidelines-for-literature-repository-managers.readthedocs.io (schema 4.0).
+ * Every record is an open access preprint; its record page is the identifier, and it is identical to the deposited DOI. */
+const OAIRE = { prefix: 'oai_openaire', schema: 'https://www.openaire.eu/schema/repo-lit/4.0/openaire.xsd', namespace: 'http://namespace.openaire.eu/schema/oaire/' };
+const OPEN = 'http://purl.org/coar/access_right/c_abf2';
+function oaire(r) {
+  const m = r.oaire;
+  const t = (name, v, attrs) => (v === null || v === undefined || v === '' ? '' : '<' + name + (attrs || '') + '>' + x(v) + '</' + name + '>');
+  return '<metadata><oaire:resource xmlns:oaire="' + OAIRE.namespace + '" xmlns:datacite="http://datacite.org/schema/kernel-4"'
+    + ' xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
+    + ' xsi:schemaLocation="' + OAIRE.namespace + ' ' + OAIRE.schema + '">'
+    + '<datacite:titles>' + t('datacite:title', m.title) + '</datacite:titles>'
+    + '<datacite:creators>' + m.creators.map((c) => '<datacite:creator>' + t('datacite:creatorName', c.name)
+      + (c.orcid ? t('datacite:nameIdentifier', c.orcid, ' nameIdentifierScheme="ORCID" schemeURI="http://orcid.org"') : '') + '</datacite:creator>').join('') + '</datacite:creators>'
+    + '<datacite:relatedIdentifiers>' + m.related.map((rel) => t('datacite:relatedIdentifier', rel.value, ' relatedIdentifierType="' + rel.type + '" relationType="' + rel.relation + '"')).join('') + '</datacite:relatedIdentifiers>'
+    + '<datacite:dates>' + t('datacite:date', m.issued, ' dateType="Issued"') + '</datacite:dates>'
+    + t('dc:language', m.language) + t('dc:publisher', m.publisher)
+    + '<oaire:resourceType resourceTypeGeneral="literature" uri="http://purl.org/coar/resource_type/c_816b">preprint</oaire:resourceType>'
+    + t('dc:description', m.description) + (m.file ? t('dc:format', 'application/pdf') : '')
+    + t('datacite:identifier', m.identifier, ' identifierType="URL"')
+    + '<datacite:rights rightsURI="' + OPEN + '">open access</datacite:rights>'
+    + (m.subjects.length ? '<datacite:subjects>' + m.subjects.map((s) => t('datacite:subject', s)).join('') + '</datacite:subjects>' : '')
+    + (m.licence ? t('oaire:licenseCondition', m.licence.name, ' startDate="' + x(m.licence.start) + '" uri="' + x(m.licence.uri) + '"') : '')
+    + (m.file ? t('oaire:file', m.file, ' accessRightsURI="' + OPEN + '" mimeType="application/pdf" objectType="fulltext"') : '')
+    + '</oaire:resource></metadata>';
+}
+
+const record = (r, prefix) => '<record>' + header(r) + (r.deleted ? '' : prefix === OAIRE.prefix ? oaire(r) : dc(r)) + '</record>\n';
 
 /* Pure: answer one request. `args` is a list of [name, value]; `data` is what build.js made; `now` is a Date. */
 function handle(args, data, now) {
@@ -109,15 +136,17 @@ function handle(args, data, now) {
     if (a.identifier !== undefined && !known(a.identifier)) return echo(error('idDoesNotExist', 'No record ' + a.identifier + '.'));
     return echo('<ListMetadataFormats><metadataFormat><metadataPrefix>oai_dc</metadataPrefix>'
       + '<schema>http://www.openarchives.org/OAI/2.0/oai_dc.xsd</schema>'
-      + '<metadataNamespace>http://www.openarchives.org/OAI/2.0/oai_dc/</metadataNamespace></metadataFormat></ListMetadataFormats>\n');
+      + '<metadataNamespace>http://www.openarchives.org/OAI/2.0/oai_dc/</metadataNamespace></metadataFormat>'
+      + '<metadataFormat><metadataPrefix>' + OAIRE.prefix + '</metadataPrefix><schema>' + OAIRE.schema + '</schema>'
+      + '<metadataNamespace>' + OAIRE.namespace + '</metadataNamespace></metadataFormat></ListMetadataFormats>\n');
   }
   if (verb === 'ListSets') {
     return echo('<ListSets>' + data.sets.map((s) => '<set><setSpec>' + x(s.spec) + '</setSpec><setName>' + x(s.name) + '</setName></set>').join('') + '</ListSets>\n');
   }
-  if (a.metadataPrefix !== 'oai_dc') return echo(error('cannotDisseminateFormat', 'Only oai_dc is given.'));
+  if (a.metadataPrefix !== 'oai_dc' && a.metadataPrefix !== OAIRE.prefix) return echo(error('cannotDisseminateFormat', 'Only oai_dc and ' + OAIRE.prefix + ' are given.'));
   if (verb === 'GetRecord') {
     const r = known(a.identifier);
-    return echo(r ? '<GetRecord>' + record(r) + '</GetRecord>\n' : error('idDoesNotExist', 'No record ' + a.identifier + '.'));
+    return echo(r ? '<GetRecord>' + record(r, a.metadataPrefix) + '</GetRecord>\n' : error('idDoesNotExist', 'No record ' + a.identifier + '.'));
   }
   /* ListIdentifiers and ListRecords. */
   for (const k of ['from', 'until']) {
@@ -131,7 +160,7 @@ function handle(args, data, now) {
   if (!list.length) return echo(error('noRecordsMatch', 'No record matches.'));
   return echo(verb === 'ListIdentifiers'
     ? '<ListIdentifiers>' + list.map((r) => header(r)).join('\n') + '</ListIdentifiers>\n'
-    : '<ListRecords>' + list.map(record).join('') + '</ListRecords>\n');
+    : '<ListRecords>' + list.map((r) => record(r, a.metadataPrefix)).join('') + '</ListRecords>\n');
 }
 
 /* The Vercel function: GET with the arguments in the query, or POST with them in the body (both are OAI-PMH). */
@@ -150,4 +179,4 @@ function handler(data) {
   };
 }
 
-module.exports = { handle, handler, argsOf, VERBS, x };
+module.exports = { handle, handler, argsOf, VERBS, x, OAIRE };

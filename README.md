@@ -181,7 +181,8 @@ Every shown record is in `papers.json`, newest first. The fields:
 
 The records can also be harvested with OAI-PMH 2.0, at the base URL `https://sophaxis.vercel.app/oai` (for example https://sophaxis.vercel.app/oai?verb=Identify).
 - Metadata: Dublin Core (`oai_dc`). The record page, the DOI and the PDF copy are among its identifiers.
-- Sets: the fields, and `openaire` with every record shown, as the OpenAIRE guidelines for literature repositories (v3) ask. The language is given as ISO 639-3 where the record has one. Sophaxis has not applied to OpenAIRE.
+- Metadata: `oai_openaire`, the application profile of the OpenAIRE Guidelines for Literature Repositories v4. Each record is an open access preprint (COAR `c_abf2`, `c_816b`); its identifier is the record page; it is `IsIdenticalTo` the DOI of the deposited work, whose repository is the publisher; the PDF copy is its full-text file; the ORCID iD of each author is given. Every listed record validates against the guidelines' schema 4.0 (checked with `xmllint` on 2026-11-08).
+- Sets: the fields, and `openaire` with every record shown, as the OpenAIRE guidelines for literature repositories (v3) ask; v4 asks for no set. The language is given as ISO 639-3 where the record has one. Sophaxis has not applied to OpenAIRE.
 - Identifiers: `oai:sophaxis.vercel.app:<id>`.
 - Datestamp: the later of `listed`, `updated` and the last change of the record, in days. A removed record stays, marked deleted.
 - Lists are answered whole, with no resumption token.
