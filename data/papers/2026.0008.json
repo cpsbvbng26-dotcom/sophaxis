@@ -1,41 +1,5 @@
 {
   "id": "2026.0008",
-  "title": "The Trinity-Infinity Framework, Series III: Beyond Three — A Generalization and Retrospective",
-  "authors": [
-    {
-      "name": "Takuya Nemoto",
-      "orcid": "0009-0000-1406-0547",
-      "given": "Takuya",
-      "family": "Nemoto"
-    }
-  ],
-  "abstract": "The first two series of the Trinity-Infinity framework prove that a recursion combining a cyclic permutation of three elements with integration toward a fixed anchor converges geometrically to a unique fixed point. We show this result never depended on there being three elements: the identical argument holds for any number of elements n ≥ 2 (Theorem 1), which we verify computationally for n=2 through 8. We then identify precisely the one respect in which n=3 is structurally distinguished — it is the smallest n for which the cyclic permutation is not its own inverse — and are explicit that this is a narrow structural fact, not a justification for the broader cultural or philosophical resonance of triads invoked in Series I's introduction. We close with a retrospective distinguishing what this series has actually proven and verified from what the original preprints claimed but did not establish.",
-  "abstract_source": "authors",
-  "category": "mathematics",
-  "license": "CC-BY-4.0",
-  "language": "eng",
-  "versions": [
-    {
-      "version": 1,
-      "doi": "10.5281/zenodo.22058964",
-      "date": "2026-08-22"
-    }
-  ],
-  "llm_disclosure": "This manuscript was prepared with drafting, mathematical-formalization, and computational-verification assistance from Claude (Anthropic, Claude Sonnet 5). Every numerical claim in Section 3 was computed by executing the operators exactly as defined in the text; the verification script (series3_verification.py) is distributed together with this PDF. The author reviewed all content and is responsible for its claims.",
-  "issue": 77,
-  "listed": "2026-11-02",
-  "status": "withdrawn",
-  "operator_own": true,
-  "notes": [
-    {
-      "date": "2026-11-02",
-      "text": "The author's errata for this series (https://github.com/cpsbvbng26-dotcom/trinity-infinity/blob/main/ERRATA.md) record that the verification script that this paper says is distributed with the PDF does not exist (E3)."
-    },
-    {
-      "date": "2026-11-02",
-      "text": "The same errata record that the statement on language models covers only the revision. The mathematical content of the first draft, published in October 2025, came from a language model (ChatGPT, OpenAI), and the paper does not say so (E4)."
-    }
-  ],
-  "withdrawal_date": "2026-11-07",
-  "withdrawal_note": "Withdrawn by the author."
+  "status": "removed",
+  "removal_date": "2026-11-07"
 }
