@@ -33,7 +33,9 @@ They are not responsible for Sophaxis, for its records, or for any error that So
 
 The operator, who is at present also the only moderator, runs Sophaxis as an unpaid volunteer.
 No one is paid for work on Sophaxis, and no one pays to submit or to read.
-Sophaxis runs only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and buys no domain or other service.
+Sophaxis is served only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and has no domain or hosting to pay for.
+The operator pays personally for Claude Code, the tool with which the site and its code are written (see How Sophaxis was made below).
+Sophaxis takes no money from anyone to cover it.
 Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.html) and the [Privacy Policy](./policies/privacy.html).
 
 Sophaxis began because the operator looked for one place that lists open preprints in philosophy and in mathematics side by side, and did not find one.
