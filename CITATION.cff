@@ -24,7 +24,16 @@ keywords:
   - logic
   - open access
 license: MIT
+version: "1.0.0"
+date-released: "2026-11-07"
+doi: "10.5281/zenodo.24033371"
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24033371"
+    description: Every version of the code at Zenodo; resolves to the latest
+  - type: doi
+    value: "10.5281/zenodo.24033372"
+    description: Version 1.0.0 of the code at Zenodo
   - type: doi
     value: 10.17605/OSF.IO/MQ7ZA
     description: The OSF project page of Sophaxis (the project, not this code release)
