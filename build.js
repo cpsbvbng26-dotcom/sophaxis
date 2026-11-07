@@ -1137,6 +1137,21 @@ function oaiData(all) {
         rights: [lic || p.license, 'info:eu-repo/semantics/openAccess'],
         languages: p.language ? [p.language] : [],
       },
+      /* The OpenAIRE Guidelines for Literature Repositories v4 (oai_openaire). The work was deposited in its repository first;
+       * the record says so by the repository as publisher and by its DOI, to which the record page is identical. */
+      oaire: {
+        title: p.title,
+        creators: p.authors.map((a) => ({ name: [familyOf(a), givenOf(a)].filter(Boolean).join(', '), orcid: a.orcid || null })),
+        identifier: SITE.baseUrl + 'abs/' + p.id + '.html',
+        related: [{ type: 'DOI', relation: 'IsIdenticalTo', value: v.doi }].concat(p.published ? [{ type: 'DOI', relation: 'IsPreviousVersionOf', value: p.published.doi }] : []),
+        issued: p.versions[0].date,
+        language: p.language || null,
+        publisher: repoName(v.doi),
+        description: p.abstract,
+        subjects: cats(p).map((c) => SITE.categories[c]).concat(p.keywords || []),
+        licence: lic ? { uri: lic, name: SITE.licenses[p.license], start: v.date } : null,
+        file: (p.pdfs || []).length ? SITE.baseUrl + 'pdf/' + p.pdfs[p.pdfs.length - 1].file : null,
+      },
     };
   });
   return {
