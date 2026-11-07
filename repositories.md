@@ -1,6 +1,6 @@
 # For repositories and DOI registration agencies
 
-Last updated: 2026-10-31.
+Last updated: 2026-11-07.
 
 This page is addressed to the repositories whose deposits Sophaxis lists, and to the agencies that register their DOIs.
 It says what Sophaxis reads from your services, how often, and what it does with it.
@@ -38,6 +38,7 @@ Reach the operator through an [issue](https://github.com/cpsbvbng26-dotcom/sopha
 ## Disclaimer toward repositories and registration agencies
 
 Sophaxis is independent, and is not affiliated with, endorsed by or a partner of any repository or registration agency.
+Sophaxis keeps a community at Zenodo (<https://zenodo.org/communities/sophaxis>) for the Zenodo records of works it lists. Any Zenodo user can open one; it does not make Sophaxis part of Zenodo.
 A record on Sophaxis is Sophaxis's own description of a deposit; it is not a statement by the repository or the agency.
 They are not responsible for Sophaxis, for its records, for its moderation, or for any error that Sophaxis introduces when it shows their metadata.
 Their names identify their services only, and their trademarks belong to them; Sophaxis shows none of their logos.
