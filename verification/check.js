@@ -2063,6 +2063,22 @@ console.log('\n52. No commitment is dropped silently');
   ok('no page loads or sends anything from or to another host', ext.length === 0, ext.join(', '));
 }
 
+/* ------------------------------------------------------------ 53 */
+console.log('\n53. robots.txt keeps the Internet Archive away from removed records');
+{
+  const B = require('../build.js');
+  const fx = loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers;
+  const r = B.robots(fx);
+  ok('every crawler may read everything; the Internet Archive\'s crawlers are kept from the page and the PDF copies of a removed record, and of no other',
+    r.startsWith('User-agent: *\nAllow: /\n') && r.includes('User-agent: ia_archiver\nUser-agent: archive.org_bot\nDisallow: /abs/2026.0003\nDisallow: /pdf/2026.0003\nAllow: /\n')
+    && !/Disallow: \/(abs|pdf)\/2026\.000[12]/.test(r) && r.endsWith('Sitemap: https://sophaxis.vercel.app/sitemap.xml\n'));
+  const { papers } = loadPapers(path.join(ROOT, 'data', 'papers'));
+  const live = read(path.join(ROOT, 'site', 'robots.txt'));
+  ok('the site\'s robots.txt names every removed record, and only those', live === B.robots(papers)
+    && papers.every((p) => (p.status === 'removed') === live.includes('Disallow: /abs/' + p.id + '\n')));
+  ok('without a removed record, robots.txt is the plain one', B.robots(fx.filter((p) => p.status !== 'removed')) === 'User-agent: *\nAllow: /\n\nSitemap: https://sophaxis.vercel.app/sitemap.xml\n');
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
