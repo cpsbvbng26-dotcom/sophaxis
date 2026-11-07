@@ -207,7 +207,8 @@ function commit(action, id, summary) {
   execFileSync('node', ['verification/check.js'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] });
   git('config', 'user.name', 'github-actions[bot]');
   git('config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com');
-  const trailer = ['-m', 'Sophaxis-Action: ' + action + ' ' + id + '\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01QqWsm63g52W27jU94E5dfL'];
+  /* Commits made by the workflow carry only the action: no model wrote them, so they name no model as co-author. */
+  const trailer = ['-m', 'Sophaxis-Action: ' + action + ' ' + id];
   git('add', '-A', 'data');
   git('commit', '-q', '-m', summary, ...trailer);
   git('add', '-A', 'site');
