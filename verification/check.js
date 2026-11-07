@@ -2085,6 +2085,42 @@ console.log('\n53. robots.txt keeps the Internet Archive away from removed recor
   ok('without a removed record, robots.txt is the plain one', B.robots(fx.filter((p) => p.status !== 'removed')) === 'User-agent: *\nAllow: /\n\nSitemap: https://sophaxis.vercel.app/sitemap.xml\n');
 }
 
+/* ------------------------------------------------------------ 54 */
+console.log('\n54. The draft manuscript for MetaArXiv');
+{
+  const md = read(path.join(ROOT, 'paper', 'metaarxiv', 'manuscript.md'));
+  const bib = read(path.join(ROOT, 'paper', 'metaarxiv', 'references.bib'));
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const body = md.replace(/^---[\s\S]*?\n---\n/, '').replace(/<!--[\s\S]*?-->/g, '');
+  const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+  ok('one author, the operator with the ORCID iD, and the disclosure: Claude is not an author',
+    /\nauthor:\n  - name: Takuya Nemoto\n    orcid: 0009-0000-1406-0547\n/.test(md) && (md.match(/^  - name:/gm) || []).length === 1
+    && body.includes('Claude is not an author.') && !/name: .*Claude/.test(md));
+  ok('the numbers of repositories and fields are those of site.json',
+    body.includes('in any of ' + W[Object.keys(site.repositories).length] + ' repositories')
+    && body.includes('in ' + W[Object.keys(site.categories).length] + ' fields'));
+  /* The manuscript reports the records from 2026.0001 to 2026.0008, as of 2026-11-07. */
+  const span = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => /^2026\.000[1-8]\.json$/.test(f))
+    .map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  const listed = span.filter((p) => p.status === 'listed');
+  const removed = span.filter((p) => p.status === 'removed');
+  ok('the counts of records are those of 2026.0001 to 2026.0008: every one the operator\'s own, the listed and the removed (' + span.length + ' / ' + listed.length + ' / ' + removed.length + ')',
+    body.includes('Sophaxis has listed ' + W[span.length] + ' records, from 2026.0001 to 2026.0008, all of them preprints by the operator.')
+    && body.includes(W[listed.length][0].toUpperCase() + W[listed.length].slice(1) + ' are listed.')
+    && body.includes(W[removed.length][0].toUpperCase() + W[removed.length].slice(1) + ', 2026.0006 to 2026.0008, were withdrawn and then removed')
+    && listed.every((p) => p.operator_own === true) && removed.map((p) => p.id).join() === '2026.0006,2026.0007,2026.0008'
+    && removed.every((p) => p.removal_date === '2026-11-07'));
+  ok('the manuscript says what it does not show: no use by other authors yet', body.includes('No other author has submitted a work.') && body.includes('No other author has used the server yet.'));
+  /* Every DOI below was read at Crossref or DataCite on 2026-11-07, from GitHub Actions. A new one is added only after reading it at its source. */
+  const READ = ['10.31222/osf.io/mp6ky', '10.1136/bmjopen-2020-041849', '10.6084/m9.figshare.1314859', '10.1177/09610006221125208', '10.5281/zenodo.24033372'];
+  const dois = [...bib.matchAll(/doi = \{([^}]+)\}/g)].map((m) => m[1]);
+  const keys = [...bib.matchAll(/^@\w+\{([^,]+),/gm)].map((m) => m[1]);
+  const cited = [...new Set([...body.matchAll(/@([a-z0-9]+)/g)].map((m) => m[1]))];
+  ok('every DOI in the references was read at its source, and every entry is cited',
+    dois.length === keys.length && dois.every((d) => READ.includes(d)) && cited.every((k) => keys.includes(k)) && keys.every((k) => cited.includes(k)),
+    'doi ' + dois.join(',') + ' / cited ' + cited.join(','));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
