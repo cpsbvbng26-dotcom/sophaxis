@@ -1,31 +1,29 @@
-// MetaArXiv as OSF describes it: scope, moderation, licences, submission settings. Read only.
+// The works the MetaArXiv manuscript would cite: their metadata at Crossref or DataCite. Read only.
 const UA = { 'User-Agent': 'sophaxis-probe (https://github.com/cpsbvbng26-dotcom/sophaxis)' };
-async function get(url) {
-  const r = await fetch(url, { headers: UA });
-  console.log('\n### ' + url + '  [' + r.status + ']');
-  return r.text();
-}
-const strip = (s) => String(s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+const titles = [
+  'Does it feel like a scientific paper? A qualitative analysis of preprint servers moderation and quality assurance processes',
+  'Preprint servers and journals: Rivals or allies?',
+  'Systematic examination of preprint platforms for use in the medical and biomedical sciences setting',
+  'Principles for Open Scholarly Infrastructures',
+  'Preprints in motion: tracking changes between posting and journal publication',
+  'Overlay journals: a study of the current landscape',
+];
+async function j(url) { const r = await fetch(url, { headers: UA }); return { status: r.status, body: await r.text() }; }
 (async () => {
-  const p = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/'));
-  const a = p.data.attributes;
-  for (const k of Object.keys(a)) {
-    const v = a[k];
-    console.log('- ' + k + ': ' + (typeof v === 'string' ? strip(v) : JSON.stringify(v)).slice(0, 3000));
+  for (const t of titles) {
+    console.log('\n### ' + t);
+    const r = await j('https://api.crossref.org/works?rows=3&select=DOI,title,author,issued,type,container-title,group-title,publisher&query.bibliographic=' + encodeURIComponent(t));
+    try {
+      for (const w of JSON.parse(r.body).message.items) {
+        console.log('  CR', w.DOI, '|', (w.title || [])[0], '|', (w.author || []).map((a) => (a.family || a.name) + (a.given ? ', ' + a.given : '')).join('; '), '|', JSON.stringify((w.issued || {})['date-parts']), '|', w.type, '|', (w['container-title'] || [])[0] || w['group-title'] || w.publisher);
+      }
+    } catch (e) { console.log('  CR', r.status, r.body.slice(0, 200)); }
+    const d = await j('https://api.datacite.org/dois?page[size]=3&query=' + encodeURIComponent('titles.title:"' + t.replace(/[":?]/g, '') + '"'));
+    try {
+      for (const w of JSON.parse(d.body).data) {
+        const a = w.attributes;
+        console.log('  DC', a.doi, '|', (a.titles || [])[0].title, '|', (a.creators || []).map((c) => c.name).join('; '), '|', a.publicationYear, '|', a.publisher, '|', (a.types || {}).resourceTypeGeneral);
+      }
+    } catch (e) { console.log('  DC', d.status, d.body.slice(0, 200)); }
   }
-  console.log('relationships:', Object.keys(p.data.relationships || {}).join(', '));
-  const lic = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/licenses/?page[size]=50'));
-  for (const l of lic.data || []) console.log('  licence:', l.attributes.name);
-  const tax = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/subjects/highlighted/?page[size]=50'));
-  for (const s of tax.data || []) console.log('  subject:', s.attributes.text);
-  const tax2 = JSON.parse(await get('https://api.osf.io/v2/providers/preprints/metaarxiv/subjects/?page[size]=100'));
-  console.log('  top-level subjects:', (tax2.data || []).map((s) => s.attributes.text).join(' | '));
-  // Does it hold software / infrastructure papers? Search titles.
-  for (const q of ['repository', 'infrastructure', 'software', 'preprint server', 'philosophy']) {
-    const r = JSON.parse(await get('https://api.osf.io/v2/preprints/?filter[provider]=metaarxiv&filter[title][icontains]=' + encodeURIComponent(q) + '&page[size]=5'));
-    console.log('  [' + q + '] total ' + ((r.meta || r.links.meta || {}).total) + ': ' + (r.data || []).map((x) => x.attributes.title).join(' || '));
-  }
-  // MetaROR: the review layer on MetaArXiv preprints.
-  const m = await get('https://metaror.org/');
-  console.log(strip(m).slice(0, 2500));
 })();
