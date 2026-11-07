@@ -139,7 +139,10 @@ Records are kept to preserve the scholarly record, as the General Data Protectio
 A person can object to the use of their personal data, and can complain to the data protection authority of their country.
 An objection is handled through the [Takedown Policy](./takedown.html).
 Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
-Until one is appointed, people there write to the operator directly.
+The operator has decided not to appoint one.
+A representative would be a paid service, or a person in the European Union or the United Kingdom who takes on liability for Sophaxis, and Sophaxis is run unpaid within free services.
+People there write to the operator directly, in English or Japanese, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator answers them, and the data protection authorities, directly, in place of a representative.
 A record of the processing is kept in the public repository, in `docs/records-of-processing.md`.
 
 ## Changes to this policy
