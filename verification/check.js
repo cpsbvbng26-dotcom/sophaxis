@@ -1830,7 +1830,8 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   ok('the authors are told and can respond; the operator\'s decision lists what is done and what is left by hand; a request not upheld puts material back',
     said[3].includes('in #9') && said[3].includes('If the request is not upheld, they are put back.') && said[3].includes('can respond')
     && said[4].includes('- [ ] ask the Internet Archive to exclude its earlier copies (by hand)') && said[4].includes('- [x] the automatic comments that repeat the record are edited')
-    && said[5].includes('put back') && said[6].includes('Its text is no longer shown.'));
+    && said[5].includes('put back') && said[6].includes('Its text is no longer shown.')
+    && R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: R.KINDS['A request about my personal data (access, correction, suspension of use, deletion)'], today: '2026-11-12', done: false }).includes('The operator carries it out by hand.'));
   const dr = R.parse(body.replace('Exposure of personal data', 'A request about my personal data (access, correction, suspension of use, deletion)'));
   const drAck = R.ack({ form: dr, record: listed, due: '2026-11-15' });
   ok('a request about the requester\'s own data is free, confirms who asks before acting, and is not told to the authors',
