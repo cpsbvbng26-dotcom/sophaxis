@@ -2669,6 +2669,21 @@ console.log('\n71. Provisional registration before a decision; language models a
     read(path.join(ROOT, 'tools', 'intake.js')).includes('The submission is now provisionally registered: it is not on the site until a moderator accepts it.'));
 }
 
+console.log('\n72. An untrue confirmation: not allowed, the record removed, relied on in good faith, and no penalty');
+{
+  const te = read(path.join(ROOT, 'policies', 'terms.md')), tj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
+  ok('the Terms, in both languages, forbid an untrue confirmation and say what follows',
+    te.includes('- Confirming in a form something that is not true, such as where the authors live') && tj.includes('- 様式で、事実でないことを確かめること。')
+    && te.includes('If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](./takedown.html) as soon as the operator learns of it.')
+    && tj.includes('確認が事実でないと分かったときは、運営者は、知った時点で[削除の規程](./takedown.ja.html)に沿って記録を削除します。')
+    && te.includes('From 2026-11-22, the operator may also decline further submissions from the same GitHub account or ORCID iD.') && tj.includes('2026-11-22 からは、同じ GitHub アカウントや ORCID iD からのその後の投稿を断ることもあります。'));
+  ok('the operator relies on the confirmations in good faith, keeps them public, and asks no penalty (Consumer Contract Act Articles 9 and 10)',
+    te.includes('The operator relies on the confirmations in good faith and does not check them.') && tj.includes('運営者は、確認を信頼して受け、確かめません。')
+    && te.includes('The confirmations stay in the public issue') && tj.includes('確認は公開の issue に残るので')
+    && te.includes('Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.') && tj.includes('投稿者に、違約金や、法令が定める以上の損害の賠償を求めることはありません。'));
+  ok('the change is announced on the top page before it takes effect', JSON.parse(read(path.join(ROOT, 'site.json'))).termsNotice.text.includes('Confirming something untrue in a form is not allowed'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
