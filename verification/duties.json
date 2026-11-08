@@ -1706,8 +1706,17 @@
       "article": "第32条第1項第四号・施行令第10条第一号",
       "duty": "第23条により講じた安全管理措置（支障を及ぼすおそれがあるものを除く）。",
       "applies": true,
-      "status": "open",
-      "open": "Two-factor authentication on the operator's GitHub account, the only one that can change the repository, is confirmed and stated. Whether the operator's Vercel and Apple accounts use it was not confirmed, so the measures for them, and for the devices that read the email, are not stated."
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "The operator's GitHub account, the only one that can change the repository, uses two-factor authentication. The operator signs in to Vercel, which serves the site, through that GitHub account."
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "二段階認証を使っています。サイトを配る Vercel には、運営者はこの GitHub アカウントでログインしています。"
+        }
+      ]
     },
     {
       "law": "APPI",

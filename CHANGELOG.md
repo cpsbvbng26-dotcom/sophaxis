@@ -5,6 +5,7 @@ The entries are grouped by the date of the merge. Version 1.0.0 was released on 
 
 ## 2026-11-08
 
+- The Privacy Policy, in both languages, says that the operator signs in to Vercel through the GitHub account that uses two-factor authentication. The last open duty of the legal review, the statement of the security measures under the APPI, is met. The previous change is #159.
 - Quebec is added to the places where Sophaxis is not offered, from 2026-11-22. Its private-sector privacy Act asks for an assessment and a written agreement before personal information leaves Quebec, which Sophaxis cannot meet; the rule now names such conditions too, and the list has 28 places. The previous change is #158.
 - The countries left out of the first screening were screened too. A duty to store personal data in the country is reported for Guinea, Madagascar and Bolivia, and a duty to register for Costa Rica, so from 2026-11-22 Sophaxis is not offered in 27 places. From the same day it does not list work by an author under 18 who lives in India, because India's Rule 10 requires, from 2027-05-13, a verified consent of a parent that Sophaxis does not check. The previous change is #157.
 - Only main is deployed: `site/vercel.json` turns off the deployment of every other branch. The free plan allows 100 deployments a day for the whole account, and the deployments of working branches used them up on 2026-11-08, so that #155 could not reach the live site. The previous change is #155.

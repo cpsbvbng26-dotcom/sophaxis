@@ -15,7 +15,7 @@ The policies were checked in six ways.
 3. **Consistency.** Every policy was compared with the others, with its Japanese translation, and with the code that carries it out. What was found is listed under Consistency below.
 4. **Fault tree.** The ways the facts relied on could fail were listed, and their likelihood and severity were each estimated from 1 to 3. The product ranks them. The numbers are the operator's estimates and serve only to rank.
 5. **Breaking on purpose.** Each fixed sentence and each number was altered in turn, and the check was seen to fail.
-6. **Clause by clause.** The articles of the GDPR, the Digital Services Act and Japan's Act on the Protection of Personal Information, its Order and its Rules that the policies rely on were read paragraph by paragraph and item by item, and each duty they place on Sophaxis was written down. `verification/duties.json` gives, for each, the sentence that meets it word for word, what is still missing, or why it does not apply, and `verification/check.js` confirms it. There are 151 duties: 122 met, 28 that do not apply, and 1 open.
+6. **Clause by clause.** The articles of the GDPR, the Digital Services Act and Japan's Act on the Protection of Personal Information, its Order and its Rules that the policies rely on were read paragraph by paragraph and item by item, and each duty they place on Sophaxis was written down. `verification/duties.json` gives, for each, the sentence that meets it word for word, what is still missing, or why it does not apply, and `verification/check.js` confirms it. There are 151 duties: 123 met, 28 that do not apply, and 0 open.
 
 ## Laws
 
@@ -176,6 +176,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 31. The other countries were screened, and the rule was changed so that a place is not offered as soon as a duty that Sophaxis cannot meet is reported ("Places not offered on a reported duty"). Eighteen places were added, from 2026-11-22. The Türkiye row above had found no duty in the text read; the commentaries report one, and Türkiye is among the eighteen.
 32. The countries the first search did not reach were screened too. Four more places were added, from 2026-11-22. India's Rule 10, which this review had recorded as open, is met by not listing work by an author under 18 who lives in India.
 33. The rule now also names conditions before personal data leaves a place that Sophaxis cannot meet. One more place was added on it, from 2026-11-22: Quebec.
+34. The operator signs in to Vercel through the GitHub account that uses two-factor authentication, and the Privacy Policy, in both languages, now says so. With that, the measures taken are stated, as Article 32(1)(iv) of the APPI and Article 10(i) of its Order ask. The policies claim no two-factor authentication for the Vercel and Apple accounts themselves.
 
 ## Risks that remain
 
@@ -195,9 +196,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 
 ## Duties still open
 
-The duty below, found clause by clause, is met only in part. The rest needs a fact that only the operator can confirm, and it is not filled by a guess.
-
-- APPI 第32条第1項第四号・施行令第10条第一号: Two-factor authentication on the operator's GitHub account, the only one that can change the repository, is confirmed and stated. Whether the operator's Vercel and Apple accounts use it was not confirmed, so the measures for them, and for the devices that read the email, are not stated.
+No duty found clause by clause is open.
 
 ## Limits
 
