@@ -122,3 +122,5 @@ Each week, an automatic step reads the date of the last update of Vercel's and A
 When a request came by email and is upheld, the grounds, without personal data, are posted in the authors' submission issue before it is emptied, so that GitHub sends them to the authors who follow it; the removal cannot be run without them.
 Sophaxis keeps no analytics and no identifiers of readers, and will not start keeping them to produce this figure.
 The operator's GitHub account, the only one that can change the repository, uses two-factor authentication.
+GitHub's own procedure is to rewrite the history first and then ask GitHub Support, which helps only with sensitive data whose risk cannot be removed otherwise; where it does not help, the earlier versions stay in the history.
+A follow-up issue lists these steps, with the request to the Internet Archive.
