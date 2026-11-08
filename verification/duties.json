@@ -1707,7 +1707,7 @@
       "duty": "第23条により講じた安全管理措置（支障を及ぼすおそれがあるものを除く）。",
       "applies": true,
       "status": "open",
-      "open": "The measures for the operator's own GitHub, Vercel and Apple accounts and devices are not stated, because whether two-factor authentication is on was not confirmed."
+      "open": "Two-factor authentication on the operator's GitHub account, the only one that can change the repository, is confirmed and stated. Whether the operator's Vercel and Apple accounts use it was not confirmed, so the measures for them, and for the devices that read the email, are not stated."
     },
     {
       "law": "APPI",

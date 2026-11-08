@@ -139,7 +139,7 @@ The measures, under the headings that Japan's Personal Information Protection Co
 - Organisation: one person, the operator, handles personal data and answers for it. Every change to the records is a public commit or pull request.
 - People: no one else handles personal data for Sophaxis. Before a moderator is invited, the operator writes here what personal data a moderator may handle and how the operator supervises it.
 - Physical: Sophaxis has no servers or papers of its own. The records live in the GitHub repository and the site on Vercel.
-- Technical: the automatic steps hold no key but the token GitHub gives each run, with the least permissions they need. Earlier versions of the site on Vercel are not open to the public.
+- Technical: the automatic steps hold no key but the token GitHub gives each run, with the least permissions they need. Earlier versions of the site on Vercel are not open to the public. The operator's GitHub account, the only one that can change the repository, uses two-factor authentication.
 - The countries where data is kept: as set out under "Services outside Japan" above.
 
 ## Automated processing
