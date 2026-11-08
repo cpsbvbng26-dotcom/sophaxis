@@ -13,6 +13,8 @@ body:
         Removal: only the Sophaxis id stays, and its page says only that the record was removed. What removal leaves is set out in the Takedown Policy: https://sophaxis.vercel.app/policies/takedown.html
         Open this issue from your own GitHub account. As at submission, your ORCID record must link to it, and an automatic check confirms that your ORCID iD belongs to an author of the work.
         To ask for removal for legal reasons, use the removal form instead.
+        Personal data given here is used only for the purposes in the Privacy Policy: https://sophaxis.vercel.app/policies/privacy.html
+        Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation, by the removal form or by email.
   - type: input
     id: id
     attributes:

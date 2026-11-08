@@ -13,10 +13,10 @@ on:
         description: Record id, such as 2026.0001
         required: true
       action:
-        description: hold (offline while reviewed), release (not upheld, put back), remove (upheld), remove-pdf (an author asks)
+        description: hold (offline while reviewed), release (not upheld, put back), remove (upheld), remove-pdf (an author asks), no-archive (an author withdraws consent to the Internet Archive)
         required: true
         type: choice
-        options: [hold, release, remove, remove-pdf]
+        options: [hold, release, remove, remove-pdf, no-archive]
   schedule:
     - cron: '17 0 * * *'
 permissions:

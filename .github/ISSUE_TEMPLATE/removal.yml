@@ -9,6 +9,8 @@ body:
         Read the Takedown Policy first: https://sophaxis.vercel.app/policies/takedown.html
 
         This issue is public. Do not include personal data. Describe where the problem is, without repeating the material itself.
+        Personal data given here is used only to handle the request, as the Privacy Policy sets out: https://sophaxis.vercel.app/policies/privacy.html
+        Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation; choose "A request about my personal data".
         If the request cannot be made in public, send it by email to the address on the operator's ORCID record (https://orcid.org/0009-0000-1406-0547) instead. For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is then taken offline while the request is reviewed.
   - type: input
     id: id
@@ -26,7 +28,8 @@ body:
         - Exposure of personal data
         - An author did not agree to the listing
         - An author asks for the PDF copy to be removed
-        - A request about my personal data (access, correction, suspension of use, deletion)
+        - A request about my personal data (access, correction, restriction, objection, deletion, stopping its provision to others, a copy)
+        - An author withdraws consent to saving in the Internet Archive
         - Another legal reason
     validations:
       required: true
@@ -46,7 +49,9 @@ body:
     id: details
     attributes:
       label: Where the problem is
-      description: Which part of the record or the PDF, and why. Do not repeat the material or include personal data.
+      description: Which part of the record or the PDF, and why it breaks the law or the policies; for a request about personal data, what is asked. Do not repeat the material or include personal data.
+    validations:
+      required: true
   - type: checkboxes
     id: confirm
     attributes:

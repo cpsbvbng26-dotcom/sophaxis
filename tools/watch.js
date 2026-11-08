@@ -111,8 +111,18 @@ function describe(e) {
   return e.message + (c ? ' (' + [c.code, c.message].filter(Boolean).join(': ') + ')' : '');
 }
 
+/* The ids whose pages and PDF copies are never sent to the Internet Archive: removed records, and records whose authors
+ * did not consent to the saves (archive: false). */
+function unsaved(list) { return new Set(list.filter((p) => p.status === 'removed' || p.archive === false).map((p) => p.id)); }
+
+/* Pure: drop every address of an unsaved record. saveToArchive applies it to whatever it is given. */
+function savable(urls, list) {
+  const no = unsaved(list);
+  return urls.filter((u) => { const m = /\/(?:abs|pdf)\/(\d{4}\.\d{4})/.exec(u); return !(m && no.has(m[1])); });
+}
+
 function archiveUrls(list) {
-  const shown = list.filter((p) => p.status !== 'removed');
+  const shown = list.filter((p) => p.status !== 'removed' && p.archive !== false);
   return [SITE.baseUrl]
     .concat(shown.map((p) => SITE.baseUrl + 'abs/' + p.id + '.html'))
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => SITE.baseUrl + 'pdf/' + x.file)));
@@ -120,8 +130,8 @@ function archiveUrls(list) {
 
 /* Save addresses to the Internet Archive, spaced and retried as above. Used by the weekly watch and, for the pages
  * a push changed, by tools/indexnow.js. A failure is logged and does not stop the others. */
-async function saveToArchive(urls) {
-  for (const u of urls) {
+async function saveToArchive(urls, list = records(path.join(ROOT, 'data', 'papers'))) {
+  for (const u of savable(urls, list)) {
     for (let attempt = 0; attempt <= RETRY_WAITS_MS.length; attempt++) {
       if (attempt) await pause(RETRY_WAITS_MS[attempt - 1]);
       try {
@@ -259,6 +269,6 @@ async function main() {
   }
 }
 
-module.exports = { saveToArchive, compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };
+module.exports = { saveToArchive, savable, unsaved, compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

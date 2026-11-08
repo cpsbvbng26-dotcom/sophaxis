@@ -11,6 +11,8 @@ body:
         This issue is public. Any one author can report the published version of a listed work. The preprint stays listed; its record page then shows the published version at the top, and asks readers to cite it.
         Open this issue from your own GitHub account. As at submission, your ORCID record must link to it, and an automatic check confirms that your ORCID iD belongs to an author of the work.
         The check also reads the metadata of the published DOI: it must be a journal article, a conference paper, a book chapter or a book, and share an author with the record.
+        Personal data given here is used only for the purposes in the Privacy Policy: https://sophaxis.vercel.app/policies/privacy.html
+        Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation, by the removal form or by email.
   - type: input
     id: id
     attributes:

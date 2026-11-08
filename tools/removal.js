@@ -50,7 +50,8 @@ const KINDS = {
   'Exposure of personal data': { slug: 'personal-data', removes: true, hold: true },
   'An author did not agree to the listing': { slug: 'author-consent', removes: true, hold: false },
   'An author asks for the PDF copy to be removed': { slug: 'pdf-copy', removes: false, hold: false },
-  'A request about my personal data (access, correction, suspension of use, deletion)': { slug: 'data-request', removes: false, hold: false },
+  'A request about my personal data (access, correction, restriction, objection, deletion, stopping its provision to others, a copy)': { slug: 'data-request', removes: false, hold: false },
+  'An author withdraws consent to saving in the Internet Archive': { slug: 'archive-consent', removes: false, hold: false },
   'Another legal reason': { slug: 'legal', removes: true, hold: false },
 };
 
@@ -73,8 +74,9 @@ function restored(p, today) {
 }
 
 /* Held: the record is a notice with the reason "under-review". */
-/* A request about the requester's own data concerns that person, not the work, so the authors are not told of it. */
-const tellsAuthors = (kind) => !kind || kind.slug !== 'data-request';
+/* A request about the requester's own data, or an author's withdrawal of their own consent, concerns that person,
+ * not the work, so the authors are not told of it. */
+const tellsAuthors = (kind) => !kind || !['data-request', 'archive-consent'].includes(kind.slug);
 const isHeld = (p) => !!p && p.status === 'removed' && p.removal_reason === 'under-review';
 const pdfFiles = (p) => ((p && p.pdfs) || []).map((x) => x.file);
 
@@ -97,6 +99,12 @@ function withoutPdfs(p) {
   return { record: n, files: pdfFiles(p), problems: validate(n, p.id + '.json') };
 }
 
+/* The record without saves to the Internet Archive, for an author who withdraws consent to them. */
+function withoutArchive(p) {
+  const n = Object.assign({}, p, { archive: false });
+  return { record: n, files: [], problems: validate(n, p.id + '.json') };
+}
+
 /* What a decision does to a record. Returns { record, files } or { skip: why }. */
 function plan(action, p, today) {
   if (!p) return { skip: 'there is no such record' };
@@ -113,6 +121,11 @@ function plan(action, p, today) {
     if (!pdfFiles(p).length) return { skip: 'the record has no PDF copy' };
     return withoutPdfs(p);
   }
+  if (action === 'no-archive') {
+    if (p.status === 'removed') return { skip: 'the record is removed' };
+    if (p.archive === false) return { skip: 'the record is already not saved to the Internet Archive' };
+    return withoutArchive(p);
+  }
   return { skip: 'unknown action ' + action };
 }
 
@@ -124,7 +137,8 @@ function ack({ form, record, held, failed, due }) {
   else if (failed) lines.push('The issue reports exposure of personal data. Taking the material offline automatically did not succeed, so the operator does it by hand.');
   else if (form.kind.hold && isHeld(record)) lines.push('The record page of ' + form.id + ' (its title, authors, abstract and PDF copy) is already offline while a request is reviewed.');
   else lines.push('The record ' + form.id + ' stays online while the request is reviewed.');
-  if (form.kind && form.kind.slug === 'data-request') lines.push('', 'Requests cost nothing. Before data is disclosed or changed, the operator confirms who is asking, through the ORCID record or by email to the address on the operator\'s ORCID record. Do not post personal data here.');
+  if (form.kind && form.kind.slug === 'data-request') lines.push('', 'Requests cost nothing. Before data is disclosed or changed, the operator confirms who is asking, through the ORCID record or by email to the address on the operator\'s ORCID record. Do not post personal data here. A copy of personal data is sent by email, never in this issue. The answer comes within one month at the latest.');
+  if (form.kind && form.kind.slug === 'archive-consent') lines.push('', 'Withdrawing consent needs no reasons and is not weighed. Once the operator confirms that the request comes from an author, the record is no longer saved to the Internet Archive, and the operator asks it to exclude the earlier copies. What was done before the withdrawal stays lawful.');
   if (record && tellsAuthors(form.kind)) lines.push('', 'The authors are told in their submission issue and can respond.');
   lines.push('', 'This comment was written automatically. It decides nothing; the operator decides.');
   return lines.join('\n');
@@ -133,14 +147,17 @@ function ack({ form, record, held, failed, due }) {
 function authorNotice({ id, kind, issue, held }) {
   return [NOTICE,
     'A removal request about ' + id + ' (' + (kind ? kind.slug : 'unstated kind') + ') is being reviewed under the [Takedown Policy](' + SITE.baseUrl + 'policies/takedown.html)' + (issue ? ' in #' + issue : ', after a request by email') + '.',
-    held ? 'The record page (its title, authors, abstract and PDF copy) is offline while it is reviewed. If the request is not upheld, it is put back.' : 'The record stays online while it is reviewed.',
+    held ? 'The record page (its title, authors, abstract and PDF copy) is offline while it is reviewed. An automatic step took it offline when the request arrived, before any decision. If the request is not upheld, it is put back.' : 'The record stays online while it is reviewed.',
     'The authors can respond ' + (issue ? 'in #' + issue : 'here') + ', or by email to the address on the operator\'s ORCID record, before the decision.',
   ].join('\n');
 }
 
 function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
+  /* Whether an automatic step took part (the Digital Services Act, Articles 16(6) and 17(3)(c)). */
+  const auto = restored || (kind && kind.hold) ? 'An automatic step took the record page offline when the request arrived, before the decision; the operator made the decision.' : 'No automatic step took part in this decision.';
+  const data = kind && kind.slug === 'data-request' ? [DATA_REMEDY] : [];
   if (decision === 'not-upheld') {
-    return [MARK, '**Not upheld** (' + today + '). The operator gives the reasons in this issue.', restored ? 'The record page of ' + id + ' (its title, authors, abstract and PDF copy) is put back.' : 'Nothing of ' + id + ' was taken offline, so nothing is put back.', CHALLENGE].join('\n');
+    return [MARK, '**Not upheld** (' + today + '). The operator gives the reasons in this issue, and where the request names a law, the grounds name the law relied on.', restored ? 'The record page of ' + id + ' (its title, authors, abstract and PDF copy) is put back once this note is posted.' : 'Nothing of ' + id + ' was taken offline, so nothing is put back.', auto, CHALLENGE, ...data].join('\n');
   }
   const steps = kind && kind.slug === 'pdf-copy'
     ? ['- [x] the PDF copies of ' + id + ' are taken off the site; the record links to the repository only']
@@ -150,13 +167,18 @@ function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
       '- [x] the OAI-PMH interface marks the record as deleted',
       '- [ ] delete those issues, so that their edit history goes too (by hand; only the owner can)',
       '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)',
-      '- [ ] ask GitHub to remove the material from the repository history (by hand)'];
-  const auto = kind && (kind.removes || kind.slug === 'pdf-copy');
-  return [MARK, '**Upheld** (' + today + '). The operator gives the grounds in this issue.', CHALLENGE, '', ...(done ? steps : [auto ? 'The record could not be changed automatically. The operator does it by hand.' : 'This kind of request changes nothing automatically. The operator carries it out by hand.'])].join('\n');
+      '- [ ] ask GitHub to remove the material from the repository history (by hand)',
+      'The removal applies wherever the site is read, and it is permanent.'];
+  const archive = ['- [x] the record of ' + id + ' is no longer saved to the Internet Archive', '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)'];
+  const changes = kind && (kind.removes || ['pdf-copy', 'archive-consent'].includes(kind.slug));
+  return [MARK, '**Upheld** (' + today + '). The operator gives the grounds in this issue, and where the request names a law, the grounds name the law relied on.', auto, CHALLENGE, ...data, '', ...(done ? (kind.slug === 'archive-consent' ? archive : steps) : [changes ? 'The record could not be changed automatically. The operator does it by hand.' : 'This kind of request changes nothing automatically. The operator carries it out by hand.'])].join('\n');
 }
 
 /* Every decision says how to challenge it (Takedown Policy, the Digital Services Act, Article 20). */
-const CHALLENGE = 'The decision can be challenged within six months, free of charge, by answering in this issue or by email to the address on the operator\'s ORCID record. The operator reviews it; no automatic step does.';
+const CHALLENGE = 'The decision can be challenged within six months, free of charge, by answering in this issue or by email to the address on the operator\'s ORCID record. The operator reviews it; no automatic step does. A court, or an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act, can also be asked.';
+
+/* A request about personal data also names the authorities and the courts (GDPR Article 12(4); APPI). */
+const DATA_REMEDY = 'A complaint can also go to Japan\'s Personal Information Protection Commission, or to a data protection authority, and the person can go to court.';
 
 /* What an issue that named a removed record says afterwards. */
 const EMPTIED = 'Removed.';
@@ -221,6 +243,7 @@ const SUMMARY = {
   release: (id) => id + ' を戻す（削除依頼は認められなかった）',
   remove: (id) => id + ' を削除の告知に替える',
   'remove-pdf': (id) => id + ' の PDF の写しを外す（著者の依頼）',
+  'no-archive': (id) => id + ' を Internet Archive に保存しない（著者が同意を撤回）',
 };
 
 /* ------------------------------------------------------------ GitHub */
@@ -311,17 +334,20 @@ async function decide() {
   const record = readRecord(form.id);
   const day = today();
   if (decision === 'not-upheld') {
+    /* The person who asked is told before the material goes back (GDPR Article 18(3)). */
+    const willRestore = isHeld(record);
+    await I.github('POST', '/issues/' + n + '/comments', { body: decisionNote({ id: form.id, decision, kind: form.kind, today: day, restored: willRestore }) });
     let restored = false;
-    if (isHeld(record) && restore(form.id)) { commit('release', form.id, SUMMARY.release(form.id) + '（#' + n + '）'); restored = true; }
-    await I.github('POST', '/issues/' + n + '/comments', { body: decisionNote({ id: form.id, decision, kind: form.kind, today: day, restored }) });
+    if (willRestore && restore(form.id)) { commit('release', form.id, SUMMARY.release(form.id) + '（#' + n + '）'); restored = true; }
+    else if (willRestore) await I.github('POST', '/issues/' + n + '/comments', { body: MARK + '\nPutting the record page back automatically did not succeed. The operator does it by hand.' });
     await label(n, [], ['held']);
     if (record && tellsAuthors(form.kind)) await I.github('POST', '/issues/' + record.issue + '/comments', { body: NOTICE + '\nThe removal request in #' + n + ' was not upheld.' + (restored ? ' The record page is back.' : '') });
     return;
   }
   if (decision !== 'upheld') throw new Error('unknown decision ' + decision);
   let done = false, emptied = [];
-  if (form.kind && (form.kind.removes || form.kind.slug === 'pdf-copy')) {
-    const action = form.kind.slug === 'pdf-copy' ? 'remove-pdf' : 'remove';
+  if (form.kind && (form.kind.removes || ['pdf-copy', 'archive-consent'].includes(form.kind.slug))) {
+    const action = { 'pdf-copy': 'remove-pdf', 'archive-consent': 'no-archive' }[form.kind.slug] || 'remove';
     const change = plan(action, record, day);
     try {
       if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
@@ -362,7 +388,7 @@ async function remind() {
   for (const r of dueReminders(open, owner, day)) await I.github('POST', '/issues/' + r.number + '/comments', { body: reminder(r.due) });
 }
 
-module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, DATA_REMEDY, withoutArchive, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];
