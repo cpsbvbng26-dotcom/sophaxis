@@ -1,19 +1,17 @@
-// Reads Apple's and Vercel's privacy statements (twice, to see whether their text is stable), and the PPC Q&A on cloud services.
-const crypto = require('crypto');
+// The PPC Q&A answers 7-53 and 7-54 (cloud services), and the update lines of Apple's and Vercel's privacy statements.
 const UA = 'sophaxis-probe (+https://github.com/cpsbvbng26-dotcom/sophaxis)';
-const plain = (h) => h.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;|&#8217;/g, "'").replace(/&quot;|&ldquo;|&rdquo;/g, '"').replace(/\s+/g, ' ').trim();
-async function get(u) { try { const r = await fetch(u, { headers: { 'User-Agent': UA } }); return { status: r.status, url: r.url, text: plain(await r.text()) }; } catch (e) { return { status: 'ERR ' + e.message, url: u, text: '' }; } }
-const around = (t, re, n = 900) => { const out = []; let m; const g = new RegExp(re, 'gi'); while ((m = g.exec(t)) && out.length < 6) out.push('…' + t.slice(Math.max(0, m.index - n / 2), m.index + n / 2) + '…'); return out.join('\n\n'); };
+const plain = (h) => h.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+async function get(u) { try { const r = await fetch(u, { headers: { 'User-Agent': UA } }); const h = await r.text(); return { status: r.status, url: r.url, html: h, text: plain(h) }; } catch (e) { return { status: 'ERR ' + e.message, url: u, html: '', text: '' }; } }
 (async () => {
-  for (const u of ['https://www.apple.com/legal/privacy/en-ww/', 'https://vercel.com/legal/privacy-notice', 'https://vercel.com/legal/dpa']) {
-    const a = await get(u); await new Promise((r) => setTimeout(r, 3000)); const b = await get(u);
-    console.log('\n=== ' + u + ' ' + a.status + ' ' + a.url + ' len ' + a.text.length);
-    console.log('sha a ' + crypto.createHash('sha256').update(a.text).digest('hex') + '\nsha b ' + crypto.createHash('sha256').update(b.text).digest('hex'));
-    console.log('--- Data Privacy Framework\n' + around(a.text, 'Data Privacy Framework'));
-    console.log('--- Standard Contractual\n' + around(a.text, 'Standard Contractual', 600));
-    console.log('--- retain / logs\n' + around(a.text, 'log data|logs? (are|is) (retained|kept)|retain', 600));
-  }
   const q = await get('https://www.ppc.go.jp/personalinfo/faq/APPI_QA/');
-  console.log('\n=== PPC QA ' + q.status + ' ' + q.url + ' len ' + q.text.length);
-  console.log(around(q.text, 'クラウドサービス', 1600));
+  const links = [...new Set([...q.html.matchAll(/href="([^"]+)"/g)].map((m) => new URL(m[1], q.url).href))].filter((u) => /APPI_QA|faq/i.test(u));
+  console.log('LINKS\n' + links.join('\n'));
+  for (const t of [q.text]) for (const key of ['Ａ７－53', 'Ａ７－54', 'A7-53', 'A7-54']) { let i = -1, n = 0; while ((i = t.indexOf(key, i + 1)) >= 0 && n++ < 3) console.log('\n[' + key + '] ' + t.slice(i, i + 1500)); }
+  for (const u of links.filter((u) => /7|chapter|q7/i.test(u)).slice(0, 6)) {
+    const r = await get(u); console.log('\n=== ' + u + ' ' + r.status + ' len ' + r.text.length);
+    for (const key of ['Ａ７－53', 'Ａ７－54', 'Ｑ７－53', 'Ｑ７－54']) { let i = -1, n = 0; while ((i = r.text.indexOf(key, i + 1)) >= 0 && n++ < 2) console.log('[' + key + '] ' + r.text.slice(i, i + 1500)); }
+  }
+  const a = await get('https://www.apple.com/legal/privacy/en-ww/');
+  console.log('\nAPPLE dates: ' + (a.text.match(/(Updated|Published|Effective)[^.]{0,60}/gi) || []).slice(0, 5).join(' | '));
+  console.log('APPLE tail: ' + a.text.slice(-600));
 })();
