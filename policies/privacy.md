@@ -81,7 +81,7 @@ The pages and the PDF copies of a work whose authors consent to it are saved to 
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
 An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
 Sophaxis copies nothing from the community, and the operator does not change the records in it.
-A request to add the record of a work by an author who lives in the European Union, the European Economic Area, the United Kingdom or China is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+A request to add the record of a work by an author who lives in the European Union, the European Economic Area, the United Kingdom, China or Thailand is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
 Copies that others have already taken are outside Sophaxis's control.
 
@@ -216,6 +216,14 @@ A record of the processing is kept in the public repository, in `docs/records-of
 
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 Article 53 of China's Personal Information Protection Law requires a processor abroad that offers products or services to people in China to set up an agency or designate a representative in China, and Sophaxis has none.
+This depends only on where a person lives, not on nationality, race, ethnic origin or any other personal characteristic.
+The rights in "Your choices" are honoured all the same, as far as they apply.
+
+## People in Thailand
+
+From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
+Section 37(5) of Thailand's Personal Data Protection Act requires a controller abroad that offers goods or services to people in Thailand to designate in writing a representative in Thailand, and Sophaxis has none.
+Section 38 exempts a controller that engages in the profession or business of processing personal data without a large amount of it; Sophaxis is not a business, so the exemption is not relied on.
 This depends only on where a person lives, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
 
