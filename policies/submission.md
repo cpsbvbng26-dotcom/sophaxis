@@ -45,13 +45,13 @@ If it turns out that an author lives there, the record is removed under the [Tak
 | Guernsey | A representative | Data Protection (Bailiwick of Guernsey) Law, 2017 | No, as reported |
 | Botswana | A representative | Data Protection Act 2024, section 54 | No, as reported |
 | Ecuador | A representative | Regulation of the Organic Law on Personal Data Protection, Article 3 | No, as reported |
-| Iraq | Notice to the regulator before the service starts | Framework Regulations for Digital Platforms and Services (2025) | No, as reported |
+| Iraq | Notice to the regulator before the service starts | Framework Regulations for Digital Platforms and Services (2025), Articles 4 and 5 | Yes |
 | Indonesia | Registration | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended | No, as reported |
-| Rwanda | Registration and storage of personal data there | Law No. 058/2021, Articles 29 and 50 | No, as reported |
+| Rwanda | Registration and storage of personal data there | Law No. 058/2021, Articles 2, 29 and 50 | Yes |
 | Zambia | Registration and storage of personal data there | Data Protection Act 2021, sections 19 and 70 | No, as reported |
 | Ethiopia | Storage of personal data there | Personal Data Protection Proclamation No. 1321/2024 | No, as reported |
-| The Democratic Republic of the Congo | Storage of personal data there and an authorisation | Ordonnance-loi No. 23/010 (Digital Code) | No, as reported |
-| Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Article 12(2) | No, as reported |
+| The Democratic Republic of the Congo | Storage of personal data there and an authorisation | Ordonnance-loi No. 23/010 (Digital Code), Articles 184, 186, 188 and 201 (read in a copy that is not the official journal) | In part |
+| Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Articles 3 and 12(2) | Yes |
 | Tunisia | A declaration by a controller who resides there | Organic Law No. 2004-63 | No, as reported |
 | Uganda | Registration | Data Protection and Privacy Act 2019, section 29 | No, as reported |
 | Guinea | Storage of personal data there | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection | No, as reported |
