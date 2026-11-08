@@ -669,7 +669,7 @@ function termsNotice(n = SITE.termsNotice) {
 /* Who Sophaxis is not offered to, and why, on the top page and the submit page: by where an author lives, never by
  * nationality or race, because a representative would be required there (site.json "scopeNotice"). */
 function scopeNotice(text = SITE.scopeNotice) {
-  return text ? `<div class="notice"><b>Not offered in the European Union, the European Economic Area, the United Kingdom or China.</b> ${esc(text)} See the <a href="./policies/submission.html">Submission Policy</a> and the <a href="./policies/privacy.html">Privacy Policy</a>.</div>\n` : '';
+  return text ? `<div class="notice"><b>Not offered in the European Union, the European Economic Area, the United Kingdom, China or Thailand.</b> ${esc(text)} See the <a href="./policies/submission.html">Submission Policy</a> and the <a href="./policies/privacy.html">Privacy Policy</a>.</div>\n` : '';
 }
 
 /* The day the records last changed: a record added, a new version, a note, an update, a withdrawal or a removal.
