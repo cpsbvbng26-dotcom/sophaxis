@@ -131,11 +131,12 @@ On 2026-11-08 the laws of the other countries were screened by searching comment
 | Madagascar | Storage in Madagascar | Law No. 2014-038 on Personal Data Protection |
 | Bolivia | Storage in Bolivia, perhaps only for telecommunications providers | Law No. 164, General Law on Telecommunications |
 | Costa Rica | Registration of databases kept for dissemination | Law No. 8968, Article 21 |
+| Quebec | An assessment and a written agreement before personal information is communicated outside Quebec | Act respecting the protection of personal information in the private sector, section 17 |
 
 Russia's law reaches Russian citizens who live elsewhere. Sophaxis decides by where a person lives and does not ask about citizenship, so that reach is not covered; it is listed under "Risks that remain".
 The duties reported in other countries apply only above a number of users, only when the controller uses equipment in the country, only on a regulator's request, or not at all, and those countries are not on the list.
 The countries that the first search did not reach were screened the same way on 2026-11-08. A duty to store personal data in the country is reported for Guinea, Madagascar and Bolivia, and a duty to register databases kept for dissemination is reported for Costa Rica; these are added to the list. For the others, either no data protection law exists, or the duties reported reach a controller abroad only through equipment in the country, a threshold or a commercial activity.
-Quebec's Act respecting the protection of personal information in the private sector asks for an assessment and a written agreement before personal information is communicated outside Quebec, if it reaches Sophaxis at all. That is none of the duties the rule names, and it is recorded here as a point to read at its source.
+Quebec's Act respecting the protection of personal information in the private sector asks for an assessment and a written agreement before personal information is communicated outside Quebec, if it reaches Sophaxis at all. Sophaxis cannot meet that condition, so the rule now names conditions before personal data leaves a place, and Quebec is added.
 Every country has now been screened, in commentaries if not at the source of its law.
 
 ## Consistency
@@ -174,6 +175,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 30. The four laws left open in #153 were read at their sources. Section 37(5) of Thailand's Personal Data Protection Act asks a representative in Thailand of a controller abroad that offers services there, and its exemption is for businesses, so Sophaxis is not offered in Thailand either, from 2026-11-22. Saudi Arabia's law and India's ask for none; Korea's asks for a domestic agent only above thresholds that Sophaxis does not reach.
 31. The other countries were screened, and the rule was changed so that a place is not offered as soon as a duty that Sophaxis cannot meet is reported ("Places not offered on a reported duty"). Eighteen places were added, from 2026-11-22. The Türkiye row above had found no duty in the text read; the commentaries report one, and Türkiye is among the eighteen.
 32. The countries the first search did not reach were screened too. Four more places were added, from 2026-11-22. India's Rule 10, which this review had recorded as open, is met by not listing work by an author under 18 who lives in India.
+33. The rule now also names conditions before personal data leaves a place that Sophaxis cannot meet. One more place was added on it, from 2026-11-22: Quebec.
 
 ## Risks that remain
 
