@@ -69,6 +69,11 @@ async function main() {
   try { git('push', '-q', 'origin', 'HEAD:main'); }
   catch (e) { await say('Not recorded: main moved while the checks ran. Remove the label and add it again.'); process.exit(1); }
   try { git('push', '-q', 'origin', '--delete', branch); } catch (e) { /* the branch can stay */ }
+  /* The issue that proposed it, where the repository does not let workflows open pull requests, is done too. */
+  for (const i of ((await github('GET', '/issues?state=open&per_page=50')) || []).filter((x) => !x.pull_request && (x.body || '').startsWith('<!-- statutes-proposal -->'))) {
+    await github('POST', '/issues/' + i.number + '/comments', { body: 'Recorded in #' + n + '.' });
+    await github('PATCH', '/issues/' + i.number, { state: 'closed', state_reason: 'completed' });
+  }
   await say('Recorded in ' + git('rev-parse', 'HEAD').trim().slice(0, 7) + ', after `' + checks.map((c) => c.join(' ')).join('` and `') + '` passed on the merged result.');
 }
 
