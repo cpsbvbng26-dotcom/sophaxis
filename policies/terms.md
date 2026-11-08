@@ -7,7 +7,8 @@ Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation
 ## Who these terms apply to
 
 These terms apply to everyone who reads Sophaxis or submits to it.
-Using the site means accepting them.
+Authors agree to them in the submission form, in their version of the day.
+Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
 The other policies are part of these terms.
 How content is moderated is set out in the Moderation Policy and the Takedown Policy, and every automatic step that takes part in it is listed on the page [What runs by itself](../automation.html).
 
