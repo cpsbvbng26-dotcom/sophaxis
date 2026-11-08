@@ -1,0 +1,261 @@
+{
+  "_": "The texts the legal review relies on. tools/statutes.js fetches each one once a week, from the e-Gov law API and from GitHub's site-policy repository, and compares it with the value recorded here. A value is recorded by hand, after the operator has read the change.",
+  "agent": "Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)",
+  "labels": [
+    "watch"
+  ],
+  "text": {
+    "state": {
+      "same": "same      ",
+      "changed": "changed   ",
+      "missing": "missing   ",
+      "unrecorded": "unrecorded",
+      "failed": "failed    "
+    },
+    "missing": "the article or item was not found",
+    "title": "law title",
+    "texts": "The changed and unrecorded texts:",
+    "summaryOdd": "{n} of {all} need a look.",
+    "summarySame": "All {all} match the recorded values.",
+    "issueTitle": "Weekly check: a statute or a term that the legal review relies on may have changed",
+    "issueHead": "The weekly check on {when} found these different from the recorded values.",
+    "issueFoot": "Read the changed text, check docs/legal-review.md and the policies, then record the new value in verification/statutes.json.",
+    "closed": "The check on {when} found everything as recorded. Closing."
+  },
+  "statutes": [
+    {
+      "law": "Moral rights (Copyright Act of Japan, Articles 19 and 20)",
+      "name": "Copyright Act",
+      "label": "Article 19",
+      "law_id": "345AC0000000048",
+      "article": "19",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Moral rights (Copyright Act of Japan, Articles 19 and 20)",
+      "name": "Copyright Act",
+      "label": "Article 20",
+      "law_id": "345AC0000000048",
+      "article": "20",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Copyright (Copyright Act of Japan, Articles 21 and 23)",
+      "name": "Copyright Act",
+      "label": "Article 21",
+      "law_id": "345AC0000000048",
+      "article": "21",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Copyright (Copyright Act of Japan, Articles 21 and 23)",
+      "name": "Copyright Act",
+      "label": "Article 23",
+      "law_id": "345AC0000000048",
+      "article": "23",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 17",
+      "law_id": "415AC0000000057",
+      "article": "17",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 18",
+      "law_id": "415AC0000000057",
+      "article": "18",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 27",
+      "law_id": "415AC0000000057",
+      "article": "27",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 28",
+      "law_id": "415AC0000000057",
+      "article": "28",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 32",
+      "law_id": "415AC0000000057",
+      "article": "32",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
+      "name": "Penal Code",
+      "label": "Article 230",
+      "law_id": "140AC0000000045",
+      "article": "230",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
+      "name": "Penal Code",
+      "label": "Article 231",
+      "law_id": "140AC0000000045",
+      "article": "231",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
+      "name": "Civil Code",
+      "label": "Article 709",
+      "law_id": "129AC0000000089",
+      "article": "709",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
+      "name": "Act on providers of specified telecommunications services",
+      "label": "Article 3",
+      "law_id": "413AC0000000137",
+      "article": "3",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
+      "name": "Consumer Contract Act",
+      "label": "Article 8",
+      "law_id": "412AC0000000061",
+      "article": "8",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
+      "name": "Consumer Contract Act",
+      "label": "Article 8-3",
+      "law_id": "412AC0000000061",
+      "article": "8_3",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
+      "name": "Consumer Contract Act",
+      "label": "Article 10",
+      "law_id": "412AC0000000061",
+      "article": "10",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
+      "name": "Civil Code",
+      "label": "Article 548-2",
+      "law_id": "129AC0000000089",
+      "article": "548_2",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
+      "name": "Civil Code",
+      "label": "Article 548-3",
+      "law_id": "129AC0000000089",
+      "article": "548_3",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
+      "name": "Civil Code",
+      "label": "Article 548-4",
+      "law_id": "129AC0000000089",
+      "article": "548_4",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Trade and advertising (Act on Specified Commercial Transactions; Act against Unjustifiable Premiums and Misleading Representations)",
+      "name": "Act on Specified Commercial Transactions",
+      "label": "Article 2",
+      "law_id": "351AC0000000057",
+      "article": "2",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Trade and advertising (Act on Specified Commercial Transactions; Act against Unjustifiable Premiums and Misleading Representations)",
+      "name": "Act against Unjustifiable Premiums and Misleading Representations",
+      "label": "Article 5",
+      "law_id": "337AC0000000134",
+      "article": "5",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 25",
+      "law_id": "334AC0000000127",
+      "article": "25",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Unfair Competition Prevention Act",
+      "label": "Article 2, paragraph 1, items 1 and 2",
+      "law_id": "405AC0000000047",
+      "article": "2",
+      "items": [
+        "1",
+        "2"
+      ],
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Minors (Civil Code, Article 5)",
+      "name": "Civil Code",
+      "label": "Article 5",
+      "law_id": "129AC0000000089",
+      "article": "5",
+      "title": null,
+      "sha256": null
+    }
+  ],
+  "policies": [
+    {
+      "name": "GitHub Terms of Service",
+      "repo": "github/site-policy",
+      "path": "Policies/github-terms/github-terms-of-service.md",
+      "commit": null
+    },
+    {
+      "name": "GitHub General Privacy Statement",
+      "repo": "github/site-policy",
+      "path": "Policies/github-privacy-statement.md",
+      "commit": null
+    }
+  ]
+}
