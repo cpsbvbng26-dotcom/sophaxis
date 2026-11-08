@@ -18,13 +18,10 @@ const around = (t, re, n = 1500, max = 2) => { const out = []; const g = new Reg
 const hrefs = (raw, re) => [...new Set([...raw.matchAll(/href=["']([^"']+)["']/gi)].map((m) => m[1]).filter((h) => re.test(h)))].slice(0, 40);
 const S = 'https://sdaia.gov.sa';
 const E = 'https://elaw.klri.re.kr';
-const L = 'https://www.law.go.kr';
 const J = [
-  ['law.go.kr PIPA page', L + '/법령/개인정보보호법', ['국내대리인'], /lsi|Seq|seq/],
-  ['law.go.kr decree page', L + '/법령/개인정보보호법시행령', ['국내대리인'], /lsi|Seq|seq/],
-  ['law.go.kr eng 289537', L + '/LSW/eng/engLsInfoR.do?lsiSeq=289537', ['Article 31-2', 'Article 32-3', 'Domestic Agent', 'domestic agent', 'PERSONAL INFORMATION PROTECTION'], null],
-  ['elaw decree 66066', E + '/kor_service/lawViewContent.do?hseq=66066', ['32조의3', 'Article 32-3', '국내대리인', 'Domestic Agent'], null],
-  ['elaw decree 66066 eng', E + '/eng_service/lawViewContent.do?hseq=66066', ['Article 32-3', 'Domestic Agent', 'domestic agent'], null],
+  ['India DPDP Act (PRS) s.10', 'https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf', ['Significant Data Fiduciary', '10\\. \\(1\\)', 'based in India', 'representative'], null],
+  ['India DPDP Rules (eGazette)', 'https://egazette.gov.in/WriteReadData/2025/267650.pdf', ['outside the territory of India', 'representative', 'based in India', 'Significant Data Fiduciary', 'commencement', 'come into force'], null],
+  ['India DPDP Rules (MeitY)', 'https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf', ['outside the territory of India', 'representative', 'based in India', 'come into force'], null],
 ];
 const extra = async () => {
   const r = await text(S + '/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf');
