@@ -2408,6 +2408,9 @@ console.log('\n64. The statutes and GitHub terms the legal review relies on are 
   ok('every Japanese law of docs/legal-review.md, and every article its heading names, is watched (' + S.statutes.length + ' articles)', gaps.length === 0, gaps.join(' / '));
   const unrec = S.statutes.filter((e) => !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !e.title || !/^\d{3}(?:AC\d{10}|CO\d{10}|M\d{11})$/.test(e.law_id) || !(e.law in M.laws))  // e-Gov ids: an Act (AC), a Cabinet Order (CO) or a ministerial or commission rule (M).map((e) => e.name + ' ' + e.label);
   ok('every watched article has its e-Gov law id, its law title, the SHA-256 of its text and a law of the review', unrec.length === 0, unrec.join(' / '));
+  ok('the privacy statements of Vercel and Apple, which handle data for Sophaxis, are watched by the date of their last update',
+    ['Vercel Privacy Notice', 'Apple Privacy Policy'].every((n) => (S.pages || []).some((p) => p.name === n)) && S.pages.every((p) => /^https:\/\//.test(p.url) && new RegExp(p.pattern).source.split('(').length === 2 && /^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(p.value || ''))
+    && read(at('tools/statutes.js')).includes('for (const e of CONF.pages || [])'));
   ok('every watched GitHub term has its latest commit', S.policies.length >= 2 && S.policies.every((p) => /^[0-9a-f]{40}$/.test(p.commit || '')));
   const wf = read(at('.github/workflows/statutes.yml'));
   ok('the watch runs weekly, may open an issue, and also runs on a pull request', /cron: '\d+ \d+ \* \* \d'/.test(wf) && wf.includes('issues: write') && wf.includes('pull_request:') && wf.includes('node tools/statutes.js'));
@@ -2475,6 +2478,12 @@ console.log('\n65. The separate consent to the Internet Archive, the residence o
   const dec = src.slice(src.indexOf('async function decide()'), src.indexOf('async function manual()'));
   ok('a request not upheld is answered before the material goes back (GDPR Article 18(3))', dec.indexOf('decisionNote({ id: form.id, decision, kind: form.kind, today: day, restored: willRestore })') > 0
     && dec.indexOf('decisionNote({ id: form.id, decision, kind: form.kind, today: day, restored: willRestore })') < dec.indexOf('restore(form.id)'));
+  const ed = R.emailDecision({ id: listed.id, action: 'remove', grounds: 'The grounds.', today: '2026-11-12' });
+  const man = src.slice(src.indexOf('async function manual()'), src.indexOf('async function remind()'));
+  ok('a decision on a request sent by email cannot be run without its grounds, which reach the authors in their submission issue before it is emptied (DSA Article 17(4))',
+    ed.startsWith(R.NOTICE) && ed.includes('Grounds: The grounds.') && ed.includes(R.CHALLENGE_EMAIL) && ed.includes('No automatic step took part')
+    && man.includes("throw new Error('give the grounds of the decision, without personal data')") && man.indexOf('emailDecision(') > 0 && man.indexOf('emailDecision(') < man.indexOf('write(change)') && man.indexOf('write(change)') < man.indexOf('erase(record)')
+    && read(path.join(ROOT, '.github', 'workflows', 'removal.yml')).includes('GROUNDS: ${{ inputs.grounds }}'));
   const tk = read(path.join(ROOT, 'policies', 'takedown.md'));
   ok('the Takedown Policy reports suspicions of serious crime, acknowledges email notices, asks good faith by email, and states the position on Article 13',
     tk.includes('Suspicions of serious crime (Article 18)') && tk.includes('the operator tells Europol.') && tk.includes('a notice by email is acknowledged by the operator by email, without undue delay.')
