@@ -2632,6 +2632,21 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     read(path.join(ROOT, 'policies', 'takedown.md')).includes('so it does not rely on the limitation of liability in 17 U.S.C. 512') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('Federal Data Protection and Information Commissioner'));
 }
 
+console.log('\n70. A possible domain and NGO at 1,000 listed works: a possibility only, with no money asked and nothing decided');
+{
+  const rd = read(path.join(ROOT, 'README.md'));
+  const n = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status !== 'removed').length;
+  ok('the README says, in both languages, that a domain and an international NGO may be considered at 1,000 listed works, after preparation',
+    rd.includes('If the number of listed works reaches 1,000, the operator may, after preparation, consider giving Sophaxis a domain of its own and running it through an international non-governmental organisation (NGO).')
+    && rd.includes('収録が 1,000 件に達したら、運営者は、準備を経て、Sophaxis に独自のドメインを取ることと、国際的な非政府組織（NGO）として運営することを検討する可能性があります。'));
+  ok('it says it is not a plan or a promise, that no such organisation exists, and that no money, donations or members are asked for',
+    rd.includes('This is a possibility, not a plan or a promise: nothing has been decided, no such organisation exists, and Sophaxis does not ask for or accept money, donations or members for it.')
+    && rd.includes('これは可能性であり、計画でも約束でもありません。まだ何も決まっておらず、そのための団体もありません。') && rd.includes('Sophaxis は、そのための資金・寄付・会員を求めず、受け取りません。'));
+  ok('any step is taken only within the law and announced before it takes effect', rd.includes('Any such step would be taken only within the law and announced on the top page before it takes effect.')
+    && rd.includes('こうした変更は法令の範囲でだけ行い、効力が始まる前にトップの頁で告知します。'));
+  ok('the number of listed works (' + n + ') is below 1,000, so the statement is still a condition, not a fact', n < 1000);
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
