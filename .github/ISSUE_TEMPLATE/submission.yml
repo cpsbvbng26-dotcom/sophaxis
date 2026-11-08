@@ -12,6 +12,8 @@ body:
         Give the DOI and your ORCID iD. The title, the authors, the abstract and the licence are taken from the DOI metadata.
         Before submitting, add `https://github.com/<your username>` under "Websites & social links" in your ORCID record.
         An automatic check then confirms that the account opening this issue belongs to an author of the work.
+        Personal data given here is used only for the purposes in the Privacy Policy: https://sophaxis.vercel.app/policies/privacy.html
+        Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation, by the removal form or by email.
   - type: input
     id: doi
     attributes:
@@ -122,11 +124,27 @@ body:
     id: consent
     attributes:
       label: Consent and agreement
-      description: Required from 2026-11-21. The Privacy Policy, under "Services outside Japan", gives the information on these services and their countries.
+      description: Required from 2026-11-21. The Privacy Policy, under "Services outside Japan", gives the information on these services and their countries. Any author can withdraw this consent at any time, by the removal form or by email; the record is then removed, and what was done before stays lawful.
       options:
-        - label: Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel, ORCID and the Internet Archive in the United States, as the Privacy Policy (https://sophaxis.vercel.app/policies/privacy.html) sets out.
+        - label: Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States, as the Privacy Policy (https://sophaxis.vercel.app/policies/privacy.html) sets out.
           required: false
         - label: I have read and agree to the Terms of Use and the other policies (https://sophaxis.vercel.app/policies/terms.html), in their version on the day of submission.
           required: false
         - label: I am 13 or older, and if I am under 18, a parent or guardian consents to this submission.
+          required: false
+  - type: checkboxes
+    id: archive
+    attributes:
+      label: Saving to the Internet Archive (optional)
+      description: Sophaxis saves its pages and PDF copies to the Internet Archive in the United States, so that they stay readable. This is a separate consent and may be left empty; the work is listed either way. The Privacy Policy, under "People in the European Union and the United Kingdom" and "Services outside Japan", gives the possible risks. Any author can withdraw it at any time, and the saves then stop without review.
+      options:
+        - label: Every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States.
+          required: false
+  - type: checkboxes
+    id: residence
+    attributes:
+      label: Where the authors live
+      description: Required from 2026-11-22. Sophaxis does not list work by authors who live in the European Union, the European Economic Area or the United Kingdom; the Submission Policy says why.
+      options:
+        - label: No author of this work lives in the European Union, the European Economic Area or the United Kingdom.
           required: false

@@ -89,6 +89,8 @@ function validate(p, file) {
   if (p.id && !ID.test(p.id)) e.push(file + ': id must look like 2026.0001');
   if (p.id && path.basename(file, '.json') !== p.id) e.push(file + ': file name must be the id');
   if (p.category && !SITE.categories[p.category]) e.push(file + ': unknown category ' + p.category);
+  /* archive is absent (every author consented to the saves to the Internet Archive) or false (not every author did). */
+  if ('archive' in p && p.archive !== false) e.push(file + ': archive is either false or absent');
   if (p.license && !SITE.licenses[p.license]) e.push(file + ': licence not accepted: ' + p.license);
   if (p.categories !== undefined) {
     if (!Array.isArray(p.categories)) e.push(file + ': categories must be a list');
@@ -1025,7 +1027,8 @@ function notFoundPage() {
  * record: its page and its PDF copies, by the prefix of its id. Whether this also hides earlier copies is the Archive's
  * decision; the operator still asks it to exclude them (Takedown Policy). */
 function robots(all) {
-  const gone = all.filter((p) => p.status === 'removed').map((p) => p.id).sort();
+  /* Also the records whose authors did not consent to the saves (archive: false). */
+  const gone = all.filter((p) => p.status === 'removed' || p.archive === false).map((p) => p.id).sort();
   const archive = gone.length ? '\nUser-agent: ia_archiver\nUser-agent: archive.org_bot\n'
     + gone.map((id) => 'Disallow: /abs/' + id + '\nDisallow: /pdf/' + id + '\n').join('') + 'Allow: /\n' : '';
   return 'User-agent: *\nAllow: /\n' + archive + '\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n';

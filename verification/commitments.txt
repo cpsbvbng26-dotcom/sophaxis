@@ -44,7 +44,7 @@ A submission that does not pass both is not listed.
 It is not an official identity check.
 It does not ask for the person section as a whole, so public email addresses and the country are never received.
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
-Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).
+Records are kept to preserve the scholarly record, for freedom of expression and information (Article 17(3)(a)).
 The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
 Material that was taken offline while the request was reviewed is put back.
 A request to disclose who submitted material is handled as Japanese law provides.
@@ -102,3 +102,18 @@ Until then, the operator lists a work by an author other than the operator only 
 For anyone else, the court that the law sets has jurisdiction.
 Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
 A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so; for them, this section describes what the law already places on the authors of a work.
+Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
+After an objection, the operator stops the use objected to, unless it shows compelling legitimate grounds that override the person's interests, rights and freedoms, or the data is needed for legal claims.
+The operator gives those grounds in writing.
+A request about personal data is answered within one month at the latest.
+When the operator does not act on a request about personal data, it says why within one month.
+It also says that the person can complain to a data protection authority and can go to court.
+A copy of personal data is sent by email, in a commonly used electronic form, or by another method the person asks for, and never in an issue.
+From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
+Any author can withdraw either consent at any time, by a removal issue or by email, and what was done before the withdrawal stays lawful.
+Withdrawing the consent to the Internet Archive stops the saves without review, once the operator confirms that the request comes from an author; the operator then asks the Internet Archive to exclude the earlier copies.
+The decision is posted in the issue, or sent by email to a person who asked by email, before the material goes back.
+A notice by email also says that the sender believes in good faith that what it says is accurate and complete.
+Where that Member State cannot be identified with reasonable certainty, the operator tells Europol.
+The operator reports promptly after learning of it, and gives the full report within 30 days, or within 60 days when the leak may come from an act done for an improper purpose.
+異議を受けたら、運営者は、本人の利益・権利・自由に優る、やむを得ない正当な理由を示せるときと、法的な請求に要るときを除いて、その利用をやめます。

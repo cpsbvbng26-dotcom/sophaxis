@@ -9,6 +9,8 @@ body:
         This issue is public. Do not include personal data.
         Corrections are added to the record as dated notes under the Moderation Policy: https://sophaxis.vercel.app/policies/moderation.html
         An error in the work itself is corrected by its authors, in a new version at the repository. To ask for a record to be removed, use the removal form instead.
+        Personal data given here is used only for the purposes in the Privacy Policy: https://sophaxis.vercel.app/policies/privacy.html
+        Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation, by the removal form or by email.
   - type: input
     id: id
     attributes:

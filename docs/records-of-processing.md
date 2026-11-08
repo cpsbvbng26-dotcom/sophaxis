@@ -6,7 +6,7 @@ This record follows Article 30 of the General Data Protection Regulation and the
 
 ## Controller
 
-Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. The operator also considers that the exception in Article 27(2)(a) applies: the processing is occasional, includes no special categories of data, and holds only what is public already. The decision is reviewed as the Privacy Policy sets out.
+Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and the operator considers that Article 3(2) does not reach it; should that view be wrong, Sophaxis does not meet Article 27, because the processing is regular and not occasional. The decision is reviewed as the Privacy Policy sets out.
 
 ## Processing
 
@@ -15,17 +15,18 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 | Confirm that a submitter, a co-author who confirms their agreement, a person who withdraws, or a person who reports a published version is an author | Submitters and co-authors | GitHub username; ORCID iD; name, websites and works from the public ORCID record | The issue; ORCID | GitHub (issue comments) | As long as the issue exists |
 | Publish record pages, author pages, lists and search | Authors | Names, ORCID iDs, abstracts, statements on generative models, notes | DOI metadata (DataCite, Crossref, JaLC); the issues | Vercel (serving); the public | Without a time limit, so that citations do not break |
 | Offer records for reuse | Authors | As above | The records | Readers of `feed.xml` and `papers.json`; OAI-PMH harvesters | As above; copies taken by others are outside Sophaxis's control |
-| Preserve the pages and the PDF copies | Authors | As above | The site | The Internet Archive (United States) | As the Internet Archive keeps them |
+| Preserve the pages and the PDF copies, for works whose authors consent to it in a separate box | Authors | As above | The site | The Internet Archive (United States) | As the Internet Archive keeps them; saves stop when any author withdraws the consent |
 | Tell search engines what changed | None (addresses only) | None | The sitemap | IndexNow | Not kept |
 | Check the listed DOIs and licences each week | Authors | DOIs and the metadata read with them | DataCite, Crossref, JaLC | GitHub (the run's log and summary) | As GitHub keeps the logs |
 | Answer requests about records and personal data | Requesters | What the request contains | The issue or the email | Apple (iCloud Mail, United States), for email | As long as needed to answer and to show the answer |
 | Act on removal requests by automatic steps: acknowledge, tell the authors, take exposed personal data offline at once, carry out the operator's decision | Requesters; authors | The Sophaxis id, the kind of request, GitHub usernames | The issues; the records | GitHub (issue comments, commits) | As long as the issues and the git history exist |
 | Serve the site and find faults | Readers | IP address and request details | The request | Vercel (United States) | As Vercel keeps its logs |
+| Answer questions, complaints, disputes and security reports | Those who write | What the message contains | The email or the issue | Apple (iCloud Mail, United States), for email | As long as needed to answer and to show the answer |
 | Gather the Zenodo records of listed works in the Zenodo community https://zenodo.org/communities/sophaxis | Authors | Nothing is copied; as curator, the operator can view and edit the metadata and files of each record submitted to the community, including names and ORCID iDs | Zenodo (an author's submission to the community) | Zenodo (CERN, Switzerland) | As long as the record stays in the community |
 
 ## Lawful basis
 
-Legitimate interest in checking authorship and in keeping a public scholarly record (GDPR Article 6(1)(f)). Records are kept under Article 17(3). Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of the Act): in the submission form, required from 2026-11-21, and until then in the submission issue before a work by an author other than the operator is listed.
+Legitimate interest in checking authorship, in keeping a public scholarly record, in serving the site safely and in answering the people who write (GDPR Article 6(1)(f)). Records are kept for freedom of expression and information (Article 17(3)(a)). The transfer to the Internet Archive rests on explicit consent (Article 49(1)(a)), asked in a box of its own that may be left empty. Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of the Act): in the submission form, required from 2026-11-21, and until then in the submission issue before a work by an author other than the operator is listed.
 
 ## Transfers outside Japan and the European Union
 

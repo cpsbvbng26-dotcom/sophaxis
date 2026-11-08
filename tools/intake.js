@@ -49,6 +49,8 @@ const FIELDS = {
   'Use of language models and other generative models': 'llm',
   'Extent of use of generative models': 'llm_extent',
   'Consent and agreement': 'consent',
+  'Saving to the Internet Archive (optional)': 'archive',
+  'Where the authors live': 'residence',
 };
 
 /* GitHub renders an issue form as "### Label" followed by the answer. */
@@ -298,6 +300,11 @@ function check({ form, login, meta, person, works, listed, pub, today }) {
     const ticked = (String(form.consent || '').match(/^- \[[xX]\] /gm) || []).length;
     if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.consentFrom) add('Consent, agreement to the policies and age are confirmed', ticked === CONSENTS, ticked + ' of ' + CONSENTS);
   }
+  /* From SITE.residenceFrom, no author may live in the European Union, the European Economic Area or the United Kingdom. */
+  {
+    const ticked = (String(form.residence || '').match(/^- \[[xX]\] /gm) || []).length;
+    if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.residenceFrom) add('No author lives in the EU, the EEA or the UK', ticked === 1, ticked ? '' : 'the box is not ticked');
+  }
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
   /* A published version given at submission gets the same checks as one reported later (tools/published.js). */
@@ -383,6 +390,10 @@ ${AGREE} ORCID: 0000-0000-0000-0000
 
 An author who cannot comment here writes by email to the address on the operator's ORCID record (https://orcid.org/${SITE.operator.orcid}) instead.
 The agreement also covers the provision of the author's personal data that the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out, including to services in the United States.
+Saving to the Internet Archive is a separate consent, given in the form above or not at all.
+Any author can withdraw a consent at any time, by the removal form or by email.
+Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
+From ${SITE.residenceFrom}, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom.
 `;
 }
 
@@ -420,6 +431,8 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     ...(meta.language ? { language: meta.language } : {}),
     versions: versions.map((v, i) => ({ version: i + 1, doi: v.doi, date: v.date })),
     llm_disclosure: form.llm.trim(),
+    /* The saves to the Internet Archive are a separate, optional consent. A form that asks it and has it unticked keeps the record out of them. */
+    ...('archive' in form && !/^- \[[xX]\] /m.test(String(form.archive || '')) ? { archive: false } : {}),
     ...(extentKey(form.llm_extent) ? { llm_extent: extentKey(form.llm_extent) } : {}),
     issue: Number(issue),
     /* The day of the draft. The moderator sets it to the day the record is merged. */

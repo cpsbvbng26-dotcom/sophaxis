@@ -16,6 +16,8 @@ A submission that does not pass both is not listed.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
 A submitter under 18 needs the consent of a parent or guardian.
+From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and the submitter confirms this in the form.
+Sophaxis does not offer its service there, because it has no representative there; the [Privacy Policy](./privacy.html) says more.
 
 This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 
@@ -41,6 +43,9 @@ The comment says "I agree to the listing of this work on Sophaxis." and gives th
 The automatic check in the issue counts each confirmation.
 The other is an email to the operator, after which the operator confirms them through their ORCID record.
 This consent covers the listing, and the provision of their personal data that the [Privacy Policy](./privacy.html) sets out.
+An email confirmation says the same, and the operator's reply links the Privacy Policy.
+Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
+Any author can withdraw a consent at any time, by a removal issue or by email.
 
 ## What the submitter confirms
 

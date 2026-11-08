@@ -1,0 +1,1899 @@
+{
+  "_": "Each duty that the articles cited by the policies place on Sophaxis, read clause by clause: met by a sentence that is in the file word for word, open with what is missing, or not applying with the reason. verification/check.js reads it.",
+  "duties": [
+    {
+      "law": "GDPR",
+      "article": "Art 3(2)(a) with recital 23 (scope)",
+      "duty": "Processing by a controller not established in the Union is covered where it relates to offering services to data subjects in the Union; \"mere accessibility\" of the website, an email address or a language is \"insufficient\"; \"mentioning of customers or users who are in the Union\" may make the intention apparent. (Art 3(2) itself is not in the file; only recital 23.)",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 7(1)",
+      "duty": "\"the controller shall be able to demonstrate that the data subject has consented\" (consent is used for the Art 49(1)(a) transfer to the Internet Archive).",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/submission.yml",
+          "text": "Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States"
+        },
+        {
+          "file": ".github/ISSUE_TEMPLATE/submission.yml",
+          "text": "Every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 7(2)",
+      "duty": "\"the request for consent shall be presented in a manner which is clearly distinguishable from the other matters\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/submission.yml",
+          "text": "label: Saving to the Internet Archive (optional)"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 7(3) first and second sentences",
+      "duty": "\"right to withdraw his or her consent at any time\"; withdrawal \"shall not affect the lawfulness of processing ... before its withdrawal\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Any author can withdraw either consent at any time, by a removal issue or by email, and what was done before the withdrawal stays lawful."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 7(3) third sentence",
+      "duty": "\"Prior to giving consent, the data subject shall be informed thereof.\"",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/submission.yml",
+          "text": "Any author can withdraw this consent at any time, by the removal form or by email"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 7(3) fourth sentence",
+      "duty": "\"It shall be as easy to withdraw as to give consent.\"",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/removal.yml",
+          "text": "An author withdraws consent to saving in the Internet Archive"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "stops the saves without review"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 7(4)",
+      "duty": "\"utmost account shall be taken of whether ... the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/submission.yml",
+          "text": "This is a separate consent and may be left empty; the work is listed either way."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 8(1)-(3)",
+      "duty": "\"Where point (a) of Article 6(1) applies, in relation to the offer of information society services directly to a child\" — parental consent below 16 (or the national age).",
+      "applies": false,
+      "reason": "Sophaxis rests on Art 6(1)(f), not 6(1)(a) (privacy.md:150), and is not offered directly to children. The Terms already bar under-13s and require parental consent under 18 (terms.md:133-134)."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 12(1)",
+      "duty": "information \"in a concise, transparent, intelligible and easily accessible form, using clear and plain language\" and \"in writing, or by other means, including ... electronic means\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Personal data is used only for these purposes:"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 12(2)",
+      "duty": "\"The controller shall facilitate the exercise of data subject rights under Articles 15 to 22.\"",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/removal.yml",
+          "text": "restriction, objection, deletion, stopping its provision to others, a copy"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "writes by email."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 12(3)",
+      "duty": "action \"without undue delay and in any event within one month of receipt\"; extension \"by two further months\" with notice \"within one month ... together with the reasons\"; electronic reply to an electronic request.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "A request about personal data is answered within one month at the latest."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "If a request needs more time, the operator says so within that month, with the reasons, and answers within three months of the request."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 12(4)",
+      "duty": "If no action is taken, inform \"within one month ... of the reasons for not taking action and on the possibility of lodging a complaint with a supervisory authority and seeking a judicial remedy\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "When the operator does not act on a request about personal data, it says why within one month."
+        },
+        {
+          "file": "tools/removal.js",
+          "text": "A complaint can also go to Japan\\'s Personal Information Protection Commission, or to a data protection authority, and the person can go to court."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 12(5)",
+      "duty": "information and actions \"shall be provided free of charge\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Requests cost nothing."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 12(6)",
+      "duty": "with \"reasonable doubts concerning the identity\", the controller may ask for information to confirm it.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Before answering a request about personal data, the operator confirms who is asking, through the ORCID record or by email."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 12(7)-(8)",
+      "duty": "standardised icons (optional); Commission delegated acts.",
+      "applies": false,
+      "reason": "Optional for the controller / addressed to the Commission."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(1)-(2) timing",
+      "duty": "information to be given \"at the time when personal data are obtained\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/correction.yml",
+          "text": "Personal data given here is used only for the purposes in the Privacy Policy"
+        },
+        {
+          "file": "contact.md",
+          "text": "Personal data in an email is used only to answer it"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(1)(a)",
+      "duty": "\"the identity and the contact details of the controller and, where applicable, of the controller's representative\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "The operator of Sophaxis, Takuya Nemoto, handles it."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(1)(b)",
+      "duty": "\"the contact details of the data protection officer, where applicable\".",
+      "applies": false,
+      "reason": "No DPO is required (Art 37, not in the file: no large-scale monitoring or special categories)."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(1)(c)",
+      "duty": "\"the purposes of the processing ... as well as the legal basis for the processing\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "- to serve the site, and to find and fix faults from Vercel's request logs;"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "- to answer questions, complaints, disputes and security reports."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(1)(d)",
+      "duty": "where based on Art 6(1)(f), \"the legitimate interests pursued\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "serving the site safely, and answering the people who write."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(1)(e)",
+      "duty": "\"the recipients or categories of recipients of the personal data, if any\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis uses these services outside Japan: GitHub (United States)"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": ", and the Internet Archive"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States)"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(1)(f)",
+      "duty": "the intended transfer to a third country and \"the existence or absence of an adequacy decision\", or a reference to the safeguards (Art 46/47) or 49(1) second subparagraph.",
+      "applies": true,
+      "status": "open",
+      "open": "Transfers to Apple (iCloud Mail) for email: the basis under the GDPR is not stated, because whether Apple is certified under the Data Privacy Framework was not checked at its source."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(2)(a)",
+      "duty": "\"the period for which the personal data will be stored, or ... the criteria used to determine that period\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Vercel keeps its request logs for the period its service sets"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "The issues, with the GitHub usernames in them, stay as long as GitHub keeps them"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(2)(b)",
+      "duty": "the right to request \"access to and rectification or erasure ... or restriction of processing ... or to object ... as well as the right to data portability\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "to have its use restricted while its accuracy or an objection is checked"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(2)(c)",
+      "duty": "where based on Art 6(1)(a) or 9(2)(a), the right to withdraw consent.",
+      "applies": false,
+      "reason": "The basis is Art 6(1)(f); the consent used is under Art 49(1)(a). The withdrawal statement is audited under Art 7(3)."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(2)(d)",
+      "duty": "\"the right to lodge a complaint with a supervisory authority\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "can complain to the data protection authority of their country."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(2)(e)",
+      "duty": "whether provision is a statutory or contractual requirement, whether the person is obliged, and \"the possible consequences of failure to provide such data\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Without them the check cannot confirm the author, and the request cannot go ahead by issue"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(2)(f)",
+      "duty": "\"the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4)\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "No decision with legal or similarly significant effects on a person is made solely by automated means."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 13(3)-(4)",
+      "duty": "information before further processing for another purpose; exemption where the person has the information.",
+      "applies": false,
+      "reason": "No further purpose is planned; changes are dated (privacy.md:173)."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(1)(a)",
+      "duty": "identity and contact details of the controller (data not obtained from the person: author names and ORCID iDs from DOI metadata, ORCID record data, co-authors).",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "The operator of Sophaxis, Takuya Nemoto, handles it."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(1)(b)",
+      "duty": "DPO contact details, where applicable.",
+      "applies": false,
+      "reason": "No DPO (Art 37 not in the file)."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(1)(c)",
+      "duty": "\"the purposes of the processing ... as well as the legal basis\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "to publish record pages, author pages, the lists and the search;"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "the basis for this use is a legitimate interest"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(1)(d)",
+      "duty": "\"the categories of personal data concerned\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "A record holds the title, the names and ORCID iDs of the authors, the abstract, the licence, the DOIs and dates of the versions, and the statement on generative models."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(1)(e)",
+      "duty": "\"the recipients or categories of recipients\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(1)(f)",
+      "duty": "third-country transfer and \"the existence or absence of an adequacy decision\" or safeguards.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(2)(a)",
+      "duty": "storage period or criteria.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis keeps records without a time limit, so that citations do not break."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(2)(b)",
+      "duty": "the legitimate interests pursued.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "checking who the authors are, keeping a public scholarly record"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(2)(c)",
+      "duty": "rights of access, rectification, erasure, restriction, objection, portability.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "to have its use restricted while its accuracy or an objection is checked"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(2)(d)",
+      "duty": "right to withdraw consent where based on 6(1)(a)/9(2)(a).",
+      "applies": false,
+      "reason": "Basis is Art 6(1)(f)."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(2)(e)",
+      "duty": "right to lodge a complaint with a supervisory authority.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "and can complain to the data protection authority of their country."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(2)(f)",
+      "duty": "\"from which source the personal data originate, and if applicable, whether it came from publicly accessible sources\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "It reads the metadata of the DOI from DataCite, Crossref or JaLC (Japan Link Center)."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "Most of a record comes from the metadata of the deposit."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "Records are built only from information that is public already."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(2)(g)",
+      "duty": "existence of automated decision-making under Art 22.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "No decision with legal or similarly significant effects on a person is made solely by automated means."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(3)(a)-(c)",
+      "duty": "information within a month, or \"at the latest at the time of the first communication\", or \"at the latest when the personal data are first disclosed\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/submission.md",
+          "text": "the operator's reply links the Privacy Policy."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 14(4)-(5)",
+      "duty": "further purposes; exemptions (already informed, disproportionate effort, law, secrecy).",
+      "applies": false,
+      "reason": "No further purpose; Sophaxis does not rely on the exemptions."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 15(1)",
+      "duty": "confirmation and \"access to the personal data and the following information\" (a)-(h).",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 15(2)",
+      "duty": "right to be informed of the Art 46 safeguards for third-country transfers.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 15(3)",
+      "duty": "\"The controller shall provide a copy of the personal data\"; by electronic request, \"in a commonly used electronic form\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "A copy of personal data is sent by email, in a commonly used electronic form"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 15(4)",
+      "duty": "the copy \"shall not adversely affect the rights and freedoms of others\".",
+      "applies": false,
+      "reason": "A limit on the right, not a duty to publish."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 16",
+      "duty": "\"rectification of inaccurate personal data\" without undue delay; completion \"by means of providing a supplementary statement\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/correction.yml",
+          "text": "Corrections are added to the record as dated notes"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 18(1)(a)-(d)",
+      "duty": "restriction where accuracy is contested, processing unlawful, data needed for legal claims, or an Art 21(1) objection is pending verification.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "While a restriction lasts, the operator takes the part concerned offline."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 18(2)",
+      "duty": "restricted data, \"with the exception of storage\", only processed with consent or for legal claims etc.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 18(3)",
+      "duty": "the person \"shall be informed by the controller before the restriction of processing is lifted\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "before the material goes back."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 19",
+      "duty": "communicate rectification, erasure or restriction \"to each recipient\"; \"inform the data subject about those recipients if the data subject requests it\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "On request, the operator tells a person which recipients were told of a correction, a removal or a restriction of their data."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 21(1)",
+      "duty": "right to object to 6(1)(f) processing; the controller \"shall no longer process ... unless the controller demonstrates compelling legitimate grounds\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "After an objection, the operator stops the use objected to, unless it shows compelling legitimate grounds that override the person's interests, rights and freedoms, or the data is needed for legal claims."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 21(2)-(3)",
+      "duty": "objection to direct marketing.",
+      "applies": false,
+      "reason": "No direct marketing."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 21(4)",
+      "duty": "\"At the latest at the time of the first communication ... the right ... shall be explicitly brought to the attention ... and shall be presented clearly and separately from any other information.\"",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "## The right to object"
+        },
+        {
+          "file": ".github/ISSUE_TEMPLATE/submission.yml",
+          "text": "Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 21(5)",
+      "duty": "objection \"by automated means using technical specifications\".",
+      "applies": false,
+      "reason": "A means open to the person; no tracking or profiling exists to object to by signal."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 21(6)",
+      "duty": "objection to processing for research or statistics under Art 89(1).",
+      "applies": false,
+      "reason": "Sophaxis does not process for research purposes under Art 89(1); Art 21(1) covers the objection."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 22(1)",
+      "duty": "\"right not to be subject to a decision based solely on automated processing ... which produces legal effects ... or similarly significantly affects\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "No decision with legal or similarly significant effects on a person is made solely by automated means."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "One step acts before the operator decides"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "It protects the person concerned, and is undone if the request is not upheld."
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 22(2)-(4)",
+      "duty": "exceptions and safeguards for permitted automated decisions.",
+      "applies": false,
+      "reason": "No decision under Art 22(1) is made."
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 27 (not in the file)",
+      "duty": "(Art 27 is not in the file; from general knowledge) a controller under Art 3(2) designates a representative in the Union unless the processing \"is occasional\", not large-scale special categories, and unlikely to result in a risk.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis does not meet Article 27, because it has no representative there"
+        }
+      ]
+    },
+    {
+      "law": "GDPR",
+      "article": "Art 17(3) (not in the file)",
+      "duty": "(Art 17 is not in the file) erasure does not apply where processing is necessary for freedom of expression and information (17(3)(a)) or for archiving in the public interest / research \"in accordance with Article 89(1)\" (17(3)(d)).",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "for freedom of expression and information (Article 17(3)(a))"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 3(a),(d),(e),(g)(iii),(i), recitals 7-8 (scope)",
+      "duty": "Applies to providers that \"offer services in the Union\", i.e. with a \"substantial connection\" (establishment, \"significant number of recipients\", or \"targeting of activities\"); \"mere technical accessibility ... cannot, on that ground alone\" establish it. Hosting = storage of information \"provided by, and at the request of, a recipient\"; online platform = a hosting service that also disseminates it to the public.",
+      "applies": false,
+      "reason": "Reasoned view: likely outside. (1) An information society service must be \"normally provided for remuneration\" (Directive 2015/1535 Art 1(1)(b), not in the file); an unpaid, non-commercial personal project may not be one. (2) No EU establishment; recipients are few; no currency, no EU top-level domain, no app, no ads; English and Japanese serve researchers worldwide rather than targeting a Member State. On the policies' own worst-case stance (takedown.md:91) Sophaxis is a hosting service (PDF copies, abstracts, statements and reasons stored at authors' request) and an online platform (record pages disseminated to the public), and a micro enterprise if an enterprise at all: Art 15(1) is lifted by Art 15(2), and Section 3 (Arts 20-28) except Art 24(3) by Art 19 (not in the file). Arts 11-18 bind; the rows below judge them on that stance."
+    },
+    {
+      "law": "DSA",
+      "article": "Arts 11-12 (not in the file)",
+      "duty": "(not in the file) a single electronic point of contact for authorities and for recipients.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12)"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 13 (not in the file)",
+      "duty": "(Art 13 is not in the file; from general knowledge) a provider without an EU establishment that offers services in the Union designates a legal representative in a Member State; no size exemption.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "Sophaxis does not meet Article 13, because it has no legal representative in the European Union."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 14(1) restrictions",
+      "duty": "\"include information on any restrictions that they impose ... in their terms and conditions\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/terms.md",
+          "text": "What is not allowed"
+        },
+        {
+          "file": "policies/terms.md",
+          "text": "The operator may decline or remove a submission that breaks these rules."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 14(1) moderation tools and complaint rules",
+      "duty": "\"information on any policies, procedures, measures and tools used for the purpose of content moderation, including algorithmic decision-making and human review, as well as the rules of procedure of their internal complaint handling system\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/terms.md",
+          "text": "every automatic step that takes part in it is listed on the page"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 14(1) form",
+      "duty": "\"clear, plain, intelligible, user-friendly and unambiguous language ... publicly available in an easily accessible and machine-readable format\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "in plain English (Article 14)"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 14(2)",
+      "duty": "\"inform the recipients of the service of any significant change to the terms and conditions\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/terms.md",
+          "text": "A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 14(3)",
+      "duty": "explain conditions to minors where the service is directed at or used mainly by them.",
+      "applies": false,
+      "reason": "Not directed at minors."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 14(4)",
+      "duty": "act \"in a diligent, objective and proportionate manner ... with due regard to the rights and legitimate interests of all parties\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 14(5)-(6)",
+      "duty": "summary and translations for very large platforms.",
+      "applies": false,
+      "reason": "Not a VLOP/VLOSE."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 15(1)",
+      "duty": "yearly transparency reports.",
+      "applies": false,
+      "reason": "Lifted by Art 15(2) for micro and small enterprises. The statistics page (takedown.md:99) goes partly beyond."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(1)",
+      "duty": "mechanisms \"easy to access and user-friendly\" allowing notices \"exclusively by electronic means\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "Notices of illegal content (Article 16): a removal issue, or an email."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(2)(a)",
+      "duty": "\"a sufficiently substantiated explanation of the reasons why ... the information in question [is] illegal content\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/removal.yml",
+          "text": "why it breaks the law or the policies"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(2)(b)",
+      "duty": "\"a clear indication of the exact electronic location of that information, such as the exact URL\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/removal.yml",
+          "text": "label: Sophaxis id"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(2)(c)",
+      "duty": "\"the name and email address of the individual or entity submitting the notice\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "A notice by email names who sends it and gives an email address. A removal issue does not, because it is public; the GitHub account that opens it stands in their place."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(2)(d)",
+      "duty": "\"a statement confirming the bona fide belief ... that the information and allegations contained therein are accurate and complete\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "A notice by email also says that the sender believes in good faith that what it says is accurate and complete."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(3)",
+      "duty": "notices give rise to actual knowledge.",
+      "applies": false,
+      "reason": "A legal effect, not a duty."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(4)",
+      "duty": "\"without undue delay, send a confirmation of receipt of the notice\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "A removal issue is acknowledged automatically; a notice by email is acknowledged by the operator by email, without undue delay."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(5)",
+      "duty": "notify the notifier of the decision, \"providing information on the possibilities for redress\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "tools/removal.js",
+          "text": "A court, or an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act, can also be asked."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 16(6)",
+      "duty": "process notices \"in a timely, diligent, non-arbitrary and objective manner\"; where automated means are used, \"include information on such use in the notification referred to in paragraph 5\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "tools/removal.js",
+          "text": "No automatic step took part in this decision."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(1)",
+      "duty": "\"a clear and specific statement of reasons to any affected recipients\" for restrictions of visibility, removal, suspension.",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "Reasons for a decision (Article 17): the operator gives the grounds of every decision in the removal issue, or by email."
+        },
+        {
+          "file": "policies/moderation.md",
+          "text": "A moderator who declines a submission names one or more of these reasons, with a short explanation"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(2)",
+      "duty": "applies where contact details are known, \"at the latest from the date that the restriction is imposed\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "tools/removal.js",
+          "text": "'A removal request about ' + id"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(3)(a)",
+      "duty": "whether the decision entails removal, disabling, demotion or restriction, \"and, where relevant, the territorial scope of the decision and its duration\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "tools/removal.js",
+          "text": "The removal applies wherever the site is read, and it is permanent."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(3)(b)",
+      "duty": "\"the facts and circumstances relied on ... whether the decision was taken pursuant to a notice ... or based on voluntary own-initiative investigations\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "tools/removal.js",
+          "text": "is being reviewed under the [Takedown Policy]"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(3)(c)",
+      "duty": "\"information on the use made of automated means in taking the decision\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "tools/removal.js",
+          "text": "An automatic step took it offline when the request arrived, before any decision."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(3)(d)",
+      "duty": "for illegal content, \"a reference to the legal ground relied on and explanations as to why the information is considered to be illegal content on that ground\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "the grounds name the law relied on and say why the material breaks it."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(3)(e)",
+      "duty": "for incompatibility with T&C, \"a reference to the contractual ground relied on and explanations\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/moderation.md",
+          "text": "A moderator who declines a submission names one or more of these reasons, with a short explanation"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(3)(f)",
+      "duty": "\"clear and user-friendly information on the possibilities for redress ... internal complaint-handling mechanisms, out-of-court dispute settlement and judicial redress\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/moderation.md",
+          "text": "The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(4)",
+      "duty": "information \"clear and easily comprehensible\" and such as \"to reasonably allow the recipient ... to effectively exercise the possibilities for redress\".",
+      "applies": true,
+      "status": "open",
+      "open": "Where a removal decided on an email request empties the submission issue, the place where the authors receive the reasons is not yet fixed."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 17(5)",
+      "duty": "not for Art 9 orders.",
+      "applies": false,
+      "reason": "Exception."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 18(1)",
+      "duty": "on information \"giving rise to a suspicion that a criminal offence involving a threat to the life or safety of a person\" has taken or will take place, \"promptly inform the law enforcement or judicial authorities of the Member State ... concerned\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "Suspicions of serious crime (Article 18)"
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 18(2)",
+      "duty": "where the Member State cannot be identified, inform the authorities of the Member State of establishment or of the legal representative, \"or inform Europol, or both\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "the operator tells Europol."
+        }
+      ]
+    },
+    {
+      "law": "DSA",
+      "article": "Art 24(1),(2),(5)",
+      "duty": "transparency additions, six-monthly active-recipient figures, statements of reasons to the Commission database.",
+      "applies": false,
+      "reason": "Lifted for micro and small enterprises by Art 19 (not in the file)."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 24(3)",
+      "duty": "communicate the paragraph 2 information (average monthly active recipients in the Union) \"upon their request and without undue delay\".",
+      "applies": true,
+      "status": "open",
+      "open": "How the average monthly recipients in the Union would be estimated on request is not stated; the site keeps no analytics."
+    },
+    {
+      "law": "DSA",
+      "article": "Art 24(4),(6)",
+      "duty": "duties of the Digital Services Coordinator and the Commission.",
+      "applies": false,
+      "reason": "Addressed to authorities."
+    },
+    {
+      "law": "APPI",
+      "article": "Scope (Art 16(2), not in the file)",
+      "duty": "whether the operator is a 個人情報取扱事業者; the policy applies the Act \"as if\".",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis applies Japan's Act on the Protection of Personal Information in full, as if its operator were a business operator under that Act."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第17条第1項",
+      "duty": "利用目的を「できる限り特定しなければならない」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "取り下げ・訂正・削除の求めと、個人情報についての求めに応えるため"
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "ほかの目的には使いません。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第17条第2項",
+      "duty": "利用目的の変更は「関連性を有すると合理的に認められる範囲」まで。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "ほかの目的には使いません。"
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "この方針を変えたときは、この頁の日付を改めます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第18条第1項",
+      "duty": "同意なく「利用目的の達成に必要な範囲を超えて」取り扱わない。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "ほかの目的には使いません。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第18条第2項・第3項",
+      "duty": "事業承継の場合の制限、及び適用除外。",
+      "applies": false,
+      "reason": "承継は無く、第3項は除外の定め。"
+    },
+    {
+      "law": "APPI",
+      "article": "第20条第1項",
+      "duty": "「偽りその他不正の手段により個人情報を取得してはならない」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "本人確認では、ORCID に、公開記録のうち「個人の詳細」（氏名）・「ウェブサイト」・「業績」の部分だけを問い合わせます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第20条第2項",
+      "duty": "要配慮個人情報を、同意なく取得しない（各号を除く）。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/submission.md",
+          "text": "The work contains no material"
+        },
+        {
+          "file": "policies/submission.md",
+          "text": "that the authors may not share, and no personal data of third parties."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第21条第1項",
+      "duty": "取得したときは、あらかじめ公表している場合を除き、速やかに利用目的を通知又は公表。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "## 利用目的"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第21条第2項",
+      "duty": "本人から直接書面（電磁的記録を含む）で取得するときは「あらかじめ、本人に対し、その利用目的を明示しなければならない」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "contact.md",
+          "text": "Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.html) sets out."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第21条第3項",
+      "duty": "利用目的を変更したときは、通知又は公表。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "この方針を変えたときは、この頁の日付を改めます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第21条第4項",
+      "duty": "適用除外。",
+      "applies": false,
+      "reason": "除外の定め。"
+    },
+    {
+      "law": "APPI",
+      "article": "第22条",
+      "duty": "個人データを「正確かつ最新の内容に保つ」、不要になれば「遅滞なく消去するよう努めなければならない」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/moderation.md",
+          "text": "Corrections are added to the record as dated notes."
+        },
+        {
+          "file": "policies/moderation.md",
+          "text": "Each week, an automatic check confirms that every listed DOI still resolves"
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "応えることと、応えたことを示すのに要る間だけ、そこに置きます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第23条",
+      "duty": "漏えい・滅失・毀損の防止その他の安全管理のため「必要かつ適切な措置を講じなければならない」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "講じている措置を、個人情報保護委員会の区分で示します。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第24条",
+      "duty": "従業者に個人データを取り扱わせるときは「必要かつ適切な監督」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Before a moderator is invited, the operator writes here what personal data a moderator may handle and how the operator supervises it."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第25条",
+      "duty": "取扱いを委託するときは、委託先に「必要かつ適切な監督」。",
+      "applies": true,
+      "status": "open",
+      "open": "Whether Vercel and iCloud Mail are entrusted handling under Article 25 or storage that the service does not handle is not settled, and no supervision is stated."
+    },
+    {
+      "law": "APPI",
+      "article": "第26条第1項",
+      "duty": "規則で定める事態が生じたときは、委員会に報告。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "法令が報告を求める漏えいが起きたときは、個人情報保護委員会に報告し、本人に知らせます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第26条第2項",
+      "duty": "本人に通知（困難な場合は代替措置）。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "本人に知らせます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第7条",
+      "duty": "報告対象：一 要配慮、二 財産的被害のおそれ、三 不正の目的をもって行われたおそれ、四 千人超。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "A leak must be reported when it involves sensitive personal information"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第8条第1項・第3項",
+      "duty": "事態を知った後「速やかに」各号の事項を報告；電子情報処理組織を使う方法。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "個人情報保護委員会に報告し"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第8条第2項",
+      "duty": "知った日から「三十日以内（…第三号…は六十日以内）」に報告。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "gives the full report within 30 days, or within 60 days when the leak may come from an act done for an improper purpose."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第10条",
+      "duty": "本人へ「速やかに」、第8条第1項第一・二・四・五・九号の事項を通知。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "本人に知らせます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第27条第1項",
+      "duty": "同意なく個人データを第三者に提供しない。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "投稿の様式で、すべての著者が掲載と、下の「外国にある事業者の利用」に挙げる提供に同意していることを確かめます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第27条第2項〜第6項",
+      "duty": "オプトアウト、委託・承継・共同利用。",
+      "applies": false,
+      "reason": "オプトアウトも共同利用も使わず、同意による。"
+    },
+    {
+      "law": "APPI",
+      "article": "第28条第1項",
+      "duty": "外国にある第三者への提供は「あらかじめ外国にある第三者への提供を認める旨の本人の同意」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/submission.md",
+          "text": "An email confirmation says the same"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第28条第2項",
+      "duty": "同意を得ようとするときは、あらかじめ外国の制度、第三者の措置その他参考となる情報を提供。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "The submission form asks for each author's consent to this, after giving the information below"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第17条第1項",
+      "duty": "電磁的記録の提供その他の適切な方法。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/submission.yml",
+          "text": "The Privacy Policy, under \"Services outside Japan\", gives the information on these services and their countries."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第17条第2項第一号",
+      "duty": "当該外国の名称。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "GitHub (United States)"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "Vercel (United States)"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "DataCite (Germany)"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "ORCID (United States)"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "the Internet Archive (United States)"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第17条第2項第二号",
+      "duty": "「適切かつ合理的な方法により得られた当該外国における個人情報の保護に関する制度に関する情報」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "The United States has no general federal law on personal data; some states have their own laws. There is no single authority for personal data across the country"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第17条第2項第三号",
+      "duty": "当該第三者が講ずる個人情報の保護のための措置に関する情報。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "What each service does to protect personal data is set out in its own statement"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "規則第17条第3項",
+      "duty": "国が特定できない場合の代替情報。",
+      "applies": false,
+      "reason": "国は特定されている。"
+    },
+    {
+      "law": "APPI",
+      "article": "規則第17条第4項",
+      "duty": "措置の情報を提供できない場合は「その旨及びその理由」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第28条第3項",
+      "duty": "体制整備者への提供後の措置。",
+      "applies": false,
+      "reason": "同意による提供で、第1項の体制整備の例外に拠っていない。"
+    },
+    {
+      "law": "APPI",
+      "article": "第32条第1項第一号",
+      "duty": "氏名又は名称及び住所を本人の知り得る状態（求めに応じ遅滞なく回答する場合を含む）に。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "住所は公開していません。求めがあれば、遅滞なく知らせます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第32条第1項第二号",
+      "duty": "すべての保有個人データの利用目的。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "## 利用目的"
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "ほかの目的には使いません。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第32条第1項第三号",
+      "duty": "第32条第2項の求め、第33条第1項（第5項準用を含む）、第34条第1項、第35条第1項・第3項・第5項の請求に応じる手続（手数料を含む）。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "A person can also ask to be told the purposes for which their data is used"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第32条第1項第四号・施行令第10条第一号",
+      "duty": "第23条により講じた安全管理措置（支障を及ぼすおそれがあるものを除く）。",
+      "applies": true,
+      "status": "open",
+      "open": "The measures for the operator's own GitHub, Vercel and Apple accounts and devices are not stated, because whether two-factor authentication is on was not confirmed."
+    },
+    {
+      "law": "APPI",
+      "article": "施行令第10条第二号",
+      "duty": "保有個人データの取扱いに関する苦情の申出先。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "個人情報の扱いへの苦情も、同じアドレスで受け付けます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "施行令第10条第三号",
+      "duty": "認定個人情報保護団体の名称等。",
+      "applies": false,
+      "reason": "対象事業者ではない。"
+    },
+    {
+      "law": "APPI",
+      "article": "第32条第2項・第3項",
+      "duty": "利用目的の通知の求めに遅滞なく通知；通知しない旨の通知。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "## 利用目的"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第33条第1項・第2項",
+      "duty": "本人が請求した方法（電磁的記録の提供等）により遅滞なく開示（各号の不開示事由を除く）。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "and never in an issue."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第33条第3項",
+      "duty": "開示しない決定、不存在、方法が困難なときは遅滞なく通知。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "If the request is not upheld, the operator says why in the issue."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第33条第5項",
+      "duty": "第三者提供記録（第29条・第30条の記録、条文は file に無い）の開示請求。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "a person can ask to see what concerns them."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第34条",
+      "duty": "訂正・追加・削除の請求に遅滞なく調査し訂正；結果（内容を含む）を通知。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": ".github/ISSUE_TEMPLATE/correction.yml",
+          "text": "Corrections are added to the record as dated notes"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第35条第1項・第2項・第5項・第6項（利用停止等）",
+      "duty": "利用の停止又は消去の請求に、理由があれば遅滞なく応じる。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "利用の停止・削除を求めることができます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第35条第3項・第4項・第5項（第三者提供の停止）",
+      "duty": "「第三者への提供の停止を請求することができる」；理由があれば遅滞なく停止。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "and to have its provision to third parties stopped."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第35条第7項",
+      "duty": "利用停止等・提供停止を行った／行わない旨を遅滞なく通知。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "tools/removal.js",
+          "text": "The operator gives the grounds in this issue"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第36条",
+      "duty": "措置をとらない旨等を通知する場合、理由を説明するよう努める。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "If the request is not upheld, the operator says why in the issue."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第37条第1項",
+      "duty": "求め又は請求を受け付ける方法を定めることができる。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "求めは、削除の issue で受け付けます。"
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "メールアドレスへ送る形でも受け付けます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第37条第2項",
+      "duty": "対象を特定するに足りる事項の提示を求め、特定に資する情報の提供等。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "Sophaxis の id と求めの種類だけを書く形にします。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第37条第3項",
+      "duty": "開示等の請求等は「代理人によってすることができる」（施行令の代理人の条は file に無い）。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "the operator then confirms the agent's authority as well as the person's identity."
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第37条第4項",
+      "duty": "手続は本人に「過重な負担を課するものとならないよう配慮」。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "by email to the address on the operator's [ORCID record]"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第38条",
+      "duty": "手数料を取るなら実費を勘案した合理的な額を定める。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "求めに費用はかかりません。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第39条",
+      "duty": "訴え提起前の事前の請求。",
+      "applies": false,
+      "reason": "本人の訴訟手続の定めで、事業者の義務ではない。"
+    },
+    {
+      "law": "APPI",
+      "article": "第40条第1項・第2項",
+      "duty": "苦情の適切かつ迅速な処理に努め、体制の整備に努める。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "個人情報の扱いへの苦情も、同じアドレスで受け付けます。"
+        }
+      ]
+    }
+  ]
+}

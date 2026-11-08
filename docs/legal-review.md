@@ -8,13 +8,14 @@ The policies themselves are the [Terms of Use](../policies/terms.md) and the pag
 
 ## Method
 
-The policies were checked in five ways.
+The policies were checked in six ways.
 
 1. **Elements as logic.** An offence or a duty arises only when all of its elements are present. Writing a law as A₁ ∧ A₂ ∧ … ∧ Aₙ, or as several such conjunctions joined by ∨, one sentence that denies a single element of every conjunction makes the whole false. Where a law sets duties instead, each duty needs a sentence that meets it. `verification/legal-matrix.json` lists, for each law below, which element is denied, or which duty is met, by which sentence, and `verification/check.js` confirms that every such sentence is in the policies word for word.
 2. **Coverage.** Every pair of actor (the operator, a submitting author, a co-author, a reader, a harvester or search engine, a third party) and act (receiving a submission, publishing a record, keeping a PDF copy, offering records for reuse, keeping data and logs, removing or withdrawing, reaching abroad) is listed in `verification/legal-matrix.json`. Every one of the 42 pairs is either covered by a law below or cannot occur, with the reason.
 3. **Consistency.** Every policy was compared with the others, with its Japanese translation, and with the code that carries it out. What was found is listed under Consistency below.
 4. **Fault tree.** The ways the facts relied on could fail were listed, and their likelihood and severity were each estimated from 1 to 3. The product ranks them. The numbers are the operator's estimates and serve only to rank.
 5. **Breaking on purpose.** Each fixed sentence and each number was altered in turn, and the check was seen to fail.
+6. **Clause by clause.** The articles of the GDPR, the Digital Services Act and Japan's Act on the Protection of Personal Information, its Order and its Rules that the policies rely on were read paragraph by paragraph and item by item, and each duty they place on Sophaxis was written down. `verification/duties.json` gives, for each, the sentence that meets it word for word, what is still missing, or why it does not apply, and `verification/check.js` confirms it. There are 151 duties: 118 met, 28 that do not apply, and 5 open.
 
 ## Laws
 
@@ -32,7 +33,7 @@ Credit is given, the licence is named and linked, no terms or technical measures
 
 ### Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)
 
-The Act is applied as if the operator were a business operator under it. The purposes are listed, consent to provision abroad is given in the form, the address is given on request, and only the name, websites and works of an ORCID record are read.
+The Act is applied as if the operator were a business operator under it. The purposes are listed, consent to provision abroad is given in the form, the address is given on request, and only the name, websites and works of an ORCID record are read. Disclosure, correction, stopping use and stopping provision to third parties can be asked, through an agent too, and a reportable leak is reported within the times the Rules set.
 
 ### Sending users' information outside (Telecommunications Business Act, Article 27-12)
 
@@ -40,7 +41,7 @@ The pages contain no code or tag that sends information about a reader to anyone
 
 ### Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)
 
-The decision not to appoint a representative is stated with its reason and its review, transfers without safeguards rest on explicit consent, and a record of processing is kept.
+From 2026-11-22 Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and does not direct itself there, so the operator considers that Article 3(2) does not reach it. The decision not to appoint a representative is stated with its reason and its review, and so is the breach if that view is wrong. The transfer to the Internet Archive rests on explicit consent in a box of its own, which may be left empty and can be withdrawn without review. The right to object has a section of its own and is stated in every form, a request is answered within one month, and a record of processing is kept.
 
 ### Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)
 
@@ -52,7 +53,7 @@ Notices are received and acted on, and a sender is disclosed only as the law req
 
 ### The Digital Services Act of the European Union
 
-There is a point of contact, every decision gives its grounds, and a decision can be challenged free of charge, with no automatic step deciding the challenge.
+The operator considers that Sophaxis has no substantial connection to the Union, and follows the Act all the same. There is a point of contact, every notice is acknowledged, every decision gives its grounds, the law relied on and whether an automatic step acted, courts and certified bodies are named, a decision can be challenged free of charge with no automatic step deciding the challenge, and suspicions of serious crime are reported.
 
 ### Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)
 
@@ -96,6 +97,15 @@ The comparison found the items below. Each was fixed in the same change as this 
 12. The Submission Policy now says that a person under 13 cannot submit from 2026-11-21, as the Terms and the form do.
 13. Reading Article 49(1)(a) of the GDPR in EUR-Lex showed that explicit consent to a transfer without safeguards must come after the person is told its possible risks. The Privacy Policy now states those risks for the Internet Archive.
 14. Article 17(4) of the APPI Enforcement Rules asks that, where the measures a recipient abroad takes cannot be given, the person be told so and why. The Privacy Policy now says so for the Internet Archive.
+15. The Privacy Policy said that the exception in Article 27(2)(a) of the GDPR applies because the processing is occasional. Publishing records, offering them for harvest and the weekly checks are regular, so it does not. The claim, added in #138, is withdrawn from the Privacy Policy, its Japanese translation and the record of processing.
+16. One box bundled the listing with the saves to the Internet Archive, which are not needed to list a work, so that consent might not be freely given (GDPR Article 7(4)). The Internet Archive now has a box of its own, which may be left empty; a record without it is not saved and `robots.txt` asks the Internet Archive not to collect it.
+17. Withdrawing consent was handled as a request for removal, which can end "not upheld" (Article 7(3)). Withdrawing consent to the Internet Archive is now a kind of request of its own and stops the saves without review.
+18. The right to object was a clause inside a sentence about complaints (Article 21(4)), and an objection was weighed under the Takedown Policy, with the burden on the person (Article 21(1)). It now has a section of its own, is stated in every form and in the note to co-authors, and the operator must show compelling grounds in writing.
+19. The Privacy Policy gave an aim of 7 days but no limit (Article 12(3)); it now gives one month, the extension, the reasons when nothing is done, and the authorities and courts (Article 12(4)). It also names restriction (Article 18), the purposes, stopping provision to third parties and the record of provision (APPI Articles 32, 33 and 35), agents (Article 37), how a copy is given, what leak is reported and when (Rules, Articles 7 and 8), the retention of the issues and the logs, the purposes of the logs and of correspondence, and the basis for GitHub, Vercel and ORCID under the Data Privacy Framework.
+20. The removal form, the withdrawal form, the published-version form and the correction form did not point to the Privacy Policy (GDPR Article 13; APPI Article 21(2)); each now does, and so does the contact page.
+21. The Takedown Policy said the acknowledgement was automatic, but only a removal issue is acknowledged so (DSA Article 16(4)); a notice by email is now acknowledged by the operator. A notice by email now states good faith (Article 16(2)(d)), the reasons in the removal form are required (Article 16(2)(a)), and Article 18 on suspicions of serious crime is met.
+22. The decision notes named neither courts nor certified bodies, nor the law relied on, nor whether an automatic step acted (DSA Articles 16(5), 16(6) and 17(3)); they now do, and a request not upheld is answered before the material goes back (GDPR Article 18(3)).
+23. The Takedown Policy stated no position on Article 13 of the Digital Services Act beyond the decision; it now says that Sophaxis would not meet it if the view on the Union were wrong.
 
 ## Risks that remain
 
@@ -108,8 +118,19 @@ The comparison found the items below. Each was fixed in the same change as this 
 | 5 | Someone passes the identity check for a work that is not theirs | 1 | 2 | 2 | The record is removed under the Takedown Policy |
 | 6 | A person under 18 submits without the consent of a parent or guardian | 1 | 2 | 2 | The listing is removed where the law gives that right |
 | 7 | A person or an authority in the European Union or the United Kingdom asks for a representative under the GDPR or the Digital Services Act | 1 | 2 | 2 | The decision is reviewed, as the Privacy Policy sets out |
-| 8 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
-| 9 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
+| 8 | An author who lives in the European Union, the European Economic Area or the United Kingdom is listed despite the box | 1 | 2 | 2 | The record is removed under the Takedown Policy, and the decision on a representative is reviewed |
+| 9 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
+| 10 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
+
+## Duties still open
+
+The duties below, found clause by clause, are not met yet. Each needs a fact or a decision of the operator, and none is filled by a guess.
+
+- GDPR Art 13(1)(f): Transfers to Apple (iCloud Mail) for email: the basis under the GDPR is not stated, because whether Apple is certified under the Data Privacy Framework was not checked at its source.
+- DSA Art 17(4): Where a removal decided on an email request empties the submission issue, the place where the authors receive the reasons is not yet fixed.
+- DSA Art 24(3): How the average monthly recipients in the Union would be estimated on request is not stated; the site keeps no analytics.
+- APPI 第25条: Whether Vercel and iCloud Mail are entrusted handling under Article 25 or storage that the service does not handle is not settled, and no supervision is stated.
+- APPI 第32条第1項第四号・施行令第10条第一号: The measures for the operator's own GitHub, Vercel and Apple accounts and devices are not stated, because whether two-factor authentication is on was not confirmed.
 
 ## Limits
 
