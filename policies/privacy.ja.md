@@ -81,7 +81,7 @@ Sophaxis は、外国にある次の事業者のサービスを使います。
 - Vercel：[Vercel Privacy Notice](https://vercel.com/legal/privacy-notice)。EU-米国データプライバシーフレームワークに従うと述べています。
 - ORCID：[ORCID Privacy Policy](https://info.orcid.org/privacy-policy/)。毎年、EU-米国データプライバシーフレームワークの基準で評価を受けていると述べています。
 - Crossref：[Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/)
-- Internet Archive：[Terms of Use](https://archive.org/about/terms)。受け取るのは公開の頁と PDF の写しだけで、記録がすでに公開している以上の個人データは含みません。
+- Internet Archive：[Terms of Use](https://archive.org/about/terms)。受け取るのは公開の頁と PDF の写しだけで、記録がすでに公開している以上の個人データは含みません。Internet Archive が個人情報を守るために講じている措置については、情報を示すことができません。その規約はスクリプトを動かさないと読めず、ほかにその措置を述べたものも見つからなかったためです。
 
 メールでの求めは、Apple のメールの受信箱（iCloud メール、米国）に届きます。
 応えることと、応えたことを示すのに要る間だけ、そこに置きます。
