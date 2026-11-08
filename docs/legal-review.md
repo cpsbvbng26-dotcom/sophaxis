@@ -108,6 +108,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 23. The Takedown Policy stated no position on Article 13 of the Digital Services Act beyond the decision; it now says that Sophaxis would not meet it if the view on the Union were wrong.
 24. Four of the duties left open in #140 are met. The basis for email reaching Apple is stated: Japan's adequacy decision, and Apple's Standard Contractual Clauses (GDPR Article 13(1)(f)). Apple and Vercel are treated as entrusted with handling, as the Personal Information Protection Commission's Q&A 7-53 reads the Act, and supervised under Article 25: a weekly step watches the date of their privacy statements. A removal decided on an email request cannot be run without its grounds, which reach the authors in their submission issue before it is emptied (DSA Article 17(4)). How the number of recipients in the Union would be given is stated (DSA Article 24(3)).
 25. "What runs by itself" still said that every page was saved to the Internet Archive and that `robots.txt` excluded only removed records; it now says that only records whose authors consented are saved, and that the others are excluded too.
+26. The operator confirmed on 2026-11-08 that their GitHub account uses two-factor authentication. The Privacy Policy, in both languages, now says so. The Vercel and Apple accounts were not confirmed and are not claimed.
 
 ## Risks that remain
 
@@ -126,9 +127,9 @@ The comparison found the items below. Each was fixed in the same change as this 
 
 ## Duties still open
 
-The duty below, found clause by clause, is not met yet. It needs a fact that only the operator can confirm, and it is not filled by a guess.
+The duty below, found clause by clause, is met only in part. The rest needs a fact that only the operator can confirm, and it is not filled by a guess.
 
-- APPI 第32条第1項第四号・施行令第10条第一号: The measures for the operator's own GitHub, Vercel and Apple accounts and devices are not stated, because whether two-factor authentication is on was not confirmed.
+- APPI 第32条第1項第四号・施行令第10条第一号: Two-factor authentication on the operator's GitHub account, the only one that can change the repository, is confirmed and stated. Whether the operator's Vercel and Apple accounts use it was not confirmed, so the measures for them, and for the devices that read the email, are not stated.
 
 ## Limits
 
