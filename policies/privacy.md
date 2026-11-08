@@ -81,6 +81,7 @@ The pages and the PDF copies of a work whose authors consent to it are saved to 
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
 An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
 Sophaxis copies nothing from the community, and the operator does not change the records in it.
+A request to add the record of a work by an author who lives in the European Union, the European Economic Area or the United Kingdom is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
 Copies that others have already taken are outside Sophaxis's control.
 

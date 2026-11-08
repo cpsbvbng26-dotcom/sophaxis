@@ -24,7 +24,7 @@ The DOI names Sophaxis as a project, not a listed work. Cite it to refer to Soph
 
 The code and the records are archived at Zenodo with each release. Version 1.0.0: [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372). Every version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371), which resolves to the latest. Cite these for the software; `CITATION.cff` gives the citation.
 
-Sophaxis keeps a community at Zenodo, opened on 2026-11-07: <https://zenodo.org/communities/sophaxis>. It gathers the Zenodo records of works listed on Sophaxis. A record is added only when the same version is listed on Sophaxis, and every addition is reviewed. Any Zenodo user can open a community; it is not an affiliation with Zenodo, and Zenodo does not endorse Sophaxis.
+Sophaxis keeps a community at Zenodo, opened on 2026-11-07: <https://zenodo.org/communities/sophaxis>. It gathers the Zenodo records of works listed on Sophaxis. A record is added only when the same version is listed on Sophaxis, and every addition is reviewed. A request to add the record of a work by an author who lives in the European Union, the European Economic Area or the United Kingdom is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms. Any Zenodo user can open a community; it is not an affiliation with Zenodo, and Zenodo does not endorse Sophaxis.
 
 Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
 
@@ -237,7 +237,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 
 コードと記録は、版を出すたびに Zenodo に保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。すべての版に共通する DOI は [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) で、いちばん新しい版を指します。ソフトウェアとして挙げるときは、こちらを引きます。
 
-Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に開きました（<https://zenodo.org/communities/sophaxis>）。Sophaxis に載っている稿のうち、Zenodo にあるものを集めています。入れるのは、同じ版が Sophaxis に載っているものだけです。追加はどれも審査を経ます。コミュニティは Zenodo の利用者なら誰でも開けるもので、Zenodo との提携ではありません。Zenodo が Sophaxis を推薦しているわけでもありません。
+Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に開きました（<https://zenodo.org/communities/sophaxis>）。Sophaxis に載っている稿のうち、Zenodo にあるものを集めています。入れるのは、同じ版が Sophaxis に載っているものだけです。追加はどれも審査を経ます。2026-11-22 から、欧州連合・欧州経済領域・英国に住む著者の作品の記録を足す依頼は断ります。その作品は Sophaxis に載らないためです。依頼そのものは、CERN の規約のもとで Zenodo に残ります。コミュニティは Zenodo の利用者なら誰でも開けるもので、Zenodo との提携ではありません。Zenodo が Sophaxis を推薦しているわけでもありません。
 
 サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
 
