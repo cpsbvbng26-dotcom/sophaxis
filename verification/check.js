@@ -2386,6 +2386,33 @@ console.log('\n63. The legal review as logic: every element denied or duty met, 
     rev.includes('it is neither legal advice nor a guarantee, and it has not been reviewed by a lawyer.'));
 }
 
+console.log('\n64. The statutes and GitHub terms the legal review relies on are watched each week');
+{
+  const at = (f) => path.join(ROOT, f);
+  const S = JSON.parse(read(at('verification/statutes.json')));
+  const M = JSON.parse(read(at('verification/legal-matrix.json')));
+  // Every Japanese law of the review is watched, and every article its heading names.
+  const foreign = /GDPR|Digital Services Act|licences|services used/;
+  const gaps = [];
+  for (const h of Object.keys(M.laws).filter((k) => !foreign.test(k))) {
+    const mine = S.statutes.filter((e) => e.law === h);
+    if (!mine.length) { gaps.push(h + ': not watched'); continue; }
+    const nums = [];
+    for (const seg of h.matchAll(/Articles? ([^;)]+)/g)) {
+      const r = /(\d+)-(\d+) to \1-(\d+)/.exec(seg[1]);
+      if (r) for (let k = Number(r[2]); k <= Number(r[3]); k++) nums.push(r[1] + '_' + k);
+      else for (const n of seg[1].matchAll(/\d+(?:-\d+)?/g)) nums.push(n[0].replace('-', '_'));
+    }
+    for (const n of nums) if (!mine.some((e) => e.article === n)) gaps.push(h + ': Article ' + n.replace('_', '-') + ' not watched');
+  }
+  ok('every Japanese law of docs/legal-review.md, and every article its heading names, is watched (' + S.statutes.length + ' articles)', gaps.length === 0, gaps.join(' / '));
+  const unrec = S.statutes.filter((e) => !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !e.title || !/^\d{3}AC\d{10}$/.test(e.law_id) || !(e.law in M.laws)).map((e) => e.name + ' ' + e.label);
+  ok('every watched article has its law number, its law title, the SHA-256 of its text and a law of the review', unrec.length === 0, unrec.join(' / '));
+  ok('every watched GitHub term has its latest commit', S.policies.length >= 2 && S.policies.every((p) => /^[0-9a-f]{40}$/.test(p.commit || '')));
+  const wf = read(at('.github/workflows/statutes.yml'));
+  ok('the watch runs weekly, may open an issue, and also runs on a pull request', /cron: '\d+ \d+ \* \* \d'/.test(wf) && wf.includes('issues: write') && wf.includes('pull_request:') && wf.includes('node tools/statutes.js'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
