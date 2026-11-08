@@ -2604,7 +2604,7 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('2026-11-22 から、Sophaxis は、インドに住む 18 歳未満の著者のいる作品を載せません。'));
   const sp = read(path.join(ROOT, 'policies', 'submission.md'));
   ok('the rule is stated, a place is added on a reported duty and taken off only after its law is read, and each change is announced',
-    sp.includes('The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, or to register there.') && sp.includes('Article 53 of China\'s Personal Information Protection Law')
+    sp.includes('The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.') && sp.includes('Article 53 of China\'s Personal Information Protection Law')
     && sp.includes('A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.')
     && sp.includes('Each change to the list is announced on the top page before it takes effect') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in China')
     && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## 中国の人へ') && sp.includes('section 37(5) of Thailand\'s Personal Data Protection Act')
@@ -2626,7 +2626,7 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
   const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('## Consistency'));
   const rrows = rsec.split('\n').filter((l) => /^\| (?!Place |---)/.test(l));
   ok('the legal review lists each of the ' + reported.length + ' places not read at its source, says how many were added in each step, and that every country has been screened',
-    rrows.length === reported.length && reported.every((p, i) => rrows[i].startsWith('| ' + cap(p.place) + ' | ')) && rv.includes(WORDS[18] + ' places were added, from 2026-11-22.') && rv.includes(WORDS[4] + ' more places were added, from 2026-11-22.') && 18 + 4 === reported.length
+    rrows.length === reported.length && reported.every((p, i) => rrows[i].startsWith('| ' + cap(p.place) + ' | ')) && rv.includes(WORDS[18] + ' places were added, from 2026-11-22.') && rv.includes(WORDS[4] + ' more places were added, from 2026-11-22.') && rv.includes(WORDS[1] + ' more place was added on it, from 2026-11-22: Quebec.') && 18 + 4 + 1 === reported.length
     && rsec.includes('Every country has now been screened, in commentaries if not at the source of its law.') && !rsec.includes('Each is open until it is screened.') && rv.includes('Commentators report that a controller abroad must register in the Data Controllers\' Registry through a representative in Türkiye'));
   ok('the Takedown Policy says that Sophaxis does not rely on 17 U.S.C. 512, and the Privacy Policy names the Swiss Commissioner',
     read(path.join(ROOT, 'policies', 'takedown.md')).includes('so it does not rely on the limitation of liability in 17 U.S.C. 512') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('Federal Data Protection and Information Commissioner'));

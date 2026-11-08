@@ -230,7 +230,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 ## People in the other places
 
 From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.html) lists either.
-Their laws require, or are reported to require, a representative there, the storage of personal data there, or registration there, and Sophaxis has none of these.
+Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
 Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.
