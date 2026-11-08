@@ -17,13 +17,23 @@ async function text(u) {
 const around = (t, re, n = 1500, max = 2) => { const out = []; const g = new RegExp(re, 'g'); let m; while ((m = g.exec(t)) && out.length < max) { out.push('…' + t.slice(Math.max(0, m.index - 100), m.index + n) + '…'); g.lastIndex = m.index + n; } return out.join('\n'); };
 const hrefs = (raw, re) => [...new Set([...raw.matchAll(/href=["']([^"']+)["']/gi)].map((m) => m[1]).filter((h) => re.test(h)))].slice(0, 40);
 const S = 'https://sdaia.gov.sa';
+const E = 'https://elaw.klri.re.kr';
 const J = [
-  ['SDAIA PDPL EN', S + '/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf', ['Article 2', 'Article 1 ', 'outside the Kingdom', 'representative', 'Representative'], null],
-  ['SDAIA Implementing Regulation EN', S + '/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf', ['Article 1 ', 'outside the Kingdom', 'representative', 'Representative', 'Article 3 '], null],
-  ['SDAIA Register rules EN', S + '/Documents/TheRulesGoverningTheNationalRegisterOfControllersWithinTheKingdomPublicEN.pdf', ['outside the Kingdom', 'epresentative', 'Article 1 ', 'Article 2 '], null],
-  ['elaw lawView raw', 'https://elaw.klri.re.kr/eng_service/lawView.do?hseq=62389&lang=ENG', [], /./],
-  ['PIPC eng laws raw', 'https://www.pipc.go.kr/eng/user/lgp/law/lawsRegulations.do', [], /./],
+  ['elaw PIPA content', E + '/eng_service/lawViewContent.do?hseq=62389', ['Article 31-2', 'Article 39-11', 'domestic agent', 'Domestic Agent', 'Article 3 \\(Definitions|Article 2 \\(Definitions'], null],
+  ['elaw PIPA multi', E + '/kor_service/lawViewMultiContent.do?hseq=62389', ['31조의2', 'Article 31-2', '국내대리인'], null],
+  ['elaw search decree', E + '/eng_service/lawSearchList.do?searchType=title&query=' + encodeURIComponent('Enforcement Decree of the Personal Information Protection Act'), ['Enforcement Decree of the Personal Information Protection Act'], /hseq/i],
+  ['PIPC eng laws raw2', 'https://www.pipc.go.kr/eng/user/lgp/law/lawsRegulations.do', ['Enforcement Decree of the Personal Information Protection Act \\[Enforcement Date September 15, 2023\\]'], /View|view|Detail|detail|file|down|seq|idx/],
 ];
+const extra = async () => {
+  const r = await text(S + '/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf');
+  console.log('\n===== SDAIA IR headings | ' + r.status);
+  console.log((r.t.match(/Article \d+\s*:\s*[A-Z][A-Za-z ,'-]{2,80}/g) || []).join('\n'));
+  console.log('--- count epresent: ' + (r.t.match(/epresent/gi) || []).length);
+  console.log(around(r.t, 'epresent', 600, 10));
+  console.log(around(r.t, 'Article 1:', 2500, 1));
+  console.log(around(r.t, 'Article 2:', 1800, 1));
+  console.log(around(r.t, 'Article 3:', 1800, 1));
+};
 (async () => {
   for (const [name, url, keys, hre] of J) {
     const r = await text(url);
@@ -31,4 +41,5 @@ const J = [
     for (const k of keys) { const a = around(r.t, k, 1600, 3); if (a) console.log('--- ' + k + '\n' + a); }
     if (hre) { console.log('HREFS: ' + hrefs(r.raw, hre).join('\n  ')); console.log('RAWBITS: ' + [...new Set((r.raw.match(/(?:onclick|src|action|url)\s*[=:(]\s*["'][^"']{3,200}["']|fn_[A-Za-z]+\([^)]{0,120}\)|[A-Za-z]+\.do[^"' <]{0,120}/gi) || []))].slice(0, 60).join('\n  ')); }
   }
+  await extra();
 })();
