@@ -1,12 +1,12 @@
 # Record of processing
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 This record follows Article 30 of the General Data Protection Regulation and the items that Japan's Act on the Protection of Personal Information asks to be made known. The [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) is the public statement; this file lists the same processing in one place.
 
 ## Controller
 
-Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. The decision is reviewed as the Privacy Policy sets out.
+Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. The operator also considers that the exception in Article 27(2)(a) applies: the processing is occasional, includes no special categories of data, and holds only what is public already. The decision is reviewed as the Privacy Policy sets out.
 
 ## Processing
 
@@ -35,6 +35,6 @@ GitHub, Vercel, ORCID, Crossref and the Internet Archive are in the United State
 
 Every automatic step is listed at https://sophaxis.vercel.app/automation.html. No decision with legal or similarly significant effects on a person is made solely by automated means.
 
-Records hold only information that is public already. The automatic checks keep nothing from an ORCID record except the name, the websites and the works, and run with the least permissions they need. Only the operator can change the records, except that the automatic step of the Takedown Policy takes an abstract and a PDF copy offline when a removal issue reports exposure of personal data.
+Records hold only information that is public already. The automatic checks keep nothing from an ORCID record except the name, the websites and the works, and run with the least permissions they need. Only the operator can change the records, except that the automatic step of the Takedown Policy takes the record page (its title, authors, abstract and PDF copy) offline when a removal issue reports exposure of personal data.
 
 The operator does not use the curator's access in the Zenodo community to change the metadata or the files of any record; changes stay with the record's authors.

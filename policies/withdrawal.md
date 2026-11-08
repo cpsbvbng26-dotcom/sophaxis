@@ -1,6 +1,6 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -63,5 +63,5 @@ The authors can report the published version before they ask for withdrawal; a w
 ## Withdrawal and removal
 
 Withdrawal is the authors' decision, and the record stays.
-Removal is for legal reasons, such as copyright infringement or exposure of personal data, and takes the title, the authors and the abstract off the site.
+Removal is for legal reasons, such as copyright infringement or exposure of personal data, or at an author's request, and takes the title, the authors, the abstract and the PDF copy off the site.
 It follows the [Takedown Policy](./takedown.html).

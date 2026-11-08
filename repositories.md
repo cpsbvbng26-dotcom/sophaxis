@@ -1,6 +1,6 @@
 # For repositories and DOI registration agencies
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 This page is addressed to the repositories whose deposits Sophaxis lists, and to the agencies that register their DOIs.
 It says what Sophaxis reads from your services, how often, and what it does with it.
@@ -18,7 +18,7 @@ Sophaxis does not harvest or mirror any repository.
 - The list of versions of a work, from the same metadata.
 - The PDF of a version, unmodified, only where the work's licence allows it and the repository offers it to scripts (Zenodo, Figshare, arXiv and Research Square), through their public APIs or download addresses. This happens once per version, when the operator starts it by hand. Where the repository publishes a checksum, the copy must match it.
 
-Every request names Sophaxis and its repository in its User-Agent: `Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)`.
+Every request that Sophaxis's own code makes names Sophaxis and its repository in its User-Agent: `Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)`. The advice step of the submission check runs [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), which names itself: `deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)`.
 Sophaxis reads no pages meant for people, and does not get around any limit or block.
 
 ## What Sophaxis shows

@@ -34,6 +34,7 @@ If a third party makes a claim against Sophaxis or its operator because somethin
 Authors agree that the record page (its title, authors, abstract and PDF copy) may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.html), and that OAI-PMH then reports the record as deleted until it is put back.
 Text written in the forms is shared as the [Licence Policy](./licences.html) sets out.
 The operator still acts on requests under the [Takedown Policy](./takedown.html).
+A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so; for them, this section describes what the law already places on the authors of a work.
 
 ## What readers may do
 
@@ -67,8 +68,10 @@ No change will introduce fees.
 A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.
 The announcement comes at least 14 days ahead, unless the law or an urgent problem, such as a security or legal risk, requires the change sooner.
 Even then, the change is announced before it takes effect.
-Other changes, such as clearer wording or new examples, take effect when they are published.
-Continuing to use Sophaxis after a change takes effect means accepting it; a person who does not accept it can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
+Other changes, such as clearer wording or new examples, take effect on the date the page shows, which is never before the day they are published.
+A change is made only as Article 548-4 of Japan's Civil Code allows: when it is in the general interest of authors and readers, or when it is reasonable in the light of the purpose of these terms, the need for it and its content.
+Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
+A person who does not accept a change can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
 
 ## Continuity
 
