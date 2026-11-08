@@ -87,7 +87,7 @@ Copies that others have already taken are outside Sophaxis's control.
 
 ## Services outside Japan
 
-Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person.
+Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person. Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts (the issue, the DOI metadata and the abstract), which the operator gives by hand to their language models, Claude, ChatGPT and Grok, to help the review; nothing is given to them after a work is listed.
 Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
 The submission form asks for each author's consent to this, after giving the information below; the confirmation is required from 2026-11-21.
 Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
@@ -147,6 +147,7 @@ The measures, under the headings that Japan's Personal Information Protection Co
 
 The automatic checks compare public records and post the result in the issue. They make no decision about a person.
 No decision with legal or similarly significant effects on a person is made solely by automated means.
+The language models that help the review make no decision; every decision on a submission is taken by a person, as the Moderation Policy sets out.
 One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.
 Every automatic step is listed on the page [What runs by itself](../automation.html).
 

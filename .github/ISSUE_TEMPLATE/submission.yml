@@ -126,7 +126,7 @@ body:
       label: Consent and agreement
       description: Required from 2026-11-21. The Privacy Policy, under "Services outside Japan", gives the information on these services and their countries. Any author can withdraw this consent at any time, by the removal form or by email; the record is then removed, and what was done before stays lawful.
       options:
-        - label: Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States, as the Privacy Policy (https://sophaxis.vercel.app/policies/privacy.html) sets out.
+        - label: Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States, and to the public parts of this submission being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy (https://sophaxis.vercel.app/policies/privacy.html) sets out.
           required: false
         - label: I have read and agree to the Terms of Use and the other policies (https://sophaxis.vercel.app/policies/terms.html), in their version on the day of submission.
           required: false

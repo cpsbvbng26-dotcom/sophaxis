@@ -134,3 +134,6 @@ From 2026-11-22, Sophaxis does not offer its service to people in Thailand eithe
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
+A provisionally registered work is not on the site.
+The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
+The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.

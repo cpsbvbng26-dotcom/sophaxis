@@ -28,10 +28,20 @@ It does not check proofs, arguments or data.
 It does not run plagiarism checks.
 It does not compare the work with the literature.
 
+## Provisional registration
+
+A submission that passes the automatic check is provisionally registered: its issue is labelled `verified`, and it waits for a moderator.
+A provisionally registered work is not on the site. It has no record page, is not offered through OAI-PMH, and is not sent to the Internet Archive or to any other service that keeps records.
+Provisional registration is not acceptance. It ends when a moderator accepts or declines the submission.
+
 ## Decisions
 
 A moderator accepts or declines a submission in its issue, and labels the issue `accepted` or `declined`.
 Every decision stays public in its issue.
+To help the review, the operator gives the public parts of a submission (the issue, the DOI metadata and the abstract) to three language models, Claude (Anthropic), ChatGPT (OpenAI) and Grok (xAI), and compares what they point out.
+The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
+The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
+What a model points out is given as a reason for a decision only after the operator has checked it.
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
 
 A moderator who declines a submission names one or more of these reasons, with a short explanation:
