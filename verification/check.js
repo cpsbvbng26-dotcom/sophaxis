@@ -2568,6 +2568,26 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
     (rm.match(/await openFollowUp\(/g) || []).length === 3 && rm.includes('  await followUps();'));
 }
 
+console.log('\n68. Who Sophaxis is not offered to, and why, at the top: by residence, not nationality or race, because of the representative');
+{
+  const B = require('../build.js');
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const N = 'This depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic';
+  const notice = B.scopeNotice();
+  const idx = read(path.join(ROOT, 'site', 'index.html')), sub = read(path.join(ROOT, 'site', 'submit.html'));
+  ok('the notice says who is not served, that it is by residence and not nationality or race, and that the reason is the representative (GDPR Article 27, DSA Article 13)',
+    notice.includes('Not offered in the European Union, the European Economic Area or the United Kingdom.') && site.scopeNotice.includes(N) && site.scopeNotice.includes('an author of any nationality who lives elsewhere can submit')
+    && site.scopeNotice.includes('Article 27 of the GDPR and of the UK GDPR') && site.scopeNotice.includes('Article 13 of the EU Digital Services Act'));
+  ok('the notice stands first on the top page and the submit page, before any other notice',
+    idx.indexOf(notice) > 0 && idx.indexOf(notice) < idx.indexOf('Change to the policies from') && idx.indexOf('<h1>') < idx.indexOf(notice) && sub.indexOf(notice) > sub.indexOf('<h1>Submit a preprint</h1>'));
+  const sp = read(path.join(ROOT, 'policies', 'submission.md')), sj = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  ok('the Submission Policy, both languages, the README and the form say the same, and that the confirmation is relied on and an untrue one leads to removal',
+    sp.includes('This rule depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.') && sp.includes('Sophaxis relies on the submitter\'s confirmation and does not check where authors live.') && sp.includes('the record is removed under the [Takedown Policy]')
+    && sj.includes('国籍・人種・民族その他の個人の属性によるものではありません。') && sj.includes('Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるかは調べません。')
+    && read(path.join(ROOT, 'README.md')).includes('not on nationality, race or ethnic origin') && read(path.join(ROOT, 'README.md')).includes('国籍・人種・民族によるものではありません')
+    && read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('not on nationality or race'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
