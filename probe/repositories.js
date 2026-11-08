@@ -8,29 +8,31 @@ async function text(u) {
     const buf = Buffer.from(await r.arrayBuffer());
     if (buf.slice(0, 5).toString() === '%PDF-') {
       fs.writeFileSync('/tmp/x.pdf', buf);
-      try { return { status: r.status + ' pdf', t: execFileSync('pdftotext', ['/tmp/x.pdf', '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).replace(/\s+/g, ' ') }; } catch (e) { return { status: r.status + ' pdf (pdftotext failed: ' + e.message.slice(0, 80) + ')', t: '' }; }
+      try { return { status: r.status + ' pdf', t: execFileSync('pdftotext', ['/tmp/x.pdf', '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).replace(/\s+/g, ' '), raw: '' }; } catch (e) { return { status: r.status + ' pdf (pdftotext failed)', t: '', raw: '' }; }
     }
-    return { status: r.status, t: plain(buf.toString('utf8')) };
-  } catch (e) { return { status: 'ERR ' + e.message, t: '' }; }
+    const raw = buf.toString('utf8');
+    return { status: r.status + ' ' + r.url, t: plain(raw), raw };
+  } catch (e) { return { status: 'ERR ' + e.message, t: '', raw: '' }; }
 }
 const around = (t, re, n = 1500, max = 2) => { const out = []; const g = new RegExp(re, 'g'); let m; while ((m = g.exec(t)) && out.length < max) { out.push('…' + t.slice(Math.max(0, m.index - 100), m.index + n) + '…'); g.lastIndex = m.index + n; } return out.join('\n'); };
+const hrefs = (raw, re) => [...new Set([...raw.matchAll(/href=["']([^"']+)["']/gi)].map((m) => m[1]).filter((h) => re.test(h)))].slice(0, 40);
 const J = [
-  ['Thailand PDPA (MDES)', 'https://www.mdes.go.th/law/download/1215', ['Section 5 ', 'Section 37 ', 'Section 38 ']],
-  ['Thailand PDPA (ETDA)', 'https://www.etda.or.th/getattachment/e820df2c-848f-4e03-86cb-a9dad38cc713/ENG-Version.aspx', ['Section 5 ', 'Section 37 ', 'Section 38 ']],
-  ['India DPDP (MeitY)', 'https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf', ['3\\. Subject to', 'made or caused to be made publicly available', 'Data Protection Officer']],
-  ['India DPDP (PRS)', 'https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf', ['3\\. Subject to', 'publicly available']],
-  ['Korea PIPA (elaw title)', 'https://elaw.klri.re.kr/eng_service/lawViewTitle.do?hseq=62389', ['Article 31-2', 'Domestic Agent']],
-  ['PPC offshore index', 'https://www.ppc.go.jp/enforcement/infoprovision/laws/', ['韓国', 'タイ', 'インド', 'サウジ']],
-  ['PPC Korea', 'https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_korea/', ['国内代理人', '域外']],
-  ['PPC Thailand', 'https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_thailand/', ['代理人', '域外']],
-  ['PPC India', 'https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_india/', ['代理人', '域外']],
-  ['PPC Saudi', 'https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_saudiarabia/', ['代理人', '域外']],
+  ['Thailand PDPA (ETDA) 37(5)', 'https://www.etda.or.th/getattachment/e820df2c-848f-4e03-86cb-a9dad38cc713/ENG-Version.aspx', ['\\(5\\) in the case', 'designate in writing', 'representative'], null],
+  ['PDPC Thailand home', 'https://www.pdpc.or.th/', [], /pdf|law|announce|ประกาศ/i],
+  ['Korea PIPA elaw lawView', 'https://elaw.klri.re.kr/eng_service/lawView.do?hseq=62389&lang=ENG', ['Article 31-2', 'domestic agent', 'Domestic Agent'], null],
+  ['Korea PIPA law.go.kr 31-2', 'https://www.law.go.kr/법령/개인정보보호법/제31조의2', ['국내대리인', '제31조의2'], null],
+  ['Korea decree law.go.kr 32-2', 'https://www.law.go.kr/법령/개인정보보호법시행령/제32조의2', ['국내대리인', '제32조의2', '매출액'], null],
+  ['Korea PIPC eng laws', 'https://www.pipc.go.kr/eng/user/lgp/law/lawsRegulations.do', ['Domestic', 'Enforcement Decree'], /pdf|down|file/i],
+  ['WIPO kr088en', 'https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/kr/kr088en.pdf', ['31-2', '39-11', 'domestic agent', 'Domestic Agent'], null],
+  ['SDAIA PDPL page', 'https://sdaia.gov.sa/en/SDAIA/about/Pages/RegulationsAndPolicies.aspx', [], /\.pdf/i],
+  ['SDAIA DGP', 'https://dgp.sdaia.gov.sa/wps/portal/pdp/knowledgecenter/', [], /\.pdf|knowledge/i],
+  ['BOE PDPL', 'https://laws.boe.gov.sa/BoeLaws/Laws/LawDetails/b7cfae89-828e-4994-b167-adaa00e37188/1', ['Article 2', 'representative', 'outside the Kingdom'], null],
 ];
 (async () => {
-  for (const [name, url, keys] of J) {
+  for (const [name, url, keys, hre] of J) {
     const r = await text(url);
     console.log('\n===== ' + name + ' | ' + r.status + ' | len ' + r.t.length + ' | ' + url);
-    for (const k of keys) { const a = around(r.t, k, 1400, 2); if (a) console.log('--- ' + k + '\n' + a); }
-    if (/PPC offshore index/.test(name)) console.log('LINKS: ' + [...new Set((r.t.match(/offshore_report_[a-z_]+/g) || []))].join(' '));
+    for (const k of keys) { const a = around(r.t, k, 1600, 3); if (a) console.log('--- ' + k + '\n' + a); }
+    if (hre) console.log('HREFS: ' + hrefs(r.raw, hre).join('\n  '));
   }
 })();
