@@ -29,6 +29,6 @@ const J = [
     const r = await text(url);
     console.log('\n===== ' + name + ' | ' + r.status + ' | len ' + r.t.length + ' | ' + url);
     for (const k of keys) { const a = around(r.t, k, 1600, 3); if (a) console.log('--- ' + k + '\n' + a); }
-    if (hre) { console.log('HREFS: ' + hrefs(r.raw, hre).join('\n  ')); console.log('RAWBITS: ' + [...new Set((r.raw.match(/(?:onclick|src|action|url)\\s*[=:(]\\s*["'][^"']{3,200}["']|fn_[A-Za-z]+\\([^)]{0,120}\\)|[A-Za-z]+\\.do[^"' <]{0,120}/gi) || []))].slice(0, 60).join('\n  ')); }
+    if (hre) { console.log('HREFS: ' + hrefs(r.raw, hre).join('\n  ')); console.log('RAWBITS: ' + [...new Set((r.raw.match(/(?:onclick|src|action|url)\s*[=:(]\s*["'][^"']{3,200}["']|fn_[A-Za-z]+\([^)]{0,120}\)|[A-Za-z]+\.do[^"' <]{0,120}/gi) || []))].slice(0, 60).join('\n  ')); }
   }
 })();
