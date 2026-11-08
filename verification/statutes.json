@@ -60,7 +60,7 @@
       "sha256": "19115b17dd39ed798e38527833b8743d4c40b3f8985fb8a4a9a8ced667e45718"
     },
     {
-      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
       "name": "Act on the Protection of Personal Information",
       "label": "Article 17",
       "law_id": "415AC0000000057",
@@ -69,7 +69,7 @@
       "sha256": "caee832efb96d091b741777eb3957718f4a6053b38ec0827ad01f00e68c65ee0"
     },
     {
-      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
       "name": "Act on the Protection of Personal Information",
       "label": "Article 18",
       "law_id": "415AC0000000057",
@@ -78,7 +78,7 @@
       "sha256": "aade43883ec2c28d6e1e43faf70f1eee83b078faff45b40826b6ac307604a7f5"
     },
     {
-      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
       "name": "Act on the Protection of Personal Information",
       "label": "Article 27",
       "law_id": "415AC0000000057",
@@ -87,7 +87,7 @@
       "sha256": "29d30b77da9902b1f11723cf336ce06a6a320b2484da90b22c7d0498c44634d6"
     },
     {
-      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
       "name": "Act on the Protection of Personal Information",
       "label": "Article 28",
       "law_id": "415AC0000000057",
@@ -96,13 +96,31 @@
       "sha256": "2abf2c3f010636a58acd0d8575edff6e95a02ca86aa6e7b210cc99bd8f6d2589"
     },
     {
-      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
       "name": "Act on the Protection of Personal Information",
       "label": "Article 32",
       "law_id": "415AC0000000057",
       "article": "32",
       "title": "個人情報の保護に関する法律",
       "sha256": "508ab29ca2664bc626001f3fccc2e5d3238b7c52780b74e5f08c093bf639fe95"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Enforcement Rules of the Act on the Protection of Personal Information",
+      "label": "Article 17",
+      "law_id": "428M60020000003",
+      "article": "17",
+      "title": null,
+      "sha256": null
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 26",
+      "law_id": "415AC0000000057",
+      "article": "26",
+      "title": null,
+      "sha256": null
     },
     {
       "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
@@ -242,6 +260,15 @@
       "article": "5",
       "title": "民法",
       "sha256": "4f6f3090a33137697d4742f664c6a80888ea52df11872ff947f3c4479641d2c7"
+    },
+    {
+      "law": "Sending users' information outside (Telecommunications Business Act, Article 27-12)",
+      "name": "Telecommunications Business Act",
+      "label": "Article 27-12",
+      "law_id": "359AC0000000086",
+      "article": "27_12",
+      "title": null,
+      "sha256": null
     }
   ],
   "policies": [

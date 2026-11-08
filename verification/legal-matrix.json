@@ -102,7 +102,7 @@
         }
       ]
     },
-    "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)": {
+    "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)": {
       "duties": [
         {
           "duty": "apply the Act even if the operator might fall outside it",
@@ -155,6 +155,32 @@
             {
               "file": "policies/privacy.md",
               "text": "Before answering a request about personal data, the operator confirms who is asking, through the ORCID record or by email."
+            }
+          ]
+        },
+        {
+          "duty": "report a leak that the law requires reported",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned."
+            }
+          ]
+        }
+      ]
+    },
+    "Sending users' information outside (Telecommunications Business Act, Article 27-12)": {
+      "forms": [
+        {
+          "elements": [
+            "a telecommunications service that has a user's terminal send information about the user to another party",
+            "without notice, publication or consent"
+          ],
+          "denied": "a telecommunications service that has a user's terminal send information about the user to another party",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "Its pages contain no code or tag that sends information about a reader to anyone else"
             }
           ]
         }
@@ -213,6 +239,15 @@
             {
               "file": "policies/privacy.md",
               "text": "The operator also considers that the exception in Article 27(2)(a) applies"
+            }
+          ]
+        },
+        {
+          "duty": "inform of the possible risks before explicit consent to a transfer without safeguards",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "The possible risks of that transfer, of which the consent is given knowing"
             }
           ]
         }
@@ -491,7 +526,7 @@
   "coverage": {
     "operator": {
       "receive a submission": [
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
         "Minors (Civil Code, Article 5)",
         "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
         "The terms of the services used (GitHub, Vercel, ORCID)"
@@ -510,10 +545,10 @@
       ],
       "offer for reuse": [
         "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)",
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)"
       ],
       "keep data and logs": [
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
         "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
       ],
       "remove or withdraw": [
@@ -546,7 +581,7 @@
         "does not occur": "an author keeps no one's data for Sophaxis"
       },
       "remove or withdraw": [
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)"
       ],
       "reach abroad": [
         "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
@@ -557,7 +592,7 @@
         "does not occur": "only the operator receives submissions"
       },
       "publish a record": [
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
         "Moral rights (Copyright Act of Japan, Articles 19 and 20)"
       ],
       "keep a PDF copy": [
@@ -570,7 +605,7 @@
         "does not occur": "a co-author keeps no one's data for Sophaxis"
       },
       "remove or withdraw": [
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
         "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)"
       ],
       "reach abroad": [
@@ -591,8 +626,9 @@
         "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
       ],
       "keep data and logs": [
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
-        "The terms of the services used (GitHub, Vercel, ORCID)"
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+        "The terms of the services used (GitHub, Vercel, ORCID)",
+        "Sending users' information outside (Telecommunications Business Act, Article 27-12)"
       ],
       "remove or withdraw": [
         "The Digital Services Act of the European Union"
@@ -614,10 +650,10 @@
       ],
       "offer for reuse": [
         "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)",
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)"
       ],
       "keep data and logs": [
-        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)"
       ],
       "remove or withdraw": [
         "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)"

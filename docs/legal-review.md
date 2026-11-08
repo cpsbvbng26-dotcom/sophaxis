@@ -30,9 +30,13 @@ The PDF copy is the deposited file, byte for byte, and every record names the au
 
 Credit is given, the licence is named and linked, no terms or technical measures are added, and no endorsement is implied.
 
-### Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)
+### Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)
 
 The Act is applied as if the operator were a business operator under it. The purposes are listed, consent to provision abroad is given in the form, the address is given on request, and only the name, websites and works of an ORCID record are read.
+
+### Sending users' information outside (Telecommunications Business Act, Article 27-12)
+
+The pages contain no code or tag that sends information about a reader to anyone else, so the rule on sending users' information outside has nothing to apply to.
 
 ### Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)
 
@@ -90,6 +94,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 10. OpenAlex is asked about DOIs, and is now among the services outside Japan; the statement on the User-Agent now names the one step that runs deposit-check, which names itself.
 11. The Takedown Policy now says that the authors are not told of a request about the requester's own personal data, as the code already did.
 12. The Submission Policy now says that a person under 13 cannot submit from 2026-11-21, as the Terms and the form do.
+13. Reading Article 49(1)(a) of the GDPR in EUR-Lex showed that explicit consent to a transfer without safeguards must come after the person is told its possible risks. The Privacy Policy now states those risks for the Internet Archive.
 
 ## Risks that remain
 
@@ -101,12 +106,12 @@ The comparison found the items below. Each was fixed in the same change as this 
 | 4 | A co-author did not agree to the listing | 1 | 2 | 2 | From 2026-11-21 every co-author confirms their own agreement; until then a record is removed if an author shows they did not agree |
 | 5 | Someone passes the identity check for a work that is not theirs | 1 | 2 | 2 | The record is removed under the Takedown Policy |
 | 6 | A person under 18 submits without the consent of a parent or guardian | 1 | 2 | 2 | The listing is removed where the law gives that right |
-| 7 | A person in the European Union or the United Kingdom asks for a representative | 1 | 2 | 2 | The decision is reviewed, as the Privacy Policy sets out |
+| 7 | A person or an authority in the European Union or the United Kingdom asks for a representative under the GDPR or the Digital Services Act | 1 | 2 | 2 | The decision is reviewed, as the Privacy Policy sets out |
 | 8 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
 | 9 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
 
 ## Limits
 
 Showing that a risk is zero is not possible by logic or by arithmetic. What this review shows is that no law above was left out, that every sentence relied on is in the policies, and that removing one makes the check fail.
-The laws of other countries were not checked one by one, beyond those named above. The texts of the GDPR, the UK GDPR and the Digital Services Act were not fetched for this review.
+The laws of other countries were not checked one by one, beyond those named above. The articles of the GDPR and the Digital Services Act that the policies cite were read on 2026-11-08 in EUR-Lex, and those of the UK GDPR at legislation.gov.uk; the Japanese articles are watched each week. Of the terms relied on, DataCite's CC0 waiver for its metadata, ORCID's terms for its public APIs, Vercel's limit of the Hobby plan to non-commercial use, and the clauses of the three accepted licences were read at their sources on the same day. Crossref's statement on the reuse of its metadata was not found at its documented address, and the Internet Archive's terms need a script to show, so neither was read.
 Registered trademarks were not searched.
