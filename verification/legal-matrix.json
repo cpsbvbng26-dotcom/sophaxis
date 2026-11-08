@@ -127,7 +127,7 @@
           "by": [
             {
               "file": ".github/ISSUE_TEMPLATE/submission.yml",
-              "text": "Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel, ORCID and the Internet Archive in the United States"
+              "text": "Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States"
             }
           ]
         },
@@ -173,6 +173,46 @@
             {
               "file": "policies/privacy.md",
               "text": "Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data"
+            }
+          ]
+        },
+        {
+          "duty": "ask consent to the Internet Archive apart, so that it is freely given",
+          "by": [
+            {
+              "file": ".github/ISSUE_TEMPLATE/submission.yml",
+              "text": "Every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States."
+            },
+            {
+              "file": "policies/privacy.md",
+              "text": "Consent to the Internet Archive is asked in a box of its own, which may be left empty"
+            }
+          ]
+        },
+        {
+          "duty": "stop provision to third parties on request (Article 35)",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "and to have its provision to third parties stopped."
+            }
+          ]
+        },
+        {
+          "duty": "state what leaks are reported and when (Rules, Articles 7 and 8)",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "gives the full report within 30 days, or within 60 days when the leak may come from an act done for an improper purpose."
+            }
+          ]
+        },
+        {
+          "duty": "accept requests through an agent (Article 37(3))",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "the operator then confirms the agent's authority as well as the person's identity."
             }
           ]
         }
@@ -229,7 +269,7 @@
           "by": [
             {
               "file": "policies/privacy.md",
-              "text": "That consent can be withdrawn at any time, by a removal issue or by email"
+              "text": "That consent is asked in a box of its own and can be withdrawn at any time, by a removal issue or by email"
             }
           ]
         },
@@ -243,11 +283,15 @@
           ]
         },
         {
-          "duty": "the ground for no representative",
+          "duty": "state the position on Article 3(2) and on a representative, and the breach if it is wrong",
           "by": [
             {
               "file": "policies/privacy.md",
-              "text": "The operator also considers that the exception in Article 27(2)(a) applies"
+              "text": "From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom."
+            },
+            {
+              "file": "policies/privacy.md",
+              "text": "Should the view above on Article 3(2) be wrong, Sophaxis does not meet Article 27"
             }
           ]
         },
@@ -257,6 +301,41 @@
             {
               "file": "policies/privacy.md",
               "text": "The possible risks of that transfer, of which the consent is given knowing"
+            }
+          ]
+        },
+        {
+          "duty": "bring the right to object to attention, apart from other information (Article 21(4))",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "## The right to object"
+            },
+            {
+              "file": ".github/ISSUE_TEMPLATE/submission.yml",
+              "text": "Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation"
+            }
+          ]
+        },
+        {
+          "duty": "answer within one month, and say why when not acting (Article 12(3) and (4))",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "A request about personal data is answered within one month at the latest."
+            },
+            {
+              "file": "policies/privacy.md",
+              "text": "It also says that the person can complain to a data protection authority and can go to court."
+            }
+          ]
+        },
+        {
+          "duty": "restriction of processing (Article 18)",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "to have its use restricted while its accuracy or an objection is checked"
             }
           ]
         }
@@ -336,6 +415,59 @@
             {
               "file": "policies/takedown.md",
               "text": "It costs nothing. The operator reviews it and answers, and the review is never left to an automatic step."
+            }
+          ]
+        },
+        {
+          "duty": "notices give reasons, and the email route asks for good faith (Article 16(2))",
+          "by": [
+            {
+              "file": ".github/ISSUE_TEMPLATE/removal.yml",
+              "text": "why it breaks the law or the policies"
+            },
+            {
+              "file": "policies/takedown.md",
+              "text": "A notice by email also says that the sender believes in good faith that what it says is accurate and complete."
+            }
+          ]
+        },
+        {
+          "duty": "acknowledge every notice (Article 16(4))",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "a notice by email is acknowledged by the operator by email, without undue delay."
+            }
+          ]
+        },
+        {
+          "duty": "courts and certified bodies named in every decision (Articles 16(5) and 17(3)(f))",
+          "by": [
+            {
+              "file": "tools/removal.js",
+              "text": "A court, or an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act, can also be asked."
+            }
+          ]
+        },
+        {
+          "duty": "report suspicions of serious crime (Article 18)",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "Suspicions of serious crime (Article 18)"
+            },
+            {
+              "file": "policies/takedown.md",
+              "text": "the operator tells Europol."
+            }
+          ]
+        },
+        {
+          "duty": "state the position on a legal representative, and the breach if it is wrong (Article 13)",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "Should the view above be wrong, Sophaxis does not meet Article 13"
             }
           ]
         }

@@ -168,7 +168,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'It is not an official identity check.',
     'It does not ask for the person section as a whole, so public email addresses and the country are never received.',
     'The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.',
-    'Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).',
+    'Records are kept to preserve the scholarly record, for freedom of expression and information (Article 17(3)(a)).',
     'The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.',
     'Material that was taken offline while the request was reviewed is put back.',
     'A request to disclose who submitted material is handled as Japanese law provides.',
@@ -1874,7 +1874,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   const B = require('../build.js');
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'removal.yml'));
   const kinds = (form.match(/id: reason[\s\S]*?options:\n((?:\s+- .*\n)+)/) || ['', ''])[1].split('\n').map((l) => l.replace(/^\s+- /, '').trim()).filter(Boolean);
-  ok('every kind of problem in the removal form is known to the script, and no other', kinds.length === 6 && kinds.every((k) => R.KINDS[k]) && Object.keys(R.KINDS).length === kinds.length);
+  ok('every kind of problem in the removal form is known to the script, and no other', kinds.length === 7 && kinds.every((k) => R.KINDS[k]) && Object.keys(R.KINDS).length === kinds.length);
   ok('only a report of exposed personal data takes material offline before the decision, as the Takedown Policy says',
     Object.entries(R.KINDS).filter(([, k]) => k.hold).map(([l]) => l).join() === 'Exposure of personal data'
     && read(path.join(ROOT, 'policies', 'takedown.md')).includes('For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision'));
@@ -1926,8 +1926,8 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
     && said[4].includes('- [x] the issues that name it are emptied, closed and locked: #3, #12') && said[4].includes('- [ ] delete those issues, so that their edit history goes too')
     && said[5].includes('put back') && said[6] === 'Removed.'
     && R.emptiedTitle('[Submission] A Title Naming the Work') === '[Submission] removed' && R.emptiedTitle('[Withdrawal] 2026.0001') === '[Withdrawal] removed' && R.emptiedTitle('Some title') === '[Removed] removed'
-    && R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: R.KINDS['A request about my personal data (access, correction, suspension of use, deletion)'], today: '2026-11-12', done: false }).includes('The operator carries it out by hand.'));
-  const dr = R.parse(body.replace('Exposure of personal data', 'A request about my personal data (access, correction, suspension of use, deletion)'));
+    && R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: R.KINDS['A request about my personal data (access, correction, restriction, objection, deletion, stopping its provision to others, a copy)'], today: '2026-11-12', done: false }).includes('The operator carries it out by hand.'));
+  const dr = R.parse(body.replace('Exposure of personal data', 'A request about my personal data (access, correction, restriction, objection, deletion, stopping its provision to others, a copy)'));
   const drAck = R.ack({ form: dr, record: listed, due: '2026-11-15' });
   ok('a request about the requester\'s own data is free, confirms who asks before acting, and is not told to the authors',
     !R.tellsAuthors(dr.kind) && drAck.includes('Requests cost nothing.') && drAck.includes('the operator confirms who is asking') && !drAck.includes('The authors are told'));
@@ -2256,7 +2256,7 @@ console.log('\n59. Consent to publication and to services outside Japan, agreeme
     form.includes('label: Consent and agreement') && form.includes('Required from ' + site.consentFrom + '.') && opts.length === I.CONSENTS
     && (part.match(/required: false/g) || []).length === I.CONSENTS);
   ok('the boxes name the services in the United States, the policies and their version, and the age',
-    /provided to GitHub, Vercel, ORCID and the Internet Archive in the United States/.test(opts[0] || '') && /agree to the Terms of Use and the other policies .*version on the day of submission/.test(opts[1] || '')
+    /provided to GitHub, Vercel and ORCID in the United States/.test(opts[0] || '') && !/Internet Archive/.test(part) && /agree to the Terms of Use and the other policies .*version on the day of submission/.test(opts[1] || '')
     && /13 or older, and if I am under 18, a parent or guardian consents/.test(opts[2] || ''));
   ok('the day is the day of the notice of the change', site.consentFrom === site.termsNotice.from);
   const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
@@ -2411,6 +2411,98 @@ console.log('\n64. The statutes and GitHub terms the legal review relies on are 
   ok('every watched GitHub term has its latest commit', S.policies.length >= 2 && S.policies.every((p) => /^[0-9a-f]{40}$/.test(p.commit || '')));
   const wf = read(at('.github/workflows/statutes.yml'));
   ok('the watch runs weekly, may open an issue, and also runs on a pull request', /cron: '\d+ \d+ \* \* \d'/.test(wf) && wf.includes('issues: write') && wf.includes('pull_request:') && wf.includes('node tools/statutes.js'));
+}
+
+console.log('\n65. The separate consent to the Internet Archive, the residence of the authors, the right to object and the clause-level duties');
+{
+  const I = require('../tools/intake.js');
+  const W = require('../tools/watch.js');
+  const B = require('../build.js');
+  const R = require('../tools/removal.js');
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  const group = (id) => (new RegExp('id: ' + id + '\\n[\\s\\S]*?(?=\\n  - type:|$)').exec(form) || [''])[0];
+  const arc = group('archive'), res = group('residence');
+  ok('the Internet Archive has a box of its own, which the form does not require and the check does not count',
+    arc.includes('label: Saving to the Internet Archive (optional)') && /required: false/.test(arc) && !/required: true/.test(arc) && arc.includes('may be left empty')
+    && arc.includes('withdraw it at any time') && I.CONSENTS === 3);
+  const listed = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
+  const off = Object.assign({}, listed, { archive: false });
+  ok('a record without that consent is not saved, and robots.txt asks the Internet Archive not to collect it',
+    W.savable([site.baseUrl + 'abs/' + listed.id + '.html', site.baseUrl + 'pdf/' + listed.id + 'v2.pdf', site.baseUrl + 'index.html'], [off]).join() === site.baseUrl + 'index.html'
+    && W.savable([site.baseUrl + 'abs/' + listed.id + '.html'], [listed]).length === 1
+    && B.robots([off]).includes('Disallow: /abs/' + listed.id + '\n') && !B.robots([listed]).includes('Disallow: /abs/' + listed.id + '\n')
+    && B.validate(Object.assign({}, listed, { archive: true }), listed.id + '.json').some((e) => e.includes('archive')) && B.validate(off, listed.id + '.json').length === 0);
+  ok('the draft record keeps the record out of the saves when the box is left empty, and only then',
+    /'archive' in form && !\/\^- \\\[\[xX\]\\\] \/m\.test/.test(read(path.join(ROOT, 'tools', 'intake.js'))));
+  ok('from ' + site.residenceFrom + ' the form asks that no author lives in the EU, the EEA or the UK, and the check needs the box',
+    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in the European Union, the European Economic Area or the United Kingdom.')
+    && site.residenceFrom === '2026-11-22' && read(path.join(ROOT, 'policies', 'submission.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not list work by an author who lives in the European Union')
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not offer its service to people in the European Union'));
+  const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
+  const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const person = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
+  const works = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
+  const runR = (residence, today) => I.check({ form: Object.assign({}, ix, { llm_extent: site.llmExtents.assistance, consent: '- [X] a\n- [X] b\n- [X] c' }, residence === null ? {} : { residence }), login: 'jcarberry', meta: dc, person, works, today });
+  const rowR = (r) => r.checks.find((c) => c[0] === 'No author lives in the EU, the EEA or the UK');
+  ok('the residence box may be empty before the day and is needed from it',
+    !rowR(runR(null, '2026-11-21')) && runR(null, '2026-11-21').ok && rowR(runR(null, '2026-11-22')) && !runR(null, '2026-11-22').ok && runR('- [X] a', '2026-11-22').ok && !runR('- [ ] a', '2026-11-22').ok);
+  /* The right to object, presented separately (GDPR Article 21(4)), and the purposes, in every form a person fills in. */
+  const OBJ = 'Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation';
+  const forms = ['submission', 'removal', 'withdrawal', 'published', 'correction'].map((f) => read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', f + '.yml')));
+  ok('every form states the right to object and links the Privacy Policy, and the Privacy Policy gives the right a section of its own',
+    forms.every((t) => t.includes(OBJ) && t.includes(site.baseUrl + 'policies/privacy.html')) && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## The right to object\n\n' + OBJ + '.')
+    && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## 異議を述べる権利') && I.coauthorNote().includes(OBJ));
+  ok('the reasons for a notice are required in the removal form (DSA Article 16(2)(a))', /label: Where the problem is[\s\S]*?required: true/.test(forms[1]));
+  /* Withdrawing consent to the Internet Archive: a kind of its own, not told to the authors, and carried out on the record. */
+  const ac = R.KINDS['An author withdraws consent to saving in the Internet Archive'];
+  const na = R.plan('no-archive', listed, '2026-11-12');
+  ok('an author who withdraws consent to the Internet Archive stops the saves, with no review of reasons and without telling the other authors',
+    ac && ac.slug === 'archive-consent' && !ac.removes && !ac.hold && !R.tellsAuthors(ac) && na.problems.length === 0 && na.record.archive === false && na.files.length === 0
+    && !!R.plan('no-archive', na.record, '2026-11-12').skip && R.ack({ form: { id: listed.id, kind: ac }, record: listed, due: '2026-11-15' }).includes('needs no reasons and is not weighed')
+    && R.decisionNote({ id: listed.id, decision: 'upheld', kind: ac, today: '2026-11-12', done: true }).includes('is no longer saved to the Internet Archive')
+    && read(path.join(ROOT, '.github', 'workflows', 'removal.yml')).includes('options: [hold, release, remove, remove-pdf, no-archive]'));
+  const dk = R.KINDS['A request about my personal data (access, correction, restriction, objection, deletion, stopping its provision to others, a copy)'];
+  const notes = [R.decisionNote({ id: listed.id, decision: 'upheld', kind: R.KINDS['Exposure of personal data'], today: '2026-11-12', done: true }),
+    R.decisionNote({ id: listed.id, decision: 'not-upheld', kind: dk, today: '2026-11-12' }), R.decisionNote({ id: listed.id, decision: 'upheld', kind: R.KINDS['Copyright infringement'], today: '2026-11-12', done: true })];
+  ok('every decision says whether an automatic step took part, names the law relied on where one is named, and names courts and certified bodies (DSA Articles 16(5), 16(6), 17(3))',
+    notes[0].includes('An automatic step took the record page offline') && notes[1].includes('No automatic step took part') && notes[2].includes('No automatic step took part')
+    && notes.every((t) => t.includes('the grounds name the law relied on') && t.includes('certified under Article 21 of the Digital Services Act'))
+    && notes[2].includes('The removal applies wherever the site is read, and it is permanent.'));
+  ok('a decision on a request about personal data names the authorities and the courts, and its acknowledgement the one-month limit (GDPR Article 12)',
+    notes[1].includes(R.DATA_REMEDY) && !notes[2].includes(R.DATA_REMEDY) && R.ack({ form: { id: listed.id, kind: dk }, record: listed, due: '2026-11-15' }).includes('within one month at the latest'));
+  const src = read(path.join(ROOT, 'tools', 'removal.js'));
+  const dec = src.slice(src.indexOf('async function decide()'), src.indexOf('async function manual()'));
+  ok('a request not upheld is answered before the material goes back (GDPR Article 18(3))', dec.indexOf('decisionNote({ id: form.id, decision, kind: form.kind, today: day, restored: willRestore })') > 0
+    && dec.indexOf('decisionNote({ id: form.id, decision, kind: form.kind, today: day, restored: willRestore })') < dec.indexOf('restore(form.id)'));
+  const tk = read(path.join(ROOT, 'policies', 'takedown.md'));
+  ok('the Takedown Policy reports suspicions of serious crime, acknowledges email notices, asks good faith by email, and states the position on Article 13',
+    tk.includes('Suspicions of serious crime (Article 18)') && tk.includes('the operator tells Europol.') && tk.includes('a notice by email is acknowledged by the operator by email, without undue delay.')
+    && tk.includes('believes in good faith that what it says is accurate and complete') && tk.includes('Sophaxis does not meet Article 13'));
+  const pv = read(path.join(ROOT, 'policies', 'privacy.md'));
+  ok('the Privacy Policy no longer relies on the exception for occasional processing, and says what follows if its view is wrong',
+    !pv.includes('Article 27(2)(a) applies') && pv.includes('Sophaxis does not meet Article 27') && !read(path.join(ROOT, 'docs', 'records-of-processing.md')).includes('Article 27(2)(a) applies')
+    && !read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('第 27 条第 2 項 a の例外にも当たる'));
+}
+
+console.log('\n66. Every duty of the cited articles, clause by clause, is met by a sentence, open and listed, or shown not to apply');
+{
+  const T = JSON.parse(read(path.join(__dirname, 'duties.json'))).duties;
+  const bad = [];
+  for (const u of T) {
+    const name = u.law + ' ' + u.article;
+    if (!u.duty) bad.push(name + ': no duty');
+    if (u.applies === false) { if (!u.reason) bad.push(name + ': no reason why it does not apply'); continue; }
+    if (u.status === 'open') { if (!u.open) bad.push(name + ': open without saying what is missing'); continue; }
+    if (u.status !== 'met' || !(u.by || []).length) { bad.push(name + ': neither met, open nor not applying'); continue; }
+    for (const b of u.by) if (!read(path.join(ROOT, b.file)).includes(b.text)) bad.push(name + ': not in ' + b.file + ': ' + b.text.slice(0, 60));
+  }
+  const met = T.filter((u) => u.status === 'met').length, open = T.filter((u) => u.status === 'open'), na = T.filter((u) => u.applies === false).length;
+  ok('every duty in verification/duties.json (' + T.length + ') is met word for word, open with what is missing, or not applying with its reason', T.length >= 150 && bad.length === 0, bad.join(' / '));
+  const rv = read(path.join(ROOT, 'docs', 'legal-review.md'));
+  ok('the legal review gives the counts (' + T.length + ' duties: ' + met + ' met, ' + na + ' not applying, ' + open.length + ' open) and lists every open duty',
+    rv.includes(T.length + ' duties: ' + met + ' met, ' + na + ' that do not apply, and ' + open.length + ' open.') && open.every((u) => rv.includes('- ' + u.law + ' ' + u.article + ': ' + u.open)));
+  ok('the three laws read clause by clause are the GDPR, the Digital Services Act and the APPI with its Order and Rules', ['GDPR', 'DSA', 'APPI'].every((l) => T.some((u) => u.law === l)) && T.every((u) => ['GDPR', 'DSA', 'APPI'].includes(u.law)));
 }
 
 console.log('\n' + '-'.repeat(60));
