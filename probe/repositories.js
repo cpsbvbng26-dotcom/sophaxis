@@ -18,11 +18,13 @@ const around = (t, re, n = 1500, max = 2) => { const out = []; const g = new Reg
 const hrefs = (raw, re) => [...new Set([...raw.matchAll(/href=["']([^"']+)["']/gi)].map((m) => m[1]).filter((h) => re.test(h)))].slice(0, 40);
 const S = 'https://sdaia.gov.sa';
 const E = 'https://elaw.klri.re.kr';
+const L = 'https://www.law.go.kr';
 const J = [
-  ['elaw PIPA content', E + '/eng_service/lawViewContent.do?hseq=62389', ['Article 31-2', 'Article 39-11', 'domestic agent', 'Domestic Agent', 'Article 3 \\(Definitions|Article 2 \\(Definitions'], null],
-  ['elaw PIPA multi', E + '/kor_service/lawViewMultiContent.do?hseq=62389', ['31조의2', 'Article 31-2', '국내대리인'], null],
-  ['elaw search decree', E + '/eng_service/lawSearchList.do?searchType=title&query=' + encodeURIComponent('Enforcement Decree of the Personal Information Protection Act'), ['Enforcement Decree of the Personal Information Protection Act'], /hseq/i],
-  ['PIPC eng laws raw2', 'https://www.pipc.go.kr/eng/user/lgp/law/lawsRegulations.do', ['Enforcement Decree of the Personal Information Protection Act \\[Enforcement Date September 15, 2023\\]'], /View|view|Detail|detail|file|down|seq|idx/],
+  ['law.go.kr PIPA page', L + '/법령/개인정보보호법', ['국내대리인'], /lsi|Seq|seq/],
+  ['law.go.kr decree page', L + '/법령/개인정보보호법시행령', ['국내대리인'], /lsi|Seq|seq/],
+  ['law.go.kr eng 289537', L + '/LSW/eng/engLsInfoR.do?lsiSeq=289537', ['Article 31-2', 'Article 32-3', 'Domestic Agent', 'domestic agent', 'PERSONAL INFORMATION PROTECTION'], null],
+  ['elaw decree 66066', E + '/kor_service/lawViewContent.do?hseq=66066', ['32조의3', 'Article 32-3', '국내대리인', 'Domestic Agent'], null],
+  ['elaw decree 66066 eng', E + '/eng_service/lawViewContent.do?hseq=66066', ['Article 32-3', 'Domestic Agent', 'domestic agent'], null],
 ];
 const extra = async () => {
   const r = await text(S + '/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf');
@@ -39,7 +41,6 @@ const extra = async () => {
     const r = await text(url);
     console.log('\n===== ' + name + ' | ' + r.status + ' | len ' + r.t.length + ' | ' + url);
     for (const k of keys) { const a = around(r.t, k, 1600, 3); if (a) console.log('--- ' + k + '\n' + a); }
-    if (hre) { console.log('HREFS: ' + hrefs(r.raw, hre).join('\n  ')); console.log('RAWBITS: ' + [...new Set((r.raw.match(/(?:onclick|src|action|url)\s*[=:(]\s*["'][^"']{3,200}["']|fn_[A-Za-z]+\([^)]{0,120}\)|[A-Za-z]+\.do[^"' <]{0,120}/gi) || []))].slice(0, 60).join('\n  ')); }
+    if (hre) { console.log('RAW: ' + r.raw.slice(0, 2500)); console.log('HREFS: ' + hrefs(r.raw, hre).join('\n  ')); console.log('RAWBITS: ' + [...new Set((r.raw.match(/(?:onclick|src|action|url)\s*[=:(]\s*["'][^"']{3,200}["']|fn_[A-Za-z]+\([^)]{0,120}\)|[A-Za-z]+\.do[^"' <]{0,120}/gi) || []))].slice(0, 60).join('\n  ')); }
   }
-  await extra();
 })();
