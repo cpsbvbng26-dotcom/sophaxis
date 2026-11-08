@@ -5,6 +5,7 @@ The entries are grouped by the date of the merge. Version 1.0.0 was released on 
 
 ## 2026-11-08
 
+- The README, in both languages, says that if the number of listed works reaches 1,000, the operator may, after preparation, consider a domain of its own and an international NGO. It is a possibility, not a plan or a promise; no such organisation exists, and no money, donations or members are asked for. Check 70 holds the wording. The previous change is #163.
 - The Japanese rule on where authors live is rewritten as one sentence that says who it is about: a work is not listed if any of its authors lives in one of the places. The README, the Submission Policy and the Privacy Policy, in Japanese, say the same; the rule on India follows the main rule. The previous change is #162.
 - The Japanese of the Submission Policy, the Privacy Policy and the README was rewritten: "所" became "国と地域", the sentences read naturally, and the Japanese table gives each law its Japanese name (`lawJa` in `site.json`, compared by check 69). The previous change is #161.
 - The Privacy Policy, in both languages, says that the operator signs in to Vercel through the GitHub account that uses two-factor authentication. The last open duty of the legal review, the statement of the security measures under the APPI, is met. The previous change is #159.
