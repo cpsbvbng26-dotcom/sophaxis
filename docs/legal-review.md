@@ -118,13 +118,10 @@ On 2026-11-08 the laws of the other countries were screened by searching comment
 | Guernsey | A representative, in certain cases | Data Protection (Bailiwick of Guernsey) Law, 2017 |
 | Botswana | A representative, for a controller that targets people in Botswana | Data Protection Act 2024, section 54 |
 | Ecuador | A special attorney resident in Ecuador, unless the processing is occasional | Regulation of the Organic Law on Personal Data Protection, Article 3 |
-| Iraq | Notice to the regulator before a service is offered to users in Iraq | Framework Regulations for Digital Platforms and Services (2025) |
 | Indonesia | Registration of a foreign electronic system operator, with no threshold | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended |
-| Rwanda | Registration, and storage in Rwanda unless the regulator allows otherwise | Law No. 058/2021, Articles 29 and 50 |
 | Zambia | Registration, and storage in Zambia | Data Protection Act 2021, sections 19 and 70 |
 | Ethiopia | Storage in Ethiopia | Personal Data Protection Proclamation No. 1321/2024 |
-| The Democratic Republic of the Congo | Storage in the country, and an authorisation for digital services | Ordonnance-loi No. 23/010 (Digital Code) |
-| Kazakhstan | Storage in Kazakhstan | Law No. 94-V on Personal Data, Article 12(2) |
+| The Democratic Republic of the Congo | Storage in the country, and a prior declaration or authorisation; a controller not established there acts through a representative | Ordonnance-loi No. 23/010 (Digital Code), Articles 184, 186, 188 and 201, read in a copy that is not the official journal |
 | Tunisia | A prior declaration, and a controller who resides in Tunisia | Organic Law No. 2004-63 |
 | Uganda | Registration, applied by the regulator to a controller abroad in 2025 | Data Protection and Privacy Act 2019, section 29 |
 | Guinea | Storage in Guinea | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection |
@@ -138,6 +135,28 @@ The duties reported in other countries apply only above a number of users, only 
 The countries that the first search did not reach were screened the same way on 2026-11-08. A duty to store personal data in the country is reported for Guinea, Madagascar and Bolivia, and a duty to register databases kept for dissemination is reported for Costa Rica; these are added to the list. For the others, either no data protection law exists, or the duties reported reach a controller abroad only through equipment in the country, a threshold or a commercial activity.
 Quebec's Act respecting the protection of personal information in the private sector asks for an assessment and a written agreement before personal information is communicated outside Quebec, if it reaches Sophaxis at all. Sophaxis cannot meet that condition, so the rule now names conditions before personal data leaves a place, and Quebec is added.
 Every country has now been screened, in commentaries if not at the source of its law.
+
+### Read at their sources after the screening
+
+On 2026-11-08 the laws behind the list were fetched from their official sources where those could be reached.
+Three were read at their sources, and each reaches a service like Sophaxis or may reach it.
+No law read was found not to reach Sophaxis, so no place is taken off the list.
+
+| Place | What the text says | Where it was read |
+| --- | --- | --- |
+| Iraq | The Regulations reach platforms abroad that provide services to users in Iraq (Article 4.1). They list the kinds of platform they cover, and a listing of preprints is not among them, but the Commission may add any other platform at any time (Article 4.2). A platform abroad of a listed kind must notify, register or be licensed before it serves users in Iraq, and every platform must designate a Platform Liaison Officer (Articles 5.1 and 5.2) | The Communication and Media Commission's PDF (cmc.iq) |
+| Rwanda | The Law reaches a controller that is neither established nor resides in Rwanda but processes the personal data of data subjects located there (Article 2). A controller must register (Article 29) and must store personal data in Rwanda unless the authority certifies otherwise (Article 50) | RwandaLII, as published in the Official Gazette of 15 October 2021 |
+| Kazakhstan | Personal data must be stored in a database located in Kazakhstan (Article 12(2)). The Law states no territorial scope, and its exclusions do not cover a controller abroad (Article 3) | Adilet, the official legal database of Kazakhstan, in Russian, with amendments to 2026 |
+
+Iraq stays on the list. Its Regulations do not name a service like Sophaxis, but the Commission may bring it in at any time, and whether they reach Sophaxis is uncertain.
+The Digital Code of the Democratic Republic of the Congo was read in full, but only in a copy published by droitnumerique.cd, a study site, and not in the official journal.
+It applies to processing in the country or abroad (Article 184), asks for a prior declaration (Article 186) made through a representative by a controller not established there (Article 188), and asks that personal data be stored in the country (Article 201).
+The other sources could not be read.
+The servers for Russia (kremlin.ru and pravo.gov.ru), Monaco, Costa Rica, Bolivia, Albania and Türkiye's legislation database did not answer.
+The sources for Guernsey, Quebec, Zambia, Uganda, Madagascar and Indonesia refused an automated request, and that refusal was not worked around.
+Ecuador's server closed the connection, and the search of Peru's official journal runs only in a browser.
+No official source was tried for Egypt, Ethiopia, Tunisia, Guinea and Botswana.
+Türkiye's Regulation on the Data Controllers' Registry is published in the Official Gazette, which could not be reached; its Law No. 6698 was read before, as the table above says.
 
 ## Consistency
 
@@ -180,6 +199,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 35. A submission that passes the automatic check is provisionally registered and is not on the site until a moderator accepts it. The review is helped by three language models, Claude, ChatGPT and Grok, to which the operator gives by hand only the public parts of a submission; every decision is taken by a person. The Privacy Policy, in both languages, lists Anthropic, OpenAI and xAI as providers outside Japan, and the form asks each author's consent to it.
 36. The Terms, in both languages, now forbid confirming something untrue in a form, and say what follows: the record is removed as soon as the operator learns of it, and from 2026-11-22 further submissions from the same account or ORCID iD may be declined. The operator relies on the confirmations in good faith and keeps them in the public issue, so that a listing on an untrue confirmation can be shown not to be an offer where Sophaxis is not offered. No penalty and no damages beyond the law are asked, as Articles 9 and 10 of the Consumer Contract Act require.
 37. Under Article 3(1)(ii) of Japan's Act on providers of specified telecommunications services, a provider that knows of the information is liable if there is good reason to find that it could have known of the infringement. Every submission is read, so the Moderation Policy now looks for the two signs that would make an untrue confirmation knowable: an affiliation or address of an author in a place where Sophaxis is not offered, which leads to a question before a decision, and a notice of rights in the PDF that contradicts its licence, which leads to declining.
+38. The laws behind the list were read where their sources could be reached ("Read at their sources after the screening"). Iraq's, Rwanda's and Kazakhstan's were read at their sources, and the Democratic Republic of the Congo's in a copy; none was found not to reach Sophaxis, so the 28 places stay. The Submission Policy, in both languages, now gives the articles read.
 
 ## Risks that remain
 

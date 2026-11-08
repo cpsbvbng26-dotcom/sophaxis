@@ -2623,10 +2623,16 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     && readme.includes('**Not offered in ' + L.length + ' places**') && readme.includes('- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない ' + L.length + ' の国と地域に住んでいる作品は載せません。'));
   const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
   const reported = L.filter((p) => p.read !== true);
-  const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('## Consistency'));
+  const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('### Read at their sources after the screening'));
   const rrows = rsec.split('\n').filter((l) => /^\| (?!Place |---)/.test(l));
-  ok('the legal review lists each of the ' + reported.length + ' places not read at its source, says how many were added in each step, and that every country has been screened',
-    rrows.length === reported.length && reported.every((p, i) => rrows[i].startsWith('| ' + cap(p.place) + ' | ')) && rv.includes(WORDS[18] + ' places were added, from 2026-11-22.') && rv.includes(WORDS[4] + ' more places were added, from 2026-11-22.') && rv.includes(WORDS[1] + ' more place was added on it, from 2026-11-22: Quebec.') && 18 + 4 + 1 === reported.length
+  /* Places of the screening read at their sources since: they leave the table above, stay on the list, and still count among the places added. */
+  const asec = rv.slice(rv.indexOf('### Read at their sources after the screening'), rv.indexOf('## Consistency'));
+  const arows = asec.split('\n').filter((l) => /^\| (?!Place |---)/.test(l));
+  const readAfter = arows.map((r) => L.find((p) => r.startsWith('| ' + cap(p.place) + ' | ')));
+  ok('the legal review lists each of the ' + reported.length + ' places not read at its source and the ' + arows.length + ' read since, says how many were added in each step, and that every country has been screened',
+    rrows.length === reported.length && reported.every((p, i) => rrows[i].startsWith('| ' + cap(p.place) + ' | ')) && rv.includes(WORDS[18] + ' places were added, from 2026-11-22.') && rv.includes(WORDS[4] + ' more places were added, from 2026-11-22.') && rv.includes(WORDS[1] + ' more place was added on it, from 2026-11-22: Quebec.') && 18 + 4 + 1 === reported.length + arows.length
+    && arows.length > 0 && readAfter.every((p) => p && p.read === true) && rsec.indexOf('### ') === 0 && rsec.lastIndexOf('### ') === 0
+    && asec.includes('No law read was found not to reach Sophaxis, so no place is taken off the list.')
     && rsec.includes('Every country has now been screened, in commentaries if not at the source of its law.') && !rsec.includes('Each is open until it is screened.') && rv.includes('Commentators report that a controller abroad must register in the Data Controllers\' Registry through a representative in Türkiye'));
   ok('the Takedown Policy says that Sophaxis does not rely on 17 U.S.C. 512, and the Privacy Policy names the Swiss Commissioner',
     read(path.join(ROOT, 'policies', 'takedown.md')).includes('so it does not rely on the limitation of liability in 17 U.S.C. 512') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('Federal Data Protection and Information Commissioner'));
