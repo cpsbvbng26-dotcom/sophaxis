@@ -1185,6 +1185,9 @@ function oaiFunction(all) {
     + '\nmodule.exports = handler(' + JSON.stringify(oaiData(all)) + ');\n';
 }
 
+/* Vercel deploys a branch only if a rule here allows it; a branch that matches several rules is deployed if any allows it. */
+const DEPLOY_BRANCHES = { '**': false, main: true };
+
 function vercelConfig(papers) {
   const shown = papers.filter((p) => p.status !== 'removed');
   const redirects = shown.map((p) => ({ source: '/abs/' + p.id, destination: '/abs/' + p.id + '.html', permanent: true }))
@@ -1194,7 +1197,10 @@ function vercelConfig(papers) {
    * abstract page, at /abs/<file>, for Google Scholar (see scholarTags). */
   const rewrites = [{ source: '/oai', destination: '/api/oai' }]
     .concat(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/abs/' + x.file, destination: '/pdf/' + x.file }))));
-  return JSON.stringify({ headers: SECURITY_HEADERS, redirects, rewrites }, null, 2) + '\n';
+  /* Only main is deployed. The free plan allows 100 deployments a day for the whole account, and a deployment
+   * of every working branch used them up on 2026-11-08, so that main could not be deployed. */
+  const git = { deploymentEnabled: DEPLOY_BRANCHES };
+  return JSON.stringify({ headers: SECURITY_HEADERS, redirects, rewrites, git }, null, 2) + '\n';
 }
 
 if (require.main === module) {

@@ -1335,7 +1335,8 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
   ok('vercel.json is what the build makes from the records, not edited by hand', vj === vercelConfig(papers));
   const cfg = JSON.parse(vj);
   const has = (s, d) => cfg.redirects.some((r) => r.source === s && r.destination === d);
-  ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'headers,redirects,rewrites'
+  ok('vercel.json is in site/, the root directory of the Vercel project, and nowhere else, and only main is deployed', !fs.existsSync(path.join(ROOT, 'vercel.json')) && Object.keys(cfg).join() === 'headers,redirects,rewrites,git'
+    && JSON.stringify(cfg.git) === JSON.stringify({ deploymentEnabled: { '**': false, main: true } })
     && JSON.stringify(cfg.rewrites[0]) === JSON.stringify({ source: '/oai', destination: '/api/oai' }));
   ok('every PDF copy of a listed record is also served at /abs/<file>, and nothing else is rewritten',
     JSON.stringify(cfg.rewrites.slice(1)) === JSON.stringify(shown.flatMap((p) => (p.pdfs || []).map((x) => ({ source: '/abs/' + x.file, destination: '/pdf/' + x.file }))))

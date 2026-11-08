@@ -145,5 +145,11 @@
       "source": "/abs/2026.0005v1.pdf",
       "destination": "/pdf/2026.0005v1.pdf"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "**": false,
+      "main": true
+    }
+  }
 }
