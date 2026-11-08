@@ -29,8 +29,8 @@
       "label": "Article 19",
       "law_id": "345AC0000000048",
       "article": "19",
-      "title": null,
-      "sha256": null
+      "title": "著作権法",
+      "sha256": "e544aec935d1d2d11c98e1f90407335be874712ae20f88a90ea4ff100d8bf042"
     },
     {
       "law": "Moral rights (Copyright Act of Japan, Articles 19 and 20)",
@@ -38,8 +38,8 @@
       "label": "Article 20",
       "law_id": "345AC0000000048",
       "article": "20",
-      "title": null,
-      "sha256": null
+      "title": "著作権法",
+      "sha256": "fd3c3f660c5bc41d424736d468def4f29f0f65d368f3a8c7be334dc9294e21c9"
     },
     {
       "law": "Copyright (Copyright Act of Japan, Articles 21 and 23)",
@@ -47,8 +47,8 @@
       "label": "Article 21",
       "law_id": "345AC0000000048",
       "article": "21",
-      "title": null,
-      "sha256": null
+      "title": "著作権法",
+      "sha256": "a85d04f2fd20d7867d5579bee40676b13405c58ea7fd7eb27f1e7a5a03bda100"
     },
     {
       "law": "Copyright (Copyright Act of Japan, Articles 21 and 23)",
@@ -56,8 +56,8 @@
       "label": "Article 23",
       "law_id": "345AC0000000048",
       "article": "23",
-      "title": null,
-      "sha256": null
+      "title": "著作権法",
+      "sha256": "19115b17dd39ed798e38527833b8743d4c40b3f8985fb8a4a9a8ced667e45718"
     },
     {
       "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
@@ -65,8 +65,8 @@
       "label": "Article 17",
       "law_id": "415AC0000000057",
       "article": "17",
-      "title": null,
-      "sha256": null
+      "title": "個人情報の保護に関する法律",
+      "sha256": "caee832efb96d091b741777eb3957718f4a6053b38ec0827ad01f00e68c65ee0"
     },
     {
       "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
@@ -74,8 +74,8 @@
       "label": "Article 18",
       "law_id": "415AC0000000057",
       "article": "18",
-      "title": null,
-      "sha256": null
+      "title": "個人情報の保護に関する法律",
+      "sha256": "aade43883ec2c28d6e1e43faf70f1eee83b078faff45b40826b6ac307604a7f5"
     },
     {
       "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
@@ -83,8 +83,8 @@
       "label": "Article 27",
       "law_id": "415AC0000000057",
       "article": "27",
-      "title": null,
-      "sha256": null
+      "title": "個人情報の保護に関する法律",
+      "sha256": "29d30b77da9902b1f11723cf336ce06a6a320b2484da90b22c7d0498c44634d6"
     },
     {
       "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
@@ -92,8 +92,8 @@
       "label": "Article 28",
       "law_id": "415AC0000000057",
       "article": "28",
-      "title": null,
-      "sha256": null
+      "title": "個人情報の保護に関する法律",
+      "sha256": "2abf2c3f010636a58acd0d8575edff6e95a02ca86aa6e7b210cc99bd8f6d2589"
     },
     {
       "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
@@ -101,8 +101,8 @@
       "label": "Article 32",
       "law_id": "415AC0000000057",
       "article": "32",
-      "title": null,
-      "sha256": null
+      "title": "個人情報の保護に関する法律",
+      "sha256": "508ab29ca2664bc626001f3fccc2e5d3238b7c52780b74e5f08c093bf639fe95"
     },
     {
       "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
@@ -110,8 +110,8 @@
       "label": "Article 230",
       "law_id": "140AC0000000045",
       "article": "230",
-      "title": null,
-      "sha256": null
+      "title": "刑法",
+      "sha256": "ac736dabc949267bfc96e7bdb12ad19dc0409e60840f3515e06ac0b4f56c95a6"
     },
     {
       "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
@@ -119,8 +119,8 @@
       "label": "Article 231",
       "law_id": "140AC0000000045",
       "article": "231",
-      "title": null,
-      "sha256": null
+      "title": "刑法",
+      "sha256": "43c0460175dccc5f1568a8253f84eec695ea817debccdd178efa15423d47ab30"
     },
     {
       "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
@@ -128,8 +128,8 @@
       "label": "Article 709",
       "law_id": "129AC0000000089",
       "article": "709",
-      "title": null,
-      "sha256": null
+      "title": "民法",
+      "sha256": "560e4d946b0d1f1f66d15f99a27226a80ea53f9e692a07b17248e319b566aacc"
     },
     {
       "law": "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
@@ -137,8 +137,8 @@
       "label": "Article 3",
       "law_id": "413AC0000000137",
       "article": "3",
-      "title": null,
-      "sha256": null
+      "title": "特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律",
+      "sha256": "9f05c7e2fe9ecab1efe8ede9c10d514666a5608c63b71baff767ccf15e8f3f32"
     },
     {
       "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
@@ -146,8 +146,8 @@
       "label": "Article 8",
       "law_id": "412AC0000000061",
       "article": "8",
-      "title": null,
-      "sha256": null
+      "title": "消費者契約法",
+      "sha256": "e448b8aeb7b5a1e82040051acc71a04a083dfd3ff1b40fa48183e7b250cf1820"
     },
     {
       "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
@@ -155,8 +155,8 @@
       "label": "Article 8-3",
       "law_id": "412AC0000000061",
       "article": "8_3",
-      "title": null,
-      "sha256": null
+      "title": "消費者契約法",
+      "sha256": "966857117514fcc2aba70f7f9100019648ce6b7c8a91268b082870e9af0a7132"
     },
     {
       "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
@@ -164,8 +164,8 @@
       "label": "Article 10",
       "law_id": "412AC0000000061",
       "article": "10",
-      "title": null,
-      "sha256": null
+      "title": "消費者契約法",
+      "sha256": "6f5fe99fd6dbb784e161b4ba0161b34dbb498a624c3205f7eed444f029970c51"
     },
     {
       "law": "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
@@ -173,8 +173,8 @@
       "label": "Article 548-2",
       "law_id": "129AC0000000089",
       "article": "548_2",
-      "title": null,
-      "sha256": null
+      "title": "民法",
+      "sha256": "a8d84ebb66e26efe68e987db813a466f35c1996a2c852ccc7788d067f33d3d2e"
     },
     {
       "law": "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
@@ -182,8 +182,8 @@
       "label": "Article 548-3",
       "law_id": "129AC0000000089",
       "article": "548_3",
-      "title": null,
-      "sha256": null
+      "title": "民法",
+      "sha256": "a885dc7b1d4c7b6c0b8540185aed7945ac58de577ce9ac4affb065f0bb9bf069"
     },
     {
       "law": "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
@@ -191,8 +191,8 @@
       "label": "Article 548-4",
       "law_id": "129AC0000000089",
       "article": "548_4",
-      "title": null,
-      "sha256": null
+      "title": "民法",
+      "sha256": "eaa6f8148934472095601c59fdf8ea7304519a550991208c805b9ef148f7cd0e"
     },
     {
       "law": "Trade and advertising (Act on Specified Commercial Transactions; Act against Unjustifiable Premiums and Misleading Representations)",
@@ -200,8 +200,8 @@
       "label": "Article 2",
       "law_id": "351AC0000000057",
       "article": "2",
-      "title": null,
-      "sha256": null
+      "title": "特定商取引に関する法律",
+      "sha256": "969c4aa94085a96778bcfc08b164aeee858b4d419c77aaadaa00286c90c315df"
     },
     {
       "law": "Trade and advertising (Act on Specified Commercial Transactions; Act against Unjustifiable Premiums and Misleading Representations)",
@@ -209,8 +209,8 @@
       "label": "Article 5",
       "law_id": "337AC0000000134",
       "article": "5",
-      "title": null,
-      "sha256": null
+      "title": "不当景品類及び不当表示防止法",
+      "sha256": "b92deb21db663911d5107867a0c058089c2c6eb82b35c57e9b6bd618ed2643f9"
     },
     {
       "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
@@ -218,8 +218,8 @@
       "label": "Article 25",
       "law_id": "334AC0000000127",
       "article": "25",
-      "title": null,
-      "sha256": null
+      "title": "商標法",
+      "sha256": "e1cd4c4290fdca9b93e0fd753c50e9fe5c6e353650609eb3f0d044c66797c405"
     },
     {
       "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
@@ -231,8 +231,8 @@
         "1",
         "2"
       ],
-      "title": null,
-      "sha256": null
+      "title": "不正競争防止法",
+      "sha256": "900c33bc3c6d3b7db92cc13678d27b03af57f0dfdab5215edabbea437fb08484"
     },
     {
       "law": "Minors (Civil Code, Article 5)",
@@ -240,8 +240,8 @@
       "label": "Article 5",
       "law_id": "129AC0000000089",
       "article": "5",
-      "title": null,
-      "sha256": null
+      "title": "民法",
+      "sha256": "4f6f3090a33137697d4742f664c6a80888ea52df11872ff947f3c4479641d2c7"
     }
   ],
   "policies": [
@@ -249,13 +249,14 @@
       "name": "GitHub Terms of Service",
       "repo": "github/site-policy",
       "path": "Policies/github-terms/github-terms-of-service.md",
-      "commit": null
+      "commit": "166eb97e485b7de3cd5dbaf8c8d16e4310fda46c"
     },
     {
       "name": "GitHub General Privacy Statement",
       "repo": "github/site-policy",
       "path": "Policies/github-privacy-statement.md",
-      "commit": null
+      "commit": "87906da47c95eda1a39ccc01f31ea2602d263dbe"
     }
-  ]
+  ],
+  "recorded": "2026-11-08"
 }
