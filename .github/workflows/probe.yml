@@ -3,7 +3,7 @@ on:
   push:
     branches: [claude/probe-repositories]
 permissions:
-  contents: read
+  contents: write
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -12,4 +12,14 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - run: node probe/repositories.js
+      - run: node probe/repositories.js > /tmp/probe-out.txt 2>&1; tail -3 /tmp/probe-out.txt
+      # The output goes to a branch of its own, so that it can be read with git instead of from the log.
+      - run: |
+          git config user.name "probe"
+          git config user.email "probe@users.noreply.github.com"
+          git checkout --orphan claude/probe-output
+          git rm -rq --cached .
+          cp /tmp/probe-out.txt out.txt
+          git add out.txt
+          git commit -qm "probe output"
+          git push -f origin claude/probe-output
