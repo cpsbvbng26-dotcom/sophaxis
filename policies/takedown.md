@@ -82,8 +82,10 @@ Outside the site:
 
 - The operator also asks GitHub to remove the material from the repository history.
 - Until GitHub does so, earlier versions of the record stay in the history of the public repository.
+- GitHub's own procedure is to rewrite the history first and then ask GitHub Support, which helps only with sensitive data whose risk cannot be removed otherwise; where it does not help, the earlier versions stay in the history.
 - The operator also asks the Internet Archive to exclude its earlier copies of the record.
 - Copies that others have already taken are outside Sophaxis's control; the operator tells the ones it knows of.
+- A follow-up issue lists these steps, with the request to the Internet Archive. Each day an automatic step checks whether the emptied issues are deleted and whether the Wayback Machine still lists a copy, ticks what is done, and reminds the operator once a week of the rest.
 
 The Sophaxis id of a removed record is never given to another work.
 
