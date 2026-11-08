@@ -114,9 +114,15 @@ For GitHub, Vercel and ORCID, a transfer from the European Union rests on the Eu
 
 Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States), and are kept there only as long as needed to answer them and to show the answer.
 What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).
+A person in the European Union who writes reaches the operator in Japan, for which the European Commission has made an adequacy decision, and the mailbox at Apple in the United States; Apple says that its international transfers of personal data collected in the European Economic Area, the United Kingdom and Switzerland are governed by Standard Contractual Clauses.
 
 Vercel keeps request logs for Sophaxis, including the IP address.
 The operator can see them, and uses them only to find and fix faults.
+
+Apple, for the mailbox, and Vercel, for its request logs, handle personal data for Sophaxis, and neither is bound by contract not to handle it.
+As the Personal Information Protection Commission's Q&A 7-53 reads Japan's Act, Sophaxis therefore treats both as entrusted with that handling, and supervises them under Article 25 of the Act.
+Each publishes the measures it takes: Vercel in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa), Apple in its Privacy Policy.
+Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
 
 ## Security
 

@@ -49,7 +49,7 @@ The code of each step is public, and each section links to it.
 - Upheld: removes the record, as "What a removed record leaves" in the Takedown Policy sets out, deletes the automatic comments about it, and empties, closes and locks the issues that name it.
 - Not upheld: puts back what was taken offline, from the git history.
 - Leaves to the operator: the grounds of the decision, deleting the emptied issues, and asking GitHub and the Internet Archive to remove earlier copies.
-- A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id.
+- A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id and, for a decision, the grounds, which are posted in the authors' submission issue before it is emptied.
 
 ## Once a day, at 09:17 Japan time
 
@@ -64,15 +64,15 @@ The code of each step is public, and each section links to it.
 ## When the site changes
 
 - Vercel serves the files that the repository holds in `site/`, which `build.js` builds from the records. The OAI-PMH interface is a small function on Vercel that reads the same records.
-- Once the new pages are live, the search engines that take IndexNow are told which record pages and PDF copies are new, changed or gone, and the new and changed ones are saved to the Internet Archive. A gone page is never saved.
+- Once the new pages are live, the search engines that take IndexNow are told which record pages and PDF copies are new, changed or gone, and the new and changed ones are saved to the Internet Archive, if their authors consented to it. A gone page is never saved.
 - Earlier versions of the site that Vercel keeps are not open to the public.
-- `robots.txt` is built with the rest of the site, and asks the Internet Archive's crawlers not to collect any removed record.
+- `robots.txt` is built with the rest of the site, and asks the Internet Archive's crawlers not to collect any removed record, or any record whose authors did not consent to the saves.
 - Code: [tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js), run by [indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) and after each push of the removal step.
 
 ## Once a week, on Monday at 13:37 Japan time
 
-- Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub.
-- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; an issue when an article of law or a GitHub term differs from the value recorded in `verification/statutes.json`; a summary of the run; a save of every page and PDF copy to the Internet Archive.
+- Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub, and the privacy statements of Vercel and Apple, from their sites.
+- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; an issue when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
 - Leaves to the operator: acting on what the issue reports.
 - Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
 

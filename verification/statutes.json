@@ -285,5 +285,19 @@
       "commit": "87906da47c95eda1a39ccc01f31ea2602d263dbe"
     }
   ],
-  "recorded": "2026-11-08"
+  "recorded": "2026-11-08",
+  "pages": [
+    {
+      "name": "Vercel Privacy Notice",
+      "url": "https://vercel.com/legal/privacy-notice",
+      "pattern": "Last Updated ([A-Z][a-z]+ \\d{1,2}, \\d{4})",
+      "value": "June 1, 2026"
+    },
+    {
+      "name": "Apple Privacy Policy",
+      "url": "https://www.apple.com/legal/privacy/en-ww/",
+      "pattern": "Updated ([A-Z][a-z]+ \\d{1,2}, \\d{4})",
+      "value": "July 30, 2025"
+    }
+  ]
 }

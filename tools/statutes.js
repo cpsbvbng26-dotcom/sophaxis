@@ -5,6 +5,8 @@
  *   reduced to plain characters, and its SHA-256 is compared with the one recorded in verification/statutes.json.
  * - Terms of services: the latest commit of each watched file in GitHub's public site-policy repository is
  *   compared with the one recorded.
+ * - Privacy statements of the services that handle data for Sophaxis (Vercel, Apple): the date each gives for its
+ *   last update is compared with the one recorded.
  *
  * On a schedule, a difference, an unrecorded entry or a failed fetch opens (or updates) one issue; when everything
  * matches again, that issue is closed. On a pull request or by hand, it only prints, and fails on a difference.
@@ -80,6 +82,19 @@ async function main() {
       if (!c) results.push({ label, state: 'failed', note: T.missing });
       else if (!e.commit) results.push({ label, state: 'unrecorded', value: c });
       else if (c !== e.commit) results.push({ label, state: 'changed', value: c, note: 'https://github.com/' + e.repo + '/commits/main/' + e.path });
+      else results.push({ label, state: 'same' });
+    } catch (err) { results.push({ label, state: 'failed', note: String(err.message || err) }); }
+  }
+  /* The privacy statements of the services that handle data for Sophaxis (Vercel's request logs, Apple's mailbox):
+   * the date each gives for its last update. A new date means the operator reads the statement again (APPI Article 25). */
+  for (const e of CONF.pages || []) {
+    const label = e.name;
+    try {
+      const text = (await get(e.url)).replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ');
+      const v = (new RegExp(e.pattern).exec(text) || [])[1];
+      if (!v) results.push({ label, state: 'missing', note: T.missing });
+      else if (!e.value) results.push({ label, state: 'unrecorded', value: v });
+      else if (v !== e.value) results.push({ label, state: 'changed', value: v, note: e.url });
       else results.push({ label, state: 'same' });
     } catch (err) { results.push({ label, state: 'failed', note: String(err.message || err) }); }
   }

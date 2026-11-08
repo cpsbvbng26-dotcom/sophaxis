@@ -1,6 +1,7 @@
 name: statutes
 # Once a week, beside the watch: the articles of Japanese law and the GitHub terms that docs/legal-review.md relies on are
-# fetched from the e-Gov law API and from github/site-policy, and compared with verification/statutes.json.
+# fetched from the e-Gov law API and from github/site-policy, and the update dates of Vercel's and Apple's privacy
+# statements from their sites, and all are compared with verification/statutes.json.
 # A difference opens an issue, which closes when everything matches again. On a pull request it only prints.
 on:
   schedule:

@@ -15,7 +15,7 @@ The policies were checked in six ways.
 3. **Consistency.** Every policy was compared with the others, with its Japanese translation, and with the code that carries it out. What was found is listed under Consistency below.
 4. **Fault tree.** The ways the facts relied on could fail were listed, and their likelihood and severity were each estimated from 1 to 3. The product ranks them. The numbers are the operator's estimates and serve only to rank.
 5. **Breaking on purpose.** Each fixed sentence and each number was altered in turn, and the check was seen to fail.
-6. **Clause by clause.** The articles of the GDPR, the Digital Services Act and Japan's Act on the Protection of Personal Information, its Order and its Rules that the policies rely on were read paragraph by paragraph and item by item, and each duty they place on Sophaxis was written down. `verification/duties.json` gives, for each, the sentence that meets it word for word, what is still missing, or why it does not apply, and `verification/check.js` confirms it. There are 151 duties: 118 met, 28 that do not apply, and 5 open.
+6. **Clause by clause.** The articles of the GDPR, the Digital Services Act and Japan's Act on the Protection of Personal Information, its Order and its Rules that the policies rely on were read paragraph by paragraph and item by item, and each duty they place on Sophaxis was written down. `verification/duties.json` gives, for each, the sentence that meets it word for word, what is still missing, or why it does not apply, and `verification/check.js` confirms it. There are 151 duties: 122 met, 28 that do not apply, and 1 open.
 
 ## Laws
 
@@ -106,6 +106,8 @@ The comparison found the items below. Each was fixed in the same change as this 
 21. The Takedown Policy said the acknowledgement was automatic, but only a removal issue is acknowledged so (DSA Article 16(4)); a notice by email is now acknowledged by the operator. A notice by email now states good faith (Article 16(2)(d)), the reasons in the removal form are required (Article 16(2)(a)), and Article 18 on suspicions of serious crime is met.
 22. The decision notes named neither courts nor certified bodies, nor the law relied on, nor whether an automatic step acted (DSA Articles 16(5), 16(6) and 17(3)); they now do, and a request not upheld is answered before the material goes back (GDPR Article 18(3)).
 23. The Takedown Policy stated no position on Article 13 of the Digital Services Act beyond the decision; it now says that Sophaxis would not meet it if the view on the Union were wrong.
+24. Four of the duties left open in #140 are met. The basis for email reaching Apple is stated: Japan's adequacy decision, and Apple's Standard Contractual Clauses (GDPR Article 13(1)(f)). Apple and Vercel are treated as entrusted with handling, as the Personal Information Protection Commission's Q&A 7-53 reads the Act, and supervised under Article 25: a weekly step watches the date of their privacy statements. A removal decided on an email request cannot be run without its grounds, which reach the authors in their submission issue before it is emptied (DSA Article 17(4)). How the number of recipients in the Union would be given is stated (DSA Article 24(3)).
+25. "What runs by itself" still said that every page was saved to the Internet Archive and that `robots.txt` excluded only removed records; it now says that only records whose authors consented are saved, and that the others are excluded too.
 
 ## Risks that remain
 
@@ -124,16 +126,12 @@ The comparison found the items below. Each was fixed in the same change as this 
 
 ## Duties still open
 
-The duties below, found clause by clause, are not met yet. Each needs a fact or a decision of the operator, and none is filled by a guess.
+The duty below, found clause by clause, is not met yet. It needs a fact that only the operator can confirm, and it is not filled by a guess.
 
-- GDPR Art 13(1)(f): Transfers to Apple (iCloud Mail) for email: the basis under the GDPR is not stated, because whether Apple is certified under the Data Privacy Framework was not checked at its source.
-- DSA Art 17(4): Where a removal decided on an email request empties the submission issue, the place where the authors receive the reasons is not yet fixed.
-- DSA Art 24(3): How the average monthly recipients in the Union would be estimated on request is not stated; the site keeps no analytics.
-- APPI 第25条: Whether Vercel and iCloud Mail are entrusted handling under Article 25 or storage that the service does not handle is not settled, and no supervision is stated.
 - APPI 第32条第1項第四号・施行令第10条第一号: The measures for the operator's own GitHub, Vercel and Apple accounts and devices are not stated, because whether two-factor authentication is on was not confirmed.
 
 ## Limits
 
 Showing that a risk is zero is not possible by logic or by arithmetic. What this review shows is that no law above was left out, that every sentence relied on is in the policies, and that removing one makes the check fail.
-The laws of other countries were not checked one by one, beyond those named above. The articles of the GDPR and the Digital Services Act that the policies cite were read on 2026-11-08 in EUR-Lex, and those of the UK GDPR at legislation.gov.uk; the Japanese articles are watched each week. Of the terms relied on, DataCite's CC0 waiver for its metadata, ORCID's terms for its public APIs, Vercel's limit of the Hobby plan to non-commercial use, and the clauses of the three accepted licences were read at their sources on the same day. Crossref's statement on the reuse of its metadata was not found at its documented address, and the Internet Archive's terms need a script to show, so neither was read.
+The laws of other countries were not checked one by one, beyond those named above. The articles of the GDPR and the Digital Services Act that the policies cite were read on 2026-11-08 in EUR-Lex, and those of the UK GDPR at legislation.gov.uk; the Japanese articles are watched each week. Of the terms relied on, DataCite's CC0 waiver for its metadata, ORCID's terms for its public APIs, Vercel's limit of the Hobby plan to non-commercial use, and the clauses of the three accepted licences were read at their sources on the same day. Apple's and Vercel's privacy statements, Schedule 2 of Vercel's Data Processing Addendum and the Personal Information Protection Commission's Q&A 7-53 and 7-54 were read at their sources on the same day. Crossref's statement on the reuse of its metadata was not found at its documented address, and the Internet Archive's terms need a script to show, so neither was read.
 Registered trademarks were not searched.

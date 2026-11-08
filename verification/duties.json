@@ -301,8 +301,17 @@
       "article": "Art 13(1)(f)",
       "duty": "the intended transfer to a third country and \"the existence or absence of an adequacy decision\", or a reference to the safeguards (Art 46/47) or 49(1) second subparagraph.",
       "applies": true,
-      "status": "open",
-      "open": "Transfers to Apple (iCloud Mail) for email: the basis under the GDPR is not stated, because whether Apple is certified under the Data Privacy Framework was not checked at its source."
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Apple says that its international transfers of personal data collected in the European Economic Area, the United Kingdom and Switzerland are governed by Standard Contractual Clauses."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it."
+        }
+      ]
     },
     {
       "law": "GDPR",
@@ -1143,8 +1152,17 @@
       "article": "Art 17(4)",
       "duty": "information \"clear and easily comprehensible\" and such as \"to reasonably allow the recipient ... to effectively exercise the possibilities for redress\".",
       "applies": true,
-      "status": "open",
-      "open": "Where a removal decided on an email request empties the submission issue, the place where the authors receive the reasons is not yet fixed."
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "the grounds, without personal data, are posted in the authors' submission issue before it is emptied"
+        },
+        {
+          "file": "tools/removal.js",
+          "text": "give the grounds of the decision, without personal data"
+        }
+      ]
     },
     {
       "law": "DSA",
@@ -1191,8 +1209,17 @@
       "article": "Art 24(3)",
       "duty": "communicate the paragraph 2 information (average monthly active recipients in the Union) \"upon their request and without undue delay\".",
       "applies": true,
-      "status": "open",
-      "open": "How the average monthly recipients in the Union would be estimated on request is not stated; the site keeps no analytics."
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/takedown.md",
+          "text": "Average monthly active recipients (Article 24(3))"
+        },
+        {
+          "file": "policies/takedown.md",
+          "text": "counted from the issues and the email, and says that readers are not counted."
+        }
+      ]
     },
     {
       "law": "DSA",
@@ -1396,8 +1423,21 @@
       "article": "第25条",
       "duty": "取扱いを委託するときは、委託先に「必要かつ適切な監督」。",
       "applies": true,
-      "status": "open",
-      "open": "Whether Vercel and iCloud Mail are entrusted handling under Article 25 or storage that the service does not handle is not settled, and no supervision is stated."
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "supervises them under Article 25 of the Act."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used."
+        },
+        {
+          "file": "verification/statutes.json",
+          "text": "\"name\": \"Apple Privacy Policy\""
+        }
+      ]
     },
     {
       "law": "APPI",
