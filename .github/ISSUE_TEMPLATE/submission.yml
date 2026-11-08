@@ -144,7 +144,7 @@ body:
     id: residence
     attributes:
       label: Where the authors live
-      description: Required from 2026-11-22. Sophaxis does not list work by authors who live in the European Union, the European Economic Area, the United Kingdom, China or Thailand. This depends only on where an author lives, not on nationality or race; the reason is that a service offered there must have a representative established there, which Sophaxis does not have. The Submission Policy says more.
+      description: Required from 2026-11-22. Sophaxis does not list work by authors who live in any of these places (the European Union, the European Economic Area, the United Kingdom, China, Thailand, Russia, Türkiye, Egypt, Peru, Albania, Monaco, Guernsey, Botswana, Ecuador, Iraq, Indonesia, Rwanda, Zambia, Ethiopia, the Democratic Republic of the Congo, Kazakhstan, Tunisia and Uganda). This depends only on where an author lives, not on nationality or race; the reason is that a law there requires, or is reported to require, a representative, local storage of personal data or registration there, which Sophaxis does not have. The Submission Policy gives the law of each.
       options:
-        - label: No author of this work lives in the European Union, the European Economic Area, the United Kingdom, China or Thailand.
+        - label: No author of this work lives in any of the places listed above.
           required: false

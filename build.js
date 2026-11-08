@@ -667,9 +667,12 @@ function termsNotice(n = SITE.termsNotice) {
 }
 
 /* Who Sophaxis is not offered to, and why, on the top page and the submit page: by where an author lives, never by
- * nationality or race, because a representative would be required there (site.json "scopeNotice"). */
-function scopeNotice(text = SITE.scopeNotice) {
-  return text ? `<div class="notice"><b>Not offered in the European Union, the European Economic Area, the United Kingdom, China or Thailand.</b> ${esc(text)} See the <a href="./policies/submission.html">Submission Policy</a> and the <a href="./policies/privacy.html">Privacy Policy</a>.</div>\n` : '';
+ * nationality or race, because a law there requires, or is reported to require, a representative, local storage or
+ * registration (site.json "notOffered" and "scopeNotice"). */
+const placeList = (names) => names.length < 2 ? names.join('') : names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1];
+const notOfferedPlaces = (L = SITE.notOffered || []) => placeList(L.map((p) => p.place));
+function scopeNotice(text = SITE.scopeNotice, L = SITE.notOffered || []) {
+  return text ? `<div class="notice"><b>Not offered in ${L.length} places.</b> ${esc(text)} The places are ${esc(notOfferedPlaces(L))}. See the <a href="./policies/submission.html">Submission Policy</a>, which gives the law of each, and the <a href="./policies/privacy.html">Privacy Policy</a>.</div>\n` : '';
 }
 
 /* The day the records last changed: a record added, a new version, a note, an update, a withdrawal or a removal.
@@ -1113,7 +1116,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { SECURITY_HEADERS, robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { SECURITY_HEADERS, robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
