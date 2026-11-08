@@ -1,0 +1,30 @@
+name: live
+# Checks that the live site serves what main holds in site/ (tools/live.js), byte for byte.
+# After a push to main it waits up to ten minutes for the deployment; once a day it checks again,
+# because a push made by a workflow starts no other workflow. A difference that remains opens an issue,
+# which closes by itself when the site matches.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '41 2 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: live
+  cancel-in-progress: true
+jobs:
+  live:
+    name: The live site serves main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node tools/live.js
+        env:
+          WAIT: ${{ github.event_name == 'push' && '600' || '0' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
