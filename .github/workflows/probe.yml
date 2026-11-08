@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+      - run: sudo apt-get install -y -q poppler-utils > /dev/null
       - run: node probe/repositories.js > /tmp/probe-out.txt 2>&1; tail -3 /tmp/probe-out.txt
       # The output goes to a branch of its own, so that it can be read with git instead of from the log.
       - run: |
