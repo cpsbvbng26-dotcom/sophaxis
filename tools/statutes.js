@@ -55,6 +55,7 @@ function article(main, num, items) {
 
 const TEXTS_FILE = path.join(ROOT, 'verification', 'statutes-texts.json');
 const BRANCH = 'statutes/record';
+const PROPOSAL = '<!-- statutes-proposal -->';
 
 async function main() {
   const results = [];
@@ -215,10 +216,19 @@ async function propose(p) {
   const owner = process.env.GITHUB_REPOSITORY.split('/')[0];
   const open = (await github('GET', '/pulls?state=open&head=' + owner + ':' + encodeURIComponent(BRANCH))) || [];
   const body = p.body + '\n\nRun: ' + process.env.GITHUB_SERVER_URL + '/' + process.env.GITHUB_REPOSITORY + '/actions/runs/' + process.env.GITHUB_RUN_ID;
-  if (open.length) await github('PATCH', '/pulls/' + open[0].number, { body });
-  else {
+  if (open.length) { await github('PATCH', '/pulls/' + open[0].number, { body }); return; }
+  try {
     const pr = await github('POST', '/pulls', { title: p.changed ? T.prTitle : T.seedTitle, head: BRANCH, base: 'main', body });
     if (CONF.labels && CONF.labels.length) await github('POST', '/issues/' + pr.number + '/labels', { labels: CONF.labels });
+  } catch (e) {
+    /* A repository may not let workflows open pull requests (Settings, Actions, "Allow GitHub Actions to create and
+     * approve pull requests"). Then the proposal is an issue with a link that opens the pull request in one step. */
+    if (!/HTTP 403/.test(e.message)) throw e;
+    const link = process.env.GITHUB_SERVER_URL + '/' + process.env.GITHUB_REPOSITORY + '/compare/main...' + BRANCH + '?expand=1';
+    const text = PROPOSAL + '\n' + T.openPr.replace('{link}', link) + '\n\n' + body;
+    const issue = ((await github('GET', '/issues?state=open&per_page=50')) || []).find((i) => !i.pull_request && (i.body || '').startsWith(PROPOSAL));
+    if (issue) await github('PATCH', '/issues/' + issue.number, { body: text });
+    else await github('POST', '/issues', { title: p.changed ? T.prTitle : T.seedTitle, body: text, labels: CONF.labels || [] });
   }
 }
 
@@ -246,6 +256,6 @@ async function report(odd) {
   }
 }
 
-module.exports = { diff, sentences, proposal, withChangelog, BRANCH };
+module.exports = { diff, sentences, proposal, withChangelog, BRANCH, PROPOSAL };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

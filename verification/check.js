@@ -2541,6 +2541,10 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
     Rc.allowed('statutes/record', ['verification/statutes.json', 'verification/statutes-texts.json', 'CHANGELOG.md']) && !Rc.allowed('statutes/record', ['verification/statutes.json', 'tools/statutes.js'])
     && !Rc.allowed('other', ['verification/statutes.json']) && !Rc.allowed('statutes/record', []) && Rc.mergeTitle(150, 'Record') === 'Record (#150)'
     && read(path.join(ROOT, 'tools', 'record.js')).includes("Co-authored-by: ' + BOT") && read(path.join(ROOT, 'tools', 'record.js')).indexOf("['node', 'verification/check.js']") < read(path.join(ROOT, 'tools', 'record.js')).indexOf("git('push', '-q', 'origin', 'HEAD:main')"));
+  const sj = read(path.join(ROOT, 'tools', 'statutes.js'));
+  ok('where workflows may not open pull requests, the proposal is an issue with a link that opens it, and recording closes that issue',
+    sj.includes("if (!/HTTP 403/.test(e.message)) throw e;") && sj.includes("'/compare/main...' + BRANCH + '?expand=1'") && S.text.openPr.includes('{link}') && S.text.openPr.includes('add the label `record`')
+    && St.PROPOSAL === '<!-- statutes-proposal -->' && read(path.join(ROOT, 'tools', 'record.js')).includes("startsWith('<!-- statutes-proposal -->')"));
   const rw = read(path.join(ROOT, '.github', 'workflows', 'record.yml'));
   ok('the record workflow acts only on the owner\'s label on the watch\'s own branch, one change to main at a time',
     rw.includes("github.event.label.name == 'record'") && rw.includes('github.event.sender.login == github.repository_owner') && rw.includes("github.event.pull_request.head.ref == 'statutes/record'")
