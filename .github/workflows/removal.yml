@@ -17,6 +17,9 @@ on:
         required: true
         type: choice
         options: [hold, release, remove, remove-pdf, no-archive]
+      grounds:
+        description: The grounds of the decision, without personal data (needed for remove, remove-pdf and no-archive; the authors receive them in their submission issue)
+        required: false
   schedule:
     - cron: '17 0 * * *'
 permissions:
@@ -94,6 +97,7 @@ jobs:
           MODE: manual
           ID: ${{ inputs.id }}
           ACTION: ${{ inputs.action }}
+          GROUNDS: ${{ inputs.grounds }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # A push made by this workflow starts no other workflow, so the search engines are told here (tools/indexnow.js).
       - run: node tools/indexnow.js

@@ -361,9 +361,19 @@ async function decide() {
   await label(n, [], ['held']);
 }
 
+/* A decision on a request sent by email has no removal issue. Its grounds go to the authors in their submission issue,
+ * before that issue is emptied, so that GitHub sends them to the authors who follow it (DSA Article 17(4)). */
+const CHALLENGE_EMAIL = 'The decision can be challenged within six months, free of charge, by email to the address on the operator\'s ORCID record. The operator reviews it; no automatic step does. A court, or an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act, can also be asked.';
+function emailDecision({ id, action, grounds, today }) {
+  const what = { remove: 'The record ' + id + ' is removed, as the Takedown Policy sets out, and this issue is emptied afterwards.', 'remove-pdf': 'The PDF copies of ' + id + ' are taken off the site; the record links to the repository only.', 'no-archive': 'The record ' + id + ' is no longer saved to the Internet Archive.' }[action];
+  return [NOTICE, '**Upheld** (' + today + '). A request about ' + id + ' sent by email was upheld.', what, 'Grounds: ' + grounds, 'No automatic step took part in this decision.', CHALLENGE_EMAIL].join('\n');
+}
+
 async function manual() {
   const id = process.env.ID, action = process.env.ACTION;
   if (!ID.test(id || '')) throw new Error('the id must look like 2026.0001');
+  const grounds = String(process.env.GROUNDS || '').trim();
+  if (['remove', 'remove-pdf', 'no-archive'].includes(action) && !grounds) throw new Error('give the grounds of the decision, without personal data');
   const record = readRecord(id);
   if (action === 'release') {
     if (!isHeld(record) || !restore(id)) throw new Error(id + ' is not offline under review');
@@ -373,6 +383,7 @@ async function manual() {
   }
   const change = plan(action, record, today());
   if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
+  if (action !== 'hold' && record.issue) await I.github('POST', '/issues/' + record.issue + '/comments', { body: emailDecision({ id, action, grounds, today: today() }) });
   write(change);
   commit(action, id, SUMMARY[action](id) + '（運営者の手で）');
   if (action === 'hold') await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id, kind: null, issue: null, held: true }) });
@@ -388,7 +399,7 @@ async function remind() {
   for (const r of dueReminders(open, owner, day)) await I.github('POST', '/issues/' + r.number + '/comments', { body: reminder(r.due) });
 }
 
-module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, DATA_REMEDY, withoutArchive, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];

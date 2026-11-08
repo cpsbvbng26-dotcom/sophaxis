@@ -83,6 +83,19 @@ async function main() {
       else results.push({ label, state: 'same' });
     } catch (err) { results.push({ label, state: 'failed', note: String(err.message || err) }); }
   }
+  /* The privacy statements of the services that handle data for Sophaxis (Vercel's request logs, Apple's mailbox):
+   * the date each gives for its last update. A new date means the operator reads the statement again (APPI Article 25). */
+  for (const e of CONF.pages || []) {
+    const label = e.name;
+    try {
+      const text = (await get(e.url)).replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ');
+      const v = (new RegExp(e.pattern).exec(text) || [])[1];
+      if (!v) results.push({ label, state: 'missing', note: T.missing });
+      else if (!e.value) results.push({ label, state: 'unrecorded', value: v });
+      else if (v !== e.value) results.push({ label, state: 'changed', value: v, note: e.url });
+      else results.push({ label, state: 'same' });
+    } catch (err) { results.push({ label, state: 'failed', note: String(err.message || err) }); }
+  }
 
   for (const r of results) console.log(T.state[r.state] + '  ' + r.label + (r.value ? '  ' + r.value : '') + (r.note ? '  (' + r.note + ')' : ''));
   const odd = results.filter((r) => r.state !== 'same');
