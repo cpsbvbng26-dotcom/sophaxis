@@ -2536,7 +2536,8 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
   ok('the changelog line goes under today, as a new date when needed, with (#PR) for the number',
     St.withChangelog('# C\n\n## 2026-11-08\n\n- a\n', '2026-11-08', '- b (#PR).') === '# C\n\n## 2026-11-08\n\n- b (#PR).\n- a\n'
     && St.withChangelog('# C\n\n## 2026-11-08\n\n- a\n', '2026-11-20', '- b (#PR).') === '# C\n\n## 2026-11-20\n\n- b (#PR).\n\n## 2026-11-08\n\n- a\n'
-    && S.changelog.line.endsWith('(#PR).') && Rc.fillNumber(S.changelog.line, 150).endsWith('(#150).'));
+    && S.changelog.line.endsWith('(#PR).') && S.changelog.seedLine.endsWith('(#PR).') && Rc.fillNumber(S.changelog.line, 150).endsWith('(#150).')
+    && read(path.join(ROOT, 'tools', 'statutes.js')).includes('p.changed ? CONF.changelog.line : CONF.changelog.seedLine'));
   ok('the label `record` merges only the watch\'s branch and only the files it writes, titles the merge as GitHub does here, and names the workflow as co-author',
     Rc.allowed('statutes/record', ['verification/statutes.json', 'verification/statutes-texts.json', 'CHANGELOG.md']) && !Rc.allowed('statutes/record', ['verification/statutes.json', 'tools/statutes.js'])
     && !Rc.allowed('other', ['verification/statutes.json']) && !Rc.allowed('statutes/record', []) && Rc.mergeTitle(150, 'Record') === 'Record (#150)'

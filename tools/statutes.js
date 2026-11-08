@@ -205,9 +205,9 @@ async function propose(p) {
   fs.writeFileSync(TEXTS_FILE, JSON.stringify(p.texts, null, 2) + '\n');
   const files = [path.relative(ROOT, FILE), path.relative(ROOT, TEXTS_FILE)];
   /* Where a changelog must cite every merged pull request, the line carries (#PR), which tools/record.js fills in. */
-  if (CONF.changelog && p.changed) {
+  if (CONF.changelog) {
     const f = path.join(ROOT, CONF.changelog.file);
-    fs.writeFileSync(f, withChangelog(fs.readFileSync(f, 'utf8'), today, CONF.changelog.line));
+    fs.writeFileSync(f, withChangelog(fs.readFileSync(f, 'utf8'), today, p.changed ? CONF.changelog.line : CONF.changelog.seedLine));
     files.push(CONF.changelog.file);
   }
   git('add', ...files);
