@@ -168,6 +168,7 @@ function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
       '- [ ] delete those issues, so that their edit history goes too (by hand; only the owner can)',
       '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)',
       '- [ ] ask GitHub to remove the material from the repository history (by hand)',
+      '- [ ] a follow-up issue lists what is left by hand, with a draft to the Internet Archive, and ticks it as it becomes true',
       'The removal applies wherever the site is read, and it is permanent.'];
   const archive = ['- [x] the record of ' + id + ' is no longer saved to the Internet Archive', '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)'];
   const changes = kind && (kind.removes || ['pdf-copy', 'archive-consent'].includes(kind.slug));
@@ -199,6 +200,61 @@ function dueReminders(issues, owner, today) {
 }
 
 const reminder = (due) => REMIND + '\nThe operator aims to answer this request by ' + due + ' (Japan time). It has had no answer from the operator yet.';
+
+/* ------------------------------------------------------------ the follow-up of a removal (pure) */
+
+/* After a removal, three things are left to the operator (Takedown Policy, "What a removed record leaves"):
+ * deleting the emptied issues, asking the Internet Archive to exclude its copies, and asking GitHub about the history.
+ * A follow-up issue lists them with drafts. The daily step ticks the first two by itself once they are true
+ * (a deleted issue answers 410 or 404; the Wayback Machine lists no capture), and closes the issue when all are ticked. */
+const FOLLOW = '<!-- sophaxis-follow-up -->';
+const FOLLOW_DAYS = 7;
+const archived = (id) => [{ url: SITE.baseUrl.replace(/^https?:\/\//, '') + 'abs/' + id + '.html', prefix: false }, { url: SITE.baseUrl.replace(/^https?:\/\//, '') + 'pdf/' + id + 'v', prefix: true }];
+const cdxUrl = (a) => 'https://web.archive.org/cdx/search/cdx?output=json&limit=1&url=' + encodeURIComponent(a.url) + (a.prefix ? '&matchType=prefix' : '');
+
+function followUpBody({ id, issues, today, done = {} }) {
+  const state = { id, issues, today, done };
+  const box = (k) => (done[k] ? '[x]' : '[ ]');
+  const page = SITE.baseUrl + 'abs/' + id + '.html';
+  return [FOLLOW, '<!-- ' + JSON.stringify(state) + ' -->',
+    'The record ' + id + ' was removed on ' + today + '. What is left by hand is listed here. The daily step ticks the first two by itself once they are true, and closes this issue when all three are ticked.',
+    '',
+    '- ' + box('issues') + ' The emptied issues are deleted' + (issues.length ? ': ' + issues.map((n) => '#' + n).join(', ') : ' (there are none)') + '. Only the owner of the repository can: open each issue, and on the right side bar, under "Notifications", click "Delete issue", then "Delete this issue".',
+    '- ' + box('archive') + ' The Wayback Machine of the Internet Archive lists no capture of the record page or its PDF copies. Send the request below to info@archive.org, as its help page asks; it promises no outcome.',
+    '- ' + box('github') + ' GitHub has been asked about the repository history, where that applies. Tick this by hand. GitHub\'s own procedure is to rewrite the history first and then contact GitHub Support, and GitHub Support helps only with sensitive data whose risk cannot be removed otherwise; other earlier versions stay in the history, as the Takedown Policy says.',
+    '',
+    '<details><summary>Request to the Internet Archive</summary>',
+    '',
+    '```',
+    'To: info@archive.org',
+    'Subject: Exclusion request: ' + page,
+    '',
+    'I run Sophaxis (' + SITE.baseUrl + '), and have controlled the site since ' + SITE.since + '.',
+    'The record ' + id + ' was removed from Sophaxis on ' + today + ' under its Takedown Policy (' + SITE.baseUrl + 'policies/takedown.html).',
+    'Please exclude these from the Wayback Machine, for all time periods:',
+    '- ' + page,
+    '- every address beginning with ' + SITE.baseUrl + 'pdf/' + id + 'v (the PDF copies of the record)',
+    'The robots.txt of the site also asks your crawlers not to collect them again.',
+    '```',
+    '',
+    '</details>',
+  ].join('\n');
+}
+
+/* Pure: the state written into a follow-up issue, or null. */
+function followUpState(body) {
+  const m = /<!-- (\{[\s\S]*?\}) -->/.exec(String(body || ''));
+  if (!String(body || '').startsWith(FOLLOW) || !m) return null;
+  try { return JSON.parse(m[1]); } catch (e) { return null; }
+}
+
+/* Pure: a box ticked by hand in the issue counts as done too. */
+function tickedByHand(body) {
+  const b = String(body || '');
+  return { issues: /- \[x\] The emptied issues are deleted/i.test(b), archive: /- \[x\] The Wayback Machine/i.test(b), github: /- \[x\] GitHub has been asked/i.test(b) };
+}
+
+const followUpReminder = () => FOLLOW + '\nSome of the follow-up of this removal is still open. The list above shows what.';
 
 /* ------------------------------------------------------------ files and git */
 
@@ -322,7 +378,9 @@ async function decideWithdrawal(n, labels, decision) {
   if (change.skip || change.problems.length) return say('The record could not be removed automatically (' + (change.skip || change.problems.join('; ')) + '). The operator does it by hand.');
   write(change);
   commit('remove', form.id, SUMMARY.remove(form.id) + '（#' + n + '、著者の求め）');
-  console.log('emptied: ' + (await erase(record)).map((x) => '#' + x).join(', '));
+  const emptied = await erase(record);
+  await openFollowUp(form.id, emptied, today());
+  console.log('emptied: ' + emptied.map((x) => '#' + x).join(', '));
 }
 
 async function decide() {
@@ -353,7 +411,7 @@ async function decide() {
       if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
       write(change);
       commit(action, form.id, SUMMARY[action](form.id) + '（#' + n + '、削除依頼を認めた）');
-      if (action === 'remove') emptied = await erase(record);
+      if (action === 'remove') { emptied = await erase(record); await openFollowUp(form.id, emptied, day); }
       done = true;
     } catch (e) { console.error(action + ': ' + e.message); }
   }
@@ -387,7 +445,55 @@ async function manual() {
   write(change);
   commit(action, id, SUMMARY[action](id) + '（運営者の手で）');
   if (action === 'hold') await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id, kind: null, issue: null, held: true }) });
-  if (action === 'remove') console.log('emptied: ' + (await erase(record)).map((x) => '#' + x).join(', '));
+  if (action === 'remove') {
+    const emptied = await erase(record);
+    await openFollowUp(id, emptied, today());
+    console.log('emptied: ' + emptied.map((x) => '#' + x).join(', '));
+  }
+}
+
+async function openFollowUp(id, issues, day) {
+  const issue = await I.github('POST', '/issues', { title: '[Follow-up] ' + id + ' removed', body: followUpBody({ id, issues, today: day }), labels: ['follow-up'] });
+  console.log('follow-up: #' + issue.number);
+  return issue.number;
+}
+
+/* The daily step: tick what has become true, close what is done, and remind once a week of what is not. */
+async function followUps() {
+  const open = (await I.github('GET', '/issues?state=open&per_page=100&labels=follow-up')) || [];
+  for (const i of open.filter((x) => !x.pull_request)) {
+    const st = followUpState(i.body);
+    if (!st) continue;
+    const done = Object.assign({}, st.done, Object.fromEntries(Object.entries(tickedByHand(i.body)).filter(([, v]) => v)));
+    if (!done.issues) {
+      let gone = 0;
+      for (const n of st.issues) {
+        const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + '/issues/' + n, { headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'User-Agent': 'sophaxis' } });
+        if (r.status === 410 || r.status === 404) gone++;
+      }
+      done.issues = gone === st.issues.length;
+    }
+    if (!done.archive) {
+      let none = 0;
+      for (const a of archived(st.id)) {
+        try {
+          const r = await fetch(cdxUrl(a), { headers: { 'User-Agent': 'sophaxis (+' + SITE.baseUrl + ')' } });
+          const rows = r.ok ? JSON.parse((await r.text()) || '[]') : null;
+          if (Array.isArray(rows) && rows.length <= 1) none++;
+        } catch (e) { /* asked again tomorrow */ }
+      }
+      done.archive = none === archived(st.id).length;
+    }
+    const body = followUpBody({ id: st.id, issues: st.issues, today: st.today, done });
+    if (body !== i.body) await I.github('PATCH', '/issues/' + i.number, { body });
+    if (done.issues && done.archive && done.github) {
+      await I.github('POST', '/issues/' + i.number + '/comments', { body: FOLLOW + '\nEverything left by hand is done. Closing.' });
+      await I.github('PATCH', '/issues/' + i.number, { state: 'closed', state_reason: 'completed' });
+      continue;
+    }
+    const last = (await comments(i.number)).filter((c) => c.body.startsWith(FOLLOW)).map((c) => c.created_at).concat([i.created_at]).sort().pop();
+    if (Date.now() - Date.parse(last) >= FOLLOW_DAYS * 86400000) await I.github('POST', '/issues/' + i.number + '/comments', { body: followUpReminder() });
+  }
 }
 
 async function remind() {
@@ -397,9 +503,10 @@ async function remind() {
   for (const l of ['removal', 'withdrawal']) open.push(...((await I.github('GET', '/issues?state=open&per_page=100&labels=' + l)) || []));
   for (const i of open) i.comments_list = await comments(i.number);
   for (const r of dueReminders(open, owner, day)) await I.github('POST', '/issues/' + r.number + '/comments', { body: reminder(r.due) });
+  await followUps();
 }
 
-module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, followUpBody, followUpState, tickedByHand, archived, cdxUrl, FOLLOW, FOLLOW_DAYS, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];
