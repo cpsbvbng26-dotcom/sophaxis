@@ -2014,14 +2014,15 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml' };
+  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
   ok('the daily and weekly times on the page are those of the schedules (' + jst(cronOf('removal.yml')) + ', Monday ' + jst(cronOf('watch.yml')) + ' Japan time)',
     auto.includes('## Once a day, at ' + jst(cronOf('removal.yml')) + ' Japan time') && auto.includes('## Once a week, on Monday at ' + jst(cronOf('watch.yml')) + ' Japan time')
+    && auto.includes('and once a day at ' + jst(cronOf('live.yml')) + ' Japan time, every file in `site/` is fetched from the live site') && cronOf('live.yml').endsWith(' * * *')
     && cronOf('watch.yml').endsWith(' * * 1') && cronOf('statutes.yml') === cronOf('watch.yml') && cronOf('removal.yml').endsWith(' * * *') && (Number(cronOf('watch.yml').split(' ')[1]) + 9) < 24);
   ok('the page says that no step decides, uses a language model or holds another key, and names the one step that acts before a decision',
     ['No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.', 'No step uses a language model. The steps are ordinary code.',
@@ -2410,7 +2411,7 @@ console.log('\n64. The statutes and GitHub terms the legal review relies on are 
   ok('every watched article has its e-Gov law id, its law title, the SHA-256 of its text and a law of the review', unrec.length === 0, unrec.join(' / '));
   ok('the privacy statements of Vercel and Apple, which handle data for Sophaxis, are watched by the date of their last update',
     ['Vercel Privacy Notice', 'Apple Privacy Policy'].every((n) => (S.pages || []).some((p) => p.name === n)) && S.pages.every((p) => /^https:\/\//.test(p.url) && new RegExp(p.pattern).source.split('(').length === 2 && /^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(p.value || ''))
-    && read(at('tools/statutes.js')).includes('for (const e of CONF.pages || [])'));
+    && read(at('tools/statutes.js')).includes('for (const [i, e] of (CONF.pages || []).entries())'));
   ok('every watched GitHub term has its latest commit', S.policies.length >= 2 && S.policies.every((p) => /^[0-9a-f]{40}$/.test(p.commit || '')));
   const wf = read(at('.github/workflows/statutes.yml'));
   ok('the watch runs weekly, may open an issue, and also runs on a pull request', /cron: '\d+ \d+ \* \* \d'/.test(wf) && wf.includes('issues: write') && wf.includes('pull_request:') && wf.includes('node tools/statutes.js'));
@@ -2512,6 +2513,54 @@ console.log('\n66. Every duty of the cited articles, clause by clause, is met by
   ok('the legal review gives the counts (' + T.length + ' duties: ' + met + ' met, ' + na + ' not applying, ' + open.length + ' open) and lists every open duty',
     rv.includes(T.length + ' duties: ' + met + ' met, ' + na + ' that do not apply, and ' + open.length + ' open.') && open.every((u) => rv.includes('- ' + u.law + ' ' + u.article + ': ' + u.open)));
   ok('the three laws read clause by clause are the GDPR, the Digital Services Act and the APPI with its Order and Rules', ['GDPR', 'DSA', 'APPI'].every((l) => T.some((u) => u.law === l)) && T.every((u) => ['GDPR', 'DSA', 'APPI'].includes(u.law)));
+}
+
+console.log('\n67. The watch proposes a pull request; the label `record` merges it after the checks; the live site is compared; removals are followed up');
+{
+  const St = require('../tools/statutes.js');
+  const Rc = require('../tools/record.js');
+  const Lv = require('../tools/live.js');
+  const R = require('../tools/removal.js');
+  const S = JSON.parse(read(path.join(__dirname, 'statutes.json')));
+  ok('a changed article is shown as a difference of its sentences', St.diff('第一条 A。第二条 B。', '第一条 A。第二条 C。第三条 D。') === '  第一条 A。\n- 第二条 B。\n+ 第二条 C。\n+ 第三条 D。');
+  const res = [{ kind: 'statute', i: 0, label: 'X 1', state: 'changed', value: 'h2', title: 'T', text: '甲。乙。' }, { kind: 'statute', i: 1, label: 'X 2', state: 'same', text: '丙。' },
+    { kind: 'policy', i: 0, label: 'P', state: 'changed', value: 'c2', note: 'https://github.com/o/r/compare/c1...c2' }, { kind: 'page', i: 0, label: 'G', state: 'same' }];
+  const conf = { statutes: [{ sha256: 'h1', title: 'T' }, { sha256: 'h', title: 'T' }], policies: [{ commit: 'c1' }], pages: [{ value: 'June 1, 2026' }], recorded: '2026-11-08' };
+  const pr = St.proposal(res, conf, { 'X 1': '甲。', 'X 2': '丙。' }, '2026-11-20');
+  ok('the proposal records the new values and texts, dates them, and shows each change; nothing new proposes nothing',
+    pr.changed === 2 && pr.conf.statutes[0].sha256 === 'h2' && pr.conf.policies[0].commit === 'c2' && pr.conf.recorded === '2026-11-20' && pr.texts['X 1'] === '甲。乙。'
+    && pr.body.includes('```diff\n  甲。\n+ 乙。\n```') && pr.body.includes('compare/c1...c2') && pr.body.includes('add the label `record`') && conf.statutes[0].sha256 === 'h1'
+    && St.proposal(res.map((r) => Object.assign({}, r, { state: 'same' })), conf, { 'X 1': '甲。乙。', 'X 2': '丙。' }, '2026-11-20') === null);
+  const seed = St.proposal([res[1]], conf, {}, '2026-11-20');
+  ok('texts that match but are not stored yet are stored without changing any value', seed && seed.changed === 0 && seed.texts['X 2'] === '丙。' && seed.conf.recorded === '2026-11-08');
+  ok('the changelog line goes under today, as a new date when needed, with (#PR) for the number',
+    St.withChangelog('# C\n\n## 2026-11-08\n\n- a\n', '2026-11-08', '- b (#PR).') === '# C\n\n## 2026-11-08\n\n- b (#PR).\n- a\n'
+    && St.withChangelog('# C\n\n## 2026-11-08\n\n- a\n', '2026-11-20', '- b (#PR).') === '# C\n\n## 2026-11-20\n\n- b (#PR).\n\n## 2026-11-08\n\n- a\n'
+    && S.changelog.line.endsWith('(#PR).') && Rc.fillNumber(S.changelog.line, 150).endsWith('(#150).'));
+  ok('the label `record` merges only the watch\'s branch and only the files it writes, titles the merge as GitHub does here, and names the workflow as co-author',
+    Rc.allowed('statutes/record', ['verification/statutes.json', 'verification/statutes-texts.json', 'CHANGELOG.md']) && !Rc.allowed('statutes/record', ['verification/statutes.json', 'tools/statutes.js'])
+    && !Rc.allowed('other', ['verification/statutes.json']) && !Rc.allowed('statutes/record', []) && Rc.mergeTitle(150, 'Record') === 'Record (#150)'
+    && read(path.join(ROOT, 'tools', 'record.js')).includes("Co-authored-by: ' + BOT") && read(path.join(ROOT, 'tools', 'record.js')).indexOf("['node', 'verification/check.js']") < read(path.join(ROOT, 'tools', 'record.js')).indexOf("git('push', '-q', 'origin', 'HEAD:main')"));
+  const rw = read(path.join(ROOT, '.github', 'workflows', 'record.yml'));
+  ok('the record workflow acts only on the owner\'s label on the watch\'s own branch, one change to main at a time',
+    rw.includes("github.event.label.name == 'record'") && rw.includes('github.event.sender.login == github.repository_owner') && rw.includes("github.event.pull_request.head.ref == 'statutes/record'")
+    && rw.includes('github.event.pull_request.head.repo.full_name == github.repository') && rw.includes('group: removal') && read(path.join(ROOT, '.github', 'workflows', 'statutes.yml')).includes('pull-requests: write'));
+  const files = Lv.served(fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => fs.statSync(path.join(ROOT, 'site', f)).isFile()).map((f) => f.split(path.sep).join('/')));
+  ok('the live check fetches every file of site/ but the Vercel configuration and the functions (' + files.length + ' files)',
+    files.length > 50 && files.every((x) => x.url.startsWith('https://sophaxis.vercel.app/')) && !files.some((x) => x.file === 'vercel.json' || x.file.startsWith('api/'))
+    && files.find((x) => x.file === 'index.html').url === 'https://sophaxis.vercel.app/' && read(path.join(ROOT, '.github', 'workflows', 'live.yml')).includes("WAIT: ${{ github.event_name == 'push' && '600' || '0' }}"));
+  const fb = R.followUpBody({ id: '2026.0009', issues: [3, 12], today: '2026-11-20' });
+  const st = R.followUpState(fb);
+  ok('a removal opens a follow-up that carries its state, the three things left by hand, and the request to the Internet Archive',
+    st.id === '2026.0009' && st.issues.join() === '3,12' && fb.includes('info@archive.org') && fb.includes('https://sophaxis.vercel.app/abs/2026.0009.html') && fb.includes('pdf/2026.0009v')
+    && fb.includes('"Delete issue"') && fb.includes('GitHub Support helps only with sensitive data') && R.followUpState('no') === null);
+  ok('a box ticked by hand counts, the ticks are written back, and the Wayback Machine is asked for the page and every PDF copy',
+    R.tickedByHand(fb.replace('- [ ] GitHub has been asked', '- [x] GitHub has been asked')).github && !R.tickedByHand(fb).github
+    && R.followUpBody({ id: '2026.0009', issues: [3], today: '2026-11-20', done: { issues: true, archive: true } }).includes('- [x] The emptied issues are deleted')
+    && R.archived('2026.0009').map(R.cdxUrl).join() === 'https://web.archive.org/cdx/search/cdx?output=json&limit=1&url=sophaxis.vercel.app%2Fabs%2F2026.0009.html,https://web.archive.org/cdx/search/cdx?output=json&limit=1&url=sophaxis.vercel.app%2Fpdf%2F2026.0009v&matchType=prefix');
+  const rm = read(path.join(ROOT, 'tools', 'removal.js'));
+  ok('every way of removing a record opens the follow-up, and the daily step works through them',
+    (rm.match(/await openFollowUp\(/g) || []).length === 3 && rm.includes('  await followUps();'));
 }
 
 console.log('\n' + '-'.repeat(60));

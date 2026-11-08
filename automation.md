@@ -48,13 +48,15 @@ The code of each step is public, and each section links to it.
 - Acts only on the label of the repository owner.
 - Upheld: removes the record, as "What a removed record leaves" in the Takedown Policy sets out, deletes the automatic comments about it, and empties, closes and locks the issues that name it.
 - Not upheld: puts back what was taken offline, from the git history.
-- Leaves to the operator: the grounds of the decision, deleting the emptied issues, and asking GitHub and the Internet Archive to remove earlier copies.
+- After a removal, opens a follow-up issue that lists what is left by hand: deleting the emptied issues, a request to the Internet Archive with its draft, and GitHub's procedure for the repository history.
+- Leaves to the operator: the grounds of the decision, deleting the emptied issues, and sending the requests to GitHub and the Internet Archive.
 - A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id and, for a decision, the grounds, which are posted in the authors' submission issue before it is emptied.
 
 ## Once a day, at 09:17 Japan time
 
 - Reads: the open removal requests and the verified withdrawals.
 - Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
+- Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
 
 ## On every push and every pull request
 
@@ -66,15 +68,24 @@ The code of each step is public, and each section links to it.
 - Vercel serves the files that the repository holds in `site/`, which `build.js` builds from the records. The OAI-PMH interface is a small function on Vercel that reads the same records.
 - Once the new pages are live, the search engines that take IndexNow are told which record pages and PDF copies are new, changed or gone, and the new and changed ones are saved to the Internet Archive, if their authors consented to it. A gone page is never saved.
 - Earlier versions of the site that Vercel keeps are not open to the public.
+- After every push to main, and once a day at 11:41 Japan time, every file in `site/` is fetched from the live site and compared byte for byte with main. A difference that remains after ten minutes (a deployment that failed, or that the daily limit of the free plan refused) opens an issue, which closes by itself when the site matches.
+- Code: [tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js), run by [live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml).
 - `robots.txt` is built with the rest of the site, and asks the Internet Archive's crawlers not to collect any removed record, or any record whose authors did not consent to the saves.
 - Code: [tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js), run by [indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) and after each push of the removal step.
 
 ## Once a week, on Monday at 13:37 Japan time
 
 - Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub, and the privacy statements of Vercel and Apple, from their sites.
-- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; an issue when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
-- Leaves to the operator: acting on what the issue reports.
+- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; a pull request when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`, with the new values and texts and, for an article, the difference of its sentences; an issue when one of them cannot be read; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
+- Leaves to the operator: acting on what the issue reports, and reading the difference before recording it.
 - Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
+
+## When the operator labels the watch's pull request `record`
+
+- Acts only on the label of the repository owner, and only on the branch `statutes/record`, which may change only `verification/statutes.json`, `verification/statutes-texts.json` and the changelog.
+- Merges it into main, fills in the changelog's pull request number, runs every check and the watch itself on the merged result, and pushes only if all pass. The merge names the workflow as co-author.
+- Leaves to the operator: reading the difference, and changing the policies first if the change requires it.
+- Code: [tools/record.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/record.js), run by [record.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/record.yml).
 
 ## Only when the operator runs it
 
@@ -84,7 +95,8 @@ The code of each step is public, and each section links to it.
 ## What stays by hand
 
 - Every decision, and its grounds.
-- Deleting emptied issues.
-- Asking GitHub to remove material from the repository history, and the Internet Archive to exclude earlier copies.
+- Deleting emptied issues, which the follow-up issue lists.
+- Asking GitHub to remove material from the repository history, and the Internet Archive to exclude earlier copies, with the drafts in the follow-up issue.
+- Recording a changed text of law or terms, by the label `record`.
 - Registering Sophaxis with indexes and registries.
 - Answering email.

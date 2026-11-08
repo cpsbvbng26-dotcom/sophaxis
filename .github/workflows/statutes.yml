@@ -2,7 +2,9 @@ name: statutes
 # Once a week, beside the watch: the articles of Japanese law and the GitHub terms that docs/legal-review.md relies on are
 # fetched from the e-Gov law API and from github/site-policy, and the update dates of Vercel's and Apple's privacy
 # statements from their sites, and all are compared with verification/statutes.json.
-# A difference opens an issue, which closes when everything matches again. On a pull request it only prints.
+# A change is proposed as a pull request from statutes/record, with the difference of each text; the operator records it
+# by the label `record` (record.yml). A failed fetch opens an issue, which closes when everything is read again.
+# On a pull request it only prints.
 on:
   schedule:
     - cron: '37 4 * * 1'
@@ -10,8 +12,9 @@ on:
   pull_request:
     paths: ['tools/statutes.js', 'verification/statutes.json', '.github/workflows/statutes.yml']
 permissions:
-  contents: read
+  contents: write
   issues: write
+  pull-requests: write
 jobs:
   statutes:
     name: The texts the legal review relies on

@@ -1,0 +1,34 @@
+name: record
+# When the repository owner adds the label `record` to a pull request that a watch proposed (statutes/record),
+# tools/record.js merges it into main, runs the checks on the merged result, and pushes only if they pass.
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+# One change to main at a time, with the removal workflow.
+concurrency:
+  group: removal
+  cancel-in-progress: false
+jobs:
+  record:
+    if: github.event.label.name == 'record' && github.event.sender.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'statutes/record'
+    name: Record what the watch proposed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      # The inputs reach the script only through the environment.
+      - run: node tools/record.js
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+          TITLE: ${{ github.event.pull_request.title }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
