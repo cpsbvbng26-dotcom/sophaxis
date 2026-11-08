@@ -125,13 +125,13 @@ The operator's GitHub account, the only one that can change the repository, uses
 GitHub's own procedure is to rewrite the history first and then ask GitHub Support, which helps only with sensitive data whose risk cannot be removed otherwise; where it does not help, the earlier versions stay in the history.
 A follow-up issue lists these steps, with the request to the Internet Archive.
 Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
-This rule depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.
-Sophaxis relies on the submitter's confirmation and does not check where authors live.
-A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
-From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.
+From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
 A provisionally registered work is not on the site.
@@ -139,5 +139,5 @@ The models only assist. No model accepts or declines a submission; every decisio
 The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
 The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.html) says it is not.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
-The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives, and declines the submission unless the author lives elsewhere.
+The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.

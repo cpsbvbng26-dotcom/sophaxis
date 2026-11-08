@@ -16,18 +16,20 @@ A submission that does not pass both is not listed.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
 A submitter under 18 needs the consent of a parent or guardian.
-From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.
+From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
-From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 28 places in the table below, and the submitter confirms this in the form.
+From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 28 places in the table below, or who stays in one between the submission and the listing, and the submitter confirms this in the form.
+A stay counts even if it is short, such as for travel, work or study.
+Stays count because the laws of several of these places reach people who are there, not only people who live there; Article 3(2) of the GDPR, for example, speaks of data subjects who are in the Union.
 Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](./privacy.html) says more.
-This rule depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.
-An author of any nationality who lives elsewhere can submit, and an author who lives there cannot, whatever their nationality.
+This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+An author of any nationality who lives elsewhere and does not stay there can submit, and an author who lives or stays there cannot, whatever their nationality.
 The reasons are laws that require a local representative, the storage of personal data in the country, or registration there (among them Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act; Article 53 of China's Personal Information Protection Law; section 37(5) of Thailand's Personal Data Protection Act), which Sophaxis, run unpaid by one person within free services, does not have; the operator has decided not to appoint a representative, as the Privacy Policy explains.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
-Sophaxis relies on the submitter's confirmation and does not check where authors live.
-If it turns out that an author lives there, the record is removed under the [Takedown Policy](./takedown.html), and the operator reviews the decision on a representative.
+Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.html), and the operator reviews the decision on a representative.
 
 | Place | What the law requires | Law | Read at its source |
 | --- | --- | --- | --- |

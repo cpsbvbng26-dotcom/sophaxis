@@ -81,7 +81,7 @@ The pages and the PDF copies of a work whose authors consent to it are saved to 
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
 An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
 Sophaxis copies nothing from the community, and the operator does not change the records in it.
-A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
 Copies that others have already taken are outside Sophaxis's control.
 
@@ -188,8 +188,8 @@ The operator gives those grounds in writing.
 ## People in the European Union and the United Kingdom
 
 From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
-It does not list work by an author who lives there, and the submission form asks the submitter to confirm it.
-This depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.
+It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.
+This depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 Anyone can read the site, but Sophaxis does not direct itself to people there.
 The operator therefore considers that the General Data Protection Regulation and the UK GDPR do not reach Sophaxis under Article 3(2).
 The rights in this section are honoured all the same, as far as they apply.
@@ -217,7 +217,7 @@ A record of the processing is kept in the public repository, in `docs/records-of
 
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 Article 53 of China's Personal Information Protection Law requires a processor abroad that offers products or services to people in China to set up an agency or designate a representative in China, and Sophaxis has none.
-This depends only on where a person lives, not on nationality, race, ethnic origin or any other personal characteristic.
+This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
 
 ## People in Thailand
@@ -225,7 +225,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
 Section 37(5) of Thailand's Personal Data Protection Act requires a controller abroad that offers goods or services to people in Thailand to designate in writing a representative in Thailand, and Sophaxis has none.
 Section 38 exempts a controller that engages in the profession or business of processing personal data without a large amount of it; Sophaxis is not a business, so the exemption is not relied on.
-This depends only on where a person lives, not on nationality, race, ethnic origin or any other personal characteristic.
+This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
 
 ## People in the other places
@@ -233,10 +233,10 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.html) lists either.
 Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
-Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
-From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.
+Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
+From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
-This depends only on where a person lives, not on nationality, race, ethnic origin or any other personal characteristic.
+This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
 
 ## Changes to this policy

@@ -7,7 +7,7 @@ Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, Met
 
 - **Acceptance is moderation, not peer review.** The quality of listed work is not guaranteed.
 - **No fees.** Sophaxis charges nothing, to authors or to readers.
-- **Not offered in 28 places**, among them the European Union, the European Economic Area, the United Kingdom, China, Thailand and Russia; the Submission Policy lists them all, with the law of each. From 2026-11-22 Sophaxis does not list work by an author who lives there. This depends only on where an author lives, not on nationality, race or ethnic origin. The reason is laws that require, or are reported to require, a local representative, the storage of personal data there, or registration there (among them GDPR and UK GDPR Article 27, EU Digital Services Act Article 13, China's Personal Information Protection Law Article 53 and Thailand's Personal Data Protection Act section 37(5)), and Sophaxis has none of these.
+- **Not offered in 28 places**, among them the European Union, the European Economic Area, the United Kingdom, China, Thailand and Russia; the Submission Policy lists them all, with the law of each. From 2026-11-22 Sophaxis does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly. This depends only on where an author lives or stays, not on nationality, race or ethnic origin. The reason is laws that require, or are reported to require, a local representative, the storage of personal data there, or registration there (among them GDPR and UK GDPR Article 27, EU Digital Services Act Article 13, China's Personal Information Protection Law Article 53 and Thailand's Personal Data Protection Act section 37(5)), and Sophaxis has none of these.
 - **Language models and other generative models are allowed when disclosed.** No generative model can be an author.
 - Sophaxis assigns no DOIs. The DOI comes from the repository.
 - It keeps an unmodified copy of the PDF where the repository allows it, so that search engines can index the full text.
@@ -217,7 +217,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 受理はモデレーションであり、査読ではありません。載った稿の質は保証しません。
 - 稿の中身・権利・生成モデルの開示の責任は、すべて著者が負います。法律が許す範囲で、第三者からの請求も著者の責任です。
 - 読む側からも書く側からも、費用を取りません。
-- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない 28 の国と地域に住んでいる作品は載せません。欧州連合・欧州経済領域・英国・中国・タイ・ロシアなどです。一覧と、それぞれの法令は、投稿の規程の表にあります。これらの国と地域には、現地に代理人を置くことや、個人データを国内に保存することなどを求める法令があり、Sophaxis はそれを満たせないためです。決めているのは住んでいる場所だけで、国籍・人種・民族によるものではありません。
+- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない 28 の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。旅行・出張・留学のような短い滞在も含みます。欧州連合・欧州経済領域・英国・中国・タイ・ロシアなどです。一覧と、それぞれの法令は、投稿の規程の表にあります。これらの国と地域には、現地に代理人を置くことや、個人データを国内に保存することなどを求める法令があり、Sophaxis はそれを満たせないためです。決めているのは住んでいる場所と滞在している場所だけで、国籍・人種・民族によるものではありません。
 - 言語モデルなどの生成モデルを使った稿は、使い方の開示を条件に受けます。画像や図を作るモデルも同じです。生成モデルは著者になれません。
 - DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
 - 検索エンジンが本文を読めるように、預け先が許す場合は PDF を変えずに写して置きます。
