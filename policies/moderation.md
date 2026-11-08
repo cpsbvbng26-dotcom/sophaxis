@@ -21,6 +21,8 @@ It does not judge whether the work is correct, original or important.
 - The submitter has confirmed that every author agrees and that the version may be shared.
 - From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
 - The work is not spam, not abusive and does not expose personal data of third parties.
+- The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives, and declines the submission unless the author lives elsewhere.
+- The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
 
 ## What moderation does not check
 
@@ -51,7 +53,8 @@ A moderator who declines a submission names one or more of these reasons, with a
 - Licence: the DOI metadata does not carry an accepted licence.
 - Authorship: the submitter could not be confirmed as an author, or not every author agrees.
 - Disclosure: the statement on generative models is missing or does not say how they were used.
-- Rights or personal data: the work contains material that the authors may not share, or personal data of third parties.
+- Rights or personal data: the work contains material that the authors may not share, or personal data of third parties, or the PDF carries a notice of rights that contradicts its licence.
+- Where the authors live: an author lives in a place where Sophaxis is not offered.
 - Spam or abuse.
 
 The submitter can answer in the issue.

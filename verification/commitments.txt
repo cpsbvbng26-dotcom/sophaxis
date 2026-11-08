@@ -139,3 +139,5 @@ The models only assist. No model accepts or declines a submission; every decisio
 The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
 The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.html) says it is not.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
+The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives, and declines the submission unless the author lives elsewhere.
+The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
