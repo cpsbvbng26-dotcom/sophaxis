@@ -1,0 +1,657 @@
+{
+  "_": "The legal review of Sophaxis as logic. A law is a disjunction (OR) of conjunctions (AND) of elements. In every conjunction, one element must be denied by a sentence in the policies. A law that sets duties lists, for each duty, the sentences that meet it. verification/check.js confirms that the laws match the headings of docs/legal-review.md, that every sentence exists word for word, and that every pair of actor and act is covered.",
+  "laws": {
+    "Copyright (Copyright Act of Japan, Articles 21 and 23)": {
+      "forms": [
+        {
+          "elements": [
+            "a work of another person",
+            "reproduction or public transmission",
+            "without permission or licence"
+          ],
+          "denied": "without permission or licence",
+          "by": [
+            {
+              "file": "policies/licences.md",
+              "text": "Sophaxis lists only work under one of these licences:"
+            },
+            {
+              "file": "policies/licences.md",
+              "text": "Licences with NonCommercial or NoDerivatives terms are not accepted."
+            },
+            {
+              "file": "policies/copyright.md",
+              "text": "The accepted licences allow this."
+            }
+          ]
+        },
+        {
+          "elements": [
+            "text that another person wrote in a form",
+            "public transmission",
+            "without permission"
+          ],
+          "denied": "without permission",
+          "by": [
+            {
+              "file": "policies/licences.md",
+              "text": "Text written in the forms before 2026-11-21 is shown with the record by the permission its writer gave"
+            }
+          ]
+        }
+      ]
+    },
+    "Moral rights (Copyright Act of Japan, Articles 19 and 20)": {
+      "forms": [
+        {
+          "elements": [
+            "a work",
+            "alteration against the will of the author"
+          ],
+          "denied": "alteration against the will of the author",
+          "by": [
+            {
+              "file": "policies/copyright.md",
+              "text": "No changes: the PDF copy is the deposited file, byte for byte, with every notice it carries."
+            }
+          ]
+        },
+        {
+          "elements": [
+            "a work",
+            "making it public without the author's name as the author wishes"
+          ],
+          "denied": "making it public without the author's name as the author wishes",
+          "by": [
+            {
+              "file": "policies/copyright.md",
+              "text": "Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI."
+            }
+          ]
+        }
+      ]
+    },
+    "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)": {
+      "duties": [
+        {
+          "duty": "give credit and name the licence",
+          "by": [
+            {
+              "file": "policies/copyright.md",
+              "text": "Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI."
+            }
+          ]
+        },
+        {
+          "duty": "add no terms or technical measures",
+          "by": [
+            {
+              "file": "policies/copyright.md",
+              "text": "No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do."
+            }
+          ]
+        },
+        {
+          "duty": "imply no endorsement",
+          "by": [
+            {
+              "file": "policies/copyright.md",
+              "text": "No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work."
+            }
+          ]
+        }
+      ]
+    },
+    "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)": {
+      "duties": [
+        {
+          "duty": "apply the Act even if the operator might fall outside it",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "Sophaxis applies Japan's Act on the Protection of Personal Information in full, as if its operator were a business operator under that Act."
+            }
+          ]
+        },
+        {
+          "duty": "specify the purposes and keep to them",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "Personal data is used only for these purposes:"
+            }
+          ]
+        },
+        {
+          "duty": "obtain consent to provision to third parties in a foreign country",
+          "by": [
+            {
+              "file": ".github/ISSUE_TEMPLATE/submission.yml",
+              "text": "Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel, ORCID and the Internet Archive in the United States"
+            }
+          ]
+        },
+        {
+          "duty": "make the Article 32 items known, including the address",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "The operator's address is not published; it is given on request, without delay."
+            }
+          ]
+        },
+        {
+          "duty": "take in no more than the identity check needs",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "It reads the name, the websites and the works of the ORCID record given in the form."
+            }
+          ]
+        },
+        {
+          "duty": "confirm who asks before answering",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "Before answering a request about personal data, the operator confirms who is asking, through the ORCID record or by email."
+            }
+          ]
+        }
+      ]
+    },
+    "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)": {
+      "duties": [
+        {
+          "duty": "state the decision on a representative",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27)."
+            }
+          ]
+        },
+        {
+          "duty": "a basis for transfers without safeguards",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "it rests on the author's explicit consent (Article 49(1)(a))."
+            }
+          ]
+        },
+        {
+          "duty": "keep a record of processing",
+          "by": [
+            {
+              "file": "docs/records-of-processing.md",
+              "text": "Records hold only information that is public already."
+            }
+          ]
+        },
+        {
+          "duty": "let consent be withdrawn",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "That consent can be withdrawn at any time, by a removal issue or by email"
+            }
+          ]
+        },
+        {
+          "duty": "data portability",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "structured, commonly used and machine-readable form (Article 20)"
+            }
+          ]
+        },
+        {
+          "duty": "the ground for no representative",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "The operator also considers that the exception in Article 27(2)(a) applies"
+            }
+          ]
+        }
+      ]
+    },
+    "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)": {
+      "duties": [
+        {
+          "duty": "take down exposure of personal data at once",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically"
+            }
+          ]
+        },
+        {
+          "duty": "remove material that the law requires removed",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "The first is removal required by law, such as copyright infringement or exposure of personal data."
+            }
+          ]
+        }
+      ]
+    },
+    "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)": {
+      "duties": [
+        {
+          "duty": "act on notices",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "Notices of illegal content (Article 16): a removal issue, or an email."
+            }
+          ]
+        },
+        {
+          "duty": "disclose a sender only as the law requires, after asking them",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "The operator first asks the person concerned for their opinion."
+            },
+            {
+              "file": "policies/takedown.md",
+              "text": "The operator discloses nothing that the law does not require."
+            }
+          ]
+        }
+      ]
+    },
+    "The Digital Services Act of the European Union": {
+      "duties": [
+        {
+          "duty": "a point of contact",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12)"
+            }
+          ]
+        },
+        {
+          "duty": "reasons for decisions",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "Reasons for a decision (Article 17): the operator gives the grounds of every decision in the removal issue, or by email."
+            }
+          ]
+        },
+        {
+          "duty": "a free challenge",
+          "by": [
+            {
+              "file": "policies/takedown.md",
+              "text": "It costs nothing. The operator reviews it and answers, and the review is never left to an automatic step."
+            }
+          ]
+        }
+      ]
+    },
+    "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)": {
+      "forms": [
+        {
+          "elements": [
+            "a consumer contract",
+            "a clause that excludes liability in full, or in part without limiting it to slight negligence"
+          ],
+          "denied": "a clause that excludes liability in full, or in part without limiting it to slight negligence",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence."
+            },
+            {
+              "file": "policies/terms.md",
+              "text": "Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it."
+            }
+          ]
+        },
+        {
+          "elements": [
+            "a consumer contract",
+            "a clause that takes a consumer's inaction as agreement and harms the consumer one-sidedly"
+          ],
+          "denied": "a clause that takes a consumer's inaction as agreement and harms the consumer one-sidedly",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "Silence, or continuing to use Sophaxis, is not taken as agreement to a change."
+            }
+          ]
+        }
+      ]
+    },
+    "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)": {
+      "duties": [
+        {
+          "duty": "announce a change before it takes effect",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date."
+            }
+          ]
+        },
+        {
+          "duty": "agreement in the form, to the version of the day",
+          "by": [
+            {
+              "file": ".github/ISSUE_TEMPLATE/submission.yml",
+              "text": "I have read and agree to the Terms of Use and the other policies"
+            }
+          ]
+        },
+        {
+          "duty": "take no silence or continued use as agreement",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "Silence, or continuing to use Sophaxis, is not taken as agreement to a change."
+            },
+            {
+              "file": "policies/terms.md",
+              "text": "A change is made only as Article 548-4 of Japan's Civil Code allows"
+            }
+          ]
+        },
+        {
+          "duty": "bind a co-author who never agreed only as the law does",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so"
+            }
+          ]
+        }
+      ]
+    },
+    "Trade and advertising (Act on Specified Commercial Transactions; Act against Unjustifiable Premiums and Misleading Representations)": {
+      "forms": [
+        {
+          "elements": [
+            "a seller or a provider of services for a fee",
+            "a transaction or a representation about it"
+          ],
+          "denied": "a seller or a provider of services for a fee",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "It does this free of charge."
+            },
+            {
+              "file": "policies/terms.md",
+              "text": "No change will introduce fees."
+            }
+          ]
+        }
+      ]
+    },
+    "Names and marks (Trademark Act; Unfair Competition Prevention Act)": {
+      "forms": [
+        {
+          "elements": [
+            "another person's mark or well-known indication",
+            "use as one's own indication in trade",
+            "confusion or suggested affiliation"
+          ],
+          "denied": "confusion or suggested affiliation",
+          "by": [
+            {
+              "file": "disclaimer.md",
+              "text": "Their names are used only to identify their services, and belong to their owners."
+            },
+            {
+              "file": "disclaimer.md",
+              "text": "It is not affiliated with, endorsed by or a partner of any repository it lists"
+            }
+          ]
+        }
+      ]
+    },
+    "Minors (Civil Code, Article 5)": {
+      "duties": [
+        {
+          "duty": "no submission under 13",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "From 2026-11-21, a person under 13 cannot submit."
+            },
+            {
+              "file": "policies/submission.md",
+              "text": "From 2026-11-21, a person under 13 cannot submit."
+            }
+          ]
+        },
+        {
+          "duty": "consent of a parent or guardian under 18",
+          "by": [
+            {
+              "file": "policies/terms.md",
+              "text": "A person under 18 may submit only with the consent of a parent or guardian."
+            }
+          ]
+        }
+      ]
+    },
+    "The terms of the services used (GitHub, Vercel, ORCID)": {
+      "duties": [
+        {
+          "duty": "stay within Vercel's Hobby plan, which is for non-commercial use",
+          "by": [
+            {
+              "file": "disclaimer.md",
+              "text": "Sophaxis is served only within the free services of GitHub and Vercel"
+            },
+            {
+              "file": "policies/terms.md",
+              "text": "It does this free of charge."
+            }
+          ]
+        },
+        {
+          "duty": "use only the public ORCID record, and only what the check needs",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "It reads the name, the websites and the works of the ORCID record given in the form."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "actors": [
+    "operator",
+    "submitting author",
+    "co-author",
+    "reader",
+    "harvester or search engine",
+    "third party"
+  ],
+  "acts": [
+    "receive a submission",
+    "publish a record",
+    "keep a PDF copy",
+    "offer for reuse",
+    "keep data and logs",
+    "remove or withdraw",
+    "reach abroad"
+  ],
+  "coverage": {
+    "operator": {
+      "receive a submission": [
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Minors (Civil Code, Article 5)",
+        "Standard terms and their change (Civil Code, Articles 548-2 to 548-4)",
+        "The terms of the services used (GitHub, Vercel, ORCID)"
+      ],
+      "publish a record": [
+        "Copyright (Copyright Act of Japan, Articles 21 and 23)",
+        "Moral rights (Copyright Act of Japan, Articles 19 and 20)",
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)",
+        "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
+        "Names and marks (Trademark Act; Unfair Competition Prevention Act)"
+      ],
+      "keep a PDF copy": [
+        "Copyright (Copyright Act of Japan, Articles 21 and 23)",
+        "Moral rights (Copyright Act of Japan, Articles 19 and 20)",
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "offer for reuse": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)",
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+      ],
+      "keep data and logs": [
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
+      ],
+      "remove or withdraw": [
+        "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
+        "The Digital Services Act of the European Union",
+        "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)"
+      ],
+      "reach abroad": [
+        "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)",
+        "The Digital Services Act of the European Union",
+        "The terms of the services used (GitHub, Vercel, ORCID)"
+      ]
+    },
+    "submitting author": {
+      "receive a submission": {
+        "does not occur": "only the operator receives submissions"
+      },
+      "publish a record": [
+        "Copyright (Copyright Act of Japan, Articles 21 and 23)",
+        "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
+        "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)"
+      ],
+      "keep a PDF copy": [
+        "Copyright (Copyright Act of Japan, Articles 21 and 23)"
+      ],
+      "offer for reuse": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "keep data and logs": {
+        "does not occur": "an author keeps no one's data for Sophaxis"
+      },
+      "remove or withdraw": [
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+      ],
+      "reach abroad": [
+        "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
+      ]
+    },
+    "co-author": {
+      "receive a submission": {
+        "does not occur": "only the operator receives submissions"
+      },
+      "publish a record": [
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Moral rights (Copyright Act of Japan, Articles 19 and 20)"
+      ],
+      "keep a PDF copy": [
+        "Copyright (Copyright Act of Japan, Articles 21 and 23)"
+      ],
+      "offer for reuse": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "keep data and logs": {
+        "does not occur": "a co-author keeps no one's data for Sophaxis"
+      },
+      "remove or withdraw": [
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)"
+      ],
+      "reach abroad": [
+        "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
+      ]
+    },
+    "reader": {
+      "receive a submission": {
+        "does not occur": "only the operator receives submissions"
+      },
+      "publish a record": {
+        "does not occur": "a reader publishes nothing on Sophaxis"
+      },
+      "keep a PDF copy": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "offer for reuse": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "keep data and logs": [
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)",
+        "The terms of the services used (GitHub, Vercel, ORCID)"
+      ],
+      "remove or withdraw": [
+        "The Digital Services Act of the European Union"
+      ],
+      "reach abroad": [
+        "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
+        "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
+      ]
+    },
+    "harvester or search engine": {
+      "receive a submission": {
+        "does not occur": "only the operator receives submissions"
+      },
+      "publish a record": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "keep a PDF copy": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "offer for reuse": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)",
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+      ],
+      "keep data and logs": [
+        "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 27, 28 and 32)"
+      ],
+      "remove or withdraw": [
+        "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)"
+      ],
+      "reach abroad": [
+        "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
+      ]
+    },
+    "third party": {
+      "receive a submission": {
+        "does not occur": "only the operator receives submissions"
+      },
+      "publish a record": [
+        "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
+        "Copyright (Copyright Act of Japan, Articles 21 and 23)",
+        "Names and marks (Trademark Act; Unfair Competition Prevention Act)"
+      ],
+      "keep a PDF copy": [
+        "Copyright (Copyright Act of Japan, Articles 21 and 23)"
+      ],
+      "offer for reuse": [
+        "The conditions of the accepted licences (CC BY 4.0, CC BY-SA 4.0, CC0 1.0)"
+      ],
+      "keep data and logs": [
+        "The terms of the services used (GitHub, Vercel, ORCID)"
+      ],
+      "remove or withdraw": [
+        "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
+        "The Digital Services Act of the European Union"
+      ],
+      "reach abroad": [
+        "The Digital Services Act of the European Union",
+        "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
+      ]
+    }
+  }
+}

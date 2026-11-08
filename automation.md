@@ -71,10 +71,10 @@ The code of each step is public, and each section links to it.
 
 ## Once a week, on Monday at 13:37 Japan time
 
-- Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work.
-- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; a summary of the run; a save of every page and PDF copy to the Internet Archive.
+- Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub.
+- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; an issue when an article of law or a GitHub term differs from the value recorded in `verification/statutes.json`; a summary of the run; a save of every page and PDF copy to the Internet Archive.
 - Leaves to the operator: acting on what the issue reports.
-- Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js).
+- Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
 
 ## Only when the operator runs it
 

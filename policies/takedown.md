@@ -42,6 +42,7 @@ A removal issue is acknowledged automatically, with the day by which the operato
 When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
 The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
+A request about the requester's own personal data concerns that person, not the work, so the authors are not told of it.
 Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 

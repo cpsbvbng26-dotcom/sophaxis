@@ -1251,9 +1251,11 @@ console.log('\n35. General terms: notice of changes, precedence, severability, w
 {
   const terms = read(path.join(ROOT, 'policies', 'terms.md'));
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
-  ok('a change against authors or readers is announced on the top page at least 14 days ahead, with what changes and from when; others take effect when published',
+  ok('a change against authors or readers is announced on the top page at least 14 days ahead, with what changes and from when; others take effect on the date shown, never before publication; changes follow Civil Code Article 548-4, and silence or continued use is not agreement',
     terms.includes('is announced on the top page before it takes effect, with what changes and from which date.') && terms.includes('The announcement comes at least 14 days ahead')
-    && terms.includes('Other changes, such as clearer wording or new examples, take effect when they are published.') && terms.includes('a person who does not accept it can stop using Sophaxis'));
+    && terms.includes('Other changes, such as clearer wording or new examples, take effect on the date the page shows, which is never before the day they are published.')
+    && terms.includes('A change is made only as Article 548-4 of Japan\'s Civil Code allows') && terms.includes('Silence, or continuing to use Sophaxis, is not taken as agreement to a change.')
+    && !/means accepting it/.test(terms) && terms.includes('A person who does not accept a change can stop using Sophaxis'));
   ok('the announcement is one setting in site.json, and the top page shows it exactly when it is set',
     'termsNotice' in site && termsNotice({ text: 'Fees stay at zero.', from: '2027-01-15' }).includes('<b>Change to the policies from 2027-01-15.</b> Fees stay at zero.')
     && termsNotice(null) === '' && read(path.join(ROOT, 'site', 'index.html')).includes('Change to the policies from') === !!(site.termsNotice && site.termsNotice.text));
@@ -1919,7 +1921,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
     said[0].startsWith(R.MARK) && said[0].includes('aims to answer by 2026-11-15 (Japan time)') && said[0].includes('taken offline at once, before the decision. This is not a decision on the request.')
     && said[1].includes('the operator does it by hand') && said[2].includes('stays online while the request is reviewed') && said.slice(0, 3).every((t) => t.includes('It decides nothing; the operator decides.')));
   ok('the authors are told and can respond; the operator\'s decision lists what is done and what is left by hand; a request not upheld puts material back',
-    said[3].includes('in #9') && said[3].includes('If the request is not upheld, they are put back.') && said[3].includes('can respond')
+    said[3].includes('in #9') && said[3].includes('If the request is not upheld, it is put back.') && said[3].includes('The record page (its title, authors, abstract and PDF copy) is offline while it is reviewed.') && said[3].includes('can respond')
     && said[4].includes('- [ ] ask the Internet Archive to exclude its earlier copies (by hand)') && said[4].includes('- [x] every automatic comment about the record is deleted')
     && said[4].includes('- [x] the issues that name it are emptied, closed and locked: #3, #12') && said[4].includes('- [ ] delete those issues, so that their edit history goes too')
     && said[5].includes('put back') && said[6] === 'Removed.'
@@ -2012,15 +2014,15 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml' };
+  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
   ok('the daily and weekly times on the page are those of the schedules (' + jst(cronOf('removal.yml')) + ', Monday ' + jst(cronOf('watch.yml')) + ' Japan time)',
     auto.includes('## Once a day, at ' + jst(cronOf('removal.yml')) + ' Japan time') && auto.includes('## Once a week, on Monday at ' + jst(cronOf('watch.yml')) + ' Japan time')
-    && cronOf('watch.yml').endsWith(' * * 1') && cronOf('removal.yml').endsWith(' * * *') && (Number(cronOf('watch.yml').split(' ')[1]) + 9) < 24);
+    && cronOf('watch.yml').endsWith(' * * 1') && cronOf('statutes.yml') === cronOf('watch.yml') && cronOf('removal.yml').endsWith(' * * *') && (Number(cronOf('watch.yml').split(' ')[1]) + 9) < 24);
   ok('the page says that no step decides, uses a language model or holds another key, and names the one step that acts before a decision',
     ['No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.', 'No step uses a language model. The steps are ordinary code.',
       'No step signs in to any account.', 'One step acts before the operator decides: when a removal issue reports exposure of personal data'].every((x) => auto.includes(x)));
@@ -2331,6 +2333,84 @@ console.log('\n62. The workflows use actions that run on Node.js 24, and Dependa
   const old = uses.filter((u) => u.v < 5).map((u) => u.f + ': ' + u.a + '@v' + u.v);
   ok('every checkout and setup-node (' + uses.length + ') is v5 or later, which runs on Node.js 24', uses.length > 0 && old.length === 0, old.join(', '));
   ok('Dependabot watches the versions of the GitHub Actions, monthly', /package-ecosystem: github-actions[\s\S]*interval: monthly/.test(read(path.join(ROOT, '.github', 'dependabot.yml'))));
+}
+
+console.log('\n63. The legal review as logic: every element denied or duty met, every pair of actor and act covered, the risks ranked');
+{
+  const at = (f) => path.join(ROOT, f);
+  const M = JSON.parse(read(at('verification/legal-matrix.json')));
+  const rev = read(at('docs/legal-review.md'));
+  // The laws are the ### headings of the "Laws" section, one for one with the matrix.
+  const part = rev.split('\n## Laws\n')[1].split('\n## ')[0];
+  const heads = [...part.matchAll(/^### (.+)$/gm)].map((m) => m[1]);
+  const keys = Object.keys(M.laws);
+  ok('the matrix and the laws of docs/legal-review.md match one for one (' + heads.length + ' laws)',
+    heads.length > 0 && heads.length === keys.length && heads.every((h) => keys.includes(h)),
+    heads.filter((h) => !keys.includes(h)).concat(keys.filter((k) => !heads.includes(k))).join(' / '));
+  // In every conjunction one element is denied by a sentence that exists word for word; every duty is met by one.
+  const bad = [];
+  let forms = 0, duties = 0;
+  for (const [law, d] of Object.entries(M.laws)) {
+    if (!(d.forms || []).length && !(d.duties || []).length) bad.push(law + ': no elements and no duties');
+    for (const f of d.forms || []) {
+      forms++;
+      if (!f.elements.includes(f.denied)) bad.push(law + ': the denied element is not one of its elements (' + f.denied + ')');
+      if (!(f.by || []).length) bad.push(law + ': nothing denies ' + f.denied);
+      for (const b of f.by || []) if (!read(at(b.file)).includes(b.text)) bad.push(law + ': not in ' + b.file + ': ' + b.text);
+    }
+    for (const u of d.duties || []) {
+      duties++;
+      if (!(u.by || []).length) bad.push(law + ': nothing meets ' + u.duty);
+      for (const b of u.by || []) if (!read(at(b.file)).includes(b.text)) bad.push(law + ': not in ' + b.file + ': ' + b.text);
+    }
+  }
+  ok('in every conjunction an element is denied, and every duty is met, by a sentence in the policies (' + forms + ' conjunctions, ' + duties + ' duties)', bad.length === 0, bad.join(' / '));
+  // Coverage: every pair of actor and act has a law, or a reason why it cannot occur.
+  const holes = [];
+  for (const a of M.actors) for (const v of M.acts) {
+    const c = (M.coverage[a] || {})[v];
+    if (Array.isArray(c)) { if (!c.length || c.some((h) => !keys.includes(h))) holes.push(a + ' × ' + v); }
+    else if (!(c && typeof c['does not occur'] === 'string' && c['does not occur'].length)) holes.push(a + ' × ' + v);
+  }
+  const n = M.actors.length * M.acts.length;
+  ok('every one of the ' + n + ' pairs of actor and act is covered, or cannot occur with a reason', holes.length === 0, holes.join(' / '));
+  ok('docs/legal-review.md states the number of pairs', rev.includes('Every one of the ' + n + ' pairs'));
+  // The risks: numbered from 1, likelihood and severity 1 to 3, product as multiplied, highest first.
+  const rows = [...rev.split('\n## Risks that remain\n')[1].split('\n## ')[0].matchAll(/^\| (\d+) \| [^|]+ \| (\d) \| (\d) \| (\d) \|/gm)].map((m) => m.slice(1, 5).map(Number));
+  ok('the table of risks has rows (' + rows.length + ')', rows.length >= 5);
+  ok('the risks are numbered from 1, each likelihood and severity is 1 to 3, and each product is their product',
+    rows.every(([k, l, v, x], i) => k === i + 1 && l >= 1 && l <= 3 && v >= 1 && v <= 3 && x === l * v),
+    rows.filter(([k, l, v, x], i) => !(k === i + 1 && x === l * v)).map((r) => r.join(',')).join(' / '));
+  ok('the risks are ranked by product, highest first', rows.every((r, i) => i === 0 || rows[i - 1][3] >= r[3]));
+  ok('docs/legal-review.md says it is not legal advice and has not been reviewed by a lawyer',
+    rev.includes('it is neither legal advice nor a guarantee, and it has not been reviewed by a lawyer.'));
+}
+
+console.log('\n64. The statutes and GitHub terms the legal review relies on are watched each week');
+{
+  const at = (f) => path.join(ROOT, f);
+  const S = JSON.parse(read(at('verification/statutes.json')));
+  const M = JSON.parse(read(at('verification/legal-matrix.json')));
+  // Every Japanese law of the review is watched, and every article its heading names.
+  const foreign = /GDPR|Digital Services Act|licences|services used/;
+  const gaps = [];
+  for (const h of Object.keys(M.laws).filter((k) => !foreign.test(k))) {
+    const mine = S.statutes.filter((e) => e.law === h);
+    if (!mine.length) { gaps.push(h + ': not watched'); continue; }
+    const nums = [];
+    for (const seg of h.matchAll(/Articles? ([^;)]+)/g)) {
+      const r = /(\d+)-(\d+) to \1-(\d+)/.exec(seg[1]);
+      if (r) for (let k = Number(r[2]); k <= Number(r[3]); k++) nums.push(r[1] + '_' + k);
+      else for (const n of seg[1].matchAll(/\d+(?:-\d+)?/g)) nums.push(n[0].replace('-', '_'));
+    }
+    for (const n of nums) if (!mine.some((e) => e.article === n)) gaps.push(h + ': Article ' + n.replace('_', '-') + ' not watched');
+  }
+  ok('every Japanese law of docs/legal-review.md, and every article its heading names, is watched (' + S.statutes.length + ' articles)', gaps.length === 0, gaps.join(' / '));
+  const unrec = S.statutes.filter((e) => !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !e.title || !/^\d{3}AC\d{10}$/.test(e.law_id) || !(e.law in M.laws)).map((e) => e.name + ' ' + e.label);
+  ok('every watched article has its law number, its law title, the SHA-256 of its text and a law of the review', unrec.length === 0, unrec.join(' / '));
+  ok('every watched GitHub term has its latest commit', S.policies.length >= 2 && S.policies.every((p) => /^[0-9a-f]{40}$/.test(p.commit || '')));
+  const wf = read(at('.github/workflows/statutes.yml'));
+  ok('the watch runs weekly, may open an issue, and also runs on a pull request', /cron: '\d+ \d+ \* \* \d'/.test(wf) && wf.includes('issues: write') && wf.includes('pull_request:') && wf.includes('node tools/statutes.js'));
 }
 
 console.log('\n' + '-'.repeat(60));

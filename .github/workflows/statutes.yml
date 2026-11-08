@@ -1,0 +1,25 @@
+name: statutes
+# Once a week, beside the watch: the articles of Japanese law and the GitHub terms that docs/legal-review.md relies on are
+# fetched from the e-Gov law API and from github/site-policy, and compared with verification/statutes.json.
+# A difference opens an issue, which closes when everything matches again. On a pull request it only prints.
+on:
+  schedule:
+    - cron: '37 4 * * 1'
+  workflow_dispatch:
+  pull_request:
+    paths: ['tools/statutes.js', 'verification/statutes.json', '.github/workflows/statutes.yml']
+permissions:
+  contents: read
+  issues: write
+jobs:
+  statutes:
+    name: The texts the legal review relies on
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node tools/statutes.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

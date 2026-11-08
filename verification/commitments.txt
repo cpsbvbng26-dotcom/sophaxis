@@ -100,3 +100,5 @@ The record page shows the level the authors chose, above their statement.
 Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
 Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
 For anyone else, the court that the law sets has jurisdiction.
+Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
+A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so; for them, this section describes what the law already places on the authors of a work.

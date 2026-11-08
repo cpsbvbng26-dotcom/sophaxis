@@ -65,6 +65,7 @@ The statement on generative models, an abstract given in the form, a reason for 
 A record also gives the number of its submission issue, which shows the submitter's GitHub username.
 Sophaxis keeps records without a time limit, so that citations do not break.
 A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](./takedown.html) sets out.
+Earlier versions stay in the history of the public repository and in the saves of the Internet Archive; the operator asks GitHub and the Internet Archive to remove them.
 
 ## Reuse and copies elsewhere
 
@@ -81,14 +82,14 @@ Copies that others have already taken are outside Sophaxis's control.
 
 ## Services outside Japan
 
-Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies.
+Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person.
 Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
 The submission form asks for each author's consent to this, after giving the information below; the confirmation is required from 2026-11-21.
 Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
 
 The countries:
 
-- The United States has no general federal law on personal data; some states have their own laws.
+- The United States has no general federal law on personal data; some states have their own laws. There is no single authority for personal data across the country, and the rights a person has over their data depend on the state and the sector.
 - Germany is in the European Union, where the General Data Protection Regulation applies.
 - Japan's Personal Information Protection Commission publishes information on the systems of other countries.
 
@@ -98,7 +99,7 @@ What each service does to protect personal data is set out in its own statement:
 - Vercel: [Vercel Privacy Notice](https://vercel.com/legal/privacy-notice). Vercel says it complies with the EU-U.S. Data Privacy Framework.
 - ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
 - Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
-- The Internet Archive: [Terms of Use](https://archive.org/about/terms).
+- The Internet Archive: [Terms of Use](https://archive.org/about/terms). It receives only the public pages and PDF copies, which hold no personal data beyond what the records already publish.
 
 Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States), and are kept there only as long as needed to answer them and to show the answer.
 What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).
@@ -111,7 +112,7 @@ The operator can see them, and uses them only to find and fix faults.
 Records are built only from information that is public already.
 The automatic checks keep nothing from an ORCID record except the name, the websites and the works.
 The automatic checks run with the least permissions they need.
-Only the operator can change the records, except that the automatic step of the [Takedown Policy](./takedown.html) takes an abstract and a PDF copy offline when a removal issue reports exposure of personal data.
+Only the operator can change the records, except that the automatic step of the [Takedown Policy](./takedown.html) takes the record page (its title, authors, abstract and PDF copy) offline when a removal issue reports exposure of personal data.
 If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned.
 
 The measures, under the headings that Japan's Personal Information Protection Commission uses:
@@ -134,6 +135,7 @@ Every automatic step is listed on the page [What runs by itself](../automation.h
 An author can withdraw a work, have its record removed so that only the Sophaxis id stays, or ask for the PDF copy to be removed.
 A person whose personal data appears in a record can ask for its removal under the [Takedown Policy](./takedown.html).
 A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+Before answering a request about personal data, the operator confirms who is asking, through the ORCID record or by email.
 The operator aims to answer within 7 days.
 Requests cost nothing.
 A complaint about how personal data is handled goes to the same email address.
@@ -148,11 +150,14 @@ Personal data that GitHub or Vercel hold about their own users, such as GitHub a
 For people in the European Union and the United Kingdom, the basis for this use is a legitimate interest: checking who the authors are, and keeping a public scholarly record.
 Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).
 Where a transfer outside the European Union has no adequacy decision or other safeguard, as for the Internet Archive, it rests on the author's explicit consent (Article 49(1)(a)).
+That consent can be withdrawn at any time, by a removal issue or by email; the operator then handles it as a request for removal under the [Takedown Policy](./takedown.html), and what was done before stays lawful.
+A person can also ask to receive the personal data they gave in a structured, commonly used and machine-readable form (Article 20); `papers.json` and the OAI-PMH interface already give every record in that form.
 A person can object to the use of their personal data, and can complain to the data protection authority of their country.
 An objection is handled through the [Takedown Policy](./takedown.html).
 Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
 The operator has decided not to appoint one.
 A representative would be a paid service, or a person in the European Union or the United Kingdom who takes on liability for Sophaxis, and Sophaxis is run unpaid within free services.
+The operator also considers that the exception in Article 27(2)(a) applies: the processing is occasional, includes no special categories of data, and holds only what is public already, so it is unlikely to result in a risk to people's rights.
 The operator reviews this decision when Sophaxis first lists a work by an author other than the operator, and whenever a data protection authority or a person in the European Union or the United Kingdom asks for a representative.
 Each review and its outcome are recorded in the public repository.
 A review weighs two ways forward: appointing a representative, or running Sophaxis through a legal entity.

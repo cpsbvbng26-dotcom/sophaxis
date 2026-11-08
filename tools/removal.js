@@ -3,7 +3,7 @@
  *
  * What runs by itself, and what the operator decides:
  *   - A removal issue is acknowledged at once, with the day by which the operator aims to answer (7 days).
- *   - Where the issue reports exposure of personal data, the abstract and the PDF copy are taken offline at once,
+ *   - Where the issue reports exposure of personal data, the record page (title, authors, abstract, PDF copy) is taken offline at once,
  *     before the decision, as the policy says. The record becomes a notice with the reason "under-review".
  *   - The authors are told in their submission issue, and can respond.
  *   - The decision is the operator's. The operator labels the issue "upheld" or "not-upheld".
@@ -120,9 +120,9 @@ function ack({ form, record, held, failed, due }) {
   const lines = [MARK, '**Removal request received.** The operator aims to answer by ' + due + ' (Japan time), within ' + DAYS + ' days, under the [Takedown Policy](' + SITE.baseUrl + 'policies/takedown.html).', ''];
   if (!form.kind) lines.push('The kind of problem could not be read. The operator reads the request as it is.');
   else if (!ID.test(form.id) || !record) lines.push('There is no record ' + (form.id || '(no id)') + '. Edit the issue to give the Sophaxis id.');
-  else if (held) lines.push('The issue reports exposure of personal data, so the abstract and the PDF copy of ' + form.id + ' were taken offline at once, before the decision. This is not a decision on the request.');
+  else if (held) lines.push('The issue reports exposure of personal data, so the record page of ' + form.id + ' (its title, authors, abstract and PDF copy) was taken offline at once, before the decision. This is not a decision on the request.');
   else if (failed) lines.push('The issue reports exposure of personal data. Taking the material offline automatically did not succeed, so the operator does it by hand.');
-  else if (form.kind.hold && isHeld(record)) lines.push('The abstract and the PDF copy of ' + form.id + ' are already offline while a request is reviewed.');
+  else if (form.kind.hold && isHeld(record)) lines.push('The record page of ' + form.id + ' (its title, authors, abstract and PDF copy) is already offline while a request is reviewed.');
   else lines.push('The record ' + form.id + ' stays online while the request is reviewed.');
   if (form.kind && form.kind.slug === 'data-request') lines.push('', 'Requests cost nothing. Before data is disclosed or changed, the operator confirms who is asking, through the ORCID record or by email to the address on the operator\'s ORCID record. Do not post personal data here.');
   if (record && tellsAuthors(form.kind)) lines.push('', 'The authors are told in their submission issue and can respond.');
@@ -133,14 +133,14 @@ function ack({ form, record, held, failed, due }) {
 function authorNotice({ id, kind, issue, held }) {
   return [NOTICE,
     'A removal request about ' + id + ' (' + (kind ? kind.slug : 'unstated kind') + ') is being reviewed under the [Takedown Policy](' + SITE.baseUrl + 'policies/takedown.html)' + (issue ? ' in #' + issue : ', after a request by email') + '.',
-    held ? 'The abstract and the PDF copy are offline while it is reviewed. If the request is not upheld, they are put back.' : 'The record stays online while it is reviewed.',
+    held ? 'The record page (its title, authors, abstract and PDF copy) is offline while it is reviewed. If the request is not upheld, it is put back.' : 'The record stays online while it is reviewed.',
     'The authors can respond ' + (issue ? 'in #' + issue : 'here') + ', or by email to the address on the operator\'s ORCID record, before the decision.',
   ].join('\n');
 }
 
 function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
   if (decision === 'not-upheld') {
-    return [MARK, '**Not upheld** (' + today + '). The operator gives the reasons in this issue.', restored ? 'The abstract and the PDF copy of ' + id + ' are put back.' : 'Nothing of ' + id + ' was taken offline, so nothing is put back.', CHALLENGE].join('\n');
+    return [MARK, '**Not upheld** (' + today + '). The operator gives the reasons in this issue.', restored ? 'The record page of ' + id + ' (its title, authors, abstract and PDF copy) is put back.' : 'Nothing of ' + id + ' was taken offline, so nothing is put back.', CHALLENGE].join('\n');
   }
   const steps = kind && kind.slug === 'pdf-copy'
     ? ['- [x] the PDF copies of ' + id + ' are taken off the site; the record links to the repository only']
@@ -217,7 +217,7 @@ function commit(action, id, summary) {
 }
 
 const SUMMARY = {
-  hold: (id) => id + ' の要旨と PDF を、削除依頼の審査中は下げる',
+  hold: (id) => id + ' の記録の頁を、削除依頼の審査中は下げる',
   release: (id) => id + ' を戻す（削除依頼は認められなかった）',
   remove: (id) => id + ' を削除の告知に替える',
   'remove-pdf': (id) => id + ' の PDF の写しを外す（著者の依頼）',
@@ -315,7 +315,7 @@ async function decide() {
     if (isHeld(record) && restore(form.id)) { commit('release', form.id, SUMMARY.release(form.id) + '（#' + n + '）'); restored = true; }
     await I.github('POST', '/issues/' + n + '/comments', { body: decisionNote({ id: form.id, decision, kind: form.kind, today: day, restored }) });
     await label(n, [], ['held']);
-    if (record && tellsAuthors(form.kind)) await I.github('POST', '/issues/' + record.issue + '/comments', { body: NOTICE + '\nThe removal request in #' + n + ' was not upheld.' + (restored ? ' The abstract and the PDF copy are back.' : '') });
+    if (record && tellsAuthors(form.kind)) await I.github('POST', '/issues/' + record.issue + '/comments', { body: NOTICE + '\nThe removal request in #' + n + ' was not upheld.' + (restored ? ' The record page is back.' : '') });
     return;
   }
   if (decision !== 'upheld') throw new Error('unknown decision ' + decision);
@@ -342,7 +342,7 @@ async function manual() {
   if (action === 'release') {
     if (!isHeld(record) || !restore(id)) throw new Error(id + ' is not offline under review');
     commit('release', id, SUMMARY.release(id));
-    await I.github('POST', '/issues/' + record.issue + '/comments', { body: NOTICE + '\nThe removal request about ' + id + ' was not upheld. The abstract and the PDF copy are back.' });
+    await I.github('POST', '/issues/' + record.issue + '/comments', { body: NOTICE + '\nThe removal request about ' + id + ' was not upheld. The record page is back.' });
     return;
   }
   const change = plan(action, record, today());
