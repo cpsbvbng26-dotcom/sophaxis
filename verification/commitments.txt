@@ -137,3 +137,5 @@ Each change to the list is announced on the top page before it takes effect, as 
 A provisionally registered work is not on the site.
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
+The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.html) says it is not.
+Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
