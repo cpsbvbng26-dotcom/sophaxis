@@ -5,6 +5,7 @@ The entries are grouped by the date of the merge. Version 1.0.0 was released on 
 
 ## 2026-11-08
 
+- A submission that passes the automatic check is provisionally registered: it is not on the site until a moderator accepts it. The review is helped by Claude, ChatGPT and Grok, given only the public parts of a submission by hand; every decision is taken by a person. The Moderation Policy and the Privacy Policy, in both languages, the form's consent and the comment on a verified submission say so; check 71 holds them. The previous change is #165.
 - The README, in both languages, says that if the number of listed works reaches 1,000, the operator may, after preparation, consider a domain of its own and an international NGO. It is a possibility, not a plan or a promise; no such organisation exists, and no money, donations or members are asked for. Check 70 holds the wording. The previous change is #163.
 - The Japanese rule on where authors live is rewritten as one sentence that says who it is about: a work is not listed if any of its authors lives in one of the places. The README, the Submission Policy and the Privacy Policy, in Japanese, say the same; the rule on India follows the main rule. The previous change is #162.
 - The Japanese of the Submission Policy, the Privacy Policy and the README was rewritten: "所" became "国と地域", the sentences read naturally, and the Japanese table gives each law its Japanese name (`lawJa` in `site.json`, compared by check 69). The previous change is #161.
