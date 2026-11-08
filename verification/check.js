@@ -2441,7 +2441,7 @@ console.log('\n65. The separate consent to the Internet Archive, the residence o
   ok('the draft record keeps the record out of the saves when the box is left empty, and only then',
     /'archive' in form && !\/\^- \\\[\[xX\]\\\] \/m\.test/.test(read(path.join(ROOT, 'tools', 'intake.js'))));
   ok('from ' + site.residenceFrom + ' the form names every place where Sophaxis is not offered, asks that no author lives in one, and the check needs the box',
-    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in any of the places listed above, and no author under 18 lives in India.') && site.notOffered.length >= 23 && res.includes('who live in any of these places (' + B.notOfferedPlaces() + ').')
+    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study), and no author under 18 lives or stays in India.') && site.notOffered.length >= 23 && res.includes('who lives in any of these places, or who stays in one between the submission and the listing, even briefly (' + B.notOfferedPlaces() + ').')
     && site.residenceFrom === '2026-11-22' && read(path.join(ROOT, 'policies', 'submission.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not list work by an author who lives in any of the ' + site.notOffered.length + ' places in the table below')
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not offer its service to people in the European Union'));
   const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
@@ -2573,19 +2573,21 @@ console.log('\n68. Who Sophaxis is not offered to, and why, at the top: by resid
 {
   const B = require('../build.js');
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
-  const N = 'This depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic';
+  const N = 'This depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic';
   const notice = B.scopeNotice();
   const idx = read(path.join(ROOT, 'site', 'index.html')), sub = read(path.join(ROOT, 'site', 'submit.html'));
   ok('the notice says who is not served, that it is by residence and not nationality or race, and that the reason is the representative (GDPR Article 27, DSA Article 13)',
     notice.includes('<b>Not offered in ' + site.notOffered.length + ' places.</b>') && notice.includes('The places are ' + B.notOfferedPlaces() + '.') && site.notOffered.every((p) => notice.includes(p.place))
-    && site.scopeNotice.includes('Article 53 of China\'s Personal Information Protection Law') && site.scopeNotice.includes('section 37(5) of Thailand\'s Personal Data Protection Act') && site.scopeNotice.includes('Article 18(5) of Russia\'s Federal Law No. 152-FZ') && site.scopeNotice.includes(N) && site.scopeNotice.includes('an author of any nationality who lives elsewhere can submit')
+    && site.scopeNotice.includes('Article 53 of China\'s Personal Information Protection Law') && site.scopeNotice.includes('section 37(5) of Thailand\'s Personal Data Protection Act') && site.scopeNotice.includes('Article 18(5) of Russia\'s Federal Law No. 152-FZ') && site.scopeNotice.includes(N) && site.scopeNotice.includes('an author of any nationality who lives elsewhere and does not stay there can submit') && site.scopeNotice.includes('or who stays in one between the submission and the listing, even briefly')
     && site.scopeNotice.includes('Article 27 of the GDPR and of the UK GDPR') && site.scopeNotice.includes('Article 13 of the EU Digital Services Act'));
   ok('the notice stands first on the top page and the submit page, before any other notice',
     idx.indexOf(notice) > 0 && idx.indexOf(notice) < idx.indexOf('Change to the policies from') && idx.indexOf('<h1>') < idx.indexOf(notice) && sub.indexOf(notice) > sub.indexOf('<h1>Submit a preprint</h1>'));
   const sp = read(path.join(ROOT, 'policies', 'submission.md')), sj = read(path.join(ROOT, 'policies', 'submission.ja.md'));
   ok('the Submission Policy, both languages, the README and the form say the same, and that the confirmation is relied on and an untrue one leads to removal',
-    sp.includes('This rule depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.') && sp.includes('Sophaxis relies on the submitter\'s confirmation and does not check where authors live.') && sp.includes('the record is removed under the [Takedown Policy]')
-    && sj.includes('国籍・人種・民族その他の個人の属性によるものではありません。') && sj.includes('Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるかは調べません。')
+    sp.includes('This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.') && sp.includes('Sophaxis relies on the submitter\'s confirmation and does not check where authors live or stay.')
+    && sp.includes('A stay counts even if it is short, such as for travel, work or study.') && sj.includes('滞在には、旅行・出張・留学のような短いものも含みます。')
+    && sp.includes('Article 3(2) of the GDPR, for example, speaks of data subjects who are in the Union.') && sp.includes('the record is removed under the [Takedown Policy]')
+    && sj.includes('国籍・人種・民族その他の個人の属性によるものではありません。') && sj.includes('Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか、どこに滞在しているかは調べません。')
     && read(path.join(ROOT, 'README.md')).includes('not on nationality, race or ethnic origin') && read(path.join(ROOT, 'README.md')).includes('国籍・人種・民族によるものではありません')
     && read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('not on nationality or race'));
 }
@@ -2599,9 +2601,9 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     && ['sections 5, 37(5) and 38', 'Implementing Regulation (SDAIA)', 'G.S.R. 846(E)', 'Article 31-2(1)', 'Article 32-3 (Presidential Decree No. 36671'].every((x) => sec.includes(x))
     && sec.includes('The four laws that #153 left open were read at their sources on 2026-11-08') && !sec.includes('could not be fetched from planalto.gov.br') && !sec.includes('Each is open until it is read.')
     && sec.includes('One duty found in them is met by not offering. From 2027-05-13, Rule 10 of India\'s Digital Personal Data Protection Rules')
-    && sec.includes('so from 2026-11-22 it does not list work by an author under 18 who lives in India.')
-    && read(path.join(ROOT, 'policies', 'submission.md')).includes('From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.')
-    && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('2026-11-22 から、著者のだれかがインドに住む 18 歳未満の人である作品は載せません。'));
+    && sec.includes('so from 2026-11-22 it does not list work by an author under 18 who lives in India.') && rv.includes('the rule on India follows.')
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.')
+    && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。'));
   const sp = read(path.join(ROOT, 'policies', 'submission.md'));
   ok('the rule is stated, a place is added on a reported duty and taken off only after its law is read, and each change is announced',
     sp.includes('The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.') && sp.includes('Article 53 of China\'s Personal Information Protection Law')
@@ -2619,8 +2621,8 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
   ok('the Submission Policy, in both languages, has one row for each of the ' + L.length + ' places in site.json, with its law and whether it was read, and gives the count',
     rowsEn.length === L.length && rowsJa.length === L.length && L.every((p, i) => rowsEn[i].startsWith('| ' + cap(p.place) + ' | ') && rowsEn[i].includes(' | ' + p.law + ' | ' + readEn(p.read) + ' |')
       && rowsJa[i].startsWith('| ' + p.ja + ' | ') && rowsJa[i].endsWith(' | ' + p.lawJa + ' | ' + readJa(p.read) + ' |'))
-    && sp.includes('who lives in any of the ' + L.length + ' places in the table below') && sj.includes('2026-11-22 から、著者のだれかが下の表の ' + L.length + ' の国と地域に住んでいる作品は載せません。')
-    && readme.includes('**Not offered in ' + L.length + ' places**') && readme.includes('- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない ' + L.length + ' の国と地域に住んでいる作品は載せません。'));
+    && sp.includes('who lives in any of the ' + L.length + ' places in the table below, or who stays in one between the submission and the listing') && sj.includes('2026-11-22 から、著者のだれかが下の表の ' + L.length + ' の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。')
+    && readme.includes('**Not offered in ' + L.length + ' places**') && readme.includes('- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない ' + L.length + ' の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。旅行・出張・留学のような短い滞在も含みます。'));
   const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
   const reported = L.filter((p) => p.read !== true);
   const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('### Read at their sources after the screening'));
@@ -2694,11 +2696,11 @@ console.log('\n73. Moderation looks for what would make an untrue confirmation k
 {
   const me = read(path.join(ROOT, 'policies', 'moderation.md')), mj = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
   ok('the Moderation Policy, in both languages, checks for an affiliation or address in a place where Sophaxis is not offered, and asks before deciding',
-    me.includes('- The work shows no affiliation or address of an author in a place where Sophaxis is not offered') && me.includes('the moderator asks the submitter where that author lives, and declines the submission unless the author lives elsewhere.')
-    && mj.includes('Sophaxis を提供しない国と地域の、著者の所属や住所が書かれていない。') && mj.includes('ほかの場所に住んでいるのでなければ断る。'));
+    me.includes('- The work shows no affiliation or address of an author in a place where Sophaxis is not offered') && me.includes('the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.')
+    && mj.includes('Sophaxis を提供しない国と地域の、著者の所属や住所が書かれていない。') && mj.includes('ほかの場所に住み、そこに滞在していないのでなければ断る。'));
   ok('it declines a PDF with a notice of rights that contradicts its licence, and names both as reasons for declining',
     me.includes('- The PDF carries no notice of rights that contradicts the licence in the DOI metadata') && mj.includes('- PDF に、DOI の登録情報のライセンスと食い違う権利の表示')
-    && me.includes('- Where the authors live: an author lives in a place where Sophaxis is not offered.') && mj.includes('- 住んでいる場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいる。'));
+    && me.includes('- Where the authors live or stay: an author lives in a place where Sophaxis is not offered, or stayed in one between the submission and the listing.') && mj.includes('- 住んでいる場所と滞在した場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在した。'));
 }
 
 console.log('\n' + '-'.repeat(60));
