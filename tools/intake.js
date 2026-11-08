@@ -506,7 +506,7 @@ ${rows}
 `;
   if (result.ok && d && d.record && !d.problems.length) {
     out += `
-Identity and licence are verified. This is not acceptance: a moderator still reads the work against the policy.
+Identity and licence are verified. The submission is now provisionally registered: it is not on the site until a moderator accepts it. This is not acceptance: a moderator still reads the work against the policy, and makes the decision.
 
 Draft record \`data/papers/${d.record.id}.json\`. The id is provisional: if another record takes it first, the record is listed under the next free id. An id is never given to a second work.
 

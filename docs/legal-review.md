@@ -177,6 +177,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 32. The countries the first search did not reach were screened too. Four more places were added, from 2026-11-22. India's Rule 10, which this review had recorded as open, is met by not listing work by an author under 18 who lives in India.
 33. The rule now also names conditions before personal data leaves a place that Sophaxis cannot meet. One more place was added on it, from 2026-11-22: Quebec.
 34. The operator signs in to Vercel through the GitHub account that uses two-factor authentication, and the Privacy Policy, in both languages, now says so. With that, the measures taken are stated, as Article 32(1)(iv) of the APPI and Article 10(i) of its Order ask. The policies claim no two-factor authentication for the Vercel and Apple accounts themselves.
+35. A submission that passes the automatic check is provisionally registered and is not on the site until a moderator accepts it. The review is helped by three language models, Claude, ChatGPT and Grok, to which the operator gives by hand only the public parts of a submission; every decision is taken by a person. The Privacy Policy, in both languages, lists Anthropic, OpenAI and xAI as providers outside Japan, and the form asks each author's consent to it.
 
 ## Risks that remain
 
