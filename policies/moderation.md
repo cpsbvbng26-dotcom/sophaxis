@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -46,6 +46,7 @@ A moderator who declines a submission names one or more of these reasons, with a
 
 The submitter can answer in the issue.
 The operator then looks at the submission once more, and that decision is final.
+The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
 
 ## Moderators
 
