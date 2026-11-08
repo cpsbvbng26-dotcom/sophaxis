@@ -79,6 +79,25 @@ No one under 13 may submit, and a person under 18 submits only with the consent 
 
 The site is served only within free services, which keeps it within Vercel's non-commercial Hobby plan, and only the public ORCID record is read.
 
+## Laws of other countries
+
+Each law below was read at its source on 2026-11-08, for whether it reaches Sophaxis and what it would ask.
+
+| Country | Law | What decides whether it applies | Sophaxis |
+| --- | --- | --- | --- |
+| United States | Children's Online Privacy Protection Rule (16 CFR 312, eCFR) | An operator of a website "operated for commercial purposes" | Does not apply: Sophaxis is not commercial. A person under 13 cannot submit all the same. |
+| United States | California Consumer Privacy Act (the Attorney General's page) | A for-profit business with revenue over $25 million, or 100,000 consumers' data bought, sold or shared | Does not apply: Sophaxis is not a business and sells nothing. |
+| United States | 17 U.S.C. 512(c) (Cornell LII) | Its limitation of liability needs an agent designated with the Copyright Office, which charges a fee | Not relied on; the Takedown Policy says so and handles such notices like any other. |
+| United Kingdom | Online Safety Act 2023, sections 3 and 4 (legislation.gov.uk) | A user-to-user service with links with the United Kingdom: a significant number of users there, the United Kingdom as a target market, or a material risk of significant harm there | Sophaxis is not offered in the United Kingdom and lists moderated scholarly preprints. |
+| European Union | Directive 2019/790, Article 2(6) (EUR-Lex) | "Not-for-profit educational and scientific repositories" are not online content-sharing service providers | Article 17 does not apply. |
+| Switzerland | Federal Act on Data Protection, Articles 3 and 14 (Fedlex) | It applies to circumstances with an effect in Switzerland; a representative is needed only if the processing is connected with an offer there and is large-scale, regular and of high risk | Applies, as to authors in Switzerland; no representative is needed, because the processing is neither large-scale nor of high risk. The Privacy Policy names the Commissioner. |
+| Brazil | ANPD Resolution CD/ANPD No. 2 of 2022, Article 11 (gov.br) | A small processing agent, natural persons included, need not appoint an encarregado but must offer a channel to data subjects | The email address on the operator's ORCID record is that channel. The text of the LGPD itself could not be fetched from planalto.gov.br. |
+| China | Personal Information Protection Law, Articles 3 and 53 (the National People's Congress) | A processor abroad that provides products or services to people in China must set up an agency or designate a representative there, with no exception for size | Sophaxis has none, so from 2026-11-22 it is not offered in China, as in the European Union, the European Economic Area and the United Kingdom. |
+| Türkiye | Law No. 6698 on the Protection of Personal Data (the Authority's site) | The law as published states no territorial scope for controllers abroad; registration has derogations set by the Board | No duty for Sophaxis was found in the text read. |
+
+The rule that follows is set out in the Submission Policy: Sophaxis is not offered where a law requires a service offered to people there to have a representative established there, and a place is added only after that law has been read at its source.
+The texts below could not be read at their sources, and are not relied on: Thailand's Personal Data Protection Act, Saudi Arabia's Personal Data Protection Law and India's Digital Personal Data Protection Act (each published as a PDF whose text could not be taken out), and Korea's Personal Information Protection Act (the official English page did not open). Each is open until it is read.
+
 ## Consistency
 
 The comparison found the items below. Each was fixed in the same change as this file.
@@ -111,6 +130,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 26. The operator confirmed on 2026-11-08 that their GitHub account uses two-factor authentication. The Privacy Policy, in both languages, now says so. The Vercel and Apple accounts were not confirmed and are not claimed.
 27. The Takedown Policy promised to ask GitHub to remove a removed record from the repository history, without saying what GitHub does. GitHub's guide on removing sensitive data and its Private Information Removal Policy, read in their sources on 2026-11-08, say that the owner rewrites the history first and that GitHub Support helps only with sensitive data whose risk cannot be removed otherwise. The policy now says so, and that the earlier versions stay where GitHub does not help. The Internet Archive's help page, read the same day, asks for exclusion requests at info@archive.org and promises no outcome; the follow-up issue of each removal carries such a request.
 28. The Terms said that using the site meant accepting them. A reader who only reads has made no agreement, and Article 548-2 of the Civil Code binds a party to standard terms only where they agreed to them or were told beforehand that the terms form the contract. The Terms now say that authors agree in the submission form, and that reading is not taken as agreement; for readers, the law decides what each side owes.
+29. The laws of other countries were read at their sources ("Laws of other countries"). China's Personal Information Protection Law asks a representative of a processor abroad that serves people in China, with no exception for size; Sophaxis is therefore not offered in China either, from 2026-11-22, by the same rule as for the European Union. The Takedown Policy now says that Sophaxis does not rely on 17 U.S.C. 512, and the Privacy Policy names the Swiss Commissioner.
 
 ## Risks that remain
 
@@ -123,7 +143,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 | 5 | Someone passes the identity check for a work that is not theirs | 1 | 2 | 2 | The record is removed under the Takedown Policy |
 | 6 | A person under 18 submits without the consent of a parent or guardian | 1 | 2 | 2 | The listing is removed where the law gives that right |
 | 7 | A person or an authority in the European Union or the United Kingdom asks for a representative under the GDPR or the Digital Services Act | 1 | 2 | 2 | The decision is reviewed, as the Privacy Policy sets out |
-| 8 | An author who lives in the European Union, the European Economic Area or the United Kingdom is listed despite the box | 1 | 2 | 2 | The record is removed under the Takedown Policy, and the decision on a representative is reviewed |
+| 8 | An author who lives in the European Union, the European Economic Area, the United Kingdom or China is listed despite the box | 1 | 2 | 2 | The record is removed under the Takedown Policy, and the decision on a representative is reviewed |
 | 9 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
 | 10 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
 
@@ -136,5 +156,5 @@ The duty below, found clause by clause, is met only in part. The rest needs a fa
 ## Limits
 
 Showing that a risk is zero is not possible by logic or by arithmetic. What this review shows is that no law above was left out, that every sentence relied on is in the policies, and that removing one makes the check fail.
-The laws of other countries were not checked one by one, beyond those named above. The articles of the GDPR and the Digital Services Act that the policies cite were read on 2026-11-08 in EUR-Lex, and those of the UK GDPR at legislation.gov.uk; the Japanese articles are watched each week. Of the terms relied on, DataCite's CC0 waiver for its metadata, ORCID's terms for its public APIs, Vercel's limit of the Hobby plan to non-commercial use, and the clauses of the three accepted licences were read at their sources on the same day. Apple's and Vercel's privacy statements, Schedule 2 of Vercel's Data Processing Addendum and the Personal Information Protection Commission's Q&A 7-53 and 7-54 were read at their sources on the same day. Crossref's statement on the reuse of its metadata was not found at its documented address, and the Internet Archive's terms need a script to show, so neither was read.
+The laws of other countries were checked as far as "Laws of other countries" sets out, and no further. The articles of the GDPR and the Digital Services Act that the policies cite were read on 2026-11-08 in EUR-Lex, and those of the UK GDPR at legislation.gov.uk; the Japanese articles are watched each week. Of the terms relied on, DataCite's CC0 waiver for its metadata, ORCID's terms for its public APIs, Vercel's limit of the Hobby plan to non-commercial use, and the clauses of the three accepted licences were read at their sources on the same day. Apple's and Vercel's privacy statements, Schedule 2 of Vercel's Data Processing Addendum and the Personal Information Protection Commission's Q&A 7-53 and 7-54 were read at their sources on the same day. Crossref's statement on the reuse of its metadata was not found at its documented address, and the Internet Archive's terms need a script to show, so neither was read.
 Registered trademarks were not searched.

@@ -127,4 +127,6 @@ A follow-up issue lists these steps, with the request to the Internet Archive.
 Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
 This rule depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.
 Sophaxis relies on the submitter's confirmation and does not check where authors live.
-A request to add the record of a work by an author who lives in the European Union, the European Economic Area or the United Kingdom is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+A request to add the record of a work by an author who lives in the European Union, the European Economic Area, the United Kingdom or China is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+The rule is that Sophaxis is not offered where a law requires a service offered to people there to have a representative established there.
+From 2026-11-22, Sophaxis does not offer its service to people in China either.
