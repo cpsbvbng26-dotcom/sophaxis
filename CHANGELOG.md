@@ -5,6 +5,7 @@ The entries are grouped by the date of the merge. Version 1.0.0 was released on 
 
 ## 2026-11-08
 
+- The Japanese of the Submission Policy, the Privacy Policy and the README was rewritten: "所" became "国と地域", the sentences read naturally, and the Japanese table gives each law its Japanese name (`lawJa` in `site.json`, compared by check 69). The previous change is #161.
 - The Privacy Policy, in both languages, says that the operator signs in to Vercel through the GitHub account that uses two-factor authentication. The last open duty of the legal review, the statement of the security measures under the APPI, is met. The previous change is #159.
 - Quebec is added to the places where Sophaxis is not offered, from 2026-11-22. Its private-sector privacy Act asks for an assessment and a written agreement before personal information leaves Quebec, which Sophaxis cannot meet; the rule now names such conditions too, and the list has 28 places. The previous change is #158.
 - The countries left out of the first screening were screened too. A duty to store personal data in the country is reported for Guinea, Madagascar and Bolivia, and a duty to register for Costa Rica, so from 2026-11-22 Sophaxis is not offered in 27 places. From the same day it does not list work by an author under 18 who lives in India, because India's Rule 10 requires, from 2027-05-13, a verified consent of a parent that Sophaxis does not check. The previous change is #157.
