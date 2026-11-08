@@ -104,6 +104,11 @@ Sophaxis takes the worst case here too, and follows the Digital Services Act of 
 - Average monthly active recipients (Article 24(3)): Sophaxis keeps no analytics and no identifiers of readers, and will not start keeping them to produce this figure. On request of a Digital Services Coordinator or the Commission, the operator gives, for each of the last six months, the number of people in the Union who submitted, reported or wrote to Sophaxis, counted from the issues and the email, and says that readers are not counted.
 - The [statistics](../stats.html) count the removed records and link to every public removal request.
 
+## Copyright notices under United States law
+
+Sophaxis has not designated an agent with the United States Copyright Office, which charges a fee, so it does not rely on the limitation of liability in 17 U.S.C. 512.
+A notice of claimed infringement under that law is handled under this policy, like any other request.
+
 ## Requests to disclose who sent material
 
 A request to disclose who submitted material is handled as Japanese law provides.

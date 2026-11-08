@@ -81,7 +81,7 @@ The pages and the PDF copies of a work whose authors consent to it are saved to 
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
 An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
 Sophaxis copies nothing from the community, and the operator does not change the records in it.
-A request to add the record of a work by an author who lives in the European Union, the European Economic Area or the United Kingdom is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+A request to add the record of a work by an author who lives in the European Union, the European Economic Area, the United Kingdom or China is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
 Copies that others have already taken are outside Sophaxis's control.
 
@@ -171,6 +171,7 @@ On request, the operator tells a person which recipients were told of a correcti
 Requests cost nothing.
 A complaint about how personal data is handled goes to the same email address.
 A person can also consult Japan's [Personal Information Protection Commission](https://www.ppc.go.jp/).
+A person in Switzerland can also complain to the Federal Data Protection and Information Commissioner.
 
 These rights are open to everyone, wherever they live.
 Where a person's own law gives them more rights over their personal data, such as the General Data Protection Regulation in the European Union, the operator honours those rights as far as they apply to Sophaxis.
@@ -210,6 +211,13 @@ Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
 People there write to the operator directly, in English or Japanese, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The operator answers them, and the data protection authorities, directly, in place of a representative.
 A record of the processing is kept in the public repository, in `docs/records-of-processing.md`.
+
+## People in China
+
+From 2026-11-22, Sophaxis does not offer its service to people in China either.
+Article 53 of China's Personal Information Protection Law requires a processor abroad that offers products or services to people in China to set up an agency or designate a representative in China, and Sophaxis has none.
+This depends only on where a person lives, not on nationality, race, ethnic origin or any other personal characteristic.
+The rights in "Your choices" are honoured all the same, as far as they apply.
 
 ## Changes to this policy
 

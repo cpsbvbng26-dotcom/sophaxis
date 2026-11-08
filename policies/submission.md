@@ -16,11 +16,13 @@ A submission that does not pass both is not listed.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
 A submitter under 18 needs the consent of a parent or guardian.
-From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and the submitter confirms this in the form.
+From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area, the United Kingdom or China, and the submitter confirms this in the form.
 Sophaxis does not offer its service there, because it has no representative there; the [Privacy Policy](./privacy.html) says more.
 This rule depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.
 An author of any nationality who lives elsewhere can submit, and an author who lives there cannot, whatever their nationality.
-The reason is the law on representatives: a service offered to people there must have a representative established there (Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act), and the operator has decided not to appoint one, as the Privacy Policy explains.
+The reason is the law on representatives: a service offered to people there must have a representative established there (Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act; Article 53 of China's Personal Information Protection Law), and the operator has decided not to appoint one, as the Privacy Policy explains.
+The rule is that Sophaxis is not offered where a law requires a service offered to people there to have a representative established there.
+A place is added to the list only after that law has been read at its source, and the change is announced on the top page before it takes effect, as the Terms of Use set out.
 Sophaxis relies on the submitter's confirmation and does not check where authors live.
 If it turns out that an author lives there, the record is removed under the [Takedown Policy](./takedown.html), and the operator reviews the decision on a representative.
 
