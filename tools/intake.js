@@ -300,10 +300,10 @@ function check({ form, login, meta, person, works, listed, pub, today }) {
     const ticked = (String(form.consent || '').match(/^- \[[xX]\] /gm) || []).length;
     if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.consentFrom) add('Consent, agreement to the policies and age are confirmed', ticked === CONSENTS, ticked + ' of ' + CONSENTS);
   }
-  /* From SITE.residenceFrom, no author may live in the European Union, the European Economic Area or the United Kingdom. */
+  /* From SITE.residenceFrom, no author may live in the European Union, the European Economic Area, the United Kingdom or China. */
   {
     const ticked = (String(form.residence || '').match(/^- \[[xX]\] /gm) || []).length;
-    if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.residenceFrom) add('No author lives in the EU, the EEA or the UK', ticked === 1, ticked ? '' : 'the box is not ticked');
+    if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.residenceFrom) add('No author lives in the EU, the EEA, the UK or China', ticked === 1, ticked ? '' : 'the box is not ticked');
   }
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
@@ -393,7 +393,7 @@ The agreement also covers the provision of the author's personal data that the [
 Saving to the Internet Archive is a separate consent, given in the form above or not at all.
 Any author can withdraw a consent at any time, by the removal form or by email.
 Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
-From ${SITE.residenceFrom}, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom.
+From ${SITE.residenceFrom}, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area, the United Kingdom or China.
 `;
 }
 
