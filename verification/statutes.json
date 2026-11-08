@@ -1,5 +1,5 @@
 {
-  "_": "The texts the legal review relies on. tools/statutes.js fetches each one once a week, from the e-Gov law API and from GitHub's site-policy repository, and compares it with the value recorded here. A value is recorded by hand, after the operator has read the change.",
+  "_": "The texts the legal review relies on. tools/statutes.js fetches each one once a week, from the e-Gov law API, from GitHub's site-policy repository and from the sites of the services named under pages, and compares it with the value recorded here. A change is proposed as a pull request; a value is recorded only when the operator, having read the difference, adds the label `record` (tools/record.js).",
   "agent": "Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)",
   "labels": [
     "watch"
@@ -20,7 +20,14 @@
     "issueTitle": "Weekly check: a statute or a term that the legal review relies on may have changed",
     "issueHead": "The weekly check on {when} found these different from the recorded values.",
     "issueFoot": "Read the changed text, check docs/legal-review.md and the policies, then record the new value in verification/statutes.json.",
-    "closed": "The check on {when} found everything as recorded. Closing."
+    "closed": "The check on {when} found everything as recorded. Closing.",
+    "prTitle": "Record the changed texts the legal review relies on",
+    "seedTitle": "Record the texts the legal review relies on",
+    "prHead": "The watch found these different from the recorded values. Each change is shown below; a statute is shown as a difference of its sentences.",
+    "noOld": "No earlier text is recorded, so the whole text is shown.",
+    "seedOnly": "No value changed.",
+    "seeded": "{n} texts that match their recorded values are stored for the first time, so that a later change can be shown as a difference.",
+    "prFoot": "Read each change, then check docs/legal-review.md and the policies. To record it, add the label `record`: a workflow merges this into main, runs the checks on the result first, and merges only if they pass. The merge button would leave the merge without the disclosure line that the checks across the repositories count, so it is not used. If a policy must change too, change it first in a pull request of its own."
   },
   "statutes": [
     {
@@ -299,5 +306,9 @@
       "pattern": "Updated ([A-Z][a-z]+ \\d{1,2}, \\d{4})",
       "value": "July 30, 2025"
     }
-  ]
+  ],
+  "changelog": {
+    "file": "CHANGELOG.md",
+    "line": "- The weekly watch found that a text the legal review relies on changed. The operator read the difference, and the new values and texts are recorded in `verification/statutes.json` and `verification/statutes-texts.json` (#PR)."
+  }
 }
