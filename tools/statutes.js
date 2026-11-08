@@ -5,6 +5,8 @@
  *   reduced to plain characters, and its SHA-256 is compared with the one recorded in verification/statutes.json.
  * - Terms of services: the latest commit of each watched file in GitHub's public site-policy repository is
  *   compared with the one recorded.
+ * - Privacy statements of the services that handle data for Sophaxis (Vercel, Apple): the date each gives for its
+ *   last update is compared with the one recorded.
  *
  * On a schedule, a difference, an unrecorded entry or a failed fetch opens (or updates) one issue; when everything
  * matches again, that issue is closed. On a pull request or by hand, it only prints, and fails on a difference.
