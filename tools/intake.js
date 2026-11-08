@@ -394,6 +394,7 @@ Saving to the Internet Archive is a separate consent, given in the form above or
 Any author can withdraw a consent at any time, by the removal form or by email.
 Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
 From ${SITE.residenceFrom}, Sophaxis does not list work by an author who lives in any of these places: ${(SITE.notOffered || []).map((p) => p.place).join(', ')}.
+Nor does it list work by an author under 18 who lives in India.
 `;
 }
 

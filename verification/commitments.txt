@@ -131,5 +131,6 @@ A request to add the record of a work by an author who lives in a place where So
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, or to register there.
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
+From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
