@@ -7,7 +7,7 @@ Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, Met
 
 - **Acceptance is moderation, not peer review.** The quality of listed work is not guaranteed.
 - **No fees.** Sophaxis charges nothing, to authors or to readers.
-- **Not offered in the European Union, the European Economic Area, the United Kingdom, China or Thailand.** From 2026-11-22 Sophaxis does not list work by an author who lives there. This depends only on where an author lives, not on nationality, race or ethnic origin. The reason is the law on representatives: a service offered to people there must have a representative established there (GDPR and UK GDPR Article 27; EU Digital Services Act Article 13; China's Personal Information Protection Law Article 53; Thailand's Personal Data Protection Act section 37(5)), and Sophaxis has none.
+- **Not offered in 23 places**, among them the European Union, the European Economic Area, the United Kingdom, China, Thailand and Russia; the Submission Policy lists them all, with the law of each. From 2026-11-22 Sophaxis does not list work by an author who lives there. This depends only on where an author lives, not on nationality, race or ethnic origin. The reason is laws that require, or are reported to require, a local representative, the storage of personal data there, or registration there (among them GDPR and UK GDPR Article 27, EU Digital Services Act Article 13, China's Personal Information Protection Law Article 53 and Thailand's Personal Data Protection Act section 37(5)), and Sophaxis has none of these.
 - **Language models and other generative models are allowed when disclosed.** No generative model can be an author.
 - Sophaxis assigns no DOIs. The DOI comes from the repository.
 - It keeps an unmodified copy of the PDF where the repository allows it, so that search engines can index the full text.
@@ -24,7 +24,7 @@ The DOI names Sophaxis as a project, not a listed work. Cite it to refer to Soph
 
 The code and the records are archived at Zenodo with each release. Version 1.0.0: [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372). Every version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371), which resolves to the latest. Cite these for the software; `CITATION.cff` gives the citation.
 
-Sophaxis keeps a community at Zenodo, opened on 2026-11-07: <https://zenodo.org/communities/sophaxis>. It gathers the Zenodo records of works listed on Sophaxis. A record is added only when the same version is listed on Sophaxis, and every addition is reviewed. A request to add the record of a work by an author who lives in the European Union, the European Economic Area, the United Kingdom, China or Thailand is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms. Any Zenodo user can open a community; it is not an affiliation with Zenodo, and Zenodo does not endorse Sophaxis.
+Sophaxis keeps a community at Zenodo, opened on 2026-11-07: <https://zenodo.org/communities/sophaxis>. It gathers the Zenodo records of works listed on Sophaxis. A record is added only when the same version is listed on Sophaxis, and every addition is reviewed. A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms. Any Zenodo user can open a community; it is not an affiliation with Zenodo, and Zenodo does not endorse Sophaxis.
 
 Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
 
@@ -216,7 +216,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 受理はモデレーションであり、査読ではありません。載った稿の質は保証しません。
 - 稿の中身・権利・生成モデルの開示の責任は、すべて著者が負います。法律が許す範囲で、第三者からの請求も著者の責任です。
 - 読む側からも書く側からも、費用を取りません。
-- 欧州連合・欧州経済領域・英国・中国・タイの人は対象にしていません。2026-11-22 から、そこに住む著者のいる作品は載せません。これは住んでいる場所だけで決まり、国籍・人種・民族によるものではありません。理由は代理人の法令です。そこの人にサービスを提供するには、そこに置いた代理人が要ります（一般データ保護規則と英国の一般データ保護規則の第 27 条、欧州連合のデジタルサービス法の第 13 条、中国の個人情報保護法の第 53 条、タイの個人データ保護法の第 37 条第 5 号）。Sophaxis は代理人を置いていません。
+- 23 の所の人は対象にしていません。欧州連合・欧州経済領域・英国・中国・タイ・ロシアなどで、すべての所と法令は投稿の規程にあります。2026-11-22 から、そこに住む著者のいる作品は載せません。これは住んでいる場所だけで決まり、国籍・人種・民族によるものではありません。理由は、現地の代理人、国内での個人データの保存、現地での登録のいずれかを求める法令、または求めると報告されている法令です（一般データ保護規則と英国の一般データ保護規則の第 27 条、欧州連合のデジタルサービス法の第 13 条、中国の個人情報保護法の第 53 条、タイの個人データ保護法の第 37 条第 5 号など）。Sophaxis はどれも備えていません。
 - 言語モデルなどの生成モデルを使った稿は、使い方の開示を条件に受けます。画像や図を作るモデルも同じです。生成モデルは著者になれません。
 - DOI の付与はしません。DOI は置いた先のリポジトリが付けます。
 - 検索エンジンが本文を読めるように、預け先が許す場合は PDF を変えずに写して置きます。
@@ -237,7 +237,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 
 コードと記録は、版を出すたびに Zenodo に保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。すべての版に共通する DOI は [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) で、いちばん新しい版を指します。ソフトウェアとして挙げるときは、こちらを引きます。
 
-Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に開きました（<https://zenodo.org/communities/sophaxis>）。Sophaxis に載っている稿のうち、Zenodo にあるものを集めています。入れるのは、同じ版が Sophaxis に載っているものだけです。追加はどれも審査を経ます。2026-11-22 から、欧州連合・欧州経済領域・英国・中国・タイに住む著者の作品の記録を足す依頼は断ります。その作品は Sophaxis に載らないためです。依頼そのものは、CERN の規約のもとで Zenodo に残ります。コミュニティは Zenodo の利用者なら誰でも開けるもので、Zenodo との提携ではありません。Zenodo が Sophaxis を推薦しているわけでもありません。
+Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に開きました（<https://zenodo.org/communities/sophaxis>）。Sophaxis に載っている稿のうち、Zenodo にあるものを集めています。入れるのは、同じ版が Sophaxis に載っているものだけです。追加はどれも審査を経ます。2026-11-22 から、Sophaxis を提供しない所（投稿の規程の表にあります）に住む著者の作品の記録を足す依頼は断ります。その作品は Sophaxis に載らないためです。依頼そのものは、CERN の規約のもとで Zenodo に残ります。コミュニティは Zenodo の利用者なら誰でも開けるもので、Zenodo との提携ではありません。Zenodo が Sophaxis を推薦しているわけでもありません。
 
 サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
 

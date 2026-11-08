@@ -93,7 +93,7 @@ Each law below was read at its source on 2026-11-08, for whether it reaches Soph
 | Switzerland | Federal Act on Data Protection, Articles 3 and 14 (Fedlex) | It applies to circumstances with an effect in Switzerland; a representative is needed only if the processing is connected with an offer there and is large-scale, regular and of high risk | Applies, as to authors in Switzerland; no representative is needed, because the processing is neither large-scale nor of high risk. The Privacy Policy names the Commissioner. |
 | Brazil | ANPD Resolution CD/ANPD No. 2 of 2022, Article 11 (gov.br) | A small processing agent, natural persons included, need not appoint an encarregado but must offer a channel to data subjects | The email address on the operator's ORCID record is that channel. The LGPD itself (Law No. 13.709, Articles 3, 4 and 41) was read in its original publication at the Chamber of Deputies, because planalto.gov.br refused the request: it reaches a service offered to people in Brazil and asks for an encarregado, but not for one established in Brazil, and the amendments the Chamber lists (Law No. 13.853 of 2019) leave Article 41 as it was. |
 | China | Personal Information Protection Law, Articles 3 and 53 (the National People's Congress) | A processor abroad that provides products or services to people in China must set up an agency or designate a representative there, with no exception for size | Sophaxis has none, so from 2026-11-22 it is not offered in China, as in the European Union, the European Economic Area and the United Kingdom. |
-| Türkiye | Law No. 6698 on the Protection of Personal Data (the Authority's site) | The law as published states no territorial scope for controllers abroad; registration has derogations set by the Board | No duty for Sophaxis was found in the text read. |
+| Türkiye | Law No. 6698 on the Protection of Personal Data (the Authority's site) | The law as published states no territorial scope for controllers abroad; registration has derogations set by the Board | No duty for Sophaxis was found in the text read. Commentators report that a controller abroad must register in the Data Controllers' Registry through a representative in Türkiye, with no threshold; on that report Türkiye is not offered from 2026-11-22, as set out below. |
 | Thailand | Personal Data Protection Act B.E. 2562, sections 5, 37(5) and 38 (ETDA's English translation, marked unofficial) | A controller abroad that offers goods or services to people in Thailand, paid or not, must designate in writing a representative in Thailand. Section 38 exempts public authorities, and a controller that engages in the profession or business of processing personal data without sensitive data and without a large amount of it as the Committee sets | Applies, and the exemption does not fit, because Sophaxis is not a business. The Committee's threshold could not be read: pdpc.or.th refused the request. From 2026-11-22 Sophaxis is not offered in Thailand. |
 | Saudi Arabia | Personal Data Protection Law, Article 2, and its Implementing Regulation (SDAIA) | The Law applies to processing, from outside the Kingdom, of the data of individuals who reside there. Neither the Law nor any of the 38 articles of the Regulation asks for a representative in the Kingdom | Applies, as to authors there; no representative is required. SDAIA's rules on the register of controllers within the Kingdom say that rules for controllers outside it will be issued separately; none were found at SDAIA on 2026-11-08. |
 | India | Digital Personal Data Protection Act 2023, sections 3 and 10 (the Gazette copy at PRS Legislative Research), and the Digital Personal Data Protection Rules 2025, G.S.R. 846(E) (the eGazette) | The Act applies to processing outside India in connection with offering goods or services to people in India, but not to personal data that the person made publicly available. Only a Significant Data Fiduciary, notified as such by the Central Government, needs a Data Protection Officer based in India | Applies only to data that the person did not make public, such as a co-author's. No representative is required. Rule 10, in force from 2027-05-13, asks for the verifiable consent of a parent before a child's data is processed; it is open, as set out below the table. |
@@ -102,6 +102,35 @@ Each law below was read at its source on 2026-11-08, for whether it reaches Soph
 The rule that follows is set out in the Submission Policy: Sophaxis is not offered where a law requires a service offered to people there to have a representative established there, and a place is added only after that law has been read at its source.
 The four laws that #153 left open were read at their sources on 2026-11-08: Thailand's, Saudi Arabia's, India's and Korea's, and Brazil's LGPD with them. Of these, only Thailand's asks for a representative from a service like Sophaxis.
 One duty found in them is still open. From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules lets the data of a child be processed only with the verifiable consent of a parent, checked against reliable details of the parent's identity and age. Sophaxis asks a submitter under 18 for the consent of a parent or guardian, but does not verify it. Whether to verify it, or not to list work by an author under 18 who lives in India, is the operator's decision, to be made before that day.
+
+### Places not offered on a reported duty
+
+On 2026-11-08 the laws of the other countries were screened by searching commentaries and trackers, not by reading the laws. The rule was then changed: a place is not offered as soon as a duty that Sophaxis cannot meet is reported, and is offered again only after its law has been read at its source and found not to reach Sophaxis. Not offering a service there breaks no law. The places below are not offered from 2026-11-22 on that ground. The Submission Policy gives the law of each.
+
+| Place | Reported duty | Law as reported |
+| --- | --- | --- |
+| Russia | The storage of the personal data of Russian citizens in Russia; the Law reaches a foreign operator that processes their data with their consent | Federal Law No. 152-FZ, Article 18(5); Article 1(1.1) was read at kremlin.ru |
+| Türkiye | Registration through a representative in Türkiye, with no threshold for a controller abroad | Regulation on the Data Controllers' Registry |
+| Egypt | A representative approved by the regulator, and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 |
+| Peru | A representative, for a controller that offers services to people in Peru | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) |
+| Albania | A representative | Law No. 124/2024 |
+| Monaco | A representative in Monaco or the European Union | Law No. 1.565, Article 25 |
+| Guernsey | A representative, in certain cases | Data Protection (Bailiwick of Guernsey) Law, 2017 |
+| Botswana | A representative, for a controller that targets people in Botswana | Data Protection Act 2024, section 54 |
+| Ecuador | A special attorney resident in Ecuador, unless the processing is occasional | Regulation of the Organic Law on Personal Data Protection, Article 3 |
+| Iraq | Notice to the regulator before a service is offered to users in Iraq | Framework Regulations for Digital Platforms and Services (2025) |
+| Indonesia | Registration of a foreign electronic system operator, with no threshold | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended |
+| Rwanda | Registration, and storage in Rwanda unless the regulator allows otherwise | Law No. 058/2021, Articles 29 and 50 |
+| Zambia | Registration, and storage in Zambia | Data Protection Act 2021, sections 19 and 70 |
+| Ethiopia | Storage in Ethiopia | Personal Data Protection Proclamation No. 1321/2024 |
+| The Democratic Republic of the Congo | Storage in the country, and an authorisation for digital services | Ordonnance-loi No. 23/010 (Digital Code) |
+| Kazakhstan | Storage in Kazakhstan | Law No. 94-V on Personal Data, Article 12(2) |
+| Tunisia | A prior declaration, and a controller who resides in Tunisia | Organic Law No. 2004-63 |
+| Uganda | Registration, applied by the regulator to a controller abroad in 2025 | Data Protection and Privacy Act 2019, section 29 |
+
+Russia's law reaches Russian citizens who live elsewhere. Sophaxis decides by where a person lives and does not ask about citizenship, so that reach is not covered; it is listed under "Risks that remain".
+The duties reported in other countries apply only above a number of users, only when the controller uses equipment in the country, only on a regulator's request, or not at all, and those countries are not on the list.
+The search that screened them ran out before these were screened: Afghanistan, Bolivia, Canada, the Central African Republic, Chad, Comoros, Costa Rica, Cuba, the Dominican Republic, El Salvador, Equatorial Guinea, Guatemala, Guinea, Guinea-Bissau, Haiti, Honduras, Madagascar, Mali, Nicaragua, North Korea, the Republic of the Congo, Samoa, the Solomon Islands, South Sudan, Suriname, Tuvalu and Venezuela. Each is open until it is screened.
 
 ## Consistency
 
@@ -137,6 +166,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 28. The Terms said that using the site meant accepting them. A reader who only reads has made no agreement, and Article 548-2 of the Civil Code binds a party to standard terms only where they agreed to them or were told beforehand that the terms form the contract. The Terms now say that authors agree in the submission form, and that reading is not taken as agreement; for readers, the law decides what each side owes.
 29. The laws of other countries were read at their sources ("Laws of other countries"). China's Personal Information Protection Law asks a representative of a processor abroad that serves people in China, with no exception for size; Sophaxis is therefore not offered in China either, from 2026-11-22, by the same rule as for the European Union. The Takedown Policy now says that Sophaxis does not rely on 17 U.S.C. 512, and the Privacy Policy names the Swiss Commissioner.
 30. The four laws left open in #153 were read at their sources. Section 37(5) of Thailand's Personal Data Protection Act asks a representative in Thailand of a controller abroad that offers services there, and its exemption is for businesses, so Sophaxis is not offered in Thailand either, from 2026-11-22. Saudi Arabia's law and India's ask for none; Korea's asks for a domestic agent only above thresholds that Sophaxis does not reach.
+31. The other countries were screened, and the rule was changed so that a place is not offered as soon as a duty that Sophaxis cannot meet is reported ("Places not offered on a reported duty"). Eighteen places were added, from 2026-11-22. The Türkiye row above had found no duty in the text read; the commentaries report one, and Türkiye is among the eighteen.
 
 ## Risks that remain
 
@@ -149,9 +179,10 @@ The comparison found the items below. Each was fixed in the same change as this 
 | 5 | Someone passes the identity check for a work that is not theirs | 1 | 2 | 2 | The record is removed under the Takedown Policy |
 | 6 | A person under 18 submits without the consent of a parent or guardian | 1 | 2 | 2 | The listing is removed where the law gives that right |
 | 7 | A person or an authority in the European Union or the United Kingdom asks for a representative under the GDPR or the Digital Services Act | 1 | 2 | 2 | The decision is reviewed, as the Privacy Policy sets out |
-| 8 | An author who lives in the European Union, the European Economic Area, the United Kingdom, China or Thailand is listed despite the box | 1 | 2 | 2 | The record is removed under the Takedown Policy, and the decision on a representative is reviewed |
-| 9 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
-| 10 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
+| 8 | An author who lives in a place where Sophaxis is not offered is listed despite the box | 1 | 2 | 2 | The record is removed under the Takedown Policy, and the decision on a representative is reviewed |
+| 9 | A Russian citizen who lives outside Russia is listed, and Russia's law asks for the storage of that data in Russia | 1 | 2 | 2 | Sophaxis decides by residence and does not ask about citizenship; the operator reviews the decision if a Russian authority raises it |
+| 10 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
+| 11 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
 
 ## Duties still open
 

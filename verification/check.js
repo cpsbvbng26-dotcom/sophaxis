@@ -2439,16 +2439,16 @@ console.log('\n65. The separate consent to the Internet Archive, the residence o
     && B.validate(Object.assign({}, listed, { archive: true }), listed.id + '.json').some((e) => e.includes('archive')) && B.validate(off, listed.id + '.json').length === 0);
   ok('the draft record keeps the record out of the saves when the box is left empty, and only then',
     /'archive' in form && !\/\^- \\\[\[xX\]\\\] \/m\.test/.test(read(path.join(ROOT, 'tools', 'intake.js'))));
-  ok('from ' + site.residenceFrom + ' the form asks that no author lives in the EU, the EEA, the UK, China or Thailand, and the check needs the box',
-    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in the European Union, the European Economic Area, the United Kingdom, China or Thailand.')
-    && site.residenceFrom === '2026-11-22' && read(path.join(ROOT, 'policies', 'submission.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not list work by an author who lives in the European Union')
+  ok('from ' + site.residenceFrom + ' the form names every place where Sophaxis is not offered, asks that no author lives in one, and the check needs the box',
+    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in any of the places listed above.') && site.notOffered.length >= 23 && res.includes('who live in any of these places (' + B.notOfferedPlaces() + ').')
+    && site.residenceFrom === '2026-11-22' && read(path.join(ROOT, 'policies', 'submission.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not list work by an author who lives in any of the ' + site.notOffered.length + ' places in the table below')
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not offer its service to people in the European Union'));
   const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
   const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
   const person = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
   const works = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
   const runR = (residence, today) => I.check({ form: Object.assign({}, ix, { llm_extent: site.llmExtents.assistance, consent: '- [X] a\n- [X] b\n- [X] c' }, residence === null ? {} : { residence }), login: 'jcarberry', meta: dc, person, works, today });
-  const rowR = (r) => r.checks.find((c) => c[0] === 'No author lives in the EU, the EEA, the UK, China or Thailand');
+  const rowR = (r) => r.checks.find((c) => c[0] === 'No author lives in a place where Sophaxis is not offered');
   ok('the residence box may be empty before the day and is needed from it',
     !rowR(runR(null, '2026-11-21')) && runR(null, '2026-11-21').ok && rowR(runR(null, '2026-11-22')) && !runR(null, '2026-11-22').ok && runR('- [X] a', '2026-11-22').ok && !runR('- [ ] a', '2026-11-22').ok);
   /* The right to object, presented separately (GDPR Article 21(4)), and the purposes, in every form a person fills in. */
@@ -2576,7 +2576,8 @@ console.log('\n68. Who Sophaxis is not offered to, and why, at the top: by resid
   const notice = B.scopeNotice();
   const idx = read(path.join(ROOT, 'site', 'index.html')), sub = read(path.join(ROOT, 'site', 'submit.html'));
   ok('the notice says who is not served, that it is by residence and not nationality or race, and that the reason is the representative (GDPR Article 27, DSA Article 13)',
-    notice.includes('Not offered in the European Union, the European Economic Area, the United Kingdom, China or Thailand.') && site.scopeNotice.includes('Article 53 of China\'s Personal Information Protection Law') && site.scopeNotice.includes('section 37(5) of Thailand\'s Personal Data Protection Act') && site.scopeNotice.includes(N) && site.scopeNotice.includes('an author of any nationality who lives elsewhere can submit')
+    notice.includes('<b>Not offered in ' + site.notOffered.length + ' places.</b>') && notice.includes('The places are ' + B.notOfferedPlaces() + '.') && site.notOffered.every((p) => notice.includes(p.place))
+    && site.scopeNotice.includes('Article 53 of China\'s Personal Information Protection Law') && site.scopeNotice.includes('section 37(5) of Thailand\'s Personal Data Protection Act') && site.scopeNotice.includes('Article 18(5) of Russia\'s Federal Law No. 152-FZ') && site.scopeNotice.includes(N) && site.scopeNotice.includes('an author of any nationality who lives elsewhere can submit')
     && site.scopeNotice.includes('Article 27 of the GDPR and of the UK GDPR') && site.scopeNotice.includes('Article 13 of the EU Digital Services Act'));
   ok('the notice stands first on the top page and the submit page, before any other notice',
     idx.indexOf(notice) > 0 && idx.indexOf(notice) < idx.indexOf('Change to the policies from') && idx.indexOf('<h1>') < idx.indexOf(notice) && sub.indexOf(notice) > sub.indexOf('<h1>Submit a preprint</h1>'));
@@ -2598,11 +2599,31 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     && sec.includes('The four laws that #153 left open were read at their sources on 2026-11-08') && !sec.includes('could not be fetched from planalto.gov.br') && !sec.includes('Each is open until it is read.')
     && sec.includes('One duty found in them is still open. From 2027-05-13, Rule 10 of India\'s Digital Personal Data Protection Rules'));
   const sp = read(path.join(ROOT, 'policies', 'submission.md'));
-  ok('the rule is stated, China and Thailand are under it, and a place is added only after its law is read and the change announced',
-    sp.includes('The rule is that Sophaxis is not offered where a law requires a service offered to people there to have a representative established there.') && sp.includes('Article 53 of China\'s Personal Information Protection Law')
-    && sp.includes('A place is added to the list only after that law has been read at its source') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in China')
+  ok('the rule is stated, a place is added on a reported duty and taken off only after its law is read, and each change is announced',
+    sp.includes('The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, or to register there.') && sp.includes('Article 53 of China\'s Personal Information Protection Law')
+    && sp.includes('A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.')
+    && sp.includes('Each change to the list is announced on the top page before it takes effect') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in China')
     && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## 中国の人へ') && sp.includes('section 37(5) of Thailand\'s Personal Data Protection Act')
-    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in Thailand') && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## タイの人へ'));
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in Thailand') && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## タイの人へ')
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in the other places') && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## ほかの所の人へ'));
+  /* The list of places is kept once, in site.json; the policies, the README and the legal review must agree with it, counts included. */
+  const L = JSON.parse(read(path.join(ROOT, 'site.json'))).notOffered;
+  const cap = (t) => t[0].toUpperCase() + t.slice(1);
+  const readEn = (r) => r === true ? 'Yes' : r === 'in part' ? 'In part' : 'No, as reported', readJa = (r) => r === true ? '読んだ' : r === 'in part' ? '一部' : 'まだ（報告による）';
+  const sj = read(path.join(ROOT, 'policies', 'submission.ja.md')), readme = read(path.join(ROOT, 'README.md'));
+  const rowsEn = sp.split('\n').filter((l) => /^\| (?!Place |---)/.test(l)), rowsJa = sj.split('\n').filter((l) => /^\| (?!所 |---)/.test(l));
+  ok('the Submission Policy, in both languages, has one row for each of the ' + L.length + ' places in site.json, with its law and whether it was read, and gives the count',
+    rowsEn.length === L.length && rowsJa.length === L.length && L.every((p, i) => rowsEn[i].startsWith('| ' + cap(p.place) + ' | ') && rowsEn[i].includes(' | ' + p.law + ' | ' + readEn(p.read) + ' |')
+      && rowsJa[i].startsWith('| ' + p.ja + ' | ') && rowsJa[i].endsWith(' | ' + p.law + ' | ' + readJa(p.read) + ' |'))
+    && sp.includes('who lives in any of the ' + L.length + ' places in the table below') && sj.includes('下の表の ' + L.length + ' の所に住む著者')
+    && readme.includes('**Not offered in ' + L.length + ' places**') && readme.includes('- ' + L.length + ' の所の人は対象にしていません。'));
+  const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+  const reported = L.filter((p) => p.read !== true);
+  const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('## Consistency'));
+  const rrows = rsec.split('\n').filter((l) => /^\| (?!Place |---)/.test(l));
+  ok('the legal review lists each of the ' + reported.length + ' places not read at its source, says how many were added, and names the countries not yet screened',
+    rrows.length === reported.length && reported.every((p, i) => rrows[i].startsWith('| ' + cap(p.place) + ' | ')) && rv.includes(WORDS[reported.length] + ' places were added, from 2026-11-22.')
+    && rsec.includes('Each is open until it is screened.') && rv.includes('Commentators report that a controller abroad must register in the Data Controllers\' Registry through a representative in Türkiye'));
   ok('the Takedown Policy says that Sophaxis does not rely on 17 U.S.C. 512, and the Privacy Policy names the Swiss Commissioner',
     read(path.join(ROOT, 'policies', 'takedown.md')).includes('so it does not rely on the limitation of liability in 17 U.S.C. 512') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('Federal Data Protection and Information Commissioner'));
 }
