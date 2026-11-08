@@ -21,13 +21,24 @@ const E = 'https://elaw.klri.re.kr';
 const J = [];
 const curlPdf = (u) => { try { execFileSync('curl', ['-sSL', '--max-time', '90', '-A', UA, '-o', '/tmp/r.pdf', u]); const t = execFileSync('pdftotext', ['/tmp/r.pdf', '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).replace(/\s+/g, ' '); return t; } catch (e) { return 'ERR ' + String(e.message).slice(0, 300); } };
 const extra = async () => {
-  for (const u of ['https://egazette.gov.in/WriteReadData/2025/267650.pdf', 'http://egazette.gov.in/WriteReadData/2025/267650.pdf']) {
-    const t = curlPdf(u);
-    console.log('\n===== curl ' + u + ' | len ' + t.length + ' | ' + t.slice(0, 300));
-    for (const k of ['outside the territory of India', 'epresentative', 'based in India', 'Significant Data Fiduciary', 'come into force', 'Data Protection Officer']) { const a = around(t, k, 1200, 3); if (a) console.log('--- ' + k + '\n' + a); }
-  }
-};
-(async () => {
+  /* The server sends only its own certificate. The intermediate is fetched from the AIA address in that certificate,
+   * and the whole chain is still verified against the system's roots. */
+  const sh = (c) => { try { return execFileSync('bash', ['-c', c], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }); } catch (e) { return 'ERR ' + String(e.stdout || '') + String(e.stderr || e.message).slice(0, 600); } };
+  console.log(sh(`set -e
+    echo | openssl s_client -connect egazette.gov.in:443 -servername egazette.gov.in 2>/dev/null | openssl x509 > /tmp/leaf.pem
+    openssl x509 -in /tmp/leaf.pem -noout -subject -issuer -dates
+    AIA=$(openssl x509 -in /tmp/leaf.pem -noout -text | grep -o 'CA Issuers - URI:[^ ]*' | head -1 | sed 's/CA Issuers - URI://')
+    echo "AIA $AIA"
+    curl -sS --max-time 60 -o /tmp/int.der "$AIA"
+    (openssl x509 -inform der -in /tmp/int.der 2>/dev/null || openssl x509 -in /tmp/int.der) > /tmp/int.pem
+    openssl x509 -in /tmp/int.pem -noout -subject -issuer
+    cat /etc/ssl/certs/ca-certificates.crt /tmp/int.pem > /tmp/bundle.pem
+    curl -sSL --max-time 120 --cacert /tmp/bundle.pem -A 'Mozilla/5.0 (compatible; sophaxis-probe)' -o /tmp/r.pdf https://egazette.gov.in/WriteReadData/2025/267650.pdf
+    head -c 5 /tmp/r.pdf; echo; ls -l /tmp/r.pdf`));
+  const t = sh('pdftotext /tmp/r.pdf - | tr -s "[:space:]" " "');
+  console.log('\n===== eGazette G.S.R. 846(E) | len ' + t.length + ' | ' + t.slice(0, 400));
+  for (const k of ['outside the territory of India', 'epresentative', 'based in India', 'Significant Data Fiduciary', 'come into force', 'Data Protection Officer', 'Third Schedule', 'Seventh Schedule']) { const a = around(t, k, 1200, 3); if (a) console.log('--- ' + k + '\n' + a); }
+};(async () => {
   for (const [name, url, keys, hre] of J) {
     const r = await text(url);
     console.log('\n===== ' + name + ' | ' + r.status + ' | len ' + r.t.length + ' | ' + url);
