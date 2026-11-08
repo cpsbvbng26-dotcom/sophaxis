@@ -310,6 +310,7 @@
   ],
   "changelog": {
     "file": "CHANGELOG.md",
-    "line": "- The weekly watch found that a text the legal review relies on changed. The operator read the difference, and the new values and texts are recorded in `verification/statutes.json` and `verification/statutes-texts.json` (#PR)."
+    "line": "- The weekly watch found that a text the legal review relies on changed. The operator read the difference, and the new values and texts are recorded in `verification/statutes.json` and `verification/statutes-texts.json` (#PR).",
+    "seedLine": "- The weekly watch stored the texts it compares, without changing any recorded value, so that a later change can be shown as a difference (#PR)."
   }
 }
