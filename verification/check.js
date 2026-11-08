@@ -2647,6 +2647,28 @@ console.log('\n70. A possible domain and NGO at 1,000 listed works: a possibilit
   ok('the number of listed works (' + n + ') is below 1,000, so the statement is still a condition, not a fact', n < 1000);
 }
 
+console.log('\n71. Provisional registration before a decision; language models assist the review, and a person decides');
+{
+  const me = read(path.join(ROOT, 'policies', 'moderation.md')), mj = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
+  const pe = read(path.join(ROOT, 'policies', 'privacy.md')), pj = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  ok('the Moderation Policy, in both languages, has provisional registration: labelled verified, not on the site, not acceptance',
+    me.includes('## Provisional registration') && me.includes('A provisionally registered work is not on the site.') && me.includes('Provisional registration is not acceptance.')
+    && mj.includes('## 仮登録') && mj.includes('仮登録の作品は、サイトに載りません。') && mj.includes('仮登録は受理ではありません。')
+    && read(path.join(ROOT, 'site', 'policies', 'moderation.html')).includes('Provisional registration'));
+  ok('it names the three language models, says the operator gives them only public parts by hand, and that a person decides',
+    ['Claude (Anthropic)', 'ChatGPT (OpenAI)', 'Grok (xAI)'].every((m) => me.includes(m)) && ['Claude（Anthropic）', 'ChatGPT（OpenAI）', 'Grok（xAI）'].every((m) => mj.includes(m))
+    && me.includes('No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.')
+    && mj.includes('言語モデルが投稿を受理したり断ったりすることはなく、判断はすべて、投稿を読んだ運営者かモデレーターが下します。')
+    && me.includes('no submission is sent to them automatically, and they are given nothing that is not already public.') && mj.includes('投稿を自動で送ることはなく、公開されていないものは渡しません。'));
+  ok('the Privacy Policy, in both languages, lists Anthropic, OpenAI and xAI among the services outside Japan, and the form asks consent to it',
+    pe.includes('Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts') && pj.includes('- Anthropic・OpenAI・xAI（いずれも米国）：審査を助けるため。')
+    && pj.includes('審査のあいだ投稿の公開されている部分が Anthropic・OpenAI・xAI に渡ることを') && pe.includes('The language models that help the review make no decision;')
+    && form.includes('to the public parts of this submission being given, for help with the review, to Anthropic, OpenAI and xAI in the United States'));
+  ok('the comment on a verified submission says it is provisionally registered and not on the site until a moderator accepts it',
+    read(path.join(ROOT, 'tools', 'intake.js')).includes('The submission is now provisionally registered: it is not on the site until a moderator accepts it.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
