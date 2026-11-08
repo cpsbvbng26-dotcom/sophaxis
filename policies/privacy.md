@@ -99,7 +99,7 @@ What each service does to protect personal data is set out in its own statement:
 - Vercel: [Vercel Privacy Notice](https://vercel.com/legal/privacy-notice). Vercel says it complies with the EU-U.S. Data Privacy Framework.
 - ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
 - Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
-- The Internet Archive: [Terms of Use](https://archive.org/about/terms). It receives only the public pages and PDF copies, which hold no personal data beyond what the records already publish.
+- The Internet Archive: [Terms of Use](https://archive.org/about/terms). It receives only the public pages and PDF copies, which hold no personal data beyond what the records already publish. Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found.
 
 Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States), and are kept there only as long as needed to answer them and to show the answer.
 What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).
@@ -150,6 +150,7 @@ Personal data that GitHub or Vercel hold about their own users, such as GitHub a
 For people in the European Union and the United Kingdom, the basis for this use is a legitimate interest: checking who the authors are, and keeping a public scholarly record.
 Records are kept to preserve the scholarly record, as the General Data Protection Regulation allows for archiving, research and freedom of expression (Article 17(3)).
 Where a transfer outside the European Union has no adequacy decision or other safeguard, as for the Internet Archive, it rests on the author's explicit consent (Article 49(1)(a)).
+The possible risks of that transfer, of which the consent is given knowing: Sophaxis knows of no adequacy decision or other safeguard that covers the Internet Archive, so personal data saved there may be protected less than under the General Data Protection Regulation, and a person may find it harder to enforce their rights there.
 That consent can be withdrawn at any time, by a removal issue or by email; the operator then handles it as a request for removal under the [Takedown Policy](./takedown.html), and what was done before stays lawful.
 A person can also ask to receive the personal data they gave in a structured, commonly used and machine-readable form (Article 20); `papers.json` and the OAI-PMH interface already give every record in that form.
 A person can object to the use of their personal data, and can complain to the data protection authority of their country.

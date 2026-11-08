@@ -2406,8 +2406,8 @@ console.log('\n64. The statutes and GitHub terms the legal review relies on are 
     for (const n of nums) if (!mine.some((e) => e.article === n)) gaps.push(h + ': Article ' + n.replace('_', '-') + ' not watched');
   }
   ok('every Japanese law of docs/legal-review.md, and every article its heading names, is watched (' + S.statutes.length + ' articles)', gaps.length === 0, gaps.join(' / '));
-  const unrec = S.statutes.filter((e) => !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !e.title || !/^\d{3}AC\d{10}$/.test(e.law_id) || !(e.law in M.laws)).map((e) => e.name + ' ' + e.label);
-  ok('every watched article has its law number, its law title, the SHA-256 of its text and a law of the review', unrec.length === 0, unrec.join(' / '));
+  const unrec = S.statutes.filter((e) => !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !e.title || !/^\d{3}(?:AC\d{10}|CO\d{10}|M\d{11})$/.test(e.law_id) || !(e.law in M.laws))  // e-Gov ids: an Act (AC), a Cabinet Order (CO) or a ministerial or commission rule (M).map((e) => e.name + ' ' + e.label);
+  ok('every watched article has its e-Gov law id, its law title, the SHA-256 of its text and a law of the review', unrec.length === 0, unrec.join(' / '));
   ok('every watched GitHub term has its latest commit', S.policies.length >= 2 && S.policies.every((p) => /^[0-9a-f]{40}$/.test(p.commit || '')));
   const wf = read(at('.github/workflows/statutes.yml'));
   ok('the watch runs weekly, may open an issue, and also runs on a pull request', /cron: '\d+ \d+ \* \* \d'/.test(wf) && wf.includes('issues: write') && wf.includes('pull_request:') && wf.includes('node tools/statutes.js'));
