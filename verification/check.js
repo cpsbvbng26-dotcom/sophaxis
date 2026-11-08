@@ -1006,9 +1006,9 @@ console.log('\n26. One operator: decisions, continuity, dependencies and statist
 {
   const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
   const reasons = (/A moderator who declines a submission names one or more of these reasons[^\n]*\n\n((?:- [^\n]+\n)+)/.exec(mod) || [, ''])[1].trim().split('\n');
-  ok('every decision is labelled and stays public, and a decline names one of seven fixed reasons',
-    mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 7
-    && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
+  ok('every decision is labelled and stays public, and a decline names one of eight fixed reasons',
+    mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 8
+    && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Where the authors live', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
   ok('the policy says the operator is the only moderator for now, how others are named, and who may not decide on what',
     mod.includes('The operator is at present the only moderator.') && mod.includes('Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision')
     && mod.includes('While the operator is the only moderator, the operator also decides on their own submissions') && mod.includes('no moderator decides on their own submission or on one by a close collaborator.'));
@@ -2682,6 +2682,17 @@ console.log('\n72. An untrue confirmation: not allowed, the record removed, reli
     && te.includes('The confirmations stay in the public issue') && tj.includes('確認は公開の issue に残るので')
     && te.includes('Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.') && tj.includes('投稿者に、違約金や、法令が定める以上の損害の賠償を求めることはありません。'));
   ok('the change is announced on the top page before it takes effect', JSON.parse(read(path.join(ROOT, 'site.json'))).termsNotice.text.includes('Confirming something untrue in a form is not allowed'));
+}
+
+console.log('\n73. Moderation looks for what would make an untrue confirmation knowable: an address in a place not served, and a notice of rights against the licence');
+{
+  const me = read(path.join(ROOT, 'policies', 'moderation.md')), mj = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
+  ok('the Moderation Policy, in both languages, checks for an affiliation or address in a place where Sophaxis is not offered, and asks before deciding',
+    me.includes('- The work shows no affiliation or address of an author in a place where Sophaxis is not offered') && me.includes('the moderator asks the submitter where that author lives, and declines the submission unless the author lives elsewhere.')
+    && mj.includes('Sophaxis を提供しない国と地域の、著者の所属や住所が書かれていない。') && mj.includes('ほかの場所に住んでいるのでなければ断る。'));
+  ok('it declines a PDF with a notice of rights that contradicts its licence, and names both as reasons for declining',
+    me.includes('- The PDF carries no notice of rights that contradicts the licence in the DOI metadata') && mj.includes('- PDF に、DOI の登録情報のライセンスと食い違う権利の表示')
+    && me.includes('- Where the authors live: an author lives in a place where Sophaxis is not offered.') && mj.includes('- 住んでいる場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいる。'));
 }
 
 console.log('\n' + '-'.repeat(60));
