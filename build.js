@@ -666,6 +666,12 @@ function termsNotice(n = SITE.termsNotice) {
   return n && n.text && n.from ? `<div class="notice"><b>Change to the policies from ${esc(n.from)}.</b> ${esc(n.text)} See the <a href="./policy.html">policies</a>.</div>\n` : '';
 }
 
+/* Who Sophaxis is not offered to, and why, on the top page and the submit page: by where an author lives, never by
+ * nationality or race, because a representative would be required there (site.json "scopeNotice"). */
+function scopeNotice(text = SITE.scopeNotice) {
+  return text ? `<div class="notice"><b>Not offered in the European Union, the European Economic Area or the United Kingdom.</b> ${esc(text)} See the <a href="./policies/submission.html">Submission Policy</a> and the <a href="./policies/privacy.html">Privacy Policy</a>.</div>\n` : '';
+}
+
 /* The day the records last changed: a record added, a new version, a note, an update, a withdrawal or a removal.
  * The ISSN Japan Centre asks a database to show its last update and how often it is updated. */
 function lastUpdated(all) {
@@ -701,7 +707,7 @@ function indexPage(papers, all = papers) {
   const last = lastUpdated(all);
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
-${pausedNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
+${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
 ${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
@@ -737,7 +743,7 @@ ${listing(mine, '../', 'No preprints are listed in this field yet.')}
 function submitPage() {
   const body = `
 <h1>Submit a preprint</h1>
-${pausedNotice()}<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation.</p>
+${pausedNotice()}${scopeNotice()}<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation.</p>
 <ol>
 <li>Deposit your preprint in ${andOr(Object.values(SITE.repositories).map((n) => `<a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>`), 'or')} under ${andOr(Object.values(SITE.licenses).map(esc), 'or')}, and note its DOI.</li>
 <li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
@@ -1107,7 +1113,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { SECURITY_HEADERS, robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { SECURITY_HEADERS, robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
