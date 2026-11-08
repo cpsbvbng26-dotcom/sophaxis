@@ -144,7 +144,7 @@ body:
     id: residence
     attributes:
       label: Where the authors live
-      description: Required from 2026-11-22. Sophaxis does not list work by authors who live in the European Union, the European Economic Area or the United Kingdom; the Submission Policy says why.
+      description: Required from 2026-11-22. Sophaxis does not list work by authors who live in the European Union, the European Economic Area or the United Kingdom. This depends only on where an author lives, not on nationality or race; the reason is that a service offered there must have a representative established there, which Sophaxis does not have. The Submission Policy says more.
       options:
         - label: No author of this work lives in the European Union, the European Economic Area or the United Kingdom.
           required: false

@@ -186,6 +186,7 @@ The operator gives those grounds in writing.
 
 From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
 It does not list work by an author who lives there, and the submission form asks the submitter to confirm it.
+This depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.
 Anyone can read the site, but Sophaxis does not direct itself to people there.
 The operator therefore considers that the General Data Protection Regulation and the UK GDPR do not reach Sophaxis under Article 3(2).
 The rights in this section are honoured all the same, as far as they apply.
