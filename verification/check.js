@@ -2601,7 +2601,7 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     && sec.includes('One duty found in them is met by not offering. From 2027-05-13, Rule 10 of India\'s Digital Personal Data Protection Rules')
     && sec.includes('so from 2026-11-22 it does not list work by an author under 18 who lives in India.')
     && read(path.join(ROOT, 'policies', 'submission.md')).includes('From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.')
-    && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('2026-11-22 から、Sophaxis は、インドに住む 18 歳未満の著者のいる作品を載せません。'));
+    && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('2026-11-22 から、インドに住む 18 歳未満の人が著者にいる作品は載せません。'));
   const sp = read(path.join(ROOT, 'policies', 'submission.md'));
   ok('the rule is stated, a place is added on a reported duty and taken off only after its law is read, and each change is announced',
     sp.includes('The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.') && sp.includes('Article 53 of China\'s Personal Information Protection Law')
@@ -2609,18 +2609,18 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     && sp.includes('Each change to the list is announced on the top page before it takes effect') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in China')
     && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## 中国の人へ') && sp.includes('section 37(5) of Thailand\'s Personal Data Protection Act')
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in Thailand') && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## タイの人へ')
-    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in the other places') && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## ほかの所の人へ'));
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('## People in the other places') && read(path.join(ROOT, 'policies', 'privacy.ja.md')).includes('## ほかの国と地域の人へ'));
   /* The list of places is kept once, in site.json; the policies, the README and the legal review must agree with it, counts included. */
   const L = JSON.parse(read(path.join(ROOT, 'site.json'))).notOffered;
   const cap = (t) => t[0].toUpperCase() + t.slice(1);
   const readEn = (r) => r === true ? 'Yes' : r === 'in part' ? 'In part' : 'No, as reported', readJa = (r) => r === true ? '読んだ' : r === 'in part' ? '一部' : 'まだ（報告による）';
   const sj = read(path.join(ROOT, 'policies', 'submission.ja.md')), readme = read(path.join(ROOT, 'README.md'));
-  const rowsEn = sp.split('\n').filter((l) => /^\| (?!Place |---)/.test(l)), rowsJa = sj.split('\n').filter((l) => /^\| (?!所 |---)/.test(l));
+  const rowsEn = sp.split('\n').filter((l) => /^\| (?!Place |---)/.test(l)), rowsJa = sj.split('\n').filter((l) => /^\| (?!国と地域 |---)/.test(l));
   ok('the Submission Policy, in both languages, has one row for each of the ' + L.length + ' places in site.json, with its law and whether it was read, and gives the count',
     rowsEn.length === L.length && rowsJa.length === L.length && L.every((p, i) => rowsEn[i].startsWith('| ' + cap(p.place) + ' | ') && rowsEn[i].includes(' | ' + p.law + ' | ' + readEn(p.read) + ' |')
-      && rowsJa[i].startsWith('| ' + p.ja + ' | ') && rowsJa[i].endsWith(' | ' + p.law + ' | ' + readJa(p.read) + ' |'))
-    && sp.includes('who lives in any of the ' + L.length + ' places in the table below') && sj.includes('下の表の ' + L.length + ' の所に住む著者')
-    && readme.includes('**Not offered in ' + L.length + ' places**') && readme.includes('- ' + L.length + ' の所の人は対象にしていません。'));
+      && rowsJa[i].startsWith('| ' + p.ja + ' | ') && rowsJa[i].endsWith(' | ' + p.lawJa + ' | ' + readJa(p.read) + ' |'))
+    && sp.includes('who lives in any of the ' + L.length + ' places in the table below') && sj.includes('下の表にある ' + L.length + ' の国と地域に住む人が著者にいる作品は載せません。')
+    && readme.includes('**Not offered in ' + L.length + ' places**') && readme.includes('- ' + L.length + ' の国と地域に住む人には、Sophaxis を提供していません。'));
   const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
   const reported = L.filter((p) => p.read !== true);
   const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('## Consistency'));
