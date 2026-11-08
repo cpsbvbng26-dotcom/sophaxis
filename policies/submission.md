@@ -16,7 +16,9 @@ A submission that does not pass both is not listed.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
 A submitter under 18 needs the consent of a parent or guardian.
-From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 23 places in the table below, and the submitter confirms this in the form.
+From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.
+From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
+From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 27 places in the table below, and the submitter confirms this in the form.
 Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](./privacy.html) says more.
 This rule depends only on where an author lives, not on nationality, race, ethnic origin or any other personal characteristic.
 An author of any nationality who lives elsewhere can submit, and an author who lives there cannot, whatever their nationality.
@@ -52,6 +54,10 @@ If it turns out that an author lives there, the record is removed under the [Tak
 | Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Article 12(2) | No, as reported |
 | Tunisia | A declaration by a controller who resides there | Organic Law No. 2004-63 | No, as reported |
 | Uganda | Registration | Data Protection and Privacy Act 2019, section 29 | No, as reported |
+| Guinea | Storage of personal data there | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection | No, as reported |
+| Madagascar | Storage of personal data there | Law No. 2014-038 on Personal Data Protection | No, as reported |
+| Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported |
+| Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported |
 
 This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 

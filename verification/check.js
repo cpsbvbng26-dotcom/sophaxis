@@ -2441,7 +2441,7 @@ console.log('\n65. The separate consent to the Internet Archive, the residence o
   ok('the draft record keeps the record out of the saves when the box is left empty, and only then',
     /'archive' in form && !\/\^- \\\[\[xX\]\\\] \/m\.test/.test(read(path.join(ROOT, 'tools', 'intake.js'))));
   ok('from ' + site.residenceFrom + ' the form names every place where Sophaxis is not offered, asks that no author lives in one, and the check needs the box',
-    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in any of the places listed above.') && site.notOffered.length >= 23 && res.includes('who live in any of these places (' + B.notOfferedPlaces() + ').')
+    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in any of the places listed above, and no author under 18 lives in India.') && site.notOffered.length >= 23 && res.includes('who live in any of these places (' + B.notOfferedPlaces() + ').')
     && site.residenceFrom === '2026-11-22' && read(path.join(ROOT, 'policies', 'submission.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not list work by an author who lives in any of the ' + site.notOffered.length + ' places in the table below')
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not offer its service to people in the European Union'));
   const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
@@ -2594,11 +2594,14 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
 {
   const rv = read(path.join(ROOT, 'docs', 'legal-review.md'));
   const sec = rv.slice(rv.indexOf('## Laws of other countries'), rv.indexOf('## Consistency'));
-  ok('the legal review names each foreign law read and what decides whether it applies, the four left open in #153 among them, and the duty still open in India',
+  ok('the legal review names each foreign law read and what decides whether it applies, the four left open in #153 among them, and how India\'s duty is met',
     ['16 CFR 312', 'California Consumer Privacy Act', '17 U.S.C. 512(c)', 'Online Safety Act 2023', 'Directive 2019/790', 'Federal Act on Data Protection', 'CD/ANPD No. 2', 'Law No. 13.709, Articles 3, 4 and 41', 'Articles 3 and 53', 'Law No. 6698'].every((x) => sec.includes(x))
     && ['sections 5, 37(5) and 38', 'Implementing Regulation (SDAIA)', 'G.S.R. 846(E)', 'Article 31-2(1)', 'Article 32-3 (Presidential Decree No. 36671'].every((x) => sec.includes(x))
     && sec.includes('The four laws that #153 left open were read at their sources on 2026-11-08') && !sec.includes('could not be fetched from planalto.gov.br') && !sec.includes('Each is open until it is read.')
-    && sec.includes('One duty found in them is still open. From 2027-05-13, Rule 10 of India\'s Digital Personal Data Protection Rules'));
+    && sec.includes('One duty found in them is met by not offering. From 2027-05-13, Rule 10 of India\'s Digital Personal Data Protection Rules')
+    && sec.includes('so from 2026-11-22 it does not list work by an author under 18 who lives in India.')
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('From 2026-11-22, Sophaxis does not list work by an author under 18 who lives in India.')
+    && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('2026-11-22 から、Sophaxis は、インドに住む 18 歳未満の著者のいる作品を載せません。'));
   const sp = read(path.join(ROOT, 'policies', 'submission.md'));
   ok('the rule is stated, a place is added on a reported duty and taken off only after its law is read, and each change is announced',
     sp.includes('The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, or to register there.') && sp.includes('Article 53 of China\'s Personal Information Protection Law')
@@ -2622,9 +2625,9 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
   const reported = L.filter((p) => p.read !== true);
   const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('## Consistency'));
   const rrows = rsec.split('\n').filter((l) => /^\| (?!Place |---)/.test(l));
-  ok('the legal review lists each of the ' + reported.length + ' places not read at its source, says how many were added, and names the countries not yet screened',
-    rrows.length === reported.length && reported.every((p, i) => rrows[i].startsWith('| ' + cap(p.place) + ' | ')) && rv.includes(WORDS[reported.length] + ' places were added, from 2026-11-22.')
-    && rsec.includes('Each is open until it is screened.') && rv.includes('Commentators report that a controller abroad must register in the Data Controllers\' Registry through a representative in Türkiye'));
+  ok('the legal review lists each of the ' + reported.length + ' places not read at its source, says how many were added in each step, and that every country has been screened',
+    rrows.length === reported.length && reported.every((p, i) => rrows[i].startsWith('| ' + cap(p.place) + ' | ')) && rv.includes(WORDS[18] + ' places were added, from 2026-11-22.') && rv.includes(WORDS[4] + ' more places were added, from 2026-11-22.') && 18 + 4 === reported.length
+    && rsec.includes('Every country has now been screened, in commentaries if not at the source of its law.') && !rsec.includes('Each is open until it is screened.') && rv.includes('Commentators report that a controller abroad must register in the Data Controllers\' Registry through a representative in Türkiye'));
   ok('the Takedown Policy says that Sophaxis does not rely on 17 U.S.C. 512, and the Privacy Policy names the Swiss Commissioner',
     read(path.join(ROOT, 'policies', 'takedown.md')).includes('so it does not rely on the limitation of liability in 17 U.S.C. 512') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('Federal Data Protection and Information Commissioner'));
 }
