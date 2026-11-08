@@ -95,6 +95,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 11. The Takedown Policy now says that the authors are not told of a request about the requester's own personal data, as the code already did.
 12. The Submission Policy now says that a person under 13 cannot submit from 2026-11-21, as the Terms and the form do.
 13. Reading Article 49(1)(a) of the GDPR in EUR-Lex showed that explicit consent to a transfer without safeguards must come after the person is told its possible risks. The Privacy Policy now states those risks for the Internet Archive.
+14. Article 17(4) of the APPI Enforcement Rules asks that, where the measures a recipient abroad takes cannot be given, the person be told so and why. The Privacy Policy now says so for the Internet Archive.
 
 ## Risks that remain
 

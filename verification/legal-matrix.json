@@ -166,6 +166,15 @@
               "text": "If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned."
             }
           ]
+        },
+        {
+          "duty": "say so, with the reason, where the measures of a recipient abroad cannot be given",
+          "by": [
+            {
+              "file": "policies/privacy.md",
+              "text": "Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data"
+            }
+          ]
         }
       ]
     },

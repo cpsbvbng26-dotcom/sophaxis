@@ -110,8 +110,8 @@
       "label": "Article 17",
       "law_id": "428M60020000003",
       "article": "17",
-      "title": null,
-      "sha256": null
+      "title": "個人情報の保護に関する法律施行規則",
+      "sha256": "04c0bd7b768b36214f8acdd85da02def040874b70b2a5c7165e1d48df7d6a377"
     },
     {
       "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
@@ -119,8 +119,8 @@
       "label": "Article 26",
       "law_id": "415AC0000000057",
       "article": "26",
-      "title": null,
-      "sha256": null
+      "title": "個人情報の保護に関する法律",
+      "sha256": "0041eb921b70c7b6f0581b376ec5f34971c961d4fec04eb4806a6de3fde85ced"
     },
     {
       "law": "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
@@ -267,8 +267,8 @@
       "label": "Article 27-12",
       "law_id": "359AC0000000086",
       "article": "27_12",
-      "title": null,
-      "sha256": null
+      "title": "電気通信事業法",
+      "sha256": "79544bb2ddce61207c1ab88cbc99135d3de82e151754084ab3d2b15d2b262db9"
     }
   ],
   "policies": [
