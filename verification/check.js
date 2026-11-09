@@ -2758,6 +2758,94 @@ console.log('\n75. GitHub and Vercel: what their own terms provide, read at thei
     && read(path.join(ROOT, 'disclaimer.ja.md')).includes('サービスを「現状のまま」保証なしに提供し'));
 }
 
+console.log('\n76. The age of the DOI: six months since the first DOI of a new work was registered (Submission Policy)');
+{
+  const I = require('../tools/intake.js');
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const sub = read(path.join(ROOT, 'policies', 'submission.md')), subJa = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
+  const changelog = read(path.join(ROOT, 'CHANGELOG.md'));
+  const announced = '2026-11-09';
+  ok('the rule starts on ' + site.doiAgeFrom + ', at least 14 days after the top page announces it on ' + announced + ', and counts ' + site.doiAgeMonths + ' months',
+    site.doiAgeFrom === '2026-11-23' && site.doiAgeMonths === 6 && days(site.doiAgeFrom, announced) >= 14
+    && site.termsNotice.text.includes('From ' + site.doiAgeFrom + ', a new work is listed only if, on the day its submission issue is opened, at least six months have passed since the first DOI of the work was registered; a new version of a listed work is not counted again.')
+    && read(path.join(ROOT, 'site', 'index.html')).includes('at least six months have passed since the first DOI of the work was registered')
+    && changelog.split('\n## ')[1].startsWith(announced) && changelog.split('\n## ')[1].includes('six months'));
+  ok('the Submission Policy, in both languages, gives the rule, how the six months and the first DOI are counted, and what it does not apply to',
+    ['From ' + site.doiAgeFrom + ', a new work is listed only if at least six months have passed since its first DOI was registered.',
+      'The six months are counted to the day the submission issue is opened, in Japan time.',
+      'They end on the same day of the month, or on the last day of a shorter month.',
+      'The first DOI is the DOI registered earliest among the DOI given and the DOIs that its metadata names as earlier versions of the work, or as the DOI of all its versions.',
+      'Where the metadata gives no such day, as for Jxiv, the operator checks it by hand.',
+      'This does not apply to a new version of a work that Sophaxis already lists, or to a submission opened before ' + site.doiAgeFrom + '.'].every((t) => sub.includes(t))
+    && [site.doiAgeFrom + ' から、新しい作品は、その最初の DOI が登録されてから六か月以上たっているときに限り載せます。',
+      '六か月は、投稿の issue を開いた日まで、日本時間で数えます。', '月の同じ日に満了し、短い月ではその月の末日に満了します。',
+      'メタデータにその日がないとき（Jxiv など）は、運営者が手で確かめます。',
+      'すでに Sophaxis に載っている作品の新しい版と、' + site.doiAgeFrom + ' より前に開かれた投稿には掛かりません。'].every((t) => subJa.includes(t)));
+  ok('the form, the steps, the automation page and llms.txt say so',
+    read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('From ' + site.doiAgeFrom + ', at least six months must have passed since the first DOI of the work was registered.')
+    && read(path.join(ROOT, 'process.md')).includes('From ' + site.doiAgeFrom + ', at least six months must have passed since the first DOI of the work was registered')
+    && read(path.join(ROOT, 'automation.md')).includes('- From ' + site.doiAgeFrom + ', it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened')
+    && read(path.join(ROOT, 'site', 'llms.txt')).includes('- Age of the DOI: from ' + site.doiAgeFrom + ', a new work is listed only if at least 6 months have passed since its first DOI was registered'));
+  ok('six months end on the same day of the month, or on the last day of a shorter month, leap years included',
+    I.addMonths('2026-06-02', 6) === '2026-12-02' && I.addMonths('2026-05-31', 6) === '2026-11-30' && I.addMonths('2026-08-31', 6) === '2027-02-28'
+    && I.addMonths('2027-08-29', 6) === '2028-02-29' && I.addMonths('2026-12-15', 6) === '2027-06-15');
+  ok('the day of registration is DataCite\'s "registered" or Crossref\'s "created", in Japan time; JaLC gives none',
+    I.registeredOf({ data: { attributes: { registered: '2026-06-01T20:00:00Z', created: '2026-05-01T00:00:00Z' } } }) === '2026-06-02'
+    && I.registeredOf({ data: { attributes: { registered: null, created: '2026-05-01T00:00:00Z' } } }) === null
+    && I.registeredOf({ message: { created: { 'date-time': '2026-09-30T03:00:00Z' }, posted: { 'date-parts': [[2026, 1, 1]] } } }) === '2026-09-30'
+    && I.registeredOf(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'jalc.json')))) === null && I.registeredOf(null) === null);
+  ok('the earlier DOIs are the ones named as the DOI of all versions or as an earlier version, and nothing else',
+    JSON.stringify(I.earlierDois({ data: { attributes: { relatedIdentifiers: [
+      { relationType: 'IsVersionOf', relatedIdentifierType: 'DOI', relatedIdentifier: 'https://doi.org/10.5281/ZENODO.1' },
+      { relationType: 'IsNewVersionOf', relatedIdentifierType: 'DOI', relatedIdentifier: '10.5281/zenodo.2' },
+      { relationType: 'HasVersion', relatedIdentifierType: 'DOI', relatedIdentifier: '10.5281/zenodo.3' },
+      { relationType: 'IsVersionOf', relatedIdentifierType: 'URL', relatedIdentifier: 'https://example.org/4' },
+      { relationType: 'IsSupplementTo', relatedIdentifierType: 'DOI', relatedIdentifier: '10.5281/zenodo.5' }] } } })) === '["10.5281/zenodo.1","10.5281/zenodo.2"]'
+    && JSON.stringify(I.earlierDois({ message: { relation: { 'is-version-of': [{ 'id-type': 'doi', id: '10.2139/SSRN.1' }], 'has-version': [{ 'id-type': 'doi', id: '10.2139/ssrn.2' }], replaces: [{ 'id-type': 'uri', id: 'x' }] } } })) === '["10.2139/ssrn.1"]');
+  const row = (first, opened) => I.doiAgeCheck(first, opened);
+  const f0 = { doi: '10.5281/zenodo.1', day: '2026-06-02' };
+  ok('the check passes from the day the six months end, fails the day before, and fails when no day can be read, leaving it to the operator',
+    row(f0, '2026-12-01')[1] === false && row(f0, '2026-12-02')[1] === true && row(f0, '2027-01-01')[1] === true
+    && row(f0, '2026-12-01')[2] === '10.5281/zenodo.1 was registered on 2026-06-02; a submission can be opened from 2026-12-02, as a new issue'
+    && row(null, '2027-01-01')[1] === false && row(null, '2027-01-01')[2].includes('the operator checks it by hand') && row(f0, '2026-12-02')[0] === I.DOI_AGE_LABEL
+    && JSON.stringify(I.earliestOf(new Map([['a', '2026-08-22'], ['b', null], ['c', '2026-06-02']]))) === '{"doi":"c","day":"2026-06-02"}' && I.earliestOf(new Map([['a', null]])) === null);
+  const meta = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const form = Object.assign(I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md'))), { update: '' });
+  const rows = (f, age) => I.check({ form: f, login: 'x', meta, person: null, works: null, listed: new Map(), today: '2026-11-23', age }).checks.filter((c) => c[0] === I.DOI_AGE_LABEL);
+  ok('the intake applies it to a submission opened from ' + site.doiAgeFrom + ', not to one opened before, nor to a new version of a listed work',
+    rows(form, { opened: '2026-11-22', first: f0 }).length === 0 && rows(form, { opened: '2026-11-23', first: f0 }).length === 1 && rows(form, { opened: '2026-11-23', first: f0 })[0][1] === false
+    && I.check({ form, login: 'x', meta, person: null, works: null, listed: new Map(), today: '2026-11-23', age: { opened: '2026-11-23', first: f0 } }).ok === false
+    && rows(Object.assign({}, form, { update: '2026.0001' }), { opened: '2026-11-23', first: f0 }).length === 0
+    && rows(form, { opened: '2027-01-01', first: f0 })[0][1] === true);
+  const walk = require('child_process').execFileSync(process.execPath, ['-e', `
+    const I = require(${JSON.stringify(path.join(ROOT, 'tools', 'intake.js'))});
+    const dc = (registered, rel) => ({ raw: { data: { attributes: { registered, relatedIdentifiers: (rel || []).map(([t, d]) => ({ relationType: t, relatedIdentifierType: 'DOI', relatedIdentifier: d })) } } } });
+    const graph = {
+      '10.5281/zenodo.9': dc('2026-06-01T20:00:00Z', [['HasVersion', '10.5281/zenodo.10']]),
+      '10.5281/zenodo.11': dc('2026-08-22T01:00:00Z', [['IsVersionOf', '10.5281/zenodo.9'], ['IsNewVersionOf', '10.5281/zenodo.10']]),
+      '10.5281/zenodo.10': dc('2026-06-02T01:00:00Z', [['IsVersionOf', '10.5281/zenodo.9'], ['IsNewVersionOf', '10.5281/zenodo.11']]),
+      '10.6084/m9.figshare.7.v1': dc('2026-10-13T00:00:00Z'),
+      '10.6084/m9.figshare.7.v2': dc('2026-10-15T00:00:00Z'),
+    };
+    const look = async (d) => graph[d] || { meta: null };
+    let loop = 0; const chain = async (d) => { loop++; const n = Number(d.split('.').pop()); return dc('2027-01-01T00:00:00Z', [['IsNewVersionOf', '10.1/c.' + (n + 1)]]); };
+    (async () => {
+      const out = [];
+      out.push(await I.firstDoi('10.5281/zenodo.11', graph['10.5281/zenodo.11'].raw, look));
+      out.push(await I.firstDoi('10.6084/m9.figshare.7.v2', graph['10.6084/m9.figshare.7.v2'].raw, look));
+      out.push(await I.firstDoi('10.5281/zenodo.12', null, look));
+      out.push(await I.firstDoi('10.1/c.0', null, chain), loop);
+      console.log(JSON.stringify(out));
+    })();`], { encoding: 'utf8' }).trim();
+  ok('the first DOI is found by following the DOI of all versions and earlier versions, the first version of Figshare, through loops, and at most ten DOIs',
+    walk === '[{"doi":"10.5281/zenodo.9","day":"2026-06-02"},{"doi":"10.6084/m9.figshare.7.v1","day":"2026-10-13"},null,{"doi":"10.1/c.0","day":"2027-01-01"},10]', walk);
+  const src = read(path.join(ROOT, 'tools', 'intake.js'));
+  ok('the workflow counts to the day the issue was opened, not the day it was edited, and looks the first DOI up only when the rule applies',
+    src.includes("const issue = await github('GET', '/issues/' + n);") && src.includes('jstDay(issue && issue.created_at ? issue.created_at')
+    && src.includes('if (meta && !form.update && opened >= SITE.doiAgeFrom) age.first = await firstDoi(form.doi, raw);'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
