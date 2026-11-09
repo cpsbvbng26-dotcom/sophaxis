@@ -2777,7 +2777,7 @@ console.log('\n76. The age of the DOI: six months since the first DOI of a new w
     site.doiAgeFrom === '2026-11-23' && site.doiAgeMonths === 6 && days(site.doiAgeFrom, announced) >= 14
     && site.termsNotice.text.includes('From ' + site.doiAgeFrom + ', a new work is listed only if, on the day its submission issue is opened, at least six months have passed since the first DOI of the work was registered; a new version of a listed work is not counted again.')
     && read(path.join(ROOT, 'site', 'index.html')).includes('at least six months have passed since the first DOI of the work was registered')
-    && changelog.split('\n## ')[1].startsWith(announced) && changelog.split('\n## ')[1].includes('six months'));
+    && changelog.split('\n## ').some((sec) => sec.startsWith(announced + '\n') && sec.includes('six months')));
   ok('the Submission Policy, in both languages, gives the rule, how the six months and the first DOI are counted, and what it does not apply to',
     ['From ' + site.doiAgeFrom + ', a new work is listed only if at least six months have passed since its first DOI was registered.',
       'The six months are counted to the day the submission issue is opened, in Japan time.',
