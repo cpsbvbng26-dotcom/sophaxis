@@ -85,6 +85,11 @@ function validate(p, file) {
   }
   /* The language of the work, as ISO 639-3 (eng, jpn, …), which OpenAIRE asks for in dc:language. */
   if (p.language !== undefined && !/^[a-z]{3}$/.test(p.language)) e.push(file + ': language must be an ISO 639-3 code, such as eng');
+  /* Conflicts of interest: from SITE.ownWaitFrom, a submission by the operator is listed no sooner than SITE.ownWaitDays days after its issue was opened. */
+  if (p.operator_own === true && DATE.test(p.listed || '') && p.listed >= SITE.ownWaitFrom) {
+    if (!DATE.test(p.submitted || '')) e.push(file + ': the operator’s own record keeps the day its submission issue was opened (submitted)');
+    else if ((Date.parse(p.listed) - Date.parse(p.submitted)) / 86400000 < SITE.ownWaitDays) e.push(file + ': the operator’s own record is listed ' + SITE.ownWaitDays + ' days after its submission issue was opened at the earliest');
+  }
   if (p.updated !== undefined && (!DATE.test(p.updated) || (DATE.test(p.listed || '') && p.updated < p.listed))) e.push(file + ': updated must be a date (YYYY-MM-DD), not earlier than listed');
   if (p.id && !ID.test(p.id)) e.push(file + ': id must look like 2026.0001');
   if (p.id && path.basename(file, '.json') !== p.id) e.push(file + ': file name must be the id');
@@ -783,6 +788,13 @@ function policyPage() {
 }
 
 /* Counts taken from the records each time the site is built, and links to every public decision. */
+/* Conflicts of interest in the Moderation Policy: how many records shown are the operator's own, said where the records are counted. */
+function ownShare(all) {
+  const shown = all.filter((p) => p.status !== 'removed');
+  const own = shown.filter((p) => p.operator_own === true).length;
+  return own + ' of the ' + shown.length + ' records shown ' + (own === 1 ? 'is' : 'are') + ' the operator’s own submissions.';
+}
+
 function statsPage(all) {
   const count = (f) => all.filter(f).length;
   const shown = all.filter((p) => p.status !== 'removed');
@@ -794,6 +806,8 @@ function statsPage(all) {
 <p>These counts are taken from the records each time the site is built. Every decision behind them is public in its GitHub issue.</p>
 <h2>Records</h2>
 ${table('Status', [row('Listed', count((p) => p.status === 'listed')), row('Withdrawn', count((p) => p.status === 'withdrawn')), row('Removed', count((p) => p.status === 'removed')), row('All', all.length)])}
+<h2>The operator’s own submissions</h2>
+<p>${esc(ownShare(all))} The operator is at present the only moderator, and decides on these too; the <a href="./policies/moderation.html">Moderation Policy</a> says how, under “Conflicts of interest”.</p>
 <h2>Published versions</h2>
 <p>A listed preprint stays listed when a later version is published. Whether it was peer-reviewed is what the authors state.</p>
 ${table('Published version', [row('Published', count((p) => p.status !== 'removed' && p.published)), row('Peer-reviewed, as the authors state', count((p) => p.status !== 'removed' && p.published && p.published.peer_reviewed === true)), row('Linked by the publisher’s metadata', count((p) => p.status !== 'removed' && p.published && p.published.evidence === 'publisher'))])}
@@ -1068,7 +1082,7 @@ function llmsTxt(all) {
     + '- Fields: ' + Object.values(SITE.categories).join(', ') + '.\n'
     + '- Accepted repositories (' + repos.length + '): ' + repos.join(', ') + '.\n'
     + '- Accepted licences: ' + Object.values(SITE.licenses).join(', ') + '.\n'
-    + '- Records shown: ' + shown.length + ' (removed records are not counted).\n'
+    + '- Records shown: ' + shown.length + ' (removed records are not counted). ' + ownShare(all) + ' The operator is at present the only moderator.\n'
     + '- Not offered in ' + L.length + ' places: ' + notOfferedPlaces(L) + '. From ' + SITE.residenceFrom + ', a work is not listed if an author lives in one of them, or stays in one between the submission and the listing, even briefly. The [Submission Policy](' + B + 'policies/submission.html) gives the law of each.\n'
     + '- Age of the DOI: from ' + SITE.doiAgeFrom + ', a new work is listed only if at least ' + SITE.doiAgeMonths + ' months have passed since its first DOI was registered, counted to the day the submission issue is opened.\n'
     + notice
