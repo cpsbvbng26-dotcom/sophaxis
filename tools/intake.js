@@ -482,6 +482,82 @@ Nor does it list work by an author under 18 who lives or stays in India.
 `;
 }
 
+/* ------------------------------------------------------------ a researcher who vouches for a first submission (Submission Policy) */
+
+/* From SITE.vouchFrom, a submitter who is not yet an author of a work listed on Sophaxis needs one researcher to vouch for it:
+ * a comment from a researcher whose ORCID record links the GitHub account that comments, and lists a journal article,
+ * a book chapter or a book with a DOI. The authors of the work and the operator cannot vouch. */
+const VOUCH = 'I vouch for this submission to Sophaxis. I am not an author of this work, and I do not live in, or stay in, a place where Sophaxis is not offered.';
+const VOUCH_LABEL = 'A researcher with a journal article, a book chapter or a book vouches for a first submission';
+const PEER_TYPES = new Set(['journal-article', 'book-chapter', 'book']);
+
+/* Pure: the comments that vouch, with the ORCID iD each gives. */
+function vouchesIn(comments) {
+  const out = [];
+  for (const c of comments || []) {
+    if (!c.user || c.user.type === 'Bot') continue;
+    const orcid = orcidOf(c.body);
+    if (orcid && squash(c.body).includes(squash(VOUCH))) out.push({ login: c.user.login, orcid });
+  }
+  return out;
+}
+
+/* Pure: the DOIs of the journal articles, book chapters and books in the works of an ORCID record. */
+function peerWorks(json) {
+  const out = new Set();
+  for (const g of (json && json.group) || []) {
+    if (!(g['work-summary'] || []).some((w) => PEER_TYPES.has(w.type))) continue;
+    for (const x of ((g['external-ids'] || {})['external-id'] || [])) {
+      if (x['external-id-type'] === 'doi' && x['external-id-relationship'] !== 'part-of') out.add(String(x['external-id-value']).toLowerCase());
+    }
+  }
+  return out;
+}
+
+/* Pure: why a vouching comment does not count, or null when it does. */
+function vouchProblem({ e, person, peer, meta, submitter }) {
+  if (SITE.operator.github && e.login.toLowerCase() === SITE.operator.github.toLowerCase()) return 'the operator cannot vouch';
+  if (e.orcid === SITE.operator.orcid) return 'the operator cannot vouch';
+  if (submitter && e.orcid === submitter) return 'the submitter cannot vouch';
+  if (!person) return 'the ORCID record could not be read';
+  if (!linksGithub(person.urls, e.login)) return 'the ORCID record does not link this GitHub account';
+  if (meta.authors.some((a) => (a.orcid && a.orcid === e.orcid) || sameName(person, a))) return 'an author of the work cannot vouch';
+  if (!peer || !peer.size) return 'the ORCID record lists no journal article, book chapter or book with a DOI';
+  return null;
+}
+
+/* The records in data/papers. */
+function loadRecords(dir = path.join(ROOT, 'data', 'papers')) {
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+}
+
+/* Pure: whether the submitter is already an author of a work that Sophaxis lists, by ORCID iD. */
+function listedAuthor(orcid, records) {
+  return !!orcid && records.some((p) => p.status === 'listed' && (p.authors || []).some((a) => a.orcid === orcid));
+}
+
+/* Pure: the row of the check. results holds { e, problem } for each vouching comment. */
+function vouchCheck(results, exempt) {
+  if (exempt) return [VOUCH_LABEL, true, 'the submitter is already an author of a listed work'];
+  const good = results.filter((r) => !r.problem);
+  if (good.length) return [VOUCH_LABEL, true, 'vouched for by ORCID ' + good.map((r) => r.e.orcid).join(', ')];
+  return [VOUCH_LABEL, false, results.length ? results.map((r) => 'ORCID ' + r.e.orcid + ': ' + r.problem).join('; ') : 'waiting for a researcher to vouch for it'];
+}
+
+function vouchNote() {
+  return `
+This is a first submission, and it needs one researcher to vouch for it, as the [Submission Policy](${SITE.baseUrl}policies/submission.html) asks.
+A researcher whose public ORCID record lists a journal article, a book chapter or a book with a DOI, and links their GitHub account, comments in this issue with these words and their own ORCID iD:
+
+~~~~
+${VOUCH} ORCID: 0000-0000-0000-0000
+~~~~
+
+The authors of the work and the operator cannot vouch. Vouching says that the work is in scope and in the ordinary form of a scholarly paper; it is not a review, and the moderator still decides.
+The GitHub username, ORCID iD and comment of the researcher are public, and the check reads the name, the websites and the works of their public ORCID record, as the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out.
+`;
+}
+
 /* ------------------------------------------------------------ the draft */
 
 function nextId(paperDir, year) {
@@ -601,8 +677,9 @@ ${JSON.stringify(d.record, null, 2).replace(/~~~~/g, '~ ~ ~ ~')}
 ` + pdfNote(d.record.versions[d.record.versions.length - 1].doi) + adviceNote(advice);
   } else if (d && d.problems && d.problems.length) {
     out += '\nThe draft record does not validate: ' + safe(d.problems.join('; ')) + '\n';
-  } else if (result.checks.some((c) => c[0] === COAUTHOR_LABEL) && result.checks.every((c) => c[1] || c[0] === COAUTHOR_LABEL)) {
-    out += coauthorNote();
+  } else if (result.checks.some((c) => c[0] === COAUTHOR_LABEL || c[0] === VOUCH_LABEL) && result.checks.every((c) => c[1] || c[0] === COAUTHOR_LABEL || c[0] === VOUCH_LABEL)) {
+    if (result.checks.some((c) => c[0] === COAUTHOR_LABEL && !c[1])) out += coauthorNote();
+    if (result.checks.some((c) => c[0] === VOUCH_LABEL && !c[1])) out += vouchNote();
   } else {
     out += `
 Not verified. Fix what failed, then edit this issue to run the checks again.
@@ -749,6 +826,25 @@ async function main() {
     const row = coauthorCheck(meta.authors, result.author, confirmed, new Date(Date.now() + 9 * 3600 * 1000).toISOString());
     if (row) { result.checks.push(row); result.ok = result.ok && row[1]; }
   }
+  if (meta && result.author && !form.update && opened >= SITE.vouchFrom) {
+    const exempt = listedAuthor(form.orcid, loadRecords());
+    const results = [];
+    if (!exempt) {
+      for (const e of vouchesIn(all)) {
+        let person = null, peer = null;
+        try {
+          const p = await orcidPersonJson(e.orcid);
+          const w = await getJson('https://pub.orcid.org/v3.0/' + e.orcid + '/works');
+          person = p && orcidPerson(p);
+          peer = w ? peerWorks(w) : new Set();
+        } catch (err) { console.error(err.message); }
+        results.push({ e, problem: vouchProblem({ e, person, peer, meta, submitter: form.orcid }) });
+      }
+    }
+    const row = vouchCheck(results, exempt);
+    result.checks.push(row);
+    result.ok = result.ok && row[1];
+  }
   const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub, opened }) : null;
   const shape = meta && !form.update ? await pdfShape(versions, meta.title) : null;
   const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : [], shape);
@@ -761,6 +857,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

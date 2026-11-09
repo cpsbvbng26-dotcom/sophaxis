@@ -2,7 +2,7 @@ name: intake
 on:
   issues:
     types: [opened, edited, reopened]
-  # A co-author confirms in a comment (Submission Policy); only comments that carry the words of a confirmation run the check again.
+  # A co-author confirms, or a researcher vouches, in a comment (Submission Policy); only comments that carry those words run the check again.
   issue_comment:
     types: [created, edited, deleted]
 permissions:
@@ -17,7 +17,7 @@ jobs:
       contains(github.event.issue.labels.*.name, 'submission')
       && (github.event_name == 'issues'
         || (!github.event.issue.pull_request && github.event.comment.user.type != 'Bot'
-          && (contains(github.event.comment.body, 'I agree to the listing of this work on Sophaxis') || contains(github.event.comment.body, 'Confirmed by email through the ORCID record'))))
+          && (contains(github.event.comment.body, 'I agree to the listing of this work on Sophaxis') || contains(github.event.comment.body, 'Confirmed by email through the ORCID record') || contains(github.event.comment.body, 'I vouch for this submission to Sophaxis'))))
     name: Look up the DOI and check the submitter
     runs-on: ubuntu-latest
     steps:
