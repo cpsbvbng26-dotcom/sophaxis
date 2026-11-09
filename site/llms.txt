@@ -48,6 +48,14 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html)
 - [撤回の規程（日本語訳）](https://sophaxis.vercel.app/policies/withdrawal.ja.html)
 - [免責事項](https://sophaxis.vercel.app/disclaimer.ja.html)
+- [トップの頁](https://sophaxis.vercel.app/index.ja.html)
+- [投稿から掲載まで（日本語訳）](https://sophaxis.vercel.app/process.ja.html)
+- [よくある質問（日本語訳）](https://sophaxis.vercel.app/faq.ja.html)
+- [自動で動く手順（日本語訳）](https://sophaxis.vercel.app/automation.ja.html)
+- [運営者と連絡先（日本語訳）](https://sophaxis.vercel.app/contact.ja.html)
+- [預け先と DOI 登録機関へ（日本語訳）](https://sophaxis.vercel.app/repositories.ja.html)
+- [規程（日本語訳）](https://sophaxis.vercel.app/policy.ja.html)
+- [透明性の自己評価（日本語訳）](https://sophaxis.vercel.app/transparency.ja.html)
 
 ## Data
 

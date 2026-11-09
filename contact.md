@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-08.
 
+Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
+
 ## Operator
 
 Sophaxis is operated by one person, Takuya Nemoto, in Japan.

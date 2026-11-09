@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-09.
 
+Japanese: [透明性の自己評価（日本語訳）](./transparency.ja.html). It is a translation; where the two differ, the English text applies.
+
 COPE, DOAJ, OASPA and WAME publish the [Principles of Transparency and Best Practice in Scholarly Publishing](https://doaj.org/apply/transparency/).
 This page holds Sophaxis against version 5.0 of October 2026, read at DOAJ on 2026-11-09, heading by heading.
 It is the operator's own assessment, not one made or endorsed by any of the four organisations, and Sophaxis is not a member of any of them.
@@ -49,7 +51,8 @@ The name Sophaxis says what the site is in its tagline, "Preprints in Philosophy
 ### Website
 
 Met.
-The site is served only over HTTPS, at one address, `https://sophaxis.vercel.app/`; the repository on GitHub points to it.
+The site is served only over HTTPS, at one address, which is `https://sophaxis.vercel.app/` and no other.
+The repository on GitHub points to it.
 Its pages run no third-party script, set no cookie and use no analytics, under a strict Content Security Policy ([Privacy Policy](./policies/privacy.html)).
 Sophaxis has no ISSN, so none is listed.
 

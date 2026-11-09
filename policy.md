@@ -1,5 +1,9 @@
 # Policies
 
+Last updated: 2026-11-09.
+
+Japanese: [規程（日本語訳）](./policy.ja.html). It is a translation; where the two differ, the English text applies.
+
 Sophaxis is an overlay preprint server for philosophy and mathematics.
 It lists preprints that authors have already deposited in an open repository,
 and it gives each one a stable record page.

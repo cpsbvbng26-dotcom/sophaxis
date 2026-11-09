@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>透明性の自己評価（日本語訳） | Sophaxis</title>
+<meta name="description" content="Sophaxis の「透明性の自己評価（日本語訳）」の頁。英語の頁の訳です。">
+<link rel="canonical" href="https://sophaxis.vercel.app/transparency.ja.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="透明性の自己評価（日本語訳） | Sophaxis">
+<meta property="og:description" content="Sophaxis の「透明性の自己評価（日本語訳）」の頁。英語の頁の訳です。">
+<meta property="og:url" content="https://sophaxis.vercel.app/transparency.ja.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/transparency.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/transparency.ja.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>透明性の自己評価（日本語訳）</h1>
+<p>最終更新：2026-11-09。</p>
+<p>これは英語の <a href="./transparency.html">Transparency: a self-assessment</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
+<p>COPE、DOAJ、OASPA、WAME は、<a href="https://doaj.org/apply/transparency/">Principles of Transparency and Best Practice in Scholarly Publishing</a>（学術出版における透明性と最善の実務の原則）を公表しています。この頁は、2026-11-09 に DOAJ で読んだ 2026 年 10 月の版 5.0 に照らして、Sophaxis を見出しごとに確かめます。これは運営者自身の評価です。四つの団体のどれかが行ったものでも、認めたものでもありません。Sophaxis は、四つの団体のどれの会員でもありません。</p>
+<p>原則は、学術誌のために書かれています。Sophaxis は学術誌ではありません。オーバーレイ型のプレプリントサーバーであり、受理はモデレーションであって、査読ではありません。原則がプレプリントサーバーに当てはまりえないときは、この頁はそう述べ、満たしたものとは数えません。</p>
+<p>見出しのそれぞれに、次の四つの印のどれか一つを付けます。</p>
+<ul><li>**満たす**：Sophaxis は原則が求めることを行っています。この頁は、それがどこにあるかを示します。</li><li>**一部**：Sophaxis はその一部を行っています。この頁は、何が欠けているかを示します。</li><li>**満たさない**：Sophaxis はそれを行っていません。この頁は、その理由を示します。</li><li>**該当しない**：原則は、Sophaxis が行わないことについてのものです。</li></ul>
+<h2>要約</h2>
+<p>| 見出し | 印 | | --- | --- | | 名称 | 満たす | | ウェブサイト | 満たす | | 刊行の予定と時期 | 満たす | | 保存 | 一部 | | 著作権 | 一部 | | ライセンス | 満たす | | 出版倫理と関連する編集の方針 | 一部 | | 編集上の評価 | 満たす | | 査読 | 該当しない | | アクセス | 満たす | | 所有と運営 | 満たす | | 編集委員会または諮問機関 | 満たさない | | 編集の担当者と連絡先 | 一部 | | 著者の料金 | 満たす | | その他の収入 | 満たす | | 広告 | 満たす | | ダイレクトマーケティング | 満たす |</p>
+<h2>学術誌としての示し方</h2>
+<p>### 名称</p>
+<p>満たす。Sophaxis という名に添えた標語「Preprints in Philosophy and Mathematics」が、サイトが何であるかを示しています。サイトは、学術誌ではないこと（<a href="./policy.ja.html">規程</a>）を述べています。どの預け先とも、どの団体とも、特別な関係を持たないこと（<a href="./disclaimer.ja.html">免責事項</a>）も述べています。</p>
+<p>### ウェブサイト</p>
+<p>満たす。サイトは HTTPS だけで、一つのアドレス <code>https://sophaxis.vercel.app/</code> で配信しています。GitHub のリポジトリも、このアドレスを示しています。頁は、第三者のスクリプトを動かさず、クッキーを置かず、アクセス解析を使いません。厳しい Content Security Policy のもとで配信しています（<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a>）。Sophaxis は ISSN を持たないので、ISSN は示していません。</p>
+<p>### 刊行の予定と時期</p>
+<p>満たす。記録は、投稿を受理したときに随時載せます。号や巻はありません（<a href="./process.ja.html">投稿から掲載まで</a>）。</p>
+<p>### 保存</p>
+<p>一部。作品そのものは、Zenodo、arXiv、Figshare などの預け先に預けられ、そこで保存されています。記録とサイトは、公開の git のリポジトリに保管しています。版 1.0.0 は Zenodo に保存しています（10.5281/zenodo.24033372）。記録の頁と PDF の写しは、著者全員が同意している場合に、毎週 Internet Archive に保存します。Sophaxis は、CLOCKSS や Portico のような、Keepers Registry のどのアーカイブにも入っていません。</p>
+<p>### 著作権</p>
+<p>一部。著者は著作権を保ちます。Sophaxis は、著作権の譲渡も独占的な許諾も求めません（<a href="./policies/copyright.ja.html">著作権の規程</a>）。サイト自身の文は CC BY 4.0、コードは MIT で、権利は運営者が持ちます。全文に印字される著作権者は、著者が PDF に書いたとおりです。Sophaxis はファイルを手を加えずに置き、著作権の表示を足しません。</p>
+<p>### ライセンス</p>
+<p>満たす。載っている作品はどれも、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを持ちます。記録の頁は、Creative Commons のウェブサイトにあるそのライセンスへリンクします（<a href="./policies/licences.ja.html">ライセンスの規程</a>）。これらのライセンスのもとでは、AI の企業を含め、誰でも作品をマイニングできます。<code>robots.txt</code> も、すべてのクローラーにサイトを読ませます。例外は Internet Archive のクローラーだけです。削除した記録と、著者が保存に同意しなかった記録は、読ませません。利用規約は、GitHub と Vercel が、AI のモデルの学習を含め、公開の内容をどう使えるかを述べています（<a href="./policies/terms.ja.html">利用規約</a>）。</p>
+<h2>学術誌の実務</h2>
+<p>### 出版倫理と関連する編集の方針</p>
+<p>一部。</p>
+<ul><li>目的と範囲：トップの頁と<a href="./policies/submission.ja.html">投稿の規程</a>に書いてあります。満たす。</li><li>著者であることと AI の使用：投稿できるのは著者だけで、著者全員の同意が要ります。言語モデルとその他の生成モデルの使用は、その程度とともに申告しなければなりません。モデルは著者になれません。満たす。</li><li>利益相反：運営者自身の投稿には印を付け、優先せず、載せる前に七日のあいだ公開で待ちます（<a href="./policies/moderation.ja.html">モデレーションの規程</a>）。著者の利益相反は尋ねていません。一部。</li><li>データの共有と再現性：方針はありません。満たさない。</li><li>資金と支援：著者に資金の開示を求めていません。満たさない。</li><li>公開後の評価：誰でも、公開の issue で記録の誤りを報告できます。満たす。</li><li>訂正・撤回・懸念表明：訂正は日付付きの注記です。Crossref が記録している通知は、Retraction Watch からのものも含め、投稿のときと毎週読み、記録に示します。満たす。</li><li>剽窃：Sophaxis は剽窃の検査を行わず、剽窃の定義も持ちません。満たさない。</li><li>苦情と異議：断られた投稿者は issue で答えることができ、運営者がもう一度見直します。削除の求めは<a href="./policies/takedown.ja.html">削除の規程</a>に従います。満たす。</li><li>研究倫理：分野が哲学と数学なので、同意や倫理審査についての方針はありません。第三者の個人データを扱う作品は断ります。一部。</li><li>研究不正の申し立て：削除の求めのほかに、書かれた手続きはありません。満たさない。</li></ul>
+<p>### 編集上の評価</p>
+<p>満たす。いまは唯一のモデレーターでもある運営者が、投稿のそれぞれを、その公開の issue で受理するか断ります。理由は、モデレーションの規程が挙げるものです。判断に影響しうる料金は、存在しません。三つの言語モデルが審査を助けます。運営者は公開の部分だけを手で渡し、言語モデルは何も決めません。モデレーションの規程がそう述べています。どの投稿も、受理を約束されません。どの記録の頁も、受理はモデレーションであって査読ではないと述べています。<a href="./decisions.html">年ごとの判断</a>の頁が、判断を、理由と判断までの日数とともに数えています。</p>
+<p>### 査読</p>
+<p>該当しない。Sophaxis は査読を行いません。モデレーションは、モデレーションの規程が定めるとおり、対象・形・ライセンス・著者であること・申告を確かめます。サイトは、どの記録にも、受理はモデレーションであって査読ではないと書いています。</p>
+<p>### アクセス</p>
+<p>満たす。どの頁も、どの PDF の写しも、登録なしに無料で読めます。</p>
+<h2>組織</h2>
+<p>### 所有と運営</p>
+<p>満たす。Sophaxis は、一人の個人が持ち、運営しています。その人は、<a href="./contact.ja.html">運営者と連絡先</a>の頁に ORCID iD とともに名を挙げ、無報酬で、無料のサービスの範囲で運営しています。どの学会・機関・後援者とも、特別な関係を持っていません。</p>
+<p>### 編集委員会または諮問機関</p>
+<p>満たさない。Sophaxis には、編集委員会も諮問機関もありません。モデレーションの規程は、ほかのモデレーターを招くことがあると述べ、その手順を示しています。まだ誰も招いていません。</p>
+<p>### 編集の担当者と連絡先</p>
+<p>一部。運営者の名と ORCID iD は連絡先の頁にあり、メールアドレスは ORCID の記録にあります。住所は公開していません。運営者は一人の私人だからです。</p>
+<h2>事業の実務</h2>
+<p>### 著者の料金</p>
+<p>満たす。Sophaxis は、著者からも読者からも、何も取りません。利用規約は、どの変更も料金を導入しないと述べています。</p>
+<p>### その他の収入</p>
+<p>満たす。Sophaxis には収入がありません。GitHub と Vercel の無料のサービスの範囲で、無報酬で運営しています。運営者は、Sophaxis を書く道具である Claude Code の料金を、個人で払っています（<a href="./disclaimer.ja.html">免責事項</a>）。</p>
+<p>### 広告</p>
+<p>満たす。Sophaxis は広告を出しません。広告をする投稿は断ります。</p>
+<p>### ダイレクトマーケティング</p>
+<p>満たす。サイトにはメーリングリストがありません。誰にもメールアドレスを尋ねず、メッセージも送りません。</p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

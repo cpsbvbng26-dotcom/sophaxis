@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-08.
 
+Japanese: [よくある質問（日本語訳）](./faq.ja.html). It is a translation; where the two differ, the English text applies.
+
 Each answer is a short form of a policy. Where they differ, the policy applies.
 
 ## What is Sophaxis?

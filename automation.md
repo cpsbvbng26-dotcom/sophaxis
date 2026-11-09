@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-09.
 
+Japanese: [自動で動く手順（日本語訳）](./automation.ja.html). It is a translation; where the two differ, the English text applies.
+
 Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel.
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
 The code of each step is public, and each section links to it.

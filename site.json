@@ -76,6 +76,7 @@
     "philosophy-of-science": "Philosophy of Science",
     "logic": "Logic"
   },
+  "categoriesJa": { "philosophy": "哲学", "mathematics": "数学", "philosophy-of-mathematics": "数理哲学", "philosophy-of-science": "科学哲学", "logic": "論理学" },
   "collections": [
     { "slug": "game-theory", "name": "Game theory", "ja": "ゲーム理論", "description": "Repeated games, equilibria and the mathematics of strategy." },
     { "slug": "individual-autonomy", "name": "The individual and autonomy", "ja": "個と自律", "description": "Philosophy of the autonomy, self-cultivation and solitude of the individual." },

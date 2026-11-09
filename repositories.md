@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-08.
 
+Japanese: [預け先と DOI 登録機関へ（日本語訳）](./repositories.ja.html). It is a translation; where the two differ, the English text applies.
+
 This page is addressed to the repositories whose deposits Sophaxis lists, and to the agencies that register their DOIs.
 It says what Sophaxis reads from your services, how often, and what it does with it.
 

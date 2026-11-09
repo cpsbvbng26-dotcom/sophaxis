@@ -18,6 +18,8 @@
 <meta property="og:description" content="Every automatic step of Sophaxis: when it runs, what it reads and writes, and what it leaves to the operator.">
 <meta property="og:url" content="https://sophaxis.vercel.app/automation.html">
 <meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/automation.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/automation.ja.html">
 <meta name="twitter:card" content="summary">
 <style>
 :root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
@@ -74,6 +76,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <main class="wrap" id="main">
 <h1>What runs by itself</h1>
 <p>Last updated: 2026-11-09.</p>
+<p>Japanese: <a href="./automation.ja.html">自動で動く手順（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <p>Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel. This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator. The code of each step is public, and each section links to it.</p>
 <ul><li>No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.</li><li>One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.</li><li>No step uses a language model. The steps are ordinary code.</li><li>No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.</li><li>A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.</li><li>The <a href="./policies/privacy.html">Privacy Policy</a> says what personal data these steps handle.</li></ul>
 <h2>When a submission issue is opened or edited, or an author confirms in a comment</h2>
