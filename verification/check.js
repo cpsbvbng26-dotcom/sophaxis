@@ -3072,6 +3072,34 @@ console.log('\n81. Decisions by year, counted from the public issues and the rec
     && read(path.join(ROOT, 'policies', 'moderation.ja.md')).includes('毎年 1 月に、前の年の判断を、公開の issue と記録から数えます。'));
 }
 
+console.log('\n82. Transparency: the self-assessment against the Principles of Transparency and Best Practice');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const t = read(path.join(ROOT, 'transparency.md'));
+  const HEADINGS = ['Name', 'Website', 'Publishing schedule and timeline', 'Preservation', 'Copyright', 'Licensing', 'Publication ethics and related editorial policies', 'Editorial assessment',
+    'Peer review', 'Access', 'Ownership and management', 'Editorial board or advisory body', 'Editorial team and contact information', 'Author fees', 'Other revenue', 'Advertising', 'Direct marketing'];
+  const MARKS = ['Met', 'In part', 'Not met', 'Does not apply'];
+  const table = Object.fromEntries([...t.matchAll(/^\| ([^|]+) \| (Met|In part|Not met|Does not apply) \|$/gm)].map((m) => [m[1].trim(), m[2]]));
+  const body = Object.fromEntries(HEADINGS.map((h) => [h, (new RegExp('^### ' + h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\n\n([^.\n]+)\\.', 'm').exec(t) || [])[1]]));
+  ok('the page holds Sophaxis against the ' + HEADINGS.length + ' headings of version 5.0, read at DOAJ, says that it is the operator\'s own assessment, and that a principle that cannot apply is not counted as met',
+    t.includes('(https://doaj.org/apply/transparency/)') && t.includes('version 5.0 of October 2026, read at DOAJ on 2026-11-09')
+    && t.includes("It is the operator's own assessment, not one made or endorsed by any of the four organisations, and Sophaxis is not a member of any of them.")
+    && t.includes('Where a principle cannot apply to a preprint server, this page says so, and does not count it as met.'));
+  const mismatch = HEADINGS.filter((h) => !MARKS.includes(table[h]) || table[h] !== body[h]);
+  ok('every heading has one of the four marks, and the summary gives the same mark as the section (' + MARKS.map((m) => Object.values(table).filter((x) => x === m).length + ' ' + m.toLowerCase()).join(', ') + ')',
+    mismatch.length === 0 && Object.keys(table).length === HEADINGS.length, mismatch.join(', '));
+  ok('what it states agrees with the site: no ISSN, the archived version, the week in public, no fees, the moderators, no board, and no review',
+    site.issn === null && t.includes('Sophaxis has no ISSN, so none is listed.') && t.includes('version 1.0.0 is archived at Zenodo (' + site.zenodo.version + ')')
+    && t.includes('wait seven days in public before listing') && site.ownWaitDays === 7
+    && read(path.join(ROOT, 'policies', 'terms.md')).includes('No change will introduce fees.') && t.includes('the Terms of Use say that no change will introduce fees')
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('The operator is at present the only moderator.') && table['Editorial board or advisory body'] === 'Not met'
+    && read(path.join(ROOT, 'policy.md')).includes('Sophaxis is not a journal.') && table['Peer review'] === 'Does not apply'
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('It does not run plagiarism checks.') && t.includes('- Plagiarism: Sophaxis runs no plagiarism check and has no definition of plagiarism. Not met.'));
+  ok('the page is built, in the sitemap, in the footer of every page and in llms-full.txt',
+    read(path.join(ROOT, 'site', 'transparency.html')).includes('<h1>Transparency: a self-assessment</h1>') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes(site.baseUrl + 'transparency.html')
+    && read(path.join(ROOT, 'site', 'index.html')).includes('<a href="./transparency.html">Transparency</a>') && read(path.join(ROOT, 'site', 'llms-full.txt')).includes('Transparency: a self-assessment'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
