@@ -86,6 +86,12 @@ The automatic check in the issue reads these days and counts the six months.
 A submission opened too early is not listed; a new issue can be opened once the six months have passed.
 This does not apply to a new version of a work that Sophaxis already lists, or to a submission opened before 2026-11-23.
 
+From 2026-11-23, a work for which Crossref records a retraction, a partial retraction, a withdrawal or a removal is not listed.
+A work for which it records an expression of concern goes to the operator, who decides under the [Moderation Policy](./moderation.html).
+Crossref includes the data of the Retraction Watch database.
+The automatic check in the issue reads these notices for the DOI given.
+A notice that a repository shows only on its own page, and not to Crossref, is not seen by the check.
+
 Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.
 Publishers set different terms for this.
 The submitter gives the DOI of the published version in the form, as set out under "When the work is published" below.
