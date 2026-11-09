@@ -1170,6 +1170,10 @@ Source: https://sophaxis.vercel.app/policy.html
 
 # Policies
 
+Last updated: 2026-11-09.
+
+Japanese: [規程（日本語訳）](./policy.ja.html). It is a translation; where the two differ, the English text applies.
+
 Sophaxis is an overlay preprint server for philosophy and mathematics.
 It lists preprints that authors have already deposited in an open repository,
 and it gives each one a stable record page.
@@ -1348,6 +1352,8 @@ Source: https://sophaxis.vercel.app/faq.html
 
 Last updated: 2026-11-08.
 
+Japanese: [よくある質問（日本語訳）](./faq.ja.html). It is a translation; where the two differ, the English text applies.
+
 Each answer is a short form of a policy. Where they differ, the policy applies.
 
 ## What is Sophaxis?
@@ -1496,6 +1502,8 @@ Source: https://sophaxis.vercel.app/process.html
 
 Last updated: 2026-11-09.
 
+Japanese: [投稿から掲載まで（日本語訳）](./process.ja.html). It is a translation; where the two differ, the English text applies.
+
 This page follows one submission from start to finish.
 The rules themselves are in the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html); where this page differs, they apply.
 
@@ -1600,6 +1608,8 @@ Source: https://sophaxis.vercel.app/automation.html
 # What runs by itself
 
 Last updated: 2026-11-09.
+
+Japanese: [自動で動く手順（日本語訳）](./automation.ja.html). It is a translation; where the two differ, the English text applies.
 
 Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel.
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
@@ -1718,6 +1728,8 @@ Source: https://sophaxis.vercel.app/transparency.html
 
 Last updated: 2026-11-09.
 
+Japanese: [透明性の自己評価（日本語訳）](./transparency.ja.html). It is a translation; where the two differ, the English text applies.
+
 COPE, DOAJ, OASPA and WAME publish the [Principles of Transparency and Best Practice in Scholarly Publishing](https://doaj.org/apply/transparency/).
 This page holds Sophaxis against version 5.0 of October 2026, read at DOAJ on 2026-11-09, heading by heading.
 It is the operator's own assessment, not one made or endorsed by any of the four organisations, and Sophaxis is not a member of any of them.
@@ -1765,7 +1777,8 @@ The name Sophaxis says what the site is in its tagline, "Preprints in Philosophy
 ### Website
 
 Met.
-The site is served only over HTTPS, at one address, `https://sophaxis.vercel.app/`; the repository on GitHub points to it.
+The site is served only over HTTPS, at one address, which is `https://sophaxis.vercel.app/` and no other.
+The repository on GitHub points to it.
 Its pages run no third-party script, set no cookie and use no analytics, under a strict Content Security Policy ([Privacy Policy](./policies/privacy.html)).
 Sophaxis has no ISSN, so none is listed.
 
@@ -1883,6 +1896,8 @@ Source: https://sophaxis.vercel.app/repositories.html
 
 Last updated: 2026-11-08.
 
+Japanese: [預け先と DOI 登録機関へ（日本語訳）](./repositories.ja.html). It is a translation; where the two differ, the English text applies.
+
 This page is addressed to the repositories whose deposits Sophaxis lists, and to the agencies that register their DOIs.
 It says what Sophaxis reads from your services, how often, and what it does with it.
 
@@ -1941,6 +1956,8 @@ Source: https://sophaxis.vercel.app/contact.html
 # Operator and contact
 
 Last updated: 2026-11-08.
+
+Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
 
 ## Operator
 
@@ -3281,4 +3298,777 @@ Sophaxis は、運営者を日本の消費者契約法の事業者であるも�
 これは、故意または重大な過失による責任や、法令が免除や制限を認めない責任を、免除したり制限したりするものではありません。
 これらの定めは日本法に準拠し、この頁のどの定めも、法令が制限を認めない権利を制限しません。
 紛争は、[利用規約](./policies/terms.ja.html)の「紛争」の節が定めるとおり、まず合意で解決します。
+
+---
+
+Source: https://sophaxis.vercel.app/process.ja.html
+
+# 投稿から掲載まで（日本語訳）
+
+最終更新：2026-11-09。
+
+これは英語の [From submission to listing](./process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、一つの投稿を始めから終わりまでたどります。
+決まりそのものは、[投稿の規程](./policies/submission.ja.html)と[モデレーションの規程](./policies/moderation.ja.html)にあります。この頁と食い違うところは、規程が適用されます。
+
+## 始める前に
+
+要るものは四つです。
+
+1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。[投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから六か月以上たっている必要があります。
+2. 預けたものに付けた CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。DOI のメタデータに出ている必要があります。
+3. [ORCID](https://orcid.org) iD。登録は無料です。
+4. [GitHub](https://github.com) のアカウント。登録は無料です。
+
+作品の著者全員が、掲載に同意している必要があります。
+[投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 から、初めての投稿には研究者一人の紹介も要ります。紹介する研究者は、学術誌の論文・本の章・本を持つ人です。
+言語モデルやその他の生成モデルを使った場合は、使った道具と、何に使ったかを書きます。
+
+## 手順 1. GitHub のユーザー名を確かめる
+
+投稿は GitHub の issue です。Sophaxis のリポジトリに公開で置く投稿で、その下にコメントが付きます。
+GitHub のアカウントが無い場合は、[github.com/signup](https://github.com/signup) で作れます。
+
+ユーザー名は、GitHub のプロフィールのアドレス `https://github.com/<your username>` の最後の部分です。
+サインインしたあとは、右上の自分の画像の下のメニューにも出ます。
+
+## 手順 2. ORCID の記録を GitHub にリンクする
+
+1. [orcid.org](https://orcid.org) でサインインすると、ORCID の記録が開きます。ORCID iD は、名前の下にある 16 桁の番号です。
+2. 「Websites & social links」の節を探し、その編集のボタン（鉛筆）を押します。
+3. 「Add link」を選びます。GitHub のような題と、アドレス `https://github.com/<your username>` を書きます。
+4. 公開の範囲を「Everyone」にして、保存します。
+
+Sophaxis は、こうして、投稿を開いた人が作品の著者であることを確かめます。
+Sophaxis が ORCID の記録から読むのは、名前・リンク・業績だけです。ORCID にメールアドレスや国を問い合わせることはありません。
+
+## 手順 3. 投稿の issue を開く
+
+1. [投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)を開きます。GitHub がサインインを求めたら、サインインします。そのあと様式が開きます。
+2. 題の「[Submission]」のあとに、作品の題のような短い言葉を足します。
+3. DOI、ORCID iD、分野、生成モデルについての申告を書き、確認の欄に印を付けます。
+4. 様式のいちばん下のボタンを押して、issue を作ります。
+
+題・著者・要旨・ライセンスは、DOI のメタデータから取ります。手で打ち込むことはありません。
+
+issue は公開されます。
+GitHub のユーザー名と、そこに書いたことはすべて、誰でも読めます。
+自分が開いた issue に新しいコメントが付くと、GitHub が知らせます。知らせは github.com に出て、初期の設定ではメールでも届きます。
+
+## 手順 4. 自動の確認が答える
+
+ふつうは数分のうちに、「Automatic checks」という題のコメントが issue に付きます。
+コメントは、預け先、ライセンス、DOI のメタデータ、ORCID の記録からのリンク、著者であることを、それぞれ通ったか通らなかったかで示します。
+issue には `verified` か `unverified` のラベルが付きます。
+
+確認が通らなかった場合は、コメントがその理由を書きます。
+ORCID の記録のリンクのような原因を直してから、issue を編集します。すると、確認がもう一度走ります。
+issue を編集するには、最初の投稿の右上のメニュー（⋯）を開き、「Edit」を選び、要るところを変えて保存します。
+何も変えない編集では、確認は走りません。
+
+預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo、Figshare、arXiv、Research Square 以外のすべての預け先がこれに当たります。
+添付は任意で、ファイルは 20 MB までです。
+添付するには、ファイルを issue のいちばん下のコメントの欄に引き入れ、そのリンクが出るのを待ってから、コメントを投稿します。
+
+投稿が確かめられた場合、コメントは、預け先にある DOI のメタデータについての助言を添えることもあります。たとえば、要旨、ライセンス、キーワードが欠けていることです。
+助言は [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) から来ます。掲載を決めるものではありません。
+検索エンジンや索引は、PDF ではなくこのメタデータを読みます。多くの預け先では、新しい版を作らずにそれを直せます。
+
+確認を通っても、受理ではありません。
+
+GitHub と ORCID のボタンの名は、変わることがあります。手順は変わりません。
+
+## 手順 5. モデレーターが投稿を読む
+
+モデレーターは、確かめられた投稿を、[モデレーションの規程](./policies/moderation.ja.html)に照らして読みます。
+見るのは、対象の分野、学術論文の形、生成モデルについての申告、そしてスパム・嫌がらせ・第三者の個人データが無いことです。
+モデレーションは査読ではありません。証明・論証・データは確かめません。
+
+目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。
+判断は issue に書きます。
+
+## 手順 6. 判断
+
+受理した場合は、2026.0001 のような Sophaxis の番号を付けて記録の頁を公開し、issue を閉じます。
+預け先が許す場合は、そのあとで、手を加えていない PDF の写しを加えます。
+
+断る場合は、モデレーターが issue に短い理由を書きます。
+投稿者は、そこで答えることができます。
+その後、運営者が投稿をもう一度見直し、その判断が最終のものになります。
+
+## 掲載のあと
+
+- 新しい版：預け先に預けてから、既存の Sophaxis の番号を書いて投稿の issue を開きます。
+- 記録の誤り：記録の頁にある「Report an error in this record」を使います。
+- 撤回：著者なら誰でも一人で、[撤回の規程](./policies/withdrawal.ja.html)に沿って作品を撤回できます。
+- 出版：後の版が学術誌、会議録、書籍で出版されたときは、著者なら誰でも一人で、[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)で報告します。プレプリントは載ったままです。
+
+ほかの問いへの短い答えは、[よくある質問](./faq.ja.html)にあります。
+
+---
+
+Source: https://sophaxis.vercel.app/faq.ja.html
+
+# よくある質問（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Frequently asked questions](./faq.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+それぞれの答えは、規程を短くしたものです。食い違うところは、規程が適用されます。
+
+## Sophaxis とは何ですか？
+
+哲学・数学・論理学・数理哲学・科学哲学のための、オーバーレイ型のプレプリントサーバーです。
+作品そのものは、その預け先が公開します。Sophaxis は、ライセンスが許す場合にだけ、手を加えていない PDF の写しを置きます。
+著者がすでに公開の預け先に預けたプレプリントを載せ、それぞれに変わらない記録の頁を与えます。
+
+## 査読ですか？
+
+いいえ。受理はモデレーションであって、査読ではありません。
+モデレーションが確かめるのは、投稿者、ライセンス、対象の分野、論文の形、生成モデルについての申告です。
+証明・論証・データは確かめません。Sophaxis は、載っているどの作品の質も保証しません。
+[モデレーションの規程](./policies/moderation.ja.html)を見てください。
+
+## 費用はかかりますか？
+
+いいえ。Sophaxis は、著者からも読者からも料金を取りません。これから取り始めることもありません。
+
+## Sophaxis は作品に DOI を与えますか？
+
+いいえ。DOI は作品を預けた預け先が与えるもので、引用するのはその DOI です。
+Sophaxis は、それぞれの記録に 2026.0001 のような番号を与えます。この番号は変わらず、ほかの記録に使い回すこともありません。
+
+## どの預け先を受け付けますか？
+
+Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv です。
+作品は、そのどれかから DOI を得ている必要があります。
+
+## どのライセンスを受け付けますか？
+
+DOI のメタデータに記された CC BY 4.0、CC BY-SA 4.0、CC0 1.0 です。
+非営利（NonCommercial）や改変禁止（NoDerivatives）の条件を持つライセンスは受け付けません。arXiv の非独占的ライセンスも受け付けません。
+[ライセンスの規程](./policies/licences.ja.html)を見てください。
+
+## 誰が投稿できますか？
+
+ORCID iD を持つ、作品の著者だけです。
+ORCID の記録が GitHub のアカウントにリンクしている必要があります。その ORCID iD が作品の著者のものであることは、自動の確認が確かめます。
+著者全員が、掲載に同意している必要があります。
+[投稿の規程](./policies/submission.ja.html)を見てください。
+
+## なぜ GitHub なのですか？
+
+投稿は GitHub の issue です。
+こうすると、すべての段階が公開されます。自動の確認も、issue を開いたアカウントが著者のものであることを確かめられます。
+Sophaxis は、自前のアカウントもパスワードも持ちません。
+
+## Sophaxis は GitHub や ORCID とつながっていますか？
+
+はい。ただし、公開の範囲でだけです。
+コード、記録、投稿は GitHub にあり、自動の確認は公開のリポジトリの GitHub Actions として動きます。
+ORCID は、その公開の API を通して読みます。
+Sophaxis は GitHub や ORCID でのサインインを使わず、誰にもアカウントへのアクセスを求めません。
+どちらとも、組織としての関係はありません。[免責事項](./disclaimer.ja.html)を見てください。
+
+## Sophaxis は言語モデルで作られましたか？
+
+はい。サイト、そのコード、規程は、運営者の求めにより、Claude Code（Anthropic）で書きました。
+運営者がそれらに責任を負います。Claude は著者ではありません。
+投稿について判断する言語モデルはありません。
+[免責事項](./disclaimer.ja.html)を見てください。
+
+## 言語モデルを使ってもよいですか？
+
+はい。どう使ったかを申告すれば使えます。
+使った道具の名を挙げ、何に使ったかを書きます。これは、画像やコードを作るものを含め、すべての生成モデルに当てはまります。
+生成モデルは著者になれません。
+申告は記録の頁に示します。
+
+## モデレーションにはどれくらいかかりますか？
+
+目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。
+判断が遅くても、投稿の受け付けを止めているわけではありません。止めているときは、トップの頁がそう示します。
+[投稿から掲載まで](./process.ja.html)の頁が、一つの投稿を順にたどります。
+
+## 載っている作品に責任を負うのは誰ですか？
+
+作品とその掲載には、著者がすべての責任を負います。内容、共有する権利、他人の素材、作品の中の個人データ、生成モデルについての申告です。
+[利用規約](./policies/terms.ja.html)を見てください。
+
+## 新しい版はどう加えますか？
+
+預け先に預けてから、更新として投稿し、既存の Sophaxis の番号を書きます。
+前の版も載ったままです。
+
+## 作品が学術誌で出版されました。投稿できますか？
+
+受け付けるライセンスで共有してよい版に限ります。
+様式に出版された版の DOI を書くと、記録がそれを示します。
+
+## 載っているプレプリントが出版されました。どうすればよいですか？
+
+著者の一人として、[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)で報告します。
+プレプリントは載ったままです。記録の頁は出版された版を先頭に示し、読者にそれを引用するよう求めます。
+Sophaxis は査読を評価しません。記録は、査読について著者が述べたことをそのまま示します。
+詳しくは、[投稿の規程](./policies/submission.ja.html)の「作品が出版されたとき」にあります。
+
+## Sophaxis は PDF の写しを置きますか？
+
+預け先がスクリプトによる取得を許す場合、Sophaxis は手を加えていない写しを置きます。検索エンジンが全文を索引に入れられるようにするためです。
+ほかの預け先の場合は、預けた PDF を投稿の issue に添付できます。
+写しを置くのは、ファイルが 20 MB までのときだけです。
+[著作権の規程](./policies/copyright.ja.html)を見てください。
+
+## 作品は Google Scholar に出ますか？
+
+それぞれの記録の頁は、Google Scholar が読むタグを持っています。サイトマップは、すべての頁を挙げています。
+Scholar は記録の頁と同じディレクトリにある PDF だけを取るので、PDF の写しもそれぞれそこから配信しています。
+記録の頁や PDF の写しが新しくなったり、変わったり、外されたりしたときは、公開されしだい、Bing のような IndexNow を受け付ける検索エンジンに知らせます。新しい頁や変わった頁は、Internet Archive にも保存します。Google は、代わりにサイトマップを読みます。
+Sophaxis は、検索エンジンが頁を索引に入れることを約束できません。
+
+## ここに載っている作品はどう引用しますか？
+
+読んだ版の DOI を引用します。
+それぞれの記録の頁は、APA、Chicago、BibTeX の形の引用と、BibTeX、RIS、CSL-JSON のファイルを示します。
+
+## 記録の誤りはどう報告しますか？
+
+記録の頁にある「Report an error in this record」のリンクを使います。
+訂正は、日付付きの注記として記録に加えます。
+
+## 作品を撤回できますか？
+
+はい。著者なら誰でも一人で、載っている作品を撤回できます。
+引用が切れないよう、記録の頁は撤回の告知とともに残ります。PDF の写しは、サイトから外します。
+[撤回の規程](./policies/withdrawal.ja.html)を見てください。
+
+## 素材の削除はどう求めますか？
+
+著作権の侵害、個人データの露出、その他の法的な理由がある場合は、[削除の規程](./policies/takedown.ja.html)に従います。
+
+## Sophaxis が閉じたら、記録はどうなりますか？
+
+すべての記録を収めたリポジトリは、公開のまま残ります。記録は読めるままです。
+Sophaxis は毎週、頁と PDF の写しを保存するよう、Internet Archive に頼んでもいます。
+
+## 誰が Sophaxis を運営していて、運営者にはどう連絡しますか？
+
+[運営者と連絡先](./contact.ja.html)の頁を見てください。
+
+---
+
+Source: https://sophaxis.vercel.app/automation.ja.html
+
+# 自動で動く手順（日本語訳）
+
+最終更新：2026-11-09。
+
+これは英語の [What runs by itself](./automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+Sophaxis には、ひとりでに動く手順がいくつかあります。
+公開のリポジトリの GitHub Actions として動くものと、Vercel での配信として動くものです。
+この頁は、そのすべてを挙げます。いつ動くか、何を読むか、何を書くか、何を運営者に残すかです。
+どの手順のコードも公開しており、各節からリンクしています。
+
+- 投稿・撤回・訂正・削除の求めについて判断する自動の手順はありません。判断はすべて運営者が下します。
+- 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
+- 言語モデルを使う手順はありません。どの手順も通常のコードです。
+- どのアカウントにもサインインする手順はありません。鍵は、GitHub が実行ごとに渡すトークンだけで、その権限は手順に要る最小限です。IndexNow の鍵は、仕組みのうえで公開のものです。
+- 記録を変える手順は、先にサイトを組み立て、すべての検査を走らせます。検査が一つでも落ちれば、何も変えません。
+- これらの手順が扱う個人データは、[個人情報の取り扱いについて](./policies/privacy.ja.html)に書いてあります。
+
+## 投稿の issue が開かれたか編集されたとき、または著者がコメントで確かめたとき
+
+- 読むもの：DataCite、Crossref、JaLC のどれかにある DOI のメタデータ。そのメタデータが作品の前の版として挙げる DOI それぞれの登録の日。Crossref がその DOI について記録している通知。最新の版の PDF。これは預け先がスクリプトに取得を許している場合だけで、モデレーターのために形を読むだけです。読んだあとは消します。issue が開かれた日。様式に書かれた公開の ORCID の記録の、氏名・ウェブサイト・業績。deposit-check によるメタデータについての助言。
+- 書くもの：それぞれの確認の結果と記録の下書きを載せたコメント。`verified` か `unverified` のラベル。
+- 2026-11-21 から、[投稿の規程](./policies/submission.ja.html)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
+- 2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから六か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。
+- 2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。
+- 2026-11-23 から、載っている作品の著者でまだない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
+- 運営者に残すこと：投稿を受理するか、断るか。
+- コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js)。[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
+
+## 撤回の issue が開かれたか編集されたとき
+
+- 読むもの：記録と、様式に書かれた公開の ORCID の記録。
+- 書くもの：それぞれの確認の結果を載せたコメント。撤回のときは、撤回したあとの記録の姿も載せます。`verified` か `unverified` のラベル。
+- 運営者に残すこと：プルリクエストで記録を撤回すること。または、確かめられた issue に `upheld` のラベルを付けて、記録を削除すること。
+- コード：[tools/withdraw.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/withdraw.js)。
+
+## 出版された版が報告されたとき
+
+- 読むもの：記録、出版された版の DOI のメタデータ、様式に書かれた公開の ORCID の記録。
+- 書くもの：それぞれの確認の結果と、出版された版を加えた記録を載せたコメント。
+- 運営者に残すこと：出版された版を記録すること。
+- コード：[tools/published.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/published.js)。
+
+## 削除依頼の issue が開かれたか編集されたとき
+
+- 読むもの：記録と、リポジトリの issue。
+- 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
+- issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.html)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。
+- 運営者に残すこと：判断。
+- コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
+
+## 運営者が求めに `upheld` か `not-upheld` のラベルを付けたとき
+
+- リポジトリの持ち主が付けたラベルにだけ応じます。
+- 認めたとき：削除の規程の「削除した記録に残るもの」のとおり、記録を削除します。その記録についての自動のコメントを消し、その記録を挙げる issue を空にして閉じ、ロックします。
+- 認めなかったとき：下げたものを、git の履歴から戻します。
+- 削除のあと、手で行うことを挙げる後始末の issue を開きます。空にした issue の削除、文面を添えた Internet Archive への依頼、リポジトリの履歴についての GitHub の手続きです。
+- 運営者に残すこと：判断の理由。空にした issue の削除。GitHub と Internet Archive への依頼を送ること。
+- メールで届いた求めも、同じように扱います。運営者が Sophaxis の id を与えて、この手順を手で動かします。判断のときは理由も与えます。理由は、著者の投稿の issue を空にする前に、そこに載ります。
+
+## 一日に一度、日本時間の 09:17
+
+- 読むもの：開いている削除の求めと、確かめられた撤回。
+- 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる二日前から書きます。
+- 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
+
+## 年に一度、一月 2 日の日本時間 12:23
+
+- 読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。
+- 書くもの：前の年の数を載せた issue。開かれた投稿、受理した投稿、断った投稿、まだ決めていない投稿の数です。断るときに挙げた理由、投稿から判断までの日数、求め、撤回した記録と削除した記録も数えます。
+- 運営者に残すこと：数を `data/reports/` に記録すること。[年ごとの判断](./decisions.html)の頁は、そこから組み立てます。
+- コード：[tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) と [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js)。[report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml) が動かします。
+
+## push とプルリクエストのたびに
+
+- 記録・規程・組み立てたサイトに対して、[verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) のすべての検査を走らせます。
+- 運営者は、検査が通ったときだけ、変更をマージします。
+
+## サイトが変わったとき
+
+- Vercel は、リポジトリの `site/` にあるファイルを配信します。そのファイルは、`build.js` が記録から組み立てます。OAI-PMH の口は、同じ記録を読む Vercel 上の小さな関数です。
+- 新しい頁が公開されると、IndexNow を受け付ける検索エンジンに、新しい記録の頁と PDF の写し、変わったもの、消えたものを知らせます。新しいものと変わったものは、著者が同意していれば Internet Archive に保存します。消えた頁は保存しません。
+- Vercel が保つ以前の版のサイトは、公開していません。
+- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。十分たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
+- コード：[tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js)。[live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml) が動かします。
+- `robots.txt` は、サイトのほかの部分と一緒に組み立てます。削除した記録と、著者が保存に同意していない記録を集めないよう、Internet Archive のクローラーに求めます。
+- コード：[tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js)。[indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) が動かし、削除の手順の push のあとにも動きます。
+
+## 週に一度、月曜日の日本時間 13:37
+
+- 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
+- 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
+- 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
+- コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
+
+## 運営者が毎週の確認のプルリクエストに `record` のラベルを付けたとき
+
+- リポジトリの持ち主が付けたラベルにだけ応じます。応じるのはブランチ `statutes/record` だけで、そのブランチが変えてよいのは `verification/statutes.json`、`verification/statutes-texts.json`、変更履歴だけです。
+- それを main にマージし、変更履歴にプルリクエストの番号を書き入れます。マージした結果に対して、すべての検査と毎週の確認そのものを走らせ、すべて通ったときだけ push します。マージは、ワークフローを共著者として挙げます。
+- 運営者に残すこと：違いを読むこと。変更が求めるなら、先に規程を変えること。
+- コード：[tools/record.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/record.js)。[record.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/record.yml) が動かします。
+
+## 運営者が動かしたときだけ
+
+- 載っている記録の PDF を預け先から取り、専用のブランチに写します。運営者が見直すプルリクエストのためです。
+- コード：[tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js)。
+
+## 手で行うこと
+
+- すべての判断と、その理由。
+- 空にした issue の削除。後始末の issue がそれを挙げます。
+- リポジトリの履歴から素材を除くよう GitHub に頼むこと。以前の写しを除外するよう Internet Archive に頼むこと。文面は後始末の issue にあります。
+- 変わった法令や規約の文を、`record` のラベルで記録すること。
+- 索引や登録簿に Sophaxis を登録すること。
+- メールに答えること。
+
+---
+
+Source: https://sophaxis.vercel.app/contact.ja.html
+
+# 運営者と連絡先（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Operator and contact](./contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 運営者
+
+Sophaxis は、日本にいる一人の個人、根本卓哉（Takuya Nemoto）が運営しています。
+個人の、営利を目的としないプロジェクトです。
+会社や大学や出版者が運営しているものではありません。
+運営者は、無報酬のボランティアとして運営しています。いまは唯一のモデレーターでもあります。
+Sophaxis は、無料のサービスの範囲だけで配信しています。
+運営者は、Sophaxis を書く道具である Claude Code の料金を、個人で払っています。
+運営者は、個人の本棚の延長として、趣味で Sophaxis を置いています。
+Sophaxis がなぜあるのか、それが記録にとって何を意味するのかは、[免責事項](./disclaimer.ja.html)にあります。
+
+- ORCID iD：[0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
+- GitHub：[cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
+
+運営者はモデレーターでもあり、サイトとその記録に責任を負います。
+サイトとそのコードは、運営者の求めにより、Claude Code（Anthropic）で作りました。[免責事項](./disclaimer.ja.html)を見てください。
+[利用規約](./policies/terms.ja.html)が定めるとおり、著者は自分の作品にすべての責任を負います。
+運営者の投稿も同じ決まりでモデレーションを行い、運営者自身のものである印を付けます。
+
+## 連絡先
+
+苦情、法的な事柄、個人データについてのことは、公開の issue ではなく、メールで送ります。
+宛先は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスです。
+[個人情報の取り扱いについて](./policies/privacy.ja.html)が定めるとおり、メールに含まれる個人データは、そのメールに答えるためだけに使います。
+
+- サイトについての質問・提案・問題：[issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new)。
+- プレプリントや新しい版の投稿：[投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)。
+- 記録の誤り：[訂正の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml)。
+- 作品の著者の一人として、作品を撤回すること：[撤回の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml)。
+- 作品の著者の一人として、載っている作品の出版された版を報告すること：[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)。
+- 法的な理由による削除：[削除の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml)。
+- 公開すべきでないこと：運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメール。
+
+issue は公開されます。issue に個人データを書かないでください。
+求めのためのメールアドレスは、このサイトではなく、ORCID の記録に置いています。
+`/oai` の OAI-PMH の口には、収集者のための別のアドレスがあります。この規格がアドレスを求めるためです。
+英語か日本語で書いてください。
+欧州連合のデジタルサービス法（第 11 条・第 12 条）のもとで、当局・欧州委員会・Sophaxis を使う人のための単一の連絡窓口も、運営者の ORCID の記録にあるメールアドレスです。収集者のためのアドレスではありません。
+運営者は、7 日以内に答えることを目指します。
+
+## ほかの場所にある Sophaxis
+
+- OSF：プロジェクトの頁 [Sophaxis: An Independent Overlay Preprint Server](https://osf.io/mq7za/) があり、その DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。この DOI が指すのはプロジェクトであって、載っている作品ではありません。
+- Zenodo：コードと記録を、版を出すたびに保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。[10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) はすべての版を表します。コミュニティ <https://zenodo.org/communities/sophaxis> は、Sophaxis に載っている作品の Zenodo の記録を集めています。これは、Sophaxis が Zenodo と特別な関係にあることを意味するものではありません。
+- GitHub：コード、記録、投稿を収めた[公開のリポジトリ](https://github.com/cpsbvbng26-dotcom/sophaxis)です。
+- ROAR：Sophaxis は、サウサンプトン大学の Registry of Open Access Repositories の編集の審査を通り、2026-11-06（日本時間）からそこに載っています。[記録 27422](https://roar.eprints.org/27422/) です。
+
+## セキュリティ
+
+セキュリティの問題は、公開の issue ではなく、メールで送ります。知られる前に直せるようにするためです。
+見つけたことと、それを再現する手順を書いてください。
+Sophaxis は報酬を出しません。どの報告にも感謝します。
+サイトは、同じ連絡先を標準のファイル [security.txt](./.well-known/security.txt) でも示しています。
+
+## アクセシビリティ
+
+Sophaxis は、Web Content Accessibility Guidelines（WCAG）2.2 のレベル AA を満たすことを目指しています。
+自動の確認は、明るい配色と暗い配色のそれぞれで、すべての文字の色のコントラストを確かめます。
+同じ確認は、本文へ飛ぶリンク、キーボードで操作する人に見えるフォーカス、すべての頁の言語、頁ごとに一つの主見出し、すべての表の見出しも確かめます。
+使いにくいところは、`accessibility` のラベルを付けた issue か、メールで報告できます。
+頁が使えないときは、求めに応じて、運営者が同じ情報を別の形で届けます。たとえば、メールでの平文です。
+
+## 住所
+
+運営者の住所は公開していません。
+日本の個人情報保護法の定めるとおり、求めがあれば遅滞なく知らせます。
+メールで求めてください。
+
+## サイトが動いている場所
+
+サイトは Vercel が配信し、GitHub の公開のリポジトリから組み立てています。
+コード、記録、issue は GitHub に保管し、自動の確認はそこで GitHub Actions として動きます。
+Sophaxis は、GitHub とも Vercel とも、特別な関係を結んでいません。[免責事項](./disclaimer.ja.html)を見てください。
+預け先と DOI 登録機関は、Sophaxis がそれらから何を取るかを、[専用の頁](./repositories.ja.html)で読めます。
+
+---
+
+Source: https://sophaxis.vercel.app/repositories.ja.html
+
+# 預け先と DOI 登録機関へ（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [For repositories and DOI registration agencies](./repositories.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis が載せている作品の預け先と、その DOI を登録する機関に宛てたものです。
+Sophaxis がそれぞれのサービスから何を読むか、どのくらいの頻度で読むか、読んだものをどう使うかを書きます。
+
+## 載せている預け先
+
+{{repositories}}
+
+作品を載せるのは、その著者が投稿したときだけです。DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されていることも要ります。
+Sophaxis は、どの預け先からも収集やミラーをしません。
+
+## Sophaxis が読むもの
+
+- 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。
+- 作品の版の一覧。同じメタデータから読みます。
+- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先がスクリプトに渡している場合だけです（Zenodo、Figshare、arXiv、Research Square）。それぞれの公開の API かダウンロードのアドレスを通します。これは版ごとに一度で、運営者が手で始めたときに行います。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
+
+Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書きます。`Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)` です。投稿の確認の助言の段階は [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) を走らせ、deposit-check は自分の名を書きます。`deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)` です。
+Sophaxis は、人が読むための頁を読みません。どんな上限も遮断も、すり抜けません。
+
+## Sophaxis が示すもの
+
+それぞれの記録の頁は、DOI へリンクし、預け先の名を挙げます。読者には、その DOI を引用するよう求めます。
+引用の先は DOI のままです。Sophaxis は、自分の DOI を与えません。
+要旨と PDF の写しは、[著作権の規程](./policies/copyright.ja.html)が定めるとおり、作品自身のライセンスのもとで、著者とともに示します。
+
+## 何かを変えるべきとき
+
+Sophaxis の読む頻度が許す範囲を超えているとき、規約が許さないものを読んでいるとき、サービスからファイルを写すのをやめるべきときは、運営者に知らせてください。
+Sophaxis は、それを変えるか、やめます。
+預けたものそのものについての求めは、預け先が扱います。Sophaxis は、預けたものを変えることも削除することもできません。
+
+運営者には、[issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues) か、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで連絡できます。
+
+## 預け先と登録機関に対する免責
+
+Sophaxis は独立しています。どの預け先とも、どの登録機関とも、組織のうえのつながりはなく、後ろ盾も受けておらず、協力関係にもありません。
+Sophaxis は、載せている作品の Zenodo の記録のために、Zenodo にコミュニティ（<https://zenodo.org/communities/sophaxis>）を置いています。
+コミュニティは、Zenodo の利用者ならだれでも開けます。これによって Sophaxis が Zenodo の一部になるわけではありません。
+Sophaxis の記録は、預けたものについての Sophaxis 自身の説明です。預け先や登録機関が述べたものではありません。
+それらは、Sophaxis にも、その記録にも、そのモデレーションにも、それらのメタデータを示すときに Sophaxis が持ち込んだ誤りにも、責任を負いません。
+それらの名は、それぞれのサービスを示すためだけに使っています。商標はそれぞれの持ち主に属し、Sophaxis はどのロゴも示しません。
+Sophaxis は、それぞれのサービスを公開の口を通して使い、公表された規約の範囲で使います。規約の範囲は、Sophaxis が理解しているとおりです。サービスが違うことを述べるときは、Sophaxis はサービスに従います。
+[免責事項](./disclaimer.ja.html)も見てください。
+
+## 謝辞
+
+Sophaxis があるのは、これらのサービスが研究とそのメタデータを開かれた形で示しているからです。Sophaxis は、次のサービスに感謝します。
+
+{{acknowledgements}}
+
+Thank you to arXiv for use of its open access interoperability.
+arXiv のオープンアクセスの相互運用性を使えることに、arXiv に感謝します。
+
+---
+
+Source: https://sophaxis.vercel.app/policy.ja.html
+
+# 規程（日本語訳）
+
+最終更新：2026-11-09。
+
+これは英語の [Policies](./policy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+Sophaxis は、哲学と数学のための、オーバーレイ型のプレプリントサーバーです。
+著者がすでに公開の預け先に預けたプレプリントを載せ、そのそれぞれに固定の記録の頁を与えます。
+
+## Sophaxis でないもの
+
+受理はモデレーションであって、査読ではありません。
+Sophaxis に載っていることが示すのは、投稿が[モデレーションの規程](./policies/moderation.ja.html)の確認を通ったことです。
+作品が正しいこと、独創的であること、重要であることは示しません。
+Sophaxis は、載っているどの作品の質も保証しません。
+
+Sophaxis は学術誌ではありません。
+DOI を与えません。
+DOI は、著者が作品を預けた預け先のものであり続けます。引用するときは、その DOI を挙げます。
+
+## 料金はありません
+
+Sophaxis は、著者からも読者からも、何も取りません。
+投稿の料金も、掲載の料金も、有料の段階もありません。
+料金を取り始めることはありません。
+
+## 約束を黙って取り下げることはしません
+
+これらの規程の約束を、黙って取り下げることはしません。
+公開のリポジトリは、約束の一覧を `verification/commitments.txt` に保っています。
+約束が規程や一覧から消えると、自動の確認が失敗します。それに代わる文が `verification/superseded.txt` に挙げてあるときは別です。
+読者や著者の務めを増やす約束の変更は、[利用規約](./policies/terms.ja.html)が定めるとおり、引き続き前もって告知します。
+
+## 運営者と利益相反
+
+Sophaxis は、日本の独立した研究者、根本卓哉（Takuya Nemoto）が運営しています。
+運営者への連絡の仕方は、[運営者と連絡先](./contact.ja.html)の頁にあります。
+運営者の投稿も同じ決まりでモデレーションを行います。
+その記録の頁には、運営者自身のものである印を付けます。
+
+## 作品を見つける
+
+それぞれの記録は、二つ以上の分野に載せることができます。
+ORCID iD を持つ著者には、Sophaxis に載っているその人の作品を挙げる頁があります。
+ORCID iD を持たない著者には、そのような頁はありません。名前だけでは、何人もの人に当てはまりうるためです。
+新しい記録は、Atom のフィード `feed.xml` で知らせます。
+すべての記録の公開の部分は、再利用のために `papers.json` で手に入ります。
+どちらの要旨も、その作品のライセンスを保ちます。
+
+## これらの頁について
+
+これらの頁は、Sophaxis がどう動き、何を約束するかを述べるものです。
+法的な助言ではありません。
+どの頁も最後に変えた日を示し、それより前の版はすべて公開のリポジトリに残ります。
+すべての規程と免責事項には、日本語訳があります。
+個人データについての頁には、日本の法律の見出しに沿った日本語版があります。
+それぞれの訳は、英語の頁の冒頭からリンクしています。
+訳と英語の文が食い違うときは、英語の文が適用されます。
+
+このサイトとそのコードは、Claude Code（Anthropic）で作りました。
+運営者がそれらに責任を負います。Claude は著者ではありません。
+
+---
+
+Source: https://sophaxis.vercel.app/transparency.ja.html
+
+# 透明性の自己評価（日本語訳）
+
+最終更新：2026-11-09。
+
+これは英語の [Transparency: a self-assessment](./transparency.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+COPE、DOAJ、OASPA、WAME は、[Principles of Transparency and Best Practice in Scholarly Publishing](https://doaj.org/apply/transparency/)（学術出版における透明性と最善の実務の原則）を公表しています。
+この頁は、2026-11-09 に DOAJ で読んだ 2026 年 10 月の版 5.0 に照らして、Sophaxis を見出しごとに確かめます。
+これは運営者自身の評価です。四つの団体のどれかが行ったものでも、認めたものでもありません。
+Sophaxis は、四つの団体のどれの会員でもありません。
+
+原則は、学術誌のために書かれています。
+Sophaxis は学術誌ではありません。オーバーレイ型のプレプリントサーバーであり、受理はモデレーションであって、査読ではありません。
+原則がプレプリントサーバーに当てはまりえないときは、この頁はそう述べ、満たしたものとは数えません。
+
+見出しのそれぞれに、次の四つの印のどれか一つを付けます。
+
+- **満たす**：Sophaxis は原則が求めることを行っています。この頁は、それがどこにあるかを示します。
+- **一部**：Sophaxis はその一部を行っています。この頁は、何が欠けているかを示します。
+- **満たさない**：Sophaxis はそれを行っていません。この頁は、その理由を示します。
+- **該当しない**：原則は、Sophaxis が行わないことについてのものです。
+
+## 要約
+
+| 見出し | 印 |
+| --- | --- |
+| 名称 | 満たす |
+| ウェブサイト | 満たす |
+| 刊行の予定と時期 | 満たす |
+| 保存 | 一部 |
+| 著作権 | 一部 |
+| ライセンス | 満たす |
+| 出版倫理と関連する編集の方針 | 一部 |
+| 編集上の評価 | 満たす |
+| 査読 | 該当しない |
+| アクセス | 満たす |
+| 所有と運営 | 満たす |
+| 編集委員会または諮問機関 | 満たさない |
+| 編集の担当者と連絡先 | 一部 |
+| 著者の料金 | 満たす |
+| その他の収入 | 満たす |
+| 広告 | 満たす |
+| ダイレクトマーケティング | 満たす |
+
+## 学術誌としての示し方
+
+### 名称
+
+満たす。
+Sophaxis という名に添えた標語「Preprints in Philosophy and Mathematics」が、サイトが何であるかを示しています。
+サイトは、学術誌ではないこと（[規程](./policy.ja.html)）を述べています。
+どの預け先とも、どの団体とも、特別な関係を持たないこと（[免責事項](./disclaimer.ja.html)）も述べています。
+
+### ウェブサイト
+
+満たす。
+サイトは HTTPS だけで、一つのアドレス `https://sophaxis.vercel.app/` で配信しています。
+GitHub のリポジトリも、このアドレスを示しています。
+頁は、第三者のスクリプトを動かさず、クッキーを置かず、アクセス解析を使いません。厳しい Content Security Policy のもとで配信しています（[個人情報の取り扱いについて](./policies/privacy.ja.html)）。
+Sophaxis は ISSN を持たないので、ISSN は示していません。
+
+### 刊行の予定と時期
+
+満たす。
+記録は、投稿を受理したときに随時載せます。号や巻はありません（[投稿から掲載まで](./process.ja.html)）。
+
+### 保存
+
+一部。
+作品そのものは、Zenodo、arXiv、Figshare などの預け先に預けられ、そこで保存されています。
+記録とサイトは、公開の git のリポジトリに保管しています。版 1.0.0 は Zenodo に保存しています（10.5281/zenodo.24033372）。
+記録の頁と PDF の写しは、著者全員が同意している場合に、毎週 Internet Archive に保存します。
+Sophaxis は、CLOCKSS や Portico のような、Keepers Registry のどのアーカイブにも入っていません。
+
+### 著作権
+
+一部。
+著者は著作権を保ちます。Sophaxis は、著作権の譲渡も独占的な許諾も求めません（[著作権の規程](./policies/copyright.ja.html)）。
+サイト自身の文は CC BY 4.0、コードは MIT で、権利は運営者が持ちます。
+全文に印字される著作権者は、著者が PDF に書いたとおりです。
+Sophaxis はファイルを手を加えずに置き、著作権の表示を足しません。
+
+### ライセンス
+
+満たす。
+載っている作品はどれも、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを持ちます。
+記録の頁は、Creative Commons のウェブサイトにあるそのライセンスへリンクします（[ライセンスの規程](./policies/licences.ja.html)）。
+これらのライセンスのもとでは、AI の企業を含め、誰でも作品をマイニングできます。
+`robots.txt` も、すべてのクローラーにサイトを読ませます。
+例外は Internet Archive のクローラーだけです。削除した記録と、著者が保存に同意しなかった記録は、読ませません。
+利用規約は、GitHub と Vercel が、AI のモデルの学習を含め、公開の内容をどう使えるかを述べています（[利用規約](./policies/terms.ja.html)）。
+
+## 学術誌の実務
+
+### 出版倫理と関連する編集の方針
+
+一部。
+
+- 目的と範囲：トップの頁と[投稿の規程](./policies/submission.ja.html)に書いてあります。満たす。
+- 著者であることと AI の使用：投稿できるのは著者だけで、著者全員の同意が要ります。言語モデルとその他の生成モデルの使用は、その程度とともに申告しなければなりません。モデルは著者になれません。満たす。
+- 利益相反：運営者自身の投稿には印を付け、優先せず、載せる前に七日のあいだ公開で待ちます（[モデレーションの規程](./policies/moderation.ja.html)）。著者の利益相反は尋ねていません。一部。
+- データの共有と再現性：方針はありません。満たさない。
+- 資金と支援：著者に資金の開示を求めていません。満たさない。
+- 公開後の評価：誰でも、公開の issue で記録の誤りを報告できます。満たす。
+- 訂正・撤回・懸念表明：訂正は日付付きの注記です。Crossref が記録している通知は、Retraction Watch からのものも含め、投稿のときと毎週読み、記録に示します。満たす。
+- 剽窃：Sophaxis は剽窃の検査を行わず、剽窃の定義も持ちません。満たさない。
+- 苦情と異議：断られた投稿者は issue で答えることができ、運営者がもう一度見直します。削除の求めは[削除の規程](./policies/takedown.ja.html)に従います。満たす。
+- 研究倫理：分野が哲学と数学なので、同意や倫理審査についての方針はありません。第三者の個人データを扱う作品は断ります。一部。
+- 研究不正の申し立て：削除の求めのほかに、書かれた手続きはありません。満たさない。
+
+### 編集上の評価
+
+満たす。
+いまは唯一のモデレーターでもある運営者が、投稿のそれぞれを、その公開の issue で受理するか断ります。理由は、モデレーションの規程が挙げるものです。
+判断に影響しうる料金は、存在しません。
+三つの言語モデルが審査を助けます。運営者は公開の部分だけを手で渡し、言語モデルは何も決めません。モデレーションの規程がそう述べています。
+どの投稿も、受理を約束されません。どの記録の頁も、受理はモデレーションであって査読ではないと述べています。
+[年ごとの判断](./decisions.html)の頁が、判断を、理由と判断までの日数とともに数えています。
+
+### 査読
+
+該当しない。
+Sophaxis は査読を行いません。
+モデレーションは、モデレーションの規程が定めるとおり、対象・形・ライセンス・著者であること・申告を確かめます。
+サイトは、どの記録にも、受理はモデレーションであって査読ではないと書いています。
+
+### アクセス
+
+満たす。
+どの頁も、どの PDF の写しも、登録なしに無料で読めます。
+
+## 組織
+
+### 所有と運営
+
+満たす。
+Sophaxis は、一人の個人が持ち、運営しています。
+その人は、[運営者と連絡先](./contact.ja.html)の頁に ORCID iD とともに名を挙げ、無報酬で、無料のサービスの範囲で運営しています。
+どの学会・機関・後援者とも、特別な関係を持っていません。
+
+### 編集委員会または諮問機関
+
+満たさない。
+Sophaxis には、編集委員会も諮問機関もありません。
+モデレーションの規程は、ほかのモデレーターを招くことがあると述べ、その手順を示しています。まだ誰も招いていません。
+
+### 編集の担当者と連絡先
+
+一部。
+運営者の名と ORCID iD は連絡先の頁にあり、メールアドレスは ORCID の記録にあります。
+住所は公開していません。運営者は一人の私人だからです。
+
+## 事業の実務
+
+### 著者の料金
+
+満たす。
+Sophaxis は、著者からも読者からも、何も取りません。
+利用規約は、どの変更も料金を導入しないと述べています。
+
+### その他の収入
+
+満たす。
+Sophaxis には収入がありません。GitHub と Vercel の無料のサービスの範囲で、無報酬で運営しています。
+運営者は、Sophaxis を書く道具である Claude Code の料金を、個人で払っています（[免責事項](./disclaimer.ja.html)）。
+
+### 広告
+
+満たす。
+Sophaxis は広告を出しません。広告をする投稿は断ります。
+
+### ダイレクトマーケティング
+
+満たす。
+サイトにはメーリングリストがありません。
+誰にもメールアドレスを尋ねず、メッセージも送りません。
 

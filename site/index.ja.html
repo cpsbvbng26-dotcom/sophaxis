@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Sophaxis：哲学と数学のプレプリント</title>
+<meta name="description" content="Sophaxis は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。">
+<link rel="canonical" href="https://sophaxis.vercel.app/index.ja.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Sophaxis：哲学と数学のプレプリント">
+<meta property="og:description" content="Sophaxis は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。">
+<meta property="og:url" content="https://sophaxis.vercel.app/index.ja.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/index.ja.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+
+<h1>Sophaxis：哲学と数学のプレプリント</h1>
+<p>Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、Sophaxis がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>
+<div class="notice">掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。Sophaxis は、著者からも読者からも料金を取りません。</div>
+<div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、28 の国と地域（欧州連合、欧州経済領域、英国、中国、タイ、ロシア、トルコ、エジプト、ペルー、アルバニア、モナコ、ガーンジー、ボツワナ、エクアドル、イラク、インドネシア、ルワンダ、ザンビア、エチオピア、コンゴ民主共和国、カザフスタン、チュニジア、ウガンダ、ギニア、マダガスカル、ボリビア、コスタリカ、ケベック州）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
+<div class="notice"><b>規程の変更を告知しています。</b>2026-11-21 から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
+<p class="meta">最終更新：<time datetime="2026-11-07">2026-11-07</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
+<p class="meta">記録の頁・一覧・統計は英語です。作品の題と要旨は、DOI の登録情報のとおりに載せています。</p>
+<h2>日本語の頁</h2>
+<ul><li><a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a></li><li><a href="./policies/terms.ja.html">利用規約（日本語訳）</a></li><li><a href="./policies/submission.ja.html">投稿の規程（日本語訳）</a></li><li><a href="./policies/moderation.ja.html">モデレーションの規程（日本語訳）</a></li><li><a href="./policies/copyright.ja.html">著作権の規程（日本語訳）</a></li><li><a href="./policies/licences.ja.html">ライセンスの規程（日本語訳）</a></li><li><a href="./policies/takedown.ja.html">削除の規程（日本語訳）</a></li><li><a href="./policies/withdrawal.ja.html">撤回の規程（日本語訳）</a></li><li><a href="./disclaimer.ja.html">免責事項</a></li><li><a href="./process.ja.html">投稿から掲載まで（日本語訳）</a></li><li><a href="./faq.ja.html">よくある質問（日本語訳）</a></li><li><a href="./automation.ja.html">自動で動く手順（日本語訳）</a></li><li><a href="./contact.ja.html">運営者と連絡先（日本語訳）</a></li><li><a href="./repositories.ja.html">預け先と DOI 登録機関へ（日本語訳）</a></li><li><a href="./policy.ja.html">規程（日本語訳）</a></li><li><a href="./transparency.ja.html">透明性の自己評価（日本語訳）</a></li></ul>
+<h2>分野と集め</h2>
+<ul class="fields" aria-label="分野"><li><a href="./list/philosophy.html">哲学（4）</a></li><li><a href="./list/mathematics.html">数学（1）</a></li><li><a href="./list/philosophy-of-mathematics.html">数理哲学（0）</a></li><li><a href="./list/philosophy-of-science.html">科学哲学（1）</a></li><li><a href="./list/logic.html">論理学（0）</a></li></ul>
+<ul class="fields" aria-label="集め"><li><a href="./collection/game-theory.html">ゲーム理論（1）</a></li><li><a href="./collection/individual-autonomy.html">個と自律（3）</a></li><li><a href="./collection/research-method-ethics.html">研究の方法と倫理（1）</a></li><li><a href="./collection/existential-philosophy.html">実存哲学（0）</a></li></ul>
+<h2>載っている作品</h2>
+<ol class="list"><li>
+<p class="meta"><span class="id">2026.0001</span> · Mathematics · 2026-10-13</p>
+<a href="./abs/2026.0001.html"><b>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</b></a>
+<p class="meta">Takuya Nemoto</p>
+</li>
+<li>
+<p class="meta"><span class="id">2026.0002</span> · Philosophy of Science · 2026-09-30</p>
+<a href="./abs/2026.0002.html"><b>Machine-mediated Rediscovery: A Case Study in Novelty, Priority, and Self-correction</b></a>
+<p class="meta">Takuya Nemoto</p>
+</li>
+<li>
+<p class="meta"><span class="id">2026.0005</span> · Philosophy · 2026-08-23</p>
+<a href="./abs/2026.0005.html"><b>Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy</b></a>
+<p class="meta">Takuya Nemoto</p>
+</li>
+<li>
+<p class="meta"><span class="id">2026.0004</span> · Philosophy · 2026-08-22</p>
+<a href="./abs/2026.0004.html"><b>The Nobility and Exemplarity of the Celibate Individual: An Antinatalist and Ascetic Reconsideration of Autonomy and Quality of Life</b></a>
+<p class="meta">Takuya Nemoto</p>
+</li>
+<li>
+<p class="meta"><span class="id">2026.0003</span> · Philosophy · 2026-08-22</p>
+<a href="./abs/2026.0003.html"><b>Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence</b></a>
+<p class="meta">Takuya Nemoto</p>
+</li></ol>
+
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>
