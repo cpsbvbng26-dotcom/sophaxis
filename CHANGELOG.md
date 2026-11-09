@@ -3,6 +3,10 @@
 The notable changes to Sophaxis, newest first. Each entry names the pull request that made it.
 The entries are grouped by the date of the merge. Version 1.0.0 was released on 2026-11-07 and archived at Zenodo (10.5281/zenodo.24033372; every version: 10.5281/zenodo.24033371).
 
+## 2026-11-10
+
+- The README no longer says that the domain `sophaxis.org` is planned. It now says that Sophaxis has no domain of its own and points to the paragraph that names, as a possibility and not a plan, when one might be considered (at 1,000 listed works). Check 70 now fails if the README or the site says a domain is planned or names one. The previous change is #188.
+
 ## 2026-11-09
 
 - The README now says that Sophaxis is listed on the Open Access Directory, which is hosted by the School of Library and Information Science at Simmons University and supervised by an independent editorial board, and which only accounts approved by its editor can edit. Its guide for contributors describes no review of each entry before it appears, so the listing is not a review of Sophaxis. The earlier wording, a wiki edited by its users, left out who runs it. The previous change is #187.
