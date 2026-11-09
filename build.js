@@ -160,6 +160,10 @@ function validate(p, file) {
     if (!p.withdrawal_note) e.push(file + ': a withdrawn record needs a note');
     if ((p.pdfs || []).length) e.push(file + ': a withdrawn record keeps no PDF copies');
   }
+  /* Notices that Crossref records against a DOI of the record, added by the operator (tools/notices.js). */
+  (p.notices || []).forEach((n, i) => {
+    if (!/^[a-z_]+$/.test(n.type || '') || !DOI.test(n.doi || '') || !DATE.test(n.date || '')) e.push(file + ': notice ' + (i + 1) + ' needs a type, the DOI of the notice and a date');
+  });
   (p.notes || []).forEach((n, i) => {
     if (!DATE.test(n.date || '') || !n.text) e.push(file + ': note ' + (i + 1) + ' needs a date and text');
   });
@@ -537,6 +541,12 @@ function publishedNotice(p) {
   const upd = (q.updates || []).map((u) => `It has a ${esc(u.type.replace(/_/g, ' '))} notice of ${esc(u.date)}: <a href="https://doi.org/${esc(u.doi)}">${esc(u.doi)}</a>.`).join(' ');
   return `<div class="notice"><b>Published.</b> A later version of this work appeared as a ${esc(q.type)} in <i>${esc(q.venue)}</i> (${esc(publishedYear(q))}): <a href="https://doi.org/${esc(q.doi)}">${esc(q.doi)}</a>. ${peer} ${how}${upd ? ' ' + upd : ''} Cite the published version.</div>`;
 }
+/* Notices that Crossref records against the preprint: said on the record page, with the notice, as the Moderation Policy says. */
+function crossrefNotices(p) {
+  if (!(p.notices || []).length) return '';
+  const each = p.notices.map((n) => `a ${esc(n.type.replace(/_/g, ' '))} of ${esc(n.date)}: <a href="https://doi.org/${esc(n.doi)}">${esc(n.doi)}</a>`).join('; ');
+  return `<div class="notice"><b>Notices.</b> Crossref records ${each}. Read the notice before citing this work.</div>`;
+}
 /* APA 7 for the published version: the authors of the record, since the published version shares them, and the venue from its metadata. */
 function publishedCite(p) {
   const names = p.authors.map((a) => (givenOf(a) ? familyOf(a) + ', ' + initials(givenOf(a)) : familyOf(a)));
@@ -593,6 +603,7 @@ ${rel.byAuthors.length ? '<p class="meta">By the same authors</p>\n' + relList(r
 <p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 ${withdrawn}
 ${publishedNotice(p)}
+${crossrefNotices(p)}
 <article itemscope itemtype="https://schema.org/ScholarlyArticle">
 ${facts}
 <h1 itemprop="headline">${esc(p.title)}</h1>
@@ -985,6 +996,7 @@ function papersJson(papers) {
     ...(p.updated ? { updated: p.updated } : {}),
     pdfs: (p.pdfs || []).map((x) => ({ version: x.version, url: SITE.baseUrl + 'pdf/' + x.file })),
     ...(p.published ? { published: p.published } : {}),
+    ...(p.notices && p.notices.length ? { notices: p.notices } : {}),
     status: p.status,
     llm_disclosure: p.llm_disclosure,
     ...(p.llm_extent ? { llm_extent: p.llm_extent } : {}),
@@ -1176,7 +1188,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

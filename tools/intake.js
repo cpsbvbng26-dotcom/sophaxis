@@ -11,6 +11,7 @@
  * What it reads, and nothing else:
  *   - the public metadata of the DOI, from DataCite or Crossref, or from JaLC for Jxiv, and the day each DOI that it names
  *     as an earlier version of the work was registered;
+ *   - the notices that Crossref records against the DOI (tools/notices.js);
  *   - the name, the websites and the works of the public ORCID record given in the form.
  * Nothing from the ORCID record is written anywhere except the result of the checks.
  *
@@ -353,7 +354,7 @@ function listedDois(paperDir) {
 /* The number of boxes in the "Consent and agreement" part of the submission form. */
 const CONSENTS = 3;
 
-function check({ form, login, meta, person, works, listed, pub, today, age }) {
+function check({ form, login, meta, person, works, listed, pub, today, age, notices }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
   const pre = repoPrefix(form.doi || '');
@@ -391,6 +392,8 @@ function check({ form, login, meta, person, works, listed, pub, today, age }) {
   add('The DOI is for a work, not for a review of one', meta.type !== 'peer-review', meta.type || '');
   /* From SITE.doiAgeFrom, counted on the day the issue was opened. A new version of a listed work is not counted again. */
   if (!form.update && age && age.opened >= SITE.doiAgeFrom) checks.push(doiAgeCheck(age.first, age.opened));
+  /* From SITE.noticesFrom: no retraction, withdrawal or removal, and no expression of concern without the operator (tools/notices.js). */
+  if (age && age.opened >= SITE.noticesFrom) checks.push(require('./notices.js').noticeCheck(notices));
   /* Every licence entry must be the same accepted licence: Crossref may give one per version (vor, am, tdm), and a CC BY entry
    * beside a non-free one does not allow a copy. Mixed entries go to the operator. */
   const kinds = [...new Set(meta.licences)];
@@ -656,6 +659,10 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
   try {
     if (meta && !form.update && opened >= SITE.doiAgeFrom) age.first = await firstDoi(form.doi, raw);
   } catch (e) { console.error(e.message); age.first = null; }
+  let notices;
+  try {
+    if (meta && opened >= SITE.noticesFrom) notices = await require('./notices.js').lookUpNotices(form.doi);
+  } catch (e) { console.error(e.message); notices = undefined; }
   try {
     if (form.orcid && orcidOk(form.orcid)) {
       const p = await orcidPersonJson(form.orcid);
@@ -669,7 +676,7 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
     pub = null;
     try { if (/^10\.\d{4,9}\/\S+$/.test(form.published)) pub = await require('./published.js').lookUpPublished(form.published); } catch (e) { console.error(e.message); }
   }
-  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age }), meta, versions, pub };
+  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices }), meta, versions, pub };
 }
 
 async function github(method, url, body) {

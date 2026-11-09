@@ -185,6 +185,18 @@ async function main() {
     }
   }
   const problems = list.flatMap((p) => compare(p, found));
+  /* Retractions, withdrawals, removals, expressions of concern and corrections that Crossref records against a DOI shown. */
+  const N = require('./notices.js');
+  const notices = {};
+  for (const p of list.filter((x) => x.status !== 'removed')) {
+    for (const v of p.versions) {
+      const d = v.doi.toLowerCase();
+      if (d in notices) continue;
+      try { notices[d] = await N.lookUpNotices(v.doi); } catch (e) { console.log('could not read the notices of ' + v.doi + ': ' + describe(e)); }
+      await pause(LOOKUP_GAP_MS);
+    }
+  }
+  problems.push(...list.flatMap((p) => N.newNotices(p, notices)));
   console.log(problems.length ? problems.join('\n') : 'every DOI resolves and keeps its licence');
   const news = [];
   for (const p of list) {
