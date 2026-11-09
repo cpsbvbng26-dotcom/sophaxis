@@ -2015,9 +2015,9 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml' };
+  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
@@ -3023,6 +3023,53 @@ console.log('\n80. A researcher vouches for a first submission (Submission Polic
     && read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('From the same day, a first submission needs a researcher to vouch for it (see the Submission Policy).')
     && read(path.join(ROOT, 'process.md')).includes('a first submission also needs a researcher to vouch for it') && read(path.join(ROOT, 'automation.md')).includes('it also counts a researcher who vouches for the work')
     && site.termsNotice.text.includes('needs a researcher whose ORCID record lists a journal article, a book chapter or a book to vouch for it.'));
+}
+
+console.log('\n81. Decisions by year, counted from the public issues and the records (Moderation Policy)');
+{
+  const R = require('../tools/report.js');
+  const B = require('../build.js');
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
+  ok('the reasons counted are the ' + R.REASONS.length + ' that the Moderation Policy names, word for word', R.REASONS.length === 8 && R.REASONS.every((r) => mod.includes('\n- ' + r + ':') || mod.includes('\n- ' + r + '.')));
+  const L = (...names) => names.map((name) => ({ name }));
+  const op = { login: 'owner' }, other = { login: 'someone' };
+  const issues = [
+    { labels: L('submission', 'accepted'), user: op, created_at: '2026-03-01T01:00:00Z', closed_at: '2026-03-01T02:00:00Z' },
+    { labels: L('submission', 'declined'), user: other, created_at: '2026-04-01T01:00:00Z', closed_at: '2026-04-11T01:00:00Z',
+      comments: [{ user: op, body: 'Declined. Reasons: out of scope; Licence.' }, { user: other, body: 'Spam or abuse?' }] },
+    { labels: L('submission'), user: other, created_at: '2026-12-31T16:00:00Z', closed_at: null },
+    { labels: L('submission', 'accepted'), user: other, created_at: '2026-12-31T14:00:00Z', closed_at: '2027-01-02T00:00:00Z' },
+    { labels: L('removal', 'upheld'), user: other, created_at: '2026-05-01T00:00:00Z' },
+    { labels: L('withdrawal'), user: other, created_at: '2026-06-01T00:00:00Z' }];
+  const records = [{ status: 'removed', removal_date: '2026-11-07' }, { status: 'withdrawn', withdrawal_date: '2025-12-01' }, { status: 'listed' }];
+  const t = R.tally({ issues, records, year: 2026, asOf: '2027-01-02', owner: 'Owner' });
+  ok('a year is counted in Japan time: an issue opened at 01:00 on 1 January in Japan belongs to the new year; the median and longest days, the undecided and those by the operator are counted',
+    t.submissions.opened === 3 && t.submissions.accepted === 2 && t.submissions.declined === 1 && t.submissions.undecided === 0 && t.submissions.byOperator === 1
+    && t.daysToDecision.median === 2 && t.daysToDecision.longest === 10 && t.complete === true
+    && R.tally({ issues, records, year: 2027, asOf: '2027-01-02', owner: 'owner' }).submissions.undecided === 1);
+  ok('a reason counts only when the repository owner names it in a declined submission; requests and records are counted by their own day',
+    t.declineReasons['Out of scope'] === 1 && t.declineReasons.Licence === 1 && t.declineReasons['Spam or abuse'] === 0
+    && t.removalRequests.opened === 1 && t.removalRequests.upheld === 1 && t.withdrawalRequests === 1 && t.records.removed === 1 && t.records.withdrawn === 0
+    && R.median([5, 1, 3]) === 3 && R.median([1, 2, 3, 4]) === 2.5 && R.median([]) === null);
+  const recorded = B.loadReports();
+  ok('every recorded year adds up and is named by its file; a year that does not add up is refused by the build',
+    recorded.length >= 1 && recorded.every((r) => B.reportProblems(r, r.year + '.json').length === 0)
+    && B.reportProblems(Object.assign({}, t, { submissions: Object.assign({}, t.submissions, { accepted: 9 }) }), '2026.json').some((e) => e.includes('do not add up'))
+    && read(path.join(ROOT, 'build.js')).includes("for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));")
+    && B.reportProblems(t, '2025.json').some((e) => e.includes('the name of the file')) && B.reportProblems(Object.assign({}, t, { complete: false }), '2026.json').some((e) => e.includes('complete says')),
+    recorded.map((r) => r.year + ' as of ' + r.asOf).join(', '));
+  const page = read(path.join(ROOT, 'site', 'decisions.html'));
+  const r0 = recorded[0];
+  ok('the Decisions by year page shows each recorded year, marked when the year was not over, and the Statistics page links it',
+    page.includes('<h2 id="y' + r0.year + '">' + r0.year + (r0.complete ? '' : ', counted up to ' + r0.asOf) + '</h2>') && page.includes('<tr><td>Accepted</td><td>' + r0.submissions.accepted + '</td></tr>')
+    && page.includes('Removal requests sent by email are not public and are not counted.') && read(path.join(ROOT, 'site', 'stats.html')).includes('<a href="./decisions.html">Decisions by year</a>')
+    && read(path.join(ROOT, 'site', 'sitemap.xml')).includes(JSON.parse(read(path.join(ROOT, 'site.json'))).baseUrl + 'decisions.html'));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'report.yml')), ri = read(path.join(ROOT, 'tools', 'report_issue.js'));
+  ok('each 2 January at 12:23 Japan time a workflow counts the year before and posts the counts in an issue; it may only read the code and write issues; the operator records them',
+    /cron: '23 3 2 1 \*'/.test(wf) && /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf) && wf.includes('YEAR: ${{ inputs.year }}') && ri.includes("if (!/^\\d{4}$/.test(year))")
+    && read(path.join(ROOT, 'automation.md')).includes('## Once a year, on 2 January at 12:23 Japan time') && read(path.join(ROOT, 'automation.md')).includes('- Leaves to the operator: recording the counts in `data/reports/`'));
+  ok('the Moderation Policy, in both languages, says so', mod.includes('Each January, the decisions of the year before are counted from the public issues and the records')
+    && read(path.join(ROOT, 'policies', 'moderation.ja.md')).includes('毎年 1 月に、前の年の判断を、公開の issue と記録から数えます。'));
 }
 
 console.log('\n' + '-'.repeat(60));
