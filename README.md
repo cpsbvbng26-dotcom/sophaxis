@@ -28,13 +28,14 @@ Sophaxis keeps a community at Zenodo, opened on 2026-11-07: <https://zenodo.org/
 
 Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
 
+Since 2026-11-09 (Japan time), Sophaxis has had an entry under Philosophy and under Mathematics on the [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) page of the Open Access Directory, a wiki at Simmons University. The operator added the entry after the wiki approved the account requested on 2026-11-03. The wiki is edited by its users, so the entry is not a review or an endorsement.
+
 Sophaxis has also applied to the registries below. None of them has listed it yet, and each decides for itself. The dates are Japan time; the state is as of 2026-11-09.
 
 | Registry | What it is | Applied | State |
 | --- | --- | --- | --- |
 | DOAPR (COAR) | Directory of Open Access Preprint Repositories | 2026-11-01 | Under review |
 | PhilPapers | Open Access Gateway, the archives whose papers PhilPapers indexes | 2026-11-03 | Requested; each archive is vetted |
-| Open Access Directory | Wiki list of disciplinary repositories | 2026-11-03 | Account requested; the entry is added once it is approved |
 | OpenDOAR (Jisc) | Directory of Open Access Repositories | 2026-11-08 | Asked; likely eligible, but new submissions are paused until an update in January 2027 |
 
 Each application is described under [Operator and contact](#operator-and-contact).
@@ -249,13 +250,14 @@ Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に�
 
 サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
 
+2026-11-09（日本時間）から、シモンズ大学のウィキ Open Access Directory の [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) の頁で、Philosophy と Mathematics の二つの節に Sophaxis の項目があります。2026-11-03 に申請したアカウントが承認されたあと、運営者が項目を足しました。このウィキは利用者が編集するもので、項目があることは審査を通ったことを意味しません。
+
 ほかに、次の登録簿に申請しています。こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。日付は日本時間です。状態は 2026-11-09 の時点のものです。
 
 | 登録先 | 何か | 申請日 | 状態 |
 | --- | --- | --- | --- |
 | DOAPR（COAR） | オープンアクセスのプレプリントリポジトリの一覧 | 2026-11-01 | 審査中 |
 | PhilPapers | Open Access Gateway。PhilPapers が論文を索引するアーカイブの一覧 | 2026-11-03 | 依頼済み。一件ずつ審査がある |
-| Open Access Directory | 分野別リポジトリの一覧（ウィキ） | 2026-11-03 | アカウントを申請中。承認されたら項目を足す |
 | OpenDOAR（Jisc） | オープンアクセスのリポジトリの一覧 | 2026-11-08 | 問い合わせ済み。基準を満たす見込みだが、新しい登録は 2027 年 1 月の案内まで止まっている |
 
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
