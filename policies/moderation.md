@@ -46,6 +46,8 @@ The operator does this by hand, in the chat of each service; no submission is se
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 What a model points out is given as a reason for a decision only after the operator has checked it.
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+Each January, the decisions of the year before are counted from the public issues and the records, with the reasons named for declining and the days to a decision, and the operator records them on the [Decisions by year](../decisions.html) page.
+The counts of the current year can be recorded before it ends, marked with the day they were counted.
 
 A moderator who declines a submission names one or more of these reasons, with a short explanation:
 

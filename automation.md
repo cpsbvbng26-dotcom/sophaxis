@@ -61,6 +61,13 @@ The code of each step is public, and each section links to it.
 - Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
 - Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
 
+## Once a year, on 2 January at 12:23 Japan time
+
+- Reads: the public issues labelled submission, withdrawal or removal, the comments of the repository owner on declined submissions, and the records.
+- Writes: an issue with the counts of the year before: submissions opened, accepted, declined and not decided yet, the reasons named for declining, the days from submission to a decision, the requests, and the records withdrawn and removed.
+- Leaves to the operator: recording the counts in `data/reports/`, from which the [Decisions by year](./decisions.html) page is built.
+- Code: [tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) and [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js), run by [report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml).
+
 ## On every push and every pull request
 
 - Runs every check of [verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) against the records, the policies and the built site.

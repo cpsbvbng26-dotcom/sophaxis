@@ -832,6 +832,7 @@ ${table('Repository', [...new Set(Object.values(SITE.repositories))].map((name) 
 <p>The extent that the authors state, at one of the levels the submission form offers. Records listed before ${esc(SITE.llmExtentFrom)} may not state one.</p>
 ${table('Extent', Object.entries(SITE.llmExtents).map(([k, label]) => row(label, shown.filter((p) => p.llm_extent === k).length)).concat([row('Not stated', shown.filter((p) => !p.llm_extent).length)]))}
 <h2>Decisions and requests</h2>
+<p>The <a href="./decisions.html">Decisions by year</a> page counts them for each year, with the reasons named for declining.</p>
 <ul>
 ${issues('accepted', 'Accepted submissions')}
 ${issues('declined', 'Declined submissions')}
@@ -1021,6 +1022,41 @@ function searchPage() {
   return page({ title: 'Search | ' + SITE.name, description: 'Search the preprints listed on ' + SITE.name + '.', rel: false, canonical: 'search.html', body, csp: SEARCH_CSP });
 }
 
+/* The reports of decisions, one per year, counted by tools/report.js from the public issues and the records (data/reports). */
+function loadReports(dir = path.join(__dirname, 'data', 'reports')) {
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((f) => /^\d{4}\.json$/.test(f)).sort().reverse().map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+}
+function reportProblems(r, file) {
+  const e = [];
+  const n = (x) => Number.isInteger(x) && x >= 0;
+  if (!Number.isInteger(r.year) || file !== r.year + '.json') e.push(file + ': the year must be the name of the file');
+  if (!DATE.test(r.asOf || '') || r.asOf.slice(0, 4) < String(r.year)) e.push(file + ': asOf is a date in or after the year');
+  if (r.complete !== (r.asOf > r.year + '-12-31')) e.push(file + ': complete says whether the year was over when it was counted');
+  const s = r.submissions || {};
+  if (!['opened', 'accepted', 'declined', 'undecided', 'byOperator'].every((k) => n(s[k])) || s.accepted + s.declined + s.undecided !== s.opened || s.byOperator > s.opened) e.push(file + ': the submissions do not add up');
+  if (!r.declineReasons || !Object.values(r.declineReasons).every(n)) e.push(file + ': each reason has a count');
+  return e;
+}
+function decisionsPage(reports) {
+  const row = (k, v) => `<tr><td>${esc(k)}</td><td>${v === null || v === undefined ? '–' : esc(String(v))}</td></tr>`;
+  const table = (head, rows) => `<div class="table"><table><tr><th scope="col">${esc(head)}</th><th scope="col">Count</th></tr>${rows.join('')}</table></div>`;
+  const year = (r) => `
+<h2 id="y${r.year}">${r.year}${r.complete ? '' : ', counted up to ' + esc(r.asOf)}</h2>
+${table('Submissions', [row('Opened', r.submissions.opened), row('Accepted', r.submissions.accepted), row('Declined', r.submissions.declined), row('Not decided yet', r.submissions.undecided), row('Opened by the operator', r.submissions.byOperator)])}
+${table('Reason named for declining', Object.entries(r.declineReasons).map(([k, v]) => row(k, v)))}
+${table('Days from submission to decision', [row('Median', r.daysToDecision.median), row('Longest', r.daysToDecision.longest)])}
+${table('Requests and records', [row('Withdrawal requests', r.withdrawalRequests), row('Removal requests made in public', r.removalRequests.opened), row('Upheld', r.removalRequests.upheld), row('Not upheld', r.removalRequests.notUpheld), row('Records withdrawn', r.records.withdrawn), row('Records removed', r.records.removed)])}
+`;
+  const body = `
+<h1>Decisions by year</h1>
+<p>Each year, the decisions of the year before are counted from the public GitHub issues and the records by <a href="${esc(SITE.repo)}/blob/main/tools/report.js">tools/report.js</a>, and recorded here. A declined submission counts once under each reason that the moderator named in the issue. Removal requests sent by email are not public and are not counted. Days are counted in Japan time.</p>
+${reports.length ? reports.map(year).join('') : '<p>No year has been recorded yet.</p>'}
+<p class="meta">The counts of the records now are on the <a href="./stats.html">Statistics</a> page.</p>
+`;
+  return page({ title: 'Decisions by year | ' + SITE.name, description: 'How many submissions ' + SITE.name + ' accepted and declined each year, the reasons named, and the time to a decision.', rel: false, canonical: 'decisions.html', body });
+}
+
 /* Each address with the date it last changed: a record with its latest version, a copy with its version,
  * a policy with its "Last updated" date, and the lists with the newest record. */
 function sitemap(papers) {
@@ -1035,7 +1071,7 @@ function sitemap(papers) {
     ['disclaimer.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(disclaimerSource()) || [, newest])[1]],
     ['disclaimer.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(disclaimerJaSource()) || [, newest])[1]],
     ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
-    ['stats.html', newest]]
+    ['stats.html', newest], ['decisions.html', (loadReports()[0] || {}).asOf || SITE.since]]
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -1120,6 +1156,7 @@ function build(out, paperDir) {
     if (!x || !x.name || !x.description || !/^https:\/\//.test(x.url || '') || !DATE.test(x.since || '')) problems.push('site.json: listedIn[' + i + '] needs a name, a description, an https url and a since date (YYYY-MM-DD)');
   });
   if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
+  for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));
   if (problems.length) return { problems };
   /* Removed records keep only their notice page; they are left out of every list, feed and search. */
   const papers = all.filter((p) => p.status !== 'removed');
@@ -1144,6 +1181,7 @@ function build(out, paperDir) {
     'disclaimer.ja.html': disclaimerJaPage(),
     'repositories.html': repositoriesPage(),
     'stats.html': statsPage(all),
+    'decisions.html': decisionsPage(loadReports()),
     'search.html': searchPage(),
     '404.html': notFoundPage(),
     'feed.xml': feed(papers),
@@ -1188,7 +1226,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

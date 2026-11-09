@@ -519,6 +519,8 @@ The operator does this by hand, in the chat of each service; no submission is se
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 What a model points out is given as a reason for a decision only after the operator has checked it.
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+Each January, the decisions of the year before are counted from the public issues and the records, with the reasons named for declining and the days to a decision, and the operator records them on the [Decisions by year](../decisions.html) page.
+The counts of the current year can be recorded before it ends, marked with the day they were counted.
 
 A moderator who declines a submission names one or more of these reasons, with a short explanation:
 
@@ -1655,6 +1657,13 @@ The code of each step is public, and each section links to it.
 - Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
 - Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
 
+## Once a year, on 2 January at 12:23 Japan time
+
+- Reads: the public issues labelled submission, withdrawal or removal, the comments of the repository owner on declined submissions, and the records.
+- Writes: an issue with the counts of the year before: submissions opened, accepted, declined and not decided yet, the reasons named for declining, the days from submission to a decision, the requests, and the records withdrawn and removed.
+- Leaves to the operator: recording the counts in `data/reports/`, from which the [Decisions by year](./decisions.html) page is built.
+- Code: [tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) and [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js), run by [report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml).
+
 ## On every push and every pull request
 
 - Runs every check of [verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) against the records, the policies and the built site.
@@ -2603,6 +2612,8 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 言語モデルは補助にとどまります。言語モデルが投稿を受理したり断ったりすることはなく、判断はすべて、投稿を読んだ運営者かモデレーターが下します。
 言語モデルの指摘を判断の理由にするのは、運営者がその指摘を確かめた後だけです。
 目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。
+毎年 1 月に、前の年の判断を、公開の issue と記録から数えます。断るときに挙げた理由と、判断までの日数も数え、運営者が[年ごとの判断](../decisions.html)の頁に記録します。
+その年の途中の数を、数えた日を添えて記録することもあります。
 
 投稿を断るモデレーターは、次の理由のうち一つ以上を、短い説明とともに挙げます。
 
