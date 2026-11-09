@@ -735,6 +735,7 @@ function indexPage(papers, all = papers) {
 ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
+<p class="meta"><a href="./index.ja.html" hreflang="ja" lang="ja">日本語</a></p>
 ${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
 ${fields(papers, '', './')}
 <p class="meta">By topic: <a href="./collections.html">Collections</a>.</p>
@@ -745,6 +746,7 @@ ${listing(papers, './', 'No preprints are listed yet.')}
     description: SITE.name + ' is an overlay preprint server for philosophy and mathematics. It charges nothing, to authors or to readers.',
     rel: false,
     canonical: '',
+    head: rootAlternates('index'),
     body,
   });
 }
@@ -827,7 +829,7 @@ function policyPage() {
   const list = `<h2>The policies</h2>
 <ul>${POLICIES.map(([slug, what]) => `<li><a href="./policies/${slug}.html">${esc(policyTitle(slug))}</a>: ${esc(what)}</li>`).join('')}</ul>`;
   const html = markdown(md).replace('<h2>What Sophaxis is not</h2>', list + '\n<h2>What Sophaxis is not</h2>');
-  return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', body: html });
+  return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', head: rootAlternates('policy'), body: html });
 }
 
 /* Counts taken from the records each time the site is built, and links to every public decision. */
@@ -909,16 +911,20 @@ function acknowledgements() {
 }
 
 const repositoriesSource = () => fs.readFileSync(path.join(ROOT, 'repositories.md'), 'utf8');
-function repositoriesPage() {
+/* The two lists of the page for repositories, filled in the English page and in its translation alike. */
+function repositoriesFill(html) {
   const list = '<ul>' + Object.entries(SITE.repositories).map(([prefix, name]) => `<li>${esc(name)}: DOIs beginning <code>${esc(prefix)}</code></li>`).join('') + '</ul>';
-  return page({ title: 'For repositories and DOI registration agencies | ' + SITE.name, description: 'What ' + SITE.name + ' reads from repositories and DOI registration agencies, how often, and what it shows.', rel: false, canonical: 'repositories.html',
-    body: markdown(repositoriesSource()).replace('<p>{{repositories}}</p>', list).replace('<p>{{acknowledgements}}</p>', acknowledgements()) });
+  return html.replace('<p>{{repositories}}</p>', list).replace('<p>{{acknowledgements}}</p>', acknowledgements());
+}
+function repositoriesPage() {
+  return page({ title: 'For repositories and DOI registration agencies | ' + SITE.name, description: 'What ' + SITE.name + ' reads from repositories and DOI registration agencies, how often, and what it shows.', rel: false, canonical: 'repositories.html', head: rootAlternates('repositories'),
+    body: repositoriesFill(markdown(repositoriesSource())) });
 }
 
 /* One submission followed from start to finish, for people who come from the site. */
 const processSource = () => fs.readFileSync(path.join(ROOT, 'process.md'), 'utf8');
 function processPage() {
-  return page({ title: 'From submission to listing | ' + SITE.name, description: 'How a submission to ' + SITE.name + ' goes from the form through the automatic check and moderation to a record page.', rel: false, canonical: 'process.html', body: markdown(processSource()) });
+  return page({ title: 'From submission to listing | ' + SITE.name, description: 'How a submission to ' + SITE.name + ' goes from the form through the automatic check and moderation to a record page.', rel: false, canonical: 'process.html', head: rootAlternates('process'), body: markdown(processSource()) });
 }
 
 /* Every step that runs by itself: when, what it reads and writes, and what it leaves to the operator. */
@@ -926,28 +932,68 @@ const automationSource = () => fs.readFileSync(path.join(ROOT, 'automation.md'),
 /* The operator's self-assessment against the Principles of Transparency and Best Practice in Scholarly Publishing. */
 const transparencySource = () => fs.readFileSync(path.join(ROOT, 'transparency.md'), 'utf8');
 function transparencyPage() {
-  return page({ title: 'Transparency | ' + SITE.name, description: 'How ' + SITE.name + ' stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator\'s own assessment.', rel: false, canonical: 'transparency.html', body: markdown(transparencySource()) });
+  return page({ title: 'Transparency | ' + SITE.name, description: 'How ' + SITE.name + ' stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator\'s own assessment.', rel: false, canonical: 'transparency.html', head: rootAlternates('transparency'), body: markdown(transparencySource()) });
 }
 function automationPage() {
-  return page({ title: 'What runs by itself | ' + SITE.name, description: 'Every automatic step of ' + SITE.name + ': when it runs, what it reads and writes, and what it leaves to the operator.', rel: false, canonical: 'automation.html', body: markdown(automationSource()) });
+  return page({ title: 'What runs by itself | ' + SITE.name, description: 'Every automatic step of ' + SITE.name + ': when it runs, what it reads and writes, and what it leaves to the operator.', rel: false, canonical: 'automation.html', head: rootAlternates('automation'), body: markdown(automationSource()) });
 }
 
 /* Short answers, each drawn from a policy, which applies where they differ. */
 const faqSource = () => fs.readFileSync(path.join(ROOT, 'faq.md'), 'utf8');
 function faqPage() {
-  return page({ title: 'Frequently asked questions | ' + SITE.name, description: 'Short answers about ' + SITE.name + ': moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.', rel: false, canonical: 'faq.html', body: markdown(faqSource()) });
+  return page({ title: 'Frequently asked questions | ' + SITE.name, description: 'Short answers about ' + SITE.name + ': moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.', rel: false, canonical: 'faq.html', head: rootAlternates('faq'), body: markdown(faqSource()) });
 }
 
 /* Who runs Sophaxis and how to reach the operator. The email address stays on the ORCID record. */
 const contactSource = () => fs.readFileSync(path.join(ROOT, 'contact.md'), 'utf8');
 function contactPage() {
-  return page({ title: 'Operator and contact | ' + SITE.name, description: 'Who operates ' + SITE.name + ', and how to reach the operator.', rel: false, canonical: 'contact.html', body: markdown(contactSource()) });
+  return page({ title: 'Operator and contact | ' + SITE.name, description: 'Who operates ' + SITE.name + ', and how to reach the operator.', rel: false, canonical: 'contact.html', head: rootAlternates('contact'), body: markdown(contactSource()) });
 }
 
 /* Japanese pages. The page on personal data follows the headings of Japan's Act on the Protection of Personal Information;
  * the others are translations, and the English text applies where they differ, as the Terms of Use say.
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
+/* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
+const JA_PAGES = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency'];
+const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
+const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
+const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
+const rootAlternates = (slug) => (hasRootJa(slug) || slug === 'index'
+  ? `<link rel="alternate" hreflang="en" href="${esc(SITE.baseUrl)}${slug === 'index' ? '' : slug + '.html'}">\n<link rel="alternate" hreflang="ja" href="${esc(SITE.baseUrl)}${slug}.ja.html">\n` : '');
+function rootJaPage(slug) {
+  const title = rootJaTitle(slug);
+  return page({ title: title + ' | ' + SITE.name, description: SITE.name + ' の「' + title + '」の頁。英語の頁の訳です。', rel: false, canonical: slug + '.ja.html', lang: 'ja', head: rootAlternates(slug), body: slug === 'repositories' ? repositoriesFill(markdown(rootJaSource(slug)))
+    : slug === 'policy' ? markdown(rootJaSource(slug)).replace('<h2>Sophaxis でないもの</h2>', `<h2>規程の一覧</h2>\n<ul>${POLICIES.filter(([s]) => JA_POLICIES[s]).map(([s]) => `<li><a href="./policies/${s}.ja.html">${esc(jaTitle(s))}</a></li>`).join('')}</ul>\n<h2>Sophaxis でないもの</h2>`)
+    : markdown(rootJaSource(slug)) });
+}
+
+/* The top page in Japanese. The records, the lists and the statistics stay in English: the titles and abstracts are those of
+ * the DOI metadata. */
+function indexJaPage(papers, all = papers) {
+  const last = lastUpdated(all);
+  const L = SITE.notOffered || [];
+  const jaLinks = Object.keys(JA_POLICIES).map((slug) => `<li><a href="./policies/${slug}.ja.html">${esc(jaTitle(slug))}</a></li>`)
+    .concat(['<li><a href="./disclaimer.ja.html">免責事項</a></li>'], JA_PAGES.filter(hasRootJa).map((slug) => `<li><a href="./${slug}.ja.html">${esc(rootJaTitle(slug))}</a></li>`)).join('');
+  const body = `
+<h1>${esc(SITE.name)}：哲学と数学のプレプリント</h1>
+<p>${esc(SITE.name)} は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、${esc(SITE.name)} がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>
+<div class="notice">掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。${esc(SITE.name)} は、著者からも読者からも料金を取りません。</div>
+<div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(L.map((p) => p.ja).join('、'))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
+${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${esc(SITE.termsNotice.from)} から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
+` : ''}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
+<p class="meta">記録の頁・一覧・統計は英語です。作品の題と要旨は、DOI の登録情報のとおりに載せています。</p>
+<h2>日本語の頁</h2>
+<ul>${jaLinks}</ul>
+<h2>分野と集め</h2>
+<ul class="fields" aria-label="分野">${Object.entries(SITE.categories).map(([slug]) => `<li><a href="./list/${slug}.html">${esc(SITE.categoriesJa[slug])}（${papers.filter((p) => cats(p).includes(slug)).length}）</a></li>`).join('')}</ul>
+<ul class="fields" aria-label="集め">${(SITE.collections || []).map((c) => `<li><a href="./collection/${esc(c.slug)}.html">${esc(c.ja)}（${papers.filter((p) => (p.collections || []).includes(c.slug)).length}）</a></li>`).join('')}</ul>
+<h2>載っている作品</h2>
+${listing(papers, './', 'まだ作品は載っていません。')}
+`;
+  return page({ title: SITE.name + '：哲学と数学のプレプリント', description: SITE.name + ' は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。', rel: false, canonical: 'index.ja.html', lang: 'ja', head: rootAlternates('index'), body });
+}
+
 const JA_POLICIES = { privacy: '個人情報の取り扱いについて', terms: '利用規約（日本語訳）', submission: '投稿の規程（日本語訳）', moderation: 'モデレーションの規程（日本語訳）', copyright: '著作権の規程（日本語訳）', licences: 'ライセンスの規程（日本語訳）', takedown: '削除の規程（日本語訳）', withdrawal: '撤回の規程（日本語訳）' };
 const jaSource = (slug) => fs.readFileSync(path.join(ROOT, 'policies', slug + '.ja.md'), 'utf8');
 const privacyJa = () => jaSource('privacy');
@@ -1114,6 +1160,7 @@ function sitemap(papers) {
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
+    .concat([['index.ja.html', newest]], JA_PAGES.filter(hasRootJa).map((slug) => [slug + '.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(rootJaSource(slug)) || [, newest])[1]]))
     .concat([['collections.html', newest]], (SITE.collections || []).map((c) => ['collection/' + c.slug + '.html', newest]))
     .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map(changed).sort().pop()]))
     .concat(papers.map((p) => ['abs/' + p.id + '.html', changed(p)]))
@@ -1155,7 +1202,8 @@ const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaime
 function llmsSources() {
   return POLICIES.map(([slug]) => ['policies/' + slug + '.md', 'policies/' + slug + '.html'])
     .concat(LLM_PAGES.map(([src, url]) => [src, url]))
-    .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.md', 'policies/' + slug + '.ja.html']), [['disclaimer.ja.md', 'disclaimer.ja.html']]);
+    .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.md', 'policies/' + slug + '.ja.html']), [['disclaimer.ja.md', 'disclaimer.ja.html']])
+    .concat(JA_PAGES.filter(hasRootJa).map((slug) => [slug + '.ja.md', slug + '.ja.html']));
 }
 function llmsTxt(all) {
   const B = SITE.baseUrl, L = SITE.notOffered || [];
@@ -1181,6 +1229,8 @@ function llmsTxt(all) {
     + '\n## Japanese\n\n'
     + Object.keys(JA_POLICIES).map((slug) => '- [' + JA_POLICIES[slug] + '](' + B + 'policies/' + slug + '.ja.html)\n').join('')
     + '- [免責事項](' + B + 'disclaimer.ja.html)\n'
+    + '- [トップの頁](' + B + 'index.ja.html)\n'
+    + JA_PAGES.filter(hasRootJa).map((slug) => '- [' + rootJaTitle(slug) + '](' + B + slug + '.ja.html)\n').join('')
     + '\n## Data\n\n'
     + '- [papers.json](' + B + 'papers.json): every public record\n- [Atom feed](' + B + 'feed.xml)\n- [OAI-PMH](' + B + 'oai?verb=Identify)\n- [Sitemap](' + B + 'sitemap.xml)\n- [Source and history](' + SITE.repo + ')\n';
 }
@@ -1243,6 +1293,8 @@ function build(out, paperDir) {
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
   files['collections.html'] = collectionsPage(papers);
+  files['index.ja.html'] = indexJaPage(papers, all);
+  JA_PAGES.filter(hasRootJa).forEach((slug) => { files[slug + '.ja.html'] = rootJaPage(slug); });
   (SITE.collections || []).forEach((c) => { files['collection/' + c.slug + '.html'] = collectionPage(papers, c); files['collection/' + c.slug + '.xml'] = feed(papers, c); });
   all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p, all); });
   /* Citation files for reference managers, one set per record that is shown. */
