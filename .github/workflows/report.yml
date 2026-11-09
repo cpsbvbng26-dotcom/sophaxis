@@ -1,0 +1,28 @@
+name: report
+# Each January, the decisions of the year before are counted from the public issues and the records (tools/report.js),
+# and posted in an issue. The operator records them in data/reports/ by pull request; decisions.html shows them.
+on:
+  schedule:
+    - cron: '23 3 2 1 *'
+  workflow_dispatch:
+    inputs:
+      year:
+        description: The year to count, such as 2026
+        required: false
+permissions:
+  contents: read
+  issues: write
+jobs:
+  report:
+    name: Count the decisions of a year
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      # The year reaches the script only through the environment, and is checked to be four digits.
+      - run: node tools/report_issue.js
+        env:
+          YEAR: ${{ inputs.year }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
