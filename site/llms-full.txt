@@ -250,6 +250,17 @@ The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv,
 It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.html).
 It must have a title, an abstract and references, in the ordinary form of a scholarly paper.
 
+From 2026-11-23, a new work is listed only if at least six months have passed since its first DOI was registered.
+The six months are counted to the day the submission issue is opened, in Japan time.
+They end on the same day of the month, or on the last day of a shorter month.
+The first DOI is the DOI registered earliest among the DOI given and the DOIs that its metadata names as earlier versions of the work, or as the DOI of all its versions.
+In Zenodo this is the DOI of all versions, and in Figshare the DOI of the first version.
+The day of registration is the one that DataCite or Crossref records.
+Where the metadata gives no such day, as for Jxiv, the operator checks it by hand.
+The automatic check in the issue reads these days and counts the six months.
+A submission opened too early is not listed; a new issue can be opened once the six months have passed.
+This does not apply to a new version of a work that Sophaxis already lists, or to a submission opened before 2026-11-23.
+
 Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.
 Publishers set different terms for this.
 The submitter gives the DOI of the published version in the form, as set out under "When the work is published" below.
@@ -1450,7 +1461,7 @@ Source: https://sophaxis.vercel.app/process.html
 
 # From submission to listing
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 This page follows one submission from start to finish.
 The rules themselves are in the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html); where this page differs, they apply.
@@ -1459,7 +1470,7 @@ The rules themselves are in the [Submission Policy](./policies/submission.html) 
 
 You need four things.
 
-1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
+1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered, as the [Submission Policy](./policies/submission.html) sets out.
 2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.
 3. An [ORCID](https://orcid.org) iD. Registration is free.
 4. A [GitHub](https://github.com) account. Registration is free.
@@ -1554,7 +1565,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel.
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
@@ -1569,9 +1580,10 @@ The code of each step is public, and each section links to it.
 
 ## When a submission issue is opened or edited, or an author confirms in a comment
 
-- Reads: the DOI metadata from DataCite, Crossref or JaLC; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
+- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
 - Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
+- From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 
@@ -2288,6 +2300,17 @@ Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作�
 作品は、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けてある必要があります。
 [ライセンスの規程](./licences.ja.html)が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。
 学術論文の通常の形で、題・要旨・参考文献を備えている必要があります。
+
+2026-11-23 から、新しい作品は、その最初の DOI が登録されてから六か月以上たっているときに限り載せます。
+六か月は、投稿の issue を開いた日まで、日本時間で数えます。
+月の同じ日に満了し、短い月ではその月の末日に満了します。
+最初の DOI とは、投稿された DOI と、そのメタデータが作品の前の版またはすべての版の DOI として挙げる DOI のうち、最も早く登録されたものです。
+Zenodo ではすべての版の DOI、Figshare では最初の版の DOI がこれに当たります。
+登録の日は、DataCite または Crossref が記録している日です。
+メタデータにその日がないとき（Jxiv など）は、運営者が手で確かめます。
+issue の自動の確認が、これらの日を読み、六か月を数えます。
+早すぎる投稿は載せません。六か月がたったあとに、新しい issue を開き直せます。
+すでに Sophaxis に載っている作品の新しい版と、2026-11-23 より前に開かれた投稿には掛かりません。
 
 すでに学術誌が出版した作品は、著者がそのようなライセンスで共有してよい版に限り投稿できます。
 その条件は出版者によって異なります。
