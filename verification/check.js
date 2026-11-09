@@ -2657,6 +2657,9 @@ console.log('\n70. A possible domain and NGO at 1,000 listed works: a possibilit
   ok('any step is taken only within the law and announced before it takes effect', rd.includes('Any such step would be taken only within the law and announced on the top page before it takes effect.')
     && rd.includes('こうした変更は法令の範囲でだけ行い、効力が始まる前にトップの頁で告知します。'));
   ok('the number of listed works (' + n + ') is below 1,000, so the statement is still a condition, not a fact', n < 1000);
+  ok('nothing in the README or the site says that a domain is planned or names one', !/sophaxis\.org|domain[^.\n]*\bplanned\b|ドメイン[^。\n]*予定/.test(rd)
+    && rd.includes('Sophaxis has no domain of its own; when one might be considered is said under [Operator and contact](#operator-and-contact).')
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => /\.(html|txt)$/.test(f)).some((f) => /sophaxis\.org/.test(read(path.join(ROOT, 'site', f)))));
 }
 
 console.log('\n71. Provisional registration before a decision; language models assist the review, and a person decides');
@@ -2774,7 +2777,7 @@ console.log('\n76. The age of the DOI: six months since the first DOI of a new w
     site.doiAgeFrom === '2026-11-23' && site.doiAgeMonths === 6 && days(site.doiAgeFrom, announced) >= 14
     && site.termsNotice.text.includes('From ' + site.doiAgeFrom + ', a new work is listed only if, on the day its submission issue is opened, at least six months have passed since the first DOI of the work was registered; a new version of a listed work is not counted again.')
     && read(path.join(ROOT, 'site', 'index.html')).includes('at least six months have passed since the first DOI of the work was registered')
-    && changelog.split('\n## ')[1].startsWith(announced) && changelog.split('\n## ')[1].includes('six months'));
+    && changelog.split('\n## ').some((sec) => sec.startsWith(announced + '\n') && sec.includes('six months')));
   ok('the Submission Policy, in both languages, gives the rule, how the six months and the first DOI are counted, and what it does not apply to',
     ['From ' + site.doiAgeFrom + ', a new work is listed only if at least six months have passed since its first DOI was registered.',
       'The six months are counted to the day the submission issue is opened, in Japan time.',
