@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -74,6 +74,10 @@ Submissions by the operator are moderated under the same rules and are marked on
 The automatic check applies to them without exception.
 While the operator is the only moderator, the operator also decides on their own submissions; the mark on the record page says so.
 Once there is another moderator, no moderator decides on their own submission or on one by a close collaborator.
+The operator's own submissions get no priority: they are moderated in the order they come, and their records have no other place on the site than any other record.
+From 2026-11-09, a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.
+The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.
+The [Statistics](../stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
 
 ## After listing
 

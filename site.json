@@ -26,6 +26,8 @@
   "residenceFrom": "2026-11-22",
   "doiAgeFrom": "2026-11-23",
   "doiAgeMonths": 6,
+  "ownWaitFrom": "2026-11-09",
+  "ownWaitDays": 7,
   "notOffered": [
     { "place": "the European Union", "ja": "欧州連合", "requires": "a representative", "law": "GDPR Article 27; Digital Services Act Article 13", "lawJa": "一般データ保護規則 第 27 条、デジタルサービス法 第 13 条", "read": true },
     { "place": "the European Economic Area", "ja": "欧州経済領域", "requires": "a representative", "law": "GDPR Article 27, as applied in the EEA", "lawJa": "一般データ保護規則 第 27 条（欧州経済領域での適用）", "read": true },

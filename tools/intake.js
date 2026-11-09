@@ -485,7 +485,7 @@ function nextId(paperDir, year) {
   return year + '.' + String((seq.length ? Math.max(...seq) : 0) + 1).padStart(4, '0');
 }
 
-function draft({ form, login, issue, meta, versions, result, paperDir, today, pub }) {
+function draft({ form, login, issue, meta, versions, result, paperDir, today, pub, opened }) {
   const dir = paperDir || path.join(ROOT, 'data', 'papers');
   if (form.update) {
     const file = path.join(dir, form.update + '.json');
@@ -519,7 +519,8 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     listed: (today || new Date().toISOString()).slice(0, 10),
     status: 'listed',
   };
-  if (SITE.operator.github && login.toLowerCase() === SITE.operator.github.toLowerCase()) p.operator_own = true;
+  /* The operator's own submission keeps the day its issue was opened: it is listed SITE.ownWaitDays days later at the earliest (Moderation Policy). */
+  if (SITE.operator.github && login.toLowerCase() === SITE.operator.github.toLowerCase()) Object.assign(p, { operator_own: true, submitted: opened || p.listed });
   if (form.published && pub) {
     const P = require('./published.js');
     p.published = P.toPublished(p, pub, { peer: P.PEER[String(form.peer || '').trim()], today: (today || new Date().toISOString()).slice(0, 10), issue });
@@ -697,7 +698,8 @@ async function main() {
   const form = parseIssue(process.env.ISSUE_BODY);
   /* The age of the DOI is counted on the day the issue was opened, not the day it was last edited. */
   const issue = await github('GET', '/issues/' + n);
-  const { result, meta, versions, pub } = await run(form, login, jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString()));
+  const opened = jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString());
+  const { result, meta, versions, pub } = await run(form, login, opened);
   const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
   if (meta && result.author) {
     const confirmed = [];
@@ -713,7 +715,7 @@ async function main() {
     const row = coauthorCheck(meta.authors, result.author, confirmed, new Date(Date.now() + 9 * 3600 * 1000).toISOString());
     if (row) { result.checks.push(row); result.ok = result.ok && row[1]; }
   }
-  const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub }) : null;
+  const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub, opened }) : null;
   const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : []);
   const mine = all.find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await github('PATCH', '/issues/comments/' + mine.id, { body });
