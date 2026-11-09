@@ -109,6 +109,19 @@ An email confirmation says the same, and the operator's reply links the Privacy 
 Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
 Any author can withdraw a consent at any time, by a removal issue or by email.
 
+## A researcher who vouches for a first submission
+
+From 2026-11-23, a submitter who is not yet an author of a work that Sophaxis lists needs one researcher to vouch for it.
+That researcher's public ORCID record lists a journal article, a book chapter or a book with a DOI, and links the GitHub account from which they comment.
+The researcher comments in the submission issue with these words and their own ORCID iD: "I vouch for this submission to Sophaxis. I am not an author of this work, and I do not live in, or stay in, a place where Sophaxis is not offered."
+The authors of the work and the operator cannot vouch.
+Like an author, the researcher must not live in, or stay in, a place where Sophaxis is not offered.
+Vouching says that the work is in scope and in the ordinary form of a scholarly paper.
+It is not a review, and the moderator still decides.
+The automatic check in the issue reads the researcher's public ORCID record as it reads a co-author's, and counts the vouching.
+The researcher can take it back by deleting the comment before the listing.
+A submitter who is already an author of a listed work needs no one to vouch, and neither does a new version of a listed work.
+
 ## What the submitter confirms
 
 - The submitter is an author of the work.

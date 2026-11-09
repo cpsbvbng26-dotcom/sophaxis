@@ -15,6 +15,7 @@ Sophaxis applies Japan's Act on the Protection of Personal Information in full, 
 Personal data is used only for these purposes:
 
 - to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
+- from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
 - to check the listed DOIs and licences each week, and, for works whose authors consent to it, to save the pages and the PDF copies to the Internet Archive each week and when they change;
@@ -54,6 +55,7 @@ It does not ask for the person section as a whole, so public email addresses and
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
+From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
 
 Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
 Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.

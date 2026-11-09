@@ -20,6 +20,7 @@ The code of each step is public, and each section links to it.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
 - From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
 - From 2026-11-23, it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.
+- From 2026-11-23, for a submitter who is not yet an author of a listed work, it also counts a researcher who vouches for the work: it reads the name, the websites and the works of that researcher's public ORCID record, and runs again when such a comment is written, edited or deleted.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 

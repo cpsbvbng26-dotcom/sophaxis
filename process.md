@@ -15,6 +15,7 @@ You need four things.
 4. A [GitHub](https://github.com) account. Registration is free.
 
 Every author of the work must agree to the listing.
+From 2026-11-23, a first submission also needs a researcher to vouch for it, with a journal article, a book chapter or a book, as the [Submission Policy](./policies/submission.html) sets out.
 If you used language models or other generative models, note which tools you used and what for.
 
 ## Step 1. Find your GitHub username
