@@ -1315,9 +1315,10 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     && !read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
     && read(path.join(ROOT, 'contact.md')).includes('- ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).')
     && read(path.join(ROOT, 'site', 'contact.html')).includes('<a href="https://roar.eprints.org/27422/">record 27422</a>')
+    && read(path.join(ROOT, 'site', 'contact.ja.html')).includes('<a href="https://roar.eprints.org/27422/">記録 27422</a>')
     && JSON.stringify(JSON.parse(read(path.join(ROOT, 'site.json'))).listedIn) === JSON.stringify([{ name: 'ROAR', description: 'the Registry of Open Access Repositories at the University of Southampton', url: 'https://roar.eprints.org/27422/', since: '2026-11-06' }])
     && read(path.join(ROOT, 'site', 'index.html')).includes('<p class="meta">Listed in <a href="https://roar.eprints.org/27422/">ROAR</a>, the Registry of Open Access Repositories at the University of Southampton, after its editorial review, since 2026-11-06 (Japan time).</p>')
-    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== 'contact.html' && f !== 'index.html').every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== 'contact.html' && f !== 'contact.ja.html' && f !== 'index.html').every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
   ok('the PhilPapers request is recorded as a request, not as an addition, in both languages',
     read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
     && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
@@ -2196,7 +2197,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
 {
   const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
   const pages = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'].map((slug) => ({ slug, dir: 'policies/' }))
-    .concat([{ slug: 'disclaimer', dir: '' }]);
+    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency'].map((slug) => ({ slug, dir: '' })));
   for (const { slug, dir } of pages) {
     const en = read(path.join(ROOT, dir, slug + '.md'));
     const ja = read(path.join(ROOT, dir, slug + '.ja.md'));
@@ -3134,6 +3135,30 @@ console.log('\n83. Collections by topic, beside the fields (Moderation Policy)')
     && slugs.every((s) => read(path.join(ROOT, 'site', 'sitemap.xml')).includes(site.baseUrl + 'collection/' + s + '.html'))
     && idx.includes('A collection says nothing of the quality of a work.') && read(path.join(ROOT, 'policies', 'moderation.md')).includes('A collection says nothing of the quality of a work')
     && read(path.join(ROOT, 'policies', 'moderation.ja.md')).includes('集めは作品の質について何も言いません。'));
+}
+
+console.log('\n84. The site in Japanese: the top page and every prose page');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const ja = read(path.join(ROOT, 'site', 'index.ja.html')), en = read(path.join(ROOT, 'site', 'index.html'));
+  const pair = '<link rel="alternate" hreflang="en" href="' + site.baseUrl + '">\n<link rel="alternate" hreflang="ja" href="' + site.baseUrl + 'index.ja.html">';
+  ok('the Japanese top page is in Japanese, names the English one and is named by it, and the English one links it', /<html lang="ja"/.test(ja) && ja.includes(pair) && en.includes(pair)
+    && en.includes('<a href="./index.ja.html" hreflang="ja" lang="ja">日本語</a>') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes(site.baseUrl + 'index.ja.html</loc>'));
+  ok('it says that acceptance is moderation, not peer review, that nothing is charged, and where Sophaxis is not offered, with all ' + site.notOffered.length + ' places by their Japanese names',
+    ja.includes('掲載はモデレーションであり、査読ではありません。') && ja.includes('著者からも読者からも料金を取りません。')
+    && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + site.notOffered.map((p) => p.ja).join('、') + '）に住んでいる著者') && ja.includes('国籍や人種ではなく'));
+  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency'];
+  const jaPolicies = ['privacy', 'terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'];
+  ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the records stay in English',
+    jaPages.every((s) => ja.includes('href="./' + s + '.ja.html"')) && jaPolicies.every((s) => ja.includes('href="./policies/' + s + '.ja.html"')) && ja.includes('href="./disclaimer.ja.html"')
+    && Object.keys(site.categories).every((s) => ja.includes('href="./list/' + s + '.html">' + site.categoriesJa[s] + '（')) && site.collections.every((c) => ja.includes('href="./collection/' + c.slug + '.html">' + c.ja + '（'))
+    && ja.includes('記録の頁・一覧・統計は英語です。'));
+  ok('the Japanese index of the policies lists every policy in Japanese, and llms.txt links every Japanese page',
+    jaPolicies.every((s) => read(path.join(ROOT, 'site', 'policy.ja.html')).includes('<a href="./policies/' + s + '.ja.html">'))
+    && jaPages.every((s) => read(path.join(ROOT, 'site', 'llms.txt')).includes(site.baseUrl + s + '.ja.html)')) && read(path.join(ROOT, 'site', 'llms.txt')).includes(site.baseUrl + 'index.ja.html)'));
+  const jaFiles = jaPages.map((s) => read(path.join(ROOT, s + '.ja.md'))).join('\n');
+  ok('the Japanese pages claim no partnership, endorsement or affiliation, and link the translations, not the English policies',
+    !/推薦|提携|公認|partner|endorse/i.test(jaFiles) && !/\]\(\.\/policies\/[a-z]+\.html\)/.test(jaFiles) && !/\]\(\.\/disclaimer\.html\)/.test(jaFiles));
 }
 
 console.log('\n' + '-'.repeat(60));
