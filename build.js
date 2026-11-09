@@ -164,6 +164,11 @@ function validate(p, file) {
   (p.notices || []).forEach((n, i) => {
     if (!/^[a-z_]+$/.test(n.type || '') || !DOI.test(n.doi || '') || !DATE.test(n.date || '')) e.push(file + ': notice ' + (i + 1) + ' needs a type, the DOI of the notice and a date');
   });
+  /* Collections by topic (site.json "collections"), chosen by the moderator. */
+  if (p.collections !== undefined) {
+    const known = new Set((SITE.collections || []).map((c) => c.slug));
+    if (!Array.isArray(p.collections) || !p.collections.length || new Set(p.collections).size !== p.collections.length || !p.collections.every((c) => known.has(c))) e.push(file + ': collections is a list of the collections in site.json, each once');
+  }
   (p.notes || []).forEach((n, i) => {
     if (!DATE.test(n.date || '') || !n.text) e.push(file + ': note ' + (i + 1) + ' needs a date and text');
   });
@@ -601,6 +606,7 @@ ${rel.byAuthors.length ? '<p class="meta">By the same authors</p>\n' + relList(r
     ? `<div class="notice"><b>Withdrawn on ${esc(p.withdrawal_date)}.</b> ${esc(p.withdrawal_note)} The record stays so that citations do not break. See the <a href="../policies/withdrawal.html">Withdrawal Policy</a>.</div>` : '';
   const body = `
 <p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
+${collectionLinks(p)}
 ${withdrawn}
 ${publishedNotice(p)}
 ${crossrefNotices(p)}
@@ -731,6 +737,7 @@ ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists prep
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
 ${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
 ${fields(papers, '', './')}
+<p class="meta">By topic: <a href="./collections.html">Collections</a>.</p>
 ${listing(papers, './', 'No preprints are listed yet.')}
 `;
   return page({
@@ -740,6 +747,31 @@ ${listing(papers, './', 'No preprints are listed yet.')}
     canonical: '',
     body,
   });
+}
+
+/* Collections by topic: a page and an Atom feed for each collection in site.json, and the index of them. */
+const collectionOf = (slug) => (SITE.collections || []).find((c) => c.slug === slug);
+function collectionLinks(p) {
+  const mine = (p.collections || []).map(collectionOf).filter(Boolean);
+  return mine.length ? `<p class="meta">In ${mine.length === 1 ? 'the collection' : 'the collections'} ${mine.map((c) => `<a href="../collection/${esc(c.slug)}.html">${esc(c.name)}</a>`).join(', ')}.</p>` : '';
+}
+function collectionPage(papers, c) {
+  const mine = papers.filter((p) => (p.collections || []).includes(c.slug));
+  const body = `
+<h1>${esc(c.name)}</h1>
+<p>${esc(c.description)} A collection by topic, chosen by the moderator; it says nothing of the quality of a work. <a href="./${esc(c.slug)}.xml">Atom feed</a> · <a href="../collections.html">All collections</a></p>
+${listing(mine, '../', 'No preprint is in this collection yet.')}
+`;
+  return page({ title: c.name + ' | ' + SITE.name, description: 'Preprints on ' + c.name.toLowerCase() + ' listed on ' + SITE.name + '.', rel: true, canonical: 'collection/' + c.slug + '.html', body });
+}
+function collectionsPage(papers) {
+  const items = (SITE.collections || []).map((c) => `<li><a href="./collection/${esc(c.slug)}.html"><b>${esc(c.name)}</b></a> (${papers.filter((p) => (p.collections || []).includes(c.slug)).length})<p class="meta">${esc(c.description)}</p></li>`).join('\n');
+  const body = `
+<h1>Collections</h1>
+<p>Records grouped by topic, beside the fields. The moderator chooses the collections of a record; a record can be in more than one, or in none. A collection says nothing of the quality of a work.</p>
+<ul class="list">${items}</ul>
+`;
+  return page({ title: 'Collections | ' + SITE.name, description: 'The preprints listed on ' + SITE.name + ', grouped by topic.', rel: false, canonical: 'collections.html', body });
 }
 
 function fieldPage(papers, slug) {
@@ -954,8 +986,8 @@ ${listing(mine, '../', '')}
 }
 
 /* Atom feed of the listing, newest first. */
-function feed(papers) {
-  const sorted = sortListing(papers);
+function feed(papers, c = null) {
+  const sorted = sortListing(c ? papers.filter((p) => (p.collections || []).includes(c.slug)) : papers);
   const stamp = (d) => d + 'T00:00:00Z';
   const updated = stamp([SITE.since].concat(sorted.map(changed)).sort().pop());
   const entries = sorted.map((p) => {
@@ -973,11 +1005,11 @@ ${cats(p).map((c) => `    <category term="${esc(c)}" label="${esc(SITE.categorie
   }).join('\n');
   return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>${esc(SITE.name)}: new preprints</title>
+  <title>${esc(SITE.name)}: ${c ? esc(c.name) : 'new preprints'}</title>
   <subtitle>${esc(SITE.tagline)}. Moderation, not peer review.</subtitle>
-  <id>${SITE.baseUrl}</id>
-  <link rel="self" href="${SITE.baseUrl}feed.xml"/>
-  <link href="${SITE.baseUrl}"/>
+  <id>${SITE.baseUrl}${c ? 'collection/' + c.slug + '.html' : ''}</id>
+  <link rel="self" href="${SITE.baseUrl}${c ? 'collection/' + c.slug + '.xml' : 'feed.xml'}"/>
+  <link href="${SITE.baseUrl}${c ? 'collection/' + c.slug + '.html' : ''}"/>
   <updated>${updated}</updated>
 ${entries}
 </feed>
@@ -1003,6 +1035,7 @@ function papersJson(papers) {
     pdfs: (p.pdfs || []).map((x) => ({ version: x.version, url: SITE.baseUrl + 'pdf/' + x.file })),
     ...(p.published ? { published: p.published } : {}),
     ...(p.notices && p.notices.length ? { notices: p.notices } : {}),
+    ...(p.collections ? { collections: p.collections } : {}),
     status: p.status,
     llm_disclosure: p.llm_disclosure,
     ...(p.llm_extent ? { llm_extent: p.llm_extent } : {}),
@@ -1081,6 +1114,7 @@ function sitemap(papers) {
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
+    .concat([['collections.html', newest]], (SITE.collections || []).map((c) => ['collection/' + c.slug + '.html', newest]))
     .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map(changed).sort().pop()]))
     .concat(papers.map((p) => ['abs/' + p.id + '.html', changed(p)]))
     .concat(papers.flatMap((p) => (p.pdfs || []).map((x) => ['pdf/' + x.file, p.versions.find((v) => v.version === x.version).date])));
@@ -1169,6 +1203,7 @@ function build(out, paperDir) {
   fs.rmSync(out, { recursive: true, force: true });
   fs.mkdirSync(path.join(out, 'abs'), { recursive: true });
   fs.mkdirSync(path.join(out, 'list'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'collection'), { recursive: true });
   fs.mkdirSync(path.join(out, 'pdf'), { recursive: true });
   fs.mkdirSync(path.join(out, 'author'), { recursive: true });
   fs.mkdirSync(path.join(out, 'policies'), { recursive: true });
@@ -1207,6 +1242,8 @@ function build(out, paperDir) {
     'api/oai.js': oaiFunction(all),
   };
   Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
+  files['collections.html'] = collectionsPage(papers);
+  (SITE.collections || []).forEach((c) => { files['collection/' + c.slug + '.html'] = collectionPage(papers, c); files['collection/' + c.slug + '.xml'] = feed(papers, c); });
   all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p, all); });
   /* Citation files for reference managers, one set per record that is shown. */
   papers.forEach((p) => {
@@ -1233,7 +1270,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

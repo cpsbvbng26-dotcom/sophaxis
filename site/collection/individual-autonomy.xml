@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sophaxis: The individual and autonomy</title>
+  <subtitle>Preprints in Philosophy and Mathematics. Moderation, not peer review.</subtitle>
+  <id>https://sophaxis.vercel.app/collection/individual-autonomy.html</id>
+  <link rel="self" href="https://sophaxis.vercel.app/collection/individual-autonomy.xml"/>
+  <link href="https://sophaxis.vercel.app/collection/individual-autonomy.html"/>
+  <updated>2026-11-02T00:00:00Z</updated>
+  <entry>
+    <id>https://sophaxis.vercel.app/abs/2026.0005.html</id>
+    <title>Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy</title>
+    <link href="https://sophaxis.vercel.app/abs/2026.0005.html"/>
+    <published>2026-08-23T00:00:00Z</published>
+    <updated>2026-11-02T00:00:00Z</updated>
+    <author><name>Takuya Nemoto</name><uri>https://orcid.org/0009-0000-1406-0547</uri></author>
+    <category term="philosophy" label="Philosophy"/>
+    <summary>This paper develops Fragmentarian Spiritual Individualism, a philosophical framework that treats life, faith, society, ideas, and eschatology not as continuous narratives but as discrete, self-contained fragments. Rather than treating discontinuity as a problem to be repaired through narrative reconstruction or communal reintegration, the framework takes fragmentation as an ontological starting point and builds outward from it an ethic of internal discipline and spiritual autonomy. Synthesizing existentialist philosophy (Kierkegaard, Nietzsche, Sartre, Heidegger), Christian mysticism (Eckhart, Boehme), the Japanese warrior ethic of Bushido, and postwar Japanese critical thought (Yoshimoto Takaaki, Karatani Kojin), the paper develops six interlocking fragments — existential solitude, institutional detachment in matters of faith, the fusion of intellectual and disciplinary “combat,” an anti-modern aesthetics of work and form, an eschatology of finitude and glory, and a philosophical genealogy situating the framework within its sources — before turning to its contemporary significance and limitations. Throughout, the paper argues that modern rationalism, institutional religion, narrative selfhood, and capitalist self-realization share a structural flaw: each subordinates the singular, discontinuous individual to an external logic of continuity, whether bureaucratic, doctrinal, biographical, or economic. Fragmentarian Spiritual Individualism proposes the fragment itself as the basic unit of ethical and spiritual life, offering a disciplined stance — neither nostalgic re-institutionalization nor nihilistic dissolution — for individuals navigating post-capitalist, post-community conditions marked by institutional distrust and the erosion of shared metanarratives.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/abs/2026.0004.html</id>
+    <title>The Nobility and Exemplarity of the Celibate Individual: An Antinatalist and Ascetic Reconsideration of Autonomy and Quality of Life</title>
+    <link href="https://sophaxis.vercel.app/abs/2026.0004.html"/>
+    <published>2026-08-22T00:00:00Z</published>
+    <updated>2026-11-02T00:00:00Z</updated>
+    <author><name>Takuya Nemoto</name><uri>https://orcid.org/0009-0000-1406-0547</uri></author>
+    <category term="philosophy" label="Philosophy"/>
+    <summary>This paper reconsiders celibacy not as a mere absence of sexual activity but as a substantive ethical and existential stance with a long history in Buddhist, Christian, and classical philosophical traditions. Drawing on antinatalist ethics, Epicurean hedonology, and Schopenhauerian pessimism, I argue that the conventional justification of sexual activity as a societal necessity — grounded in concerns about reproduction and demographic continuity — conflates descriptive biological function with normative ethical value. Once this conflation is set aside, I argue, the ethical evaluation of one's mode of living can be grounded instead in individual autonomy and self-sustaining quality of life (QOL) rather than reproductive obligation. Engaging with David Benatar's asymmetry argument, I suggest that the moral status of humanity's demographic continuity need not be treated as self-evidently overriding individual self-determination. I then draw on Epicurus's distinction between stable and transient pleasure, and on Schopenhauer's account of sexual desire as an expression of a species-oriented will-to-live, to argue that celibacy can constitute a coherent discipline of autonomous, self-sustained flourishing. Finally, I consider four objections — from relational psychology, from the alleged self-undermining character of universalized antinatalism, from the charge of theological parochialism, and from the subjectivity of QOL judgments — and offer replies. I conclude that celibacy, properly understood, merits recognition as one exemplary and defensible path of ethical self-cultivation, rather than as a deficiency to be explained away.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/abs/2026.0003.html</id>
+    <title>Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence</title>
+    <link href="https://sophaxis.vercel.app/abs/2026.0003.html"/>
+    <published>2026-08-22T00:00:00Z</published>
+    <updated>2026-11-02T00:00:00Z</updated>
+    <author><name>Takuya Nemoto</name><uri>https://orcid.org/0009-0000-1406-0547</uri></author>
+    <category term="philosophy" label="Philosophy"/>
+    <summary>This essay develops personal imperialism as a heuristic framework for thinking about the integration of selfhood under conditions of late-modern fragmentation. The term does not denote empire as a form of state, still less any claim to dominion over other persons; it names a strictly reflexive project — the individual's cultivation of an internally sovereign order — assembled from three philosophically heterogeneous sources. From Immanuel Kant's Kingdom of Ends, the essay draws a legislative register: the self as simultaneously the author and the subject of its own governing law. From Friedrich Nietzsche's will to power, read cautiously and with attention to the contested editorial status of that phrase within his corpus, it draws an evaluative register: the ceaseless re-creation of the values that legislation alone cannot supply. From Ernst Jünger's Gestalt of the Worker, it draws a mobilizational register: the total absorption of the self's capacities into lived, actual form. Rather than presenting these three registers as smoothly compatible layers, the essay argues that their real philosophical tensions — Kantian universalism against Nietzschean perspectivism, legislated stability against perpetual revaluation — are constitutive of the concept rather than defects to be resolved away. It closes by confronting the central risk of its own vocabulary: that a rhetoric of empire, however reflexively bounded, imports the historical freight of conquest and domination. The essay is offered as an exploratory and programmatic contribution, not a completed doctrine.</summary>
+  </entry>
+</feed>

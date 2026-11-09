@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sophaxis: Existential philosophy</title>
+  <subtitle>Preprints in Philosophy and Mathematics. Moderation, not peer review.</subtitle>
+  <id>https://sophaxis.vercel.app/collection/existential-philosophy.html</id>
+  <link rel="self" href="https://sophaxis.vercel.app/collection/existential-philosophy.xml"/>
+  <link href="https://sophaxis.vercel.app/collection/existential-philosophy.html"/>
+  <updated>2026-10-30T00:00:00Z</updated>
+
+</feed>
