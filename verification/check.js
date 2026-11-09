@@ -2728,6 +2728,33 @@ console.log('\n74. llms.txt and llms-full.txt: the facts and every policy, for l
   ok('the README says, in both languages, what the two files are', read(path.join(ROOT, 'README.md')).includes('`llms.txt`') && read(path.join(ROOT, 'README.md')).includes('言語モデル'));
 }
 
+console.log('\n75. GitHub and Vercel: what their own terms provide, read at their sources, with dates and sections');
+{
+  const te = read(path.join(ROOT, 'policies', 'terms.md')), tj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
+  const pe = read(path.join(ROOT, 'policies', 'privacy.md')), pj = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  const links = ['https://docs.github.com/en/site-policy/github-terms/github-terms-of-service', 'https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies',
+    'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement', 'https://vercel.com/legal/terms', 'https://vercel.com/legal/acceptable-use-policy', 'https://vercel.com/legal/privacy-notice'];
+  ok('the Terms, in both languages, name the six documents with links, the day they were read and the date of each', [te, tj].every((t) => links.every((u) => t.includes('(' + u + ')')) && t.includes('2026-11-09')
+    && ['2026-04-27', '2026-10-19', '2026-04-21', '2026-06-01'].every((d) => t.includes(d))));
+  const facts = [['(GitHub Terms, B.3)', '（GitHub の利用規約 B.3）'], ['(GitHub Terms, C)', '（GitHub の利用規約 C）'], ['(GitHub Terms, D.2 and M.3)', '（GitHub の利用規約 D.2・M.3）'],
+    ['(GitHub Terms, D.4)', '（GitHub の利用規約 D.4）'], ['(GitHub Terms, J.3)', '（GitHub の利用規約 J.3）'], ['(Vercel Terms, section 4)', '（Vercel の利用規約 第 4 条）'],
+    ['(Vercel Terms, section 3)', '（Vercel の利用規約 第 3 条）'], ['(Vercel Terms, sections 3 and 8)', '（Vercel の利用規約 第 3 条・第 8 条）'],
+    ['(GitHub Terms, O and P; Vercel Terms, sections 20 and 21)', '（GitHub の利用規約 O・P、Vercel の利用規約 第 20 条・第 21 条）'], ['(GitHub Terms, S.1; Vercel Terms, section 23)', '（GitHub の利用規約 S.1、Vercel の利用規約 第 23 条）']];
+  const miss = facts.filter(([e, j]) => !te.includes(e) || !tj.includes(j)).map(([e]) => e);
+  ok('they give, with the section of each, the age, the content rules, removal, public content and AI training, the Hobby plan, model training, the acceptable use, "as is" and the law (' + facts.length + ' sections, both languages)', miss.length === 0, miss.join(' / '));
+  ok('they say that Sophaxis is non-commercial, that the site can go offline without warning, and that model training is on unless the team turns it off',
+    te.includes('Sophaxis is non-commercial.') && te.includes('so the site can go offline without warning') && te.includes('unless the account turns this off in its team settings')
+    && tj.includes('Sophaxis は非商用です。') && tj.includes('サイトが予告なく見られなくなることがあります。') && tj.includes('アカウントのチームの設定でこれを止めたときは別です'));
+  ok('the Privacy Policy, in both languages, states before consent the two uses of the records by GitHub and Vercel under their terms',
+    pe.includes('to train AI features and the models of its affiliates (section D.4)') && pe.includes('unless the account turns this off in its team settings (section 3)')
+    && pj.includes('AI の機能と関連会社のモデルの学習に使うことを認めています（D.4）') && pj.includes('アカウントのチームの設定でこれを止めたときは別です（第 3 条）')
+    && pe.indexOf('section D.4') < pe.indexOf('## Security'));
+  ok('no policy says that the operator has turned Vercel\'s model training off, until the operator confirms it and the review records it',
+    ![te, tj, pe, pj].some((t) => /has turned (this|it) off|opted out|止めています|止めました/.test(t)) || read(path.join(ROOT, 'docs', 'legal-review.md')).includes('The operator turned Vercel\'s model training off on'));
+  ok('the Disclaimer, in both languages, says that both provide their services as is and points to the Terms', read(path.join(ROOT, 'disclaimer.md')).includes('GitHub and Vercel each provide their services "as is"')
+    && read(path.join(ROOT, 'disclaimer.ja.md')).includes('サービスを「現状のまま」保証なしに提供し'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
