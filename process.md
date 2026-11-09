@@ -2,6 +2,8 @@
 
 Last updated: 2026-11-09.
 
+Japanese: [投稿から掲載まで（日本語訳）](./process.ja.html). It is a translation; where the two differ, the English text applies.
+
 This page follows one submission from start to finish.
 The rules themselves are in the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html); where this page differs, they apply.
 
