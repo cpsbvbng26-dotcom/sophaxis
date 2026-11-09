@@ -1,0 +1,36 @@
+{
+  "year": 2026,
+  "asOf": "2026-11-09",
+  "complete": false,
+  "submissions": {
+    "opened": 8,
+    "accepted": 8,
+    "declined": 0,
+    "undecided": 0,
+    "byOperator": 8
+  },
+  "declineReasons": {
+    "Out of scope": 0,
+    "Not in the form of a scholarly paper": 0,
+    "Licence": 0,
+    "Authorship": 0,
+    "Disclosure": 0,
+    "Rights or personal data": 0,
+    "Where the authors live or stay": 0,
+    "Spam or abuse": 0
+  },
+  "daysToDecision": {
+    "median": 0,
+    "longest": 1
+  },
+  "withdrawalRequests": 0,
+  "removalRequests": {
+    "opened": 0,
+    "upheld": 0,
+    "notUpheld": 0
+  },
+  "records": {
+    "withdrawn": 0,
+    "removed": 3
+  }
+}
