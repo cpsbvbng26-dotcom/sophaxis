@@ -2846,6 +2846,39 @@ console.log('\n76. The age of the DOI: six months since the first DOI of a new w
     && src.includes('if (meta && !form.update && opened >= SITE.doiAgeFrom) age.first = await firstDoi(form.doi, raw);'));
 }
 
+console.log('\n77. Conflicts of interest: no priority for the operator, a public week before listing, and the share said (Moderation Policy)');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md')), modJa = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
+  ok('the Moderation Policy, in both languages, gives no priority to the operator, waits seven days from ' + site.ownWaitFrom + ', and says where the share is shown',
+    site.ownWaitFrom === '2026-11-09' && site.ownWaitDays === 7
+    && mod.includes("The operator's own submissions get no priority: they are moderated in the order they come, and their records have no other place on the site than any other record.")
+    && mod.includes('From ' + site.ownWaitFrom + ', a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.')
+    && mod.includes('The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.')
+    && modJa.includes('運営者の投稿は優先しません。') && modJa.includes(site.ownWaitFrom + ' から、運営者の投稿は、投稿の issue を開いてから七日がたつまで載せません。')
+    && modJa.includes('それより早く載せようとすると、サイトの生成が止まります。'));
+  const base = { id: '2026.0099', title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', category: 'philosophy', license: 'CC-BY-4.0',
+    versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-11-01' }], llm_disclosure: 'No generative model was used at all in this work.', issue: 9, status: 'listed' };
+  const v = (extra) => validate(Object.assign({}, base, extra), '2026.0099.json');
+  ok('the build refuses the operator’s own record listed before seven days, or without the day of its issue; others and earlier records are not touched',
+    v({ operator_own: true, listed: '2026-11-15', submitted: '2026-11-09' }).some((e) => e.includes('7 days after its submission issue was opened at the earliest'))
+    && v({ operator_own: true, listed: '2026-11-16', submitted: '2026-11-09' }).length === 0
+    && v({ operator_own: true, listed: '2026-11-16' }).some((e) => e.includes('keeps the day its submission issue was opened'))
+    && v({ operator_own: true, listed: '2026-11-02' }).length === 0 && v({ listed: '2026-11-10' }).length === 0);
+  const I = require('../tools/intake.js');
+  const meta = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const form = Object.assign(I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md'))), { update: '' });
+  const dr = (login) => I.draft({ form, login, issue: 9, meta, versions: [{ doi: meta.doi, date: meta.date }], result: { licence: 'CC-BY-4.0' }, today: '2026-11-20', opened: '2026-11-12' }).record;
+  ok('the draft of the operator’s own submission keeps the day its issue was opened; another submitter’s draft has no such day',
+    dr(site.operator.github).submitted === '2026-11-12' && dr(site.operator.github).operator_own === true && !('submitted' in dr('jcarberry')) && !('operator_own' in dr('jcarberry'))
+    && read(path.join(ROOT, 'tools', 'intake.js')).includes('draft({ form, login, issue: n, meta, versions, result, pub, opened })'));
+  const papers = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status !== 'removed');
+  const own = papers.filter((p) => p.operator_own === true).length;
+  const share = own + ' of the ' + papers.length + ' records shown ' + (own === 1 ? 'is' : 'are') + ' the operator’s own submissions.';
+  ok('the Statistics page and llms.txt say how many of the records shown are the operator’s own (' + own + ' of ' + papers.length + '), counted from the records',
+    read(path.join(ROOT, 'site', 'stats.html')).includes('<h2>The operator’s own submissions</h2>\n<p>' + share) && read(path.join(ROOT, 'site', 'llms.txt')).includes(share), share);
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
