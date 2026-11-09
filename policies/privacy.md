@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -106,6 +106,11 @@ What each service does to protect personal data is set out in its own statement:
 
 - GitHub: [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement). GitHub says it complies with the EU-U.S. Data Privacy Framework.
 - Vercel: [Vercel Privacy Notice](https://vercel.com/legal/privacy-notice). Vercel says it complies with the EU-U.S. Data Privacy Framework.
+
+Two uses of the records by GitHub and Vercel themselves come with their terms, which Sophaxis cannot change:
+
+- GitHub's Terms of Service let GitHub and its affiliates use what is posted in issues and public repositories, the records among it, to train AI features and the models of its affiliates (section D.4). There is no setting that turns this off for public content (section J.3).
+- Vercel's Terms of Service let Vercel, on the free Hobby plan on which Sophaxis is served, use the content of the site, the records among it, to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (section 3).
 - ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
 
 For GitHub, Vercel and ORCID, a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it.

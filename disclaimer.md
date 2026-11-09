@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -66,6 +66,8 @@ Sophaxis runs on GitHub: its code, its records and its submissions (GitHub issue
 The site is built from that repository and served by Vercel.
 Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, JaLC, OpenAlex, ORCID and the repositories.
 Using GitHub to submit is subject to GitHub's own terms and privacy statement.
+GitHub and Vercel each provide their services "as is", without warranty, and limit their liability under their own terms; Sophaxis cannot promise more about their services than they do.
+The site is served on Vercel's free Hobby plan, on which Vercel may disable or remove a deployment with or without notice. What their terms provide is set out in the [Terms of Use](./policies/terms.html), under "GitHub and Vercel".
 
 ## How Sophaxis was made
 

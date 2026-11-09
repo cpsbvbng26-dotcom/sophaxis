@@ -5,6 +5,7 @@ The entries are grouped by the date of the merge. Version 1.0.0 was released on 
 
 ## 2026-11-09
 
+- GitHub's and Vercel's own terms were read at their sources, and the Terms of Use, in both languages, now say what they provide, with the date and section of each: GitHub's age of 13, its rules on content and its licence to train AI on public content; Vercel's Hobby plan for non-commercial use, its right to remove a deployment without notice and its model training unless the team turns it off; and that both provide their services as is under the law of California. The Privacy Policy states the two uses of the records before consent; the Disclaimer points to them. Check 75 holds them. The previous change is #173.
 - For language models and the search services built on them, the site serves `llms.txt` and `llms-full.txt`. The first gives the facts from `site.json` and the records and links every policy and page; the second holds every policy and page word for word, from the same Markdown. Both say that the policies apply where they differ, and give no email address; check 74 holds them. The previous change is #171.
 
 ## 2026-11-08
