@@ -87,4 +87,6 @@ They do not replace the work.
 A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.
 
 Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record.
+The same check reads the notices that Crossref records against each DOI of a record shown: retractions, withdrawals, removals, expressions of concern and corrections, including those from Retraction Watch.
+The operator adds a new notice to the record, where its page shows it with a link, and reviews the listing.
 A problem is reported in a public issue, and the operator looks into it.

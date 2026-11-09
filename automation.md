@@ -15,10 +15,11 @@ The code of each step is public, and each section links to it.
 
 ## When a submission issue is opened or edited, or an author confirms in a comment
 
-- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
+- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
 - Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
 - From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
+- From 2026-11-23, it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 
@@ -76,8 +77,8 @@ The code of each step is public, and each section links to it.
 
 ## Once a week, on Monday at 13:37 Japan time
 
-- Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub, and the privacy statements of Vercel and Apple, from their sites.
-- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; a pull request when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`, with the new values and texts and, for an article, the difference of its sentences (where the repository does not let workflows open pull requests, an issue with a link that opens it); an issue when one of them cannot be read; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
+- Reads: the DOI metadata of every listed version, the notices that Crossref records against each of them, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub, and the privacy statements of Vercel and Apple, from their sites.
+- Writes: an issue when a DOI stops resolving, a licence changes, Crossref records a notice that the record does not hold, a new version appears or a published version may exist; a pull request when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`, with the new values and texts and, for an article, the difference of its sentences (where the repository does not let workflows open pull requests, an issue with a link that opens it); an issue when one of them cannot be read; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
 - Leaves to the operator: acting on what the issue reports, and reading the difference before recording it.
 - Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
 
