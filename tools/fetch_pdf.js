@@ -131,6 +131,6 @@ async function main() {
   fs.writeFileSync(file, JSON.stringify(p, null, 2) + '\n');
 }
 
-module.exports = { sourceFor, accept, attachmentOk, LIMITS, PDF_ACCEPT };
+module.exports = { sourceFor, accept, download, attachmentOk, LIMITS, PDF_ACCEPT };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

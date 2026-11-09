@@ -12,6 +12,7 @@
  *   - the public metadata of the DOI, from DataCite or Crossref, or from JaLC for Jxiv, and the day each DOI that it names
  *     as an earlier version of the work was registered;
  *   - the notices that Crossref records against the DOI (tools/notices.js);
+ *   - the PDF of the latest version, where the repository lets a script fetch it, only to read its shape (tools/pdf_shape.js);
  *   - the name, the websites and the works of the public ORCID record given in the form.
  * Nothing from the ORCID record is written anywhere except the result of the checks.
  *
@@ -22,7 +23,8 @@
 const fs = require('fs');
 const path = require('path');
 const { validate, orcidOk, repoPrefix } = require('../build.js');
-const { sourceFor, LIMITS } = require('./fetch_pdf.js');
+const { sourceFor, LIMITS, download, accept } = require('./fetch_pdf.js');
+const { shapeOfFile, shapeNote } = require('./pdf_shape.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
@@ -577,7 +579,7 @@ function metadataAdvice(doi, dir = path.join(ROOT, 'deposit-check')) {
   }
 }
 
-function comment(result, d, advice = []) {
+function comment(result, d, advice = [], shape = null) {
   const safe = (s) => String(s).replace(/[`|<>]/g, '');
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
   let out = `${MARK}
@@ -607,7 +609,32 @@ Not verified. Fix what failed, then edit this issue to run the checks again.
 To link your GitHub account, add \`https://github.com/<your username>\` under "Websites & social links" in your ORCID record.
 `;
   }
+  out += shapeNote(shape);
   return out;
+}
+
+/* ------------------------------------------------------------ the shape of the PDF (Moderation Policy) */
+
+/* Where the repository lets Sophaxis fetch the PDF of the latest version, its shape is read for the moderator: pages,
+ * readable text, the title, an abstract and references (tools/pdf_shape.js). It decides nothing. The file is kept only
+ * for the reading, in the runner's temporary folder, and deleted after. Null where the repository does not allow it. */
+async function pdfShape(versions, title) {
+  const last = versions[versions.length - 1];
+  const src = last && sourceFor(last.doi, versions.length);
+  if (!src) return null;
+  const file = path.join(require('os').tmpdir(), 'sophaxis-shape-' + process.pid + '.pdf');
+  try {
+    const { bytes, md5 } = await download(src);
+    const problems = accept(bytes, md5);
+    if (problems.length) return { error: 'the PDF in the repository is ' + problems.join(', ') };
+    fs.writeFileSync(file, bytes);
+    return shapeOfFile(file, title);
+  } catch (e) {
+    console.error(e.message);
+    return { error: 'the PDF could not be fetched from the repository' };
+  } finally {
+    fs.rmSync(file, { force: true });
+  }
 }
 
 /* ------------------------------------------------------------ network */
@@ -723,7 +750,8 @@ async function main() {
     if (row) { result.checks.push(row); result.ok = result.ok && row[1]; }
   }
   const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub, opened }) : null;
-  const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : []);
+  const shape = meta && !form.update ? await pdfShape(versions, meta.title) : null;
+  const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : [], shape);
   const mine = all.find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await github('PATCH', '/issues/comments/' + mine.id, { body });
   else await github('POST', '/issues/' + n + '/comments', { body });
@@ -733,6 +761,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

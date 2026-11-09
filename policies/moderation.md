@@ -16,7 +16,7 @@ It does not judge whether the work is correct, original or important.
 - The work is in scope.
 - The DOI resolves to the work described, and the submitter is one of its authors.
 - The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
-- The work has a title, an abstract and references, in the ordinary form of a scholarly paper.
+- The work has a title, an abstract and references, in the ordinary form of a scholarly paper. Where the repository lets Sophaxis fetch the PDF, the automatic check reads its shape (the number of pages, whether its text can be read, and whether the title, an abstract and references can be found) and shows it in the issue. The shape decides nothing; the moderator reads the PDF.
 - The submission includes a statement on the use of language models and other generative models.
 - The submitter has confirmed that every author agrees and that the version may be shared.
 - From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.

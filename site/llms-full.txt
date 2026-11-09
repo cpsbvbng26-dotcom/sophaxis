@@ -476,7 +476,7 @@ It does not judge whether the work is correct, original or important.
 - The work is in scope.
 - The DOI resolves to the work described, and the submitter is one of its authors.
 - The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
-- The work has a title, an abstract and references, in the ordinary form of a scholarly paper.
+- The work has a title, an abstract and references, in the ordinary form of a scholarly paper. Where the repository lets Sophaxis fetch the PDF, the automatic check reads its shape (the number of pages, whether its text can be read, and whether the title, an abstract and references can be found) and shows it in the issue. The shape decides nothing; the moderator reads the PDF.
 - The submission includes a statement on the use of language models and other generative models.
 - The submitter has confirmed that every author agrees and that the version may be shared.
 - From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
@@ -1592,7 +1592,7 @@ The code of each step is public, and each section links to it.
 
 ## When a submission issue is opened or edited, or an author confirms in a comment
 
-- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
+- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the PDF of the latest version, where the repository lets a script fetch it, only to read its shape for the moderator, deleted after the reading; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
 - Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
 - From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
@@ -2540,7 +2540,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 - 作品が対象の分野に入る。
 - DOI が書かれた作品へ解決し、投稿者がその著者の一人である。
 - 作品が、受け付けるライセンスの一つ、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを持つ。
-- 作品が、学術論文の通常の形で、題・要旨・参考文献を備えている。
+- 作品が、学術論文の通常の形で、題・要旨・参考文献を備えている。リポジトリが Sophaxis に PDF の取得を許しているときは、自動の確認が PDF の形（頁数、文字として読めるか、題・要旨・参考文献が見つかるか）を読み、issue に示します。形は何も決めません。モデレーターが PDF を読みます。
 - 投稿に、言語モデルとその他の生成モデルの使用についての申告がある。
 - 投稿者が、著者全員の同意と、その版を共有してよいことを確認している。
 - 2026-11-21 から、[投稿の規程](./submission.ja.html)が定めるとおり、著者が複数いる作品では、ほかの著者全員がそれぞれ自分の同意を確かめている。

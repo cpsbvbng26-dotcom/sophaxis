@@ -395,7 +395,7 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
-  ok('the workflow passes the issue text through the environment, never into the shell', runs.join() === 'node tools/intake.js,node tools/withdraw.js,node tools/published.js'
+  ok('the workflow passes the issue text through the environment, never into the shell', runs.join() === "sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js,node tools/withdraw.js,node tools/published.js"
     && (wf.match(/ISSUE_BODY: \$\{\{ github\.event\.issue\.body \}\}/g) || []).length === 3);
   ok('the workflow may only read the code and write to issues', /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
   ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version', (wf.match(/^    if: /gm) || []).length === 3
@@ -2933,6 +2933,44 @@ console.log('\n78. Retractions, withdrawals and other notices that Crossref reco
     && mod.includes('The operator adds a new notice to the record, where its page shows it with a link, and reviews the listing.') && modJa.includes('運営者は、新しい通知を記録に加えます。')
     && auto.includes('- From ' + site.noticesFrom + ', it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.')
     && auto.includes('Crossref records a notice that the record does not hold'));
+}
+
+console.log('\n79. The shape of the PDF, read by machine for the moderator (Moderation Policy)');
+{
+  const S = require('../tools/pdf_shape.js');
+  const I = require('../tools/intake.js');
+  const page1 = 'Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold\nTakuya Nemoto\nAbstract\nIn a discounted repeated game ' + 'x'.repeat(900);
+  const good = { pages: 10, text: page1 + '\f' + 'body '.repeat(200) + '\fReferences\n[1] A. Author.\f', title: 'Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold' };
+  const pass = (shape) => shape.map((r) => r[1]);
+  ok('a paper with its title, an abstract, references and readable text on enough pages passes every row, and the count of pages ignores the last empty one',
+    JSON.stringify(pass(S.shapeOf(good))) === '[true,true,true,true,true]' && S.shapeOf(good)[1][2].endsWith('in the first 3 pages') && S.MIN_PAGES === 4 && S.SHAPE_PAGES === 60);
+  ok('each row fails on its own: too few pages, images only, the title missing from the first page, no abstract on the first two pages, references only on the first page',
+    pass(S.shapeOf(Object.assign({}, good, { pages: 3 })))[0] === false && pass(S.shapeOf(Object.assign({}, good, { pages: null })))[0] === false
+    && pass(S.shapeOf(Object.assign({}, good, { text: '\f\f\f' })))[1] === false
+    && pass(S.shapeOf(Object.assign({}, good, { title: 'Quite Another Title About Something Else' })))[2] === false
+    && pass(S.shapeOf(Object.assign({}, good, { text: good.text.replace('Abstract', 'Opening') })))[3] === false
+    && pass(S.shapeOf(Object.assign({}, good, { text: good.text.replace('Abstract', 'Opening').replace('References', 'Abstract and References') })))[3] === false
+    && pass(S.shapeOf(Object.assign({}, good, { title: 'Repeated Measures in Another Field of Medicine' })))[2] === false
+    && pass(S.shapeOf(Object.assign({}, good, { text: 'References ' + page1 + '\f' + 'body '.repeat(200) })))[4] === false
+    && pass(S.shapeOf(Object.assign({}, good, { text: page1.replace('Abstract', '要旨') + '\f本文\f参考文献\n' })))[3] === true);
+  ok('the title is compared by its words of four letters or more, folded, and by every word in other scripts',
+    JSON.stringify(S.titleWords('Über die Möglichkeit: a Note on GÖDEL')) === '["uber","moglichkeit","note","godel"]' && S.titleWords('自己実験としての名乗り').length === 1);
+  const note = S.shapeNote({ rows: S.shapeOf(Object.assign({}, good, { pages: 2 })) });
+  ok('the issue shows the shape as decided by nothing, a "no" marked, and says when it could not be read',
+    note.includes('**The shape of the PDF**, read by machine for the moderator. It decides nothing, and a "no" is not a reason for declining by itself.') && note.includes('| **no** | The PDF has at least 4 pages | 2 pages |')
+    && S.shapeNote({ error: 'poppler-utils is not installed' }).includes('could not be read: poppler-utils is not installed. The moderator reads the PDF.') && S.shapeNote(null) === ''
+    && I.comment({ ok: false, checks: [] }, null, [], { error: 'x' }).includes('could not be read: x'));
+  const src = read(path.join(ROOT, 'tools', 'intake.js'));
+  const none = require('child_process').execFileSync(process.execPath, ['-e', `require(${JSON.stringify(path.join(ROOT, 'tools', 'intake.js'))}).pdfShape([{ doi: '10.2139/ssrn.1', date: '2026-01-01' }], 'T').then((r) => console.log(JSON.stringify(r)))`], { encoding: 'utf8' }).trim();
+  ok('the PDF is read only where the repository lets a script fetch it, only for a new work, kept in a temporary file and deleted after',
+    none === 'null' && src.includes("const shape = meta && !form.update ? await pdfShape(versions, meta.title) : null;") && src.includes("fs.rmSync(file, { force: true });")
+    && src.includes('const problems = accept(bytes, md5);') && src.includes("const src = last && sourceFor(last.doi, versions.length);"));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md')), modJa = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
+  ok('the workflow installs poppler-utils before the intake and goes on without it; the Moderation Policy, in both languages, and the automation page say what is read',
+    wf.indexOf('poppler-utils') > 0 && wf.indexOf('poppler-utils') < wf.indexOf('node tools/intake.js') && wf.includes("|| echo 'poppler-utils could not be installed'")
+    && mod.includes('The shape decides nothing; the moderator reads the PDF.') && modJa.includes('形は何も決めません。モデレーターが PDF を読みます。')
+    && read(path.join(ROOT, 'automation.md')).includes('only to read its shape for the moderator, deleted after the reading'));
 }
 
 console.log('\n' + '-'.repeat(60));
