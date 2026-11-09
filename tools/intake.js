@@ -6,10 +6,11 @@
  *   node tools/intake.js
  *
  * By hand, without writing to GitHub:
- *   node tools/intake.js --dry-run --doi 10.6084/m9.figshare.1 --orcid 0000-0002-1825-0097 --login alice
+ *   node tools/intake.js --dry-run --doi 10.6084/m9.figshare.1 --orcid 0000-0002-1825-0097 --login alice [--opened 2026-12-01]
  *
  * What it reads, and nothing else:
- *   - the public metadata of the DOI, from DataCite or Crossref, or from JaLC for Jxiv;
+ *   - the public metadata of the DOI, from DataCite or Crossref, or from JaLC for Jxiv, and the day each DOI that it names
+ *     as an earlier version of the work was registered;
  *   - the name, the websites and the works of the public ORCID record given in the form.
  * Nothing from the ORCID record is written anywhere except the result of the checks.
  *
@@ -205,6 +206,82 @@ function fromJaLC(json) {
   };
 }
 
+/* ------------------------------------------------------------ the age of the DOI (Submission Policy) */
+
+/* From SITE.doiAgeFrom, a new work is listed only if SITE.doiAgeMonths months have passed, on the day its submission issue is
+ * opened, since the first DOI of the work was registered. The policies give their dates in Japan time. */
+const DOI_AGE_LABEL = 'Six months have passed since the first DOI of the work was registered';
+const JST = 9 * 3600 * 1000;
+function jstDay(t) {
+  const ms = Date.parse(t);
+  return Number.isNaN(ms) ? null : new Date(ms + JST).toISOString().slice(0, 10);
+}
+
+/* Pure: the day n months after a day, on the same day of the month, or on the last day of a shorter month. */
+function addMonths(day, n) {
+  const [y, m, d] = String(day).split('-').map(Number);
+  const first = new Date(Date.UTC(y, m - 1 + n, 1));
+  const last = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + 1, 0)).getUTCDate();
+  first.setUTCDate(Math.min(d, last));
+  return first.toISOString().slice(0, 10);
+}
+
+/* Pure: the day the agency first registered the DOI, in Japan time, or null. DataCite records it as "registered",
+ * Crossref as "created". JaLC gives no such day in what Sophaxis reads, so a Jxiv DOI is checked by hand. */
+function registeredOf(raw) {
+  if (raw && raw.data && raw.data.attributes) return raw.data.attributes.registered ? jstDay(raw.data.attributes.registered) : null;
+  if (raw && raw.message) return raw.message.created && raw.message.created['date-time'] ? jstDay(raw.message.created['date-time']) : null;
+  return null;
+}
+
+/* Pure: the DOIs that the metadata names as the DOI of all versions of the work, or as an earlier version of it. */
+const EARLIER_DATACITE = new Set(['IsVersionOf', 'IsNewVersionOf']);
+const EARLIER_CROSSREF = ['is-version-of', 'replaces'];
+const bareDoi = (d) => String(d).trim().replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').toLowerCase();
+function earlierDois(raw) {
+  if (raw && raw.data && raw.data.attributes) {
+    return (raw.data.attributes.relatedIdentifiers || [])
+      .filter((r) => EARLIER_DATACITE.has(r.relationType) && /^doi$/i.test(r.relatedIdentifierType || '')).map((r) => bareDoi(r.relatedIdentifier));
+  }
+  if (raw && raw.message && raw.message.relation) {
+    return EARLIER_CROSSREF.flatMap((k) => raw.message.relation[k] || []).filter((r) => r['id-type'] === 'doi').map((r) => bareDoi(r.id));
+  }
+  return [];
+}
+
+/* The first DOI of the work: the one registered earliest among the DOI given and the DOIs that the metadata names as
+ * earlier, followed through at most ten DOIs. Figshare numbers its versions, so its first version is always looked at.
+ * Null when no registration day can be read. */
+async function firstDoi(doi, raw, look = lookUp) {
+  const days = new Map();
+  const queue = [[bareDoi(doi), raw]];
+  const fig = /^(10\.6084\/m9\.figshare\.\d+)(\.v\d+)?$/i.exec(bareDoi(doi));
+  if (fig) queue.push([fig[1] + '.v1', null]);
+  while (queue.length && days.size < 10) {
+    const [d, given] = queue.shift();
+    if (days.has(d)) continue;
+    const r = given || (await look(d)).raw || null;
+    days.set(d, registeredOf(r));
+    for (const e of earlierDois(r)) if (!days.has(e)) queue.push([e, null]);
+  }
+  return earliestOf(days);
+}
+
+/* Pure: the DOI with the earliest registration day, as { doi, day }, or null. */
+function earliestOf(days) {
+  let best = null;
+  for (const [doi, day] of days) if (day && (!best || day < best.day)) best = { doi, day };
+  return best;
+}
+
+/* Pure: the row of the check. The day the issue was opened must be on or after the day the months end. */
+function doiAgeCheck(first, opened, months = SITE.doiAgeMonths) {
+  if (!first) return [DOI_AGE_LABEL, false, 'no registration day could be read from the DOI metadata; the operator checks it by hand'];
+  const due = addMonths(first.day, months);
+  return [DOI_AGE_LABEL, opened >= due, first.doi + ' was registered on ' + first.day + '; a submission can be opened from ' + due
+    + (opened >= due ? '' : ', as a new issue')];
+}
+
 /* ------------------------------------------------------------ ORCID */
 
 /* The public name and links of an ORCID record, read from the two sections that hold them, so that the email addresses and
@@ -276,7 +353,7 @@ function listedDois(paperDir) {
 /* The number of boxes in the "Consent and agreement" part of the submission form. */
 const CONSENTS = 3;
 
-function check({ form, login, meta, person, works, listed, pub, today }) {
+function check({ form, login, meta, person, works, listed, pub, today, age }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
   const pre = repoPrefix(form.doi || '');
@@ -312,6 +389,8 @@ function check({ form, login, meta, person, works, listed, pub, today }) {
     checks.push(...require('./published.js').checkPublished({ versions: [{ doi: meta.doi || form.doi }], authors: meta.authors }, form.published, pub));
   }
   add('The DOI is for a work, not for a review of one', meta.type !== 'peer-review', meta.type || '');
+  /* From SITE.doiAgeFrom, counted on the day the issue was opened. A new version of a listed work is not counted again. */
+  if (!form.update && age && age.opened >= SITE.doiAgeFrom) checks.push(doiAgeCheck(age.first, age.opened));
   /* Every licence entry must be the same accepted licence: Crossref may give one per version (vor, am, tdm), and a CC BY entry
    * beside a non-free one does not allow a copy. Mixed entries go to the operator. */
   const kinds = [...new Set(meta.licences)];
@@ -566,12 +645,16 @@ async function versionsOf(doi, meta, raw) {
 }
 
 /* A service that cannot be reached fails its check; it does not stop the others. */
-async function run(form, login) {
+async function run(form, login, opened = jstDay(new Date().toISOString())) {
   let meta = null, raw = null, person = null, works = null, versions = [];
+  const age = { opened, first: null };
   try {
     if (repoPrefix(form.doi || '')) ({ meta, raw } = await lookUp(form.doi));
     if (meta) versions = await versionsOf(form.doi, meta, raw);
   } catch (e) { console.error(e.message); meta = null; }
+  try {
+    if (meta && !form.update && opened >= SITE.doiAgeFrom) age.first = await firstDoi(form.doi, raw);
+  } catch (e) { console.error(e.message); age.first = null; }
   try {
     if (form.orcid && orcidOk(form.orcid)) {
       const p = await orcidPersonJson(form.orcid);
@@ -585,7 +668,7 @@ async function run(form, login) {
     pub = null;
     try { if (/^10\.\d{4,9}\/\S+$/.test(form.published)) pub = await require('./published.js').lookUpPublished(form.published); } catch (e) { console.error(e.message); }
   }
-  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub }), meta, versions, pub };
+  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age }), meta, versions, pub };
 }
 
 async function github(method, url, body) {
@@ -603,7 +686,7 @@ async function main() {
   const arg = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : ''; };
   if (args.includes('--dry-run')) {
     const form = { doi: arg('--doi'), orcid: arg('--orcid'), category: arg('--category') || 'mathematics', llm: 'Dry run: no statement is given here.' };
-    const { result, meta, versions } = await run(form, arg('--login'));
+    const { result, meta, versions } = await run(form, arg('--login'), arg('--opened') || undefined);
     const d = meta && result.ok ? draft({ form, login: arg('--login'), issue: 0, meta, versions, result }) : null;
     console.log(comment(result, d, meta ? metadataAdvice(form.doi) : []));
     if (meta) console.log('versions: ' + JSON.stringify(versions));
@@ -612,7 +695,9 @@ async function main() {
   const n = process.env.ISSUE_NUMBER;
   const login = process.env.ISSUE_AUTHOR;
   const form = parseIssue(process.env.ISSUE_BODY);
-  const { result, meta, versions, pub } = await run(form, login);
+  /* The age of the DOI is counted on the day the issue was opened, not the day it was last edited. */
+  const issue = await github('GET', '/issues/' + n);
+  const { result, meta, versions, pub } = await run(form, login, jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString()));
   const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
   if (meta && result.author) {
     const confirmed = [];
@@ -639,6 +724,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
