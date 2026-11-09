@@ -14,7 +14,7 @@ Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, Met
 - Search, field pages, author pages (by ORCID iD), an Atom feed (`feed.xml`), the records as JSON (`papers.json`), and citations in APA, Chicago and BibTeX, with BibTeX, RIS and CSL-JSON files (`cite/`).
 - On each record page: related records (a shared ORCID iD or keyword), a link to report an error, and the saved copies at the Internet Archive.
 
-Site: https://sophaxis.vercel.app/ (the domain `sophaxis.org` is planned).
+Site: https://sophaxis.vercel.app/. Sophaxis has no domain of its own; when one might be considered is said under [Operator and contact](#operator-and-contact).
 Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.md), [Submission](policies/submission.md), [Moderation](policies/moderation.md), [Copyright](policies/copyright.md), [Licences](policies/licences.md), [Privacy](policies/privacy.md) and [Takedown](policies/takedown.md).
 
 ## Sophaxis itself: DOI, listings and registrations under review
