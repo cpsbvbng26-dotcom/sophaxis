@@ -75,6 +75,17 @@ The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv,
 It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.html).
 It must have a title, an abstract and references, in the ordinary form of a scholarly paper.
 
+From 2026-11-23, a new work is listed only if at least six months have passed since its first DOI was registered.
+The six months are counted to the day the submission issue is opened, in Japan time.
+They end on the same day of the month, or on the last day of a shorter month.
+The first DOI is the DOI registered earliest among the DOI given and the DOIs that its metadata names as earlier versions of the work, or as the DOI of all its versions.
+In Zenodo this is the DOI of all versions, and in Figshare the DOI of the first version.
+The day of registration is the one that DataCite or Crossref records.
+Where the metadata gives no such day, as for Jxiv, the operator checks it by hand.
+The automatic check in the issue reads these days and counts the six months.
+A submission opened too early is not listed; a new issue can be opened once the six months have passed.
+This does not apply to a new version of a work that Sophaxis already lists, or to a submission opened before 2026-11-23.
+
 Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.
 Publishers set different terms for this.
 The submitter gives the DOI of the published version in the form, as set out under "When the work is published" below.

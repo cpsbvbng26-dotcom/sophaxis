@@ -1,6 +1,6 @@
 # What runs by itself
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel.
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
@@ -15,9 +15,10 @@ The code of each step is public, and each section links to it.
 
 ## When a submission issue is opened or edited, or an author confirms in a comment
 
-- Reads: the DOI metadata from DataCite, Crossref or JaLC; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
+- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
 - Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
+- From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 
