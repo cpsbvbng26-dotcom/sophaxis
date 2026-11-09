@@ -1,10 +1,12 @@
 # Submission Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
 
 ## Who can submit
+
+If you are worried about your personal data because Vercel, which serves the site, or GitHub, which keeps the submissions, may use what they hold to train AI models, do not submit. The [Privacy Policy](./privacy.html) explains these uses.
 
 Only an author of a work can submit it.
 Sophaxis confirms this through ORCID, before a moderator reads the work.

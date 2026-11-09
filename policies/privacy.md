@@ -111,6 +111,8 @@ Two uses of the records by GitHub and Vercel themselves come with their terms, w
 
 - GitHub's Terms of Service let GitHub and its affiliates use what is posted in issues and public repositories, the records among it, to train AI features and the models of its affiliates (section D.4). There is no setting that turns this off for public content (section J.3).
 - Vercel's Terms of Service let Vercel, on the free Hobby plan on which Sophaxis is served, use the content of the site, the records among it, to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (section 3).
+
+If these uses make you worry about your personal data, do not submit, and do not agree to be listed as an author, because Sophaxis cannot list a work without GitHub and Vercel. An author of a listed work can withdraw the consent at any time, and the record is then removed, as set out above.
 - ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
 
 For GitHub, Vercel and ORCID, a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it.
