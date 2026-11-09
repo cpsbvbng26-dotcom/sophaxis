@@ -454,7 +454,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.html
 
 # Moderation Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -528,6 +528,10 @@ Submissions by the operator are moderated under the same rules and are marked on
 The automatic check applies to them without exception.
 While the operator is the only moderator, the operator also decides on their own submissions; the mark on the record page says so.
 Once there is another moderator, no moderator decides on their own submission or on one by a close collaborator.
+The operator's own submissions get no priority: they are moderated in the order they come, and their records have no other place on the site than any other record.
+From 2026-11-09, a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.
+The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.
+The [Statistics](../stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
 
 ## After listing
 
@@ -2505,7 +2509,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 # モデレーションの規程（日本語訳）
 
-最終更新：2026-11-08。
+最終更新：2026-11-09。
 
 これは英語の [Moderation Policy](./moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -2579,6 +2583,10 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 自動の確認は、例外なくそれにも掛かります。
 運営者が唯一のモデレーターであるあいだは、運営者が自分の投稿についても判断します。記録の頁の印がそれを示します。
 ほかのモデレーターが加われば、どのモデレーターも、自分の投稿や近しい共同研究者の投稿については判断しません。
+運営者の投稿は優先しません。届いた順にモデレーションを行い、その記録をサイトのほかの記録と違う場所に置くこともしません。
+2026-11-09 から、運営者の投稿は、投稿の issue を開いてから七日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。
+記録は issue を開いた日を持ち、それより早く載せようとすると、サイトの生成が止まります。
+[統計](../stats.html)の頁と `llms.txt` が、表示している記録のうち何件が運営者の投稿かを示します。
 
 ## 掲載の後
 
