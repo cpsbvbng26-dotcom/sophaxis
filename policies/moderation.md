@@ -84,6 +84,9 @@ The [Statistics](../stats.html) page and `llms.txt` say how many of the records 
 
 ## After listing
 
+The moderator may put a listed record in one or more [collections](../collections.html) by topic, beside its fields.
+A collection says nothing of the quality of a work, and an author can ask, in the record's correction issue, for a record to be put in a collection or taken out of one.
+
 Corrections are added to the record as dated notes.
 Anyone can report an error in a record through the link on its page, which opens a public correction issue.
 They do not replace the work.

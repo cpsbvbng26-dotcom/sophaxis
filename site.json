@@ -76,6 +76,12 @@
     "philosophy-of-science": "Philosophy of Science",
     "logic": "Logic"
   },
+  "collections": [
+    { "slug": "game-theory", "name": "Game theory", "ja": "ゲーム理論", "description": "Repeated games, equilibria and the mathematics of strategy." },
+    { "slug": "individual-autonomy", "name": "The individual and autonomy", "ja": "個と自律", "description": "Philosophy of the autonomy, self-cultivation and solitude of the individual." },
+    { "slug": "research-method-ethics", "name": "Method and ethics of research", "ja": "研究の方法と倫理", "description": "Novelty, priority and self-correction in research, and research with language models." },
+    { "slug": "existential-philosophy", "name": "Existential philosophy", "ja": "実存哲学", "description": "Existence, freedom and the individual in the existential tradition." }
+  ],
   "licenses": {
     "CC-BY-4.0": "CC BY 4.0",
     "CC-BY-SA-4.0": "CC BY-SA 4.0",
