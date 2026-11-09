@@ -284,6 +284,19 @@ An email confirmation says the same, and the operator's reply links the Privacy 
 Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
 Any author can withdraw a consent at any time, by a removal issue or by email.
 
+## A researcher who vouches for a first submission
+
+From 2026-11-23, a submitter who is not yet an author of a work that Sophaxis lists needs one researcher to vouch for it.
+That researcher's public ORCID record lists a journal article, a book chapter or a book with a DOI, and links the GitHub account from which they comment.
+The researcher comments in the submission issue with these words and their own ORCID iD: "I vouch for this submission to Sophaxis. I am not an author of this work, and I do not live in, or stay in, a place where Sophaxis is not offered."
+The authors of the work and the operator cannot vouch.
+Like an author, the researcher must not live in, or stay in, a place where Sophaxis is not offered.
+Vouching says that the work is in scope and in the ordinary form of a scholarly paper.
+It is not a review, and the moderator still decides.
+The automatic check in the issue reads the researcher's public ORCID record as it reads a co-author's, and counts the vouching.
+The researcher can take it back by deleting the comment before the listing.
+A submitter who is already an author of a listed work needs no one to vouch, and neither does a new version of a listed work.
+
 ## What the submitter confirms
 
 - The submitter is an author of the work.
@@ -480,6 +493,7 @@ It does not judge whether the work is correct, original or important.
 - The submission includes a statement on the use of language models and other generative models.
 - The submitter has confirmed that every author agrees and that the version may be shared.
 - From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
+- From 2026-11-23, a researcher has vouched for a first submission, as the Submission Policy sets out.
 - The work is not spam, not abusive and does not expose personal data of third parties.
 - The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 - The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
@@ -709,6 +723,7 @@ Sophaxis applies Japan's Act on the Protection of Personal Information in full, 
 Personal data is used only for these purposes:
 
 - to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
+- from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
 - to check the listed DOIs and licences each week, and, for works whose authors consent to it, to save the pages and the PDF copies to the Internet Archive each week and when they change;
@@ -748,6 +763,7 @@ It does not ask for the person section as a whole, so public email addresses and
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
+From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
 
 Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
 Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
@@ -1488,6 +1504,7 @@ You need four things.
 4. A [GitHub](https://github.com) account. Registration is free.
 
 Every author of the work must agree to the listing.
+From 2026-11-23, a first submission also needs a researcher to vouch for it, with a journal article, a book chapter or a book, as the [Submission Policy](./policies/submission.html) sets out.
 If you used language models or other generative models, note which tools you used and what for.
 
 ## Step 1. Find your GitHub username
@@ -1597,6 +1614,7 @@ The code of each step is public, and each section links to it.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
 - From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
 - From 2026-11-23, it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.
+- From 2026-11-23, for a submitter who is not yet an author of a listed work, it also counts a researcher who vouches for the work: it reads the name, the websites and the works of that researcher's public ORCID record, and runs again when such a comment is written, edited or deleted.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 
@@ -1839,6 +1857,7 @@ Sophaxis の運営者、根本卓哉です。住所は公開していません�
 - 本人確認のために読む、ORCID の公開記録のうち、氏名・ウェブサイト・業績
 - 撤回や出版版の報告の様式に書かれた内容
 - 2026-11-21 から、共著者が同意を確かめるコメントに書く GitHub のユーザー名と ORCID iD
+- 2026-11-23 から、初めての投稿を紹介する研究者がコメントに書く GitHub のユーザー名と ORCID iD。その ORCID の公開記録のうち、氏名・ウェブサイト・業績も同じように読みます。これらはその研究者自身の行為で issue に公開されます
 
 本人確認では、ORCID に、公開記録のうち「個人の詳細」（氏名）・「ウェブサイト」・「業績」の部分だけを問い合わせます。
 「人物」の部分をまとめて問い合わせないので、公開のメールアドレスや国を受け取ることはありません。
@@ -1858,6 +1877,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 
 - 投稿者が、その論文の著者本人であることを確かめるため
 - 2026-11-21 から、同意を確かめる共著者が、その論文の著者本人であることを確かめるため
+- 2026-11-23 から、初めての投稿を紹介する研究者が、その論文の著者でなく、学術誌の論文・本の章・本を持つことを確かめるため
 - 撤回や出版版の報告をする人が、その論文の著者本人であることを確かめるため
 - 論文の記録の頁、著者ごとの頁、一覧と検索を作り、公開するため
 - 記録を `feed.xml`・`papers.json`・OAI-PMH（`/oai`）で再利用できる形にするため
@@ -2348,6 +2368,19 @@ issue の自動の確認が、それぞれの確認を数えます。
 記録を Internet Archive に保存するには、著者全員の別の同意が要ります。様式がこれを尋ね、空けておくこともできます。同意がなければ、記録はそこに保存しません。
 どの著者も、いつでも、削除依頼の issue かメールで同意を撤回できます。
 
+## 初めての投稿の紹介
+
+2026-11-23 から、Sophaxis に載っている作品の著者でまだない投稿者は、研究者一人の紹介を得る必要があります。
+紹介する研究者は、公開の ORCID の記録が DOI 付きの学術誌の論文・本の章・本を挙げ、コメントに使う GitHub のアカウントをリンクしている研究者です。
+その研究者は、投稿の issue に、次の言葉と自分の ORCID iD をコメントします。「I vouch for this submission to Sophaxis. I am not an author of this work, and I do not live in, or stay in, a place where Sophaxis is not offered.」
+作品の著者と運営者は紹介できません。
+著者と同じく、紹介する研究者も、Sophaxis を提供しない国と地域に住んでいたり、滞在していたりしてはいけません。
+紹介は、作品が対象の分野に入り、学術論文の通常の形をしていることを示すものです。
+査読ではなく、判断するのはモデレーターです。
+issue の自動の確認が、共著者のときと同じように、紹介する研究者の公開の ORCID の記録を読み、紹介を数えます。
+紹介した研究者は、掲載の前ならコメントを消して紹介を取り消せます。
+すでに載っている作品の著者である投稿者と、載っている作品の新しい版には、紹介は要りません。
+
 ## 投稿者が確認すること
 
 - 投稿者は、作品の著者である。
@@ -2544,6 +2577,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 - 投稿に、言語モデルとその他の生成モデルの使用についての申告がある。
 - 投稿者が、著者全員の同意と、その版を共有してよいことを確認している。
 - 2026-11-21 から、[投稿の規程](./submission.ja.html)が定めるとおり、著者が複数いる作品では、ほかの著者全員がそれぞれ自分の同意を確かめている。
+- 2026-11-23 から、投稿の規程が定めるとおり、初めての投稿が研究者の紹介を得ている。
 - 作品がスパムでも嫌がらせでもなく、第三者の個人データを晒していない。
 - 作品に、[投稿の規程](./submission.ja.html)の表にある、Sophaxis を提供しない国と地域の、著者の所属や住所が書かれていない。書かれていれば、モデレーターはその著者がどこに住んでいるか、投稿のあとにそこに滞在したかを投稿者に尋ね、ほかの場所に住み、そこに滞在していないのでなければ断る。
 - PDF に、DOI の登録情報のライセンスと食い違う権利の表示（出版社の「無断転載禁止」など）がない。あれば断る。
