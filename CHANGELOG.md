@@ -3,6 +3,10 @@
 The notable changes to Sophaxis, newest first. Each entry names the pull request that made it.
 The entries are grouped by the date of the merge. Version 1.0.0 was released on 2026-11-07 and archived at Zenodo (10.5281/zenodo.24033372; every version: 10.5281/zenodo.24033371).
 
+## 2026-11-09
+
+- For language models and the search services built on them, the site serves `llms.txt` and `llms-full.txt`. The first gives the facts from `site.json` and the records and links every policy and page; the second holds every policy and page word for word, from the same Markdown. Both say that the policies apply where they differ, and give no email address; check 74 holds them. The previous change is #171.
+
 ## 2026-11-08
 
 - The rule on authors now counts stays as well as homes: from 2026-11-22 a work is not listed if an author lives in a place where Sophaxis is not offered, or stays in one between the submission and the listing, even briefly, such as for travel, work or study. Several of the laws reach people who are there, not only people who live there (GDPR Article 3(2), for example). The rule on India follows. The policies, the README, the form, the intake notice and the top-page notice say so in both languages, and four commitments moved with their wording. The previous change is #170.
