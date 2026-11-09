@@ -33,6 +33,7 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [Frequently asked questions](https://sophaxis.vercel.app/faq.html)
 - [From submission to listing](https://sophaxis.vercel.app/process.html)
 - [What runs by itself](https://sophaxis.vercel.app/automation.html)
+- [Transparency: a self-assessment](https://sophaxis.vercel.app/transparency.html)
 - [For repositories and DOI registration agencies](https://sophaxis.vercel.app/repositories.html)
 - [Operator and contact](https://sophaxis.vercel.app/contact.html)
 

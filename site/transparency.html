@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-X7bG1h7Kx7egdeGkQb78lIpdVnA1v+5U28UAoT5YRDg='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Transparency | Sophaxis</title>
+<meta name="description" content="How Sophaxis stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator's own assessment.">
+<link rel="canonical" href="https://sophaxis.vercel.app/transparency.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Transparency | Sophaxis">
+<meta property="og:description" content="How Sophaxis stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator's own assessment.">
+<meta property="og:url" content="https://sophaxis.vercel.app/transparency.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<meta name="twitter:card" content="summary">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>Transparency: a self-assessment</h1>
+<p>Last updated: 2026-11-09.</p>
+<p>COPE, DOAJ, OASPA and WAME publish the <a href="https://doaj.org/apply/transparency/">Principles of Transparency and Best Practice in Scholarly Publishing</a>. This page holds Sophaxis against version 5.0 of October 2026, read at DOAJ on 2026-11-09, heading by heading. It is the operator's own assessment, not one made or endorsed by any of the four organisations, and Sophaxis is not a member of any of them.</p>
+<p>The Principles are written for journals. Sophaxis is not a journal: it is an overlay preprint server, and acceptance is moderation, not peer review. Where a principle cannot apply to a preprint server, this page says so, and does not count it as met.</p>
+<p>Each heading gets one of four marks:</p>
+<ul><li>**Met**: Sophaxis does what the principle asks, and the page says where.</li><li>**In part**: Sophaxis does some of it; the page says what is missing.</li><li>**Not met**: Sophaxis does not do it; the page says why.</li><li>**Does not apply**: the principle is about something Sophaxis does not do.</li></ul>
+<h2>Summary</h2>
+<p>| Heading | Mark | | --- | --- | | Name | Met | | Website | Met | | Publishing schedule and timeline | Met | | Preservation | In part | | Copyright | In part | | Licensing | Met | | Publication ethics and related editorial policies | In part | | Editorial assessment | Met | | Peer review | Does not apply | | Access | Met | | Ownership and management | Met | | Editorial board or advisory body | Not met | | Editorial team and contact information | In part | | Author fees | Met | | Other revenue | Met | | Advertising | Met | | Direct marketing | Met |</p>
+<h2>Journal presentation</h2>
+<p>### Name</p>
+<p>Met. The name Sophaxis says what the site is in its tagline, &quot;Preprints in Philosophy and Mathematics&quot;, and the site says that it is not a journal (<a href="./policy.html">Policies</a>) and has no affiliation with any repository or organisation (<a href="./disclaimer.html">Disclaimer</a>).</p>
+<p>### Website</p>
+<p>Met. The site is served only over HTTPS, at one address, <code>https://sophaxis.vercel.app/</code>; the repository on GitHub points to it. Its pages run no third-party script, set no cookie and use no analytics, under a strict Content Security Policy (<a href="./policies/privacy.html">Privacy Policy</a>). Sophaxis has no ISSN, so none is listed.</p>
+<p>### Publishing schedule and timeline</p>
+<p>Met. Records are listed continuously, when a submission is accepted; there are no issues or volumes (<a href="./process.html">From submission to listing</a>).</p>
+<p>### Preservation</p>
+<p>In part. The works themselves are deposited, and preserved, in their repositories, such as Zenodo, arXiv or Figshare. The records and the site are kept in a public git repository, and version 1.0.0 is archived at Zenodo (10.5281/zenodo.24033372). Record pages and PDF copies are saved to the Internet Archive each week, where every author consents to it. Sophaxis is in no archive of the Keepers Registry, such as CLOCKSS or Portico.</p>
+<p>### Copyright</p>
+<p>In part. Authors keep their copyright; Sophaxis asks for no transfer and no exclusive licence (<a href="./policies/copyright.html">Copyright Policy</a>). The site's own text is CC BY 4.0 and its code MIT, held by the operator. The copyright holder printed on the full text is whatever the authors put in their PDF; Sophaxis keeps the file unmodified and does not add a statement.</p>
+<p>### Licensing</p>
+<p>Met. Every listed work carries CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, and its record page links the licence on the Creative Commons website (<a href="./policies/licences.html">Licence Policy</a>). These licences let anyone mine the works, AI companies included, and <code>robots.txt</code> lets every crawler read the site; only the Internet Archive's crawlers are kept from removed records and from records whose authors did not consent to the saves. The Terms of Use say how GitHub and Vercel may use public content, including to train AI models (<a href="./policies/terms.html">Terms of Use</a>).</p>
+<h2>Journal practices</h2>
+<p>### Publication ethics and related editorial policies</p>
+<p>In part.</p>
+<ul><li>Aims and scope: stated on the top page and in the <a href="./policies/submission.html">Submission Policy</a>. Met.</li><li>Authorship, and the use of AI: only an author can submit, every author must agree, and the use of language models and other generative models must be disclosed, with its extent; a model cannot be an author. Met.</li><li>Conflicts of interest: the operator's own submissions are marked, get no priority and wait seven days in public before listing (<a href="./policies/moderation.html">Moderation Policy</a>). Conflicts of interest of the authors are not asked for. In part.</li><li>Data sharing and reproducibility: no policy. Not met.</li><li>Funding and support: authors are not asked to disclose funding. Not met.</li><li>Post-publication review: anyone can report an error in a record by a public issue. Met.</li><li>Corrections, retractions and expressions of concern: corrections are dated notes; the notices that Crossref records, including those from Retraction Watch, are read at submission and each week, and shown on the record. Met.</li><li>Plagiarism: Sophaxis runs no plagiarism check and has no definition of plagiarism. Not met.</li><li>Complaints and appeals: a declined submitter can answer in the issue, and the operator looks once more; requests to remove follow the <a href="./policies/takedown.html">Takedown Policy</a>. Met.</li><li>Research ethics: no policy on consent or ethics review, since the fields are philosophy and mathematics; work with personal data of third parties is declined. In part.</li><li>Allegations of research misconduct: no written process beyond removal requests. Not met.</li></ul>
+<p>### Editorial assessment</p>
+<p>Met. The operator, who is at present the only moderator, accepts or declines each submission in its public issue, on the reasons the Moderation Policy lists; no fee exists that could influence a decision. Three language models assist the review, given only public parts by hand, and decide nothing; the Moderation Policy says so. No submission is guaranteed acceptance, and every record page says that acceptance is moderation, not peer review. The <a href="./decisions.html">Decisions by year</a> page counts the decisions, with the reasons and the time to a decision.</p>
+<p>### Peer review</p>
+<p>Does not apply. Sophaxis does not peer review. Its moderation checks scope, form, licence, authorship and disclosure, as the Moderation Policy sets out, and the site says on every record that acceptance is moderation, not peer review.</p>
+<p>### Access</p>
+<p>Met. Every page and every PDF copy is free to read, with no registration.</p>
+<h2>Organisation</h2>
+<p>### Ownership and management</p>
+<p>Met. Sophaxis is owned and run by one person, named with an ORCID iD on the <a href="./contact.html">Operator and contact</a> page, unpaid, within free services. It has no affiliation with any society, institution or sponsor.</p>
+<p>### Editorial board or advisory body</p>
+<p>Not met. Sophaxis has no editorial board and no advisory body. The Moderation Policy says that other moderators may be invited, and names how; none has been invited yet.</p>
+<p>### Editorial team and contact information</p>
+<p>In part. The operator's name and ORCID iD are on the contact page, and the email address is on the ORCID record. No postal address is published: the operator is one private person.</p>
+<h2>Business practices</h2>
+<p>### Author fees</p>
+<p>Met. Sophaxis charges nothing, to authors or to readers, and the Terms of Use say that no change will introduce fees.</p>
+<p>### Other revenue</p>
+<p>Met. Sophaxis has no revenue: it is run unpaid within the free services of GitHub and Vercel, and the operator pays personally for Claude Code, with which it is written (<a href="./disclaimer.html">Disclaimer</a>).</p>
+<p>### Advertising</p>
+<p>Met. Sophaxis shows no advertising, and declines a submission that advertises.</p>
+<p>### Direct marketing</p>
+<p>Met. The site has no mailing list, asks no one for an email address, and sends no messages.</p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>
