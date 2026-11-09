@@ -1,0 +1,2974 @@
+# Sophaxis: the policies and pages in full
+
+Each part below is the Markdown from which the page at its address is built, word for word.
+
+---
+
+Source: https://sophaxis.vercel.app/policies/terms.html
+
+# Terms of Use
+
+Last updated: 2026-11-08.
+
+Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Who these terms apply to
+
+These terms apply to everyone who reads Sophaxis or submits to it.
+Authors agree to them in the submission form, in their version of the day.
+Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
+The other policies are part of these terms.
+How content is moderated is set out in the Moderation Policy and the Takedown Policy, and every automatic step that takes part in it is listed on the page [What runs by itself](../automation.html).
+
+## What Sophaxis provides
+
+Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
+It gives each listed work a record page, a search, a feed and, where the repository allows, a copy of the PDF.
+It does this free of charge.
+
+## The authors bear full responsibility
+
+The authors bear full responsibility for their work and for its listing on Sophaxis.
+This covers:
+
+- the content of the work, including every claim, proof, citation, calculation and figure;
+- the right to share the version under its licence, and the permission of any publisher;
+- material from others in the work, and any infringement of copyright or other rights;
+- personal data of third parties in the work;
+- the statement on generative models, and any use that it leaves out;
+- the truth of everything the submitter confirms in the [Submission Policy](./submission.html).
+
+Moderation does not move any of this to the operator.
+A listing says only that a submission passed the checks in the [Moderation Policy](./moderation.html).
+If a third party makes a claim against Sophaxis or its operator because something the submitter confirmed at submission is untrue, the authors are responsible for it, as the law provides.
+Authors agree that the record page (its title, authors, abstract and PDF copy) may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.html), and that OAI-PMH then reports the record as deleted until it is put back.
+Text written in the forms is shared as the [Licence Policy](./licences.html) sets out.
+The operator still acts on requests under the [Takedown Policy](./takedown.html).
+A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so; for them, this section describes what the law already places on the authors of a work.
+
+## What readers may do
+
+Readers may read, download and reuse each listed work under its own licence.
+The text of this site may be reused under CC BY 4.0, as set out in the [Licence Policy](./licences.html).
+
+## What is not allowed
+
+- Submitting work of which you are not an author.
+- Submitting material that infringes copyright or other rights.
+- Submitting personal data of third parties without a lawful basis.
+- Spam, abuse, and attempts to disrupt the site or the submission process.
+- Confirming in a form something that is not true, such as where the authors live or stay, the submitter's age, the agreement of the authors or the statement on generative models.
+
+The operator may decline or remove a submission that breaks these rules.
+If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](./takedown.html) as soon as the operator learns of it. From 2026-11-22, the operator may also decline further submissions from the same GitHub account or ORCID iD.
+The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.html) says it is not.
+The confirmations stay in the public issue, so that what was confirmed, and when, can be shown.
+Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
+
+## No warranty
+
+Sophaxis is provided as it is.
+It does not guarantee the quality, correctness or completeness of listed work.
+It does not guarantee that the site will always be reachable.
+The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
+
+## Changes and closure
+
+These terms and the other policies may change.
+The date on each page shows its last change, and earlier versions stay in the public repository.
+No change will introduce fees.
+
+A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.
+The announcement comes at least 14 days ahead, unless the law or an urgent problem, such as a security or legal risk, requires the change sooner.
+Even then, the change is announced before it takes effect.
+Other changes, such as clearer wording or new examples, take effect on the date the page shows, which is never before the day they are published.
+A change is made only as Article 548-4 of Japan's Civil Code allows: when it is in the general interest of authors and readers, or when it is reasonable in the light of the purpose of these terms, the need for it and its content.
+Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
+A person who does not accept a change can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
+
+## Continuity
+
+Sophaxis is run by one person, and is planned so that it can stop without loss.
+
+- A slow decision is not a pause: moderation can take several weeks or a few months. A pause is for when the operator cannot work on Sophaxis at all, for example because of illness. If that lasts for more than 30 days, the top page says that new submissions are paused. Listed records stay online.
+- Unless the operator cannot act, a closure is announced on the top page at least 30 days ahead, and new submissions stop first.
+- If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive.
+- The code and the records are archived at Zenodo with each release, under a DOI that resolves to the latest version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371).
+- The operator may hand Sophaxis over to another person, to an institution or to a legal entity. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
+- Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
+- The DOIs stay with the repositories that issued them, whatever happens to Sophaxis.
+
+## Law
+
+These terms are governed by the laws of Japan.
+Nothing in them limits a right that the law does not allow to be limited.
+In particular, nothing in them excludes or limits liability for intent or gross negligence, or any liability that Japan's Consumer Contract Act or another law does not allow to be excluded or limited.
+
+## Disputes
+
+A dispute about Sophaxis or a listed work is settled by agreement wherever possible.
+
+1. Write to the operator first, by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in an issue if the matter can be public. Say what the dispute is about and what would settle it.
+2. Both sides then try, in good faith, to reach an agreement by talking. The operator answers within 7 days and does not leave a dispute without reply.
+3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
+
+If a dispute is not settled in these ways, it goes to the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
+For anyone else, the court that the law sets has jurisdiction.
+The operator's address is given on request, as the [Operator and contact](../contact.html) page says.
+This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
+Nothing in this section stops anyone from asking a court for urgent relief, or from using the [Takedown Policy](./takedown.html).
+
+## People outside Japan
+
+Sophaxis is run from Japan and can be read from anywhere.
+
+- The same steps apply. Talks and mediation can be held in writing or online, in English or Japanese, so that no one has to travel to Japan to settle a dispute.
+- These terms are governed by the laws of Japan. Where the law of a person's own country gives them protection that cannot be set aside by agreement, such as the protection of consumers, that protection still applies.
+- A person outside Japan who may sue in the courts of their own country under that country's law keeps that right; the agreement on the court above does not take it away.
+- These terms are written in English, and a Japanese translation is published. Where the translation differs from the English text, the English text applies.
+
+## GitHub and Vercel
+
+Sophaxis runs on two services based in the United States, and their own terms apply alongside these.
+
+- Submitting to Sophaxis means using GitHub: opening an issue, commenting and attaching files are governed by GitHub's Terms of Service and Privacy Statement, between the user and GitHub.
+- Reading Sophaxis means receiving pages from Vercel, which handles each request, including the IP address, under its own terms and privacy policy, possibly in countries other than Japan or the reader's own.
+- These terms bind the operator and the people who use Sophaxis. They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel, or against the operator for what GitHub or Vercel does.
+- A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court. The steps in Disputes above cover only the operator and Sophaxis.
+- Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](./takedown.html) whether or not GitHub or Vercel has acted.
+- If GitHub or Vercel removes, limits or blocks something on their side, for example under the law of the United States, Sophaxis may not be able to restore it.
+
+## General
+
+- The other policies are part of these terms. Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply. The FAQ, the step-by-step page and the Disclaimer explain these terms and do not change them.
+- If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows.
+- If the operator does not enforce a part of these terms at one time, that does not waive it.
+- From 2026-11-21, a person under 13 cannot submit.
+- A person under 18 may submit only with the consent of a parent or guardian.
+- Where the law gives a person who submitted as a minor a right to have the listing removed, the [Takedown Policy](./takedown.html) applies.
+- A notice to the operator is given by email to the address on the ORCID record, or in an issue. A notice to an author is given in their submission issue.
+
+## Contact
+
+The operator and every way to reach the operator are on the [Operator and contact](../contact.html) page.
+Questions go to the [issues of the repository](https://github.com/cpsbvbng26-dotcom/sophaxis/issues).
+Anything that should not be public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+Requests to remove material follow the [Takedown Policy](./takedown.html).
+
+---
+
+Source: https://sophaxis.vercel.app/policies/submission.html
+
+# Submission Policy
+
+Last updated: 2026-11-08.
+
+Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Who can submit
+
+Only an author of a work can submit it.
+Sophaxis confirms this through ORCID, before a moderator reads the work.
+
+- The ORCID record given in the form links to the GitHub account that opened the issue.
+- The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.
+
+A submission that does not pass both is not listed.
+Authors without an ORCID iD cannot submit.
+From 2026-11-21, a person under 13 cannot submit.
+A submitter under 18 needs the consent of a parent or guardian.
+From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
+From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
+From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 28 places in the table below, or who stays in one between the submission and the listing, and the submitter confirms this in the form.
+A stay counts even if it is short, such as for travel, work or study.
+Stays count because the laws of several of these places reach people who are there, not only people who live there; Article 3(2) of the GDPR, for example, speaks of data subjects who are in the Union.
+Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](./privacy.html) says more.
+This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+An author of any nationality who lives elsewhere and does not stay there can submit, and an author who lives or stays there cannot, whatever their nationality.
+The reasons are laws that require a local representative, the storage of personal data in the country, or registration there (among them Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act; Article 53 of China's Personal Information Protection Law; section 37(5) of Thailand's Personal Data Protection Act), which Sophaxis, run unpaid by one person within free services, does not have; the operator has decided not to appoint a representative, as the Privacy Policy explains.
+The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
+A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
+Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
+Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.html), and the operator reviews the decision on a representative.
+
+| Place | What the law requires | Law | Read at its source |
+| --- | --- | --- | --- |
+| The European Union | A representative | GDPR Article 27; Digital Services Act Article 13 | Yes |
+| The European Economic Area | A representative | GDPR Article 27, as applied in the EEA | Yes |
+| The United Kingdom | A representative | UK GDPR Article 27 | Yes |
+| China | A representative | Personal Information Protection Law, Article 53 | Yes |
+| Thailand | A representative | Personal Data Protection Act, section 37(5) | Yes |
+| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) (read) and Article 18(5) (reported) | In part |
+| Türkiye | Registration through a representative there | Regulation on the Data Controllers' Registry | No, as reported |
+| Egypt | A representative and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 | No, as reported |
+| Peru | A representative | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) | No, as reported |
+| Albania | A representative | Law No. 124/2024 on Personal Data Protection | No, as reported |
+| Monaco | A representative | Law No. 1.565, Article 25 | No, as reported |
+| Guernsey | A representative | Data Protection (Bailiwick of Guernsey) Law, 2017 | No, as reported |
+| Botswana | A representative | Data Protection Act 2024, section 54 | No, as reported |
+| Ecuador | A representative | Regulation of the Organic Law on Personal Data Protection, Article 3 | No, as reported |
+| Iraq | Notice to the regulator before the service starts | Framework Regulations for Digital Platforms and Services (2025), Articles 4 and 5 | Yes |
+| Indonesia | Registration | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended | No, as reported |
+| Rwanda | Registration and storage of personal data there | Law No. 058/2021, Articles 2, 29 and 50 | Yes |
+| Zambia | Registration and storage of personal data there | Data Protection Act 2021, sections 19 and 70 | No, as reported |
+| Ethiopia | Storage of personal data there | Personal Data Protection Proclamation No. 1321/2024 | No, as reported |
+| The Democratic Republic of the Congo | Storage of personal data there and an authorisation | Ordonnance-loi No. 23/010 (Digital Code), Articles 184, 186, 188 and 201 (read in a copy that is not the official journal) | In part |
+| Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Articles 3 and 12(2) | Yes |
+| Tunisia | A declaration by a controller who resides there | Organic Law No. 2004-63 | No, as reported |
+| Uganda | Registration | Data Protection and Privacy Act 2019, section 29 | No, as reported |
+| Guinea | Storage of personal data there | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection | No, as reported |
+| Madagascar | Storage of personal data there | Law No. 2014-038 on Personal Data Protection | No, as reported |
+| Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported |
+| Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported |
+| Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported |
+
+This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
+
+## What can be submitted
+
+Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
+Work that belongs mainly to another field is out of scope, even if it uses mathematics.
+
+The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
+It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.html).
+It must have a title, an abstract and references, in the ordinary form of a scholarly paper.
+
+Work that a journal has already published may be submitted only in a version that the authors may share under such a licence.
+Publishers set different terms for this.
+The submitter gives the DOI of the published version in the form, as set out under "When the work is published" below.
+
+## When a work has more than one author
+
+From 2026-11-21, a work with more than one author is listed only after every other author confirms their own agreement.
+Each confirms in one of two ways.
+One is a comment in the submission issue, from a GitHub account that their ORCID record links.
+The comment says "I agree to the listing of this work on Sophaxis." and gives their ORCID iD.
+The automatic check in the issue counts each confirmation.
+The other is an email to the operator, after which the operator confirms them through their ORCID record.
+This consent covers the listing, and the provision of their personal data that the [Privacy Policy](./privacy.html) sets out.
+An email confirmation says the same, and the operator's reply links the Privacy Policy.
+Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
+Any author can withdraw a consent at any time, by a removal issue or by email.
+
+## What the submitter confirms
+
+- The submitter is an author of the work.
+- Every author of the work agrees to its listing on Sophaxis.
+- The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
+- The work contains no material, such as figures or long quotations, that the authors may not share, and no personal data of third parties.
+- The statement on generative models is complete and true.
+- The authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.html) set out.
+
+## How to submit
+
+1. Deposit the preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, under an accepted licence, and obtain its DOI.
+2. Link your ORCID record to your GitHub account: add `https://github.com/<your username>` under "Websites & social links".
+3. Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.
+4. An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.
+5. A moderator checks the submission under the [Moderation Policy](./moderation.html). If it passes, a record page is published.
+
+The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata, not typed in by hand.
+
+The submission issue is public.
+Your GitHub username and everything you write in the form will be visible to anyone.
+
+## Language models and other generative models
+
+Work written or developed with language models is accepted, on one condition: the use is disclosed.
+The same condition applies to every other generative model, including models that produce images, figures, audio or code.
+
+The disclosure must name the tools used and say what they were used for,
+for example drafting, translation, proofs, code, literature search, editing, figures or images.
+If no generative model was used, the statement says so.
+
+From 2026-11-21, the form also asks for the extent of use, at one of four levels. The authors choose the highest level that applies:
+
+- None: no generative model was used.
+- Editing: language editing, translation or proofreading only.
+- Assistance: structure, literature search or checking; the authors wrote the text.
+- Drafting: a generative model drafted text, proofs, code or figures that the authors revised.
+
+The record page shows the level the authors chose, above their statement. The level does not replace the statement; the statement still names the tools and what each did.
+A level of "None" cannot stand beside a statement that names a model.
+
+A language model cannot be listed as an author.
+No other generative model can be listed as an author either.
+The authors bear full responsibility for the work, as the [Terms of Use](./terms.html) set out.
+
+If substantial undisclosed use comes to light after listing,
+the record receives a notice, and the authors are asked to add a disclosure.
+
+## Versions and updates
+
+A work is listed once, under one Sophaxis id.
+That id is never given to another work, even after a record is withdrawn or removed.
+
+A new version is a new version in the repository.
+Most repositories give each version its own DOI.
+arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version.
+Submit it as an update to the existing record; earlier versions stay listed.
+
+## When the work is published
+
+A listed preprint stays listed when a later version is published in a journal, in proceedings or in a book.
+The record page then shows the published version at the top: what it is, where and when it appeared, and its DOI.
+It asks readers to cite the published version, and it names the listed version as the preprint.
+
+Any one author reports the published version with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml), from the GitHub account that the author's ORCID record links.
+An automatic check confirms that the report comes from an author, and reads the metadata of the published DOI.
+The published version must be a journal article, a conference paper, a book chapter or a book.
+It must not be in one of the accepted repositories, and it must share an author with the record.
+A moderator then records it, and the decision is public in the issue.
+A published version can also be given at submission, and the same checks run on it.
+
+Sophaxis does not judge the peer review of a journal.
+The record repeats what the authors state: that the published version was peer-reviewed, that it was not, or nothing.
+It also says whether the publisher's metadata links the published version to the preprint, or whether only an author reported it.
+
+Each week Sophaxis looks in the metadata of Crossref and DataCite for a published version that is linked to a listed preprint and shares an author with it.
+It records nothing by itself: it asks the authors to report it.
+The same weekly check confirms that a recorded published version still resolves.
+When the publisher adds a retraction, a correction or another notice to the published version, the record page shows it.
+
+Some publishers ask authors to remove or change a preprint on publication.
+The authors check the publisher's terms.
+If the listing must go, any one author can withdraw it under the [Withdrawal Policy](./withdrawal.html), and the record page keeps the link to the published version.
+
+## Examples of what is not accepted
+
+These examples show how the rules above apply. They are not a complete list; the rules decide.
+Each group matches a reason that a moderator names when declining, under the [Moderation Policy](./moderation.html).
+
+Authorship: the submitter must be an author, and every author must agree.
+
+- Submitting a colleague's paper for them, even with their permission. Only an author can submit.
+- Submitting a paper by a teacher, a supervisor or a famous author because it deserves to be read.
+- Opening the issue from a GitHub account that the ORCID record does not link to, such as a lab account or a second personal account.
+- Giving the ORCID iD of a co-author, or of anyone other than the person who opens the issue.
+- Giving an ORCID iD that neither the DOI metadata nor the ORCID record connects to the work.
+- Submitting a work when a co-author has not agreed, or has said no.
+- Opening a new GitHub account to submit a declined work again under another name.
+
+Repository and DOI: the work must have its own DOI from an accepted repository.
+
+- A PDF on a personal website, a university page, Google Drive, Dropbox, Academia.edu or ResearchGate.
+- A work on PhilArchive, PhilSci-Archive or HAL alone, which give no DOI of their own. Deposit it also in an accepted repository.
+- The DOI of the version a journal published, given as the DOI of the deposit.
+- A different work given as the published version of a listed preprint.
+- The DOI of an article in a SciELO journal, rather than in SciELO Preprints.
+- The DOI of a peer review report, as Qeios and ScienceOpen also register.
+- A DOI that does not resolve, or that leads to a different work.
+
+Licence: the DOI metadata must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
+
+- CC BY-NC 4.0, CC BY-ND 4.0, CC BY-NC-SA 4.0 or CC BY-NC-ND 4.0.
+- CC BY 3.0, CC BY 2.0 or any other earlier version of a Creative Commons licence.
+- The arXiv non-exclusive licence (arXiv.org perpetual, non-exclusive license).
+- "All rights reserved", or no licence in the DOI metadata at all.
+- A licence written only in the PDF or on the repository page, but not in the DOI metadata.
+- A licence changed after listing to one that is not accepted. The weekly check reports it, and the operator looks into it.
+
+Scope: the work must belong mainly to philosophy, mathematics, logic, the philosophy of mathematics or the philosophy of science.
+
+- A paper in physics, economics, computer science, engineering, biology or psychology that uses mathematics as a tool.
+- A machine-learning benchmark, a software description or a data set.
+- Literary criticism, history or political commentary that does not argue a philosophical or mathematical question.
+- Self-help or spiritual guidance that gives advice or practice instead of arguing a philosophical question, or a political manifesto or campaign.
+
+Form: the work must have a title, an abstract and references, in the ordinary form of a scholarly paper.
+
+- Slides, a poster, lecture notes or a recorded talk.
+- A blog post or an essay without references.
+- An abstract alone, or a title page without the full text.
+- Several unrelated papers in one deposit.
+- Fiction, poetry or a diary.
+
+Disclosure: the statement on generative models must name the tools and say what they were used for.
+
+- "None" when a language model drafted, translated or edited any part of the text.
+- A statement that says only that a language model was used, without naming the tool or saying what it did.
+- Figures or images made with a generative model that the statement leaves out.
+- A language model or another generative model listed as an author in the DOI metadata or in the paper.
+
+Rights or personal data: the authors must be free to share everything in the work, and it must not expose others.
+
+- A figure, a table or a photograph copied from a book, a paper or a website without permission, beyond what quotation allows. Citing the source does not replace permission.
+- The publisher's typeset version of a journal article, when the publisher allows only the authors' manuscript to be shared.
+- Names, email addresses, postal addresses or photographs of private persons who have not agreed.
+- Survey or interview answers from which a participant can be identified.
+- Screenshots of private messages, emails or chats.
+- Unpublished material of another researcher, shared without their consent.
+
+Spam or abuse.
+
+- The same work submitted again and again, or under several titles.
+- Many submissions opened at once to flood the issues.
+- Advertising, links to paid services, or text written to sell something.
+- Text that harasses, threatens or defames a named person.
+- Attempts to break the form, the automatic check or the site, for example by placing code or markup in the fields.
+- Pretending to be another person, an institution or a journal.
+
+Versions.
+
+- A new version submitted as a new work, instead of as an update to the existing Sophaxis id.
+- A new version of a withdrawn record. A withdrawn record takes no new versions.
+
+## Withdrawal
+
+Any one author can withdraw a listed work under the [Withdrawal Policy](./withdrawal.html).
+Records are not deleted: a withdrawn work keeps its record page with a withdrawal notice, so that citations to it do not break.
+An author can instead have the record removed, so that only its Sophaxis id stays.
+Removal for legal reasons follows the [Takedown Policy](./takedown.html).
+
+---
+
+Source: https://sophaxis.vercel.app/policies/moderation.html
+
+# Moderation Policy
+
+Last updated: 2026-11-08.
+
+Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Moderation is not peer review
+
+Acceptance is moderation, not peer review.
+Moderation decides whether a submission may be listed.
+It does not judge whether the work is correct, original or important.
+
+## What moderation checks
+
+- The automatic check has verified the submitter and the licence.
+- The work is in scope.
+- The DOI resolves to the work described, and the submitter is one of its authors.
+- The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
+- The work has a title, an abstract and references, in the ordinary form of a scholarly paper.
+- The submission includes a statement on the use of language models and other generative models.
+- The submitter has confirmed that every author agrees and that the version may be shared.
+- From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
+- The work is not spam, not abusive and does not expose personal data of third parties.
+- The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
+- The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
+
+## What moderation does not check
+
+It does not check proofs, arguments or data.
+It does not run plagiarism checks.
+It does not compare the work with the literature.
+
+## Provisional registration
+
+A submission that passes the automatic check is provisionally registered: its issue is labelled `verified`, and it waits for a moderator.
+A provisionally registered work is not on the site. It has no record page, is not offered through OAI-PMH, and is not sent to the Internet Archive or to any other service that keeps records.
+Provisional registration is not acceptance. It ends when a moderator accepts or declines the submission.
+
+## Decisions
+
+A moderator accepts or declines a submission in its issue, and labels the issue `accepted` or `declined`.
+Every decision stays public in its issue.
+To help the review, the operator gives the public parts of a submission (the issue, the DOI metadata and the abstract) to three language models, Claude (Anthropic), ChatGPT (OpenAI) and Grok (xAI), and compares what they point out.
+The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
+The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
+What a model points out is given as a reason for a decision only after the operator has checked it.
+As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+
+A moderator who declines a submission names one or more of these reasons, with a short explanation:
+
+- Out of scope: the work belongs mainly to a field outside philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
+- Not in the form of a scholarly paper: it lacks a title, an abstract or references.
+- Licence: the DOI metadata does not carry an accepted licence.
+- Authorship: the submitter could not be confirmed as an author, or not every author agrees.
+- Disclosure: the statement on generative models is missing or does not say how they were used.
+- Rights or personal data: the work contains material that the authors may not share, or personal data of third parties, or the PDF carries a notice of rights that contradicts its licence.
+- Where the authors live or stay: an author lives in a place where Sophaxis is not offered, or stayed in one between the submission and the listing.
+- Spam or abuse.
+
+The submitter can answer in the issue.
+The operator then looks at the submission once more, and that decision is final.
+The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
+
+## Moderators
+
+The operator is at present the only moderator.
+Other moderators may be invited.
+A researcher in these fields who would like to moderate can write to the operator; the operator decides whom to invite.
+Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
+
+## Conflicts of interest
+
+Submissions by the operator are moderated under the same rules and are marked on their record pages.
+The automatic check applies to them without exception.
+While the operator is the only moderator, the operator also decides on their own submissions; the mark on the record page says so.
+Once there is another moderator, no moderator decides on their own submission or on one by a close collaborator.
+
+## After listing
+
+Corrections are added to the record as dated notes.
+Anyone can report an error in a record through the link on its page, which opens a public correction issue.
+They do not replace the work.
+A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.
+
+Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record.
+A problem is reported in a public issue, and the operator looks into it.
+
+---
+
+Source: https://sophaxis.vercel.app/policies/copyright.html
+
+# Copyright Policy
+
+Last updated: 2026-11-07.
+
+Japanese: [著作権の規程（日本語訳）](./copyright.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Authors keep their copyright
+
+Sophaxis asks for no transfer of copyright and no exclusive licence.
+The work stays under the licence the authors gave it in the repository.
+
+## What Sophaxis copies, and on what basis
+
+Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse; for Jxiv, they come from the public metadata of JaLC.
+The abstract is part of the work.
+It is shown under the work's own licence, with its authors and a link to the work.
+
+Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
+It copies the file only from a repository that lets a script fetch it: Zenodo, Figshare, arXiv and Research Square.
+Where the repository publishes a checksum, the copy must match it.
+When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
+For any other repository, the authors can attach the deposited PDF to their submission issue.
+Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
+Without such a file, the record links to the repository only.
+A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB.
+A larger file stays at its repository, and the record links to it.
+
+The copy is the file the authors deposited, shared under the work's own licence, with its authors, its licence and a link to the original.
+The accepted licences allow this.
+Authors can ask for the copy to be removed; the record then links to the repository only.
+
+Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, so that they stay readable even if this site goes away.
+
+Every record page carries the citation tags that Google Scholar reads.
+Sophaxis does not control whether or when a search engine indexes a page.
+
+## How Sophaxis meets the licences
+
+Sophaxis shares a listed work only under the work's own licence, and only as that licence allows.
+The three accepted licences permit copying and sharing for any purpose.
+CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credits the authors anyway.
+
+- Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI.
+- No changes: the PDF copy is the deposited file, byte for byte, with every notice it carries. The abstract is shown as plain text, with formatting tags removed and its words unchanged.
+- No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do.
+- No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work.
+
+## Work published in a journal
+
+When a journal publishes a work, the copyright or an exclusive licence may pass to the publisher.
+The authors must then make sure that the version they deposited may be shared under its licence.
+If it may not, the work cannot be listed.
+
+## Material from others
+
+Figures, tables, long quotations and other material from others need permission, or must be used in a way the law allows, such as quotation.
+The authors are responsible for this.
+
+## Examples of what is not allowed
+
+These examples show how this policy applies. They are not a complete list.
+
+The version that is shared:
+
+- Depositing the publisher's typeset version under CC BY when the copyright went to the publisher. The authors can no longer license it.
+- Depositing an accepted manuscript before the embargo that the publisher sets has ended.
+- Attaching to the submission issue a PDF that differs from the deposited file, such as a newer draft, an edited copy or the journal layout. The copy must be the deposited file, unmodified.
+- Asking Sophaxis to change its PDF copy. A change is a new version in the repository.
+
+Material from others:
+
+- A figure, a table, a map or a photograph copied from a book, a paper or a website without permission, beyond quotation.
+- A long passage of another work, quoted at a length that the law of quotation does not cover.
+- The full text of a poem, a song or a short story by someone else.
+- A translation of someone else's paper, deposited as the authors' own work, or without the permission of the original's rights holder.
+- Images from an archive whose terms forbid publishing them again.
+- Material under a NonCommercial or NoDerivatives licence, placed inside a work that carries CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 as though it were under that licence.
+- A screenshot of software, a web page or a video, reproduced beyond what quotation allows.
+
+Requests:
+
+- Repeating the infringing material itself in a public removal issue. Describe where it is instead.
+- Asking Sophaxis to remove a deposit from its repository. Sophaxis cannot; the request goes to the repository.
+
+## Infringement
+
+A rights holder who believes that a listed work infringes their rights can ask for its removal under the [Takedown Policy](./takedown.html).
+
+---
+
+Source: https://sophaxis.vercel.app/policies/licences.html
+
+# Licence Policy
+
+Last updated: 2026-11-08.
+
+Japanese: [ライセンスの規程（日本語訳）](./licences.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Accepted licences
+
+Sophaxis lists only work under one of these licences:
+
+- CC BY 4.0
+- CC BY-SA 4.0
+- CC0 1.0
+
+They let Sophaxis show the abstract and keep a copy of the PDF, with credit to the authors.
+They also let readers reuse the work freely.
+Licences with NonCommercial or NoDerivatives terms are not accepted.
+
+## Where the licence must appear
+
+The licence must appear in the DOI metadata of the deposit; the automatic check reads it there.
+The licence condition applies in every repository.
+On arXiv, choose CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 when you submit; the arXiv non-exclusive licence is not accepted.
+Work on SSRN is accepted only if it carries one of the accepted licences.
+
+## Licences of this site
+
+The text of this site is licensed under CC BY 4.0.
+The code is licensed under MIT.
+Each listed work keeps its own licence.
+
+The record data in `feed.xml`, `papers.json` and the OAI-PMH interface may be reused freely.
+Abstracts in them keep the licence of their work.
+
+## Text written in the forms
+
+From 2026-11-21, an abstract given in a form is shared under the licence of the work.
+From 2026-11-21, other text written in the forms, such as the statement on generative models, a reason for withdrawal or a correction, is shared under CC0 1.0 by the person who writes it.
+This lets Sophaxis show it with the record, and lets others reuse it with the record data.
+Text written in the forms before 2026-11-21 is shown with the record by the permission its writer gave by writing it in a public form for the record; anyone who wrote it can ask for it to be removed under the [Takedown Policy](./takedown.html).
+
+---
+
+Source: https://sophaxis.vercel.app/policies/privacy.html
+
+# Privacy Policy
+
+Last updated: 2026-11-08.
+
+Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
+
+## Who handles personal data
+
+The operator of Sophaxis, Takuya Nemoto, handles it.
+The operator's address is not published; it is given on request, without delay.
+Sophaxis applies Japan's Act on the Protection of Personal Information in full, as if its operator were a business operator under that Act.
+
+## Purposes
+
+Personal data is used only for these purposes:
+
+- to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
+- to publish record pages, author pages, the lists and the search;
+- to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
+- to check the listed DOIs and licences each week, and, for works whose authors consent to it, to save the pages and the PDF copies to the Internet Archive each week and when they change;
+- to tell search engines which addresses are new, changed or removed;
+- to answer requests to withdraw, correct or remove a record, and requests about personal data;
+- to serve the site, and to find and fix faults from Vercel's request logs;
+- to answer questions, complaints, disputes and security reports.
+
+## The site
+
+The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.
+Its pages contain no code or tag that sends information about a reader to anyone else, so nothing falls under the rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12).
+The search page runs one script, served by Sophaxis itself.
+It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
+No other page runs a script.
+
+Each record page has share links to X, Bluesky, Facebook, LinkedIn and email.
+They are plain links to each service's own page.
+Nothing is sent anywhere until a reader follows one, and the service then works under its own privacy policy.
+
+The site is hosted on Vercel.
+Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.
+Sophaxis has not turned on Vercel's analytics.
+
+## Submissions
+
+Submissions are public GitHub issues and are subject to GitHub's terms.
+Your GitHub username and everything you write in the form become public.
+
+When a submission issue is opened or edited, a GitHub Action reads two kinds of public data.
+It reads the metadata of the DOI from DataCite, Crossref or JaLC (Japan Link Center).
+It reads the name, the websites and the works of the ORCID record given in the form.
+It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
+The same check runs when a withdrawal issue or a published-version issue is opened or edited.
+The check asks ORCID only for the personal details (the name), the websites and the works sections of the record.
+It does not ask for the person section as a whole, so public email addresses and the country are never received.
+The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
+The automatic comment in a submission issue repeats the draft record, which is public already.
+From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
+
+Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
+Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
+Nothing else is asked of anyone.
+
+## Records
+
+A record holds the title, the names and ORCID iDs of the authors, the abstract, the licence, the DOIs and dates of the versions, and the statement on generative models.
+Most of a record comes from the metadata of the deposit.
+The statement on generative models, an abstract given in the form, a reason for withdrawal and notes on corrections come from the issues, where they are public already.
+A record also gives the number of its submission issue, which shows the submitter's GitHub username.
+Sophaxis keeps records without a time limit, so that citations do not break.
+The issues, with the GitHub usernames in them, stay as long as GitHub keeps them; removing a record empties the issues that name it, and the operator then deletes them.
+Vercel keeps its request logs for the period its service sets, and the operator does not copy them.
+A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](./takedown.html) sets out.
+Earlier versions stay in the history of the public repository and in the saves of the Internet Archive; the operator asks GitHub and the Internet Archive to remove them.
+
+## Reuse and copies elsewhere
+
+The records are offered for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`.
+Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there.
+The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
+Requests about personal data go to the address on the operator's ORCID record, as below.
+The pages and the PDF copies of a work whose authors consent to it are saved to the Internet Archive.
+Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
+An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
+Sophaxis copies nothing from the community, and the operator does not change the records in it.
+A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
+Copies that others have already taken are outside Sophaxis's control.
+
+## Services outside Japan
+
+Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person. Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts (the issue, the DOI metadata and the abstract), which the operator gives by hand to their language models, Claude, ChatGPT and Grok, to help the review; nothing is given to them after a work is listed.
+Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
+The submission form asks for each author's consent to this, after giving the information below; the confirmation is required from 2026-11-21.
+Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
+Consent to the Internet Archive is asked in a box of its own, which may be left empty; a record without it is not saved there, and `robots.txt` asks the Internet Archive not to collect it.
+Any author can withdraw either consent at any time, by a removal issue or by email, and what was done before the withdrawal stays lawful.
+Withdrawing the consent to the Internet Archive stops the saves without review, once the operator confirms that the request comes from an author; the operator then asks the Internet Archive to exclude the earlier copies.
+Withdrawing the consent to GitHub, Vercel and ORCID removes the record, because Sophaxis cannot list a work without them.
+
+The countries:
+
+- The United States has no general federal law on personal data; some states have their own laws. There is no single authority for personal data across the country, and the rights a person has over their data depend on the state and the sector.
+- Germany is in the European Union, where the General Data Protection Regulation applies.
+- Japan's Personal Information Protection Commission publishes information on the systems of other countries.
+
+What each service does to protect personal data is set out in its own statement:
+
+- GitHub: [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement). GitHub says it complies with the EU-U.S. Data Privacy Framework.
+- Vercel: [Vercel Privacy Notice](https://vercel.com/legal/privacy-notice). Vercel says it complies with the EU-U.S. Data Privacy Framework.
+- ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
+
+For GitHub, Vercel and ORCID, a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it.
+
+- Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
+- The Internet Archive: [Terms of Use](https://archive.org/about/terms). It receives only the public pages and PDF copies, which hold no personal data beyond what the records already publish. Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found.
+
+Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States), and are kept there only as long as needed to answer them and to show the answer.
+What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).
+A person in the European Union who writes reaches the operator in Japan, for which the European Commission has made an adequacy decision, and the mailbox at Apple in the United States; Apple says that its international transfers of personal data collected in the European Economic Area, the United Kingdom and Switzerland are governed by Standard Contractual Clauses.
+
+Vercel keeps request logs for Sophaxis, including the IP address.
+The operator can see them, and uses them only to find and fix faults.
+
+Apple, for the mailbox, and Vercel, for its request logs, handle personal data for Sophaxis, and neither is bound by contract not to handle it.
+As the Personal Information Protection Commission's Q&A 7-53 reads Japan's Act, Sophaxis therefore treats both as entrusted with that handling, and supervises them under Article 25 of the Act.
+Each publishes the measures it takes: Vercel in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa), Apple in its Privacy Policy.
+Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
+
+## Security
+
+Records are built only from information that is public already.
+The automatic checks keep nothing from an ORCID record except the name, the websites and the works.
+The automatic checks run with the least permissions they need.
+Only the operator can change the records, except that the automatic step of the [Takedown Policy](./takedown.html) takes the record page (its title, authors, abstract and PDF copy) offline when a removal issue reports exposure of personal data.
+If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned.
+A leak must be reported when it involves sensitive personal information, data whose misuse could cause financial loss, data leaked through an act done for an improper purpose, such as an attack on the operator's accounts, or the data of more than 1,000 people.
+The operator reports promptly after learning of it, and gives the full report within 30 days, or within 60 days when the leak may come from an act done for an improper purpose.
+
+The measures, under the headings that Japan's Personal Information Protection Commission uses:
+
+- Organisation: one person, the operator, handles personal data and answers for it. Every change to the records is a public commit or pull request.
+- People: no one else handles personal data for Sophaxis. Before a moderator is invited, the operator writes here what personal data a moderator may handle and how the operator supervises it.
+- Physical: Sophaxis has no servers or papers of its own. The records live in the GitHub repository and the site on Vercel.
+- Technical: the automatic steps hold no key but the token GitHub gives each run, with the least permissions they need. Earlier versions of the site on Vercel are not open to the public. The operator's GitHub account, the only one that can change the repository, uses two-factor authentication. The operator signs in to Vercel, which serves the site, through that GitHub account.
+- The countries where data is kept: as set out under "Services outside Japan" above.
+
+## Automated processing
+
+The automatic checks compare public records and post the result in the issue. They make no decision about a person.
+No decision with legal or similarly significant effects on a person is made solely by automated means.
+The language models that help the review make no decision; every decision on a submission is taken by a person, as the Moderation Policy sets out.
+One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.
+Every automatic step is listed on the page [What runs by itself](../automation.html).
+
+## Your choices
+
+An author can withdraw a work, have its record removed so that only the Sophaxis id stays, or ask for the PDF copy to be removed.
+A person whose personal data appears in a record can ask for its removal under the [Takedown Policy](./takedown.html).
+A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+A person can also ask to be told the purposes for which their data is used, to have its use restricted while its accuracy or an objection is checked, and to have its provision to third parties stopped.
+While a restriction lasts, the operator takes the part concerned offline.
+The submission issue, with its consent, and the history of the record in the public repository are the record of provision to third parties (Article 29 of Japan's Act on the Protection of Personal Information); a person can ask to see what concerns them.
+A person whose data is not in a record, such as a GitHub username in an issue or an IP address in Vercel's logs, writes by email.
+Before answering a request about personal data, the operator confirms who is asking, through the ORCID record or by email.
+A request can also be made through an agent, such as a parent or guardian or a person the requester appoints; the operator then confirms the agent's authority as well as the person's identity.
+A copy of personal data is sent by email, in a commonly used electronic form, or by another method the person asks for, and never in an issue.
+The operator aims to answer within 7 days.
+A request about personal data is answered within one month at the latest.
+If a request needs more time, the operator says so within that month, with the reasons, and answers within three months of the request.
+When the operator does not act on a request about personal data, it says why within one month.
+It also says that the person can complain to a data protection authority and can go to court.
+On request, the operator tells a person which recipients were told of a correction, a removal or a restriction of their data.
+Requests cost nothing.
+A complaint about how personal data is handled goes to the same email address.
+A person can also consult Japan's [Personal Information Protection Commission](https://www.ppc.go.jp/).
+A person in Switzerland can also complain to the Federal Data Protection and Information Commissioner.
+
+These rights are open to everyone, wherever they live.
+Where a person's own law gives them more rights over their personal data, such as the General Data Protection Regulation in the European Union, the operator honours those rights as far as they apply to Sophaxis.
+Personal data that GitHub or Vercel hold about their own users, such as GitHub accounts, is theirs to handle under their own privacy statements; a request about it goes to them.
+
+## The right to object
+
+Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
+An objection goes by a removal issue or by email.
+After an objection, the operator stops the use objected to, unless it shows compelling legitimate grounds that override the person's interests, rights and freedoms, or the data is needed for legal claims.
+The operator gives those grounds in writing.
+
+## People in the European Union and the United Kingdom
+
+From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
+It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.
+This depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+Anyone can read the site, but Sophaxis does not direct itself to people there.
+The operator therefore considers that the General Data Protection Regulation and the UK GDPR do not reach Sophaxis under Article 3(2).
+The rights in this section are honoured all the same, as far as they apply.
+For people in the European Union and the United Kingdom, the basis for this use is a legitimate interest: checking who the authors are, keeping a public scholarly record, serving the site safely, and answering the people who write.
+Records are kept to preserve the scholarly record, for freedom of expression and information (Article 17(3)(a)).
+Where a transfer outside the European Union has no adequacy decision or other safeguard, as for the Internet Archive, it rests on the author's explicit consent (Article 49(1)(a)).
+The possible risks of that transfer, of which the consent is given knowing: Sophaxis knows of no adequacy decision or other safeguard that covers the Internet Archive, so personal data saved there may be protected less than under the General Data Protection Regulation, and a person may find it harder to enforce their rights there.
+That consent is asked in a box of its own and can be withdrawn at any time, by a removal issue or by email; the saves to the Internet Archive then stop without review, and what was done before stays lawful.
+A person can also ask to receive the personal data they gave in a structured, commonly used and machine-readable form (Article 20); `papers.json` and the OAI-PMH interface already give every record in that form.
+A person can object to the use of their personal data, as set out under "The right to object" above, and can complain to the data protection authority of their country.
+Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
+The operator has decided not to appoint one.
+A representative would be a paid service, or a person in the European Union or the United Kingdom who takes on liability for Sophaxis, and Sophaxis is run unpaid within free services.
+Should the view above on Article 3(2) be wrong, Sophaxis does not meet Article 27, because it has no representative there; the processing is regular, so the exception for occasional processing does not apply.
+The operator reviews this decision when Sophaxis first lists a work by an author other than the operator, and whenever a data protection authority or a person in the European Union or the United Kingdom asks for a representative.
+Each review and its outcome are recorded in the public repository.
+A review weighs two ways forward: appointing a representative, or running Sophaxis through a legal entity.
+A legal entity established in Japan would not by itself settle the question of a representative; only an establishment in the European Union or the United Kingdom would, and the General Data Protection Regulation would then apply to that establishment in full.
+Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
+People there write to the operator directly, in English or Japanese, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator answers them, and the data protection authorities, directly, in place of a representative.
+A record of the processing is kept in the public repository, in `docs/records-of-processing.md`.
+
+## People in China
+
+From 2026-11-22, Sophaxis does not offer its service to people in China either.
+Article 53 of China's Personal Information Protection Law requires a processor abroad that offers products or services to people in China to set up an agency or designate a representative in China, and Sophaxis has none.
+This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+The rights in "Your choices" are honoured all the same, as far as they apply.
+
+## People in Thailand
+
+From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
+Section 37(5) of Thailand's Personal Data Protection Act requires a controller abroad that offers goods or services to people in Thailand to designate in writing a representative in Thailand, and Sophaxis has none.
+Section 38 exempts a controller that engages in the profession or business of processing personal data without a large amount of it; Sophaxis is not a business, so the exemption is not relied on.
+This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+The rights in "Your choices" are honoured all the same, as far as they apply.
+
+## People in the other places
+
+From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.html) lists either.
+Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
+A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
+Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
+From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
+From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
+This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+The rights in "Your choices" are honoured all the same, as far as they apply.
+
+## Changes to this policy
+
+When this policy changes, the date at the top changes.
+Earlier versions stay in the public repository.
+
+---
+
+Source: https://sophaxis.vercel.app/policies/withdrawal.html
+
+# Withdrawal Policy
+
+Last updated: 2026-11-08.
+
+Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Who can withdraw
+
+Any one author of a listed work can withdraw it.
+A work is listed only while every author agrees, so the listing ends when one author withdraws that agreement.
+
+The request comes from the author's own GitHub account, as at submission.
+The author's ORCID record must link to that account, and the ORCID iD must belong to an author of the work.
+An automatic check confirms both and posts the result in the issue.
+
+## How to ask
+
+Open a withdrawal issue and give the Sophaxis id, your ORCID iD and a short reason.
+The reason is shown on the record page, so it must not contain personal data.
+The issue is public.
+
+A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator then confirms the author through the ORCID record, as the check does in the issue.
+
+## What happens
+
+The operator aims to act within 7 days of a verified request.
+The record page keeps its address, its title, its authors, its abstract and its versions, so that citations do not break.
+A notice at the top gives the date of withdrawal and the reason.
+The record stays in the lists, the search, the feed and `papers.json`, marked as withdrawn.
+The PDF copies are taken off the site, and the record links to the repository only.
+A withdrawn record takes no new versions.
+Earlier copies stay in the history of the public repository and in the Internet Archive, and harvesters of the OAI-PMH interface keep what they took.
+
+## Removal at an author's request
+
+An author can ask, in the same issue, for the record to be removed instead of withdrawn.
+The form asks which of the two the author wants.
+The same check confirms that the account asking belongs to an author of the work.
+A record that is already withdrawn can still be removed.
+The operator removes the record by labelling the verified issue `upheld`, and aims to do so within 7 days.
+Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.html) sets out.
+No reason is shown, and the withdrawal issue itself is emptied, closed and locked.
+
+## An author's name
+
+As the Creative Commons licences provide, an author can ask for their name to be taken off a record.
+The operator does so as far as is reasonably practicable, and the record stays.
+
+## The work in its repository
+
+Withdrawal on Sophaxis does not touch the deposit.
+Sophaxis cannot withdraw or delete a work at Zenodo, Figshare or any other repository; a request about the deposit goes to that repository.
+If the repository withdraws or deletes the deposit, the weekly check finds that the DOI no longer resolves, and the operator withdraws the record with a note that says so.
+
+## Withdrawal on publication
+
+Some publishers ask authors to remove a preprint when the work is published.
+Any one author can then withdraw the listing as above.
+If the published version is recorded, the record page keeps the link to it, so that a reader who follows a citation of the preprint finds the published version.
+The authors can report the published version before they ask for withdrawal; a withdrawn record takes no new report.
+
+## Withdrawal and removal
+
+Withdrawal is the authors' decision, and the record stays.
+Removal is for legal reasons, such as copyright infringement or exposure of personal data, or at an author's request, and takes the title, the authors, the abstract and the PDF copy off the site.
+It follows the [Takedown Policy](./takedown.html).
+
+---
+
+Source: https://sophaxis.vercel.app/policies/takedown.html
+
+# Takedown Policy
+
+Last updated: 2026-11-08.
+
+Japanese: [削除の規程（日本語訳）](./takedown.ja.html). It is a translation; where the two differ, the English text applies.
+
+## When a record is removed
+
+Records are not deleted.
+Every Sophaxis id stays, even when its record is removed.
+A record is removed in three cases.
+The first is removal required by law, such as copyright infringement or exposure of personal data.
+The second is when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](./withdrawal.html).
+The third is when an author of the work asks for it in a withdrawal issue, as the [Withdrawal Policy](./withdrawal.html) sets out.
+A removed record leaves only what the section "What a removed record leaves" below lists.
+
+## How to ask
+
+To request removal for legal reasons, open a removal issue.
+Do not include personal data in the issue.
+Describe where the problem is, without repeating the material itself.
+Say how you are concerned: as an author, as the rights holder, as the person whose data appears, or on their behalf.
+
+Requests are welcome from any country, in English or Japanese.
+A request may rest on the law of the requester's country, such as a copyright notice under the law of the United States or a request under the data protection law of the European Union.
+The operator considers it under this policy and under Japanese law, and takes the material offline when either requires it.
+
+The site is served by Vercel, and the repository and its issues are kept on GitHub, both in the United States.
+A request can also go to GitHub, for example as a copyright notice under its own process, or to Vercel.
+They decide under their own terms; the operator decides on Sophaxis under this policy, whatever they decide.
+Where the operator removes material, it also asks GitHub to remove it from the repository history, as set out below.
+
+A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+That is the address for requests; the address in the OAI-PMH interface is for harvesters.
+For personal data and other serious harm, the operator then takes the record page (its title, authors, abstract and PDF copy) offline while the request is reviewed; authors agree to this in the [Terms of Use](./terms.html).
+
+## What happens
+
+The operator aims to answer each request within 7 days.
+For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.
+A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
+When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
+The automatic steps decide nothing; the operator decides every request.
+The authors are told in their submission issue and can respond.
+A request about the requester's own personal data concerns that person, not the work, so the authors are not told of it.
+Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
+This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
+
+If the request is upheld, the record is removed, as the next section sets out.
+If the request is not upheld, the operator says why in the issue.
+Material that was taken offline while the request was reviewed is put back.
+The decision is posted in the issue, or sent by email to a person who asked by email, before the material goes back.
+An author can answer a request at any time; if the answer shows that the request has no ground, the material is put back.
+
+## What a removed record leaves
+
+This section applies to every removed record, whatever the reason.
+The removal is carried out by `tools/removal.js` in the public repository, after the operator's decision, and every step below is checked automatically before it is published.
+
+On the site:
+
+- When a record is removed, its page is replaced by a notice that says only that the record with that Sophaxis id was removed.
+- The notice gives no reason and no other detail.
+- The address keeps working, so that citations lead to the notice instead of to nothing.
+- The title, the authors, the abstract and the PDF copy are removed from the site.
+- The page asks search engines not to index it, and the record leaves every list, the search, the feed, `papers.json` and the sitemap. The statistics count it only among removed records.
+- Earlier versions of the site that Vercel keeps are not open to the public.
+- `robots.txt` asks the Internet Archive's crawlers not to collect the page or its PDF copies again.
+
+In the records and the OAI-PMH interface:
+
+- The record keeps only its Sophaxis id, the word "removed" and the day of removal. The day is kept because the OAI-PMH interface needs it.
+- The OAI-PMH interface marks the record as deleted, with that day and no metadata, so that harvesters can remove it when they next visit.
+
+In the issues:
+
+- Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
+- Deleting an issue also deletes its edit history.
+- A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
+
+Outside the site:
+
+- The operator also asks GitHub to remove the material from the repository history.
+- Until GitHub does so, earlier versions of the record stay in the history of the public repository.
+- GitHub's own procedure is to rewrite the history first and then ask GitHub Support, which helps only with sensitive data whose risk cannot be removed otherwise; where it does not help, the earlier versions stay in the history.
+- The operator also asks the Internet Archive to exclude its earlier copies of the record.
+- Copies that others have already taken are outside Sophaxis's control; the operator tells the ones it knows of.
+- A follow-up issue lists these steps, with the request to the Internet Archive. Each day an automatic step checks whether the emptied issues are deleted and whether the Wayback Machine still lists a copy, ticks what is done, and reminds the operator once a week of the rest.
+
+The Sophaxis id of a removed record is never given to another work.
+
+## For the European Union: the Digital Services Act
+
+From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, or who stays there between the submission and the listing, and does not direct itself to people there, so the operator considers that it has no substantial connection to the Union and does not offer services there in the sense of the Act.
+Sophaxis takes the worst case here too, and follows the Digital Services Act of the European Union as far as it can apply to a service of its size.
+
+- Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12): the email address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), in English or Japanese. Sophaxis has no legal representative in the European Union (Article 13), and the operator has decided not to appoint one, for the reason the [Privacy Policy](./privacy.html) gives. Authorities write to the operator directly at that address. Should the view above be wrong, Sophaxis does not meet Article 13, because it has no legal representative in the European Union.
+- Notices of illegal content (Article 16): a removal issue, or an email. A notice by email names who sends it and gives an email address. A removal issue does not, because it is public; the GitHub account that opens it stands in their place. A notice by email also says that the sender believes in good faith that what it says is accurate and complete. A removal issue is acknowledged automatically; a notice by email is acknowledged by the operator by email, without undue delay. The decision is told in the issue or by email.
+- Reasons for a decision (Article 17): the operator gives the grounds of every decision in the removal issue, or by email. The authors were pointed to that issue when the request arrived. The grounds say whether an automatic step acted: only the step that takes exposed personal data offline at once ever does, and it acts on the kind of problem that the request names. Where material is held to be illegal, the grounds name the law relied on and say why the material breaks it. They also say how far the measure reaches and for how long: a removal applies wherever the site is read, and it is permanent. When a request came by email and is upheld, the grounds, without personal data, are posted in the authors' submission issue before it is emptied, so that GitHub sends them to the authors who follow it; the removal cannot be run without them. An author can also ask the operator for them by email.
+- Challenging a decision (Article 20): the person who sent the notice and the authors can challenge a decision within six months, by answering in the removal issue or by email. It costs nothing. The operator reviews it and answers, and the review is never left to an automatic step.
+- A person can also go to a court, or to an out-of-court dispute settlement body certified under Article 21.
+- Suspicions of serious crime (Article 18): if the operator learns of information that gives rise to a suspicion of a criminal offence that threatens a person's life or safety, the operator promptly tells the law enforcement or judicial authorities of the Member State concerned, with all relevant information it has. Where that Member State cannot be identified with reasonable certainty, the operator tells Europol.
+- The rules that limit what may be listed are in the [Terms of Use](./terms.html) and these policies, in plain English (Article 14).
+- Average monthly active recipients (Article 24(3)): Sophaxis keeps no analytics and no identifiers of readers, and will not start keeping them to produce this figure. On request of a Digital Services Coordinator or the Commission, the operator gives, for each of the last six months, the number of people in the Union who submitted, reported or wrote to Sophaxis, counted from the issues and the email, and says that readers are not counted.
+- The [statistics](../stats.html) count the removed records and link to every public removal request.
+
+## Copyright notices under United States law
+
+Sophaxis has not designated an agent with the United States Copyright Office, which charges a fee, so it does not rely on the limitation of liability in 17 U.S.C. 512.
+A notice of claimed infringement under that law is handled under this policy, like any other request.
+
+## Requests to disclose who sent material
+
+A request to disclose who submitted material is handled as Japanese law provides.
+The operator first asks the person concerned for their opinion.
+The operator discloses nothing that the law does not require.
+
+## The work in its repository
+
+Sophaxis cannot remove a work from Zenodo, Figshare or any other repository.
+A request about the deposit itself goes to that repository.
+
+---
+
+Source: https://sophaxis.vercel.app/policy.html
+
+# Policies
+
+Sophaxis is an overlay preprint server for philosophy and mathematics.
+It lists preprints that authors have already deposited in an open repository,
+and it gives each one a stable record page.
+
+## What Sophaxis is not
+
+Acceptance is moderation, not peer review.
+A listing on Sophaxis says that a submission passed the checks in the [Moderation Policy](./policies/moderation.html).
+It does not say that the work is correct, original or important.
+Sophaxis does not guarantee the quality of any listed work.
+
+Sophaxis is not a journal.
+It does not assign DOIs.
+The DOI stays with the repository where the author deposited the work, and it is the reference to cite.
+
+## No fees
+
+Sophaxis charges nothing, to authors or to readers.
+There are no submission fees, no listing fees and no paid tiers.
+It will not start charging.
+
+## Commitments are never dropped silently
+
+A commitment in these policies is never dropped silently.
+The public repository keeps the list of commitments in `verification/commitments.txt`.
+The automatic check fails if one disappears from the policies or from the list, unless the text that replaces it is named in `verification/superseded.txt`.
+A change to a commitment that adds a duty for readers or authors is still announced in advance, as the [Terms of Use](./policies/terms.html) set out.
+
+## Operator and conflicts of interest
+
+Sophaxis is operated by Takuya Nemoto, an independent researcher in Japan.
+The [Operator and contact](./contact.html) page says how to reach the operator.
+Submissions by the operator are moderated under the same rules
+and are marked on their record pages as the operator's own.
+
+## Finding work
+
+Each record can be listed in more than one field.
+Authors with an ORCID iD have a page that lists their work on Sophaxis.
+Authors without one have no such page, because a name alone can belong to several people.
+New records are announced in an Atom feed, `feed.xml`.
+The public part of every record is available as `papers.json`, for reuse.
+Abstracts in both keep the licence of their work.
+
+## About these pages
+
+These pages describe how Sophaxis works and what it promises.
+They are not legal advice.
+Each page shows the date of its last change, and every earlier version is kept in the public repository.
+Every policy and the Disclaimer have Japanese translations, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
+
+This site and its code were built with Claude Code (Anthropic).
+The operator is responsible for them. Claude is not an author.
+
+---
+
+Source: https://sophaxis.vercel.app/disclaimer.html
+
+# Disclaimer
+
+Last updated: 2026-11-08.
+
+Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page gathers in one place what Sophaxis does not promise.
+The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.
+
+## Listed work
+
+Listing is moderation, not peer review.
+Sophaxis does not check proofs, arguments or data, and does not guarantee that any listed work is correct, original, complete or of any quality.
+The authors bear full responsibility for their work, including its statement on generative models, which Sophaxis does not verify.
+
+## Metadata
+
+Titles, authors, abstracts, licences, versions and dates come from the DOI metadata held by DataCite, Crossref and JaLC, and are shown as received; an abstract that the metadata does not have comes from the submission form.
+An error there can appear here.
+Errors can be reported through the link on each record page.
+
+## The identity check
+
+The automatic check confirms that the person who controls an ORCID record opened the submission issue, and that the ORCID iD belongs to an author of the work.
+It is not an official identity check.
+
+## No affiliation
+
+Sophaxis is an independent, personal project.
+It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.
+Their names are used only to identify their services, and belong to their owners.
+They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
+
+## Who runs Sophaxis, and why
+
+The operator, who is at present also the only moderator, runs Sophaxis as an unpaid volunteer.
+No one is paid for work on Sophaxis, and no one pays to submit or to read.
+Sophaxis is served only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and has no domain or hosting to pay for.
+The operator pays personally for Claude Code, the tool with which the site and its code are written (see How Sophaxis was made below).
+Sophaxis takes no money from anyone to cover it.
+Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.html) and the [Privacy Policy](./policies/privacy.html).
+
+Sophaxis began because the operator looked for one place that lists open preprints in philosophy and in mathematics side by side, and did not find one.
+It is kept for the operator's own reading, as the next section says, and for anyone who works on the same questions.
+This is the operator's reason, not a judgement on other archives.
+Sophaxis does not replace them, and a work listed here stays in its own repository.
+
+## The operator's own use
+
+The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf: a place to keep works in philosophy and mathematics at hand and to read them.
+This use does not change what is listed or how.
+
+- Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it; such a work stays on the operator's own shelf, outside Sophaxis.
+- Sophaxis is not run for profit. It charges no one, sells nothing, shows no advertising and earns nothing.
+- Sophaxis does not publish works. Each work is published by its repository under its DOI, and Sophaxis links to it.
+- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](./policies/copyright.html).
+- Sophaxis takes no copyright and no exclusive licence in any work.
+- A rights holder can ask for the removal of a work under the [Takedown Policy](./policies/takedown.html).
+
+These choices keep Sophaxis within what the authors and the licences allow.
+They are not legal advice, and they do not claim that no legal question can arise.
+
+## GitHub and other services
+
+Sophaxis runs on GitHub: its code, its records and its submissions (GitHub issues) are kept there, and its automatic checks run as GitHub Actions in the public repository.
+The site is built from that repository and served by Vercel.
+Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, JaLC, OpenAlex, ORCID and the repositories.
+Using GitHub to submit is subject to GitHub's own terms and privacy statement.
+
+## How Sophaxis was made
+
+The site, its code, its policies and these pages were written with Claude Code, a coding tool by Anthropic, at the operator's request.
+The operator reviewed them and is responsible for them; Claude is not an author of Sophaxis or of any listed work.
+No language model decides on a submission: the automatic check is ordinary code, and every decision is made by a moderator.
+Sophaxis is not affiliated with or endorsed by Anthropic.
+Claude Code is named as a disclosure of how the site was made, not as an endorsement or an advertisement.
+The operator is an ordinary paying user of it.
+Sophaxis has no arrangement with Anthropic, receives nothing from it, and does not link to its products.
+
+## Links
+
+Sophaxis links to repositories, DOIs and other sites that it does not control.
+It is not responsible for their content, their availability or their terms.
+
+## Availability
+
+The site is provided as it is, and may be unavailable, change or close.
+If it closes, the repository with every record stays public; see Continuity in the [Terms of Use](./policies/terms.html).
+
+Sophaxis depends on outside services:
+
+- If Vercel stops, the site is not served; the records stay in the repository on GitHub and in the Internet Archive.
+- If GitHub stops, no one can submit, and the automatic checks do not run; the site keeps showing what it last built.
+- If DataCite, Crossref or JaLC cannot be reached, a submission cannot be checked until they can.
+- If a repository removes a deposit, its DOI stops resolving, and the record is withdrawn under the [Withdrawal Policy](./policies/withdrawal.html).
+
+## Not advice
+
+The policies and pages of Sophaxis describe how Sophaxis works.
+They are not legal or professional advice.
+
+## Liability
+
+The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
+This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
+These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
+Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.html) sets out.
+
+---
+
+Source: https://sophaxis.vercel.app/faq.html
+
+# Frequently asked questions
+
+Last updated: 2026-11-08.
+
+Each answer is a short form of a policy. Where they differ, the policy applies.
+
+## What is Sophaxis?
+
+An overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
+The work itself is published by its repository; Sophaxis keeps an unmodified PDF copy only where the licence allows.
+It lists preprints that authors have already deposited in an open repository, and gives each one a stable record page.
+
+## Is it peer review?
+
+No. Acceptance is moderation, not peer review.
+Moderation checks the submitter, the licence, the scope, the form of the paper and the statement on generative models.
+It does not check proofs, arguments or data, and Sophaxis does not guarantee the quality of any listed work.
+See the [Moderation Policy](./policies/moderation.html).
+
+## Does it cost anything?
+
+No. Sophaxis charges nothing, to authors or to readers, and will not start charging.
+
+## Does Sophaxis give my work a DOI?
+
+No. The DOI comes from the repository where you deposited the work, and it is the reference to cite.
+Sophaxis gives each record an id, such as 2026.0001, which never changes and is never reused.
+
+## Which repositories are accepted?
+
+Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works and Jxiv.
+The work must have a DOI from one of them.
+
+## Which licences are accepted?
+
+CC BY 4.0, CC BY-SA 4.0 and CC0 1.0, as given in the DOI metadata.
+Licences with NonCommercial or NoDerivatives terms are not accepted, and neither is the arXiv non-exclusive licence.
+See the [Licence Policy](./policies/licences.html).
+
+## Who can submit?
+
+Only an author of the work, with an ORCID iD.
+Your ORCID record must link to your GitHub account, and an automatic check confirms that your ORCID iD belongs to an author of the work.
+Every author must agree to the listing.
+See the [Submission Policy](./policies/submission.html).
+
+## Why GitHub?
+
+Submissions are GitHub issues.
+This keeps every step public and lets the automatic check confirm that the account opening the issue belongs to an author.
+Sophaxis has no accounts of its own and no passwords.
+
+## Is Sophaxis connected to GitHub and ORCID?
+
+Yes, in public only.
+The code, the records and the submissions are on GitHub, and the automatic checks run as GitHub Actions in the public repository.
+ORCID is read through its public API.
+Sophaxis does not use GitHub or ORCID sign-in, asks no one for access to their accounts, and is not affiliated with either; see the [Disclaimer](./disclaimer.html).
+
+## Was Sophaxis made with a language model?
+
+Yes. The site, its code and its policies were written with Claude Code (Anthropic) at the operator's request.
+The operator is responsible for them, and Claude is not an author.
+No language model decides on a submission.
+See the [Disclaimer](./disclaimer.html).
+
+## Can I use language models?
+
+Yes, if you disclose how.
+Name the tools and say what they were used for; this covers every generative model, including those that make images or code.
+A generative model cannot be an author.
+The statement is shown on the record page.
+
+## How long does moderation take?
+
+As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+A slow decision does not mean that submissions are paused; when they are, the top page says so.
+[From submission to listing](./process.html) follows a submission step by step.
+
+## Who is responsible for a listed work?
+
+The authors bear full responsibility for the work and its listing: its content, the rights to share it, material from others, personal data in it and the statement on generative models.
+See the [Terms of Use](./policies/terms.html).
+
+## How do I add a new version?
+
+Deposit it in the repository, then submit it as an update and give the existing Sophaxis id.
+Earlier versions stay listed.
+
+## My work has been published in a journal. Can I submit it?
+
+Only a version that you may share under an accepted licence.
+Give the DOI of the published version in the form, and the record shows it.
+
+## My listed preprint has been published. What do I do?
+
+Report it with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml), as one of its authors.
+The preprint stays listed, and its record page shows the published version at the top and asks readers to cite it.
+Sophaxis does not judge peer review: the record repeats what you state about it.
+The details are in the [Submission Policy](./policies/submission.html), under "When the work is published".
+
+## Does Sophaxis keep a copy of the PDF?
+
+Where the repository allows a script to fetch it, Sophaxis keeps an unmodified copy, so that search engines can index the full text.
+For any other repository, you can attach the deposited PDF to your submission issue.
+A copy is kept only if the file is at most 20 MB.
+See the [Copyright Policy](./policies/copyright.html).
+
+## Will my work appear in Google Scholar?
+
+Each record page carries the tags that Google Scholar reads, and the sitemap lists every page.
+Scholar takes a PDF only from the directory of its record page, so each PDF copy is also served there.
+When a record page or a PDF copy is new, changed or removed, the search engines that take IndexNow, such as Bing, are told as soon as it is live. A new or changed page is also saved to the Internet Archive. Google reads the sitemap instead.
+Sophaxis cannot promise that a search engine will index a page.
+
+## How do I cite a work listed here?
+
+Cite the DOI of the version you read.
+Each record page gives the citation in APA, Chicago and BibTeX, and as BibTeX, RIS and CSL-JSON files.
+
+## How do I report an error in a record?
+
+Use the link "Report an error in this record" on its page.
+Corrections are added to the record as dated notes.
+
+## Can I withdraw my work?
+
+Yes. Any one author can withdraw a listed work.
+The record page stays with a withdrawal notice, so that citations do not break, and the PDF copies are taken off the site.
+See the [Withdrawal Policy](./policies/withdrawal.html).
+
+## How do I ask for material to be removed?
+
+For copyright infringement, exposure of personal data or another legal reason, follow the [Takedown Policy](./policies/takedown.html).
+
+## What happens to the records if Sophaxis closes?
+
+The repository with every record stays public, so that the records stay readable.
+Each week, Sophaxis also asks the Internet Archive to save its pages and the PDF copies.
+
+## Who runs Sophaxis, and how do I reach the operator?
+
+See the [Operator and contact](./contact.html) page.
+
+---
+
+Source: https://sophaxis.vercel.app/process.html
+
+# From submission to listing
+
+Last updated: 2026-11-08.
+
+This page follows one submission from start to finish.
+The rules themselves are in the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html); where this page differs, they apply.
+
+## Before you start
+
+You need four things.
+
+1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
+2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.
+3. An [ORCID](https://orcid.org) iD. Registration is free.
+4. A [GitHub](https://github.com) account. Registration is free.
+
+Every author of the work must agree to the listing.
+If you used language models or other generative models, note which tools you used and what for.
+
+## Step 1. Find your GitHub username
+
+A submission is a GitHub issue: a public post in the Sophaxis repository, with comments below it.
+If you have no GitHub account, create one at [github.com/signup](https://github.com/signup).
+
+Your username is the last part of the address of your GitHub profile, `https://github.com/<your username>`.
+After you sign in, it also appears in the menu under your picture at the top right.
+
+## Step 2. Link your ORCID record to GitHub
+
+1. Sign in at [orcid.org](https://orcid.org). Your ORCID record opens; your ORCID iD is the 16-digit number under your name.
+2. Find the section "Websites & social links" and click its edit button (the pencil).
+3. Choose "Add link". Give a title, such as GitHub, and the address `https://github.com/<your username>`.
+4. Set its visibility to "Everyone", then save.
+
+This is how Sophaxis confirms that the person who opens the submission is an author of the work.
+Sophaxis reads only the name, the links and the works in your ORCID record; it never asks ORCID for your email address or your country.
+
+## Step 3. Open a submission issue
+
+1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens.
+2. After "[Submission]" in the title, add a few words, such as the title of your work.
+3. Give the DOI, your ORCID iD, the category and the statement on generative models, and tick the confirmations.
+4. Press the button at the bottom of the form to create the issue.
+
+The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.
+
+The issue is public.
+Your GitHub username and everything you write in it can be read by anyone.
+GitHub tells you about each new comment on an issue you opened, on github.com and, by default, by email.
+
+## Step 4. The automatic check answers
+
+Usually within a few minutes, a comment titled "Automatic checks" appears in the issue.
+It shows each check as pass or fail: the repository, the licence, the DOI metadata, the link from your ORCID record and your authorship.
+The issue receives the label `verified` or `unverified`.
+
+If a check fails, the comment says why.
+Fix the cause, for example the link in your ORCID record, then edit the issue; the check runs again.
+To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
+An edit that changes nothing does not start the check.
+
+If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, Figshare, arXiv and Research Square), the comment asks you to attach the deposited PDF to the issue.
+This is optional, and the file must be at most 20 MB.
+To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
+
+When the submission is verified, the comment may also give advice on the DOI metadata at the repository, for example a missing abstract, licence or keywords.
+The advice comes from [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check). It does not decide the listing.
+Search engines and indexes read this metadata rather than the PDF, and most repositories let you correct it without making a new version.
+
+A pass is not acceptance.
+
+The buttons on GitHub and ORCID may be renamed over time; the steps stay the same.
+
+## Step 5. A moderator reads the submission
+
+A moderator reads the verified submission against the [Moderation Policy](./policies/moderation.html):
+the scope, the form of a scholarly paper, the statement on generative models, and the absence of spam, abuse and personal data of third parties.
+Moderation is not peer review. It does not check proofs, arguments or data.
+
+As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+The decision is written in the issue.
+
+## Step 6. The decision
+
+If the submission is accepted, its record page is published with a Sophaxis id, such as 2026.0001, and the issue is closed.
+Where the repository allows, an unmodified copy of the PDF is added afterwards.
+
+If it is declined, the moderator gives a short reason in the issue.
+You can answer there.
+The operator then looks at the submission once more, and that decision is final.
+
+## After listing
+
+- A new version: deposit it in the repository, then open a submission issue that gives the existing Sophaxis id.
+- An error in the record: use "Report an error in this record" on its page.
+- Withdrawal: any one author can withdraw the work under the [Withdrawal Policy](./policies/withdrawal.html).
+- Publication: when a later version is published in a journal, in proceedings or in a book, any one author reports it with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml). The preprint stays listed.
+
+Short answers to other questions are in the [FAQ](./faq.html).
+
+---
+
+Source: https://sophaxis.vercel.app/automation.html
+
+# What runs by itself
+
+Last updated: 2026-11-08.
+
+Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel.
+This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
+The code of each step is public, and each section links to it.
+
+- No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
+- One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
+- No step uses a language model. The steps are ordinary code.
+- No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.
+- A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.
+- The [Privacy Policy](./policies/privacy.html) says what personal data these steps handle.
+
+## When a submission issue is opened or edited, or an author confirms in a comment
+
+- Reads: the DOI metadata from DataCite, Crossref or JaLC; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
+- Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
+- From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
+- Leaves to the operator: accepting or declining the submission.
+- Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
+
+## When a withdrawal issue is opened or edited
+
+- Reads: the record, and the public ORCID record given in the form.
+- Writes: a comment with the result of each check and, for a withdrawal, the record as it would be after it; the label `verified` or `unverified`.
+- Leaves to the operator: withdrawing the record by a pull request, or removing it by labelling the verified issue `upheld`.
+- Code: [tools/withdraw.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/withdraw.js).
+
+## When a published version is reported
+
+- Reads: the record, the DOI metadata of the published version, and the public ORCID record given in the form.
+- Writes: a comment with the result of each check and the record with its published version.
+- Leaves to the operator: recording the published version.
+- Code: [tools/published.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/published.js).
+
+## When a removal issue is opened or edited
+
+- Reads: the record and the issues of the repository.
+- Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
+- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](./policies/takedown.html) says.
+- Leaves to the operator: the decision.
+- Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
+
+## When the operator labels a request `upheld` or `not-upheld`
+
+- Acts only on the label of the repository owner.
+- Upheld: removes the record, as "What a removed record leaves" in the Takedown Policy sets out, deletes the automatic comments about it, and empties, closes and locks the issues that name it.
+- Not upheld: puts back what was taken offline, from the git history.
+- After a removal, opens a follow-up issue that lists what is left by hand: deleting the emptied issues, a request to the Internet Archive with its draft, and GitHub's procedure for the repository history.
+- Leaves to the operator: the grounds of the decision, deleting the emptied issues, and sending the requests to GitHub and the Internet Archive.
+- A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id and, for a decision, the grounds, which are posted in the authors' submission issue before it is emptied.
+
+## Once a day, at 09:17 Japan time
+
+- Reads: the open removal requests and the verified withdrawals.
+- Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
+- Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
+
+## On every push and every pull request
+
+- Runs every check of [verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) against the records, the policies and the built site.
+- The operator merges a change only when the checks pass.
+
+## When the site changes
+
+- Vercel serves the files that the repository holds in `site/`, which `build.js` builds from the records. The OAI-PMH interface is a small function on Vercel that reads the same records.
+- Once the new pages are live, the search engines that take IndexNow are told which record pages and PDF copies are new, changed or gone, and the new and changed ones are saved to the Internet Archive, if their authors consented to it. A gone page is never saved.
+- Earlier versions of the site that Vercel keeps are not open to the public.
+- After every push to main, and once a day at 11:41 Japan time, every file in `site/` is fetched from the live site and compared byte for byte with main. A difference that remains after ten minutes (a deployment that failed, or that the daily limit of the free plan refused) opens an issue, which closes by itself when the site matches.
+- Code: [tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js), run by [live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml).
+- `robots.txt` is built with the rest of the site, and asks the Internet Archive's crawlers not to collect any removed record, or any record whose authors did not consent to the saves.
+- Code: [tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js), run by [indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) and after each push of the removal step.
+
+## Once a week, on Monday at 13:37 Japan time
+
+- Reads: the DOI metadata of every listed version, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub, and the privacy statements of Vercel and Apple, from their sites.
+- Writes: an issue when a DOI stops resolving, a licence changes, a new version appears or a published version may exist; a pull request when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`, with the new values and texts and, for an article, the difference of its sentences (where the repository does not let workflows open pull requests, an issue with a link that opens it); an issue when one of them cannot be read; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
+- Leaves to the operator: acting on what the issue reports, and reading the difference before recording it.
+- Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
+
+## When the operator labels the watch's pull request `record`
+
+- Acts only on the label of the repository owner, and only on the branch `statutes/record`, which may change only `verification/statutes.json`, `verification/statutes-texts.json` and the changelog.
+- Merges it into main, fills in the changelog's pull request number, runs every check and the watch itself on the merged result, and pushes only if all pass. The merge names the workflow as co-author.
+- Leaves to the operator: reading the difference, and changing the policies first if the change requires it.
+- Code: [tools/record.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/record.js), run by [record.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/record.yml).
+
+## Only when the operator runs it
+
+- Copies the PDF of a listed record from its repository onto a branch of its own, for a pull request that the operator reviews.
+- Code: [tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js).
+
+## What stays by hand
+
+- Every decision, and its grounds.
+- Deleting emptied issues, which the follow-up issue lists.
+- Asking GitHub to remove material from the repository history, and the Internet Archive to exclude earlier copies, with the drafts in the follow-up issue.
+- Recording a changed text of law or terms, by the label `record`.
+- Registering Sophaxis with indexes and registries.
+- Answering email.
+
+---
+
+Source: https://sophaxis.vercel.app/repositories.html
+
+# For repositories and DOI registration agencies
+
+Last updated: 2026-11-08.
+
+This page is addressed to the repositories whose deposits Sophaxis lists, and to the agencies that register their DOIs.
+It says what Sophaxis reads from your services, how often, and what it does with it.
+
+## The repositories listed
+
+{{repositories}}
+
+A work is listed only if its authors submit it, and only if its DOI metadata carries CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
+Sophaxis does not harvest or mirror any repository.
+
+## What Sophaxis reads
+
+- The DOI metadata of a submitted work, from the public REST APIs of DataCite, Crossref and, for Jxiv, JaLC: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence.
+- The list of versions of a work, from the same metadata.
+- The PDF of a version, unmodified, only where the work's licence allows it and the repository offers it to scripts (Zenodo, Figshare, arXiv and Research Square), through their public APIs or download addresses. This happens once per version, when the operator starts it by hand. Where the repository publishes a checksum, the copy must match it.
+
+Every request that Sophaxis's own code makes names Sophaxis and its repository in its User-Agent: `Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)`. The advice step of the submission check runs [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), which names itself: `deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)`.
+Sophaxis reads no pages meant for people, and does not get around any limit or block.
+
+## What Sophaxis shows
+
+Each record page links to the DOI and names the repository, and asks readers to cite the DOI.
+The DOI stays the reference; Sophaxis gives no DOIs of its own.
+The abstract and any PDF copy are shown under the work's own licence, with its authors, as the [Copyright Policy](./policies/copyright.html) sets out.
+
+## If something should change
+
+If Sophaxis reads more often than you allow, reads something your terms do not allow, or should stop copying files from your service, tell the operator.
+Sophaxis will change or stop it.
+A request about a deposit itself stays with the repository; Sophaxis cannot change or remove a deposit.
+
+Reach the operator through an [issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues) or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+
+## Disclaimer toward repositories and registration agencies
+
+Sophaxis is independent, and is not affiliated with, endorsed by or a partner of any repository or registration agency.
+Sophaxis keeps a community at Zenodo (<https://zenodo.org/communities/sophaxis>) for the Zenodo records of works it lists. Any Zenodo user can open one; it does not make Sophaxis part of Zenodo.
+A record on Sophaxis is Sophaxis's own description of a deposit; it is not a statement by the repository or the agency.
+They are not responsible for Sophaxis, for its records, for its moderation, or for any error that Sophaxis introduces when it shows their metadata.
+Their names identify their services only, and their trademarks belong to them; Sophaxis shows none of their logos.
+Sophaxis uses each service through its public interfaces and within its published terms, as Sophaxis understands them; where a service says otherwise, Sophaxis follows the service.
+See also the [Disclaimer](./disclaimer.html).
+
+## Acknowledgements
+
+Sophaxis exists because these services make research and its metadata openly available. Sophaxis thanks:
+
+{{acknowledgements}}
+
+Thank you to arXiv for use of its open access interoperability.
+
+---
+
+Source: https://sophaxis.vercel.app/contact.html
+
+# Operator and contact
+
+Last updated: 2026-11-08.
+
+## Operator
+
+Sophaxis is operated by one person, Takuya Nemoto, in Japan.
+It is a personal, non-commercial project.
+It is not run by a company, a university or a publisher.
+The operator runs it as an unpaid volunteer, and is at present the only moderator. It is served only within free services; the operator pays personally for Claude Code, with which it is written.
+The operator keeps it as a hobby, as an extension of a personal reading shelf; why it exists and what that means for the records is in the [Disclaimer](./disclaimer.html).
+
+- ORCID iD: [0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
+- GitHub: [cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
+
+The operator is also the moderator, and is responsible for the site and its records.
+The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.html).
+The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.html) set out.
+Submissions by the operator are moderated under the same rules and are marked as the operator's own.
+
+## Contact
+
+Complaints, legal matters and anything about personal data go by email, not to a public issue: use the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.html) sets out.
+
+- Questions, suggestions and problems with the site: [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
+- Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml).
+- An error in a record: [the correction form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml).
+- Withdrawing a work, as one of its authors: [the withdrawal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml).
+- Reporting the published version of a listed work, as one of its authors: [the published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml).
+- Removal for legal reasons: [the removal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml).
+- Anything that should not be public: email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+
+Issues are public. Do not put personal data in them.
+The email address for requests is kept on the ORCID record, not on this site.
+The OAI-PMH interface at `/oai` gives a separate address made for harvesters, because the protocol requires one.
+Write in English or Japanese.
+The email address on the operator's ORCID record, not the one for harvesters, is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
+The operator aims to answer within 7 days.
+
+## Sophaxis elsewhere
+
+- OSF: the project page [Sophaxis: An Independent Overlay Preprint Server](https://osf.io/mq7za/), with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The DOI names the project, not a listed work.
+- Zenodo: the code and the records, archived with each release. Version 1.0.0 has the DOI [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372); [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) stands for every version. The community <https://zenodo.org/communities/sophaxis> gathers the Zenodo records of works listed on Sophaxis; it is not an affiliation with Zenodo.
+- GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
+- ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).
+
+## Security
+
+A security problem goes by email, not to a public issue, so that it can be fixed before it is known.
+Say what you found and how to reproduce it.
+Sophaxis offers no reward, and thanks every report.
+The site gives the same contact in the standard file [security.txt](./.well-known/security.txt).
+
+## Accessibility
+
+Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.
+Its checks confirm the contrast of every text colour in the light and dark schemes, a link to skip to the content, a visible focus for keyboard users, the language of every page, one main heading per page, and headers for every table.
+A barrier can be reported in an issue with the label `accessibility`, or by email.
+If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
+
+## Postal address
+
+The operator's postal address is not published.
+It is given on request, without delay, as Japan's Act on the Protection of Personal Information provides.
+Ask for it by email.
+
+## Where the site runs
+
+The site is hosted on Vercel and built from the public repository on GitHub.
+The code, the records and the issues are kept on GitHub, and the automatic checks run as GitHub Actions there.
+Sophaxis is not affiliated with GitHub or Vercel; see the [Disclaimer](./disclaimer.html).
+Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of its own](./repositories.html).
+
+---
+
+Source: https://sophaxis.vercel.app/policies/privacy.ja.html
+
+# 個人情報の取り扱いについて
+
+最終更新：2026-11-08。
+
+Sophaxis の個人情報の取り扱いを、日本の個人情報保護法の項目に沿って書いたものです。英語の [Privacy Policy](./privacy.html) の訳で、項目を日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
+
+## 取り扱う者
+
+Sophaxis の運営者、根本卓哉です。住所は公開していません。求めがあれば、遅滞なく知らせます。
+運営者が個人情報保護法の「個人情報取扱事業者」に当たるものとして、同法の定めをすべて守ります。
+
+## 取り扱う個人情報
+
+- 投稿の issue に載る GitHub のユーザー名と、投稿の様式に書かれた内容
+- 載せた論文の著者の氏名と ORCID iD（DOI の登録情報から取ります）
+- 本人確認のために読む、ORCID の公開記録のうち、氏名・ウェブサイト・業績
+- 撤回や出版版の報告の様式に書かれた内容
+- 2026-11-21 から、共著者が同意を確かめるコメントに書く GitHub のユーザー名と ORCID iD
+
+本人確認では、ORCID に、公開記録のうち「個人の詳細」（氏名）・「ウェブサイト」・「業績」の部分だけを問い合わせます。
+「人物」の部分をまとめて問い合わせないので、公開のメールアドレスや国を受け取ることはありません。
+検査が使うのは氏名・ウェブサイト・業績だけで、ほかは保存せず、どこにも書き写しません。
+サイトは、閲覧者の個人情報を集めません。Cookie も、アクセス解析も使いません。
+頁には、閲覧者の情報を外へ送るコードもタグもありません。電気通信事業法の外部送信の規律（第 27 条の 12）に当たるものはありません。
+検索の頁は、Sophaxis 自身が配るスクリプトを一つだけ動かします。Sophaxis から記録の一覧を読み、閲覧者のブラウザの中で検索し、どこにも何も送りません。ほかの頁はスクリプトを動かしません。
+記録の頁には、X・Bluesky・Facebook・LinkedIn・メールへの共有のリンクがあります。どれも各サービスの頁への普通のリンクで、閲覧者がたどるまで何も送られず、たどった先では各サービスの方針が掛かります。
+Sophaxis は、Vercel のアクセス解析を有効にしていません。
+
+投稿・撤回・出版版の報告には、ORCID iD と、その ORCID の記録がリンクする GitHub のアカウントが要ります。
+これが無いと検査は著者を確かめられず、issue では手続きを進められません。
+その場合も、各規程のとおりメールで求めることができます。
+ほかには何も求めません。
+
+## 利用目的
+
+- 投稿者が、その論文の著者本人であることを確かめるため
+- 2026-11-21 から、同意を確かめる共著者が、その論文の著者本人であることを確かめるため
+- 撤回や出版版の報告をする人が、その論文の著者本人であることを確かめるため
+- 論文の記録の頁、著者ごとの頁、一覧と検索を作り、公開するため
+- 記録を `feed.xml`・`papers.json`・OAI-PMH（`/oai`）で再利用できる形にするため
+- 毎週、DOI とライセンスを確かめるため。著者が同意した作品については、頁と PDF の写しを Internet Archive に保存するため（頁が変わったときにも保存します）
+- 新しく載った頁、変わった頁、削除した頁の場所を、検索エンジンに知らせるため
+- 取り下げ・訂正・削除の求めと、個人情報についての求めに応えるため
+- サイトを配信し、Vercel の閲覧の要求の記録から不具合を見つけて直すため
+- 問い合わせ・苦情・紛争・安全についての報告に応えるため
+
+ほかの目的には使いません。
+
+## 公開と第三者への提供
+
+著者の氏名と ORCID iD は、記録の頁で公開します。
+記録は、`feed.xml`・`papers.json`・OAI-PMH でも公開します。OpenAIRE などの収集者は、そこから題・著者・要旨・ライセンスを写します。
+著者が同意した作品の頁と PDF の写しは、Internet Archive（米国）に保存します。
+Zenodo に置かれた作品は、Zenodo にある Sophaxis のコミュニティ（https://zenodo.org/communities/sophaxis）にも集めることがあります。
+コミュニティに記録を出すのは著者です。記録を持つのは Zenodo で、運営はスイスの CERN です。
+Sophaxis はコミュニティから何も写しません。運営者がそこの記録を書き換えることもありません。
+2026-11-22 から、著者のだれかが Sophaxis を提供しない国と地域（投稿の規程の表にあります）に住んでいるか、投稿から掲載までのあいだにそこに滞在した作品については、記録を足す依頼を断ります。その作品は Sophaxis に載らないためです。依頼そのものは、CERN の規約のもとで Zenodo に残ります。
+投稿の様式で、すべての著者が掲載と、下の「外国にある事業者の利用」に挙げる提供に同意していることを確かめます。Internet Archive への保存は別の同意で、空けておくこともできます。
+法令に基づく場合を除き、これ以外に個人情報を第三者へ渡すことはありません。
+ほかの者がすでに写したものは、Sophaxis の手の外にあります。
+
+## 外国にある事業者の利用
+
+Sophaxis は、外国にある次の事業者のサービスを使います。
+記録に含まれる個人データが GitHub・Vercel・ORCID・Internet Archive に渡ることと、審査のあいだ投稿の公開されている部分が Anthropic・OpenAI・xAI に渡ることを、個人情報保護法第 28 条の「外国にある第三者への提供」として扱います。
+投稿の様式で、この頁の情報を示したうえで、著者それぞれの同意を求めます。この確認は 2026-11-21 から必須です。
+それまでは、運営者以外の著者の作品は、すべての著者が投稿の issue でこの同意を示してから載せます。
+Internet Archive への保存の同意は、別の欄で尋ねます。空けておくこともでき、そのときは記録をそこに保存せず、`robots.txt` で Internet Archive に集めないよう求めます。
+どの著者も、どちらの同意も、削除の issue かメールでいつでも撤回できます。撤回の前に行ったことは、適法なままです。
+Internet Archive への同意を撤回すると、著者からの求めであることを運営者が確かめたうえで、審査なしに保存をやめます。運営者は、それまでの写しを除くよう Internet Archive に頼みます。
+GitHub・Vercel・ORCID への提供の同意を撤回すると、記録を削除します。これらが無いと作品を載せられないためです。
+
+- GitHub（米国）：投稿の受け付けと、記録の保管
+- Vercel（米国）：サイトの配信。閲覧の要求を、IP アドレスを含めて処理します
+- DataCite（ドイツ）・Crossref（米国）：DOI の登録情報を読むため
+- ORCID（米国）：ORCID の公開記録を読むため
+- Internet Archive（米国）：公開した頁と PDF の写しを保存するため
+- OpenAlex（米国）：載せた作品をどう収めているかを、DOI だけで問い合わせるため。人については問い合わせません
+- Anthropic・OpenAI・xAI（いずれも米国）：審査を助けるため。運営者が、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、それぞれの言語モデル Claude・ChatGPT・Grok に手で読ませます。掲載の後には渡しません
+
+それぞれの事業者の個人情報の扱いは、各社の規約によります。
+米国には、個人情報についての連邦の一般法がありません。州ごとの法律があります。国全体で個人情報を受け持つ一つの機関はなく、本人が持つ権利は、州と分野によって違います。
+ドイツは欧州連合の国で、一般データ保護規則（GDPR）が適用されます。
+各国の個人情報の保護の制度については、個人情報保護委員会が情報を公表しています。
+
+各事業者が個人情報を守るために講じている措置は、それぞれの方針にあります。
+
+- GitHub：[GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)。EU-米国データプライバシーフレームワークに従うと述べています。
+- Vercel：[Vercel Privacy Notice](https://vercel.com/legal/privacy-notice)。EU-米国データプライバシーフレームワークに従うと述べています。
+- ORCID：[ORCID Privacy Policy](https://info.orcid.org/privacy-policy/)。毎年、EU-米国データプライバシーフレームワークの基準で評価を受けていると述べています。
+
+GitHub・Vercel・ORCID について、欧州連合からの移転は、各社がその枠組みの認証を受けている限りで、EU-米国データプライバシーフレームワークについての欧州委員会の十分性認定に基づきます。
+
+- Crossref：[Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/)
+- Internet Archive：[Terms of Use](https://archive.org/about/terms)。受け取るのは公開の頁と PDF の写しだけで、記録がすでに公開している以上の個人データは含みません。Internet Archive が個人情報を守るために講じている措置については、情報を示すことができません。その規約はスクリプトを動かさないと読めず、ほかにその措置を述べたものも見つからなかったためです。
+
+メールでの求めは、Apple のメールの受信箱（iCloud メール、米国）に届きます。
+応えることと、応えたことを示すのに要る間だけ、そこに置きます。
+Apple が講じている措置は、[Apple のプライバシーポリシー](https://www.apple.com/legal/privacy/)にあります。
+欧州連合の人がメールを書くと、それは日本にいる運営者（日本には欧州委員会の十分性認定があります）と、米国の Apple の受信箱に届きます。Apple は、欧州経済領域・英国・スイスで集めた個人データの国際移転は標準契約条項によると述べています。
+
+Vercel は、Sophaxis への閲覧の要求の記録（IP アドレスを含みます）を持っています。
+運営者はこれを見ることができ、不具合を見つけて直すためだけに使います。
+
+受信箱の Apple と、閲覧の要求の記録の Vercel は、Sophaxis のために個人データを扱っており、どちらも契約で扱わないと定められてはいません。
+個人情報保護委員会の Q&A 7-53 の読み方に沿って、Sophaxis は両者をその取り扱いの委託先として扱い、個人情報保護法第 25 条により監督します。
+各社は講じている措置を公表しています。Vercel は[データ処理補遺](https://vercel.com/legal/dpa)の別表 2 に、Apple はプライバシーポリシーに書いています。
+毎週、自動の手順が Vercel と Apple のプライバシーの方針の最終更新日を読みます。日付が変われば issue が開き、運営者が方針を読み直して、そのサービスを使い続けてよいかを決めます。
+
+## 安全のための措置
+
+記録は、DOI の登録情報など、すでに公開されている情報だけで作ります。
+投稿の自動の検査は、読むものを ORCID の氏名・ウェブサイト・業績に限り、ほかを書き写しません。
+検査に与える権限は、必要な最小限にしています。
+記録を変えられるのは、運営者だけです。
+ただし、削除依頼が個人情報の露出を報告したときは、[削除の方針](./takedown.html)の自動の手順が記録の頁（題・著者・要旨・PDF の写し）を下げます。
+法令が報告を求める漏えいが起きたときは、個人情報保護委員会に報告し、本人に知らせます。
+報告が要るのは、要配慮個人情報を含むとき、不正に使われると財産の損害が生じうるとき、運営者のアカウントへの攻撃のような不正の目的による行為で漏れたとき、1,000 人を超えるときです。
+運営者は、知ったあと速やかに報告し、30 日以内に、不正の目的による行為のおそれがあるときは 60 日以内に、確かな報告をします。
+
+講じている措置を、個人情報保護委員会の区分で示します。
+
+- 組織的な措置：個人データを扱うのは運営者一人で、運営者が責任を負います。記録の変更は、どれも公開のコミットかプルリクエストとして残ります。
+- 人的な措置：運営者のほかに、Sophaxis の個人データを扱う人はいません。モデレーターを招く前に、運営者は、モデレーターが扱える個人データと、運営者がどう監督するかをここに書きます。
+- 物理的な措置：Sophaxis は、自前のサーバーも紙の記録も持ちません。記録は GitHub のリポジトリに、サイトは Vercel にあります。
+- 技術的な措置：自動の手順が持つ鍵は、GitHub が実行ごとに渡す最小限の権限のトークンだけです。Vercel に残る以前の版のサイトは、公開していません。リポジトリを変えられる唯一のアカウントである運営者の GitHub アカウントは、二段階認証を使っています。サイトを配る Vercel には、運営者はこの GitHub アカウントでログインしています。
+- 外的環境の把握：「外国にある事業者の利用」に示したとおりです。
+
+## 自動の処理
+
+自動の検査は、公開されている記録を照らし合わせ、その結果を issue に書くだけです。人についての判断はしません。
+人に法的な効果、またはそれに近い重大な影響を与える判断を、自動の処理だけで下すことはありません。
+審査を助ける言語モデルは、判断をしません。投稿についての判断は、モデレーションの規程のとおり、すべて人が下します。
+運営者の判断の前に動く手順が一つだけあります。削除依頼が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）を下げる手順です。
+本人を守るためのもので、依頼が認められなければ元に戻します。
+自動の手順は、[What runs by itself](../automation.html) の頁にすべて挙げています。
+
+## 保存の期間
+
+記録は、引用が壊れないよう、期限を設けずに保ちます。
+issue とそこに載る GitHub のユーザー名は、GitHub が issue を保つ間、残ります。記録を削除すると、その記録を名指す issue を空にし、運営者がそのあと削除します。
+Vercel の閲覧の要求の記録は、そのサービスが定める期間だけ残ります。運営者はそれを写しません。
+削除の求めがあれば、[削除の規程](./takedown.html)に沿って記録を削除します。
+著者の求めでも削除します。
+削除した記録に残るのは、Sophaxis の番号と削除の日だけです。
+公開のリポジトリの履歴と、Internet Archive の保存には、以前の版が残ります。
+運営者は、GitHub と Internet Archive にその削除を頼みます。
+
+## 開示・訂正・利用停止・削除の求め
+
+本人は、Sophaxis が持つ自分の個人データについて、開示・訂正・利用の停止・削除を求めることができます。
+利用目的を知らせること、正確さや異議を確かめる間の利用の制限、第三者への提供の停止も求めることができます。制限の間、運営者は該当する部分を下げます。
+投稿の issue とその同意、公開のリポジトリにある記録の履歴が、第三者提供の記録（個人情報保護法第 29 条）です。本人は、自分に関わる部分の開示を求めることができます。
+記録に載っていない個人データ（issue の GitHub のユーザー名、Vercel の記録の IP アドレスなど）についての求めは、メールで受け付けます。
+求めは、削除の issue で受け付けます。
+issue は公開されるので、個人情報は書かず、Sophaxis の id と求めの種類だけを書く形にします。
+公開の場で求めにくいときは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへ送る形でも受け付けます。
+個人データについての求めに答える前に、運営者は、ORCID の記録かメールで、求めた人が誰かを確かめます。
+求めは、親権者・保護者や本人が選んだ人などの代理人を通してもできます。そのときは、本人であることに加えて、代理の権限を確かめます。
+個人データの開示は、メールで、広く使われる電子の形か、本人が求める方法で行います。issue には書きません。
+OAI-PMH の入口にも、収集者のためのアドレスがあります。この規格がアドレスを求めるためです。個人情報についての求めは、ORCID の記録のアドレスで受け付けます。
+運営者は、7 日以内に応えることを目安にします。
+個人データについての求めには、遅くとも 1 か月以内に応えます。
+もっと時間が要るときは、その 1 か月のうちに理由を添えて知らせ、求めから 3 か月以内に応えます。
+求めのとおりにしないときは、1 か月以内に理由を知らせます。データ保護機関への苦情と、裁判所に訴えることができることも知らせます。
+求めがあれば、訂正・削除・制限をどの受け手に知らせたかを伝えます。
+求めに費用はかかりません。
+個人情報の扱いへの苦情も、同じアドレスで受け付けます。
+[個人情報保護委員会](https://www.ppc.go.jp/)に相談することもできます。
+スイスの人は、スイスの連邦データ保護・情報コミッショナーに苦情を申し立てることもできます。
+
+## 異議を述べる権利
+
+誰でも、いつでも、自分の事情を理由に、Sophaxis での自分の個人データの利用に異議を述べることができます。
+異議は、削除の issue かメールで受け付けます。
+異議を受けたら、運営者は、本人の利益・権利・自由に優る、やむを得ない正当な理由を示せるときと、法的な請求に要るときを除いて、その利用をやめます。
+その理由は、書面で示します。
+
+## 欧州連合と英国の人へ
+
+2026-11-22 から、Sophaxis は、欧州連合・欧州経済領域・英国の人にサービスを提供しません。
+著者のだれかがそこに住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せず、投稿の様式で投稿者にこのことを確かめます。短い滞在も含みます。
+これは住んでいる場所と滞在している場所だけで決まり、国籍・人種・民族その他の個人の属性によるものではありません。
+サイトは誰でも読めますが、Sophaxis はそこの人に向けて運営していません。
+そのため運営者は、一般データ保護規則と英国の一般データ保護規則は、第 3 条第 2 項によっては Sophaxis に及ばないと考えています。
+それでも、この節に書く権利は、当てはまる限り守ります。
+欧州連合と英国の人については、この取り扱いの根拠は正当な利益です。著者を確かめること、公開の学術記録を保つこと、サイトを安全に配信すること、連絡をくれた人に応えることです。
+記録は、学術記録を保つために、表現と情報の自由のために残します（第 17 条第 3 項 a）。
+十分性の認定もほかの保護措置もない欧州連合の外への移転は、著者の明示の同意に基づきます（第 49 条第 1 項 a）。Internet Archive への移転がこれに当たります。
+その移転の起こりうる危険を、同意の前に示します。Sophaxis は、Internet Archive に掛かる十分性の認定もほかの保護措置も知りません。そのため、そこに保存された個人データは、一般データ保護規則のもとより弱くしか守られないことがあり、本人がそこで権利を行使することも難しいことがあります。
+この同意は別の欄で尋ね、削除の issue かメールで、いつでも撤回できます。そのとき Internet Archive への保存は審査なしにやめます。撤回の前に行ったことは、適法なままです。
+本人は、自分が示した個人データを、構造化され、広く使われ、機械で読める形で受け取るよう求めることもできます（第 20 条）。`papers.json` と OAI-PMH の入口が、すべての記録をすでにその形で示しています。
+本人は、上の「異議を述べる権利」のとおり異議を述べることができます。自国のデータ保護機関に苦情を申し立てることもできます。
+欧州連合と英国に代理人（第 27 条）は置いていません。
+置かないと決めています。
+代理人は、有料のサービスか、欧州連合や英国にいて Sophaxis の責任を引き受ける人になります。
+Sophaxis は、無報酬で、無料の範囲で運営しています。
+第 3 条第 2 項についての上の考えが誤っていれば、代理人がいないので、Sophaxis は第 27 条を満たしていません。取り扱いは継続的なものなので、時折の取り扱いの例外には当たりません。
+運営者は、運営者以外の著者の作品を初めて載せたときに、この判断を見直します。データ保護機関、または欧州連合や英国にいる人から代理人を求められたときも、そのつど見直します。
+見直しのたびに、その結果を公開のリポジトリに記録します。
+見直しでは、二つの道を比べます。代理人を置くことと、法人を通して Sophaxis を運営することです。
+日本で法人を作っても、それだけでは代理人の問題は片付きません。片付くのは欧州連合か英国に拠点を置いたときだけで、そのときはその拠点に一般データ保護規則が全面的に掛かります。
+どの形で運営するとしても、Sophaxis は著者からも読者からも料金を取りません。
+それらの地域の人は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへ、英語か日本語で直接連絡できます。
+運営者は、その連絡にも、データ保護機関からの連絡にも、代理人に代わって自ら応えます。
+取り扱いの記録は、公開のリポジトリの `docs/records-of-processing.md` に置いています。
+
+## 中国の人へ
+
+2026-11-22 から、Sophaxis は中国の人にもサービスを提供しません。
+中国の個人情報保護法第 53 条は、中国の人に商品やサービスを提供する国外の処理者に、中国国内の機関の設置か代理人の指定を求めています。Sophaxis はどちらも置いていません。
+これは住んでいる場所と滞在している場所だけで決まり、国籍・人種・民族その他の個人の属性によるものではありません。
+それでも、上に書いた本人の求めには、当てはまる限り応えます。
+
+## タイの人へ
+
+2026-11-22 から、Sophaxis はタイの人にもサービスを提供しません。
+タイの個人データ保護法第 37 条第 5 号は、タイの人に商品やサービスを提供する国外の管理者に、タイ国内の代理人を書面で指定するよう求めています。Sophaxis は代理人を置いていません。
+第 38 条は、個人データの処理を職業や事業とし、その量が多くない管理者を除いています。Sophaxis は事業ではないので、この除外には拠りません。
+これは住んでいる場所と滞在している場所だけで決まり、国籍・人種・民族その他の個人の属性によるものではありません。
+それでも、上に書いた本人の求めには、当てはまる限り応えます。
+
+## ほかの国と地域の人へ
+
+2026-11-22 から、Sophaxis は、[投稿の規程](./submission.ja.html)の表にあるほかの国と地域の人にもサービスを提供しません。
+そこの法令は、現地の代理人、国内での個人データの保存、現地での登録、データを国外へ出す前の条件のいずれかを求めているか、求めると報告されています。Sophaxis はどれも満たしていません。
+国や地域は、そうした務めが報告された時点で表に足し、法令を原文で読んでから外します。
+ロシアの連邦法第 152-FZ 号は、国外に住むロシア国民のデータにも、本人が処理に同意していれば及びます（第 1 条第 1.1 項）。Sophaxis は住んでいる場所と滞在している場所で決め、国籍は尋ねないので、この部分には対応していません。ロシアの当局から指摘があれば、運営者は判断を見直します。
+2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
+インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
+これは住んでいる場所と滞在している場所だけで決まり、国籍・人種・民族その他の個人の属性によるものではありません。
+それでも、上に書いた本人の求めには、当てはまる限り応えます。
+
+## この方針の変更
+
+この方針を変えたときは、この頁の日付を改めます。
+過去の版は、公開のリポジトリに残ります。
+
+---
+
+Source: https://sophaxis.vercel.app/policies/terms.ja.html
+
+# 利用規約（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Terms of Use](./terms.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。
+
+## この規約が及ぶ人
+
+この規約は、Sophaxis を読む人と、Sophaxis に投稿する人のすべてに及びます。
+投稿者は、投稿の様式で、その日の版のこの規約に同意します。
+Sophaxis を読むことを、何かへの同意とはみなしません。読む人にとって、この規約は Sophaxis の仕組みを示すもので、双方が負うものは法令が定めます。
+ほかの規程も、この規約の一部です。
+コンテンツのモデレーションの仕方は、モデレーションの規程と削除の規程に定めています。そこに関わる自動の手順は、[What runs by itself](../automation.html) の頁にすべて挙げています。
+
+## Sophaxis が提供するもの
+
+Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せます。
+載せた作品のそれぞれに、記録の頁、検索、フィードを与えます。預け先が許す場合は、PDF の写しも置きます。
+これらを無料で行います。
+
+## 著者がすべての責任を負う
+
+著者は、自分の作品と、それを Sophaxis に載せることについて、すべての責任を負います。
+次のものを含みます。
+
+- 作品の内容。主張・証明・引用・計算・図のすべてを含みます。
+- その版をそのライセンスで共有する権利と、出版者の許諾。
+- 作品の中の他人の素材と、著作権その他の権利の侵害。
+- 作品の中の第三者の個人データ。
+- 生成モデルについての申告と、そこに書かれていない使用。
+- [投稿の規程](./submission.html)で投稿者が確認する事柄が、すべて真実であること。
+
+モデレーションによって、これらのどれかが運営者に移ることはありません。
+掲載が示すのは、投稿が[モデレーションの規程](./moderation.html)の確認を通ったことだけです。
+投稿時に投稿者が確認した事柄が真実でなかったために、第三者が Sophaxis や運営者に請求をした場合、法令の定めるところにより、著者がその責任を負います。
+著者は、[削除の規程](./takedown.ja.html)に沿って削除の求めを検討するあいだ、記録の頁（題・著者・要旨・PDF の写し）を公開から外すこと、そのあいだ OAI-PMH がその記録を削除済みとして示すことに同意します。
+様式に書かれた文は、[ライセンスの規程](./licences.html)が定めるとおりに共有します。
+運営者は、それでも[削除の規程](./takedown.ja.html)に沿って求めに応じます。
+様式でこの規約に同意していない共著者は、法令がそうする範囲でだけ、この規約に拘束されます。その人にとって、この節は、法令がすでに作品の著者に負わせていることを述べるものです。
+
+## 読者ができること
+
+読者は、載っている作品のそれぞれを、その作品自身のライセンスに沿って、読み、ダウンロードし、再利用できます。
+このサイトの文は、[ライセンスの規程](./licences.html)が定めるとおり、CC BY 4.0 で再利用できます。
+
+## してはいけないこと
+
+- 自分が著者でない作品を投稿すること。
+- 著作権その他の権利を侵害する素材を投稿すること。
+- 法令上の根拠なく、第三者の個人データを投稿すること。
+- スパム、嫌がらせ、サイトや投稿の手続きを妨げようとすること。
+- 様式で、事実でないことを確かめること。例として、著者の住んでいる場所や滞在している場所、投稿者の年齢、著者の同意、生成モデルの使用についての申告があります。
+
+運営者は、これらの決まりに反する投稿を、断り、または削除することがあります。
+確認が事実でないと分かったときは、運営者は、知った時点で[削除の規程](./takedown.ja.html)に沿って記録を削除します。2026-11-22 からは、同じ GitHub アカウントや ORCID iD からのその後の投稿を断ることもあります。
+運営者は、確認を信頼して受け、確かめません。事実でない確認で載った作品があっても、[投稿の規程](./submission.ja.html)が提供しないとする国と地域で、Sophaxis を提供していることにはなりません。
+確認は公開の issue に残るので、何をいつ確かめたかを示せます。
+投稿者に、違約金や、法令が定める以上の損害の賠償を求めることはありません。
+
+## 保証しないこと
+
+Sophaxis は、現状のまま提供します。
+載っている作品の質・正しさ・完全さを保証しません。
+サイトにいつでも届くことも保証しません。
+運営者は、自らの故意または過失で生じさせた損害について、日本の法令の定めるとおり責任を負います。
+著者が書いた作品の内容だけ、または GitHub・Vercel・預け先だけが原因で生じた損害については、法令が運営者に責任を負わせる場合を除き、運営者は責任を負いません。
+Sophaxis は、運営者を日本の消費者契約法の事業者であるものとみなして、読者と著者に同法を適用します。
+
+## 変更と終了
+
+この規約とほかの規程は、変わることがあります。
+各頁の日付が最後の変更を示し、過去の版は公開のリポジトリに残ります。
+どの変更によっても、料金は生じません。
+
+著者や読者の権利を奪い、または狭める変更と、義務を加える変更は、効力を持つ前に、変わる中身とその開始日を添えて、トップの頁で告知します。
+告知は少なくとも 14 日前に行います。ただし、法令や、安全や法的なリスクのような差し迫った問題が、より早い変更を求める場合は、この限りではありません。
+その場合でも、変更は効力を持つ前に告知します。
+文をわかりやすくすることや、例を足すことのようなほかの変更は、頁に示した日に効力を持ちます。その日が公開の日より前になることはありません。
+変更は、日本の民法第 548 条の 4 が認めるときにだけ行います。著者と読者の一般の利益に合うとき、またはこの規約の目的、変更の必要、変更後の中身に照らして合理的なときです。
+黙っていることや、Sophaxis を使い続けることを、変更への同意とはみなしません。
+変更を受け入れない人は Sophaxis の利用をやめることができ、著者は[撤回の規程](./withdrawal.ja.html)に沿って自分の作品を撤回できます。
+
+## 続けるための備え
+
+Sophaxis は一人で運営しており、失うものなく止められるように組んでいます。
+
+- 判断が遅いことは、休止ではありません。モデレーションには数週間から数か月かかることがあります。休止とは、病気などのために、運営者が Sophaxis の作業をまったくできないときのことです。それが 30 日を超えて続く場合、トップの頁で新しい投稿の受け付けを休止していることを示します。載っている記録は公開したままです。
+- 運営者が行動できない場合を除き、閉鎖は少なくとも 30 日前にトップの頁で告知し、先に新しい投稿の受け付けを止めます。
+- Sophaxis を閉じる場合、運営者は、すべての記録を収めたリポジトリを公開のまま残し、記録を読めるようにします。頁と PDF の写しは、毎週 Internet Archive にも保存しています。
+- コードと記録は、版を出すたびに Zenodo に保存しています。いちばん新しい版を指す DOI は [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) です。
+- 運営者は、Sophaxis をほかの人、機関、または法人に引き継ぐことがあります。引き継ぎは先にサイトで告知し、新しい運営者が通常の手続きで変えるまで、この規約は効力を保ちます。
+- 誰でも、リポジトリを写し、そのライセンスのもとで、ほかの場所で作業を続けられます。文は CC BY 4.0、コードは MIT です。載っている作品は、それぞれ自身のライセンスを保ちます。
+- DOI は、Sophaxis に何があっても、それを発行した預け先に残ります。
+
+## 準拠法
+
+この規約は、日本法に準拠します。
+この規約のどの定めも、法令が制限を認めない権利を制限しません。
+特に、故意または重大な過失による責任や、日本の消費者契約法その他の法令が免除や制限を認めない責任を、免除したり制限したりしません。
+
+## 紛争
+
+Sophaxis や載っている作品についての紛争は、できるかぎり合意で解決します。
+
+1. まず運営者に連絡します。運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへ送るか、公開してよい事柄なら issue に書きます。何についての紛争か、何があれば解決するかを書きます。
+2. その後、双方が誠実に話し合い、合意を目指します。運営者は 7 日以内に答え、紛争を返事のないまま放置しません。
+3. 話し合いで 60 日以内に解決しない場合、どちらの側も、裁判の前に、日本の簡易裁判所の民事調停のような調停を申し出ることができます。
+
+これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、運営者の住所地を管轄する地方裁判所または簡易裁判所を、第一審の合意管轄裁判所とします。この合意は専属的なものではありません。
+それ以外の人との間では、法令の定める裁判所が管轄します。
+運営者の住所は、[運営者と連絡先](../contact.html)の頁にあるとおり、求めがあれば知らせます。
+これは、消費者や日本国外の人が、法令によって別の裁判所で訴えを起こし、または応じる権利を奪うものではありません。
+この節のどの定めも、誰かが裁判所に緊急の救済を求めることや、[削除の規程](./takedown.ja.html)を使うことを妨げません。
+
+## 日本国外の方へ
+
+Sophaxis は日本から運営しており、どこからでも読めます。
+
+- 同じ手順が適用されます。話し合いと調停は、書面やオンラインで、英語か日本語で行えます。紛争を解決するために、誰も日本へ来る必要はありません。
+- この規約は日本法に準拠します。その人自身の国の法令が、合意で排除できない保護、たとえば消費者の保護を与えている場合、その保護は引き続き適用されます。
+- 日本国外の人が、自国の法令に基づいて自国の裁判所に訴えることができる場合、その権利は残ります。上の裁判所についての合意が、それを奪うことはありません。
+- この規約は英語で書かれており、この日本語の訳を公開しています。訳が英語の文と食い違う場合は、英語の文が適用されます。
+
+## GitHub と Vercel
+
+Sophaxis は、米国に拠点を置く二つのサービスの上で動いており、それぞれの規約もこの規約と並んで適用されます。
+
+- Sophaxis に投稿することは、GitHub を使うことを意味します。issue を開くこと、コメントすること、ファイルを添付することは、利用者と GitHub とのあいだで、GitHub の利用規約とプライバシーステートメントに従います。
+- Sophaxis を読むことは、Vercel から頁を受け取ることを意味します。Vercel は、IP アドレスを含むそれぞれの要求を、自らの規約と個人情報の方針に沿って、日本や読者の国以外の国で処理することがあります。
+- この規約が拘束するのは、運営者と Sophaxis を使う人です。GitHub や Vercel を拘束せず、GitHub や Vercel に対する請求権も、GitHub や Vercel が行ったことについての運営者に対する請求権も、誰にも与えません。
+- GitHub や Vercel そのものとの紛争は、それぞれの準拠法と裁判所の定めを含め、それぞれの規約に従います。上の「紛争」の手順が扱うのは、運営者と Sophaxis だけです。
+- Sophaxis のリポジトリや issue の中の素材は、GitHub 自身の手続きで GitHub に通報することもでき、サイトの素材は Vercel に通報することもできます。運営者は、GitHub や Vercel が対応したかどうかにかかわらず、[削除の規程](./takedown.ja.html)に沿って求めに応じます。
+- GitHub や Vercel が、たとえば米国の法令に基づいて、自らの側で何かを削除し、制限し、または遮断した場合、Sophaxis はそれを元に戻せないことがあります。
+
+## 一般
+
+- ほかの規程は、この規約の一部です。ある規程がある事柄をより詳しく扱う場合は、その事柄についてはその規程が適用されます。それ以外で両者が食い違う場合は、この規約が適用されます。FAQ、手順を順に示す頁、免責事項は、この規約を説明するもので、この規約を変えるものではありません。
+- この規約の一部が無効または執行できないとされた場合も、残りは効力を保ち、その部分は法令が許す範囲で適用されます。
+- 運営者がある時点でこの規約の一部を執行しなくても、それによってその部分を放棄したことにはなりません。
+- 2026-11-21 から、13 歳未満の人は投稿できません。
+- 18 歳未満の人は、親または保護者の同意がある場合に限り投稿できます。
+- 未成年として投稿した人に、法令が掲載の削除を求める権利を与えている場合は、[削除の規程](./takedown.ja.html)が適用されます。
+- 運営者への通知は、ORCID の記録にあるメールアドレスへのメールか、issue で行います。著者への通知は、その著者の投稿の issue で行います。
+
+## 連絡先
+
+運営者と、運営者に連絡するすべての方法は、[運営者と連絡先](../contact.html)の頁にあります。
+質問は[リポジトリの issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues) へどうぞ。
+公開すべきでない事柄は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへメールで送ります。
+素材の削除の求めは、[削除の規程](./takedown.ja.html)に沿って行います。
+
+---
+
+Source: https://sophaxis.vercel.app/policies/submission.ja.html
+
+# 投稿の規程（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Submission Policy](./submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+## 投稿できる人
+
+作品を投稿できるのは、その作品の著者だけです。
+Sophaxis は、モデレーターが作品を読む前に、ORCID を通してこれを確かめます。
+
+- 様式に書かれた ORCID の記録が、issue を開いた GitHub のアカウントにリンクしている。
+- その ORCID iD が作品の著者のものである。DOI のメタデータがそれを著者の一人として挙げているか、ORCID の記録がその DOI を業績に挙げ、名前が著者の一人と合う。
+
+この両方を通らない投稿は載せません。
+ORCID iD を持たない著者は投稿できません。
+2026-11-21 から、13 歳未満の人は投稿できません。
+18 歳未満の投稿者には、親または保護者の同意が要ります。
+2026-11-22 から、著者のだれかが下の表の 28 の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。投稿者は様式でこのことを確かめます。
+滞在には、旅行・出張・留学のような短いものも含みます。
+滞在も数えるのは、いくつかの国と地域の法令が、そこに住む人だけでなく、そこにいる人にも及ぶためです。たとえば一般データ保護規則の第 3 条第 2 項は、欧州連合にいるデータ主体と書いています。
+これらの国と地域では、Sophaxis はサービスを提供しません。その国や地域の法令が、そこに住む人へサービスを提供する者に務めを課しているか、課していると報告されていて、Sophaxis はその務めを一つも満たしていないためです。詳しくは[個人情報の取り扱いについて](./privacy.ja.html)にあります。
+この決まりは、著者がどこに住んでいるか、どこに滞在しているかだけで決まります。国籍・人種・民族その他の個人の属性によるものではありません。
+どの国籍の著者も、これらの国と地域の外に住み、そこに滞在していなければ投稿できます。これらの国と地域に住んでいるか滞在している著者は、国籍を問わず投稿できません。
+務めの中身は、現地に代理人を置くこと、個人データを国内に保存すること、現地で登録すること、データを国外へ出す前に条件を満たすことのいずれかです（一般データ保護規則と英国の一般データ保護規則の第 27 条、欧州連合のデジタルサービス法の第 13 条、中国の個人情報保護法の第 53 条、タイの個人データ保護法の第 37 条第 5 号など）。Sophaxis は一人が無償の範囲で運営していて、どれも備えていません。運営者は、個人情報の取り扱いについての頁が示すとおり、代理人を置かないと決めています。
+決まりは、こうした務めを求める法令、または求めると報告されている法令のある国と地域には、Sophaxis を提供しないことです。
+国や地域を表に足すのは、そうした務めが報告された時点です。法令の原文を読むのを待ちません。表から外すのは、その法令を原文で読み、Sophaxis に及ばないと確かめてからです。
+表を変えるときは、利用規約のとおり、効力が始まる前にトップの頁で告知します。
+Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか、どこに滞在しているかは調べません。
+著者がこれらの国と地域に住んでいる、または投稿から掲載までのあいだにそこに滞在したと分かったときは、[削除の規程](./takedown.ja.html)に沿って記録を削除し、運営者は代理人についての判断を見直します。
+2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
+インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
+
+| 国と地域 | 法令が求めるもの | 法令 | 原文で読んだか |
+| --- | --- | --- | --- |
+| 欧州連合 | 代理人 | 一般データ保護規則 第 27 条、デジタルサービス法 第 13 条 | 読んだ |
+| 欧州経済領域 | 代理人 | 一般データ保護規則 第 27 条（欧州経済領域での適用） | 読んだ |
+| 英国 | 代理人 | 英国の一般データ保護規則 第 27 条 | 読んだ |
+| 中国 | 代理人 | 個人情報保護法 第 53 条 | 読んだ |
+| タイ | 代理人 | 個人データ保護法 第 37 条第 5 号 | 読んだ |
+| ロシア | 国内での個人データの保存 | 連邦法第 152-FZ 号 第 1 条第 1.1 項（読んだ）、第 18 条第 5 項（報告による） | 一部 |
+| トルコ | 国内の代理人を通じた登録 | データ管理者登録簿に関する規則 | まだ（報告による） |
+| エジプト | 代理人と許可 | 2020 年法律第 151 号とその施行規則 第 3 条 | まだ（報告による） |
+| ペルー | 代理人 | 法律第 29733 号の施行規則（最高令第 016-2024-JUS 号） | まだ（報告による） |
+| アルバニア | 代理人 | 個人データ保護法（法律第 124/2024 号） | まだ（報告による） |
+| モナコ | 代理人 | 法律第 1.565 号 第 25 条 | まだ（報告による） |
+| ガーンジー | 代理人 | ガーンジー管轄区データ保護法（2017 年） | まだ（報告による） |
+| ボツワナ | 代理人 | 2024 年データ保護法 第 54 条 | まだ（報告による） |
+| エクアドル | 代理人 | 個人データ保護組織法の施行規則 第 3 条 | まだ（報告による） |
+| イラク | 開始前の当局への届出 | デジタルプラットフォームとサービスの枠組み規則（2025 年）第 4 条・第 5 条 | 読んだ |
+| インドネシア | 登録 | 通信情報大臣規則 2020 年第 5 号（改正後） | まだ（報告による） |
+| ルワンダ | 登録と国内での個人データの保存 | 法律第 058/2021 号 第 2 条・第 29 条・第 50 条 | 読んだ |
+| ザンビア | 登録と国内での個人データの保存 | 2021 年データ保護法 第 19 条・第 70 条 | まだ（報告による） |
+| エチオピア | 国内での個人データの保存 | 個人データ保護布告 第 1321/2024 号 | まだ（報告による） |
+| コンゴ民主共和国 | 国内での個人データの保存と許可 | デジタル法典（オルドナンス法第 23/010 号）第 184 条・第 186 条・第 188 条・第 201 条（官報ではない写しで読んだ） | 一部 |
+| カザフスタン | 国内での個人データの保存 | 個人データ法（法律第 94-V 号）第 3 条・第 12 条第 2 項 | 読んだ |
+| チュニジア | 国内に住む管理者による届出 | 2004 年組織法第 63 号 | まだ（報告による） |
+| ウガンダ | 登録 | 2019 年データ保護・プライバシー法 第 29 条 | まだ（報告による） |
+| ギニア | 国内での個人データの保存 | サイバーセキュリティと個人データ保護に関する法律（L/2016/037/AN） | まだ（報告による） |
+| マダガスカル | 国内での個人データの保存 | 個人データ保護法（法律第 2014-038 号） | まだ（報告による） |
+| ボリビア | 国内での個人データの保存 | 電気通信一般法（法律第 164 号） | まだ（報告による） |
+| コスタリカ | 登録 | 法律第 8968 号 第 21 条 | まだ（報告による） |
+| ケベック州 | データを外へ出す前の評価と書面の契約 | 民間部門の個人情報保護法 第 17 条 | まだ（報告による） |
+
+これは、ORCID の記録を管理している人が issue を開いたことを確かめるものです。公的な本人確認ではありません。
+
+## 投稿できるもの
+
+Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作品を受け付けます。
+主に別の分野に属する作品は、数学を使っていても対象外です。
+
+作品は、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けてある必要があります。
+[ライセンスの規程](./licences.ja.html)が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。
+学術論文の通常の形で、題・要旨・参考文献を備えている必要があります。
+
+すでに学術誌が出版した作品は、著者がそのようなライセンスで共有してよい版に限り投稿できます。
+その条件は出版者によって異なります。
+投稿者は、下の「作品が出版されたとき」に定めるとおり、出版された版の DOI を様式に書きます。
+
+## 著者が複数いる作品
+
+2026-11-21 から、著者が複数いる作品は、ほかの著者全員がそれぞれ自分の同意を確かめてから載せます。
+確かめ方は二通りです。
+一つは、投稿の issue へのコメントです。そのコメントは、その著者の ORCID の記録がリンクしている GitHub のアカウントから書きます。
+コメントには「I agree to the listing of this work on Sophaxis.」と書き、自分の ORCID iD を添えます。
+issue の自動の確認が、それぞれの確認を数えます。
+もう一つは、運営者へのメールです。その後、運営者がその人の ORCID の記録で本人であることを確かめます。
+この同意は、掲載と、[個人情報の取り扱いについて](./privacy.ja.html)が定める個人データの提供に及びます。
+メールで確かめるときも同じことを書きます。運営者の返信は、個人情報の取り扱いについての頁へのリンクを添えます。
+記録を Internet Archive に保存するには、著者全員の別の同意が要ります。様式がこれを尋ね、空けておくこともできます。同意がなければ、記録はそこに保存しません。
+どの著者も、いつでも、削除依頼の issue かメールで同意を撤回できます。
+
+## 投稿者が確認すること
+
+- 投稿者は、作品の著者である。
+- 作品の著者全員が、Sophaxis への掲載に同意している。
+- 著者は、この版をそのライセンスで共有する権利を持っている。学術誌が出版した作品なら、出版者がそれを許している。
+- 作品には、図や長い引用のように著者が共有してはいけない素材も、第三者の個人データも含まれていない。
+- 生成モデルについての申告は、完全で真実である。
+- [利用規約](./terms.ja.html)が定めるとおり、著者は作品とその掲載についてすべての責任を負う。
+
+## 投稿の手順
+
+1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、受け付けるライセンスでプレプリントを預け、DOI を得る。
+2. ORCID の記録を GitHub のアカウントにリンクする。「Websites & social links」に `https://github.com/<your username>` を足す。
+3. Sophaxis のリポジトリで投稿の issue を開き、DOI、ORCID iD、分野、生成モデルについての申告を書く。
+4. 自動の確認が DOI のメタデータと ORCID の記録を読み、結果を issue に書く。
+5. モデレーターが[モデレーションの規程](./moderation.ja.html)に沿って投稿を確かめる。通れば記録の頁を公開する。
+
+題・著者・要旨・ライセンス・版は、手で打ち込むのではなく、DOI のメタデータから取ります。
+
+投稿の issue は公開されます。
+GitHub のユーザー名と、様式に書いたことはすべて、誰でも見られます。
+
+## 言語モデルとその他の生成モデル
+
+言語モデルを使って書いた作品や開発した作品も、一つの条件で受け付けます。使ったことを申告することです。
+同じ条件は、画像・図・音声・コードを作るモデルを含め、ほかのすべての生成モデルに当てはまります。
+
+申告では、使った道具の名を挙げ、何に使ったかを書きます。
+たとえば、下書き、翻訳、証明、コード、文献探索、編集、図、画像です。
+生成モデルを使わなかった場合は、申告にそう書きます。
+
+2026-11-21 から、様式では使った程度も四段階で尋ねます。著者は、当てはまるうちで最も高い段階を選びます。
+
+- None: no generative model was used.（使っていない）
+- Editing: language editing, translation or proofreading only.（言葉の手直し・翻訳・校正だけ）
+- Assistance: structure, literature search or checking; the authors wrote the text.（構成・文献探索・確認の手助け。文は著者が書いた）
+- Drafting: a generative model drafted text, proofs, code or figures that the authors revised.（生成モデルが文・証明・コード・図の下書きを作り、著者が手を入れた）
+
+記録の頁では、著者が選んだ段階を申告の上に示します。段階は申告の代わりにはなりません。申告では引き続き、道具の名と、それぞれが何をしたかを書きます。
+「None」の段階は、モデルの名を挙げる申告と並んで成り立ちません。
+
+言語モデルを著者に挙げることはできません。
+ほかの生成モデルも、著者に挙げることはできません。
+[利用規約](./terms.ja.html)が定めるとおり、著者が作品についてすべての責任を負います。
+
+掲載の後に、申告されていない相当の使用が明らかになった場合、
+記録に注記を付け、著者に申告を足すよう求めます。
+
+## 版と更新
+
+作品は、一つの Sophaxis の番号のもとで一度だけ載せます。
+その番号は、記録を撤回したり削除したりした後も、ほかの作品に与えることはありません。
+
+新しい版とは、預け先での新しい版のことです。
+多くの預け先は、版ごとに別の DOI を与えます。
+arXiv はすべての版に一つの DOI を使い、その DOI は最新の版を指します。その場合、記録は同じ DOI を、版ごとの日付とともに挙げます。
+新しい版は、既存の記録の更新として投稿します。前の版も載ったままです。
+
+## 作品が出版されたとき
+
+載っているプレプリントは、後の版が学術誌、会議録、書籍で出版されても、載ったままです。
+その場合、記録の頁は出版された版を先頭に示します。何であるか、いつどこで出たか、その DOI です。
+読者には出版された版を引用するよう求め、載っている版をプレプリントとして示します。
+
+出版された版は、著者なら誰でも一人で、[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)で報告できます。報告は、その著者の ORCID の記録がリンクしている GitHub のアカウントから行います。
+自動の確認が、報告が著者からのものであることを確かめ、出版された版の DOI のメタデータを読みます。
+出版された版は、学術誌の論文、会議の論文、書籍の章、書籍のどれかでなければなりません。
+受け付ける預け先のどれかにあるものであってはならず、記録と共通の著者がいなければなりません。
+その後、モデレーターがそれを記録し、その判断は issue で公開します。
+出版された版は投稿のときに書くこともでき、そのときも同じ確認が走ります。
+
+Sophaxis は、学術誌の査読を評価しません。
+記録は、著者が述べるとおりに書きます。出版された版が査読を受けた、受けていない、または何も述べない、のどれかです。
+出版者のメタデータが出版された版をプレプリントにリンクしているか、著者が報告しただけかも書きます。
+
+Sophaxis は毎週、Crossref と DataCite のメタデータから、載っているプレプリントにリンクし、共通の著者を持つ出版された版を探します。
+自分では何も記録しません。著者に報告を求めます。
+同じ毎週の確認で、記録した出版された版がまだ解決するかも確かめます。
+出版者が出版された版に撤回、訂正その他の告知を付けた場合、記録の頁にそれを示します。
+
+出版者の中には、出版に際してプレプリントを外したり変えたりするよう著者に求めるものがあります。
+著者は出版者の条件を確かめます。
+掲載を終える必要がある場合、著者なら誰でも一人で、[撤回の規程](./withdrawal.ja.html)に沿って撤回でき、記録の頁は出版された版へのリンクを保ちます。
+
+## 受け付けないものの例
+
+これらの例は、上の決まりの当てはめ方を示すものです。すべてを挙げたものではなく、決めるのは決まりのほうです。
+それぞれの組は、[モデレーションの規程](./moderation.ja.html)に沿ってモデレーターが断るときに挙げる理由に対応しています。
+
+著者であること：投稿者は著者でなければならず、著者全員が同意していなければなりません。
+
+- 同僚の論文を、本人の許しを得ていても、代わりに投稿すること。投稿できるのは著者だけです。
+- 先生、指導教員、著名な著者の論文を、読まれる価値があるからと投稿すること。
+- 研究室のアカウントや二つ目の個人アカウントのように、ORCID の記録がリンクしていない GitHub のアカウントから issue を開くこと。
+- 共著者の ORCID iD や、issue を開く本人以外の ORCID iD を書くこと。
+- DOI のメタデータも ORCID の記録も作品と結び付けていない ORCID iD を書くこと。
+- 共著者が同意していない、または断ったのに、作品を投稿すること。
+- 断られた作品を、新しい GitHub のアカウントを作って別の名で投稿し直すこと。
+
+預け先と DOI：作品は、受け付ける預け先から、自分自身の DOI を得ていなければなりません。
+
+- 個人のウェブサイト、大学の頁、Google Drive、Dropbox、Academia.edu、ResearchGate にある PDF。
+- 自身の DOI を与えない PhilArchive、PhilSci-Archive、HAL にだけある作品。受け付ける預け先にも預けてください。
+- 学術誌が出版した版の DOI を、預けたものの DOI として書くこと。
+- 別の作品を、載っているプレプリントの出版された版として書くこと。
+- SciELO Preprints ではなく、SciELO の学術誌の論文の DOI。
+- Qeios と ScienceOpen が登録する、査読報告の DOI。
+- 解決しない DOI や、別の作品につながる DOI。
+
+ライセンス：DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されていなければなりません。
+
+- CC BY-NC 4.0、CC BY-ND 4.0、CC BY-NC-SA 4.0、CC BY-NC-ND 4.0。
+- CC BY 3.0、CC BY 2.0 その他のクリエイティブ・コモンズのライセンスの古い版。
+- arXiv の非独占的ライセンス（arXiv.org perpetual, non-exclusive license）。
+- 「All rights reserved」、または DOI のメタデータにライセンスがまったく無いもの。
+- PDF や預け先の頁にだけ書かれ、DOI のメタデータには無いライセンス。
+- 掲載の後に、受け付けないライセンスへ変えられたもの。毎週の確認がそれを報告し、運営者が調べます。
+
+対象：作品は、主に哲学・数学・論理学・数理哲学・科学哲学に属していなければなりません。
+
+- 数学を道具として使う、物理学・経済学・計算機科学・工学・生物学・心理学の論文。
+- 機械学習のベンチマーク、ソフトウェアの説明、データセット。
+- 哲学や数学の問いを論じない、文芸批評・歴史・政治的な論評。
+- 哲学の問いを論じずに助言や実践を説く自己啓発や精神的な手引き、政治の宣言文や運動の呼びかけ。
+
+形：作品は、学術論文の通常の形で、題・要旨・参考文献を備えていなければなりません。
+
+- スライド、ポスター、講義ノート、録画した講演。
+- 参考文献の無いブログの記事や随筆。
+- 要旨だけ、または本文の無い表紙だけ。
+- 互いに関係の無い複数の論文を一つにまとめた預け物。
+- 小説、詩、日記。
+
+申告：生成モデルについての申告は、道具の名を挙げ、何に使ったかを書いていなければなりません。
+
+- 言語モデルが本文のどこかを下書きし、翻訳し、または編集したのに「None」とすること。
+- 道具の名も、何をしたかも書かず、言語モデルを使ったとだけ述べる申告。
+- 生成モデルで作った図や画像を、申告から漏らすこと。
+- DOI のメタデータや論文で、言語モデルやその他の生成モデルを著者に挙げること。
+
+権利と個人データ：著者は作品の中のすべてを自由に共有できなければならず、作品は他人を晒すものであってはなりません。
+
+- 書籍・論文・ウェブサイトから、許しを得ずに、引用として認められる範囲を超えて写した図・表・写真。出典を示しても、許しの代わりにはなりません。
+- 出版者が著者の原稿だけの共有を許しているのに、学術誌の論文の出版者による組版の版を出すこと。
+- 同意していない私人の名前、メールアドレス、住所、写真。
+- 参加者を特定できる、調査や聞き取りへの回答。
+- 私的なメッセージ、メール、チャットの画面写し。
+- ほかの研究者の未公開の素材を、その人の同意なく共有すること。
+
+スパムと嫌がらせ。
+
+- 同じ作品を何度も、または複数の題で投稿すること。
+- issue を埋めるために、多くの投稿を一度に開くこと。
+- 広告、有料のサービスへのリンク、何かを売るために書かれた文。
+- 名を挙げた人を、嫌がらせ、脅し、または中傷する文。
+- 欄にコードやマークアップを置くなどして、様式・自動の確認・サイトを壊そうとすること。
+- ほかの人、機関、学術誌になりすますこと。
+
+版。
+
+- 新しい版を、既存の Sophaxis の番号の更新としてではなく、新しい作品として投稿すること。
+- 撤回した記録の新しい版。撤回した記録には、新しい版を加えません。
+
+## 撤回
+
+著者なら誰でも一人で、[撤回の規程](./withdrawal.ja.html)に沿って、載っている作品を撤回できます。
+記録は消しません。撤回した作品は撤回の告知とともに記録の頁を保ち、その作品への引用は切れません。
+著者は代わりに記録を削除させることもでき、その場合は Sophaxis の番号だけが残ります。
+法的な理由による削除は、[削除の規程](./takedown.ja.html)に従います。
+
+---
+
+Source: https://sophaxis.vercel.app/policies/moderation.ja.html
+
+# モデレーションの規程（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Moderation Policy](./moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+## モデレーションは査読ではない
+
+受理はモデレーションであって、査読ではありません。
+モデレーションは、投稿を載せてよいかどうかを決めます。
+作品が正しいか、独創的か、重要かは判断しません。
+
+## モデレーションが確かめること
+
+- 自動の確認が、投稿者とライセンスを確かめている。
+- 作品が対象の分野に入る。
+- DOI が書かれた作品へ解決し、投稿者がその著者の一人である。
+- 作品が、受け付けるライセンスの一つ、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを持つ。
+- 作品が、学術論文の通常の形で、題・要旨・参考文献を備えている。
+- 投稿に、言語モデルとその他の生成モデルの使用についての申告がある。
+- 投稿者が、著者全員の同意と、その版を共有してよいことを確認している。
+- 2026-11-21 から、[投稿の規程](./submission.ja.html)が定めるとおり、著者が複数いる作品では、ほかの著者全員がそれぞれ自分の同意を確かめている。
+- 作品がスパムでも嫌がらせでもなく、第三者の個人データを晒していない。
+- 作品に、[投稿の規程](./submission.ja.html)の表にある、Sophaxis を提供しない国と地域の、著者の所属や住所が書かれていない。書かれていれば、モデレーターはその著者がどこに住んでいるか、投稿のあとにそこに滞在したかを投稿者に尋ね、ほかの場所に住み、そこに滞在していないのでなければ断る。
+- PDF に、DOI の登録情報のライセンスと食い違う権利の表示（出版社の「無断転載禁止」など）がない。あれば断る。
+
+## モデレーションが確かめないこと
+
+証明・論証・データは確かめません。
+剽窃の検査は行いません。
+作品を文献と比べることはしません。
+
+## 仮登録
+
+自動の確認を通った投稿は、仮登録になります。その issue に `verified` のラベルが付き、モデレーターの判断を待ちます。
+仮登録の作品は、サイトに載りません。記録の頁は作らず、OAI-PMH でも渡さず、Internet Archive など記録を保存するほかのサービスにも送りません。
+仮登録は受理ではありません。モデレーターが受理するか断ると、仮登録は終わります。
+
+## 判断
+
+モデレーターは、投稿の issue で受理か却下を決め、issue に `accepted` か `declined` のラベルを付けます。
+判断はすべて、その issue で公開されたまま残ります。
+審査を助けるため、運営者は、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、三つの言語モデル、Claude（Anthropic）、ChatGPT（OpenAI）、Grok（xAI）に読ませ、それぞれの指摘を見比べます。
+運営者はこれを、各サービスのチャットで手で行います。投稿を自動で送ることはなく、公開されていないものは渡しません。
+言語モデルは補助にとどまります。言語モデルが投稿を受理したり断ったりすることはなく、判断はすべて、投稿を読んだ運営者かモデレーターが下します。
+言語モデルの指摘を判断の理由にするのは、運営者がその指摘を確かめた後だけです。
+目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。
+
+投稿を断るモデレーターは、次の理由のうち一つ以上を、短い説明とともに挙げます。
+
+- 対象外：作品が主に、哲学・数学・論理学・数理哲学・科学哲学の外の分野に属する。
+- 学術論文の形でない：題・要旨・参考文献のどれかを欠く。
+- ライセンス：DOI のメタデータに、受け付けるライセンスが記されていない。
+- 著者であること：投稿者が著者であると確かめられない、または著者全員が同意していない。
+- 申告：生成モデルについての申告が無い、またはどう使ったかを書いていない。
+- 権利と個人データ：作品に、著者が共有してはいけない素材や第三者の個人データが含まれている。または、PDF にライセンスと食い違う権利の表示がある。
+- 住んでいる場所と滞在した場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在した。
+- スパムまたは嫌がらせ。
+
+投稿者は issue で答えることができます。
+その後、運営者が投稿をもう一度見直し、その判断が最終のものになります。
+投稿者は、裁判所に訴えることも、デジタルサービス法第 21 条で認証された裁判外の紛争解決機関を使うこともできます。
+
+## モデレーター
+
+いまのモデレーターは運営者だけです。
+ほかのモデレーターを招くことがあります。
+これらの分野の研究者でモデレーターを引き受けたい人は、運営者に連絡できます。誰を招くかは運営者が決めます。
+どのモデレーターも、判断をする前に、[運営者と連絡先](../contact.html)の頁に ORCID iD とともに名を挙げ、この規程に沿って無報酬でモデレーションを行います。
+
+## 利益相反
+
+運営者の投稿も同じ決まりでモデレーションを行い、記録の頁にその旨の印を付けます。
+自動の確認は、例外なくそれにも掛かります。
+運営者が唯一のモデレーターであるあいだは、運営者が自分の投稿についても判断します。記録の頁の印がそれを示します。
+ほかのモデレーターが加われば、どのモデレーターも、自分の投稿や近しい共同研究者の投稿については判断しません。
+
+## 掲載の後
+
+訂正は、日付付きの注記として記録に加えます。
+誰でも、記録の頁のリンクから、記録の誤りを報告できます。そのリンクは公開の訂正の issue を開きます。
+注記が作品に置き換わることはありません。
+申告されていない生成モデルの使用のような問題が明らかになった場合、記録に告知を付けることがあります。
+
+毎週、自動の確認が、載っているすべての DOI がまだ解決し、記録にあるライセンスをまだ持っていることを確かめます。
+問題は公開の issue で報告し、運営者が調べます。
+
+---
+
+Source: https://sophaxis.vercel.app/policies/copyright.ja.html
+
+# 著作権の規程（日本語訳）
+
+最終更新：2026-11-07。
+
+これは英語の [Copyright Policy](./copyright.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+## 著作権は著者に残る
+
+Sophaxis は、著作権の譲渡も、独占的な許諾も求めません。
+作品は、著者が預け先で付けたライセンスのままです。
+
+## Sophaxis が写すものと、その根拠
+
+題・著者名・ライセンス・日付は、DataCite と Crossref が再利用のために公開している DOI のメタデータから取ります。Jxiv については、JaLC の公開のメタデータから取ります。
+要旨は作品の一部です。
+要旨は、作品自身のライセンスのもとで、著者と作品へのリンクを添えて示します。
+
+Sophaxis は、検索エンジンが本文を索引できるように、載っているそれぞれの版の PDF の写しを、手を加えずに置きます。
+写すのは、スクリプトでファイルを取らせる預け先からだけです。Zenodo、Figshare、arXiv、Research Square です。
+預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
+預けたものに PDF が複数ある場合、Sophaxis はどれが論文かを推測せず、写しを作りません。
+ほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。
+その場合、Sophaxis はそのファイルを手を加えずに置き、記録には著者が提供したと書きます。
+そのようなファイルが無ければ、記録は預け先へのリンクだけになります。
+写しを置くのは、ファイルが 20 MB 以下で、写し全体が 1 GB 以内に収まるあいだだけです。
+それより大きいファイルは預け先に置いたままにし、記録はそこへリンクします。
+
+写しは著者が預けたファイルそのものです。作品自身のライセンスのもとで、著者、ライセンス、原本へのリンクを添えて共有します。
+受け付けるライセンスは、これを認めています。
+著者は写しを外すよう求めることができます。その場合、記録は預け先へのリンクだけになります。
+
+Sophaxis は毎週、Internet Archive に頁と PDF の写しの保存を求めています。このサイトが無くなっても読めるようにするためです。
+
+記録の頁はどれも、Google Scholar が読む引用のタグを持ちます。
+検索エンジンが頁を索引するかどうか、いつ索引するかは、Sophaxis には決められません。
+
+## Sophaxis がライセンスを守るやり方
+
+Sophaxis は、載っている作品を、作品自身のライセンスのもとで、そのライセンスが認める範囲でだけ共有します。
+受け付ける三つのライセンスは、どれも、目的を問わず複製と共有を認めています。
+CC BY 4.0 と CC BY-SA 4.0 は表示を求めます。CC0 1.0 は求めませんが、Sophaxis はそれでも著者を示します。
+
+- 表示：記録の頁はどれも、著者と題を挙げ、ライセンスの名をリンク付きで示し、DOI で作品へリンクします。
+- 改変しない：PDF の写しは、預けたファイルを 1 バイトも変えずに、そこに付いている告知ごと置いたものです。要旨は、書式のタグを外し、語を変えずに、素の文として示します。
+- 条件を足さない：Sophaxis は、ライセンスが読者に認めていることを制限する条件も技術的な手段も足しません。
+- 推薦を装わない：Sophaxis のどこにも、著者が Sophaxis やその作品の使い方を推薦していると述べたり、ほのめかしたりするものはありません。
+
+## 学術誌が出版した作品
+
+学術誌が作品を出版すると、著作権や独占的な許諾が出版者に移ることがあります。
+その場合、著者は、預けた版をそのライセンスで共有してよいことを確かめなければなりません。
+共有してはいけない場合、その作品は載せられません。
+
+## 他人の素材
+
+図・表・長い引用その他の他人の素材には、許諾が要ります。または、引用のように法令が認めるやり方で使わなければなりません。
+その責任は著者が負います。
+
+## 認めないことの例
+
+これらの例は、この規程の当てはめ方を示すものです。すべてを挙げたものではありません。
+
+共有する版について：
+
+- 著作権が出版者に移ったのに、出版者の組版の版を CC BY で預けること。著者はもはやそれを許諾できません。
+- 出版者が定めるエンバーゴが明ける前に、受理された原稿を預けること。
+- 新しい草稿、手を入れた写し、学術誌の体裁のように、預けたファイルと異なる PDF を投稿の issue に添付すること。写しは、預けたファイルを手を加えずに置いたものでなければなりません。
+- Sophaxis に PDF の写しを変えるよう求めること。変えるなら、預け先での新しい版になります。
+
+他人の素材について：
+
+- 書籍・論文・ウェブサイトから、許しを得ずに、引用の範囲を超えて写した図・表・地図・写真。
+- 引用の法令が及ばない長さで引いた、ほかの作品の長い一節。
+- 他人の詩・歌・短編の全文。
+- 他人の論文の翻訳を、著者自身の作品として預けること、または原作の権利者の許しなく預けること。
+- 再公開を禁じる条件のある資料館の画像。
+- 非営利や改変禁止のライセンスの素材を、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 の作品の中に、そのライセンスのもとにあるかのように置くこと。
+- ソフトウェア、ウェブの頁、動画の画面写しを、引用として認められる範囲を超えて載せること。
+
+求めについて：
+
+- 公開の削除の issue で、侵害している素材そのものを繰り返すこと。代わりに、それがどこにあるかを書いてください。
+- 預け先から預けたものを削除するよう Sophaxis に求めること。Sophaxis にはできません。その求めは預け先へ送ります。
+
+## 侵害
+
+載っている作品が自分の権利を侵害していると考える権利者は、[削除の規程](./takedown.ja.html)に沿って削除を求めることができます。
+
+---
+
+Source: https://sophaxis.vercel.app/policies/licences.ja.html
+
+# ライセンスの規程（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Licence Policy](./licences.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+## 受け付けるライセンス
+
+Sophaxis が載せるのは、次のライセンスのどれかを持つ作品だけです。
+
+- CC BY 4.0
+- CC BY-SA 4.0
+- CC0 1.0
+
+これらのライセンスなら、Sophaxis は著者を示したうえで、要旨を示し、PDF の写しを置けます。
+読者も、作品を自由に再利用できます。
+非営利（NonCommercial）や改変禁止（NoDerivatives）の条件を持つライセンスは受け付けません。
+
+## ライセンスを記す場所
+
+ライセンスは、預けたものの DOI のメタデータに記されている必要があります。自動の確認はそこから読みます。
+ライセンスの条件は、どの預け先でも同じです。
+arXiv では、投稿のときに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを選んでください。arXiv の非独占的ライセンスは受け付けません。
+SSRN の作品は、受け付けるライセンスのどれかを持つ場合に限り受け付けます。
+
+## このサイトのライセンス
+
+このサイトの文は CC BY 4.0 で許諾しています。
+コードは MIT で許諾しています。
+載っている作品は、それぞれ自身のライセンスを保ちます。
+
+`feed.xml`、`papers.json`、OAI-PMH の口にある記録のデータは、自由に再利用できます。
+その中の要旨は、その作品のライセンスを保ちます。
+
+## 様式に書かれた文
+
+2026-11-21 から、様式で示された要旨は、その作品のライセンスで共有します。
+2026-11-21 から、生成モデルについての申告、撤回の理由、訂正のような、様式に書かれたほかの文は、書いた人が CC0 1.0 で共有します。
+これにより、Sophaxis はそれを記録とともに示すことができ、ほかの人も記録のデータとともに再利用できます。
+2026-11-21 より前に様式に書かれた文は、書いた人が記録のための公開の様式に書いたことで与えた許しにより、記録とともに示します。書いた人は、[削除の規程](./takedown.ja.html)に沿って、その削除を求めることができます。
+
+---
+
+Source: https://sophaxis.vercel.app/policies/takedown.ja.html
+
+# 削除の規程（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Takedown Policy](./takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+## 記録を削除するとき
+
+記録は消しません。
+記録を削除しても、Sophaxis の番号はすべて残ります。
+記録を削除するのは、三つの場合です。
+一つ目は、著作権の侵害や個人データの露出のように、法令が削除を求める場合です。
+二つ目は、著者が掲載に同意していなかったことを示し、その作品を[撤回の規程](./withdrawal.ja.html)で撤回できない場合です。
+三つ目は、[撤回の規程](./withdrawal.ja.html)が定めるとおり、作品の著者が撤回の issue で削除を求めた場合です。
+削除した記録に残るのは、下の「削除した記録に残るもの」の節に挙げるものだけです。
+
+## 求め方
+
+法的な理由で削除を求めるときは、削除の issue を開きます。
+issue に個人データを書かないでください。
+問題の素材そのものを繰り返さずに、問題がどこにあるかを書きます。
+著者として、権利者として、データが載っている本人として、またはその代理として、のどの立場で関わっているかを書きます。
+
+求めは、どの国からでも、英語か日本語で受け付けます。
+求めは、求める人の国の法令に基づくものでも構いません。たとえば米国の法令に基づく著作権の通知や、欧州連合のデータ保護法に基づく求めです。
+運営者は、この規程と日本法に沿って検討し、どちらかが求める場合は素材を公開から外します。
+
+サイトは Vercel が配信し、リポジトリとその issue は GitHub が保管しています。どちらも米国にあります。
+求めは、たとえば GitHub 自身の手続きでの著作権の通知として GitHub に、または Vercel に送ることもできます。
+GitHub と Vercel は、それぞれの規約で判断します。運営者は、それがどう判断しても、Sophaxis についてはこの規程で判断します。
+運営者が素材を削除する場合は、下に定めるとおり、リポジトリの履歴からの削除も GitHub に求めます。
+
+公開の場で行えない求めは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへメールで送ります。
+それが求めのための宛先です。OAI-PMH の口にある宛先は、収集者のためのものです。
+個人データやそのほかの重大な害については、運営者は、求めを検討するあいだ、記録の頁（題・著者・要旨・PDF の写し）を公開から外します。著者は[利用規約](./terms.ja.html)でこれに同意しています。
+
+## 求めを受けた後
+
+運営者は、それぞれの求めに 7 日以内に答えることを目指します。
+個人データやそのほかの重大な害については、判断の前に、記録の頁（題・著者・要旨・PDF の写し）をただちに公開から外し、戻すまで OAI-PMH はその記録を削除済みとして示します。
+削除の issue には、運営者が答える目安の日を添えた受領の知らせが自動で付きます。
+削除の issue が個人データの露出を報告している場合、運営者が読む前に、記録の頁（題・著者・要旨・PDF の写し）が自動で公開から外れます。
+自動の処理は何も決めません。どの求めも運営者が判断します。
+著者には、その投稿の issue で知らせ、著者は応答できます。
+求めた人自身の個人データについての求めは、作品ではなくその人に関わるものなので、著者には知らせません。
+重大な害のためにただちに外す場合を除き、運営者は、求めに沿って素材を外す前に、著者に同意するかどうかを尋ねます。7 日以内に反対がなければ、外すことがあります。
+この通知と応答の手続きは、インターネット上のサービスの提供者の責任に関する日本の法令の考え方に沿ったものです。素材に関わる人は、判断の前に求めを知り、答えることができます。ただし、重大な害のために素材をただちに公開から外す必要がある場合は除きます。
+
+求めが認められた場合、記録は次の節のとおり削除します。
+求めが認められなかった場合、運営者はその理由を issue で示します。
+検討のあいだ公開から外していた素材は、元に戻します。
+戻す前に、判断を issue に書くか、メールで求めた人にはメールで送ります。
+著者はいつでも求めに答えることができ、その答えから求めに根拠がないと分かった場合は、素材を元に戻します。
+
+## 削除した記録に残るもの
+
+この節は、理由にかかわらず、削除したすべての記録に適用されます。
+削除は、運営者の判断の後、公開のリポジトリにある `tools/removal.js` が行います。下の各段階は、公開する前に自動で確かめます。
+
+サイトでは:
+
+- 記録を削除すると、その頁は、その Sophaxis の番号の記録を削除したことだけを述べる告知に置き換わります。
+- 告知には、理由もほかの詳細も書きません。
+- 引用が何もない所ではなく告知へ届くように、アドレスは働いたままにします。
+- 題・著者・要旨・PDF の写しは、サイトから外します。
+- 頁は検索エンジンに索引しないよう求め、記録はすべての一覧、検索、フィード、`papers.json`、サイトマップから外れます。統計では、削除した記録としてだけ数えます。
+- Vercel が保持しているサイトの過去の版は、公開しません。
+- `robots.txt` で、Internet Archive のクローラーに、その頁と PDF の写しを再び集めないよう求めます。
+
+記録と OAI-PMH の口では:
+
+- 記録には、Sophaxis の番号、「removed」の語、削除の日だけが残ります。日を残すのは、OAI-PMH の口がそれを必要とするためです。
+- OAI-PMH の口は、その日を添え、メタデータなしで、記録を削除済みとして示します。収集者が次に訪れたときに取り除けるようにするためです。
+
+issue では:
+
+- その記録についての自動のコメントはすべて消し、その記録を挙げる issue は中身を空にして閉じ、ロックします。その後、運営者がそれらを削除します。
+- issue を削除すると、その編集履歴も消えます。
+- 削除の求めそのものは、それへの判断とともに残ります。削除を求めた撤回の issue は、ほかと同じように中身を空にします。
+
+サイトの外では:
+
+- 運営者は、リポジトリの履歴からの素材の削除も GitHub に求めます。
+- GitHub が削除するまで、記録の過去の版は公開のリポジトリの履歴に残ります。
+- GitHub 自身の手続きでは、先に持ち主が履歴を書き換え、そのあと GitHub のサポートに頼みます。サポートが手伝うのは、ほかに危険を除く手のない機微なデータだけです。手伝わないときは、過去の版は履歴に残ります。
+- 運営者は、Internet Archive にも、その記録の過去の写しを除外するよう求めます。
+- ほかの者がすでに取った写しは、Sophaxis の手の外にあります。運営者は、知っているものには知らせます。
+- これらの手順は、後始末の issue にまとめます。Internet Archive への依頼の文面も添えます。毎日、自動の手順が、空にした issue が削除されたかと、Wayback Machine に写しが残っているかを確かめ、済んだものに印を付け、残りを週に一度、運営者に知らせます。
+
+削除した記録の Sophaxis の番号は、ほかの作品に与えることはありません。
+
+## 欧州連合のデジタルサービス法について
+
+2026-11-22 から、Sophaxis は、著者のだれかが欧州連合に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品を載せず、そこの人に向けて運営していません。そのため運営者は、Sophaxis は欧州連合と実質的なつながりを持たず、この法の意味でそこにサービスを提供していないと考えています。
+Sophaxis はここでも最も厳しい場合を想定し、その規模のサービスに当てはまりうる範囲で、欧州連合のデジタルサービス法に従います。
+
+- 当局・欧州委員会・Sophaxis を使う人のための連絡窓口（第 11 条・第 12 条）は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスで、英語か日本語で受け付けます。Sophaxis は欧州連合に法定代理人を置いておらず（第 13 条）、運営者は、[個人情報の取り扱いについて](./privacy.ja.html)が示す理由により、置かないと決めています。当局はそのアドレスで運営者に直接連絡します。上の考えが誤っていれば、欧州連合に法定代理人がいないので、Sophaxis は第 13 条を満たしていません。
+- 違法なコンテンツの通知（第 16 条）は、削除の issue かメールで行います。メールでの通知には、送る人の名とメールアドレスを書きます。削除の issue は公開されるので、これらを書きません。代わりに、issue を開いた GitHub のアカウントがその役を果たします。メールでの通知には、書いたことが正確で完全だと誠実に信じていることも書きます。削除の issue には受領の知らせが自動で付きます。メールでの通知には、運営者が遅滞なくメールで受領を知らせます。判断は issue かメールで知らせます。
+- 判断の理由（第 17 条）は、運営者が、すべての判断について削除の issue かメールで示します。著者には、求めが届いた時点でその issue を知らせています。理由には、自動の処理が働いたかどうかを書きます。働くのは露出した個人データをただちに公開から外す処理だけで、それは求めが挙げた問題の種類に応じて働きます。素材を違法と判断したときは、理由に、拠った法令と、素材がそれに反するわけを書きます。措置の及ぶ範囲と期間も書きます。削除は、サイトがどこで読まれても及び、恒久のものです。メールでの求めを認めたときは、個人データを含めずに書いた理由を、空にする前の著者の投稿の issue に書きます。GitHub がそれを、その issue を見ている著者に送ります。理由が無いと、削除の手順は動きません。著者は、運営者にメールで理由を求めることもできます。
+- 判断への異議（第 20 条）は、通知を送った人と著者が、六か月以内に、削除の issue での返答かメールで申し立てることができます。費用はかかりません。運営者が見直して答え、見直しを自動の処理に任せることはありません。
+- 裁判所に訴えることも、第 21 条で認証された裁判外の紛争解決機関を使うこともできます。
+- 重大な犯罪の疑い（第 18 条）：人の生命や安全を脅かす犯罪の疑いを生じさせる情報を知ったときは、運営者は、関係する加盟国の法執行機関か司法機関に、持っている関係の情報をすべて添えて速やかに知らせます。その加盟国を十分な確かさで特定できないときは、欧州刑事警察機構（Europol）に知らせます。
+- 載せてよいものを制限する決まりは、[利用規約](./terms.ja.html)とこれらの規程に、平易な英語で書いてあります（第 14 条）。
+- 月ごとの平均の利用者数（第 24 条第 3 項）：Sophaxis は、アクセス解析も読者を見分ける識別子も持たず、この数を出すために持ち始めることもしません。デジタルサービス調整官か欧州委員会から求められたときは、直近六か月の月ごとに、Sophaxis に投稿・通知・連絡をした欧州連合の人の数を issue とメールから数えて示し、読者は数えていないことを添えます。
+- [統計](../stats.html)は削除した記録を数え、公開の削除の求めのすべてへリンクしています。
+
+## 米国法による著作権の通知
+
+Sophaxis は、手数料の掛かる米国著作権局への代理人の届け出をしていません。そのため、米国著作権法第 512 条の責任の制限には拠りません。
+その法による侵害の通知も、ほかの求めと同じく、この規程に沿って扱います。
+
+## 素材を送った人の開示の求め
+
+素材を投稿した人の開示を求められた場合は、日本の法令が定めるとおりに扱います。
+運営者は、まず関係する人に意見を聴きます。
+運営者は、法令が求めないものは開示しません。
+
+## 預け先にある作品
+
+Sophaxis は、Zenodo、Figshare その他の預け先から作品を削除できません。
+預けたものそのものについての求めは、その預け先へ送ります。
+
+---
+
+Source: https://sophaxis.vercel.app/policies/withdrawal.ja.html
+
+# 撤回の規程（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Withdrawal Policy](./withdrawal.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+## 撤回できる人
+
+載っている作品の著者なら、誰でも一人で撤回できます。
+作品は、すべての著者が同意しているあいだだけ載せるので、一人の著者がその同意を取り下げると掲載は終わります。
+
+求めは、投稿のときと同じく、著者自身の GitHub のアカウントから出します。
+著者の ORCID の記録がそのアカウントにリンクしており、その ORCID iD が作品の著者のものでなければなりません。
+自動の確認が両方を確かめ、結果を issue に書きます。
+
+## 求め方
+
+撤回の issue を開き、Sophaxis の番号、ORCID iD、短い理由を書きます。
+理由は記録の頁に出るので、個人データを含めてはいけません。
+issue は公開されます。
+
+公開の場で行えない求めは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへメールで送ります。
+その場合、運営者は、issue で確認が行うのと同じく、ORCID の記録で著者であることを確かめます。
+
+## 求めを受けた後
+
+運営者は、確かめられた求めから 7 日以内に対応することを目指します。
+引用が切れないように、記録の頁は、アドレス・題・著者・要旨・版を保ちます。
+頁の先頭の告知に、撤回の日と理由を書きます。
+記録は、撤回済みの印を付けて、一覧・検索・フィード・`papers.json` に残ります。
+PDF の写しはサイトから外し、記録は預け先へのリンクだけになります。
+撤回した記録には、新しい版を加えません。
+過去の写しは、公開のリポジトリの履歴と Internet Archive に残り、OAI-PMH の口の収集者は、取ったものを保ちます。
+
+## 著者の求めによる削除
+
+著者は、同じ issue で、撤回の代わりに記録の削除を求めることができます。
+様式で、二つのうちどちらを望むかを尋ねます。
+同じ確認で、求めているアカウントが作品の著者のものであることを確かめます。
+すでに撤回した記録も、削除できます。
+運営者は、確かめられた issue に `upheld` のラベルを付けて記録を削除し、7 日以内に行うことを目指します。
+その後に残るのは、[削除の規程](./takedown.ja.html)の「削除した記録に残るもの」の節が定めるとおり、Sophaxis の番号だけです。
+理由は示さず、撤回の issue そのものも中身を空にして閉じ、ロックします。
+
+## 著者の名前
+
+クリエイティブ・コモンズのライセンスが定めるとおり、著者は、記録から自分の名前を外すよう求めることができます。
+運営者は、合理的に可能な範囲でそれに応じ、記録は残します。
+
+## 預け先にある作品
+
+Sophaxis での撤回は、預けたものに手を触れません。
+Sophaxis は、Zenodo、Figshare その他の預け先にある作品を撤回したり削除したりできません。預けたものについての求めは、その預け先へ送ります。
+預け先が預けたものを撤回したり削除したりした場合、毎週の確認で DOI が解決しなくなったことが分かり、運営者はその旨の注記を付けて記録を撤回します。
+
+## 出版に伴う撤回
+
+出版者の中には、作品が出版されたときにプレプリントを外すよう著者に求めるものがあります。
+その場合、著者なら誰でも一人で、上のとおり掲載を撤回できます。
+出版された版が記録されていれば、記録の頁はそこへのリンクを保ちます。プレプリントの引用をたどった読者が、出版された版に行き着けるようにするためです。
+著者は、撤回を求める前に、出版された版を報告できます。撤回した記録には、新しい報告を受け付けません。
+
+## 撤回と削除
+
+撤回は著者の判断で、記録は残ります。
+削除は、著作権の侵害や個人データの露出のような法的な理由によるもの、または著者の求めによるもので、題・著者・要旨・PDF の写しをサイトから外します。
+削除は[削除の規程](./takedown.ja.html)に従います。
+
+---
+
+Source: https://sophaxis.vercel.app/disclaimer.ja.html
+
+# 免責事項（日本語訳）
+
+最終更新：2026-11-08。
+
+これは英語の [Disclaimer](./disclaimer.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+この頁は、Sophaxis が約束しないことを一か所にまとめたものです。
+拘束力を持つのは[利用規約](./policies/terms.ja.html)です。この頁と食い違う場合は、利用規約が適用されます。
+
+## 載っている作品
+
+掲載はモデレーションであって、査読ではありません。
+Sophaxis は証明・論証・データを確かめず、載っている作品が正しいこと、独創的であること、完全であること、何らかの質を持つことを保証しません。
+著者は、生成モデルについての申告を含め、自分の作品にすべての責任を負います。Sophaxis はその申告を検証しません。
+
+## メタデータ
+
+題・著者・要旨・ライセンス・版・日付は、DataCite、Crossref、JaLC が保持する DOI のメタデータから取り、受け取ったとおりに示します。メタデータに要旨がない場合は、投稿の様式に書かれた要旨を示します。
+そこに誤りがあれば、ここにも出ることがあります。
+誤りは、記録の頁のそれぞれにあるリンクから報告できます。
+
+## 本人の確認
+
+自動の確認は、ORCID の記録を管理している人が投稿の issue を開いたこと、その ORCID iD が作品の著者のものであることを確かめます。
+公的な本人確認ではありません。
+
+## 提携していないこと
+
+Sophaxis は、独立した個人のプロジェクトです。
+載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。
+それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。
+それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。[預け先と DOI 登録機関へ](./repositories.html)の頁も見てください。
+
+## 誰が、なぜ Sophaxis を運営するか
+
+いまは唯一のモデレーターでもある運営者が、無報酬のボランティアとして Sophaxis を運営しています。
+Sophaxis の仕事で報酬を受ける人はおらず、投稿にも閲覧にも料金は要りません。
+Sophaxis は、GitHub と Vercel の無料のサービスの範囲だけで、sophaxis.vercel.app のアドレスで配信しており、支払うべきドメインやホスティングはありません。
+運営者は、サイトとそのコードを書く道具である Claude Code の料金を、個人で払っています（下の「Sophaxis の作り方」を見てください）。
+Sophaxis は、その費用に充てるお金を誰からも受け取りません。
+無報酬で務めていても、[利用規約](./policies/terms.ja.html)と[個人情報の取り扱いについて](./policies/privacy.ja.html)のもとで運営者が読者と著者に負う務めは軽くなりません。
+
+Sophaxis を始めたのは、運営者が、哲学と数学の公開のプレプリントを並べて載せる場所を一つ探して、見つからなかったからです。
+次の節が述べるとおり、運営者自身が読むために、そして同じ問いに取り組む人のために置いています。
+これは運営者の理由であって、ほかのアーカイブへの評価ではありません。
+Sophaxis はそれらに代わるものではなく、ここに載る作品は、それぞれの預け先に置かれたままです。
+
+## 運営者自身の使い方
+
+運営者は、個人の本棚の延長として、趣味で Sophaxis を置いています。哲学と数学の作品を手元に置き、読むための場所です。
+この使い方によって、何を載せるか、どう載せるかは変わりません。
+
+- 作品を投稿できるのは、その作品の著者だけです。運営者は、読んだから、手元に置きたいからといって、他人の作品を載せません。そのような作品は、Sophaxis の外の、運営者自身の本棚に置きます。
+- Sophaxis は営利のために運営していません。誰からも料金を取らず、何も売らず、広告を出さず、何の収入も得ません。
+- Sophaxis は作品を出版しません。それぞれの作品は、その預け先が DOI のもとで公開し、Sophaxis はそこへリンクします。
+- PDF の写しは、著者が預けたファイルを手を加えずに置いたもので、作品のライセンスが認める範囲でだけ、著者、ライセンス、原本へのリンクを添えて共有します。[著作権の規程](./policies/copyright.ja.html)を見てください。
+- Sophaxis は、どの作品についても、著作権も独占的な許諾も取りません。
+- 権利者は、[削除の規程](./policies/takedown.ja.html)に沿って作品の削除を求めることができます。
+
+これらの決めによって、Sophaxis は、著者とライセンスが認める範囲に収まるようにしています。
+これらは法的な助言ではなく、法的な問題が一つも起こりえないと主張するものでもありません。
+
+## GitHub とその他のサービス
+
+Sophaxis は GitHub の上で動いています。コード、記録、投稿（GitHub の issue）はそこに保管し、自動の確認は公開のリポジトリの GitHub Actions として動きます。
+サイトはそのリポジトリから組み立て、Vercel が配信します。
+Sophaxis は GitHub や ORCID でのサインインを使わず、誰にもアカウントへのアクセスを求めません。DataCite、Crossref、JaLC、OpenAlex、ORCID、預け先の公開の API を通して、公開のデータだけを読みます。
+投稿のために GitHub を使うことには、GitHub 自身の規約とプライバシーステートメントが適用されます。
+
+## Sophaxis の作り方
+
+サイト、そのコード、規程、これらの頁は、運営者の求めにより、Anthropic のコーディングの道具である Claude Code で書きました。
+運営者がそれらを確かめ、責任を負います。Claude は、Sophaxis の著者でも、載っているどの作品の著者でもありません。
+投稿について判断する言語モデルはありません。自動の確認は通常のコードで、判断はすべてモデレーターが行います。
+Sophaxis は Anthropic と提携しておらず、推薦も受けていません。
+Claude Code の名を挙げるのは、サイトの作り方の開示としてであって、推薦や広告としてではありません。
+運営者は、その普通の有料の利用者です。
+Sophaxis は Anthropic と何の取り決めもなく、Anthropic から何も受け取らず、その製品へのリンクも置いていません。
+
+## リンク
+
+Sophaxis は、自らが管理しない預け先、DOI、その他のサイトへリンクしています。
+それらの内容、利用できるかどうか、その規約について、責任を負いません。
+
+## 利用できること
+
+サイトは現状のまま提供し、利用できなくなったり、変わったり、閉じたりすることがあります。
+閉じた場合も、すべての記録を収めたリポジトリは公開のまま残ります。[利用規約](./policies/terms.ja.html)の「続けるための備え」を見てください。
+
+Sophaxis は、外部のサービスに頼っています。
+
+- Vercel が止まれば、サイトは配信されません。記録は GitHub のリポジトリと Internet Archive に残ります。
+- GitHub が止まれば、誰も投稿できず、自動の確認も動きません。サイトは、最後に組み立てたものを示し続けます。
+- DataCite、Crossref、JaLC に届かなければ、届くようになるまで投稿を確かめられません。
+- 預け先が預けたものを削除すれば、その DOI は解決しなくなり、記録は[撤回の規程](./policies/withdrawal.ja.html)に沿って撤回します。
+
+## 助言ではないこと
+
+Sophaxis の規程と頁は、Sophaxis の仕組みを説明するものです。
+法的な助言や専門的な助言ではありません。
+
+## 責任
+
+運営者は、自らの故意または過失で生じさせた損害について、日本の法令の定めるとおり責任を負います。
+著者が書いた作品の内容だけ、または GitHub・Vercel・預け先だけが原因で生じた損害については、法令が運営者に責任を負わせる場合を除き、運営者は責任を負いません。
+Sophaxis は、運営者を日本の消費者契約法の事業者であるものとみなして、読者と著者に同法を適用します。
+これは、故意または重大な過失による責任や、法令が免除や制限を認めない責任を、免除したり制限したりするものではありません。
+これらの定めは日本法に準拠し、この頁のどの定めも、法令が制限を認めない権利を制限しません。
+紛争は、[利用規約](./policies/terms.ja.html)の「紛争」の節が定めるとおり、まず合意で解決します。
+
