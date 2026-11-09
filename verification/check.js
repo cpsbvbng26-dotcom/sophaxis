@@ -2751,6 +2751,9 @@ console.log('\n75. GitHub and Vercel: what their own terms provide, read at thei
     && pe.indexOf('section D.4') < pe.indexOf('## Security'));
   ok('no policy says that the operator has turned Vercel\'s model training off, until the operator confirms it and the review records it',
     ![te, tj, pe, pj].some((t) => /has turned (this|it) off|opted out|止めています|止めました/.test(t)) || read(path.join(ROOT, 'docs', 'legal-review.md')).includes('The operator turned Vercel\'s model training off on'));
+  ok('the Submission Policy and the Privacy Policy, in both languages, tell a person worried by these uses not to submit, and how a listed author withdraws',
+    read(path.join(ROOT, 'policies', 'submission.md')).includes('to train AI models, do not submit.') && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('個人情報が心配な方は、投稿しないでください。')
+    && pe.includes('If these uses make you worry about your personal data, do not submit, and do not agree to be listed as an author') && pj.includes('これらの利用で個人情報が心配な方は、投稿しないでください。著者として載ることにも同意しないでください。'));
   ok('the Disclaimer, in both languages, says that both provide their services as is and points to the Terms', read(path.join(ROOT, 'disclaimer.md')).includes('GitHub and Vercel each provide their services "as is"')
     && read(path.join(ROOT, 'disclaimer.ja.md')).includes('サービスを「現状のまま」保証なしに提供し'));
 }

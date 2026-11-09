@@ -175,11 +175,13 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 
 # Submission Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
 
 ## Who can submit
+
+If you are worried about your personal data because Vercel, which serves the site, or GitHub, which keeps the submissions, may use what they hold to train AI models, do not submit. The [Privacy Policy](./privacy.html) explains these uses.
 
 Only an author of a work can submit it.
 Sophaxis confirms this through ORCID, before a moderator reads the work.
@@ -780,6 +782,8 @@ Two uses of the records by GitHub and Vercel themselves come with their terms, w
 
 - GitHub's Terms of Service let GitHub and its affiliates use what is posted in issues and public repositories, the records among it, to train AI features and the models of its affiliates (section D.4). There is no setting that turns this off for public content (section J.3).
 - Vercel's Terms of Service let Vercel, on the free Hobby plan on which Sophaxis is served, use the content of the site, the records among it, to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (section 3).
+
+If these uses make you worry about your personal data, do not submit, and do not agree to be listed as an author, because Sophaxis cannot list a work without GitHub and Vercel. An author of a listed work can withdraw the consent at any time, and the record is then removed, as set out above.
 - ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
 
 For GitHub, Vercel and ORCID, a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it.
@@ -1886,6 +1890,8 @@ GitHub と Vercel が自ら記録を使う場合が二つあり、それぞれ�
 
 - GitHub の利用規約は、issue と公開のリポジトリに置かれたもの（記録を含みます）を、GitHub とその関連会社が、AI の機能と関連会社のモデルの学習に使うことを認めています（D.4）。公開の内容について、これを止める設定はありません（J.3）。
 - Vercel の利用規約は、Sophaxis を配信している無料の Hobby プランでは、サイトの内容（記録を含みます）を、Vercel が AI と機械学習のモデルの学習に使い、そのために第三者に渡すことを認めています。アカウントのチームの設定でこれを止めたときは別です（第 3 条）。
+
+これらの利用で個人情報が心配な方は、投稿しないでください。著者として載ることにも同意しないでください。Sophaxis は、GitHub と Vercel なしには作品を載せられないためです。載っている作品の著者は、いつでも同意を撤回でき、そのときは記録を削除します（上のとおり）。
 - ORCID：[ORCID Privacy Policy](https://info.orcid.org/privacy-policy/)。毎年、EU-米国データプライバシーフレームワークの基準で評価を受けていると述べています。
 
 GitHub・Vercel・ORCID について、欧州連合からの移転は、各社がその枠組みの認証を受けている限りで、EU-米国データプライバシーフレームワークについての欧州委員会の十分性認定に基づきます。
@@ -2208,11 +2214,13 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-08。
+最終更新：2026-11-09。
 
 これは英語の [Submission Policy](./submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
 ## 投稿できる人
+
+サイトを配信する Vercel や、投稿を保管する GitHub が、置かれたものを AI のモデルの学習に使うことがあるため、個人情報が心配な方は、投稿しないでください。この利用は、[個人情報の取り扱いについて](./privacy.ja.html)に書いてあります。
 
 作品を投稿できるのは、その作品の著者だけです。
 Sophaxis は、モデレーターが作品を読む前に、ORCID を通してこれを確かめます。
