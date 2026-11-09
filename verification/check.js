@@ -3100,6 +3100,42 @@ console.log('\n82. Transparency: the self-assessment against the Principles of T
     && read(path.join(ROOT, 'site', 'index.html')).includes('<a href="./transparency.html">Transparency</a>') && read(path.join(ROOT, 'site', 'llms-full.txt')).includes('Transparency: a self-assessment'));
 }
 
+console.log('\n83. Collections by topic, beside the fields (Moderation Policy)');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js');
+  const C = site.collections;
+  const slugs = C.map((c) => c.slug);
+  ok('the ' + C.length + ' collections have a slug, an English and a Japanese name and a description, each slug once',
+    C.length === 4 && JSON.stringify(slugs) === '["game-theory","individual-autonomy","research-method-ethics","existential-philosophy"]'
+    && C.every((c) => /^[a-z]+(-[a-z]+)*$/.test(c.slug) && c.name && c.ja && c.description && c.description.endsWith('.')) && new Set(slugs).size === slugs.length
+    && JSON.stringify(C.map((c) => c.ja)) === '["ゲーム理論","個と自律","研究の方法と倫理","実存哲学"]');
+  const base = { id: '2026.0099', title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', category: 'philosophy', license: 'CC-BY-4.0',
+    versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-11-01' }], llm_disclosure: 'No generative model was used at all in this work.', issue: 9, listed: '2026-11-02', status: 'listed' };
+  const v = (c) => validate(Object.assign({}, base, { collections: c }), '2026.0099.json');
+  ok('a record names only collections of site.json, each once, in a list that is not empty',
+    v(['game-theory']).length === 0 && v(['game-theory', 'existential-philosophy']).length === 0 && v(['nope']).length === 1 && v([]).length === 1 && v(['game-theory', 'game-theory']).length === 1 && v('game-theory').length === 1
+    && validate(base, '2026.0099.json').length === 0);
+  const papers = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status !== 'removed');
+  const counts = Object.fromEntries(slugs.map((s) => [s, papers.filter((p) => (p.collections || []).includes(s)).length]));
+  const idx = read(path.join(ROOT, 'site', 'collections.html'));
+  ok('each collection has its page and Atom feed with its own records, the index counts them (' + slugs.map((s) => s + ' ' + counts[s]).join(', ') + '), and an empty one says so',
+    slugs.every((s) => {
+      const pg = read(path.join(ROOT, 'site', 'collection', s + '.html')), fd = read(path.join(ROOT, 'site', 'collection', s + '.xml'));
+      const mine = papers.filter((p) => (p.collections || []).includes(s));
+      return idx.includes('<a href="./collection/' + s + '.html"><b>' + C.find((c) => c.slug === s).name + '</b></a> (' + counts[s] + ')')
+        && (mine.length ? mine.every((p) => pg.includes('href="../abs/' + p.id + '.html"') && fd.includes('<id>' + site.baseUrl + 'abs/' + p.id + '.html</id>')) : pg.includes('No preprint is in this collection yet.'))
+        && (fd.match(/<entry>/g) || []).length === mine.length && fd.includes('<link rel="self" href="' + site.baseUrl + 'collection/' + s + '.xml"/>');
+    }) && counts['existential-philosophy'] === 0);
+  ok('a record page links its collections, the top page links the index, papers.json and the sitemap carry them, and a collection says nothing of quality',
+    papers.filter((p) => p.collections).every((p) => p.collections.every((s) => read(path.join(ROOT, 'site', 'abs', p.id + '.html')).includes('<a href="../collection/' + s + '.html">')))
+    && read(path.join(ROOT, 'site', 'index.html')).includes('By topic: <a href="./collections.html">Collections</a>.')
+    && JSON.parse(read(path.join(ROOT, 'site', 'papers.json'))).filter((p) => p.collections).length === papers.filter((p) => p.collections).length
+    && slugs.every((s) => read(path.join(ROOT, 'site', 'sitemap.xml')).includes(site.baseUrl + 'collection/' + s + '.html'))
+    && idx.includes('A collection says nothing of the quality of a work.') && read(path.join(ROOT, 'policies', 'moderation.md')).includes('A collection says nothing of the quality of a work')
+    && read(path.join(ROOT, 'policies', 'moderation.ja.md')).includes('集めは作品の質について何も言いません。'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
