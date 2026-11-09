@@ -2973,6 +2973,58 @@ console.log('\n79. The shape of the PDF, read by machine for the moderator (Mode
     && read(path.join(ROOT, 'automation.md')).includes('only to read its shape for the moderator, deleted after the reading'));
 }
 
+console.log('\n80. A researcher vouches for a first submission (Submission Policy)');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const I = require('../tools/intake.js');
+  const fx = (f) => JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', f)));
+  const meta = I.fromDataCite(fx('datacite.json'));
+  const c = (login, body, type) => ({ user: { login, type: type || 'User' }, body });
+  const words = I.VOUCH + ' ORCID: 0000-0002-1825-0097';
+  const found = I.vouchesIn([c('jcarberry', words), c('bot', words, 'Bot'), c('x', 'I vouch for this submission to Sophaxis. ORCID: 0000-0002-1825-0097'), c('y', I.VOUCH)]);
+  ok('a vouching comment gives the full words and an ORCID iD; a bot, the words cut short, or no iD do not count',
+    JSON.stringify(found) === '[{"login":"jcarberry","orcid":"0000-0002-1825-0097"}]'
+    && I.VOUCH === 'I vouch for this submission to Sophaxis. I am not an author of this work, and I do not live in, or stay in, a place where Sophaxis is not offered.');
+  const peer = I.peerWorks(fx('orcid-works-journal.json'));
+  ok('the journal articles, book chapters and books with a DOI are read from a real ORCID record; other works do not count',
+    peer.size === 6 && peer.has('10.5555/12345680') && I.peerWorks(fx('orcid-works.json')).size === 0
+    && I.peerWorks({ group: [{ 'work-summary': [{ type: 'preprint' }], 'external-ids': { 'external-id': [{ 'external-id-type': 'doi', 'external-id-value': '10.1/p', 'external-id-relationship': 'self' }] } }] }).size === 0
+    && I.peerWorks({ group: [{ 'work-summary': [{ type: 'book-chapter' }], 'external-ids': { 'external-id': [{ 'external-id-type': 'doi', 'external-id-value': '10.1/B', 'external-id-relationship': 'self' }] } }] }).has('10.1/b'));
+  const person = { name: 'Someone Else', given: 'Someone', family: 'Else', urls: ['https://github.com/vouchr'] };
+  const e = { login: 'vouchr', orcid: '0000-0001-0000-0002' };
+  const prob = (over) => I.vouchProblem(Object.assign({ e, person, peer, meta, submitter: '0000-0002-1825-0097' }, over));
+  ok('it counts only from a researcher whose ORCID record links the account and lists such a work, who is neither an author, the submitter nor the operator',
+    prob({}) === null && prob({ person: null }) === 'the ORCID record could not be read' && prob({ person: Object.assign({}, person, { urls: [] }) }) === 'the ORCID record does not link this GitHub account'
+    && prob({ peer: new Set() }) === 'the ORCID record lists no journal article, book chapter or book with a DOI'
+    && prob({ e: { login: 'vouchr', orcid: meta.authors[1].orcid || '0000-0001-0000-0002' }, person: Object.assign({}, person, { given: meta.authors[1].given, family: meta.authors[1].family, name: meta.authors[1].name }) }) === 'an author of the work cannot vouch'
+    && prob({ submitter: e.orcid }) === 'the submitter cannot vouch'
+    && prob({ e: { login: site.operator.github, orcid: e.orcid } }) === 'the operator cannot vouch' && prob({ e: { login: 'vouchr', orcid: site.operator.orcid } }) === 'the operator cannot vouch');
+  const recs = [{ status: 'listed', authors: [{ orcid: site.operator.orcid }] }, { status: 'withdrawn', authors: [{ orcid: '0000-0001-1111-1111' }] }];
+  ok('an author of a listed work needs no one to vouch; a withdrawn work does not make one an author; otherwise the check waits, names why a comment does not count, and passes on one that does',
+    I.listedAuthor(site.operator.orcid, recs) === true && I.listedAuthor('0000-0001-1111-1111', recs) === false && I.listedAuthor('', recs) === false
+    && I.vouchCheck([], true)[1] === true && I.vouchCheck([], false)[2] === 'waiting for a researcher to vouch for it' && I.vouchCheck([], false)[1] === false
+    && I.vouchCheck([{ e, problem: 'the operator cannot vouch' }], false)[2] === 'ORCID 0000-0001-0000-0002: the operator cannot vouch'
+    && I.vouchCheck([{ e, problem: 'x' }, { e, problem: null }], false)[1] === true);
+  const note = I.comment({ ok: false, checks: [['The DOI metadata could be read', true, ''], [I.VOUCH_LABEL, false, 'waiting for a researcher to vouch for it']] }, null);
+  const src = read(path.join(ROOT, 'tools', 'intake.js'));
+  ok('while only the vouching is awaited, the comment says who can vouch and how, that it is not a review, and what becomes public; the check applies from ' + site.vouchFrom + ' to a new work',
+    note.includes('This is a first submission, and it needs one researcher to vouch for it') && note.includes(I.VOUCH + ' ORCID: 0000-0000-0000-0000') && note.includes('it is not a review, and the moderator still decides')
+    && note.includes('The GitHub username, ORCID iD and comment of the researcher are public') && !note.includes('Not verified. Fix what failed')
+    && site.vouchFrom === '2026-11-23' && src.includes('if (meta && result.author && !form.update && opened >= SITE.vouchFrom) {')
+    && read(path.join(ROOT, '.github', 'workflows', 'intake.yml')).includes("contains(github.event.comment.body, 'I vouch for this submission to Sophaxis')"));
+  const sub = read(path.join(ROOT, 'policies', 'submission.md')), subJa = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  const pri = read(path.join(ROOT, 'policies', 'privacy.md')), priJa = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  ok('the Submission Policy and the Privacy Policy, in both languages, the Moderation Policy, the form, the steps, the automation page and the top-page notice say so',
+    sub.includes('## A researcher who vouches for a first submission') && sub.includes('From ' + site.vouchFrom + ', a submitter who is not yet an author of a work that Sophaxis lists needs one researcher to vouch for it.')
+    && sub.includes('"' + I.VOUCH + '"') && sub.includes('It is not a review, and the moderator still decides.') && sub.includes('Like an author, the researcher must not live in, or stay in, a place where Sophaxis is not offered.')
+    && subJa.includes('## 初めての投稿の紹介') && subJa.includes('「' + I.VOUCH + '」') && subJa.includes('査読ではなく、判断するのはモデレーターです。')
+    && pri.includes('a researcher who vouches for a first submission in a comment gives their ORCID iD there') && priJa.includes('初めての投稿を紹介する研究者がコメントに書く GitHub のユーザー名と ORCID iD')
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('- From ' + site.vouchFrom + ', a researcher has vouched for a first submission')
+    && read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('From the same day, a first submission needs a researcher to vouch for it (see the Submission Policy).')
+    && read(path.join(ROOT, 'process.md')).includes('a first submission also needs a researcher to vouch for it') && read(path.join(ROOT, 'automation.md')).includes('it also counts a researcher who vouches for the work')
+    && site.termsNotice.text.includes('needs a researcher whose ORCID record lists a journal article, a book chapter or a book to vouch for it.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
