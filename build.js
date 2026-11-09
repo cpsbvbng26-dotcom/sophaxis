@@ -1070,6 +1070,7 @@ function llmsTxt(all) {
     + '- Accepted licences: ' + Object.values(SITE.licenses).join(', ') + '.\n'
     + '- Records shown: ' + shown.length + ' (removed records are not counted).\n'
     + '- Not offered in ' + L.length + ' places: ' + notOfferedPlaces(L) + '. From ' + SITE.residenceFrom + ', a work is not listed if an author lives in one of them, or stays in one between the submission and the listing, even briefly. The [Submission Policy](' + B + 'policies/submission.html) gives the law of each.\n'
+    + '- Age of the DOI: from ' + SITE.doiAgeFrom + ', a new work is listed only if at least ' + SITE.doiAgeMonths + ' months have passed since its first DOI was registered, counted to the day the submission issue is opened.\n'
     + notice
     + '\n## Policies\n\n'
     + POLICIES.map(([slug, what]) => '- [' + policyTitle(slug) + '](' + B + 'policies/' + slug + '.html): ' + what + '\n').join('')
