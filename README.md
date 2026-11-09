@@ -28,7 +28,7 @@ Sophaxis keeps a community at Zenodo, opened on 2026-11-07: <https://zenodo.org/
 
 Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
 
-Since 2026-11-09 (Japan time), Sophaxis has had an entry under Philosophy and under Mathematics on the [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) page of the Open Access Directory, a wiki at Simmons University. The operator added the entry after the wiki approved the account requested on 2026-11-03. The wiki is edited by its users, so the entry is not a review or an endorsement.
+Since 2026-11-09 (Japan time), Sophaxis has been listed under Philosophy and under Mathematics on the [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) page of the Open Access Directory. The directory is hosted by the School of Library and Information Science at Simmons University and supervised by an independent editorial board, and only accounts approved by its editor can edit it. The operator's account, requested on 2026-11-03, was approved, and the operator added the entry. The directory's guide for contributors describes no review of each entry before it appears, so the listing is not a review of Sophaxis.
 
 Sophaxis has also applied to the registries below. None of them has listed it yet, and each decides for itself. The dates are Japan time; the state is as of 2026-11-09.
 
@@ -250,7 +250,7 @@ Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に�
 
 サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
 
-2026-11-09（日本時間）から、シモンズ大学のウィキ Open Access Directory の [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) の頁で、Philosophy と Mathematics の二つの節に Sophaxis の項目があります。2026-11-03 に申請したアカウントが承認されたあと、運営者が項目を足しました。このウィキは利用者が編集するもので、項目があることは審査を通ったことを意味しません。
+2026-11-09（日本時間）から、Open Access Directory の [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) の頁で、Philosophy と Mathematics の二つの節に Sophaxis が載っています。この一覧は、シモンズ大学の図書館情報学の大学院が運営し、独立した編集委員会が監督しています。編集できるのは、編集者が承認したアカウントだけです。2026-11-03 に申請した運営者のアカウントが承認され、運営者が項目を足しました。寄稿者向けの案内には、項目が載る前に一件ずつ審査する手順は書かれていないので、この掲載は Sophaxis の審査ではありません。
 
 ほかに、次の登録簿に申請しています。こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。日付は日本時間です。状態は 2026-11-09 の時点のものです。
 

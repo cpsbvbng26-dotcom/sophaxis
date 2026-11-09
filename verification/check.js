@@ -1307,7 +1307,8 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && names.every((n, i) => en[i].startsWith('| ' + n) && ja[i].startsWith('| ' + n))
       && en.every((r) => /\| 2026-\d\d-\d\d \| (Under review|Under editorial review|Requested|Account requested|Asked; likely eligible, but new submissions are paused)/.test(r) && !/\bListed\b|Approved|Accepted/.test(r))
       && ja.every((r) => /\| 2026-\d\d-\d\d \| (審査中|編集の審査中|依頼済み|アカウントを申請中|問い合わせ済み。基準を満たす見込みだが)/.test(r) && !/掲載済み|承認済み|載った/.test(r))
-      && rd.includes('The wiki is edited by its users, so the entry is not a review or an endorsement.') && rd.includes('このウィキは利用者が編集するもので、項目があることは審査を通ったことを意味しません。')
+      && rd.includes('only accounts approved by its editor can edit it.') && rd.includes('describes no review of each entry before it appears, so the listing is not a review of Sophaxis.')
+      && rd.includes('編集できるのは、編集者が承認したアカウントだけです。') && rd.includes('この掲載は Sophaxis の審査ではありません。')
       && !en.concat(ja).some((r) => r.includes('Open Access Directory'))
       && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
   }
