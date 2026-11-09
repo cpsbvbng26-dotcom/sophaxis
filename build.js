@@ -320,7 +320,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}automation.html">What runs by itself</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}contact.html">Contact</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}automation.html">What runs by itself</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}transparency.html">Transparency</a> · <a href="${up}contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>
@@ -891,6 +891,11 @@ function processPage() {
 
 /* Every step that runs by itself: when, what it reads and writes, and what it leaves to the operator. */
 const automationSource = () => fs.readFileSync(path.join(ROOT, 'automation.md'), 'utf8');
+/* The operator's self-assessment against the Principles of Transparency and Best Practice in Scholarly Publishing. */
+const transparencySource = () => fs.readFileSync(path.join(ROOT, 'transparency.md'), 'utf8');
+function transparencyPage() {
+  return page({ title: 'Transparency | ' + SITE.name, description: 'How ' + SITE.name + ' stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator\'s own assessment.', rel: false, canonical: 'transparency.html', body: markdown(transparencySource()) });
+}
 function automationPage() {
   return page({ title: 'What runs by itself | ' + SITE.name, description: 'Every automatic step of ' + SITE.name + ': when it runs, what it reads and writes, and what it leaves to the operator.', rel: false, canonical: 'automation.html', body: markdown(automationSource()) });
 }
@@ -1068,6 +1073,7 @@ function sitemap(papers) {
     ['faq.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(faqSource()) || [, newest])[1]],
     ['process.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(processSource()) || [, newest])[1]],
     ['automation.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(automationSource()) || [, newest])[1]],
+    ['transparency.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(transparencySource()) || [, newest])[1]],
     ['disclaimer.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(disclaimerSource()) || [, newest])[1]],
     ['disclaimer.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(disclaimerJaSource()) || [, newest])[1]],
     ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
@@ -1110,7 +1116,7 @@ function robots(all) {
  * llms-full.txt holds the policies and pages word for word, from the same Markdown the pages are built from, so the two
  * cannot drift apart. Nothing here is written by hand, and nothing says more than the policies do. */
 const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['faq.md', 'faq.html', 'Frequently asked questions'],
-  ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
+  ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['transparency.md', 'transparency.html', 'Transparency: a self-assessment'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
   ['contact.md', 'contact.html', 'Operator and contact']];
 function llmsSources() {
   return POLICIES.map(([slug]) => ['policies/' + slug + '.md', 'policies/' + slug + '.html'])
@@ -1177,6 +1183,7 @@ function build(out, paperDir) {
     'faq.html': faqPage(),
     'process.html': processPage(),
     'automation.html': automationPage(),
+    'transparency.html': transparencyPage(),
     'disclaimer.html': disclaimerPage(),
     'disclaimer.ja.html': disclaimerJaPage(),
     'repositories.html': repositoriesPage(),
