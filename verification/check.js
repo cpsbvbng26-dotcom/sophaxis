@@ -2879,6 +2879,62 @@ console.log('\n77. Conflicts of interest: no priority for the operator, a public
     read(path.join(ROOT, 'site', 'stats.html')).includes('<h2>The operator’s own submissions</h2>\n<p>' + share) && read(path.join(ROOT, 'site', 'llms.txt')).includes(share), share);
 }
 
+console.log('\n78. Retractions, withdrawals and other notices that Crossref records (Submission and Moderation Policies)');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const N = require('../tools/notices.js');
+  const I = require('../tools/intake.js');
+  const B = require('../build.js');
+  const u = (doi, type, d, source) => ({ DOI: doi, type, source, updated: { 'date-parts': d } });
+  const answer = { message: { items: [
+    { DOI: '10.1/R', 'update-to': [u('10.5/X', 'retraction', [[2026, 3, 4]], 'retraction-watch')] },
+    { DOI: '10.1/Z', 'update-to': [u('10.5/Y', 'withdrawal', [[2026, 1, 1]])] },
+    { DOI: '10.1/C', 'update-to': [u('10.5/x', 'correction', [[2025, 1, 2]])] },
+    { DOI: '10.1/C', 'update-to': [u('10.5/x', 'correction', [[2025, 1, 2]])] },
+    { DOI: '10.1/N', 'update-to': [u('10.5/x', 'expression of concern', [[2025]])] }] } };
+  ok('the notices of a DOI are read from the Crossref answer: that DOI only, each once, oldest first, with a full date',
+    JSON.stringify(N.noticesFrom(answer, 'https://doi.org/10.5/X')) === '[{"type":"correction","doi":"10.1/c","date":"2025-01-02","source":"publisher"},{"type":"retraction","doi":"10.1/r","date":"2026-03-04","source":"retraction-watch"}]'
+    && N.noticesFrom({}, '10.5/X').length === 0);
+  const c = (list) => N.noticeCheck(list);
+  const n = (type) => ({ type, doi: '10.1/n', date: '2026-01-01' });
+  ok('a retraction, a partial retraction, a withdrawal or a removal fails the check, an expression of concern goes to the operator, a correction passes, and an unread Crossref fails',
+    ['retraction', 'partial_retraction', 'withdrawal', 'removal'].every((t) => c([n(t)])[1] === false && c([n(t)])[2].endsWith('such a work is not listed'))
+    && c([n('expression_of_concern')])[1] === false && c([n('expression_of_concern')])[2].endsWith('the operator decides')
+    && c([n('correction')])[1] === true && c([n('correction')])[2].startsWith('recorded: correction of 2026-01-01') && c([])[1] === true
+    && c(undefined)[1] === false && c(undefined)[2].includes('the operator checks it by hand'));
+  const meta = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const form = Object.assign(I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md'))), { update: '' });
+  const rows = (opened, notices) => I.check({ form, login: 'x', meta, person: null, works: null, listed: new Map(), today: opened, age: { opened, first: { doi: '10.1/a', day: '2020-01-01' } }, notices }).checks.filter((r) => r[0] === N.NOTICE_LABEL);
+  ok('the intake applies it to a submission opened from ' + site.noticesFrom + ', the day the top page announces, and not before',
+    site.noticesFrom === '2026-11-23' && rows('2026-11-22', [n('retraction')]).length === 0 && rows('2026-11-23', [n('retraction')])[0][1] === false && rows('2026-11-23', [])[0][1] === true
+    && site.termsNotice.text.includes('From the same day, a work for which Crossref records a retraction, a withdrawal or a removal is not listed, and one with an expression of concern goes to the operator first.')
+    && read(path.join(ROOT, 'tools', 'intake.js')).includes("if (meta && opened >= SITE.noticesFrom) notices = await require('./notices.js').lookUpNotices(form.doi);"));
+  const rec = { id: '2026.0099', status: 'listed', versions: [{ doi: '10.5/X' }, { doi: '10.5/x' }], notices: [{ type: 'correction', doi: '10.1/C', date: '2025-01-02' }] };
+  const found = { '10.5/x': N.noticesFrom(answer, '10.5/X') };
+  const news = N.newNotices(rec, found);
+  ok('each week, a notice that the record does not hold yet is reported once, for the operator to add; a removed record is not looked at',
+    news.length === 1 && news[0] === '2026.0099: Crossref records a retraction of 2026-03-04 for 10.5/x, https://doi.org/10.1/r; the operator adds it to the record and reviews the listing under the Moderation Policy'
+    && N.newNotices(Object.assign({}, rec, { status: 'removed' }), found).length === 0
+    && /const N = require\('\.\/notices\.js'\);[\s\S]*notices\[d\] = await N\.lookUpNotices\(v\.doi\);[\s\S]*problems\.push\(\.\.\.list\.flatMap\(\(p\) => N\.newNotices\(p, notices\)\)\);/.test(read(path.join(ROOT, 'tools', 'watch.js'))));
+  const base = { id: '2026.0099', title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', category: 'philosophy', license: 'CC-BY-4.0',
+    versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-11-01' }], llm_disclosure: 'No generative model was used at all in this work.', issue: 9, listed: '2026-11-02', status: 'listed' };
+  const withN = Object.assign({}, base, { notices: [{ type: 'retraction', doi: '10.1016/r.2026.1', date: '2026-03-04' }] });
+  ok('a record holds its notices with a type, the DOI of the notice and a date; the record page shows each with a link, and papers.json carries them',
+    validate(withN, '2026.0099.json').length === 0 && validate(Object.assign({}, base, { notices: [{ type: 'Retraction!', doi: 'x', date: '2026' }] }), '2026.0099.json').some((e) => e.includes('notice 1 needs a type'))
+    && B.crossrefNotices(withN) === '<div class="notice"><b>Notices.</b> Crossref records a retraction of 2026-03-04: <a href="https://doi.org/10.1016/r.2026.1">10.1016/r.2026.1</a>. Read the notice before citing this work.</div>'
+    && B.crossrefNotices(base) === '' && read(path.join(ROOT, 'build.js')).includes('${publishedNotice(p)}\n${crossrefNotices(p)}\n')
+    && read(path.join(ROOT, 'build.js')).includes("...(p.notices && p.notices.length ? { notices: p.notices } : {}),"));
+  const sub = read(path.join(ROOT, 'policies', 'submission.md')), subJa = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md')), modJa = read(path.join(ROOT, 'policies', 'moderation.ja.md')), auto = read(path.join(ROOT, 'automation.md'));
+  ok('the policies, in both languages, and the automation page say what is read, what follows, and what the check cannot see',
+    sub.includes('From ' + site.noticesFrom + ', a work for which Crossref records a retraction, a partial retraction, a withdrawal or a removal is not listed.')
+    && sub.includes('A notice that a repository shows only on its own page, and not to Crossref, is not seen by the check.')
+    && subJa.includes(site.noticesFrom + ' から、Crossref が撤回・一部撤回・取り下げ・削除を記録している作品は載せません。') && subJa.includes('Crossref に届けていない通知は、この確認では見えません。')
+    && mod.includes('The operator adds a new notice to the record, where its page shows it with a link, and reviews the listing.') && modJa.includes('運営者は、新しい通知を記録に加えます。')
+    && auto.includes('- From ' + site.noticesFrom + ', it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.')
+    && auto.includes('Crossref records a notice that the record does not hold'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
