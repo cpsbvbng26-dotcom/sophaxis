@@ -15,7 +15,7 @@ The code of each step is public, and each section links to it.
 
 ## When a submission issue is opened or edited, or an author confirms in a comment
 
-- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
+- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the PDF of the latest version, where the repository lets a script fetch it, only to read its shape for the moderator, deleted after the reading; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
 - Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
 - From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
