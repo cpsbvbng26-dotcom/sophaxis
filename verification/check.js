@@ -2703,6 +2703,31 @@ console.log('\n73. Moderation looks for what would make an untrue confirmation k
     && me.includes('- Where the authors live or stay: an author lives in a place where Sophaxis is not offered, or stayed in one between the submission and the listing.') && mj.includes('- 住んでいる場所と滞在した場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在した。'));
 }
 
+console.log('\n74. llms.txt and llms-full.txt: the facts and every policy, for language models');
+{
+  const B = require('../build.js');
+  const SITEJ = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const lt = read(path.join(ROOT, 'site', 'llms.txt')), lf = read(path.join(ROOT, 'site', 'llms-full.txt'));
+  const shown = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status !== 'removed').length;
+  const links = [...lt.matchAll(/\]\((https:\/\/sophaxis\.vercel\.app\/[^)?]*)/g)].map((m) => m[1].replace(SITEJ.baseUrl, ''));
+  const missing = links.filter((u) => u !== 'oai' && !fs.existsSync(path.join(ROOT, 'site', u)));
+  ok('llms.txt is in the llms.txt form: a title, a summary, and sections of links, and says that the policies apply where it differs',
+    lt.startsWith('# ' + SITEJ.name + '\n\n> ') && lt.includes('Acceptance is moderation, not peer review.') && lt.includes('Sophaxis charges nothing, to authors or to readers.')
+    && lt.includes('Where this file and a policy differ, the policy applies.') && ['## Facts', '## Policies', '## Other pages', '## Japanese', '## Data'].every((h) => lt.includes('\n' + h + '\n')));
+  ok('every page and policy it links is built, and it links every policy, every Japanese page and llms-full.txt', missing.length === 0 && links.length >= 20
+    && B.llmsSources().every(([, url]) => links.includes(url)) && links.includes('llms-full.txt'), missing.join(', '));
+  ok('its counts are the counts of the records and of site.json (' + shown + ' shown, ' + SITEJ.notOffered.length + ' places, ' + new Set(Object.values(SITEJ.repositories)).size + ' repositories)',
+    lt.includes('- Records shown: ' + shown + ' ') && lt.includes('- Not offered in ' + SITEJ.notOffered.length + ' places: ') && lt.includes('- Accepted repositories (' + new Set(Object.values(SITEJ.repositories)).size + '): ')
+    && lt.includes('or stays in one between the submission and the listing, even briefly') && (!SITEJ.termsNotice || lt.includes(SITEJ.termsNotice.text)));
+  ok('it gives no email address: requests go through the ORCID record', !/[\w.+-]+@[\w-]+\.[\w.]+/.test(lt) && !/[\w.+-]+@[\w-]+\.[\w.]+/.test(lf.replace(/noreply@[\w.]+/g, '')) && lt.includes('the address on that ORCID record'));
+  ok('llms-full.txt holds each policy and page word for word, with the address it is built into (' + B.llmsSources().length + ' parts)',
+    B.llmsSources().every(([src, url]) => lf.includes('Source: ' + SITEJ.baseUrl + url + '\n\n' + read(path.join(ROOT, src)).trim() + '\n')) && (lf.match(/^Source: /gm) || []).length === B.llmsSources().length);
+  const vj = JSON.parse(read(path.join(ROOT, 'site', 'vercel.json')));
+  ok('both are served as UTF-8 text, and robots.txt lets every crawler read them', vj.headers.some((h) => h.source === '/(llms|llms-full)\\.txt' && h.headers.some((x) => x.key === 'Content-Type' && x.value === 'text/plain; charset=utf-8'))
+    && read(path.join(ROOT, 'site', 'robots.txt')).startsWith('User-agent: *\nAllow: /\n'));
+  ok('the README says, in both languages, what the two files are', read(path.join(ROOT, 'README.md')).includes('`llms.txt`') && read(path.join(ROOT, 'README.md')).includes('言語モデル'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

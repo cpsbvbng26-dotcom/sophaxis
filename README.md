@@ -62,6 +62,10 @@ A push made by the removal workflow starts no other workflow, so that workflow d
 Only those addresses and the home page are sent. Author pages, whose address carries an ORCID iD, are not.
 Google does not take IndexNow. It reads the sitemap, which `robots.txt` names and which is registered in Google Search Console.
 
+For language models and the search services built on them, the site serves `llms.txt` (https://sophaxis.vercel.app/llms.txt) and `llms-full.txt`, in the form of the llms.txt proposal.
+`llms.txt` gives the facts taken from `site.json` and the records, and links every policy and page; `llms-full.txt` holds every policy and page word for word, from the same Markdown.
+Both are built by `build.js`, say that the policies apply where they differ, and give no email address.
+
 ## How the site is made
 
 ```
@@ -227,6 +231,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁、sitemap から外れた頁（削除した記録など）を知らせます（`tools/indexnow.js`）。新しい頁と変わった頁は、その場で Internet Archive にも保存します。外れた頁は保存しません。削除の自動処理が push したときも、同じことをその場で行います。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
 - 自動で動く手順は、いつ動き、何を読み、何を書き、何を運営者に残すかとともに、[What runs by itself](https://sophaxis.vercel.app/automation.html) の頁にすべて挙げています。どの手順も依頼の判断はせず、言語モデルを使わず、実行ごとに GitHub が渡すトークンのほかに鍵を持ちません。
 - Google は IndexNow を受けません。Google には、`robots.txt` が示し、Google Search Console に登録した sitemap から読ませます。
+- 言語モデルと、それを使う検索のために、`llms.txt`（https://sophaxis.vercel.app/llms.txt）と `llms-full.txt` を置いています。`llms.txt` は `site.json` と記録から取った事実と、すべての規程と頁へのリンクです。`llms-full.txt` は、すべての規程と頁を、頁と同じ Markdown から一字一句そのまま収めたものです。どちらも `build.js` が作り、食い違うときは規程が優先すると書き、メールアドレスは載せません。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 確かめが通った投稿には、預け先の登録情報についての助言も返します（[deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) による、要旨やライセンスの欠けなど）。助言は掲載の可否を決めません。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。

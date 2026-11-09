@@ -1,0 +1,56 @@
+# Sophaxis
+
+> Sophaxis is an overlay preprint server for philosophy, mathematics, philosophy of mathematics, philosophy of science and logic. It lists preprints that authors have already deposited in an open repository with a DOI, and gives each a stable record page. Acceptance is moderation, not peer review. Sophaxis charges nothing, to authors or to readers.
+
+The policies below are the rules. Where this file and a policy differ, the policy applies. The full text of every policy is in [llms-full.txt](https://sophaxis.vercel.app/llms-full.txt).
+
+## Facts
+
+- Operator: Takuya Nemoto (ORCID https://orcid.org/0009-0000-1406-0547), one person in Japan, unpaid. Requests by email go to the address on that ORCID record; see the [contact page](https://sophaxis.vercel.app/contact.html).
+- Fields: Philosophy, Mathematics, Philosophy of Mathematics, Philosophy of Science, Logic.
+- Accepted repositories (15): Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works, Jxiv.
+- Accepted licences: CC BY 4.0, CC BY-SA 4.0, CC0 1.0.
+- Records shown: 5 (removed records are not counted).
+- Not offered in 28 places: the European Union, the European Economic Area, the United Kingdom, China, Thailand, Russia, Türkiye, Egypt, Peru, Albania, Monaco, Guernsey, Botswana, Ecuador, Iraq, Indonesia, Rwanda, Zambia, Ethiopia, the Democratic Republic of the Congo, Kazakhstan, Tunisia, Uganda, Guinea, Madagascar, Bolivia, Costa Rica and Quebec. From 2026-11-22, a work is not listed if an author lives in one of them, or stays in one between the submission and the listing, even briefly. The [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) gives the law of each.
+- Change announced on the top page, from 2026-11-21 (where the text names a later day, that day): A person under 13 can no longer submit. A work with more than one author is listed only after every other author confirms their own agreement. Text written in the forms is shared under CC0 1.0, and an abstract given in a form under the licence of the work. The submission form asks two more confirmations: that every author consents to the record being published, offered through OAI-PMH and provided to services in the United States, and agreement to the policies. The form also asks for the extent of use of generative models, at one of four levels: none, editing, assistance or drafting. From 2026-11-22, a work is listed only if no author lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or stays in one between the submission and the listing, even briefly, and no author under 18 lives or stays in India; the form asks the submitter to confirm it. The saves to the Internet Archive become a separate box that may be left empty. Confirming something untrue in a form is not allowed; from 2026-11-22, the operator may decline further submissions from the account that did so.
+
+## Policies
+
+- [Terms of Use](https://sophaxis.vercel.app/policies/terms.html): The rules for everyone who reads or submits.
+- [Submission Policy](https://sophaxis.vercel.app/policies/submission.html): Who can submit what, and what the submitter confirms.
+- [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html): What moderation checks, and what it does not.
+- [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html): Authors keep their copyright; what Sophaxis copies and why.
+- [Licence Policy](https://sophaxis.vercel.app/policies/licences.html): The accepted licences, and the licences of this site.
+- [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html): What the site and the checks read, and what becomes public.
+- [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html): How an author withdraws a listed work, and what stays.
+- [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html): How to ask for removal, and what happens then.
+
+## Other pages
+
+- [Policies (index)](https://sophaxis.vercel.app/policy.html)
+- [Disclaimer](https://sophaxis.vercel.app/disclaimer.html)
+- [Frequently asked questions](https://sophaxis.vercel.app/faq.html)
+- [From submission to listing](https://sophaxis.vercel.app/process.html)
+- [What runs by itself](https://sophaxis.vercel.app/automation.html)
+- [For repositories and DOI registration agencies](https://sophaxis.vercel.app/repositories.html)
+- [Operator and contact](https://sophaxis.vercel.app/contact.html)
+
+## Japanese
+
+- [個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html)
+- [利用規約（日本語訳）](https://sophaxis.vercel.app/policies/terms.ja.html)
+- [投稿の規程（日本語訳）](https://sophaxis.vercel.app/policies/submission.ja.html)
+- [モデレーションの規程（日本語訳）](https://sophaxis.vercel.app/policies/moderation.ja.html)
+- [著作権の規程（日本語訳）](https://sophaxis.vercel.app/policies/copyright.ja.html)
+- [ライセンスの規程（日本語訳）](https://sophaxis.vercel.app/policies/licences.ja.html)
+- [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html)
+- [撤回の規程（日本語訳）](https://sophaxis.vercel.app/policies/withdrawal.ja.html)
+- [免責事項](https://sophaxis.vercel.app/disclaimer.ja.html)
+
+## Data
+
+- [papers.json](https://sophaxis.vercel.app/papers.json): every public record
+- [Atom feed](https://sophaxis.vercel.app/feed.xml)
+- [OAI-PMH](https://sophaxis.vercel.app/oai?verb=Identify)
+- [Sitemap](https://sophaxis.vercel.app/sitemap.xml)
+- [Source and history](https://github.com/cpsbvbng26-dotcom/sophaxis)

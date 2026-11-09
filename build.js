@@ -1043,6 +1043,49 @@ function robots(all) {
   return 'User-agent: *\nAllow: /\n' + archive + '\nSitemap: ' + SITE.baseUrl + 'sitemap.xml\n';
 }
 
+/* llms.txt and llms-full.txt (the llms.txt proposal, https://llmstxt.org/): what a language model needs to answer a
+ * question about Sophaxis from its own words. llms.txt gives the facts from site.json and links every policy and page;
+ * llms-full.txt holds the policies and pages word for word, from the same Markdown the pages are built from, so the two
+ * cannot drift apart. Nothing here is written by hand, and nothing says more than the policies do. */
+const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['faq.md', 'faq.html', 'Frequently asked questions'],
+  ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
+  ['contact.md', 'contact.html', 'Operator and contact']];
+function llmsSources() {
+  return POLICIES.map(([slug]) => ['policies/' + slug + '.md', 'policies/' + slug + '.html'])
+    .concat(LLM_PAGES.map(([src, url]) => [src, url]))
+    .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.md', 'policies/' + slug + '.ja.html']), [['disclaimer.ja.md', 'disclaimer.ja.html']]);
+}
+function llmsTxt(all) {
+  const B = SITE.baseUrl, L = SITE.notOffered || [];
+  const shown = all.filter((p) => p.status !== 'removed');
+  const repos = [...new Set(Object.values(SITE.repositories))];
+  const notice = SITE.termsNotice && SITE.termsNotice.text ? '- Change announced on the top page, from ' + SITE.termsNotice.from + ' (where the text names a later day, that day): ' + SITE.termsNotice.text + '\n' : '';
+  return '# ' + SITE.name + '\n\n> ' + SITE.name + ' is an overlay preprint server for ' + Object.values(SITE.categories).map((c) => c.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' and $1')
+    + '. It lists preprints that authors have already deposited in an open repository with a DOI, and gives each a stable record page. Acceptance is moderation, not peer review. Sophaxis charges nothing, to authors or to readers.\n\n'
+    + 'The policies below are the rules. Where this file and a policy differ, the policy applies. The full text of every policy is in [llms-full.txt](' + B + 'llms-full.txt).\n\n'
+    + '## Facts\n\n'
+    + '- Operator: ' + SITE.operator.name + ' (ORCID https://orcid.org/' + SITE.operator.orcid + '), one person in Japan, unpaid. Requests by email go to the address on that ORCID record; see the [contact page](' + B + 'contact.html).\n'
+    + '- Fields: ' + Object.values(SITE.categories).join(', ') + '.\n'
+    + '- Accepted repositories (' + repos.length + '): ' + repos.join(', ') + '.\n'
+    + '- Accepted licences: ' + Object.values(SITE.licenses).join(', ') + '.\n'
+    + '- Records shown: ' + shown.length + ' (removed records are not counted).\n'
+    + '- Not offered in ' + L.length + ' places: ' + notOfferedPlaces(L) + '. From ' + SITE.residenceFrom + ', a work is not listed if an author lives in one of them, or stays in one between the submission and the listing, even briefly. The [Submission Policy](' + B + 'policies/submission.html) gives the law of each.\n'
+    + notice
+    + '\n## Policies\n\n'
+    + POLICIES.map(([slug, what]) => '- [' + policyTitle(slug) + '](' + B + 'policies/' + slug + '.html): ' + what + '\n').join('')
+    + '\n## Other pages\n\n'
+    + LLM_PAGES.map(([, url, t]) => '- [' + t + '](' + B + url + ')\n').join('')
+    + '\n## Japanese\n\n'
+    + Object.keys(JA_POLICIES).map((slug) => '- [' + JA_POLICIES[slug] + '](' + B + 'policies/' + slug + '.ja.html)\n').join('')
+    + '- [免責事項](' + B + 'disclaimer.ja.html)\n'
+    + '\n## Data\n\n'
+    + '- [papers.json](' + B + 'papers.json): every public record\n- [Atom feed](' + B + 'feed.xml)\n- [OAI-PMH](' + B + 'oai?verb=Identify)\n- [Sitemap](' + B + 'sitemap.xml)\n- [Source and history](' + SITE.repo + ')\n';
+}
+function llmsFull() {
+  return '# ' + SITE.name + ': the policies and pages in full\n\nEach part below is the Markdown from which the page at its address is built, word for word.\n\n'
+    + llmsSources().map(([src, url]) => '---\n\nSource: ' + SITE.baseUrl + url + '\n\n' + fs.readFileSync(path.join(ROOT, src), 'utf8').trim() + '\n\n').join('');
+}
+
 function build(out, paperDir) {
   const { papers: all, problems } = loadPapers(paperDir);
   if (SITE.zenodo && (!/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.doi || '') || !/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.version || '') || !/^https:\/\/zenodo\.org\/communities\//.test(SITE.zenodo.community || ''))) problems.push('site.json: zenodo needs a concept DOI, a version DOI and the community URL');
@@ -1083,6 +1126,8 @@ function build(out, paperDir) {
     '.well-known/security.txt': ['Contact: ' + SITE.baseUrl + 'contact.html', 'Expires: ' + SITE.securityTxtExpires, 'Preferred-Languages: en, ja',
       'Canonical: ' + SITE.baseUrl + '.well-known/security.txt', 'Policy: ' + SITE.baseUrl + 'contact.html'].join('\n') + '\n',
     'robots.txt': robots(all),
+    'llms.txt': llmsTxt(all),
+    'llms-full.txt': llmsFull(),
     /* IndexNow reads the key from a file of that name at the root (tools/indexnow.js). The key is public by design. */
     [SITE.indexNowKey + '.txt']: SITE.indexNowKey,
     /* The Vercel project's root directory is site/, so Vercel reads its configuration from here. */
@@ -1116,7 +1161,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { SECURITY_HEADERS, robots, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
@@ -1200,7 +1245,9 @@ function vercelConfig(papers) {
   /* Only main is deployed. The free plan allows 100 deployments a day for the whole account, and a deployment
    * of every working branch used them up on 2026-11-08, so that main could not be deployed. */
   const git = { deploymentEnabled: DEPLOY_BRANCHES };
-  return JSON.stringify({ headers: SECURITY_HEADERS, redirects, rewrites, git }, null, 2) + '\n';
+  /* The llms files are UTF-8 text with Japanese in them; say so, so that no reader guesses another encoding. */
+  const text = { source: '/(llms|llms-full)\\.txt', headers: [{ key: 'Content-Type', value: 'text/plain; charset=utf-8' }] };
+  return JSON.stringify({ headers: SECURITY_HEADERS.concat([text]), redirects, rewrites, git }, null, 2) + '\n';
 }
 
 if (require.main === module) {
