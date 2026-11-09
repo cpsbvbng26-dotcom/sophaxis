@@ -1,6 +1,6 @@
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-08。
+最終更新：2026-11-09。
 
 Sophaxis の個人情報の取り扱いを、日本の個人情報保護法の項目に沿って書いたものです。英語の [Privacy Policy](./privacy.html) の訳で、項目を日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
@@ -87,6 +87,11 @@ GitHub・Vercel・ORCID への提供の同意を撤回すると、記録を削�
 
 - GitHub：[GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)。EU-米国データプライバシーフレームワークに従うと述べています。
 - Vercel：[Vercel Privacy Notice](https://vercel.com/legal/privacy-notice)。EU-米国データプライバシーフレームワークに従うと述べています。
+
+GitHub と Vercel が自ら記録を使う場合が二つあり、それぞれの規約に定めがあります。Sophaxis はこれを変えられません。
+
+- GitHub の利用規約は、issue と公開のリポジトリに置かれたもの（記録を含みます）を、GitHub とその関連会社が、AI の機能と関連会社のモデルの学習に使うことを認めています（D.4）。公開の内容について、これを止める設定はありません（J.3）。
+- Vercel の利用規約は、Sophaxis を配信している無料の Hobby プランでは、サイトの内容（記録を含みます）を、Vercel が AI と機械学習のモデルの学習に使い、そのために第三者に渡すことを認めています。アカウントのチームの設定でこれを止めたときは別です（第 3 条）。
 - ORCID：[ORCID Privacy Policy](https://info.orcid.org/privacy-policy/)。毎年、EU-米国データプライバシーフレームワークの基準で評価を受けていると述べています。
 
 GitHub・Vercel・ORCID について、欧州連合からの移転は、各社がその枠組みの認証を受けている限りで、EU-米国データプライバシーフレームワークについての欧州委員会の十分性認定に基づきます。

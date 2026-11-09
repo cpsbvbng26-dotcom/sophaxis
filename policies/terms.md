@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -131,6 +131,18 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 - A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court. The steps in Disputes above cover only the operator and Sophaxis.
 - Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](./takedown.html) whether or not GitHub or Vercel has acted.
 - If GitHub or Vercel removes, limits or blocks something on their side, for example under the law of the United States, Sophaxis may not be able to restore it.
+
+Their terms were read at their sources on 2026-11-09: GitHub's [Terms of Service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (effective 2026-04-27), [Acceptable Use Policies](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies) and [General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) (effective 2026-04-27); Vercel's [Terms of Service](https://vercel.com/legal/terms) (last updated 2026-10-19), [Acceptable Use Policy](https://vercel.com/legal/acceptable-use-policy) (last updated 2026-04-21) and [Privacy Notice](https://vercel.com/legal/privacy-notice) (last updated 2026-06-01).
+What they say that matters to people who use Sophaxis:
+
+- GitHub accepts only users aged 13 or over, or older where a user's own country requires it (GitHub Terms, B.3).
+- What is written or attached in an issue must follow GitHub's Acceptable Use Policies, among them its rules on spam, harassment and other people's private information (GitHub Terms, C).
+- GitHub may refuse or remove content that breaks the law or its terms, and may close accounts (GitHub Terms, D.2 and M.3).
+- Content in a public repository and in its issues can be seen by everyone, and GitHub's terms do not restrict its lawful use by others (GitHub Terms, D.5 and D.8). GitHub and its affiliates may store, copy and display it, and use it to train AI features and the models of their affiliates (GitHub Terms, D.4); there is no setting that turns this off for public content (GitHub Terms, J.3).
+- The site is served on Vercel's free Hobby plan, which Vercel allows only for personal or non-commercial use; Sophaxis is non-commercial. Vercel may disable or remove a deployment on that plan with or without notice, so the site can go offline without warning; the records stay in the repository (Vercel Terms, section 4).
+- On the Hobby plan, Vercel may use the content it serves to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (Vercel Terms, section 3).
+- Content on the site must also follow Vercel's Acceptable Use Policy, and Vercel may remove or disable content (Vercel Terms, sections 3 and 8).
+- GitHub and Vercel each provide their services "as is", without warranty, and limit their liability (GitHub Terms, O and P; Vercel Terms, sections 20 and 21). Their terms are governed by the law of California, with the courts of San Francisco, and Vercel's also provide for arbitration (GitHub Terms, S.1; Vercel Terms, section 23).
 
 ## General
 
