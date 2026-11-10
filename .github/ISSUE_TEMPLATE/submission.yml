@@ -74,6 +74,39 @@ body:
         - Philosophy of Mathematics
         - Philosophy of Science
         - Logic
+  - type: dropdown
+    id: subfield
+    attributes:
+      label: Subfield (optional)
+      description: One subfield within the category chosen above, if one fits.
+      options:
+        - "Philosophy: Ethics"
+        - "Philosophy: Political philosophy"
+        - "Philosophy: Epistemology"
+        - "Philosophy: Metaphysics"
+        - "Philosophy: Philosophy of mind"
+        - "Philosophy: Philosophy of language"
+        - "Philosophy: Aesthetics"
+        - "Philosophy: Philosophy of religion"
+        - "Philosophy: History of philosophy"
+        - "Philosophy: Asian and comparative philosophy"
+        - "Mathematics: Algebra"
+        - "Mathematics: Analysis"
+        - "Mathematics: Geometry and topology"
+        - "Mathematics: Number theory"
+        - "Mathematics: Combinatorics"
+        - "Mathematics: Probability and statistics"
+        - "Mathematics: Game theory"
+        - "Mathematics: Applied mathematics"
+        - "Logic: Proof theory"
+        - "Logic: Model theory"
+        - "Logic: Set theory"
+        - "Logic: Computability"
+        - "Logic: Philosophical logic"
+        - "Philosophy of Science: Philosophy of physics"
+        - "Philosophy of Science: Philosophy of biology"
+        - "Philosophy of Science: Philosophy of the social sciences"
+        - "Philosophy of Science: Philosophy of technology"
   - type: textarea
     id: abstract
     attributes:
@@ -89,6 +122,11 @@ body:
     attributes:
       label: Abstract in a second language (optional)
       description: An abstract in a language other than that of the abstract above, written or checked by the authors. It is shown as given; Sophaxis does not check the translation.
+  - type: textarea
+    id: lay_summary
+    attributes:
+      label: Summary in plain words (optional)
+      description: At most three sentences and 600 characters, for readers outside the field. It is shown on the record page as the authors' own summary, and is not part of the work.
   - type: textarea
     id: llm
     attributes:

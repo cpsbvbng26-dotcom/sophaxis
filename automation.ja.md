@@ -1,6 +1,6 @@
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [What runs by itself](./automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -70,7 +70,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 読むもの：記録と `data/news.json`。
 - 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
 - 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
-- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
+- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の一日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
+- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) と [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
 
 ## 年に一度、一月 2 日の日本時間 12:23
 

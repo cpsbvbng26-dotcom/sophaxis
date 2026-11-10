@@ -1,6 +1,6 @@
 # 投稿から掲載まで（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [From submission to listing](./process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -41,9 +41,9 @@ Sophaxis が ORCID の記録から読むのは、名前・リンク・業績だ�
 
 ## 手順 3. 投稿の issue を開く
 
-1. [投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)を開きます。GitHub がサインインを求めたら、サインインします。そのあと様式が開きます。
+1. [投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)を開きます。GitHub がサインインを求めたら、サインインします。そのあと様式が開きます。同じ様式の[日本語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml)もあります。
 2. 題の「[Submission]」のあとに、作品の題のような短い言葉を足します。
-3. DOI、ORCID iD、分野、生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告を書き、確認の欄に印を付けます。
+3. DOI、ORCID iD、分野（合えば下位の分野も）、生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告を書き、確認の欄に印を付けます。平易な要約と二つ目の言語の要旨は任意です。
 4. 様式のいちばん下のボタンを押して、issue を作ります。
 
 題・著者・要旨・ライセンスは、DOI のメタデータから取ります。手で打ち込むことはありません。

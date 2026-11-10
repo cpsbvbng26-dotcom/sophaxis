@@ -1,0 +1,238 @@
+name: プレプリントを投稿する（日本語の様式）
+description: Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv に預けたプレプリントを載せるための、日本語の様式です。
+title: "[Submission] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        これは英語の様式（Submit a preprint）の日本語版です。中身は同じで、自動の確認も同じように動きます。規程と様式の英語の文と食い違うときは、英語の文が適用されます。
+        この issue は公開されます。あなたの GitHub のユーザー名と、ここに書くことは、だれでも見られます。
+        受理はモデレーションであり、査読ではありません。投稿の前に投稿の規程を読んでください：https://sophaxis.vercel.app/policies/submission.ja.html
+
+        DOI と ORCID iD を書きます。題・著者・要旨・ライセンスは、DOI のメタデータから取ります。
+        投稿の前に、ORCID の記録の「Websites & social links」に `https://github.com/<あなたのユーザー名>` を足してください。
+        そのあと自動の確認が、この issue を開いたアカウントが作品の著者のものかを確かめます。
+        ここに書く個人情報は、個人情報の取り扱いの目的にだけ使います：https://sophaxis.vercel.app/policies/privacy.ja.html
+        だれでも、いつでも、自分の事情を理由に、Sophaxis での自分の個人情報の利用に異議を述べられます。削除の様式かメールで述べます。
+        選択肢（分野・査読・生成モデルの程度など）は、自動の確認が読めるよう英語のままにしてあります。
+  - type: input
+    id: doi
+    attributes:
+      label: 預けたプレプリントの DOI
+      description: Zenodo（10.5281/zenodo.…）、Figshare（10.6084/m9.figshare.…）、OSF Preprints（10.31219/osf.io/…）、SocArXiv（10.31235/osf.io/…）、MetaArXiv（10.31222/osf.io/…）、arXiv（10.48550/arXiv.…）、Preprints.org（10.20944/preprints…）、SSRN（10.2139/ssrn.…）、Research Square（10.21203/rs.3.rs-…）、SciELO Preprints（10.1590/SciELOPreprints.…）、Qeios（10.32388/…）、ScienceOpen Preprints（10.14293/PR2199.…）、Advance（10.31124/advance.…）、KC Works（10.17613/…）、Jxiv（10.51094/jxiv.…）の DOI。DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが必要です。2026-11-23 からは、作品の最初の DOI が登録されてから六か月以上たっている必要があります。同じ日から、はじめての投稿には推薦する研究者が要ります（投稿の規程を見てください）。
+      placeholder: 10.5281/zenodo.0000000
+    validations:
+      required: true
+  - type: input
+    id: orcid
+    attributes:
+      label: あなたの ORCID iD
+      description: ORCID の記録があなたの GitHub のアカウントにつながっていて、その iD が作品の著者のものである必要があります。
+      placeholder: 0000-0002-1825-0097
+    validations:
+      required: true
+  - type: input
+    id: published
+    attributes:
+      label: 出版された版の DOI（学術誌が出版した場合だけ）
+      description: 記録はそこへリンクします。預けた版は、そのライセンスのもとで共有してよい版である必要があります。
+      placeholder: 10.1000/journal.0000
+  - type: dropdown
+    id: peer
+    attributes:
+      label: 出版された版は査読を受けましたか？
+      description: 上で出版された版を書いたときだけ答えます。Sophaxis は、あなたの答えをあなたの申告として示します。上から順に「はい、学術誌か出版者が査読した」「いいえ、査読を受けていない」「分からない」です。
+      options:
+        - Yes, the journal or the publisher peer-reviewed it
+        - No, it was not peer-reviewed
+        - I do not know
+  - type: input
+    id: update
+    attributes:
+      label: すでにある Sophaxis の番号（新しい版のときだけ）
+      placeholder: 2026.0001
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分野
+      description: Philosophy は哲学、Mathematics は数学、Philosophy of Mathematics は数理哲学、Philosophy of Science は科学哲学、Logic は論理学です。
+      options:
+        - Philosophy
+        - Mathematics
+        - Philosophy of Mathematics
+        - Philosophy of Science
+        - Logic
+    validations:
+      required: true
+  - type: dropdown
+    id: others
+    attributes:
+      label: ほかの分野（任意）
+      description: 作品をあわせて載せる分野です。
+      multiple: true
+      options:
+        - Philosophy
+        - Mathematics
+        - Philosophy of Mathematics
+        - Philosophy of Science
+        - Logic
+  - type: dropdown
+    id: subfield
+    attributes:
+      label: 下位の分野（任意）
+      description: 上で選んだ分野の中の下位の分野を、合うものがあれば一つ選びます。
+      options:
+        - "Philosophy: Ethics"
+        - "Philosophy: Political philosophy"
+        - "Philosophy: Epistemology"
+        - "Philosophy: Metaphysics"
+        - "Philosophy: Philosophy of mind"
+        - "Philosophy: Philosophy of language"
+        - "Philosophy: Aesthetics"
+        - "Philosophy: Philosophy of religion"
+        - "Philosophy: History of philosophy"
+        - "Philosophy: Asian and comparative philosophy"
+        - "Mathematics: Algebra"
+        - "Mathematics: Analysis"
+        - "Mathematics: Geometry and topology"
+        - "Mathematics: Number theory"
+        - "Mathematics: Combinatorics"
+        - "Mathematics: Probability and statistics"
+        - "Mathematics: Game theory"
+        - "Mathematics: Applied mathematics"
+        - "Logic: Proof theory"
+        - "Logic: Model theory"
+        - "Logic: Set theory"
+        - "Logic: Computability"
+        - "Logic: Philosophical logic"
+        - "Philosophy of Science: Philosophy of physics"
+        - "Philosophy of Science: Philosophy of biology"
+        - "Philosophy of Science: Philosophy of the social sciences"
+        - "Philosophy of Science: Philosophy of technology"
+  - type: textarea
+    id: abstract
+    attributes:
+      label: 要旨（DOI のメタデータに無いときだけ）
+      description: リポジトリに要旨があるときは、空のままにします。
+  - type: input
+    id: abstract_other_lang
+    attributes:
+      label: 二つ目の要旨の言語（任意）
+      description: "下に二つ目の言語の要旨を書くときは、その言語の二文字か三文字の符号（ISO 639）。例：ja、de、fr。"
+  - type: textarea
+    id: abstract_other
+    attributes:
+      label: 二つ目の言語の要旨（任意）
+      description: 上の要旨と違う言語の要旨で、著者が書いたか確かめたもの。そのまま示し、Sophaxis は訳を確かめません。
+  - type: textarea
+    id: lay_summary
+    attributes:
+      label: 平易な要約（任意）
+      description: 分野の外の読者のための、三文以内、600 字以内の要約。記録の頁に著者自身の要約として示し、作品の一部ではありません。
+  - type: textarea
+    id: llm
+    attributes:
+      label: 言語モデルとその他の生成モデルの使用
+      description: 使った道具の名を挙げ、何に使ったか（下書き・翻訳・証明・コード・文献の探索・手直し・図・画像）を書きます。言語モデルに限らず、すべての生成モデルが対象です。使っていなければ、そう書きます。
+      placeholder: |
+        例：
+        使っていない。
+        ChatGPT（OpenAI）が最初の草稿を日本語から英語に訳し、著者がすべての文を直した。
+        Claude（Anthropic）が付録のコードを書き、文献を示した。著者がそれぞれの文献を確かめた。
+    validations:
+      required: true
+  - type: dropdown
+    id: llm_extent
+    attributes:
+      label: 生成モデルを使った程度
+      description: 当てはまるうちで最も高い程度を選びます。どの道具が何をしたかは、上の申告に書きます。2026-11-21 から必須です。上から順に「使っていない」「言葉の手直し・翻訳・校正だけ」「構成・文献の探索・確認の手助け。本文は著者が書いた」「生成モデルが文・証明・コード・図の草稿を作り、著者が直した」です。
+      options:
+        - "None: no generative model was used"
+        - "Editing: language editing, translation or proofreading only"
+        - "Assistance: structure, literature search or checking; the authors wrote the text"
+        - "Drafting: a generative model drafted text, proofs, code or figures that the authors revised"
+    validations:
+      required: false
+  - type: textarea
+    id: funding
+    attributes:
+      label: 資金
+      description: 2026-11-24 から必須です。作品のすべての資金提供者を、助成の番号とともに挙げるか、資金が無かったと書きます。
+      placeholder: |
+        例：
+        この研究は資金を受けていない。
+        JSPS 科研費 JP00K00000。
+    validations:
+      required: false
+  - type: textarea
+    id: competing_interests
+    attributes:
+      label: 利益相反
+      description: 2026-11-24 から必須です。作品に関わる著者の金銭的・個人的な利害を書くか、無いと書きます。
+      placeholder: |
+        例：
+        著者に利益相反はない。
+    validations:
+      required: false
+  - type: textarea
+    id: ethics
+    attributes:
+      label: 人を対象とする研究と研究倫理
+      description: 2026-11-24 から必須です。調査・聞き取り・人を対象とする実験など、人を対象とする研究を含むかを書きます。含むときは、承認した倫理審査委員会の名を挙げるか、適用された決まりのもとで承認が要らなかった理由を書き、特定できる参加者の全員が同意したことを書きます。
+      placeholder: |
+        例：
+        この研究は人を対象としない。
+        調査は X 大学の倫理審査委員会が承認した（承認番号 2026-01）。参加者は全員、書面で同意した。
+    validations:
+      required: false
+  - type: textarea
+    id: data
+    attributes:
+      label: データとコード（任意）
+      description: 作品が拠るデータ・コード・その他の資料がどこにあるか（DOI 付きのリポジトリなど）、または無いことを書きます。
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 確認
+      options:
+        - label: 私はこの作品の著者です。
+          required: true
+        - label: この作品のすべての著者が、Sophaxis への掲載に同意しています。
+          required: true
+        - label: 著者はこの版をそのライセンスのもとで共有してよく、学術誌が出版した作品なら、出版者がそれを認めています。
+          required: true
+        - label: 作品には、著者が共有してはならない素材も、第三者の個人情報も含まれていません。
+          required: true
+        - label: 利用規約のとおり、作品とその掲載の責任は、すべて著者が負います。
+          required: true
+        - label: 掲載はモデレーションであり、査読ではないことを理解しています。
+          required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 同意
+      description: 2026-11-21 から必須です。これらのサービスとその国についての情報は、個人情報の取り扱いの「外国にある事業者の利用」にあります。どの著者も、いつでも、削除の様式かメールでこの同意を取り下げられます。そのときは記録を削除し、それまでにしたことは適法なままです。
+      options:
+        - label: すべての著者が、個人情報の取り扱い（https://sophaxis.vercel.app/policies/privacy.ja.html）のとおり、記録が公開されること、OAI-PMH で提供されること、米国の GitHub・Vercel・ORCID に提供されること、そして審査の手助けのために、この投稿の公開の部分が米国の Anthropic・OpenAI・xAI に渡されることに同意します。
+          required: false
+        - label: 利用規約とその他の規程（https://sophaxis.vercel.app/policies/terms.ja.html）を、投稿の日の版で読み、同意します。
+          required: false
+        - label: 私は 13 歳以上です。18 歳未満なら、親または保護者がこの投稿に同意しています。
+          required: false
+  - type: checkboxes
+    id: archive
+    attributes:
+      label: Internet Archive への保存（任意）
+      description: Sophaxis は、頁と PDF の写しを読めるままに保つため、米国の Internet Archive に保存します。これは別の同意で、空のままでもかまいません。どちらでも作品は載ります。考えられる危険は、個人情報の取り扱いの「欧州連合と英国の人へ」と「外国にある事業者の利用」にあります。どの著者も、いつでも取り下げられ、そのときは審査なしに保存を止めます。
+      options:
+        - label: すべての著者が、記録の頁と PDF の写しが米国の Internet Archive に保存されることに同意します。
+          required: false
+  - type: checkboxes
+    id: residence
+    attributes:
+      label: 著者の住んでいる場所
+      description: 2026-11-22 から必須です。Sophaxis は、次の場所のどれかに住んでいる著者、または投稿から掲載までのあいだに短くでもそこに滞在した著者の作品を載せません（欧州連合、欧州経済領域、英国、中国、タイ、ロシア、トルコ、エジプト、ペルー、アルバニア、モナコ、ガーンジー、ボツワナ、エクアドル、イラク、インドネシア、ルワンダ、ザンビア、エチオピア、コンゴ民主共和国、カザフスタン、チュニジア、ウガンダ、ギニア、マダガスカル、ボリビア、コスタリカ、ケベック州）。これは著者が住んでいる場所と滞在した場所だけによるもので、国籍や人種にはよりません。その場所の法律が、代理人、個人データの国内での保存、そこでの登録、またはデータを持ち出す前の条件を求めているか、求めていると伝えられており、Sophaxis はそれを満たしていないためです。それぞれの法律は投稿の規程にあります。インドに住んでいるか滞在している 18 歳未満の著者の作品も載せません。インドの法律が、Sophaxis が確かめない、親の確かめられた同意を求めているためです。
+      options:
+        - label: この作品のどの著者も、上に挙げた場所のどれにも住んでおらず、投稿から掲載までのあいだに（旅行・仕事・留学などで）短くでもそこに滞在しません。インドに住んでいるか滞在している 18 歳未満の著者もいません。
+          required: false

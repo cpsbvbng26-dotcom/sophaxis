@@ -137,6 +137,8 @@ function validate(p, file) {
     if (p[k] !== undefined && (typeof p[k] !== 'string' || p[k].trim().length < 4 || p[k].length > 2000)) e.push(file + ': ' + k + ' must be a statement of 4 to 2000 characters');
   });
   /* The extent of use, one of the levels in site.json. Required for records listed from SITE.llmExtentFrom. */
+  if (p.lay_summary !== undefined && !(typeof p.lay_summary === 'string' && p.lay_summary.trim() && p.lay_summary.length <= 600)) e.push(file + ': lay_summary must be a text of at most 600 characters');
+  if (p.subfield !== undefined && !Object.prototype.hasOwnProperty.call((SITE.subfields || {})[p.category] || {}, p.subfield)) e.push(file + ': subfield must be one of site.json subfields of its category');
   if (p.abstract_other !== undefined && !(p.abstract_other && /^[a-z]{2,3}$/.test(p.abstract_other.lang || '') && typeof p.abstract_other.text === 'string' && p.abstract_other.text.trim()
     && Object.keys(p.abstract_other).sort().join() === 'lang,text')) e.push(file + ': abstract_other must be { lang: a two- or three-letter code, text }');
   if (p.llm_extent !== undefined && !Object.prototype.hasOwnProperty.call(SITE.llmExtents, p.llm_extent)) e.push(file + ': llm_extent must be one of ' + Object.keys(SITE.llmExtents).join(', '));
@@ -189,6 +191,7 @@ function validate(p, file) {
     if (!/^[0-9a-f]{64}$/.test(x.sha256 || '')) e.push(where + ' needs a sha256');
     if (!/^https:\/\//.test(x.source || '')) e.push(where + ' needs the https address it was copied from');
     if (x.provided_by !== undefined && x.provided_by !== 'authors') e.push(where + ': provided_by can only be "authors"');
+    if (!Number.isInteger(x.pages) || x.pages < 1 || !Number.isInteger(x.words) || x.words < 0) e.push(where + ' needs its pages and words (node tools/pdf_stats.js)');
   });
   return e;
 }
@@ -607,6 +610,12 @@ function hasCard(p) {
   if (!fs.existsSync(m) || !fs.existsSync(path.join(CARDS, p.id + '.png'))) return false;
   return JSON.parse(fs.readFileSync(m, 'utf8'))[p.id] === require('./tools/cards.js').cardHash(p);
 }
+/* A rough guide to the time a PDF takes to read: its pages and words, at 200 words a minute, rounded to five minutes. */
+const WORDS_PER_MINUTE = 200;
+function readingTime(x) {
+  const minutes = Math.max(5, Math.round(x.words / WORDS_PER_MINUTE / 5) * 5);
+  return `The PDF has ${x.pages} pages and about ${x.words.toLocaleString('en-US')} words: roughly ${minutes} minutes at ${WORDS_PER_MINUTE} words a minute. Mathematics and dense argument take longer.`;
+}
 function recordPage(p, all = [p]) {
   if (p.status === 'removed') return removedPage(p);
   const v = latest(p);
@@ -646,7 +655,7 @@ function recordPage(p, all = [p]) {
     : `Unmodified copies of the files the authors deposited at ${esc(repoName(v.doi))}`}, kept so that search engines can index the full text. They are shared under ${esc(SITE.licenses[p.license])}, by ${esc(authorsText(p))}. Cite the DOI.</p>` : '';
   /* As arXiv does: the ways to read the work, at the top, before the abstract. */
   const lastPdf = pdfs.slice(-1)[0];
-  const access = `<p class="access"><b>Access:</b> ${p.published ? `<a href="https://doi.org/${esc(p.published.doi)}">Published version (${esc(p.published.venue)})</a> · ` : ''}${lastPdf ? `<a href="../pdf/${esc(lastPdf.file)}" type="application/pdf">PDF (v${lastPdf.version})</a> · ` : ''}<a href="https://doi.org/${esc(v.doi)}">${esc(repoName(v.doi))} (v${v.version})</a> · <a href="../cite/${esc(p.id)}.bib">BibTeX</a></p>`;
+  const access = `<p class="access"><b>Access:</b> ${p.published ? `<a href="https://doi.org/${esc(p.published.doi)}">Published version (${esc(p.published.venue)})</a> · ` : ''}${lastPdf ? `<a href="../pdf/${esc(lastPdf.file)}" type="application/pdf">PDF (v${lastPdf.version}, ${lastPdf.pages} pages)</a> · ` : ''}<a href="https://doi.org/${esc(v.doi)}">${esc(repoName(v.doi))} (v${v.version})</a> · <a href="../cite/${esc(p.id)}.bib">BibTeX</a></p>`;
   const rel = related(p, all);
   const relList = (xs) => '<ul>' + xs.map((x) => `<li><a href="./${esc(x.id)}.html">${esc(x.title)}</a> <span class="meta">${esc(authorsText(x))}, ${esc(latest(x).date.slice(0, 4))}</span></li>`).join('') + '</ul>';
   const relatedHtml = rel.byAuthors.length || rel.onTopic.length ? `<h2>Related records</h2>
@@ -661,7 +670,7 @@ ${rel.byAuthors.length ? '<p class="meta">By the same authors</p>\n' + relList(r
     + crumb(3, `<span itemprop="name" aria-current="page">${esc(p.id)}</span>`) + '</span></nav>';
   const body = `
 ${crumbs}
-<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.subfield ? ' · ' + esc(SITE.subfields[p.category][p.subfield]) : ''}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 ${collectionLinks(p)}
 ${withdrawn}
 ${publishedNotice(p)}
@@ -671,9 +680,12 @@ ${facts}
 <h1 itemprop="headline">${esc(p.title)}</h1>
 <p>${authors}</p>
 ${p.status === 'withdrawn' ? '' : access}
-<h2>Abstract</h2>
+${lastPdf && p.status !== 'withdrawn' ? `<p class="meta">${readingTime(lastPdf)}</p>\n` : ''}<h2>Abstract</h2>
 <div class="abstract"><p itemprop="abstract">${esc(p.abstract)}</p></div>
 <p class="meta">Abstract by ${esc(authorsText(p))}, ${p.abstract_source === 'authors' ? 'given by the authors in the submission issue, because the DOI metadata has none' : 'from the DOI metadata'}, shown as plain text without other changes, under <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>.</p>
+${p.lay_summary ? `<h2>In plain words</h2>
+<p>${esc(p.lay_summary)}</p>
+<p class="meta">A summary for readers outside the field, written by the authors and given in the submission issue. It is not part of the work.</p>` : ''}
 ${p.abstract_other ? `<h2>Abstract in a second language</h2>
 <div class="abstract" lang="${esc(p.abstract_other.lang)}"><p>${esc(p.abstract_other.text)}</p></div>
 <p class="meta">Given by the authors in the submission issue (language code ${esc(p.abstract_other.lang)}), shown as given. ${esc(SITE.name)} has not checked the translation.</p>` : ''}
@@ -859,7 +871,7 @@ ${listing(mine, '../', 'No preprints are listed in this field yet.')}
 function submitPage() {
   const body = `
 <h1>Submit a preprint</h1>
-${pausedNotice()}${scopeNotice()}<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation. The <a href="./checklist.html">checklist</a> gathers what a submission needs, with two paper templates.</p>
+${pausedNotice()}${scopeNotice()}<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation. The <a href="./checklist.html">checklist</a> gathers what a submission needs, with two paper templates. The form is also <a href="${esc(SITE.repo)}/issues/new?template=submission-ja.yml">in Japanese</a>.</p>
 <ol>
 <li>Deposit your preprint in ${andOr(Object.values(SITE.repositories).map((n) => `<a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>`), 'or')} under ${andOr(Object.values(SITE.licenses).map(esc), 'or')}, and note its DOI.</li>
 <li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
@@ -1558,7 +1570,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

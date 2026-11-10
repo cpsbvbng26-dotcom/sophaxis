@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+      # pdfinfo and pdftotext, to confirm the pages and words recorded for each PDF copy.
+      - run: sudo apt-get update -q && sudo apt-get install -y -q poppler-utils
       - run: node verification/check.js
 
   # A browser is needed here, so it is a job of its own: a failure of the browser is then not mistaken for a fault of the site.

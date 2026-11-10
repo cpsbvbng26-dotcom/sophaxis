@@ -42,7 +42,9 @@
       "version": 1,
       "file": "2026.0005v1.pdf",
       "sha256": "58dbe84b2be8fe7fe6a785419ca7223415dcb1c199764f9eaf65305d41b2bb71",
-      "source": "https://zenodo.org/api/records/22064241/files/Fragmentarian%20Spiritual%20Individualism%20Preprint.pdf/content"
+      "source": "https://zenodo.org/api/records/22064241/files/Fragmentarian%20Spiritual%20Individualism%20Preprint.pdf/content",
+      "pages": 10,
+      "words": 5253
     }
   ]
 }

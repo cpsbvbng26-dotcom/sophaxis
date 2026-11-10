@@ -39,7 +39,9 @@
       "file": "2026.0002v1.pdf",
       "sha256": "cdb0def389d44cf8f250f9d2bbfb0badb7688254953293fef60ff52a26855001",
       "source": "https://github.com/user-attachments/files/34197789/ssrn-7537983.pdf",
-      "provided_by": "authors"
+      "provided_by": "authors",
+      "pages": 9,
+      "words": 3883
     }
   ]
 }

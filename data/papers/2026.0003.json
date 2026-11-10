@@ -42,7 +42,9 @@
       "version": 1,
       "file": "2026.0003v1.pdf",
       "sha256": "2d1d169954079fc4684e3505bce950a0120ccb838626545d7717e7c17b447541",
-      "source": "https://zenodo.org/api/records/22057583/files/manifesto_of_imperial_selfhood_revised.pdf/content"
+      "source": "https://zenodo.org/api/records/22057583/files/manifesto_of_imperial_selfhood_revised.pdf/content",
+      "pages": 9,
+      "words": 4425
     }
   ]
 }
