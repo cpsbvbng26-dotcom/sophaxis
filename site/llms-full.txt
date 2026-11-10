@@ -569,6 +569,7 @@ The operator is at present the only moderator.
 Other moderators may be invited.
 A researcher in these fields who would like to moderate can write to the operator; the operator decides whom to invite.
 Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
+Since 2026-11-10 the operator has also invited researchers to form an advisory board, which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.html).
 
 ## Conflicts of interest
 
@@ -1910,6 +1911,7 @@ It has no affiliation with any society, institution or sponsor.
 Not met.
 Sophaxis has no editorial board and no advisory body.
 The Moderation Policy says that other moderators may be invited, and names how; none has been invited yet.
+Since 2026-11-10 a call for an advisory board has been open ([Advisory board: a call](./advisory.html)); no adviser has joined yet.
 
 ### Editorial team and contact information
 
@@ -2006,7 +2008,7 @@ Source: https://sophaxis.vercel.app/contact.html
 
 # Operator and contact
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-10.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2025,6 +2027,8 @@ The operator is also the moderator, and is responsible for the site and its reco
 The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.html).
 The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.html) set out.
 Submissions by the operator are moderated under the same rules and are marked as the operator's own.
+There is no advisory board yet; the call for one is on [Advisory board: a call](./advisory.html). Advisers will be named here, with an ORCID iD, once they agree.
+Introducing Sophaxis: [the page for anyone introducing it](./press.html), and [the name, logo and badge](./brand.html).
 
 ## Contact
 
@@ -2079,6 +2083,140 @@ The site is hosted on Vercel and built from the public repository on GitHub.
 The code, the records and the issues are kept on GitHub, and the automatic checks run as GitHub Actions there.
 Sophaxis is not affiliated with GitHub or Vercel; see the [Disclaimer](./disclaimer.html).
 Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of its own](./repositories.html).
+
+---
+
+Source: https://sophaxis.vercel.app/advisory.html
+
+# Advisory board: a call
+
+Last updated: 2026-11-10.
+
+Japanese: [諮問委員の募集（日本語訳）](./advisory.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Why
+
+Sophaxis has no editorial board and no advisory body; the [transparency self-assessment](./transparency.html) marks this as not met.
+Since 2026-11-10 the operator has invited researchers to form an advisory board.
+Until someone agrees and is named on the [Operator and contact](./contact.html) page, there is no board.
+
+## What an adviser does
+
+- Reads a proposed change to the policies before it is announced, and says what they think, in its public issue or by email.
+- Advises on the scope of the fields and on hard cases, when the operator asks.
+- Gives no decision on any submission. Moderators are invited separately, as the [Moderation Policy](./policies/moderation.html) sets out.
+- Speaks for themselves only. Advising Sophaxis says nothing about the quality of any listed work, and does not involve the adviser's institution.
+
+The operator decides, and stays responsible for the site and its records.
+
+## Who can join
+
+- A researcher in philosophy, mathematics, logic, the philosophy of mathematics or the philosophy of science.
+- Whose public ORCID record lists a journal article, a book chapter or a book with a DOI.
+- Who does not live in, or stay in, a place where Sophaxis is not offered, as the [Submission Policy](./policies/submission.html) lists them.
+
+An adviser is not paid and pays nothing.
+An adviser can leave at any time by saying so; their name then leaves the contact page, and the date they left is kept.
+
+## How to join
+
+Write to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), with your ORCID iD and a sentence on why you would like to advise.
+The operator decides whom to invite, and answers every message.
+Each adviser is named, with an ORCID iD, on the contact page, only after they agree to it.
+
+## Conflicts of interest
+
+An adviser who submits a work goes through the same moderation as anyone else, with no priority.
+An adviser does not advise on a case that concerns their own work, or the work of a close collaborator.
+
+---
+
+Source: https://sophaxis.vercel.app/brand.html
+
+# Name, logo and badge
+
+Last updated: 2026-11-10.
+
+Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Name
+
+The name is written Sophaxis, in Latin letters, with a capital S, in every language.
+In Japanese it is read ソファクシス.
+A record is cited by its Sophaxis id, such as `2026.0001`, and by the DOI of the deposited work.
+
+## Logo
+
+The logo is drawn with rectangles and polygons only, so that it looks the same on every device and uses no typeface.
+
+- [favicon.svg](./favicon.svg): the logo as a vector image.
+- [og.png](./og.png): the logo as a square PNG.
+
+Use the logo unchanged, to refer to Sophaxis or to link to it.
+Do not use it in a way that suggests that Sophaxis reviewed, recommends or is connected with something it is not.
+
+## Colours
+
+| Use | Light | Dark |
+| --- | --- | --- |
+| Background | `#f7f5f0` | `#14171f` |
+| Text | `#1d2330` | `#e6e2d8` |
+| Accent | `#2f4a7a` | `#9fb6e0` |
+
+## Badge for a listed work
+
+An author of a listed work can show that it is listed, with the badge [badge.svg](./badge.svg).
+Each record page gives the badge with a link to that record, ready to paste.
+
+- Use it only for a work that Sophaxis lists, and link it to the record page.
+- Remove it if the work is withdrawn or its record is removed.
+- The badge says that the work passed moderation. It does not say that the work was peer-reviewed, and it says nothing of its quality.
+
+## Text of the site
+
+The text of the site is shared under CC BY 4.0 and its code under MIT, as every page says.
+
+---
+
+Source: https://sophaxis.vercel.app/press.html
+
+# For anyone introducing Sophaxis
+
+Last updated: 2026-11-10.
+
+Japanese: [紹介する人のために（日本語訳）](./press.ja.html). It is a translation; where the two differ, the English text applies.
+
+## In one sentence
+
+Sophaxis is a free overlay preprint server for philosophy and mathematics: it moderates preprints that their authors have already deposited with a DOI, and gives each a stable record page.
+
+## In one paragraph
+
+Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
+Authors deposit their work in an open repository, such as Zenodo, arXiv or SSRN, and submit the DOI in a public GitHub issue.
+An automatic check confirms through ORCID that the submitter is an author and that the work carries an open licence; a moderator then decides in public.
+Each record page shows the abstract, the versions, an unmodified PDF copy and the authors' statement on the use of generative models.
+Sophaxis charges nothing, to authors or to readers, and is run unpaid by one person in Japan.
+
+## Facts
+
+<!-- facts -->
+
+## What Sophaxis is not
+
+- It does not peer review: acceptance is moderation.
+- It is not a journal, and it has no ISSN.
+- It issues no DOIs: the DOIs are those of the repositories.
+- It has no affiliation with any repository, society or institution, as the [Disclaimer](./disclaimer.html) says.
+
+## Name and logo
+
+The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
+
+## Contact
+
+Questions go to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in [a public issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
+News is on the [News](./news.html) page.
 
 ---
 
@@ -2898,6 +3036,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 ほかのモデレーターを招くことがあります。
 これらの分野の研究者でモデレーターを引き受けたい人は、運営者に連絡できます。誰を招くかは運営者が決めます。
 どのモデレーターも、判断をする前に、[運営者と連絡先](../contact.html)の頁に ORCID iD とともに名を挙げ、この規程に沿って無報酬でモデレーションを行います。
+2026-11-10 から、運営者は、諮問委員会を作るため研究者も募っています。諮問委員会は規程について助言し、どの投稿についても判断しません。募集は[諮問委員の募集](../advisory.ja.html)にあります。
 
 ## 利益相反
 
@@ -3784,7 +3923,7 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-08。
+最終更新：2026-11-10。
 
 これは英語の [Operator and contact](./contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -3806,6 +3945,8 @@ Sophaxis がなぜあるのか、それが記録にとって何を意味する�
 サイトとそのコードは、運営者の求めにより、Claude Code（Anthropic）で作りました。[免責事項](./disclaimer.ja.html)を見てください。
 [利用規約](./policies/terms.ja.html)が定めるとおり、著者は自分の作品にすべての責任を負います。
 運営者の投稿も同じ決まりでモデレーションを行い、運営者自身のものである印を付けます。
+諮問委員会はまだありません。募集は[諮問委員の募集](./advisory.ja.html)にあります。委員は、本人が同意したあと、ORCID iD とともにここに名を載せます。
+Sophaxis を紹介する人のために、[紹介する人のために](./press.ja.html)と[名前・ロゴ・バッジ](./brand.ja.html)の頁があります。
 
 ## 連絡先
 
@@ -4142,6 +4283,7 @@ Sophaxis は、一人の個人が持ち、運営しています。
 満たさない。
 Sophaxis には、編集委員会も諮問機関もありません。
 モデレーションの規程は、ほかのモデレーターを招くことがあると述べ、その手順を示しています。まだ誰も招いていません。
+2026-11-10 から、諮問委員の募集を開いています（[諮問委員の募集](./advisory.ja.html)）。まだ誰も加わっていません。
 
 ### 編集の担当者と連絡先
 
@@ -4173,4 +4315,138 @@ Sophaxis は広告を出しません。広告をする投稿は断ります。
 満たす。
 サイトにはメーリングリストがありません。
 誰にもメールアドレスを尋ねず、メッセージも送りません。
+
+---
+
+Source: https://sophaxis.vercel.app/advisory.ja.html
+
+# 諮問委員の募集（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [Advisory board: a call](./advisory.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## なぜ
+
+Sophaxis には、編集委員会も諮問機関もありません。[透明性の自己評価](./transparency.ja.html)は、これを「満たさない」としています。
+2026-11-10 から、運営者は、諮問委員会を作るため研究者を募っています。
+だれかが引き受け、[運営者と連絡先](./contact.ja.html)の頁に名が載るまでは、委員会はありません。
+
+## 諮問委員がすること
+
+- 規程の変更の案を告知の前に読み、その公開の issue かメールで意見を述べます。
+- 運営者が求めたときに、分野の範囲や判断の難しい件について助言します。
+- どの投稿についても判断しません。モデレーターは、[モデレーションの規程](./policies/moderation.ja.html)が定めるとおり、別に招きます。
+- 自分の立場だけで話します。Sophaxis に助言することは、載っている作品の質について何も言わず、委員の所属機関も関わりません。
+
+決めるのは運営者で、サイトと記録の責任も運営者が負います。
+
+## 加われる人
+
+- 哲学・数学・論理学・数理哲学・科学哲学の研究者。
+- 公開の ORCID の記録に、DOI 付きの学術誌の論文・本の章・本が載っている人。
+- [投稿の規程](./policies/submission.ja.html)の表にある、Sophaxis を提供しない国と地域に住んでおらず、滞在もしていない人。
+
+諮問委員に報酬はなく、委員が払うものもありません。
+委員はいつでも、そう言えば辞められます。そのときは名が連絡先の頁から外れ、辞めた日が残ります。
+
+## 加わり方
+
+運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、ORCID iD と、助言したい理由を一文添えて、メールを送ります。
+誰を招くかは運営者が決め、すべてのメールに返事をします。
+委員の名は ORCID iD とともに連絡先の頁に載せます。載せるのは、本人が同意したあとだけです。
+
+## 利益相反
+
+委員が作品を投稿したときも、ほかの人と同じモデレーションを受け、優先はされません。
+委員は、自分の作品や、近い共同研究者の作品に関わる件には助言しません。
+
+---
+
+Source: https://sophaxis.vercel.app/brand.ja.html
+
+# 名前・ロゴ・バッジ（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [Name, logo and badge](./brand.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 名前
+
+名前は、どの言語でも、ラテン文字で頭を大文字にして Sophaxis と書きます。
+日本語では、ソファクシスと読みます。
+記録は、`2026.0001` のような Sophaxis の番号と、預けられた作品の DOI で引きます。
+
+## ロゴ
+
+ロゴは長方形と多角形だけで描いてあります。どの端末でも同じ形に描かれ、書体を使いません。
+
+- [favicon.svg](./favicon.svg)：ベクター画像のロゴ。
+- [og.png](./og.png)：正方形の PNG のロゴ。
+
+ロゴは、手を加えずに、Sophaxis を指すときと、Sophaxis へリンクするときに使います。
+Sophaxis が実際にはしていない審査・推奨・関わりを思わせる使い方はしません。
+
+## 色
+
+| 用途 | 明るい表示 | 暗い表示 |
+| --- | --- | --- |
+| 背景 | `#f7f5f0` | `#14171f` |
+| 文字 | `#1d2330` | `#e6e2d8` |
+| 強調 | `#2f4a7a` | `#9fb6e0` |
+
+## 載っている作品のバッジ
+
+載っている作品の著者は、バッジ [badge.svg](./badge.svg) で、載っていることを示せます。
+記録の頁ごとに、その記録へのリンクを付けたバッジを、貼れる形で示しています。
+
+- 使うのは Sophaxis に載っている作品だけにし、その記録の頁へリンクします。
+- 作品を撤回したとき、または記録が削除されたときは、外します。
+- バッジが示すのは、作品がモデレーションを通ったことだけです。査読を受けたことを示すものではなく、作品の質についても何も言いません。
+
+## サイトの文
+
+すべての頁に書いてあるとおり、サイトの文は CC BY 4.0、コードは MIT で共有しています。
+
+---
+
+Source: https://sophaxis.vercel.app/press.ja.html
+
+# 紹介する人のために（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [For anyone introducing Sophaxis](./press.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 一文で
+
+Sophaxis は、哲学と数学のための無料のオーバーレイ型プレプリントサーバーです。著者が DOI 付きで預けたプレプリントをモデレーションし、一篇ごとに変わらない記録の頁を与えます。
+
+## 一段落で
+
+Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せます。
+著者は、Zenodo、arXiv、SSRN などの開かれたリポジトリに作品を預け、その DOI を公開の GitHub の issue で投稿します。
+自動の確認が、ORCID を通して投稿者が著者であることと、作品が開かれたライセンスを持つことを確かめ、そのあとモデレーターが公開の場で判断します。
+記録の頁には、要旨・版・手を加えない PDF の写し・生成モデルの使用についての著者の申告が載ります。
+Sophaxis は、著者からも読者からも料金を取らず、日本に住む一人が無報酬で運営しています。
+
+## 事実
+
+<!-- facts -->
+
+## Sophaxis でないもの
+
+- 査読は行いません。受理はモデレーションです。
+- 学術誌ではなく、ISSN も持ちません。
+- DOI を発行しません。DOI はリポジトリのものです。
+- [免責事項](./disclaimer.ja.html)にあるとおり、どのリポジトリ・学会・機関とも特別な関係を持ちません。
+
+## 名前とロゴ
+
+名前・ロゴ・色・載っている作品のバッジは、[名前・ロゴ・バッジ](./brand.ja.html)の頁にあります。
+
+## 連絡先
+
+質問は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールか、[公開の issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) で受けます。
+お知らせは、[お知らせ](./news.html)の頁にあります（英語）。
 

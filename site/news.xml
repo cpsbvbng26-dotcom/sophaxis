@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sophaxis: news</title>
+  <id>https://sophaxis.vercel.app/news.html</id>
+  <link rel="self" href="https://sophaxis.vercel.app/news.xml"/>
+  <link href="https://sophaxis.vercel.app/news.html"/>
+  <updated>2026-11-10T00:00:00Z</updated>
+  <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n8</id>
+    <title>A call for an advisory board</title>
+    <link href="https://sophaxis.vercel.app/advisory.html"/>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <summary>Sophaxis has no editorial board or advisory body yet. The operator invites researchers in its fields to form an unpaid advisory board, which advises on the policies and decides no submission.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n7</id>
+    <title>Name, logo and a badge for listed works</title>
+    <link href="https://sophaxis.vercel.app/brand.html"/>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <summary>A page sets out the name, the logo and the colours, and a badge that authors of listed works can show. A page for anyone introducing Sophaxis gives a sentence, a paragraph and the facts.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n6</id>
+    <title>Statements on funding, competing interests and research ethics</title>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html"/>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <summary>From 2026-11-24, the submission form asks for statements on funding, on competing interests, and on human participants and research ethics. The Moderation Policy now defines plagiarism and sets out how a concern of misconduct is handled.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n5</id>
+    <title>Listed in the Open Access Directory</title>
+    <link href="https://oad.simmons.edu/oadwiki/Disciplinary_repositories"/>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <summary>Sophaxis is listed under Philosophy and under Mathematics on the page of disciplinary repositories of the Open Access Directory, hosted at Simmons University.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n4</id>
+    <title>The site in Japanese</title>
+    <link href="https://sophaxis.vercel.app/index.ja.html"/>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <summary>The top page and every prose page are now also in Japanese. The records stay in English, as their titles and abstracts come from the DOI metadata.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n3</id>
+    <title>Version 1.0.0 archived at Zenodo</title>
+    <link href="https://doi.org/10.5281/zenodo.24033372"/>
+    <updated>2026-11-07T00:00:00Z</updated>
+    <summary>The first version of Sophaxis, its code and its records, is archived at Zenodo with a DOI.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n2</id>
+    <title>Listed in ROAR</title>
+    <link href="https://roar.eprints.org/27422/"/>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <summary>Sophaxis passed editorial review and is listed in ROAR, the Registry of Open Access Repositories at the University of Southampton.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n1</id>
+    <title>Sophaxis opens</title>
+    <link href="https://sophaxis.vercel.app/index.html"/>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <summary>Sophaxis, an overlay preprint server for philosophy and mathematics, opens at its address on Vercel.</summary>
+  </entry>
+</feed>
