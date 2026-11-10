@@ -1325,11 +1325,14 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     && read(path.join(ROOT, 'site', 'press.ja.html')).includes('<tr><th scope="row">掲載先</th><td><a href="https://roar.eprints.org/27422/">ROAR</a>（2026-11-06 から）</td></tr>')
     && read(path.join(ROOT, 'site', 'news.html')).includes('Sophaxis passed editorial review and is listed in ROAR, the Registry of Open Access Repositories at the University of Southampton. <a href="https://roar.eprints.org/27422/">More</a>')
     && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['contact.html', 'contact.ja.html', 'index.html', 'press.html', 'press.ja.html', 'news.html'].includes(f)).every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
-  ok('the PhilPapers request is recorded as a request, not as an addition, in both languages',
+  ok('the PhilPapers request is recorded as a request, not as an addition, in both languages, and the site names PhilPapers only on the page that tells authors how to use it themselves',
     read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
     && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
     && !/(indexed|listed|harvested) (by|in|on) PhilPapers|added to (the )?(PhilPapers|Open Access Gateway)/i.test(read(path.join(ROOT, 'README.md')))
-    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /PhilPapers/i.test(read(path.join(ROOT, 'site', f)))));
+    && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['findable.html', 'findable.ja.html'].includes(f)).some((f) => /PhilPapers/i.test(read(path.join(ROOT, 'site', f))))
+    && read(path.join(ROOT, 'site', 'findable.html')).includes('Sophaxis has no connection with these services; their names are given only so that authors can find them.')
+    && read(path.join(ROOT, 'site', 'findable.ja.html')).includes('Sophaxis は、これらのサービスと特別な関係を持ちません。')
+    && !/(indexed|listed|harvested) (by|in|on) PhilPapers|Sophaxis (is|was) (in|on) PhilPapers/i.test(read(path.join(ROOT, 'site', 'findable.html'))));
 }
 
 /* ------------------------------------------------------------ 37 */
@@ -2022,16 +2025,16 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml' };
+  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
   ok('the daily and weekly times on the page are those of the schedules (' + jst(cronOf('removal.yml')) + ', Monday ' + jst(cronOf('watch.yml')) + ' Japan time)',
     auto.includes('## Once a day, at ' + jst(cronOf('removal.yml')) + ' Japan time') && auto.includes('## Once a week, on Monday at ' + jst(cronOf('watch.yml')) + ' Japan time')
     && auto.includes('and once a day at ' + jst(cronOf('live.yml')) + ' Japan time, every file in `site/` is fetched from the live site') && cronOf('live.yml').endsWith(' * * *')
-    && cronOf('watch.yml').endsWith(' * * 1') && cronOf('statutes.yml') === cronOf('watch.yml') && cronOf('removal.yml').endsWith(' * * *') && (Number(cronOf('watch.yml').split(' ')[1]) + 9) < 24);
+    && cronOf('watch.yml').endsWith(' * * 1') && cronOf('monthly.yml').endsWith(' 1 * *') && auto.includes('## Once a month, on the 1st at ' + jst(cronOf('monthly.yml')) + ' Japan time') && cronOf('statutes.yml') === cronOf('watch.yml') && cronOf('removal.yml').endsWith(' * * *') && (Number(cronOf('watch.yml').split(' ')[1]) + 9) < 24);
   ok('the page says that no step decides, uses a language model or holds another key, and names the one step that acts before a decision',
     ['No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.', 'No step uses a language model. The steps are ordinary code.',
       'No step signs in to any account.', 'One step acts before the operator decides: when a removal issue reports exposure of personal data'].every((x) => auto.includes(x)));
@@ -2203,7 +2206,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
 {
   const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
   const pages = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'].map((slug) => ({ slug, dir: 'policies/' }))
-    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press'].map((slug) => ({ slug, dir: '' })));
+    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility'].map((slug) => ({ slug, dir: '' })));
   for (const { slug, dir } of pages) {
     const en = read(path.join(ROOT, dir, slug + '.md'));
     const ja = read(path.join(ROOT, dir, slug + '.ja.md'));
@@ -3157,7 +3160,7 @@ console.log('\n84. The site in Japanese: the top page and every prose page');
   ok('it says that acceptance is moderation, not peer review, that nothing is charged, and where Sophaxis is not offered, with all ' + site.notOffered.length + ' places by their Japanese names',
     ja.includes('掲載はモデレーションであり、査読ではありません。') && ja.includes('著者からも読者からも料金を取りません。')
     && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + site.notOffered.map((p) => p.ja).join('、') + '）に住んでいる著者') && ja.includes('国籍や人種ではなく'));
-  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press'];
+  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility'];
   const jaPolicies = ['privacy', 'terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'];
   ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the records stay in English',
     jaPages.every((s) => ja.includes('href="./' + s + '.ja.html"')) && jaPolicies.every((s) => ja.includes('href="./policies/' + s + '.ja.html"')) && ja.includes('href="./disclaimer.ja.html"')
@@ -3333,6 +3336,42 @@ console.log('\n89. The official account on X');
     && read(path.join(ROOT, 'contact.md')).includes('- X: the official account [@SophaxisX](https://x.com/SophaxisX), with new records and news. The handle ends in X because @Sophaxis was already taken; that account is not Sophaxis.')
     && read(path.join(ROOT, 'contact.ja.md')).includes('@Sophaxis のアカウントは Sophaxis ではありません。') && read(path.join(ROOT, 'site', 'press.html')).includes('href="https://x.com/SophaxisX"')
     && pages.every((f) => read(path.join(ROOT, 'site', f)).includes('<meta name="twitter:site" content="@SophaxisX">')), [...handles].join(', '));
+}
+
+console.log('\n90. Outreach: the call to researchers, finding a listed work, accessibility, new by month, and the monthly summary');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js'), M = require('../tools/monthly.js');
+  const recs = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  const shown = recs.filter((p) => p.status !== 'removed');
+  const call = read(path.join(ROOT, 'call.md'));
+  ok('the call says that every work listed so far is the operator\'s only while that is true, names the days of the rules from site.json, and says what Sophaxis is not',
+    (call.includes('Every work listed so far is by the operator') === shown.every((p) => p.operator_own === true))
+    && call.includes('- From ' + site.doiAgeFrom + ', six months since the first DOI') && site.vouchFrom === site.doiAgeFrom && call.includes('- From ' + site.statementsFrom + ', statements on funding')
+    && call.includes('Acceptance is moderation, not peer review.') && call.includes('Nothing is charged, to authors or to readers.')
+    && read(path.join(ROOT, 'site', 'index.html')).includes('Researchers: <a href="./call.html">a call to submit</a>.'));
+  const kb = read(path.join(__dirname, 'check_keyboard.js'));
+  const widths = JSON.parse((/const WIDTHS = (\[[^\]]+\]);/.exec(kb) || [])[1]);
+  const acc = read(path.join(ROOT, 'accessibility.md'));
+  ok('the accessibility statement names the widths that the browser check uses (' + Math.max(...widths) + ' to ' + Math.min(...widths) + '), says it is not audited, and the contact page and every footer point to it',
+    acc.includes('at widths from ' + Math.max(...widths) + ' down to ' + Math.min(...widths) + ' pixels') && acc.includes('no one else has audited the site.')
+    && acc.includes('Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.') && read(path.join(ROOT, 'contact.md')).includes('Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.')
+    && read(path.join(ROOT, 'contact.md')).includes('is on [Accessibility](./accessibility.html).')
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== '404.html').every((f) => /<footer>[\s\S]*accessibility\.html">Accessibility<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f)))));
+  ok('the page on finding a listed work promises no index, and says that Sophaxis has no connection with the services it names',
+    read(path.join(ROOT, 'findable.md')).includes('None of these is a promise that any index picks the work up; each decides for itself.') && read(path.join(ROOT, 'findable.md')).includes('Sophaxis has no connection with these services'));
+  const months = read(path.join(ROOT, 'site', 'months.html'));
+  const groups = [...new Set(shown.map((p) => p.listed.slice(0, 7)))];
+  ok('New by month lists each of the ' + shown.length + ' records shown once, under the month it was listed, with the count of each month',
+    shown.every((p) => (months.match(new RegExp('href="\\./abs/' + p.id.replace('.', '\\.') + '\\.html"', 'g')) || []).length === 1)
+    && groups.every((m) => months.includes('<h2 id="m' + m + '">') && months.includes('(' + shown.filter((p) => p.listed.startsWith(m)).length + ')</h2>'))
+    && !recs.filter((p) => p.status === 'removed').some((p) => months.includes(p.id)));
+  const many = Array.from({ length: 12 }, (_, i) => ({ id: '2027.00' + String(i + 10), status: 'listed', listed: '2027-01-0' + (1 + (i % 9)), title: 'A rather long title for testing number ' + i + ' of the monthly summary' }));
+  const p1 = M.posts('2027-01', many, [{ date: '2027-01-02', title: 'News' }]);
+  ok('the monthly summary counts as X does (a URL 23, a light character 1, any other 2), keeps each post within 280, names the month before, and skips a month with nothing',
+    M.weighted('abc') === 3 && M.weighted('日本') === 4 && M.weighted('see https://example.org/x') === 27 && M.monthBefore('2027-01-01') === '2026-12' && M.monthBefore('2026-11-01') === '2026-10'
+    && M.weighted(p1.en) <= M.LIMIT && M.weighted(p1.ja) <= M.LIMIT && p1.en.startsWith('Sophaxis in January 2027: 12 new preprints') && M.posts('2027-02', many, []) === null
+    && /cron: '17 0 1 \* \*'/.test(read(path.join(ROOT, '.github', 'workflows', 'monthly.yml'))) && /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(read(path.join(ROOT, '.github', 'workflows', 'monthly.yml'))));
 }
 
 console.log('\n' + '-'.repeat(60));
