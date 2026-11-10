@@ -11,6 +11,7 @@
   "oai": { "adminEmails": ["wenwop21@icloud.com"] },
   "indexNowKey": "78f10d269b31138e5573375129074532",
   "repo": "https://github.com/cpsbvbng26-dotcom/sophaxis",
+  "x": "SophaxisX",
   "osf": { "url": "https://osf.io/mq7za/", "doi": "10.17605/OSF.IO/MQ7ZA" },
   "zenodo": { "doi": "10.5281/zenodo.24033371", "version": "10.5281/zenodo.24033372", "community": "https://zenodo.org/communities/sophaxis" },
   "pdfLimits": { "fileMB": 20, "totalGB": 1 },
