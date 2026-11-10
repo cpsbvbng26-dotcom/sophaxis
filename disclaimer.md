@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -28,7 +28,7 @@ It is not an official identity check.
 
 Sophaxis is an independent, personal project.
 It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.
-Their names are used only to identify their services, and belong to their owners.
+Their names are used only to identify their services, and belong to their owners. Some of them are trade marks.
 They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
 
 ## Who runs Sophaxis, and why

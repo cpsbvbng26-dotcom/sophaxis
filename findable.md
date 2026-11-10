@@ -14,7 +14,7 @@ None of these is a promise that any index picks the work up; each decides for it
 
 ## What the authors can do
 
-- ORCID: add the DOI of the work to your ORCID record, so that services that read ORCID connect the work to you.
+- ORCID: add the DOI of the work to your ORCID record, so that services that read ORCID connect the work to you. Each author page on Sophaxis also offers one BibTeX file of all that author's records, which ORCID can import.
 - Google Scholar: it finds works in repositories by itself, often within several weeks. In a Google Scholar profile you can add the work, or confirm it once found.
 - PhilPapers: for philosophy, many readers look in PhilPapers. You can add a record of the work to PhilPapers, and you can deposit it in PhilArchive, its open archive, which has its own moderation. Both are free.
 - researchmap: researchers in Japan can add the work to their researchmap record.

@@ -15,6 +15,8 @@ The operator keeps it as a hobby, as an extension of a personal reading shelf; w
 - ORCID iD: [0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
 - GitHub: [cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
 
+About the operator, the site shows the name, the ORCID iD and the GitHub account above, and nothing more: no photograph, no telephone number and no postal address, which is given on request as "Postal address" below says.
+
 The operator is also the moderator, and is responsible for the site and its records.
 The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.html).
 The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.html) set out.

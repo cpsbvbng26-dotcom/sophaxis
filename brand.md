@@ -8,6 +8,7 @@ Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.html). It i
 
 The name is written Sophaxis, in Latin letters, with a capital S, in every language.
 In Japanese it is read ソファクシス.
+It joins the Greek sophia (σοφία), wisdom, and the Latin axis; the [History and name](./history.html) page says more.
 A record is cited by its Sophaxis id, such as `2026.0001`, and by the DOI of the deposited work.
 
 ## Logo

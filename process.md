@@ -9,7 +9,7 @@ The rules themselves are in the [Submission Policy](./policies/submission.html) 
 
 ## Before you start
 
-You need four things.
+You need four things. The [checklist](./checklist.html) gathers the rest of what a submission needs.
 
 1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered, as the [Submission Policy](./policies/submission.html) sets out.
 2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.

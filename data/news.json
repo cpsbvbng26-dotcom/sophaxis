@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-10",
+    "title": "A checklist, paper templates, a history page and a page in plain words",
+    "text": "A checklist gathers what a submission needs, with examples of a statement on generative models and two paper templates under CC0 1.0. A page tells how Sophaxis began on 2026-10-30 and where its name comes from, another fits Sophaxis on one sheet, and another says how to submit in plain words, in English and in plain Japanese. Record pages show where they sit and can carry an abstract in a second language, each author page offers one BibTeX file for ORCID, and the site follows a request for more contrast.",
+    "url": "checklist.html"
+  },
+  {
+    "date": "2026-11-10",
     "title": "How Sophaxis differs, a glossary, and a feed for each field",
     "text": "A page sets Sophaxis beside arXiv, PhilArchive, SSRN and Zenodo, as a layer on top of the repositories; a glossary defines the words the site uses; the press page says how to cite Sophaxis itself; and each field now has its own Atom feed.",
     "url": "compare.html"

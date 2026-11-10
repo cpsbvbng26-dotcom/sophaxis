@@ -1,6 +1,6 @@
 # Frequently asked questions
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-10.
 
 Japanese: [よくある質問（日本語訳）](./faq.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -114,6 +114,21 @@ Each record page carries the tags that Google Scholar reads, and the sitemap lis
 Scholar takes a PDF only from the directory of its record page, so each PDF copy is also served there.
 When a record page or a PDF copy is new, changed or removed, the search engines that take IndexNow, such as Bing, are told as soon as it is live. A new or changed page is also saved to the Internet Archive. Google reads the sitemap instead.
 Sophaxis cannot promise that a search engine will index a page.
+
+## What should I check before submitting?
+
+The [checklist](./checklist.html) gathers what the policies ask, with examples of a statement on generative models.
+It also offers two paper templates, in Markdown and in LaTeX, under CC0 1.0. Using them is not required.
+
+## Does Sophaxis track readers?
+
+No. The site sets no cookies, runs no analytics and loads nothing from other servers, as the [Privacy Policy](./policies/privacy.html) says.
+It shows no counts of views or downloads.
+
+## Is there a mailing list?
+
+No. Sophaxis sends no newsletter and collects no email addresses for one.
+New records and news can be followed through the Atom feeds: [new preprints](./feed.xml), [news](./news.xml), and one feed for each field.
 
 ## How do I cite a work listed here?
 

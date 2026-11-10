@@ -4,6 +4,10 @@ Last updated: 2026-11-10.
 
 Japanese: [紹介する人のために（日本語訳）](./press.ja.html). It is a translation; where the two differ, the English text applies.
 
+## In a few words
+
+A free overlay preprint server for philosophy and mathematics.
+
 ## In one sentence
 
 Sophaxis is a free overlay preprint server for philosophy and mathematics: it moderates preprints that their authors have already deposited with a DOI, and gives each a stable record page.
@@ -39,6 +43,7 @@ The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https:/
 ## Name and logo
 
 The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
+A version of Sophaxis that fits on one sheet, for printing, is [Sophaxis on one page](./leaflet.html).
 
 ## Contact
 

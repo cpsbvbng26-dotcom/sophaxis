@@ -14,7 +14,14 @@ This is the operator's own assessment, made with the checks below; no one else h
 Before any change is published, two sets of checks run on every page of the site.
 
 - In the text of each page: the contrast of every text colour in the light and dark schemes, a link to skip to the content, the language of the page, one main heading, and headers for every table.
-- In a browser, at widths from 1440 down to 360 pixels: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.
+- In a browser, at widths from 1440 down to 360 pixels, among them 640, which is a window 1280 pixels wide zoomed to 200 percent: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.
+
+## Contrast and reading
+
+- When the system asks for more contrast, the site uses a darker grey and a stronger accent in the light scheme, and lighter ones in the dark scheme. Every text colour then has a contrast of at least 7:1, and a check confirms it on every change.
+- In forced colours, as in the high contrast modes of Windows, the focus ring takes the colour the system gives.
+- In the Japanese pages, the [glossary](./glossary.ja.html) gives the reading of hard words in kana, in parentheses. The pages do not use ruby, which screen readers do not all read the same way.
+- [In plain words](./easy.html) tells how to submit in short sentences, in English and in plain Japanese.
 
 ## What is not checked, and what is known
 

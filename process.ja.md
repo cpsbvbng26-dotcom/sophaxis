@@ -9,7 +9,7 @@
 
 ## 始める前に
 
-要るものは四つです。
+要るものは四つです。投稿に要るほかのことは、[確かめること](./checklist.ja.html)の頁にまとめてあります。
 
 1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。[投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから六か月以上たっている必要があります。
 2. 預けたものに付けた CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。DOI のメタデータに出ている必要があります。

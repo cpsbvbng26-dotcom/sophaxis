@@ -1,6 +1,6 @@
 # Policies
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [規程（日本語訳）](./policy.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -24,6 +24,7 @@ The DOI stays with the repository where the author deposited the work, and it is
 Sophaxis charges nothing, to authors or to readers.
 There are no submission fees, no listing fees and no paid tiers.
 It will not start charging.
+It takes no donations, sponsorship or advertising.
 
 ## Commitments are never dropped silently
 
@@ -31,6 +32,13 @@ A commitment in these policies is never dropped silently.
 The public repository keeps the list of commitments in `verification/commitments.txt`.
 The automatic check fails if one disappears from the policies or from the list, unless the text that replaces it is named in `verification/superseded.txt`.
 A change to a commitment that adds a duty for readers or authors is still announced in advance, as the [Terms of Use](./policies/terms.html) set out.
+
+## Editorial independence
+
+The moderator decides on each submission under the published policies, and on nothing else.
+No repository, funder, institution, author or service can direct a decision.
+No listing is given in return for money, a favour or a citation.
+The reasons for every decision are public in its issue.
 
 ## Operator and conflicts of interest
 
