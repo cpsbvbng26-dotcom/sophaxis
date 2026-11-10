@@ -2218,6 +2218,15 @@ Sophaxis charges nothing, to authors or to readers, and is run unpaid by one per
 - It issues no DOIs: the DOIs are those of the repositories.
 - It has no affiliation with any repository, society or institution, as the [Disclaimer](./disclaimer.html) says.
 
+## Citing Sophaxis itself
+
+To cite a listed work, cite the DOI of that work, not Sophaxis.
+To cite Sophaxis itself, as a service or as software, cite the DOI of every version of its code at Zenodo, which resolves to the latest:
+
+`Nemoto, T. (2026). Sophaxis: an overlay preprint server for philosophy and mathematics [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24033371`
+
+The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The words used on the site are defined in the [Glossary](./glossary.html), and how Sophaxis differs from other places is on [a page of its own](./compare.html).
+
 ## Name and logo
 
 The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
@@ -2335,6 +2344,75 @@ Before any change is published, two sets of checks run on every page of the site
 
 A barrier can be reported in [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) with the label `accessibility`, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
+
+---
+
+Source: https://sophaxis.vercel.app/compare.html
+
+# How Sophaxis differs from other places
+
+Last updated: 2026-11-10.
+
+Japanese: [ほかの場との違い（日本語訳）](./compare.ja.html). It is a translation; where the two differ, the English text applies.
+
+## In short
+
+Sophaxis is a layer on top of the repositories, not one of them.
+A work is first deposited in a repository, which keeps the file and gives the DOI; Sophaxis then moderates it and lists it beside other work in its fields.
+It replaces none of the places below, and a work can be in several of them at once.
+
+## Side by side
+
+| | Keeps the file | Gives a DOI | Before a work appears | Fields | Fees to authors |
+| --- | --- | --- | --- | --- | --- |
+| Sophaxis | No; it keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository | An automatic check through ORCID, then moderation in a public issue | Philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science | None |
+| arXiv | Yes | Yes | Moderation, and for some first submissions an endorsement | Physics, mathematics, computer science and other sciences | None |
+| PhilArchive | Yes | No | A check by its editors | Philosophy | None |
+| SSRN | Yes | Yes | A check by its staff | Mainly the social sciences and the humanities, with networks for philosophy and mathematics | None |
+| Zenodo | Yes | Yes | No review of the content | Every field | None |
+
+These are short summaries as of 2026-11-10; the pages of each service are what count.
+Sophaxis has no connection with any of them; they are named only to show the difference.
+
+## Why a layer
+
+Repositories that take every field make a work citable, but leave a reader in philosophy or mathematics to find it among everything else.
+Sophaxis gathers such works in one place for these fields, checks in public that the submitter is an author and that the licence is open, and gives each a stable record page.
+Acceptance is moderation, not peer review.
+
+---
+
+Source: https://sophaxis.vercel.app/glossary.html
+
+# Glossary
+
+Last updated: 2026-11-10.
+
+Japanese: [用語集（日本語訳）](./glossary.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Terms
+
+- Overlay: a service that lists works kept elsewhere. Sophaxis keeps no work of its own; each work stays in its repository.
+- Preprint: a version of a work made public by its authors, before or apart from publication in a journal.
+- Repository: the place where the authors deposit the work and which gives it a DOI, such as Zenodo, arXiv or SSRN. The [Submission Policy](./policies/submission.html) names those that Sophaxis accepts.
+- DOI: the persistent identifier that the repository registers for the work. Sophaxis gives no DOI.
+- First DOI: the earliest DOI of a work among the DOI given and the earlier ones that its metadata names, from which the six months are counted.
+- Moderation: the check by which a moderator decides whether a submission may be listed. It is not peer review, and it does not judge whether the work is correct or important.
+- Automatic check: the code that reads the DOI metadata and the ORCID record and posts what it found in the submission issue. It decides nothing.
+- Provisional registration: a submission that passed the automatic check and waits for a moderator, labelled `verified`. It is not on the site.
+- Vouching: from 2026-11-23, a researcher with a journal article, a book chapter or a book says that a first submission is in scope and in the form of a scholarly paper. It is not a review.
+- Record: what Sophaxis keeps about a listed work: its title, authors, abstract, licence, versions and statements.
+- Sophaxis id: the number of a record, such as `2026.0001`. It is never given to another work.
+- Version: each deposit of the work in its repository, with its own DOI and date, listed in the record.
+- PDF copy: an unmodified copy of a deposited PDF, kept on Sophaxis where the repository allows it, so that search engines can read the full text.
+- Field and collection: a field is one of the five areas that a work is listed under; a collection gathers records on a topic, chosen by the moderator, and says nothing of quality.
+- Statement: what the authors state in the form, on generative models and, from 2026-11-24, on funding, competing interests and research ethics. Sophaxis shows it and does not check it.
+- Notice: a retraction, withdrawal, removal, expression of concern or correction that Crossref records against a DOI. A record shows the notices for its DOIs.
+- Correction note: a dated note added to a record when an error in it is found.
+- Withdrawal: an author asks that a listed work no longer be listed. The record stays, with a notice, so that citations do not break. See the [Withdrawal Policy](./policies/withdrawal.html).
+- Removal: a record is taken down to its id, its state and its day, for a legal reason or at an author's request. See the [Takedown Policy](./policies/takedown.html).
+- Operator's own submission: a work by the operator. It is marked, gets no priority, and waits seven days in public before listing.
+- Badge: an image that the authors of a listed work can show, with a link to its record.
 
 ---
 
@@ -4568,6 +4646,15 @@ Sophaxis は、著者からも読者からも料金を取らず、日本に住�
 - DOI を発行しません。DOI はリポジトリのものです。
 - [免責事項](./disclaimer.ja.html)にあるとおり、どのリポジトリ・学会・機関とも特別な関係を持ちません。
 
+## Sophaxis 自体を引く
+
+載った作品を引くときは、Sophaxis ではなく、その作品の DOI を引きます。
+Sophaxis そのものを、サービスまたはソフトウェアとして引くときは、Zenodo にあるコードのすべての版の DOI を引きます。この DOI は、いちばん新しい版を指します。
+
+`Nemoto, T. (2026). Sophaxis: an overlay preprint server for philosophy and mathematics [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24033371`
+
+プロジェクトには OSF の頁もあり、その DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。サイトで使う語は[用語集](./glossary.ja.html)で定め、Sophaxis がほかの場とどう違うかは[別の頁](./compare.ja.html)にあります。
+
 ## 名前とロゴ
 
 名前・ロゴ・色・載っている作品のバッジは、[名前・ロゴ・バッジ](./brand.ja.html)の頁にあります。
@@ -4685,4 +4772,73 @@ Sophaxis は、ウェブコンテンツ・アクセシビリティ・ガイド�
 
 障壁は、ラベル `accessibility` を付けた [issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) か、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで知らせることができます。
 頁が使えないときは、求めに応じて、メールでの平文など、別の形で同じ情報を届けます。
+
+---
+
+Source: https://sophaxis.vercel.app/compare.ja.html
+
+# ほかの場との違い（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [How Sophaxis differs from other places](./compare.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 要するに
+
+Sophaxis はリポジトリの上に重ねる層であって、リポジトリの一つではありません。
+作品はまずリポジトリに預けられ、リポジトリがファイルを保ち、DOI を与えます。そのあと Sophaxis がモデレーションをして、同じ分野のほかの作品と並べて載せます。
+下に挙げる場のどれの代わりにもならず、一つの作品がいくつかの場に同時にあってかまいません。
+
+## 並べて
+
+| | ファイルを保つ | DOI を与える | 作品が出る前 | 分野 | 著者の料金 |
+| --- | --- | --- | --- | --- | --- |
+| Sophaxis | 保たない。手を加えない PDF の写しを置き、リポジトリへリンクする | 与えない。リポジトリの DOI を使う | ORCID を通した自動の確認のあと、公開の issue でのモデレーション | 哲学・数学・論理学・数理哲学・科学哲学 | なし |
+| arXiv | 保つ | 与える | モデレーション。初めての投稿の一部には紹介 | 物理学・数学・計算機科学ほかの科学 | なし |
+| PhilArchive | 保つ | 与えない | 編集者による確認 | 哲学 | なし |
+| SSRN | 保つ | 与える | 担当者による確認 | 主に社会科学と人文学。哲学と数学のネットワークもある | なし |
+| Zenodo | 保つ | 与える | 中身の審査はない | すべての分野 | なし |
+
+これは 2026-11-10 の時点の短いまとめです。決めるのは、それぞれのサービスの頁です。
+Sophaxis はどれとも特別な関係を持ちません。名を挙げるのは、違いを示すためだけです。
+
+## なぜ層なのか
+
+すべての分野を受けるリポジトリは、作品を引けるものにします。けれども、哲学や数学の読者は、ほかのすべてのものの中から作品を探すことになります。
+Sophaxis は、これらの分野のそうした作品を一つの場に集め、投稿者が著者であることとライセンスが開かれていることを公開の場で確かめ、一篇ごとに変わらない記録の頁を与えます。
+受理はモデレーションであって、査読ではありません。
+
+---
+
+Source: https://sophaxis.vercel.app/glossary.ja.html
+
+# 用語集（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [Glossary](./glossary.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 用語
+
+- オーバーレイ：ほかの場所にある作品を載せるサービス。Sophaxis は自分の作品を持たず、作品はそれぞれのリポジトリに残ります。
+- プレプリント：著者が公開した作品の版。学術誌での出版の前の版、または出版とは別の版です。
+- リポジトリ：著者が作品を預け、作品に DOI を与える場。Zenodo、arXiv、SSRN などです。Sophaxis が受けるものは、[投稿の規程](./policies/submission.ja.html)が挙げています。
+- DOI：リポジトリが作品に登録する、変わらない識別子。Sophaxis は DOI を与えません。
+- 最初の DOI：投稿された DOI と、そのメタデータが挙げる前の DOI のうち、最も早いもの。六か月はここから数えます。
+- モデレーション：投稿を載せてよいかを、モデレーターが決める確認。査読ではなく、作品が正しいか、重要かは判断しません。
+- 自動の確認：DOI のメタデータと ORCID の記録を読み、分かったことを投稿の issue に書くコード。何も決めません。
+- 仮登録：自動の確認を通り、`verified` のラベルが付いて、モデレーターを待っている投稿。サイトには出ません。
+- 紹介：2026-11-23 から、学術誌の論文・本の章・本を持つ研究者が、初めての投稿が対象の分野に入り、学術論文の形をしていると述べること。審査ではありません。
+- 記録：載った作品について Sophaxis が持つもの。題・著者・要旨・ライセンス・版・申告です。
+- Sophaxis の番号：`2026.0001` のような記録の番号。ほかの作品に与えることはありません。
+- 版：作品をリポジトリに預けるたびの、それぞれの DOI と日付。記録に並びます。
+- PDF の写し：預けられた PDF を手を加えずに写したもの。リポジトリが許すときに Sophaxis に置き、検索エンジンが全文を読めるようにします。
+- 分野と集め：分野は、作品を載せる五つの領域の一つです。集めは、モデレーターが選んだ主題ごとの記録のまとまりで、質については何も言いません。
+- 申告：著者が様式に書くもの。生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告です。Sophaxis は示し、確かめはしません。
+- 通知：Crossref が DOI に記録する撤回・取り下げ・削除・懸念表明・訂正。記録は、その DOI の通知を示します。
+- 訂正の注記：記録に誤りが見つかったときに足す、日付付きの注記。
+- 撤回：著者が、載っている作品をもう載せないよう求めること。引用が切れないよう、記録は注記とともに残ります。[撤回の規程](./policies/withdrawal.ja.html)を見てください。
+- 削除：法的な理由か著者の求めにより、記録を番号・状態・日付だけにすること。[削除の規程](./policies/takedown.ja.html)を見てください。
+- 運営者自身の投稿：運営者の作品。印を付け、優先せず、載せる前に七日のあいだ公開で待ちます。
+- バッジ：載った作品の著者が示せる、記録へのリンク付きの画像。
 

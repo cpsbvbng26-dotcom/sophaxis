@@ -7,6 +7,13 @@
   <updated>2026-11-10T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/news.html#n11</id>
+    <title>How Sophaxis differs, a glossary, and a feed for each field</title>
+    <link href="https://sophaxis.vercel.app/compare.html"/>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <summary>A page sets Sophaxis beside arXiv, PhilArchive, SSRN and Zenodo, as a layer on top of the repositories; a glossary defines the words the site uses; the press page says how to cite Sophaxis itself; and each field now has its own Atom feed.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/news.html#n10</id>
     <title>A call to researchers, and an accessibility statement</title>
     <link href="https://sophaxis.vercel.app/call.html"/>
