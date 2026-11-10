@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-J0NqTczqhQ0uwNXXUW4Iu8ZtkIyQeln112ceWji2buk='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-NXSglpEqJJQZUYXj5hbsvCK8JNG2q99qwoOgCyyL794='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Accessibility | Sophaxis</title>
 <meta name="description" content="The accessibility of Sophaxis: the aim, what is checked on every change, what is known, and how to report a barrier.">
 <link rel="canonical" href="https://sophaxis.vercel.app/accessibility.html">
@@ -56,7 +56,7 @@ ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .table { overflow-x: auto; }
-td a, p code { overflow-wrap: anywhere; }
+td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
@@ -84,7 +84,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Accessibility</h1>
-<p>Last updated: 2026-11-10.</p>
+<p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./accessibility.ja.html">アクセシビリティ（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <h2>The aim</h2>
 <p>Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA. This is the operator's own assessment, made with the checks below; no one else has audited the site.</p>
@@ -97,6 +97,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul><li>The PDF copies are the authors' files, kept unmodified; Sophaxis cannot add structure to them, and some may not work with a screen reader.</li><li>Titles and abstracts come from the DOI metadata as plain text, so mathematical notation may read poorly.</li><li>The search page needs JavaScript, the only script on the site; without it, the lists by field and by month, and the feeds, give the same records.</li><li>The records, the lists and the statistics are in English; the policies and the prose pages are also in Japanese.</li></ul>
 <h2>Reporting a barrier</h2>
 <p>A barrier can be reported in <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new">an issue</a> with the label <code>accessibility</code>, or by email to the address on the operator's <a href="https://orcid.org/0009-0000-1406-0547">ORCID record</a>. If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.</p>
+<h2>Help to check</h2>
+<p>No one else has audited the site, so Sophaxis asks for help. Anyone who uses a screen reader, a magnifier, voice control, a switch or the keyboard alone can try the site and report what works and what does not, in an issue with the label <code>accessibility</code>. Nothing is paid and nothing is asked beyond the report itself. What is found is fixed where it can be, and recorded under &quot;What is not checked, and what is known&quot; above, with the date and without the reporter's name unless they ask for it.</p>
 </main>
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>

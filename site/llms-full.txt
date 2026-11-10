@@ -495,7 +495,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.html
 
 # Moderation Policy
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -569,6 +569,16 @@ The operator is at present the only moderator.
 Other moderators may be invited.
 A researcher in these fields who would like to moderate can write to the operator; the operator decides whom to invite.
 Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
+A second moderator is invited only when all of these hold:
+
+- They have an ORCID iD and a published or listed work in one of the fields of Sophaxis.
+- They agree, in a public issue, to moderate under this policy without pay.
+- They declare their interests as an adviser does, and the contact page shows the declaration.
+- No work of theirs has been declined or removed under "Research integrity" below.
+
+A moderator does not decide on their own work, or on the work of a close collaborator; another moderator, or the operator, decides it.
+When two moderators disagree, the operator decides, and says so in the issue.
+A moderator may stop at any time, and the operator may end a moderator's role; either is recorded on the contact page with the date.
 Since 2026-11-10 the operator has also invited researchers to form an advisory board, which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.html).
 
 ## Conflicts of interest
@@ -1219,7 +1229,7 @@ Source: https://sophaxis.vercel.app/policy.html
 
 # Policies
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [規程（日本語訳）](./policy.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1279,6 +1289,7 @@ Abstracts in both keep the licence of their work.
 
 These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
+Each policy is put in a few sentences on [The policies in brief](./rules.html); the policies themselves govern.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
 Every policy and the Disclaimer have Japanese translations, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
 
@@ -2131,7 +2142,7 @@ Source: https://sophaxis.vercel.app/advisory.html
 
 # Advisory board: a call
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [諮問委員の募集（日本語訳）](./advisory.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2169,6 +2180,15 @@ Each adviser is named, with an ORCID iD, on the contact page, only after they ag
 
 An adviser who submits a work goes through the same moderation as anyone else, with no priority.
 An adviser does not advise on a case that concerns their own work, or the work of a close collaborator.
+
+Before being named, an adviser declares the following, and the contact page shows the declaration beside the name:
+
+- Any position held now at a repository, publisher, journal, preprint server or index.
+- Any payment received in the last three years from one of them.
+- Any listed work of their own, or of a close collaborator, on Sophaxis.
+- Anything else that a reader might reasonably see as a conflict, or that there is none.
+
+The declaration is updated whenever it changes. An adviser who declares nothing is not named.
 
 ---
 
@@ -2225,7 +2245,7 @@ Source: https://sophaxis.vercel.app/press.html
 
 # For anyone introducing Sophaxis
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [紹介する人のために（日本語訳）](./press.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2269,6 +2289,7 @@ The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https:/
 
 The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
 A version of Sophaxis that fits on one sheet, for printing, is [Sophaxis on one page](./leaflet.html).
+For library staff, there is [For libraries](./libraries.html).
 
 ## Contact
 
@@ -2356,7 +2377,7 @@ Source: https://sophaxis.vercel.app/accessibility.html
 
 # Accessibility
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [アクセシビリティ（日本語訳）](./accessibility.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2390,6 +2411,13 @@ Before any change is published, two sets of checks run on every page of the site
 
 A barrier can be reported in [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) with the label `accessibility`, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
+
+## Help to check
+
+No one else has audited the site, so Sophaxis asks for help.
+Anyone who uses a screen reader, a magnifier, voice control, a switch or the keyboard alone can try the site and report what works and what does not, in an issue with the label `accessibility`.
+Nothing is paid and nothing is asked beyond the report itself.
+What is found is fixed where it can be, and recorded under "What is not checked, and what is known" above, with the date and without the reporter's name unless they ask for it.
 
 ---
 
@@ -3204,7 +3232,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 # モデレーションの規程（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Moderation Policy](./moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3278,6 +3306,16 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 ほかのモデレーターを招くことがあります。
 これらの分野の研究者でモデレーターを引き受けたい人は、運営者に連絡できます。誰を招くかは運営者が決めます。
 どのモデレーターも、判断をする前に、[運営者と連絡先](../contact.html)の頁に ORCID iD とともに名を挙げ、この規程に沿って無報酬でモデレーションを行います。
+二人目のモデレーターは、次のすべてに当たるときだけ招きます。
+
+- ORCID iD を持ち、Sophaxis の分野のどれかで、出版されたか載っている作品がある。
+- 公開の issue で、この規程に沿って無報酬でモデレーションを行うことに同意する。
+- 諮問委員と同じように利益相反を申告し、連絡先の頁がその申告を示す。
+- 自分の作品が、下の「研究の公正」によって断られたり外されたりしたことがない。
+
+モデレーターは、自分の作品や、近い共同研究者の作品について判断しません。ほかのモデレーターか運営者が判断します。
+二人のモデレーターの意見が分かれたときは、運営者が決め、issue にそう書きます。
+モデレーターはいつでも降りられ、運営者はモデレーターの役を終えることができます。どちらも、日付とともに連絡先の頁に記します。
 2026-11-10 から、運営者は、諮問委員会を作るため研究者も募っています。諮問委員会は規程について助言し、どの投稿についても判断しません。募集は[諮問委員の募集](../advisory.ja.html)にあります。
 
 ## 利益相反
@@ -3781,15 +3819,161 @@ Sophaxis は、運営者を日本の消費者契約法の事業者であるも�
 
 ---
 
+Source: https://sophaxis.vercel.app/first.ja.html
+
+# はじめてのプレプリント（日本語訳）
+
+最終更新：2026-11-11。
+
+これは英語の [Your first preprint](./first.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、大学院生のように、まだプレプリントを公開したことのない人のためのものです。新しい決まりは足しません。[規程](./policy.ja.html)が決まりです。
+
+## プレプリントとは
+
+プレプリントは、著者が自ら公開する論文の版です。学術誌での出版の前の版、または出版とは別の版です。
+査読は受けていません。それでも、読者は読み、引用し、応答できます。
+
+## 預ける前に
+
+- 論文を普通の形にします。題・要旨・参考文献を備えます。
+- のちに投稿するかもしれない学術誌の、プレプリントについての方針を読みます。多くは、プレプリントを先に出してよいかを書いており、プレプリントに注記を求める誌もあります。
+- ライセンスを選びます。Sophaxis が載せるのは、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかの作品だけです。預けたものに与えたライセンスは、すでに作られた写しについては取り消せません。
+- ORCID iD を取り、これから使う書き方で名前を論文に書きます。
+- ほかの人が論文の一部を書いたときは、預ける前にその全員に尋ねます。
+
+## リポジトリを選ぶ
+
+Sophaxis が載せるのは、次のリポジトリのどれかに DOI 付きで預けた作品です。
+
+<!-- repositories -->
+
+選ぶ前に、次の点について、それぞれのリポジトリの頁を読みます。Sophaxis はそれらを比べません。それぞれの頁が決めることです。
+
+- 著者や読者から、何か料金を取るか。
+- 公開の前に審査があるか。あるなら、どれくらいかかるか。
+- 新しい版をどう足すか。版ごとに DOI が付くか。
+- どのライセンスを選べるか。DOI のメタデータのどこにライセンスが出るか。
+
+## 預ける
+
+- PDF を上げ、題・ORCID iD 付きの全著者・要旨・キーワード・ライセンスを入れます。
+- 記録が出たら、名前・ライセンス・DOI を確かめます。
+- 預けたものは残り続けます。直すときは新しい版を足し、消そうとはしません。
+
+## 預けたあと
+
+- 作品を自分の ORCID の記録に足します（[載った作品を見つけてもらうために](./findable.ja.html)）。
+- Sophaxis に載せるには、[確かめること](./checklist.ja.html)を読み、[投稿から掲載まで](./process.ja.html)の手順に沿います。
+- [投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 からは、最初の DOI から六か月たった作品だけを載せます。はじめての投稿には、推薦する研究者が要ります。
+
+---
+
+Source: https://sophaxis.vercel.app/libraries.ja.html
+
+# 図書館の方へ（日本語訳）
+
+最終更新：2026-11-11。
+
+これは英語の [For libraries](./libraries.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、哲学と数学の研究者が作品を見つけ、共有するのを手伝う図書館の方のためのものです。
+
+## Sophaxis とは
+
+Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のための、無料のオーバーレイ型プレプリントサーバーです。
+自らは原稿を持ちません。記録の一件ごとに、開かれたリポジトリに DOI 付きで預けられ、モデレーションを経たプレプリントへつなぎ、ライセンスが許すときは、手を加えない PDF の写しを置きます。
+受理はモデレーションであり、査読ではありません。著者からも読者からも料金を取りません。
+
+## 読者に案内する
+
+- 主題の案内から、[一覧](./index.ja.html)か分野の頁へリンクできます。
+- 分野ごとに Atom の配信があります（例：[Philosophy](./list/philosophy.xml)）。新しい記録はすべて [feed.xml](./feed.xml) に入ります。
+- 記録は作品の DOI で引用できます。記録の頁は、いくつかの書式の引用と、BibTeX・RIS・CSL-JSON のファイルを示します。
+
+## 記録を収集する
+
+- OAI-PMH：ベース URL は `https://sophaxis.vercel.app/oai` で、形式は `oai_dc` と `oai_openaire` です。
+- すべての記録は [papers.json](./papers.json) にもあり、[サイトマップ](./sitemap.xml)がすべての頁を挙げます。
+- `feed.xml`・`papers.json`・OAI-PMH の記録のデータは、自由に再利用できます。要旨と PDF の写しは、それぞれの作品のライセンスに従います（[ライセンスの規程](./policies/licences.ja.html)）。
+
+## 研究者に知らせる
+
+- [はじめてのプレプリント](./first.ja.html)は、プレプリントを公開したことのない人のための頁です。
+- [確かめること](./checklist.ja.html)は、投稿に要るものをまとめています。
+- [一枚でわかる Sophaxis](./leaflet.ja.html)は、掲示板に貼るために印刷できます。
+
+## Sophaxis でないもの
+
+- 学術誌ではなく、DOI も発行しません。
+- 機関の運営ではありません。[免責事項](./disclaimer.ja.html)のとおり、一人が無報酬で運営しています。
+- どの図書館・リポジトリ・索引とも提携していません。
+
+---
+
+Source: https://sophaxis.vercel.app/rules.ja.html
+
+# 規程の要点（日本語訳）
+
+最終更新：2026-11-11。
+
+これは英語の [The policies in brief](./rules.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、それぞれの規程を数文にまとめたものです。まとめであって、誰も縛りません。決まりは、下にリンクしたそれぞれの規程です。
+
+## 利用規約
+
+- 作品とその掲載の責任は、すべて著者が負います。受理はモデレーションであり、査読ではありません。
+- Sophaxis は何も保証しません。閉じるときは、運営者が動けない場合を除き、30 日以上前にトップの頁で知らせます。
+- 日本法が適用されます。争いは、できる限り話し合いで解決します。まず運営者に書き、運営者は 7 日以内に答えます。
+- 全文：[利用規約](./policies/terms.ja.html)
+
+## 個人情報の取り扱い
+
+- サイトは cookie を使わず、アクセス解析をせず、ほかのサーバーから何も読み込みません。
+- 投稿は公開の GitHub の issue です。ORCID の記録からは、名前・ウェブサイト・業績だけを使います。
+- Sophaxis が使うサービスの一部は日本の外にあり、多くは米国です。規程がそれぞれを挙げています。
+- 全文：[個人情報の取り扱いについて](./policies/privacy.ja.html)
+
+## 投稿の規程
+
+- 著者は、受け付けるリポジトリに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかで預けた作品の DOI で投稿します。投稿者の GitHub のアカウントにつないだ ORCID の記録が要ります。
+- すべての著者の同意が要ります。生成モデルの使用は申告します。モデルは著者になれません。
+- 規程が挙げる場所に住む著者や、そこに滞在する著者には、Sophaxis を提供しません。
+- 全文：[投稿の規程](./policies/submission.ja.html)
+
+## モデレーションの規程
+
+- モデレーターは、issue の中で公開して判断し、断るときは理由を挙げます。
+- 投稿者は issue で答えることができ、運営者はもう一度見ます。
+- 運営者自身の投稿も同じ決まりでモデレーションを受け、その印が付きます。
+- 全文：[モデレーションの規程](./policies/moderation.ja.html)
+
+## ライセンスと著作権の規程
+
+- 著作権は著者に残ります。Sophaxis は、作品のライセンスのもとで要旨を示し、PDF の写しを置きます。
+- 他者の図・表・長い引用には、許諾か、法の許す使い方が要ります。
+- 記録のデータは自由に再利用できます。サイトの文は CC BY 4.0、コードは MIT です。
+- 全文：[ライセンスの規程](./policies/licences.ja.html)と[著作権の規程](./policies/copyright.ja.html)
+
+## 撤回と削除の規程
+
+- 著者は、載った作品を撤回できます。引用が切れないよう記録は注記つきで残り、PDF の写しは外します。
+- 記録は、法的な理由か著者の求めにより削除できます。削除した記録に何が残るかは、規程が定めます。
+- 全文：[撤回の規程](./policies/withdrawal.ja.html)と[削除の規程](./policies/takedown.ja.html)
+
+---
+
 Source: https://sophaxis.vercel.app/checklist.ja.html
 
 # 投稿の前に：確かめること（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Before you submit: a checklist](./checklist.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 この一覧は、新しい決まりを足しません。[投稿の規程](./policies/submission.ja.html)と[モデレーションの規程](./policies/moderation.ja.html)が求めていることを集め、一度で欠けのない投稿になるようにしたものです。一覧と規程が食い違うときは、規程が適用されます。
+プレプリントを公開したことのない人は、先に[はじめてのプレプリント](./first.ja.html)を読みます。
 
 ## 作品
 
@@ -4507,7 +4691,7 @@ Source: https://sophaxis.vercel.app/policy.ja.html
 
 # 規程（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Policies](./policy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4566,6 +4750,7 @@ ORCID iD を持たない著者には、そのような頁はありません。�
 
 これらの頁は、Sophaxis がどう動き、何を約束するかを述べるものです。
 法的な助言ではありません。
+それぞれの規程を数文にまとめた[規程の要点](./rules.ja.html)もあります。決まりは規程そのものです。
 どの頁も最後に変えた日を示し、それより前の版はすべて公開のリポジトリに残ります。
 すべての規程と免責事項には、日本語訳があります。
 個人データについての頁には、日本の法律の見出しに沿った日本語版があります。
@@ -4764,7 +4949,7 @@ Source: https://sophaxis.vercel.app/advisory.ja.html
 
 # 諮問委員の募集（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Advisory board: a call](./advisory.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4802,6 +4987,15 @@ Sophaxis には、編集委員会も諮問機関もありません。[透明性�
 
 委員が作品を投稿したときも、ほかの人と同じモデレーションを受け、優先はされません。
 委員は、自分の作品や、近い共同研究者の作品に関わる件には助言しません。
+
+委員は、名を挙げる前に次のことを申告し、連絡先の頁はその申告を名と並べて示します。
+
+- いま、リポジトリ・出版者・学術誌・プレプリントサーバー・索引で就いている役職。
+- この三年間に、それらのどれかから受け取った支払い。
+- Sophaxis に載っている、自分か近い共同研究者の作品。
+- ほかに、読者が利益相反と見てもおかしくないこと。無ければ、無いこと。
+
+申告は、変わるたびに改めます。申告をしない委員は、名を挙げません。
 
 ---
 
@@ -4858,7 +5052,7 @@ Source: https://sophaxis.vercel.app/press.ja.html
 
 # 紹介する人のために（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [For anyone introducing Sophaxis](./press.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4902,6 +5096,7 @@ Sophaxis そのものを、サービスまたはソフトウェアとして引�
 
 名前・ロゴ・色・載っている作品のバッジは、[名前・ロゴ・バッジ](./brand.ja.html)の頁にあります。
 紙一枚に収まる、印刷用の紹介は[一枚でわかる Sophaxis](./leaflet.ja.html)です。
+図書館の方には、[図書館の方へ](./libraries.ja.html)があります。
 
 ## 連絡先
 
@@ -4989,7 +5184,7 @@ Source: https://sophaxis.vercel.app/accessibility.ja.html
 
 # アクセシビリティ（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Accessibility](./accessibility.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5023,6 +5218,13 @@ Sophaxis は、ウェブコンテンツ・アクセシビリティ・ガイド�
 
 障壁は、ラベル `accessibility` を付けた [issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) か、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで知らせることができます。
 頁が使えないときは、求めに応じて、メールでの平文など、別の形で同じ情報を届けます。
+
+## 確かめる手伝い
+
+サイトはほかの誰の監査も受けていないので、Sophaxis は手伝いを求めています。
+スクリーンリーダー・拡大鏡・音声操作・スイッチ・キーボードだけで使う人は、だれでもサイトを試し、使えたことと使えなかったことを、ラベル `accessibility` を付けた issue で知らせることができます。
+謝礼はなく、知らせのほかに何も求めません。
+見つかったことは、できる限り直し、上の「確かめていないことと、分かっていること」に日付とともに記します。知らせた人の名は、本人が望まない限り記しません。
 
 ---
 
