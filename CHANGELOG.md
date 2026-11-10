@@ -3,6 +3,10 @@
 The notable changes to Sophaxis, newest first. Each entry names the pull request that made it.
 The entries are grouped by the date of the merge. Version 1.0.0 was released on 2026-11-07 and archived at Zenodo (10.5281/zenodo.24033372; every version: 10.5281/zenodo.24033371). Version 1.1.0 is dated 2026-11-10 and gathers the changes merged since 1.0.0; its own Zenodo DOI is recorded here once Zenodo gives it.
 
+## 2026-11-11
+
+- The page on the name, logo and badge, in both languages, records that the operator searched J-PlatPat and the WIPO Global Brand Database for the name Sophaxis on 2026-11-11 (Japan time) and found no trade mark of that name, that a search is not legal advice, and that no registration has been applied for. Check 92 holds it. The previous change is #200.
+
 ## 2026-11-10
 
 - The README, in both languages, records PhilPapers' answer: as the works listed so far appear to be by the operator, it recommends depositing them in PhilArchive rather than adding Sophaxis to the Open Access Gateway, and Sophaxis is not in the Gateway. The check that holds the PhilPapers request now holds the answer. The previous change is #199.

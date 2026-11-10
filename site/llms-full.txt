@@ -2176,7 +2176,7 @@ Source: https://sophaxis.vercel.app/brand.html
 
 # Name, logo and badge
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2186,6 +2186,7 @@ The name is written Sophaxis, in Latin letters, with a capital S, in every langu
 In Japanese it is read ソファクシス.
 It joins the Greek sophia (σοφία), wisdom, and the Latin axis; the [History and name](./history.html) page says more.
 A record is cited by its Sophaxis id, such as `2026.0001`, and by the DOI of the deposited work.
+On 2026-11-11 (Japan time), the operator searched J-PlatPat, the database of the Japan Patent Office, and the WIPO Global Brand Database for the name Sophaxis, and found no trade mark of that name. A search shows only what those databases held that day, and it is not legal advice. The operator has not applied to register the name.
 
 ## Logo
 
@@ -4808,7 +4809,7 @@ Source: https://sophaxis.vercel.app/brand.ja.html
 
 # 名前・ロゴ・バッジ（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Name, logo and badge](./brand.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4818,6 +4819,7 @@ Source: https://sophaxis.vercel.app/brand.ja.html
 日本語では、ソファクシスと読みます。
 ギリシア語の sophia（σοφία、知恵）と、ラテン語の axis（軸）を合わせた名です。[沿革と名前](./history.ja.html)の頁に詳しく書いてあります。
 記録は、`2026.0001` のような Sophaxis の番号と、預けられた作品の DOI で引きます。
+2026-11-11（日本時間）に、運営者が、特許庁のデータベースである J-PlatPat と、WIPO Global Brand Database で Sophaxis の名を調べ、その名の商標は見つかりませんでした。調べた結果は、その日に二つのデータベースにあったものだけを示し、法的な助言ではありません。運営者は、この名の登録を出願していません。
 
 ## ロゴ
 
