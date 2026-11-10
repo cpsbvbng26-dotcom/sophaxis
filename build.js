@@ -333,7 +333,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}automation.html">What runs by itself</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}transparency.html">Transparency</a> · <a href="${up}news.html">News</a> · <a href="${up}press.html">Press</a> · <a href="${up}contact.html">Contact</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}automation.html">What runs by itself</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}transparency.html">Transparency</a> · <a href="${up}news.html">News</a> · <a href="${up}press.html">Press</a> · <a href="${up}accessibility.html">Accessibility</a> · <a href="${up}contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>
@@ -780,7 +780,7 @@ ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists prep
 <p class="meta"><a href="./index.ja.html" hreflang="ja" lang="ja">日本語</a></p>
 ${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
 ${fields(papers, '', './')}
-<p class="meta">By topic: <a href="./collections.html">Collections</a>.</p>
+<p class="meta">By topic: <a href="./collections.html">Collections</a>. By month: <a href="./months.html">New by month</a>. Researchers: <a href="./call.html">a call to submit</a>.</p>
 ${listing(papers, './', 'No preprints are listed yet.')}
 `;
   return page({
@@ -977,7 +977,10 @@ const transparencySource = () => fs.readFileSync(path.join(ROOT, 'transparency.m
  * for anyone introducing Sophaxis, whose facts are filled in from site.json and the records, so that no number is typed by hand. */
 const PROSE = { advisory: 'The call for an advisory board of ' + SITE.name + ': what an adviser does, who can join and how.',
   brand: 'The name, the logo, the colours of ' + SITE.name + ', and the badge for listed works.',
-  press: 'For anyone introducing ' + SITE.name + ': a sentence, a paragraph, the facts, and what it is not.' };
+  press: 'For anyone introducing ' + SITE.name + ': a sentence, a paragraph, the facts, and what it is not.',
+  call: 'A call to researchers in philosophy and mathematics to submit to ' + SITE.name + ': what a listed work gets, what it is not, and what a submission needs.',
+  findable: 'How the authors of a work listed on ' + SITE.name + ' can help readers find it: ORCID, Google Scholar, PhilPapers and researchmap.',
+  accessibility: 'The accessibility of ' + SITE.name + ': the aim, what is checked on every change, what is known, and how to report a barrier.' };
 const proseSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.md'), 'utf8');
 const proseDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(proseSource(slug)) || [])[1];
 let pressRecords = [];
@@ -1001,6 +1004,21 @@ function prosePage(slug) {
   const title = src.split('\n')[0].replace(/^# /, '');
   const body = markdown(src);
   return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : body });
+}
+
+/* New by month: the records shown, grouped by the month in which they were listed, newest first. */
+function monthsPage(papers) {
+  const byMonth = {};
+  sortListing(papers).forEach((p) => { (byMonth[p.listed.slice(0, 7)] = byMonth[p.listed.slice(0, 7)] || []).push(p); });
+  const months = Object.keys(byMonth).sort().reverse();
+  const name = (m) => new Date(m + '-01T00:00:00Z').toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  const body = `
+<h1>New by month</h1>
+<p>The records shown, by the month in which each was listed on ${esc(SITE.name)}, newest first. A record removed since is not shown.</p>
+${months.length ? months.map((m) => `<h2 id="m${esc(m)}">${esc(name(m))} (${byMonth[m].length})</h2>
+<ul>${byMonth[m].map((p) => `<li><a href="./abs/${esc(p.id)}.html">${esc(p.title)}</a> <span class="meta">${esc(authorsText(p))} · ${esc(SITE.categories[p.category])} · listed ${esc(p.listed)}</span></li>`).join('')}</ul>`).join('\n') : '<p>No record is shown yet.</p>'}
+`;
+  return page({ title: 'New by month | ' + SITE.name, description: 'The records of ' + SITE.name + ' by the month in which each was listed.', rel: false, canonical: 'months.html', body });
 }
 
 /* News: dated notices from data/news.json, newest first, as a page and an Atom feed. A link is a page of the site or an https address. */
@@ -1085,7 +1103,7 @@ function contactPage() {
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
 /* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
-const JA_PAGES = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press'];
+const JA_PAGES = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility'];
 const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
 const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
 const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -1296,7 +1314,7 @@ function sitemap(papers) {
     ['disclaimer.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(disclaimerJaSource()) || [, newest])[1]],
     ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
     ['stats.html', newest], ['decisions.html', (loadReports()[0] || {}).asOf || SITE.since]]
-    .concat(Object.keys(PROSE).map((slug) => [slug + '.html', proseDate(slug) || newest]), [['news.html', (loadNews()[0] || {}).date || SITE.since]])
+    .concat(Object.keys(PROSE).map((slug) => [slug + '.html', proseDate(slug) || newest]), [['news.html', (loadNews()[0] || {}).date || SITE.since], ['months.html', newest]])
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -1338,7 +1356,7 @@ function robots(all) {
  * cannot drift apart. Nothing here is written by hand, and nothing says more than the policies do. */
 const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['faq.md', 'faq.html', 'Frequently asked questions'],
   ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['transparency.md', 'transparency.html', 'Transparency: a self-assessment'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
-  ['contact.md', 'contact.html', 'Operator and contact'], ['advisory.md', 'advisory.html', 'Advisory board: a call'], ['brand.md', 'brand.html', 'Name, logo and badge'], ['press.md', 'press.html', 'For anyone introducing Sophaxis']];
+  ['contact.md', 'contact.html', 'Operator and contact'], ['advisory.md', 'advisory.html', 'Advisory board: a call'], ['brand.md', 'brand.html', 'Name, logo and badge'], ['press.md', 'press.html', 'For anyone introducing Sophaxis'], ['call.md', 'call.html', 'A call to researchers'], ['findable.md', 'findable.html', 'Making a listed work easy to find'], ['accessibility.md', 'accessibility.html', 'Accessibility']];
 function llmsSources() {
   return POLICIES.map(([slug]) => ['policies/' + slug + '.md', 'policies/' + slug + '.html'])
     .concat(LLM_PAGES.map(([src, url]) => [src, url]))
@@ -1416,6 +1434,10 @@ function build(out, paperDir) {
     'brand.html': prosePage('brand'),
     'press.html': prosePage('press'),
     'news.html': newsPage(loadNews()),
+    'months.html': monthsPage(papers),
+    'call.html': prosePage('call'),
+    'findable.html': prosePage('findable'),
+    'accessibility.html': prosePage('accessibility'),
     'news.xml': newsFeed(loadNews()),
     'badge.svg': badgeSvg(),
     'disclaimer.html': disclaimerPage(),
@@ -1473,7 +1495,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
