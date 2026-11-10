@@ -63,6 +63,7 @@ Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at lev
 Its checks confirm the contrast of every text colour in the light and dark schemes, a link to skip to the content, a visible focus for keyboard users, the language of every page, one main heading per page, and headers for every table.
 A barrier can be reported in an issue with the label `accessibility`, or by email.
 If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
+The full statement, with what is checked and what is known not to work, is on [Accessibility](./accessibility.html).
 
 ## Postal address
 

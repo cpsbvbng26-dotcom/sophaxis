@@ -65,6 +65,13 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる二日前から書きます。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
+## 月に一度、1 日の日本時間 09:17
+
+- 読むもの：記録と `data/news.json`。
+- 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
+- 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
+- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
+
 ## 年に一度、一月 2 日の日本時間 12:23
 
 - 読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。

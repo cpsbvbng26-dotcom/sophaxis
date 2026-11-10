@@ -1,0 +1,22 @@
+name: monthly
+# On the 1st of each month at 09:17 Japan time, the summary of the month before for the official account on X is posted in an
+# issue (tools/monthly.js). The operator copies it; nothing is posted to X automatically.
+on:
+  schedule:
+    - cron: '17 0 1 * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  monthly:
+    name: The summary of the month before
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node tools/monthly.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

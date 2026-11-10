@@ -1721,6 +1721,13 @@ The code of each step is public, and each section links to it.
 - Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
 - Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
 
+## Once a month, on the 1st at 09:17 Japan time
+
+- Reads: the records and `data/news.json`.
+- Writes: an issue with a post in English and one in Japanese for the official account on X, each within the 280 characters that X counts, naming what was listed and announced in the month before. A month with nothing new gets no issue.
+- Leaves to the operator: posting it. X's API is paid, so nothing is posted to X automatically.
+- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
+
 ## Once a year, on 2 January at 12:23 Japan time
 
 - Reads: the public issues labelled submission, withdrawal or removal, the comments of the repository owner on declined submissions, and the records.
@@ -2071,6 +2078,7 @@ Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at lev
 Its checks confirm the contrast of every text colour in the light and dark schemes, a link to skip to the content, a visible focus for keyboard users, the language of every page, one main heading per page, and headers for every table.
 A barrier can be reported in an issue with the label `accessibility`, or by email.
 If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
+The full statement, with what is checked and what is known not to work, is on [Accessibility](./accessibility.html).
 
 ## Postal address
 
@@ -2218,6 +2226,115 @@ The name, the logo, the colours and the badge for listed works are on the page [
 
 Questions go to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in [a public issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
 News is on the [News](./news.html) page and on X, at [@SophaxisX](https://x.com/SophaxisX).
+
+---
+
+Source: https://sophaxis.vercel.app/call.html
+
+# A call to researchers
+
+Last updated: 2026-11-10.
+
+Japanese: [研究者の方へ（日本語訳）](./call.ja.html). It is a translation; where the two differ, the English text applies.
+
+## Who it is for
+
+Sophaxis is for researchers in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
+It lists a preprint that you have already deposited, with a DOI, in one of the repositories that the [Submission Policy](./policies/submission.html) names.
+Every work listed so far is by the operator; the first submissions from other researchers are welcome.
+
+## What a listed work gets
+
+- A record page with the abstract, the versions, the licence, the formats for citing it and an unmodified PDF copy where the repository allows one.
+- A place beside other work in its fields, in the lists, the feeds, the search and the collections.
+- Its record offered to harvesters through OAI-PMH, and a card that shows the title and the authors when the page is shared.
+- A badge that the authors can show, with a link to the record.
+
+Nothing is charged, to authors or to readers.
+The authors keep their copyright, and the work stays in its repository under its own DOI.
+
+## What it is not
+
+Acceptance is moderation, not peer review.
+Sophaxis does not judge whether a work is correct or important, and listing does not replace publication in a journal.
+A listed work can still be published in a journal, and the record page then shows the published version.
+
+## What a submission needs
+
+- A DOI in one of the repositories that the Submission Policy names.
+- CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in the DOI metadata.
+- An ORCID record that links the GitHub account from which you submit.
+- A statement on the use of language models and other generative models.
+- From 2026-11-23, six months since the first DOI of the work was registered, and, for a first submission, a researcher who vouches for it.
+- From 2026-11-24, statements on funding, on competing interests, and on human participants and research ethics.
+- No author who lives in, or stays in, a place where Sophaxis is not offered, as the Submission Policy lists them.
+
+## How to submit
+
+The steps are on the page [From submission to listing](./process.html), and the form opens from [Submit](./submit.html).
+A question before submitting can go in [a public issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new), or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+
+---
+
+Source: https://sophaxis.vercel.app/findable.html
+
+# Making a listed work easy to find
+
+Last updated: 2026-11-10.
+
+Japanese: [載った作品を見つけてもらうために（日本語訳）](./findable.ja.html). It is a translation; where the two differ, the English text applies.
+
+## What Sophaxis does by itself
+
+- Each record page carries the tags that Google Scholar and other indexes read, with a link to the PDF copy where there is one.
+- The records are offered to harvesters through OAI-PMH, and new pages are announced to search engines through IndexNow and the sitemap.
+- With the consent of every author, the record page and the PDF copy are saved to the Internet Archive each week.
+
+None of these is a promise that any index picks the work up; each decides for itself.
+
+## What the authors can do
+
+- ORCID: add the DOI of the work to your ORCID record, so that services that read ORCID connect the work to you.
+- Google Scholar: it finds works in repositories by itself, often within several weeks. In a Google Scholar profile you can add the work, or confirm it once found.
+- PhilPapers: for philosophy, many readers look in PhilPapers. You can add a record of the work to PhilPapers, and you can deposit it in PhilArchive, its open archive, which has its own moderation. Both are free.
+- researchmap: researchers in Japan can add the work to their researchmap record.
+- The badge and the card: show the badge from the record page, with its link, and share the address of the record page, which shows the card with the title and the authors.
+
+Sophaxis has no connection with these services; their names are given only so that authors can find them.
+
+---
+
+Source: https://sophaxis.vercel.app/accessibility.html
+
+# Accessibility
+
+Last updated: 2026-11-10.
+
+Japanese: [アクセシビリティ（日本語訳）](./accessibility.ja.html). It is a translation; where the two differ, the English text applies.
+
+## The aim
+
+Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.
+This is the operator's own assessment, made with the checks below; no one else has audited the site.
+
+## What is checked on every change
+
+Before any change is published, two sets of checks run on every page of the site.
+
+- In the text of each page: the contrast of every text colour in the light and dark schemes, a link to skip to the content, the language of the page, one main heading, and headers for every table.
+- In a browser, at widths from 1440 down to 360 pixels: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.
+
+## What is not checked, and what is known
+
+- The PDF copies are the authors' files, kept unmodified; Sophaxis cannot add structure to them, and some may not work with a screen reader.
+- Titles and abstracts come from the DOI metadata as plain text, so mathematical notation may read poorly.
+- The search page needs JavaScript, the only script on the site; without it, the lists by field and by month, and the feeds, give the same records.
+- The records, the lists and the statistics are in English; the policies and the prose pages are also in Japanese.
+
+## Reporting a barrier
+
+A barrier can be reported in [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) with the label `accessibility`, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
 
 ---
 
@@ -3868,6 +3985,13 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる二日前から書きます。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
+## 月に一度、1 日の日本時間 09:17
+
+- 読むもの：記録と `data/news.json`。
+- 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
+- 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
+- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
+
 ## 年に一度、一月 2 日の日本時間 12:23
 
 - 読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。
@@ -3992,6 +4116,7 @@ Sophaxis は、Web Content Accessibility Guidelines（WCAG）2.2 のレベル AA
 同じ確認は、本文へ飛ぶリンク、キーボードで操作する人に見えるフォーカス、すべての頁の言語、頁ごとに一つの主見出し、すべての表の見出しも確かめます。
 使いにくいところは、`accessibility` のラベルを付けた issue か、メールで報告できます。
 頁が使えないときは、求めに応じて、運営者が同じ情報を別の形で届けます。たとえば、メールでの平文です。
+確かめていることと、うまく働かないと分かっていることを含む全文は、[アクセシビリティ](./accessibility.ja.html)にあります。
 
 ## 住所
 
@@ -4451,4 +4576,113 @@ Sophaxis は、著者からも読者からも料金を取らず、日本に住�
 
 質問は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールか、[公開の issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) で受けます。
 お知らせは、[お知らせ](./news.html)の頁（英語）と、X の [@SophaxisX](https://x.com/SophaxisX) にあります。
+
+---
+
+Source: https://sophaxis.vercel.app/call.ja.html
+
+# 研究者の方へ（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [A call to researchers](./call.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 誰のためか
+
+Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の研究者のためのものです。
+[投稿の規程](./policies/submission.ja.html)が挙げるリポジトリのどれかに、DOI 付きですでに預けたプレプリントを載せます。
+これまでに載った作品は、すべて運営者のものです。ほかの研究者からの最初の投稿を待っています。
+
+## 載った作品が得るもの
+
+- 要旨・版・ライセンス・引用の書式と、リポジトリが許す場合は手を加えない PDF の写しを載せた記録の頁。
+- 一覧・配信・検索・集めの中で、同じ分野のほかの作品と並ぶ場所。
+- OAI-PMH を通して収集する側へ渡される記録と、頁を共有したときに題と著者を示すカード。
+- 著者が示せる、記録へのリンク付きのバッジ。
+
+著者からも読者からも、何も取りません。
+著作権は著者が持ち続け、作品はリポジトリに、それ自身の DOI のまま残ります。
+
+## そうでないもの
+
+受理はモデレーションであって、査読ではありません。
+Sophaxis は作品が正しいか、重要かを判断しません。載ることは、学術誌での出版の代わりにはなりません。
+載った作品も学術誌で出版でき、そのときは記録の頁が出版された版を示します。
+
+## 投稿に要るもの
+
+- 投稿の規程が挙げるリポジトリのどれかの DOI。
+- DOI のメタデータにある CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。
+- 投稿に使う GitHub のアカウントへのリンクを載せた ORCID の記録。
+- 言語モデルとその他の生成モデルの使用についての申告。
+- 2026-11-23 から、作品の最初の DOI の登録から六か月がたっていること。初めての投稿では、作品を紹介する研究者一人も要ります。
+- 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告。
+- 投稿の規程が挙げる、Sophaxis を提供しない国と地域に、住んでいる著者も滞在している著者もいないこと。
+
+## 投稿のしかた
+
+手順は[投稿から掲載まで](./process.ja.html)の頁にあり、様式は[投稿](./submit.html)の頁から開きます。
+投稿の前の質問は、[公開の issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) か、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで受けます。
+
+---
+
+Source: https://sophaxis.vercel.app/findable.ja.html
+
+# 載った作品を見つけてもらうために（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [Making a listed work easy to find](./findable.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## Sophaxis がひとりでにすること
+
+- 記録の頁には、Google Scholar などの索引が読む目印を入れ、PDF の写しがあればそれへのリンクも入れています。
+- 記録は OAI-PMH を通して収集する側へ渡し、新しい頁は IndexNow とサイトマップで検索エンジンに知らせます。
+- 著者全員の同意があれば、記録の頁と PDF の写しを毎週 Internet Archive に保存します。
+
+どれも、索引が作品を拾うことを約束するものではありません。拾うかどうかは、それぞれが決めます。
+
+## 著者ができること
+
+- ORCID：作品の DOI を自分の ORCID の記録に足すと、ORCID を読むサービスが作品とあなたを結び付けます。
+- Google Scholar：リポジトリにある作品を自分で見つけます。多くは数週間のうちです。Google Scholar のプロフィールで、作品を足すことも、見つかったものを確かめることもできます。
+- PhilPapers：哲学では、多くの読者が PhilPapers で探します。作品の記録を PhilPapers に足すことができ、その開かれたアーカイブである PhilArchive に預けることもできます。PhilArchive には独自のモデレーションがあります。どちらも無料です。
+- researchmap：日本の研究者は、作品を自分の researchmap の記録に足せます。
+- バッジとカード：記録の頁のバッジを、そのリンクとともに示します。記録の頁のアドレスを共有すると、題と著者を載せたカードが出ます。
+
+Sophaxis は、これらのサービスと特別な関係を持ちません。名を挙げるのは、著者が見つけられるようにするためだけです。
+
+---
+
+Source: https://sophaxis.vercel.app/accessibility.ja.html
+
+# アクセシビリティ（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [Accessibility](./accessibility.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 目指すもの
+
+Sophaxis は、ウェブコンテンツ・アクセシビリティ・ガイドライン（WCAG）2.2 の適合レベル AA を目指しています。
+これは、下の検査による運営者自身の評価です。ほかの誰もサイトを監査していません。
+
+## 変更のたびに確かめること
+
+変更を公開する前に、サイトのすべての頁について二組の検査が動きます。
+
+- 頁の文から：明るい表示と暗い表示での、すべての文字色のコントラスト、本文へ飛ぶリンク、頁の言語、一つの主見出し、すべての表の見出し。
+- ブラウザで、幅 1440 から 360 ピクセルまで：キーボードだけで使えること、フォーカスが読む順に進み、止まらないこと、フォーカスの当たった要素が枠を示すこと、すべての画像に代替テキストがあり、すべての入力欄にラベルがあること、頁が横に動かないこと。
+
+## 確かめていないことと、分かっていること
+
+- PDF の写しは、著者のファイルを手を加えずに置いたものです。Sophaxis は構造を足せず、画面読み上げで使えないものもありえます。
+- 題と要旨は DOI のメタデータからの平文なので、数式は読みにくいことがあります。
+- 検索の頁は、サイトで唯一のスクリプトである JavaScript を要します。それがなくても、分野ごと・月ごとの一覧と配信で、同じ記録にたどれます。
+- 記録・一覧・統計は英語です。規程と散文の頁は日本語でもあります。
+
+## 障壁を知らせる
+
+障壁は、ラベル `accessibility` を付けた [issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) か、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで知らせることができます。
+頁が使えないときは、求めに応じて、メールでの平文など、別の形で同じ情報を届けます。
 

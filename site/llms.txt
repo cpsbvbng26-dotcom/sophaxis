@@ -39,6 +39,9 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [Advisory board: a call](https://sophaxis.vercel.app/advisory.html)
 - [Name, logo and badge](https://sophaxis.vercel.app/brand.html)
 - [For anyone introducing Sophaxis](https://sophaxis.vercel.app/press.html)
+- [A call to researchers](https://sophaxis.vercel.app/call.html)
+- [Making a listed work easy to find](https://sophaxis.vercel.app/findable.html)
+- [Accessibility](https://sophaxis.vercel.app/accessibility.html)
 
 ## Japanese
 
@@ -62,6 +65,9 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [諮問委員の募集（日本語訳）](https://sophaxis.vercel.app/advisory.ja.html)
 - [名前・ロゴ・バッジ（日本語訳）](https://sophaxis.vercel.app/brand.ja.html)
 - [紹介する人のために（日本語訳）](https://sophaxis.vercel.app/press.ja.html)
+- [研究者の方へ（日本語訳）](https://sophaxis.vercel.app/call.ja.html)
+- [載った作品を見つけてもらうために（日本語訳）](https://sophaxis.vercel.app/findable.ja.html)
+- [アクセシビリティ（日本語訳）](https://sophaxis.vercel.app/accessibility.ja.html)
 
 ## Data
 

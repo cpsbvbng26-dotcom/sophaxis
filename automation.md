@@ -64,6 +64,13 @@ The code of each step is public, and each section links to it.
 - Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
 - Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
 
+## Once a month, on the 1st at 09:17 Japan time
+
+- Reads: the records and `data/news.json`.
+- Writes: an issue with a post in English and one in Japanese for the official account on X, each within the 280 characters that X counts, naming what was listed and announced in the month before. A month with nothing new gets no issue.
+- Leaves to the operator: posting it. X's API is paid, so nothing is posted to X automatically.
+- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
+
 ## Once a year, on 2 January at 12:23 Japan time
 
 - Reads: the public issues labelled submission, withdrawal or removal, the comments of the repository owner on declined submissions, and the records.
