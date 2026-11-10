@@ -1297,8 +1297,8 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     const rows = (head) => { const i = rd.indexOf(head); return i < 0 ? [] : rd.slice(i).split('\n\n').find((b) => b.startsWith('| ')).split('\n').slice(2); };
     const en = rows('## Sophaxis itself: DOI, listings and registrations under review');
     const ja = rows('### Sophaxis 自体の DOI、掲載先と、審査中の登録');
-    const names = ['DOAPR', 'PhilPapers', 'OpenDOAR', 'ASAPbio', 'CORE'];
-    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same five in both languages, none of them shown as listed',
+    const names = ['DOAPR', 'OpenDOAR', 'ASAPbio', 'CORE'];
+    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same ' + names.length + ' in both languages, none of them shown as listed',
       rd.indexOf('## Sophaxis itself: DOI, listings and registrations under review') < rd.indexOf('## Submitting') && rd.indexOf('### Sophaxis 自体の DOI、掲載先と、審査中の登録') < rd.indexOf('貢献の窓口')
       && rd.includes('Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
       && rd.includes('サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
@@ -1328,9 +1328,9 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['contact.html', 'contact.ja.html', 'index.html', 'press.html', 'press.ja.html', 'news.html', 'history.html', 'history.ja.html'].includes(f)).every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f))))
     /* The history page names ROAR only as the title of its news item, with no link of its own. */
     && ['history.html', 'history.ja.html'].every((f) => (read(path.join(ROOT, 'site', f)).match(/\bROAR\b/g) || []).length === 1 && read(path.join(ROOT, 'site', f)).includes('<li>2026-11-06: Listed in ROAR</li>') && !read(path.join(ROOT, 'site', f)).includes('roar.eprints')));
-  ok('the PhilPapers request is recorded as a request, not as an addition, in both languages, and the site names PhilPapers only on the page that tells authors how to use it themselves',
-    read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
-    && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
+  ok('the PhilPapers request is recorded with its answer, not as an addition, in both languages, and the site names PhilPapers only on the page that tells authors how to use it themselves',
+    read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes('it recommends depositing them in PhilArchive rather than adding Sophaxis to the Gateway. Sophaxis is not in the Open Access Gateway.')
+    && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('Sophaxis は Open Access Gateway に入っていません。') && !read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
     && !/(indexed|listed|harvested) (by|in|on) PhilPapers|added to (the )?(PhilPapers|Open Access Gateway)/i.test(read(path.join(ROOT, 'README.md')))
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['findable.html', 'findable.ja.html'].includes(f)).some((f) => /PhilPapers/i.test(read(path.join(ROOT, 'site', f))))
     && read(path.join(ROOT, 'site', 'findable.html')).includes('Sophaxis has no connection with these services; their names are given only so that authors can find them.')
