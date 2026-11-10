@@ -3236,6 +3236,26 @@ console.log('\n85. Funding, competing interests, research ethics and data; plagi
     && t.includes('| Publication ethics and related editorial policies | Met |') && !/^- [^\n]*\. (Not met|In part)\.$/m.test(t.split('### Publication ethics and related editorial policies')[1].split('\n### ')[0]));
 }
 
+console.log('\n86. The Markdown of the prose pages is rendered, not shown: tables, third-level headings and bold');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js');
+  ok('a table becomes a table with a header row, ### a heading, **bold** bold; a table without its row of dashes stops the build',
+    B.markdown('| A | B |\n| --- | --- |\n| 1 | **x** |') === '<div class="table"><table><tr><th scope="col">A</th><th scope="col">B</th></tr><tr><td>1</td><td><b>x</b></td></tr></table></div>'
+    && B.markdown('### Name\n\nMet.') === '<h3>Name</h3>\n<p>Met.</p>' && B.markdown('- **Met**: yes') === '<ul><li><b>Met</b>: yes</li></ul>'
+    && (() => { try { B.markdown('| A | B |\n| 1 | 2 |'); return false; } catch (e) { return true; } })());
+  const html = [];
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith('.html') && html.push(path.join(d, e.name))));
+  walk(path.join(ROOT, 'site'));
+  const raw = html.filter((f) => { const t = read(f).replace(/<(pre|code)>[\s\S]*?<\/\1>/g, ''); return /\*\*|<p>\|\s|<p>#{1,6} |<li>#{1,6} /.test(t); });
+  ok('no page of the ' + html.length + ' shows Markdown as text: no **, no table row and no heading inside a paragraph', raw.length === 0, raw.map((f) => path.relative(ROOT, f)).join(', '));
+  const t = read(path.join(ROOT, 'site', 'transparency.html')), tj = read(path.join(ROOT, 'site', 'transparency.ja.html'));
+  const sub = read(path.join(ROOT, 'site', 'policies', 'submission.html'));
+  ok('the transparency page shows its summary as a table and its 17 headings as headings, in both languages, and the Submission Policy its ' + site.notOffered.length + ' places as a table',
+    t.includes('<tr><td>Publication ethics and related editorial policies</td><td>Met</td></tr>') && (t.match(/<h3>/g) || []).length === 17 && (tj.match(/<h3>/g) || []).length === 17 && tj.includes('<table>')
+    && sub.includes('<th scope="col">Place</th>') && (sub.split('<th scope="col">Place</th>')[1].split('</table>')[0].match(/<tr>/g) || []).length === site.notOffered.length);
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
