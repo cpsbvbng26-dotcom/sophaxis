@@ -258,6 +258,7 @@ nav a:first-child { margin-left: 0; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .25rem; }
 ol.list { list-style: none; padding: 0; margin: 0; }
 ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 .meta { color: var(--muted); font-size: .9rem; }
@@ -339,27 +340,42 @@ ${body}
 `;
 }
 
-/* A small Markdown subset: #, ##, paragraphs, ordered and unordered lists. */
+/* A small Markdown subset: #, ##, ###, paragraphs, ordered and unordered lists, tables with a header row, and **bold**. */
 function markdown(src) {
   const out = [];
   let para = [];
   let list = null;
+  let table = null;
   const inline = (s) => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
     .replace(/\[([^\]]+)\]\(((?:\.\.?\/|https:\/\/)[^)\s]+)\)/g, '<a href="$2">$1</a>');
   /* Lines of a paragraph join with a space, except after Japanese text, which takes none. */
   const join = (lines) => lines.reduce((acc, l) => (acc && /[\u3000-\u30ff\u4e00-\u9fff\uff00-\uffef]$/.test(acc) ? acc + l : (acc ? acc + ' ' + l : l)), '');
   const flushPara = () => { if (para.length) { out.push('<p>' + inline(join(para)) + '</p>'); para = []; } };
   const flushList = () => { if (list) { out.push('<' + list.tag + '>' + list.items.map((i) => '<li>' + inline(i) + '</li>').join('') + '</' + list.tag + '>'); list = null; } };
+  /* A table is a header row, a row of dashes, and the body rows; each row starts and ends with "|". */
+  const cells = (l) => l.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+  const flushTable = () => {
+    if (!table) return;
+    const [head, rule, ...rows] = table;
+    if (!rule || !cells(rule).every((c) => /^:?-{3,}:?$/.test(c))) throw new Error('a table needs a header row and a row of dashes: ' + head);
+    out.push('<div class="table"><table><tr>' + cells(head).map((c) => '<th scope="col">' + inline(c) + '</th>').join('') + '</tr>'
+      + rows.map((r) => '<tr>' + cells(r).map((c) => '<td>' + inline(c) + '</td>').join('') + '</tr>').join('') + '</table></div>');
+    table = null;
+  };
+  const flush = () => { flushPara(); flushList(); flushTable(); };
   for (const line of src.split('\n')) {
     let m;
-    if (/^\s*$/.test(line)) { flushPara(); flushList(); continue; }
-    if ((m = /^(#{1,2}) (.*)$/.exec(line))) { flushPara(); flushList(); out.push('<h' + m[1].length + '>' + inline(m[2]) + '</h' + m[1].length + '>'); continue; }
+    if (/^\s*$/.test(line)) { flush(); continue; }
+    if (/^\|.*\|\s*$/.test(line)) { flushPara(); flushList(); (table = table || []).push(line); continue; }
+    flushTable();
+    if ((m = /^(#{1,3}) (.*)$/.exec(line))) { flush(); out.push('<h' + m[1].length + '>' + inline(m[2]) + '</h' + m[1].length + '>'); continue; }
     if ((m = /^\d+\. (.*)$/.exec(line))) { flushPara(); if (!list || list.tag !== 'ol') { flushList(); list = { tag: 'ol', items: [] }; } list.items.push(m[1]); continue; }
     if ((m = /^- (.*)$/.exec(line))) { flushPara(); if (!list || list.tag !== 'ul') { flushList(); list = { tag: 'ul', items: [] }; } list.items.push(m[1]); continue; }
     if (list) { list.items[list.items.length - 1] += ' ' + line.trim(); continue; }
     para.push(line.trim());
   }
-  flushPara(); flushList();
+  flush();
   return out.join('\n');
 }
 
@@ -1340,7 +1356,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
