@@ -3473,6 +3473,10 @@ console.log('\n92. Before submitting, the history and the name, plain words, the
     pol.includes('It takes no donations, sponsorship or advertising.') && polJa.includes('寄付・協賛・広告も受けません。') && pol.includes('No repository, funder, institution, author or service can direct a decision.') && polJa.includes('預け先・資金提供者・機関・著者・サービスのどれも、判断を指図できません。')
     && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== '404.html').every((f) => read(path.join(ROOT, 'site', f)).includes('No cookies, no analytics and nothing loaded from other servers (<a href="'))
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.'));
+  ok('the search for the name is recorded with its day and its two databases, as a search and not legal advice, with no registration applied for, in both languages',
+    read(path.join(ROOT, 'brand.md')).includes('On 2026-11-11 (Japan time), the operator searched J-PlatPat, the database of the Japan Patent Office, and the WIPO Global Brand Database for the name Sophaxis, and found no trade mark of that name.')
+    && read(path.join(ROOT, 'brand.md')).includes('it is not legal advice. The operator has not applied to register the name.')
+    && read(path.join(ROOT, 'brand.ja.md')).includes('J-PlatPat と、WIPO Global Brand Database で Sophaxis の名を調べ、その名の商標は見つかりませんでした。') && read(path.join(ROOT, 'brand.ja.md')).includes('法的な助言ではありません。'));
 }
 
 console.log('\n' + '-'.repeat(60));
