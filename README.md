@@ -30,13 +30,15 @@ Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at th
 
 Since 2026-11-09 (Japan time), Sophaxis has been listed under Philosophy and under Mathematics on the [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) page of the Open Access Directory. The directory is hosted by the School of Library and Information Science at Simmons University and supervised by an independent editorial board, and only accounts approved by its editor can edit it. The operator's account, requested on 2026-11-03, was approved, and the operator added the entry. The directory's guide for contributors describes no review of each entry before it appears, so the listing is not a review of Sophaxis.
 
-Sophaxis has also applied to the registries below. None of them has listed it yet, and each decides for itself. The dates are Japan time; the state is as of 2026-11-09.
+Sophaxis has also applied to the registries below. None of them has listed it yet, and each decides for itself. The dates are Japan time; the state is as of 2026-11-10.
 
 | Registry | What it is | Applied | State |
 | --- | --- | --- | --- |
 | DOAPR (COAR) | Directory of Open Access Preprint Repositories | 2026-11-01 | Under review |
 | PhilPapers | Open Access Gateway, the archives whose papers PhilPapers indexes | 2026-11-03 | Requested; each archive is vetted |
 | OpenDOAR (Jisc) | Directory of Open Access Repositories | 2026-11-08 | Asked; likely eligible, but new submissions are paused until an update in January 2027 |
+| ASAPbio | Directory of preprint servers and their policies | 2026-11-10 | Requested by email |
+| CORE | Aggregator of open access research, harvested through OAI-PMH | 2026-11-10 | Requested; waiting for the first harvest |
 
 Each application is described under [Operator and contact](#operator-and-contact).
 
@@ -159,6 +161,8 @@ On 2026-11-03 (Japan time) the OAI-PMH base URL, <https://sophaxis.vercel.app/oa
 On the same day the operator asked PhilPapers to add Sophaxis to its Open Access Gateway, the list of archives whose papers PhilPapers indexes. Each archive is vetted before it is added, so whether it is added is PhilPapers' decision.
 On the same day the operator submitted a record of Sophaxis to ROAR, the Registry of Open Access Repositories at the University of Southampton. It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
 On 2026-11-08 (Japan time) the operator asked OpenDOAR, the Directory of Open Access Repositories run by Jisc, whether Sophaxis meets its inclusion criteria. Jisc answered that a preprint server that holds the PDFs on its own server would likely meet them, and that new submissions are paused while OpenDOAR is under review, with an update promised for January 2027. Sophaxis will apply after that update; whether it is listed is OpenDOAR's decision.
+On 2026-11-10 (Japan time) the operator asked ASAPbio, by email, to add Sophaxis to its directory of preprint servers. Whether it is added is ASAPbio's decision.
+On the same day the operator asked CORE, the aggregator of open access research at the Open University, to harvest Sophaxis through its OAI-PMH base URL. CORE tells the contact once the first harvest is done; whether and when it indexes Sophaxis is CORE's decision.
 Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned. JOSS asks for a repository that has been public for more than six months. The first commit here is from 2026-10-30, so the earliest possible submission is 2027-05-01. Nothing has been submitted yet. Whether a preprint server is within the scope of JOSS is for JOSS to decide.
 If the number of listed works reaches 1,000, the operator may, after preparation, consider giving Sophaxis a domain of its own and running it through an international non-governmental organisation (NGO). This is a possibility, not a plan or a promise: nothing has been decided, no such organisation exists, and Sophaxis does not ask for or accept money, donations or members for it. Any such step would be taken only within the law and announced on the top page before it takes effect. Until then, Sophaxis is run by one person in Japan at <https://sophaxis.vercel.app/>.
 Short answers to common questions are in the [FAQ](https://sophaxis.vercel.app/faq.html); where they differ from a policy, the policy applies.
@@ -252,13 +256,15 @@ Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に�
 
 2026-11-09（日本時間）から、Open Access Directory の [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) の頁で、Philosophy と Mathematics の二つの節に Sophaxis が載っています。この一覧は、シモンズ大学の図書館情報学の大学院が運営し、独立した編集委員会が監督しています。編集できるのは、編集者が承認したアカウントだけです。2026-11-03 に申請した運営者のアカウントが承認され、運営者が項目を足しました。寄稿者向けの案内には、項目が載る前に一件ずつ審査する手順は書かれていないので、この掲載は Sophaxis の審査ではありません。
 
-ほかに、次の登録簿に申請しています。こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。日付は日本時間です。状態は 2026-11-09 の時点のものです。
+ほかに、次の登録簿に申請しています。こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。日付は日本時間です。状態は 2026-11-10 の時点のものです。
 
 | 登録先 | 何か | 申請日 | 状態 |
 | --- | --- | --- | --- |
 | DOAPR（COAR） | オープンアクセスのプレプリントリポジトリの一覧 | 2026-11-01 | 審査中 |
 | PhilPapers | Open Access Gateway。PhilPapers が論文を索引するアーカイブの一覧 | 2026-11-03 | 依頼済み。一件ずつ審査がある |
 | OpenDOAR（Jisc） | オープンアクセスのリポジトリの一覧 | 2026-11-08 | 問い合わせ済み。基準を満たす見込みだが、新しい登録は 2027 年 1 月の案内まで止まっている |
+| ASAPbio | プレプリントサーバーとその方針の一覧 | 2026-11-10 | 依頼済み（メール） |
+| CORE | OAI-PMH で集めるオープンアクセスの論文の索引 | 2026-11-10 | 依頼済み。最初の収集を待っている |
 
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
 
@@ -269,5 +275,7 @@ OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [
 同じ日に、PhilPapers に、Open Access Gateway へ Sophaxis を加えるよう依頼しました。PhilPapers が論文を索引するアーカイブの一覧です。加える前に一件ずつ審査があります。加えるかどうかは PhilPapers が決めます。
 同じ日に、サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
 2026-11-08（日本時間）に、Jisc が運営する OpenDOAR（Directory of Open Access Repositories）に、Sophaxis が掲載の基準を満たすかを問い合わせました。Jisc からは、PDF を自分のサーバーに置くプレプリントサーバーなら基準を満たす見込みが高いこと、OpenDOAR を見直すあいだ新しい登録を止めていて、2027 年 1 月に案内を出すことの返事がありました。その案内のあとに申請します。載せるかどうかは OpenDOAR が決めます。
+2026-11-10（日本時間）に、ASAPbio に、プレプリントサーバーの一覧へ Sophaxis を加えるようメールで依頼しました。加えるかどうかは ASAPbio が決めます。
+同じ日に、英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、OAI-PMH の入口から Sophaxis を収集するよう依頼しました。最初の収集が終わると、CORE から連絡先に知らせが届きます。収集して索引に載せるかどうかと、その時期は、CORE が決めます。
 Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。
 収録が 1,000 件に達したら、運営者は、準備を経て、Sophaxis に独自のドメインを取ることと、国際的な非政府組織（NGO）として運営することを検討する可能性があります。これは可能性であり、計画でも約束でもありません。まだ何も決まっておらず、そのための団体もありません。Sophaxis は、そのための資金・寄付・会員を求めず、受け取りません。こうした変更は法令の範囲でだけ行い、効力が始まる前にトップの頁で告知します。それまでは、日本に住む一人の運営者が <https://sophaxis.vercel.app/> で運営します。
