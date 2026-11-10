@@ -1312,7 +1312,7 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && !en.concat(ja).some((r) => r.includes('Open Access Directory'))
       && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
   }
-  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages, and on the top page and the contact page of the site and nowhere else on it',
+  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages, and on the top page, the contact page, the press page and the news of the site and nowhere else on it',
     read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes('It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
     && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
     && !read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
@@ -1321,7 +1321,10 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     && read(path.join(ROOT, 'site', 'contact.ja.html')).includes('<a href="https://roar.eprints.org/27422/">記録 27422</a>')
     && JSON.stringify(JSON.parse(read(path.join(ROOT, 'site.json'))).listedIn) === JSON.stringify([{ name: 'ROAR', description: 'the Registry of Open Access Repositories at the University of Southampton', url: 'https://roar.eprints.org/27422/', since: '2026-11-06' }])
     && read(path.join(ROOT, 'site', 'index.html')).includes('<p class="meta">Listed in <a href="https://roar.eprints.org/27422/">ROAR</a>, the Registry of Open Access Repositories at the University of Southampton, after its editorial review, since 2026-11-06 (Japan time).</p>')
-    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== 'contact.html' && f !== 'contact.ja.html' && f !== 'index.html').every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
+    && read(path.join(ROOT, 'site', 'press.html')).includes('<tr><th scope="row">Listed in</th><td><a href="https://roar.eprints.org/27422/">ROAR</a> (since 2026-11-06)</td></tr>')
+    && read(path.join(ROOT, 'site', 'press.ja.html')).includes('<tr><th scope="row">掲載先</th><td><a href="https://roar.eprints.org/27422/">ROAR</a>（2026-11-06 から）</td></tr>')
+    && read(path.join(ROOT, 'site', 'news.html')).includes('Sophaxis passed editorial review and is listed in ROAR, the Registry of Open Access Repositories at the University of Southampton. <a href="https://roar.eprints.org/27422/">More</a>')
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['contact.html', 'contact.ja.html', 'index.html', 'press.html', 'press.ja.html', 'news.html'].includes(f)).every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
   ok('the PhilPapers request is recorded as a request, not as an addition, in both languages',
     read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
     && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
@@ -2200,7 +2203,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
 {
   const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
   const pages = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'].map((slug) => ({ slug, dir: 'policies/' }))
-    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency'].map((slug) => ({ slug, dir: '' })));
+    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press'].map((slug) => ({ slug, dir: '' })));
   for (const { slug, dir } of pages) {
     const en = read(path.join(ROOT, dir, slug + '.md'));
     const ja = read(path.join(ROOT, dir, slug + '.ja.md'));
@@ -3154,7 +3157,7 @@ console.log('\n84. The site in Japanese: the top page and every prose page');
   ok('it says that acceptance is moderation, not peer review, that nothing is charged, and where Sophaxis is not offered, with all ' + site.notOffered.length + ' places by their Japanese names',
     ja.includes('掲載はモデレーションであり、査読ではありません。') && ja.includes('著者からも読者からも料金を取りません。')
     && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + site.notOffered.map((p) => p.ja).join('、') + '）に住んでいる著者') && ja.includes('国籍や人種ではなく'));
-  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency'];
+  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press'];
   const jaPolicies = ['privacy', 'terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'];
   ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the records stay in English',
     jaPages.every((s) => ja.includes('href="./' + s + '.ja.html"')) && jaPolicies.every((s) => ja.includes('href="./policies/' + s + '.ja.html"')) && ja.includes('href="./disclaimer.ja.html"')
@@ -3254,6 +3257,51 @@ console.log('\n86. The Markdown of the prose pages is rendered, not shown: table
   ok('the transparency page shows its summary as a table and its 17 headings as headings, in both languages, and the Submission Policy its ' + site.notOffered.length + ' places as a table',
     t.includes('<tr><td>Publication ethics and related editorial policies</td><td>Met</td></tr>') && (t.match(/<h3>/g) || []).length === 17 && (tj.match(/<h3>/g) || []).length === 17 && tj.includes('<table>')
     && sub.includes('<th scope="col">Place</th>') && (sub.split('<th scope="col">Place</th>')[1].split('</table>')[0].match(/<tr>/g) || []).length === site.notOffered.length);
+}
+
+console.log('\n87. Brand: the call for an advisory board, the name and logo, the badge, the page for anyone introducing Sophaxis, and the news');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js');
+  const adv = read(path.join(ROOT, 'advisory.md')), t = read(path.join(ROOT, 'transparency.md'));
+  ok('the call says what an adviser does and does not do, who can join, that it is unpaid and named only after agreeing; until then there is no board, and the self-assessment stays "Not met"',
+    adv.includes('Until someone agrees and is named on the [Operator and contact](./contact.html) page, there is no board.') && adv.includes('- Gives no decision on any submission.')
+    && adv.includes('Advising Sophaxis says nothing about the quality of any listed work, and does not involve the adviser\'s institution.') && adv.includes('An adviser is not paid and pays nothing.')
+    && adv.includes('Each adviser is named, with an ORCID iD, on the contact page, only after they agree to it.') && adv.includes('An adviser who submits a work goes through the same moderation as anyone else, with no priority.')
+    && /\| Editorial board or advisory body \| Not met \|/.test(t) && t.includes('Since 2026-11-10 a call for an advisory board has been open ([Advisory board: a call](./advisory.html)); no adviser has joined yet.')
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.html).')
+    && read(path.join(ROOT, 'contact.md')).includes('There is no advisory board yet;'));
+  const css = read(path.join(ROOT, 'build.js'));
+  const tok = (dark, k) => ((dark ? /@media \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/ : /\n:root \{([^}]*)\}/).exec(css) || [])[1].match(new RegExp('--' + k + ': (#[0-9a-f]{6})'))[1];
+  const brand = read(path.join(ROOT, 'brand.md'));
+  ok('the colours on the brand page are those of the site, in both themes', ['bg', 'fg', 'accent'].every((k) => brand.includes('`' + tok(false, k) + '` | `' + tok(true, k) + '`')));
+  const badge = read(path.join(ROOT, 'site', 'badge.svg'));
+  const listed = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  ok('the badge is an SVG with a title and the accent colour, and each listed record, and no other, offers it with a link to itself',
+    badge.startsWith('<svg xmlns="http://www.w3.org/2000/svg"') && badge.includes('<title>Sophaxis: listed</title>') && badge.includes('fill="' + tok(false, 'accent') + '"') && !/<script|href=/.test(badge)
+    && listed.every((p) => read(path.join(ROOT, 'site', 'abs', p.id + '.html')).includes('(' + site.baseUrl + 'abs/' + p.id + '.html)</code></pre>') === (p.status === 'listed'))
+    && B.badgeSnippet({ id: '2026.0099', status: 'withdrawn' }) === '' && brand.includes('- Remove it if the work is withdrawn or its record is removed.'));
+  const shown = listed.filter((p) => p.status !== 'removed').length;
+  const press = read(path.join(ROOT, 'site', 'press.html')), pressJa = read(path.join(ROOT, 'site', 'press.ja.html'));
+  ok('the page for anyone introducing Sophaxis takes its facts from site.json and the records (' + shown + ' shown), in both languages, and says what Sophaxis is not',
+    press.includes('<tr><th scope="row">Records shown</th><td>' + shown + '</td></tr>') && pressJa.includes('<tr><th scope="row">載っている記録</th><td>' + shown + '</td></tr>')
+    && press.includes('<tr><th scope="row">Started</th><td>' + site.since + '</td></tr>') && !/&lt;!-- facts --&gt;/.test(press + pressJa)
+    && read(path.join(ROOT, 'press.md')).includes('- It does not peer review: acceptance is moderation.') && read(path.join(ROOT, 'press.md')).includes('- It issues no DOIs: the DOIs are those of the repositories.')
+    && (() => { try { B.pressFacts('<p>no place</p>'); return false; } catch (e) { return true; } })());
+  const news = B.loadNews(), nh = read(path.join(ROOT, 'site', 'news.html')), nx = read(path.join(ROOT, 'site', 'news.xml'));
+  ok('the news (' + news.length + ' notices) is newest first, each with a date, a title and a text, as a page and an Atom feed with one entry each; a notice out of order or with a bad link is refused',
+    B.newsProblems(news).length === 0 && (nx.match(/<entry>/g) || []).length === news.length && news.every((n) => nh.includes('<b>' + n.title.replace(/&/g, '&amp;') + '</b>'))
+    && nx.includes('<link rel="self" href="' + site.baseUrl + 'news.xml"/>') && B.newsProblems([{ date: '2026-01-01', title: 'a', text: 'b' }, { date: '2026-02-01', title: 'a', text: 'b' }]).length === 1
+    && B.newsProblems([{ date: '2026-01-01', title: 'a', text: 'b', url: 'javascript:x' }]).length === 1);
+  const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== '404.html');
+  ok('every page links the news and the press page in its footer, and the sitemap and llms.txt name the new pages',
+    pages.every((f) => /<footer>[\s\S]*href="(\.\.\/|\.\/)news\.html">News<\/a> · <a href="(\.\.\/|\.\/)press\.html">Press<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
+    && ['advisory', 'brand', 'press', 'news'].every((s) => read(path.join(ROOT, 'site', 'sitemap.xml')).includes(site.baseUrl + s + '.html'))
+    && ['advisory', 'brand', 'press'].every((s) => read(path.join(ROOT, 'site', 'llms.txt')).includes(site.baseUrl + s + '.html')));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-review-'));
+  ok('the year in review is shown beside the counts when data/reports/<year>.md exists, and the January issue gives its headings',
+    B.yearInReview(1999) === '' && read(path.join(ROOT, 'tools', 'report_issue.js')).includes('The year in review goes beside the counts') && read(path.join(ROOT, 'tools', 'report_issue.js')).includes('## Next year')
+    && read(path.join(ROOT, 'build.js')).includes("const f = path.join(ROOT, 'data', 'reports', year + '.md');") && fs.rmSync(dir, { recursive: true }) === undefined);
 }
 
 console.log('\n' + '-'.repeat(60));

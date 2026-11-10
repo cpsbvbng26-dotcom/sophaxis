@@ -36,6 +36,9 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [Transparency: a self-assessment](https://sophaxis.vercel.app/transparency.html)
 - [For repositories and DOI registration agencies](https://sophaxis.vercel.app/repositories.html)
 - [Operator and contact](https://sophaxis.vercel.app/contact.html)
+- [Advisory board: a call](https://sophaxis.vercel.app/advisory.html)
+- [Name, logo and badge](https://sophaxis.vercel.app/brand.html)
+- [For anyone introducing Sophaxis](https://sophaxis.vercel.app/press.html)
 
 ## Japanese
 
@@ -56,6 +59,9 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [預け先と DOI 登録機関へ（日本語訳）](https://sophaxis.vercel.app/repositories.ja.html)
 - [規程（日本語訳）](https://sophaxis.vercel.app/policy.ja.html)
 - [透明性の自己評価（日本語訳）](https://sophaxis.vercel.app/transparency.ja.html)
+- [諮問委員の募集（日本語訳）](https://sophaxis.vercel.app/advisory.ja.html)
+- [名前・ロゴ・バッジ（日本語訳）](https://sophaxis.vercel.app/brand.ja.html)
+- [紹介する人のために（日本語訳）](https://sophaxis.vercel.app/press.ja.html)
 
 ## Data
 

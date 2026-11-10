@@ -27,6 +27,14 @@ The decisions of ${year}, counted from the public issues and the records by \`to
 ~~~~json
 ${json.trim()}
 ~~~~
+
+The year in review goes beside the counts, in \`data/reports/${year}.md\`, by the same pull request. It names no count, since the counts are shown above it, and keeps to these headings:
+
+- \`## Registrations and listings\`: where Sophaxis was listed, applied or declined that year.
+- \`## Changes to the policies\`: each change announced, with its day.
+- \`## Problems\`: outages, records taken offline, mistakes found, and what was done.
+- \`## Advisers and moderators\`: who joined or left.
+- \`## Next year\`: what the operator intends, as an intention and not a promise.
 `;
   await github('POST', '/issues', { title: 'Decisions of ' + year + ': record them', body });
   console.log(json);

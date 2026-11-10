@@ -38,3 +38,5 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
 node build.js
 node verification/check.js
 ```
+10. お知らせは `data/news.json` に足す（新しいものを先頭に、日付・題・本文、リンクはサイトの頁か https）。`news.html` と `news.xml` は生成物。
+    `press.html` の事実の表は `site.json` と記録から作る。数を手で書かない。年の振り返りは `data/reports/<year>.md` に置き、数は書かない（上に表が出る）。

@@ -74,6 +74,7 @@ The operator is at present the only moderator.
 Other moderators may be invited.
 A researcher in these fields who would like to moderate can write to the operator; the operator decides whom to invite.
 Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
+Since 2026-11-10 the operator has also invited researchers to form an advisory board, which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.html).
 
 ## Conflicts of interest
 
