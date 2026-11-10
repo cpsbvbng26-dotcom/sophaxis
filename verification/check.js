@@ -1006,9 +1006,9 @@ console.log('\n26. One operator: decisions, continuity, dependencies and statist
 {
   const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
   const reasons = (/A moderator who declines a submission names one or more of these reasons[^\n]*\n\n((?:- [^\n]+\n)+)/.exec(mod) || [, ''])[1].trim().split('\n');
-  ok('every decision is labelled and stays public, and a decline names one of eight fixed reasons',
-    mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 8
-    && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Where the authors live', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
+  ok('every decision is labelled and stays public, and a decline names one of nine fixed reasons',
+    mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 9
+    && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Plagiarism', 'Where the authors live', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
   ok('the policy says the operator is the only moderator for now, how others are named, and who may not decide on what',
     mod.includes('The operator is at present the only moderator.') && mod.includes('Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision')
     && mod.includes('While the operator is the only moderator, the operator also decides on their own submissions') && mod.includes('no moderator decides on their own submission or on one by a close collaborator.'));
@@ -3037,7 +3037,7 @@ console.log('\n81. Decisions by year, counted from the public issues and the rec
   const R = require('../tools/report.js');
   const B = require('../build.js');
   const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
-  ok('the reasons counted are the ' + R.REASONS.length + ' that the Moderation Policy names, word for word', R.REASONS.length === 8 && R.REASONS.every((r) => mod.includes('\n- ' + r + ':') || mod.includes('\n- ' + r + '.')));
+  ok('the reasons counted are the ' + R.REASONS.length + ' that the Moderation Policy names, word for word', R.REASONS.length === 9 && R.REASONS.every((r) => mod.includes('\n- ' + r + ':') || mod.includes('\n- ' + r + '.')));
   const L = (...names) => names.map((name) => ({ name }));
   const op = { login: 'owner' }, other = { login: 'someone' };
   const issues = [
@@ -3101,7 +3101,8 @@ console.log('\n82. Transparency: the self-assessment against the Principles of T
     && read(path.join(ROOT, 'policies', 'terms.md')).includes('No change will introduce fees.') && t.includes('the Terms of Use say that no change will introduce fees')
     && read(path.join(ROOT, 'policies', 'moderation.md')).includes('The operator is at present the only moderator.') && table['Editorial board or advisory body'] === 'Not met'
     && read(path.join(ROOT, 'policy.md')).includes('Sophaxis is not a journal.') && table['Peer review'] === 'Does not apply'
-    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('It does not run plagiarism checks.') && t.includes('- Plagiarism: Sophaxis runs no plagiarism check and has no definition of plagiarism. Not met.'));
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('It does not run plagiarism checks.') && read(path.join(ROOT, 'policies', 'moderation.md')).includes('## Research integrity\n\nPlagiarism is presenting')
+    && t.includes("- Plagiarism: the Moderation Policy defines plagiarism, including the reuse of the authors' own work as new, and a submission found to plagiarise is declined; Sophaxis runs no software check. Met."));
   ok('the page is built, in the sitemap, in the footer of every page and in llms-full.txt',
     read(path.join(ROOT, 'site', 'transparency.html')).includes('<h1>Transparency: a self-assessment</h1>') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes(site.baseUrl + 'transparency.html')
     && read(path.join(ROOT, 'site', 'index.html')).includes('<a href="./transparency.html">Transparency</a>') && read(path.join(ROOT, 'site', 'llms-full.txt')).includes('Transparency: a self-assessment'));
@@ -3165,6 +3166,74 @@ console.log('\n84. The site in Japanese: the top page and every prose page');
   const jaFiles = jaPages.map((s) => read(path.join(ROOT, s + '.ja.md'))).join('\n');
   ok('the Japanese pages claim no partnership, endorsement or affiliation, and link the translations, not the English policies',
     !/推薦|提携|公認|partner|endorse/i.test(jaFiles) && !/\]\(\.\/policies\/[a-z]+\.html\)/.test(jaFiles) && !/\]\(\.\/disclaimer\.html\)/.test(jaFiles));
+}
+
+console.log('\n85. Funding, competing interests, research ethics and data; plagiarism and misconduct (Submission and Moderation Policies)');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const I = require('../tools/intake.js');
+  const B = require('../build.js');
+  const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
+  const LABELS = { funding: 'Funding', competing_interests: 'Competing interests', ethics: 'Human participants and research ethics', data: 'Data and code (optional)' };
+  const part = (id) => (new RegExp('    id: ' + id + '\\n[\\s\\S]*?(?=\\n  - type:|$)').exec(form) || [''])[0];
+  ok('the form asks the three statements, not required by the form itself, required from ' + site.statementsFrom + ', and data and code as an option; the intake reads each field',
+    site.statementsFrom === '2026-11-24' && I.STATEMENTS.map((x) => x[0]).join() === 'funding,competing_interests,ethics'
+    && I.STATEMENTS.every(([k]) => part(k).includes('label: ' + LABELS[k] + '\n') && part(k).includes('Required from ' + site.statementsFrom + '.') && part(k).includes('required: false'))
+    && part('data').includes('label: ' + LABELS.data + '\n') && !part('data').includes('Required from')
+    && Object.keys(LABELS).every((k) => I.parseIssue('### ' + LABELS[k] + '\n\nThe work had no funding.\n')[k] === 'The work had no funding.'));
+  const rows = (f, opened) => I.check({ form: Object.assign({ doi: '10.5281/zenodo.1', orcid: '0000-0002-1825-0097', category: 'philosophy', llm: 'No generative model was used in this work.' }, f), login: 'x', meta: null, age: { opened } })
+    .checks.filter((c) => I.STATEMENTS.some((x) => x[1] === c[0]));
+  const all = { funding: 'None.', competing_interests: 'None.', ethics: 'The work involves no human participants.' };
+  ok('the check asks each statement for an issue opened from ' + site.statementsFrom + ', and passes only when each is given; before that day it asks only what is given',
+    rows({}, site.statementsFrom).length === 3 && rows({}, site.statementsFrom).every((c) => c[1] === false && c[2] === 'the field is empty')
+    && rows(all, site.statementsFrom).length === 3 && rows(all, site.statementsFrom).every((c) => c[1] === true)
+    && rows(Object.assign({}, all, { funding: 'no' }), site.statementsFrom).filter((c) => !c[1]).length === 1
+    && rows({}, '2026-11-23').length === 0 && rows({ funding: 'None.' }, '2026-11-23').length === 1 && I.STATEMENT_MIN === 4);
+  const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-papers-'));
+  const f0 = { doi: dc.doi, orcid: '0000-0002-1825-0097', category: 'philosophy', llm: 'No generative model was used in this work.', llm_extent: site.llmExtents.none };
+  const d = I.draft({ form: Object.assign({}, f0, all, { data: 'The code is at <b>Zenodo</b>.' }), login: 'x', issue: 9, meta: dc, versions: [{ doi: dc.doi, date: dc.date }], result: { licence: 'CC-BY-4.0' }, paperDir: dir, today: '2026-11-25' });
+  const d0 = I.draft({ form: f0, login: 'x', issue: 9, meta: dc, versions: [{ doi: dc.doi, date: dc.date }], result: { licence: 'CC-BY-4.0' }, paperDir: dir, today: '2026-11-25' });
+  ok('the draft keeps each statement given, as plain text, and no key for one not given; the record is valid',
+    d.problems.length === 0 && d.record.funding === 'None.' && d.record.ethics === 'The work involves no human participants.' && d.record.data === 'The code is at Zenodo.'
+    && !('funding' in d0.record) && !('data' in d0.record), d.problems.join('; '));
+  const base = { id: '2026.0099', title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', category: 'philosophy', license: 'CC-BY-4.0',
+    versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-11-01' }], llm_disclosure: 'No generative model was used at all in this work.', issue: 9, listed: '2026-11-02', status: 'listed' };
+  const v = (o) => validate(Object.assign({}, base, o), '2026.0099.json').length;
+  ok('a record keeps each statement as a text of 4 to 2000 characters; an empty, short, long or non-text statement is refused',
+    v(all) === 0 && v({ data: 'At Zenodo.' }) === 0 && v({ funding: '' }) === 1 && v({ competing_interests: 'no' }) === 1 && v({ ethics: 'x'.repeat(2001) }) === 1 && v({ data: 5 }) === 1
+    && B.STATEMENT_KEYS.map((x) => x[0]).join() === 'funding,competing_interests,ethics,data');
+  const html = B.statements(Object.assign({}, base, all, { data: 'At <Zenodo>.' }));
+  ok('the record page shows the statements under their headings, escaped, says that Sophaxis does not check them, and shows nothing when none is given',
+    html.startsWith('<h2>Statements by the authors</h2>') && html.includes('<p class="meta">Competing interests</p>\n<p>None.</p>') && html.includes('<p>At &lt;Zenodo&gt;.</p>')
+    && html.includes('As the authors state them in the submission issue. Sophaxis does not check them.') && B.statements(base) === ''
+    && read(path.join(ROOT, 'build.js')).includes('${statements(p)}${notes ?') && read(path.join(ROOT, 'build.js')).includes('...Object.fromEntries(STATEMENT_KEYS.filter(([k]) => p[k]).map(([k]) => [k, p[k]])),'));
+  const sub = read(path.join(ROOT, 'policies', 'submission.md')), subJa = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  ok('the Submission Policy, in both languages, sets out the three statements from ' + site.statementsFrom + ', ethics approval and consent, data and code encouraged but not required, and no check of what they say',
+    sub.includes('## Funding, competing interests, research ethics, and data\n\nFrom ' + site.statementsFrom + ', the form asks three statements, and a work is listed only if each is given.')
+    && sub.includes('Work that involves human participants must name the ethics committee that approved it, or say why no approval was needed under the rules that applied where the research was done.')
+    && sub.includes('Every participant who can be identified must have consented, and the statement says so.') && sub.includes('Sophaxis encourages authors to make them available, but does not require it and does not check them.')
+    && sub.includes('This does not apply to a submission opened before ' + site.statementsFrom + '.')
+    && subJa.includes('## 研究資金、利益相反、研究倫理、データ\n\n' + site.statementsFrom + ' から、様式は三つの申告を求めます。') && subJa.includes('Sophaxis は著者にそれらを公開するよう勧めますが、求めはせず、確かめもしません。'));
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md')), modJa = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
+  const ri = (mod.split('## Research integrity\n')[1] || '').split('\n## ')[0];
+  ok('the Moderation Policy, in both languages, defines plagiarism, declines it as a named reason, and runs no software',
+    ri.startsWith("\nPlagiarism is presenting the words, ideas, proofs or results of others as one's own, without saying where they come from.")
+    && ri.includes('and so is submitting one work to Sophaxis twice under different DOIs.') && ri.includes('Sophaxis runs no software to detect plagiarism.')
+    && mod.includes('\n- Plagiarism: ') && require('../tools/report.js').REASONS.includes('Plagiarism') && modJa.includes('## 研究の公正\n\n剽窃とは、') && modJa.includes('\n- 剽窃：'));
+  ok('it says how a concern of misconduct is raised and answered: in public or by email, 14 days for the authors, no investigation, a note only for what is established, the person who wrote not named, and the operator\'s own work alike',
+    ri.includes('Anyone can raise a concern about a listed record, in public through the correction issue linked on its page.')
+    && ri.includes('goes by email to the address on the operator\'s [ORCID record](https://orcid.org/' + site.operator.orcid + ').')
+    && ri.includes('gives the authors 14 days to answer it.') && ri.includes('- Sophaxis does not investigate misconduct.') && ri.includes('the operator tells the person who raised the concern that the institution or the journal is the body that investigates')
+    && ri.includes('- A note is added to the record only for what is established:') && ri.includes('it does not repeat an allegation.')
+    && ri.includes('is not named to the authors or to anyone else without their consent, unless the law requires it.') && ri.includes('- A concern about a work by the operator follows the same steps')
+    && ri.includes('Sophaxis is not a member of COPE.') && modJa.includes('Sophaxis は不正を調査しません。') && modJa.includes('Sophaxis は COPE の会員ではありません。'));
+  const t = read(path.join(ROOT, 'transparency.md'));
+  ok('the change is announced on the top page 14 days ahead, and the steps, the automation page and the transparency page say so',
+    (Date.parse(site.statementsFrom) - Date.parse('2026-11-10')) / 86400000 >= 14
+    && site.termsNotice.text.includes('From ' + site.statementsFrom + ', the form asks three more statements, on funding, on competing interests, and on human participants and research ethics, and a work is listed only if each is given; it also asks, optionally, where the data and code are.')
+    && read(path.join(ROOT, 'process.md')).includes('From ' + site.statementsFrom + ', the form also asks for statements on funding') && read(path.join(ROOT, 'automation.md')).includes('- From ' + site.statementsFrom + ', it also checks that the statements on funding')
+    && t.includes('| Publication ethics and related editorial policies | Met |') && !/^- [^\n]*\. (Not met|In part)\.$/m.test(t.split('### Publication ethics and related editorial policies')[1].split('\n### ')[0]));
 }
 
 console.log('\n' + '-'.repeat(60));
