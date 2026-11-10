@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -129,6 +129,7 @@ A submitter who is already an author of a listed work needs no one to vouch, and
 - The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
 - The work contains no material, such as figures or long quotations, that the authors may not share, and no personal data of third parties.
 - The statement on generative models is complete and true.
+- From 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are complete and true.
 - The authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.html) set out.
 
 ## How to submit
@@ -169,6 +170,27 @@ The authors bear full responsibility for the work, as the [Terms of Use](./terms
 
 If substantial undisclosed use comes to light after listing,
 the record receives a notice, and the authors are asked to add a disclosure.
+
+## Funding, competing interests, research ethics, and data
+
+From 2026-11-24, the form asks three statements, and a work is listed only if each is given.
+The automatic check in the issue confirms that each field is filled in; it does not judge what it says.
+
+- Funding: every funder of the work, with grant numbers, or that the work had no funding.
+- Competing interests: any financial or personal interest of an author that bears on the work, such as employment, consultancy, payments or a close relation to a person the work discusses, or that there is none.
+- Human participants and research ethics: whether the work involves human participants, such as surveys, interviews or experiments with people.
+
+Work that involves human participants must name the ethics committee that approved it, or say why no approval was needed under the rules that applied where the research was done.
+Every participant who can be identified must have consented, and the statement says so.
+Work that contains personal data of third parties is not accepted, as set out above.
+
+The form also asks, as an option, where the data, code and other materials on which the work rests can be found, such as a repository with a DOI, or that there are none.
+Sophaxis encourages authors to make them available, but does not require it and does not check them.
+
+The record page shows each statement as the authors give it.
+Sophaxis does not check the statements beyond reading them.
+A statement found to be untrue is handled under "Research integrity" in the [Moderation Policy](./moderation.html).
+This does not apply to a submission opened before 2026-11-24.
 
 ## Versions and updates
 

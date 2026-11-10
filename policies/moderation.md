@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -18,6 +18,7 @@ It does not judge whether the work is correct, original or important.
 - The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
 - The work has a title, an abstract and references, in the ordinary form of a scholarly paper. Where the repository lets Sophaxis fetch the PDF, the automatic check reads its shape (the number of pages, whether its text can be read, and whether the title, an abstract and references can be found) and shows it in the issue. The shape decides nothing; the moderator reads the PDF.
 - The submission includes a statement on the use of language models and other generative models.
+- From 2026-11-24, the submission states the funding, the competing interests, and whether the work involves human participants, with the ethics approval and the consent where it does, as the [Submission Policy](./submission.html) sets out.
 - The submitter has confirmed that every author agrees and that the version may be shared.
 - From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
 - From 2026-11-23, a researcher has vouched for a first submission, as the Submission Policy sets out.
@@ -29,6 +30,8 @@ It does not judge whether the work is correct, original or important.
 
 It does not check proofs, arguments or data.
 It does not run plagiarism checks.
+A moderator who finds plagiarism declines the submission, as set out under "Research integrity" below.
+It does not check the statements on funding, competing interests, research ethics, or data and code, beyond reading them.
 It does not compare the work with the literature.
 
 ## Provisional registration
@@ -55,8 +58,9 @@ A moderator who declines a submission names one or more of these reasons, with a
 - Not in the form of a scholarly paper: it lacks a title, an abstract or references.
 - Licence: the DOI metadata does not carry an accepted licence.
 - Authorship: the submitter could not be confirmed as an author, or not every author agrees.
-- Disclosure: the statement on generative models is missing or does not say how they were used.
+- Disclosure: the statement on generative models is missing or does not say how they were used, or, from 2026-11-24, a statement on funding, competing interests, or human participants and research ethics is missing or incomplete.
 - Rights or personal data: the work contains material that the authors may not share, or personal data of third parties, or the PDF carries a notice of rights that contradicts its licence.
+- Plagiarism: the work presents the words, ideas, proofs or results of others as the authors' own, or presents the authors' own earlier work as new, without saying where they come from.
 - Where the authors live or stay: an author lives in a place where Sophaxis is not offered, or stayed in one between the submission and the listing.
 - Spam or abuse.
 
@@ -81,6 +85,28 @@ The operator's own submissions get no priority: they are moderated in the order 
 From 2026-11-09, a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.
 The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.
 The [Statistics](../stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
+
+## Research integrity
+
+Plagiarism is presenting the words, ideas, proofs or results of others as one's own, without saying where they come from.
+Presenting the authors' own earlier work as new, without citing it, is treated the same way, and so is submitting one work to Sophaxis twice under different DOIs.
+Quoting, paraphrasing or building on the work of others with a clear citation is not plagiarism.
+Sophaxis runs no software to detect plagiarism.
+A moderator who finds it in a submission declines the submission, naming "Plagiarism".
+
+Research misconduct includes plagiarism, fabrication (making up data, results or sources), falsification (changing them so that the work misrepresents them), and an untrue statement in the form.
+Anyone can raise a concern about a listed record, in public through the correction issue linked on its page.
+A concern that should not be public, or that names a person, goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator handles a concern by the steps that COPE, the Committee on Publication Ethics, recommends for journals, as far as one person can; Sophaxis is not a member of COPE.
+
+- The operator reads the concern and, if it concerns a listed record and is not plainly without ground, gives the authors 14 days to answer it.
+- Sophaxis does not investigate misconduct. It has no power to examine data, records or witnesses. Where the research was done at an institution, or a journal has published the work, the operator tells the person who raised the concern that the institution or the journal is the body that investigates, and may inform it.
+- A note is added to the record only for what is established: what the authors confirm, what an institution or a journal finds, or what a notice that Crossref records says. The note says what was found and by whom, and the day; it does not repeat an allegation.
+- Where plagiarism or another problem is established, the authors are asked to correct the work in its repository or to withdraw it under the [Withdrawal Policy](./withdrawal.html). Copying that infringes copyright is removed under the [Takedown Policy](./takedown.html).
+- The person who raised a concern by email is not named to the authors or to anyone else without their consent, unless the law requires it.
+- A concern about a work by the operator follows the same steps, and the operator's answer is posted in the record's correction issue.
+
+The operator closes without action a concern that is plainly made to harass, and says so to the person who raised it.
 
 ## After listing
 
