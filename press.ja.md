@@ -34,4 +34,4 @@ Sophaxis は、著者からも読者からも料金を取らず、日本に住�
 ## 連絡先
 
 質問は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールか、[公開の issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) で受けます。
-お知らせは、[お知らせ](./news.html)の頁にあります（英語）。
+お知らせは、[お知らせ](./news.html)の頁（英語）と、X の [@SophaxisX](https://x.com/SophaxisX) にあります。

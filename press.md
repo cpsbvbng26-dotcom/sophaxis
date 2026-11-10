@@ -34,4 +34,4 @@ The name, the logo, the colours and the badge for listed works are on the page [
 ## Contact
 
 Questions go to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in [a public issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
-News is on the [News](./news.html) page.
+News is on the [News](./news.html) page and on X, at [@SophaxisX](https://x.com/SophaxisX).
