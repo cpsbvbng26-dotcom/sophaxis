@@ -78,6 +78,13 @@ The code of each step is public, and each section links to it.
 - Leaves to the operator: recording the counts in `data/reports/`, from which the [Decisions by year](./decisions.html) page is built.
 - Code: [tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) and [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js), run by [report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml).
 
+## Once a year, on 30 October at 09:17 Japan time
+
+- Reads: the section "Yearly audit" of [docs/operations.md](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md), the operator's routine.
+- Writes: an issue on the day Sophaxis began, with that list to tick, unless an issue of the same title exists.
+- Leaves to the operator: the audit itself.
+- Code: [tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js), run by [audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml).
+
 ## On every push and every pull request
 
 - Runs every check of [verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) against the records, the policies and the built site.

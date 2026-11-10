@@ -79,6 +79,13 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 運営者に残すこと：数を `data/reports/` に記録すること。[年ごとの判断](./decisions.html)の頁は、そこから組み立てます。
 - コード：[tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) と [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js)。[report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml) が動かします。
 
+## 年に一度、十月 30 日の日本時間 09:17
+
+- 読むもの：運営者の手順を書いた [docs/operations.md](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md) の「Yearly audit」の節。
+- 書くもの：Sophaxis が始まった日に、その一覧に印を付けるための issue。同じ題の issue があれば開きません。
+- 運営者に残すこと：点検そのもの。
+- コード：[tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js)。[audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml) が動かします。
+
 ## push とプルリクエストのたびに
 
 - 記録・規程・組み立てたサイトに対して、[verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) のすべての検査を走らせます。

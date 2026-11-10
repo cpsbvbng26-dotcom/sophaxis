@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UPVSIVFPNY+NLOpeGHCMdJ0Ymy6SGe9Fka2gBKuE4qI='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-J0NqTczqhQ0uwNXXUW4Iu8ZtkIyQeln112ceWji2buk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Sophaxis：哲学と数学のプレプリント</title>
 <meta name="description" content="Sophaxis は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。">
 <link rel="canonical" href="https://sophaxis.vercel.app/index.ja.html">
@@ -25,6 +25,10 @@
 <style>
 :root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 a { color: var(--accent); }
@@ -66,6 +70,9 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -85,7 +92,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p class="meta">最終更新：<time datetime="2026-11-07">2026-11-07</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">記録の頁・一覧・統計は英語です。作品の題と要旨は、DOI の登録情報のとおりに載せています。</p>
 <h2>日本語の頁</h2>
-<ul><li><a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a></li><li><a href="./policies/terms.ja.html">利用規約（日本語訳）</a></li><li><a href="./policies/submission.ja.html">投稿の規程（日本語訳）</a></li><li><a href="./policies/moderation.ja.html">モデレーションの規程（日本語訳）</a></li><li><a href="./policies/copyright.ja.html">著作権の規程（日本語訳）</a></li><li><a href="./policies/licences.ja.html">ライセンスの規程（日本語訳）</a></li><li><a href="./policies/takedown.ja.html">削除の規程（日本語訳）</a></li><li><a href="./policies/withdrawal.ja.html">撤回の規程（日本語訳）</a></li><li><a href="./disclaimer.ja.html">免責事項</a></li><li><a href="./process.ja.html">投稿から掲載まで（日本語訳）</a></li><li><a href="./faq.ja.html">よくある質問（日本語訳）</a></li><li><a href="./automation.ja.html">自動で動く手順（日本語訳）</a></li><li><a href="./contact.ja.html">運営者と連絡先（日本語訳）</a></li><li><a href="./repositories.ja.html">預け先と DOI 登録機関へ（日本語訳）</a></li><li><a href="./policy.ja.html">規程（日本語訳）</a></li><li><a href="./transparency.ja.html">透明性の自己評価（日本語訳）</a></li><li><a href="./advisory.ja.html">諮問委員の募集（日本語訳）</a></li><li><a href="./brand.ja.html">名前・ロゴ・バッジ（日本語訳）</a></li><li><a href="./press.ja.html">紹介する人のために（日本語訳）</a></li><li><a href="./call.ja.html">研究者の方へ（日本語訳）</a></li><li><a href="./findable.ja.html">載った作品を見つけてもらうために（日本語訳）</a></li><li><a href="./accessibility.ja.html">アクセシビリティ（日本語訳）</a></li><li><a href="./compare.ja.html">ほかの場との違い（日本語訳）</a></li><li><a href="./glossary.ja.html">用語集（日本語訳）</a></li></ul>
+<ul><li><a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a></li><li><a href="./policies/terms.ja.html">利用規約（日本語訳）</a></li><li><a href="./policies/submission.ja.html">投稿の規程（日本語訳）</a></li><li><a href="./policies/moderation.ja.html">モデレーションの規程（日本語訳）</a></li><li><a href="./policies/copyright.ja.html">著作権の規程（日本語訳）</a></li><li><a href="./policies/licences.ja.html">ライセンスの規程（日本語訳）</a></li><li><a href="./policies/takedown.ja.html">削除の規程（日本語訳）</a></li><li><a href="./policies/withdrawal.ja.html">撤回の規程（日本語訳）</a></li><li><a href="./disclaimer.ja.html">免責事項</a></li><li><a href="./checklist.ja.html">投稿の前に：確かめること（日本語訳）</a></li><li><a href="./history.ja.html">沿革と名前（日本語訳）</a></li><li><a href="./leaflet.ja.html">一枚でわかる Sophaxis（日本語訳）</a></li><li><a href="./easy.ja.html">やさしいことばで（日本語訳）</a></li><li><a href="./process.ja.html">投稿から掲載まで（日本語訳）</a></li><li><a href="./faq.ja.html">よくある質問（日本語訳）</a></li><li><a href="./automation.ja.html">自動で動く手順（日本語訳）</a></li><li><a href="./contact.ja.html">運営者と連絡先（日本語訳）</a></li><li><a href="./repositories.ja.html">預け先と DOI 登録機関へ（日本語訳）</a></li><li><a href="./policy.ja.html">規程（日本語訳）</a></li><li><a href="./transparency.ja.html">透明性の自己評価（日本語訳）</a></li><li><a href="./advisory.ja.html">諮問委員の募集（日本語訳）</a></li><li><a href="./brand.ja.html">名前・ロゴ・バッジ（日本語訳）</a></li><li><a href="./press.ja.html">紹介する人のために（日本語訳）</a></li><li><a href="./call.ja.html">研究者の方へ（日本語訳）</a></li><li><a href="./findable.ja.html">載った作品を見つけてもらうために（日本語訳）</a></li><li><a href="./accessibility.ja.html">アクセシビリティ（日本語訳）</a></li><li><a href="./compare.ja.html">ほかの場との違い（日本語訳）</a></li><li><a href="./glossary.ja.html">用語集（日本語訳）</a></li></ul>
 <h2>分野と集め</h2>
 <ul class="fields" aria-label="分野"><li><a href="./list/philosophy.html">哲学（4）</a></li><li><a href="./list/mathematics.html">数学（1）</a></li><li><a href="./list/philosophy-of-mathematics.html">数理哲学（0）</a></li><li><a href="./list/philosophy-of-science.html">科学哲学（1）</a></li><li><a href="./list/logic.html">論理学（0）</a></li></ul>
 <ul class="fields" aria-label="集め"><li><a href="./collection/game-theory.html">ゲーム理論（1）</a></li><li><a href="./collection/individual-autonomy.html">個と自律（3）</a></li><li><a href="./collection/research-method-ethics.html">研究の方法と倫理（1）</a></li><li><a href="./collection/existential-philosophy.html">実存哲学（0）</a></li></ul>
@@ -119,8 +126,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </main>
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
-<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
-<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./contact.html">Contact</a></p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>

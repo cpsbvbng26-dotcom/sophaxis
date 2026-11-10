@@ -18,8 +18,8 @@ const os = require('os');
 const path = require('path');
 
 const SITE = path.resolve(__dirname, '..', 'site');
-/* Wide and narrow: a page can overflow at 360 px and not at 390 px. */
-const WIDTHS = [1440, 1200, 900, 390, 360];
+/* Wide and narrow: a page can overflow at 360 px and not at 390 px. 640 px is a window 1280 px wide zoomed to 200 %. */
+const WIDTHS = [1440, 1200, 900, 640, 390, 360];
 
 function pages(dir = SITE, rel = '') {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -173,6 +173,16 @@ async function walk(pg) {
       }
       await c2.close();
     }
+  }
+  /* The leaflet says that it fits one sheet: print it to A4 and count the pages. */
+  {
+    const c3 = await browser.newContext();
+    const p3 = await c3.newPage();
+    await p3.goto(base + 'leaflet.html', { waitUntil: 'load' });
+    const pdf = await p3.pdf({ format: 'A4', printBackground: false });
+    const sheets = (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+    ok('leaflet.html: printed on A4, it fits one sheet', sheets === 1, sheets + ' pages');
+    await c3.close();
   }
   await browser.close();
   server.close();

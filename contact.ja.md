@@ -18,6 +18,8 @@ Sophaxis がなぜあるのか、それが記録にとって何を意味する�
 - ORCID iD：[0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
 - GitHub：[cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
 
+運営者について、サイトが示すのは、上の名前・ORCID iD・GitHub のアカウントだけです。写真・電話番号・住所は載せません。住所は、下の「住所」のとおり、求めがあれば知らせます。
+
 運営者はモデレーターでもあり、サイトとその記録に責任を負います。
 サイトとそのコードは、運営者の求めにより、Claude Code（Anthropic）で作りました。[免責事項](./disclaimer.ja.html)を見てください。
 [利用規約](./policies/terms.ja.html)が定めるとおり、著者は自分の作品にすべての責任を負います。

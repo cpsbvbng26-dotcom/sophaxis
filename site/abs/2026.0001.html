@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UPVSIVFPNY+NLOpeGHCMdJ0Ymy6SGe9Fka2gBKuE4qI='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-J0NqTczqhQ0uwNXXUW4Iu8ZtkIyQeln112ceWji2buk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture | Sophaxis</title>
 <meta name="description" content="In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses t">
 <link rel="canonical" href="https://sophaxis.vercel.app/abs/2026.0001.html">
@@ -30,6 +30,10 @@
 <style>
 :root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 a { color: var(--accent); }
@@ -71,6 +75,9 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -82,6 +89,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 
+<nav class="crumbs" aria-label="Breadcrumb"><span itemscope itemtype="https://schema.org/BreadcrumbList"><span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="../index.html"><span itemprop="name">Listing</span></a><meta itemprop="position" content="1"></span> › <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="../list/mathematics.html"><span itemprop="name">Mathematics</span></a><meta itemprop="position" content="2"></span> › <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name" aria-current="page">2026.0001</span><meta itemprop="position" content="3"></span></span></nav>
 <p class="meta"><span class="id">Sophaxis:2026.0001</span> · <a href="../list/mathematics.html">Mathematics</a><span class="flag">operator’s own submission</span></p>
 <p class="meta">In the collection <a href="../collection/game-theory.html">Game theory</a>.</p>
 
@@ -102,6 +110,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>Abstract</h2>
 <div class="abstract"><p itemprop="abstract">In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses that identity to study the symmetric n-player game in which a player whose k co-players cooperate earns k + 1 by cooperating and k + 2 by defecting. Main results: 1. The three-player rotation scheme, in which exactly one player defects in each period, is a subgame-perfect equilibrium path if and only if δ ≥ 1/φ ≈ 0.618, where φ is the golden ratio. For n players the threshold lies in (1/(n−2) − 2/(n−2)^n, 1/(n−2)). 2. The payoff vector (2, 4, 2) is never an equilibrium payoff. This corrects an example in the author's earlier preprint (https://doi.org/10.5281/zenodo.22058777). 3. With public randomization, (2+t, 4−t, 2+t) is an equilibrium payoff if and only if δ ≥ max(1/2, 1−t). 4. Without randomization, the set of sustainable t passes through three regimes: two points for 1/2 ≤ δ &lt; 1/φ, a countably infinite set at δ = 1/φ, and the full segment for δ ≥ 2/3. Inside the window 1/φ &lt; δ &lt; 2/3 it has positive Hausdorff dimension, with an explicit lower bound. 5. Golden-window conjecture: inside the window the set has Lebesgue measure zero, and its dimension increases continuously from 0 to 1. Numerical evidence is reported. 6. In the linear dilemma with benefit b and cost c, the rotation is sustainable exactly when cooperation is efficient, the three-player threshold is (√(1 + 4c/b) − 1)/2, and the rotation always needs more patience than cooperation by everyone. The literature has not been searched systematically, and some of the results may be known. All proofs are given in full. This is a preprint and has not been peer-reviewed. Every number in the paper is produced by games/games.py and checked by verification/check_games.py in https://github.com/cpsbvbng26-dotcom/trinity-operator (MIT licence). Generative AI disclosure: the author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.Version 2: author line changed to &quot;Independent Researcher&quot; (with a note); wording of the language-model declaration revised. Mathematical content unchanged.</p></div>
 <p class="meta">Abstract by Takuya Nemoto, from the DOI metadata, shown as plain text without other changes, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
 </article>
 
 <div class="notice">This is a preprint. It has not been peer-reviewed. Listing on Sophaxis means it passed moderation, not that it is correct. Sophaxis does not guarantee its quality. The authors bear full responsibility for its content.</div>
@@ -146,8 +155,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </main>
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
-<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
-<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../transparency.html">Transparency</a> · <a href="../news.html">News</a> · <a href="../press.html">Press</a> · <a href="../accessibility.html">Accessibility</a> · <a href="../contact.html">Contact</a></p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="../policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../transparency.html">Transparency</a> · <a href="../news.html">News</a> · <a href="../press.html">Press</a> · <a href="../history.html">History</a> · <a href="../accessibility.html">Accessibility</a> · <a href="../easy.html">In plain words</a> · <a href="../contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>

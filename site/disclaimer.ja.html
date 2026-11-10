@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UPVSIVFPNY+NLOpeGHCMdJ0Ymy6SGe9Fka2gBKuE4qI='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-J0NqTczqhQ0uwNXXUW4Iu8ZtkIyQeln112ceWji2buk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>免責事項（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の免責事項の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/disclaimer.ja.html">
@@ -25,6 +25,10 @@
 <style>
 :root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 a { color: var(--accent); }
@@ -66,6 +70,9 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -77,7 +84,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>免責事項（日本語訳）</h1>
-<p>最終更新：2026-11-09。</p>
+<p>最終更新：2026-11-10。</p>
 <p>これは英語の <a href="./disclaimer.html">Disclaimer</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./policies/terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
 <p>この頁は、Sophaxis が約束しないことを一か所にまとめたものです。拘束力を持つのは<a href="./policies/terms.ja.html">利用規約</a>です。この頁と食い違う場合は、利用規約が適用されます。</p>
 <h2>載っている作品</h2>
@@ -87,7 +94,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>本人の確認</h2>
 <p>自動の確認は、ORCID の記録を管理している人が投稿の issue を開いたこと、その ORCID iD が作品の著者のものであることを確かめます。公的な本人確認ではありません。</p>
 <h2>提携していないこと</h2>
-<p>Sophaxis は、独立した個人のプロジェクトです。載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。<a href="./repositories.html">預け先と DOI 登録機関へ</a>の頁も見てください。</p>
+<p>Sophaxis は、独立した個人のプロジェクトです。載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。その中には商標もあります。それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。<a href="./repositories.html">預け先と DOI 登録機関へ</a>の頁も見てください。</p>
 <h2>誰が、なぜ Sophaxis を運営するか</h2>
 <p>いまは唯一のモデレーターでもある運営者が、無報酬のボランティアとして Sophaxis を運営しています。Sophaxis の仕事で報酬を受ける人はおらず、投稿にも閲覧にも料金は要りません。Sophaxis は、GitHub と Vercel の無料のサービスの範囲だけで、sophaxis.vercel.app のアドレスで配信しており、支払うべきドメインやホスティングはありません。運営者は、サイトとそのコードを書く道具である Claude Code の料金を、個人で払っています（下の「Sophaxis の作り方」を見てください）。Sophaxis は、その費用に充てるお金を誰からも受け取りません。無報酬で務めていても、<a href="./policies/terms.ja.html">利用規約</a>と<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a>のもとで運営者が読者と著者に負う務めは軽くなりません。</p>
 <p>Sophaxis を始めたのは、運営者が、哲学と数学の公開のプレプリントを並べて載せる場所を一つ探して、見つからなかったからです。次の節が述べるとおり、運営者自身が読むために、そして同じ問いに取り組む人のために置いています。これは運営者の理由であって、ほかのアーカイブへの評価ではありません。Sophaxis はそれらに代わるものではなく、ここに載る作品は、それぞれの預け先に置かれたままです。</p>
@@ -112,8 +119,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </main>
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
-<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
-<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./contact.html">Contact</a></p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UPVSIVFPNY+NLOpeGHCMdJ0Ymy6SGe9Fka2gBKuE4qI='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-J0NqTczqhQ0uwNXXUW4Iu8ZtkIyQeln112ceWji2buk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>自動で動く手順（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「自動で動く手順（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/automation.ja.html">
@@ -25,6 +25,10 @@
 <style>
 :root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 a { color: var(--accent); }
@@ -66,6 +70,9 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -97,6 +104,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul><li>読むもの：記録と <code>data/news.json</code>。</li><li>書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。</li><li>運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js">tools/monthly.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml">monthly.yml</a> が動かします。</li></ul>
 <h2>年に一度、一月 2 日の日本時間 12:23</h2>
 <ul><li>読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。</li><li>書くもの：前の年の数を載せた issue。開かれた投稿、受理した投稿、断った投稿、まだ決めていない投稿の数です。断るときに挙げた理由、投稿から判断までの日数、求め、撤回した記録と削除した記録も数えます。</li><li>運営者に残すこと：数を <code>data/reports/</code> に記録すること。<a href="./decisions.html">年ごとの判断</a>の頁は、そこから組み立てます。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js">tools/report.js</a> と <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js">tools/report_issue.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml">report.yml</a> が動かします。</li></ul>
+<h2>年に一度、十月 30 日の日本時間 09:17</h2>
+<ul><li>読むもの：運営者の手順を書いた <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md">docs/operations.md</a> の「Yearly audit」の節。</li><li>書くもの：Sophaxis が始まった日に、その一覧に印を付けるための issue。同じ題の issue があれば開きません。</li><li>運営者に残すこと：点検そのもの。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js">tools/audit.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml">audit.yml</a> が動かします。</li></ul>
 <h2>push とプルリクエストのたびに</h2>
 <ul><li>記録・規程・組み立てたサイトに対して、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js">verification/check.js</a> のすべての検査を走らせます。</li><li>運営者は、検査が通ったときだけ、変更をマージします。</li></ul>
 <h2>サイトが変わったとき</h2>
@@ -112,8 +121,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </main>
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
-<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
-<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./contact.html">Contact</a></p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>

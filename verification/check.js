@@ -503,7 +503,8 @@ console.log('\n11. Finding work: search, feed, records as JSON, authors, keyword
   ok('Chicago author-date: first author inverted, the others not', a.includes('Doe, Jane, and Taro Yamada. 2026. “A Fixture Record for Testing the Build.” Preprint, Zenodo. https://doi.org/10.5281/zenodo.1234999.'));
   ok('an author with an ORCID iD links to an author page that lists the record', a.includes('<a href="../author/0000-0002-1825-0097.html"><span itemprop="name">Jane Doe</span></a>')
     && read(path.join(FIX, 'author', '0000-0002-1825-0097.html')).includes('href="../abs/2026.0001.html"'));
-  ok('an author without an ORCID iD gets no page: a name alone can belong to several people', !a.includes('../author/Taro') && fs.readdirSync(path.join(FIX, 'author')).length === 1);
+  ok('an author without an ORCID iD gets no page: a name alone can belong to several people', !a.includes('../author/Taro')
+    && fs.readdirSync(path.join(FIX, 'author')).filter((f) => f.endsWith('.html')).length === 1 && fs.readdirSync(path.join(FIX, 'author')).join() === '0000-0002-1825-0097.bib,0000-0002-1825-0097.html');
   const feedXml = read(path.join(FIX, 'feed.xml'));
   ok('the Atom feed lists every record, newest first, with authors, fields and abstract', feedXml.startsWith('<?xml') && feedXml.includes('xmlns="http://www.w3.org/2005/Atom"')
     && feedXml.indexOf('abs/2026.0001.html') < feedXml.indexOf('abs/2026.0002.html') && feedXml.includes('<uri>https://orcid.org/0000-0002-1825-0097</uri>')
@@ -1312,7 +1313,7 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && !en.concat(ja).some((r) => r.includes('Open Access Directory'))
       && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
   }
-  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages, and on the top page, the contact page, the press page and the news of the site and nowhere else on it',
+  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages, and on the top page, the contact page, the press page and the news of the site, and on the history page only as the title of its news item, and nowhere else on it',
     read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes('It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
     && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
     && !read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
@@ -1324,7 +1325,9 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     && read(path.join(ROOT, 'site', 'press.html')).includes('<tr><th scope="row">Listed in</th><td><a href="https://roar.eprints.org/27422/">ROAR</a> (since 2026-11-06)</td></tr>')
     && read(path.join(ROOT, 'site', 'press.ja.html')).includes('<tr><th scope="row">掲載先</th><td><a href="https://roar.eprints.org/27422/">ROAR</a>（2026-11-06 から）</td></tr>')
     && read(path.join(ROOT, 'site', 'news.html')).includes('Sophaxis passed editorial review and is listed in ROAR, the Registry of Open Access Repositories at the University of Southampton. <a href="https://roar.eprints.org/27422/">More</a>')
-    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['contact.html', 'contact.ja.html', 'index.html', 'press.html', 'press.ja.html', 'news.html'].includes(f)).every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f)))));
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['contact.html', 'contact.ja.html', 'index.html', 'press.html', 'press.ja.html', 'news.html', 'history.html', 'history.ja.html'].includes(f)).every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f))))
+    /* The history page names ROAR only as the title of its news item, with no link of its own. */
+    && ['history.html', 'history.ja.html'].every((f) => (read(path.join(ROOT, 'site', f)).match(/\bROAR\b/g) || []).length === 1 && read(path.join(ROOT, 'site', f)).includes('<li>2026-11-06: Listed in ROAR</li>') && !read(path.join(ROOT, 'site', f)).includes('roar.eprints')));
   ok('the PhilPapers request is recorded as a request, not as an addition, in both languages, and the site names PhilPapers only on the page that tells authors how to use it themselves',
     read(path.join(ROOT, 'README.md')).includes('the operator asked PhilPapers to add Sophaxis to its Open Access Gateway') && read(path.join(ROOT, 'README.md')).includes("whether it is added is PhilPapers' decision.")
     && read(path.join(ROOT, 'README.md')).includes('Open Access Gateway へ Sophaxis を加えるよう依頼しました。') && read(path.join(ROOT, 'README.md')).includes('加えるかどうかは PhilPapers が決めます。')
@@ -2026,9 +2029,9 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml' };
+  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
@@ -3404,6 +3407,72 @@ console.log('\n91. Positioning: how Sophaxis differs, the glossary, citing Sopha
       return (fd.match(/<entry>/g) || []).length === mine.length && mine.every((p) => fd.includes('<id>' + site.baseUrl + 'abs/' + p.id + '.html</id>'))
         && fd.includes('<link rel="self" href="' + site.baseUrl + 'list/' + s + '.xml"/>') && pg.includes('<a href="./' + s + '.xml">Atom feed</a>') && pg.includes('href="./' + s + '.xml">');
     }));
+}
+
+console.log('\n92. Before submitting, the history and the name, plain words, the record pages, more contrast, and the yearly audit');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js'), I = require('../tools/intake.js'), A = require('../tools/audit.js');
+  const ck = read(path.join(ROOT, 'checklist.md'));
+  const items = ck.split('\n').filter((l) => /^\d+\. /.test(l));
+  ok('the checklist adds no rule, numbers its ' + items.length + ' items from 1 without a gap across its sections, names the accepted licences of site.json, and the Japanese has as many',
+    ck.includes('This list adds no rule.') && ck.includes('Where this list and the policies differ, the policies apply.') && items.every((l, i) => l.startsWith((i + 1) + '. '))
+    && Object.values(site.licenses).every((l) => ck.includes(l)) && read(path.join(ROOT, 'checklist.ja.md')).split('\n').filter((l) => /^\d+\. /.test(l)).length === items.length
+    && read(path.join(ROOT, 'site', 'checklist.html')).includes('<ol start="5">'));
+  ok('the two templates are served as they are, as text, each dedicated to the public domain under CC0 1.0 and asking for every statement',
+    B.TEMPLATES.every((f) => fs.readFileSync(path.join(ROOT, 'site', 'templates', f)).equals(fs.readFileSync(path.join(ROOT, 'templates', f))) && read(path.join(ROOT, 'templates', f)).includes('under CC0 1.0 (public domain dedication)')
+      && ['Generative models', 'Funding', 'Competing interests', 'Human participants and research ethics'].every((x) => read(path.join(ROOT, 'templates', f)).includes(x)))
+    && JSON.parse(read(path.join(ROOT, 'site', 'vercel.json'))).headers.some((h) => h.source === '/templates/(.*)' && h.headers[0].value === 'text/plain; charset=utf-8'));
+  const news = JSON.parse(read(path.join(ROOT, 'data', 'news.json')));
+  const hist = read(path.join(ROOT, 'site', 'history.html'));
+  ok('the history names the day of site.json and the oldest news item, lists every news item once, oldest first, and gives the origin of the name, as the brand page does, in both languages',
+    news[news.length - 1].date === site.since && news[news.length - 1].title === 'Sophaxis opens' && read(path.join(ROOT, 'history.md')).includes('On ' + site.since + ', the operator')
+    && (hist.match(/<li>\d{4}-\d{2}-\d{2}: /g) || []).length === news.length && hist.indexOf('<li>' + site.since + ': Sophaxis opens</li>') < hist.indexOf('<li>' + news[0].date + ': ' + news[0].title.replace(/&/g, '&amp;') + '</li>')
+    && read(path.join(ROOT, 'history.md')).includes('joins the Greek sophia (σοφία), wisdom, and the Latin axis') && read(path.join(ROOT, 'brand.md')).includes('It joins the Greek sophia (σοφία), wisdom, and the Latin axis')
+    && read(path.join(ROOT, 'history.ja.md')).includes('ギリシア語の sophia（σοφία、知恵）と、ラテン語の axis（軸）') && read(path.join(ROOT, 'brand.ja.md')).includes('ギリシア語の sophia（σοφία、知恵）と、ラテン語の axis（軸）'));
+  const sentences = (t) => t.split('\n').filter((l) => l && !/^(#|Last updated|Japanese:|最終更新|これは英語の|\d+\. |- )/.test(l)).flatMap((l) => l.split(/(?<=[.。])\s*/)).filter((x) => x.trim());
+  const longEn = sentences(read(path.join(ROOT, 'easy.md'))).filter((x) => x.split(/\s+/).length > 25);
+  const longJa = sentences(read(path.join(ROOT, 'easy.ja.md'))).filter((x) => x.length > 60);
+  ok('the page in plain words keeps every sentence short (at most 25 words in English, 60 characters in Japanese)', longEn.length === 0 && longJa.length === 0, longEn.concat(longJa).slice(0, 3).join(' / '));
+  const recs = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status !== 'removed');
+  ok('every record page shows its breadcrumb, with its main field, as schema.org microdata', recs.every((p) => {
+    const h = read(path.join(ROOT, 'site', 'abs', p.id + '.html'));
+    return h.includes('<nav class="crumbs" aria-label="Breadcrumb"><span itemscope itemtype="https://schema.org/BreadcrumbList">') && h.includes('href="../list/' + p.category + '.html"><span itemprop="name">' + site.categories[p.category] + '</span>')
+      && (h.match(/itemtype="https:\/\/schema.org\/ListItem"/g) || []).length === 3 && h.includes('<span itemprop="name" aria-current="page">' + p.id + '</span>');
+  }));
+  const good = { id: '2026.0001', title: 'T', authors: [{ name: 'A' }], abstract: 'x', category: Object.keys(site.categories)[0], license: Object.keys(site.licenses)[0], versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-11-01' }], llm_disclosure: 'none', issue: 1, listed: '2026-11-01', status: 'listed' };
+  const err = (o) => B.validate(Object.assign({}, good, { abstract_other: o }), '2026.0001.json').filter((e) => /abstract_other/.test(e)).length;
+  ok('a second abstract is taken from the form only with a language code and a text, and a record holds it only as { lang, text }',
+    JSON.stringify(I.otherAbstract({ abstract_other_lang: ' JA ', abstract_other: ' 要旨 ' })) === '{"lang":"ja","text":"要旨"}' && I.otherAbstract({ abstract_other_lang: 'japanese', abstract_other: 'x' }) === null
+    && I.otherAbstract({ abstract_other_lang: 'ja', abstract_other: '' }) === null && err({ lang: 'ja', text: '要旨' }) === 0 && err({ lang: 'Japanese', text: 'x' }) === 1 && err({ lang: 'ja', text: '' }) === 1
+    && err({ lang: 'ja', text: 'x', by: 'me' }) === 1 && read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('label: Abstract in a second language (optional)')
+    && I.parseIssue('### Language of the second abstract (optional)\n\nde\n\n### Abstract in a second language (optional)\n\nZ').abstract_other_lang === 'de');
+  const authors = [...new Set(recs.flatMap((p) => p.authors.filter((a) => a.orcid).map((a) => a.orcid)))];
+  ok('each author page (' + authors.length + ') offers one BibTeX file with each of the author\'s records once', authors.length > 0 && authors.every((o) => {
+    const bib = read(path.join(ROOT, 'site', 'author', o + '.bib')), mine = recs.filter((p) => p.authors.some((a) => a.orcid === o));
+    return (bib.match(/^@misc\{/gm) || []).length === mine.length && mine.every((p) => bib.includes('Listed on Sophaxis as ' + p.id + '}')) && read(path.join(ROOT, 'site', 'author', o + '.html')).includes('href="./' + o + '.bib"');
+  }));
+  const css = (/<style>([\s\S]*?)<\/style>/.exec(read(path.join(ROOT, 'site', 'index.html'))) || [, ''])[1];
+  const pal = (re) => Object.fromEntries([...((re.exec(css) || [])[1] || '').matchAll(/--([a-z]+): (#[0-9a-f]{6})/g)].map((m) => [m[1], m[2]]));
+  const light = Object.assign(pal(/\n:root \{([^}]*)\}/), pal(/@media \(prefers-contrast: more\) \{ :root \{([^}]*)\}/));
+  const dark = Object.assign(pal(/@media \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/), pal(/@media \(prefers-contrast: more\) and \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/));
+  const lum = (h) => { const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+  const low = [['light', light], ['dark', dark]].flatMap(([n, t]) => ['fg', 'muted', 'accent'].flatMap((f) => ['bg', 'card'].filter((b) => !(t[f] && t[b] && ratio(t[f], t[b]) >= 7)).map((b) => n + ' ' + f + '/' + b)));
+  ok('when more contrast is asked, every text colour stands at 7:1 or more on every background, in both schemes, and forced colours take the system\'s focus colour',
+    Object.keys(pal(/@media \(prefers-contrast: more\) \{ :root \{([^}]*)\}/)).length >= 2 && low.length === 0 && css.includes('@media (forced-colors: active)') && css.includes('outline-color: Highlight;'), low.join(', '));
+  const sec = read(path.join(ROOT, 'docs', 'operations.md'));
+  const bullets = sec.slice(sec.indexOf('\n## Yearly audit\n')).split('\n').filter((l) => l.startsWith('- [ ] '));
+  const cron = (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', 'audit.yml'))) || [])[1] || '';
+  ok('the yearly audit opens on the day Sophaxis began, at 09:17 Japan time, with every item of the routine (' + bullets.length + '), and only once a year',
+    cron === '17 0 ' + Number(site.since.slice(8, 10)) + ' ' + Number(site.since.slice(5, 7)) + ' *' && bullets.length >= 5 && JSON.stringify(A.items()) === JSON.stringify(bullets)
+    && A.body('2027').includes(bullets.join('\n')) && A.title('2027') === 'Yearly audit, 2027' && read(path.join(ROOT, 'tools', 'audit.js')).includes('x.title === title(year)')
+    && /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(read(path.join(ROOT, '.github', 'workflows', 'audit.yml'))));
+  const pol = read(path.join(ROOT, 'policy.md')), polJa = read(path.join(ROOT, 'policy.ja.md'));
+  ok('the Policies take no donations and keep decisions independent, in both languages, and every page says in its footer that there are no cookies and no analytics',
+    pol.includes('It takes no donations, sponsorship or advertising.') && polJa.includes('寄付・協賛・広告も受けません。') && pol.includes('No repository, funder, institution, author or service can direct a decision.') && polJa.includes('預け先・資金提供者・機関・著者・サービスのどれも、判断を指図できません。')
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== '404.html').every((f) => read(path.join(ROOT, 'site', f)).includes('No cookies, no analytics and nothing loaded from other servers (<a href="'))
+    && read(path.join(ROOT, 'policies', 'privacy.md')).includes('The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.'));
 }
 
 console.log('\n' + '-'.repeat(60));
