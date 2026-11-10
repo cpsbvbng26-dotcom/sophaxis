@@ -333,7 +333,7 @@ ${body}
 <footer><div class="wrap">
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
-<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}automation.html">What runs by itself</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}transparency.html">Transparency</a> · <a href="${up}contact.html">Contact</a></p>
+<p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}automation.html">What runs by itself</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}transparency.html">Transparency</a> · <a href="${up}news.html">News</a> · <a href="${up}press.html">Press</a> · <a href="${up}contact.html">Contact</a></p>
 </div></footer>
 </body>
 </html>
@@ -663,6 +663,7 @@ ${copies}
 ${p.llm_extent ? `<p class="meta">Extent, as the authors state it: ${esc(SITE.llmExtents[p.llm_extent])}</p>
 ` : ''}<p>${esc(p.llm_disclosure)}</p>
 ${statements(p)}${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
+${badgeSnippet(p)}
 <h2>Cite</h2>
 ${p.published ? `<p class="meta">Published version</p>
 <p class="cite">${esc(publishedCite(p))}</p>
@@ -964,6 +965,94 @@ function processPage() {
 const automationSource = () => fs.readFileSync(path.join(ROOT, 'automation.md'), 'utf8');
 /* The operator's self-assessment against the Principles of Transparency and Best Practice in Scholarly Publishing. */
 const transparencySource = () => fs.readFileSync(path.join(ROOT, 'transparency.md'), 'utf8');
+/* Prose pages at the root that need nothing but their Markdown: the call for an advisory board, the name and logo, and the page
+ * for anyone introducing Sophaxis, whose facts are filled in from site.json and the records, so that no number is typed by hand. */
+const PROSE = { advisory: 'The call for an advisory board of ' + SITE.name + ': what an adviser does, who can join and how.',
+  brand: 'The name, the logo, the colours of ' + SITE.name + ', and the badge for listed works.',
+  press: 'For anyone introducing ' + SITE.name + ': a sentence, a paragraph, the facts, and what it is not.' };
+const proseSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.md'), 'utf8');
+const proseDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(proseSource(slug)) || [])[1];
+let pressRecords = [];
+function pressFacts(html, ja = false) {
+  const shown = pressRecords.filter((p) => p.status !== 'removed');
+  const listed = (SITE.listedIn || []).map((x) => `<a href="${esc(x.url)}">${esc(x.name)}</a>${ja ? '（' + esc(x.since) + ' から）' : ' (since ' + esc(x.since) + ')'}`).join(', ');
+  const rows = ja ? [['始まった日', esc(SITE.since)], ['載っている記録', String(shown.length)], ['分野', Object.keys(SITE.categories).map((k) => esc(SITE.categoriesJa[k])).join('・')],
+    ['掲載先', listed], ['受け付けるライセンス', Object.values(SITE.licenses).map(esc).join('、')], ['料金', 'なし（著者からも読者からも）'],
+    ['運営者', `${esc(SITE.operator.name)}（<a href="https://orcid.org/${esc(SITE.operator.orcid)}">ORCID ${esc(SITE.operator.orcid)}</a>）`],
+    ['ソースコード', `<a href="${esc(SITE.repo)}">GitHub</a>`], ['保存版', `<a href="https://doi.org/${esc(SITE.zenodo.doi)}">${esc(SITE.zenodo.doi)}</a>（Zenodo）`]]
+    : [['Started', esc(SITE.since)], ['Records shown', String(shown.length)], ['Fields', Object.values(SITE.categories).map(esc).join(', ')],
+      ['Listed in', listed], ['Licences accepted', Object.values(SITE.licenses).map(esc).join(', ')], ['Fees', 'None, to authors or to readers'],
+      ['Operator', `${esc(SITE.operator.name)} (<a href="https://orcid.org/${esc(SITE.operator.orcid)}">ORCID ${esc(SITE.operator.orcid)}</a>)`],
+      ['Source code', `<a href="${esc(SITE.repo)}">GitHub</a>`], ['Archived version', `<a href="https://doi.org/${esc(SITE.zenodo.doi)}">${esc(SITE.zenodo.doi)}</a> (Zenodo)`]];
+  const table = `<div class="table"><table><tr><th scope="col">${ja ? '項目' : 'Fact'}</th><th scope="col">${ja ? '内容' : 'Value'}</th></tr>${rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</table></div>`;
+  if (!html.includes('<p>&lt;!-- facts --&gt;</p>')) throw new Error('press: the place for the facts is missing');
+  return html.replace('<p>&lt;!-- facts --&gt;</p>', table);
+}
+function prosePage(slug) {
+  const src = proseSource(slug);
+  const title = src.split('\n')[0].replace(/^# /, '');
+  const body = markdown(src);
+  return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : body });
+}
+
+/* News: dated notices from data/news.json, newest first, as a page and an Atom feed. A link is a page of the site or an https address. */
+const loadNews = () => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'news.json'), 'utf8'));
+function newsProblems(items) {
+  const e = [];
+  if (!Array.isArray(items)) return ['data/news.json: a list of notices'];
+  items.forEach((n, i) => {
+    if (!DATE.test(n.date || '') || !n.title || !n.text) e.push('data/news.json: notice ' + (i + 1) + ' needs a date, a title and a text');
+    if (n.url !== undefined && !/^(https:\/\/|[a-z0-9][a-z0-9./-]*\.html$)/.test(n.url)) e.push('data/news.json: notice ' + (i + 1) + ' links a page of the site or an https address');
+    if (i > 0 && n.date > items[i - 1].date) e.push('data/news.json: notices are newest first');
+  });
+  return e;
+}
+const newsHref = (n, up = './') => (/^https:/.test(n.url) ? n.url : up + n.url);
+function newsPage(items) {
+  const body = `
+<h1>News</h1>
+<p>What changed at ${esc(SITE.name)}, newest first. New records are in the <a href="./feed.xml">feed of new preprints</a>; this page is also a feed: <a href="./news.xml">news.xml</a>. Every change is in the <a href="${esc(SITE.repo)}/blob/main/CHANGELOG.md">changelog</a>.</p>
+<ol class="list">${items.map((n) => `<li><p class="meta">${esc(n.date)}</p><p><b>${esc(n.title)}</b></p><p>${esc(n.text)}${n.url ? ` <a href="${esc(newsHref(n))}">More</a>` : ''}</p></li>`).join('')}</ol>
+`;
+  return page({ title: 'News | ' + SITE.name, description: 'What changed at ' + SITE.name + ', newest first.', rel: false, canonical: 'news.html', head: `<link rel="alternate" type="application/atom+xml" title="${esc(SITE.name)}: news" href="./news.xml">\n`, body });
+}
+function newsFeed(items) {
+  const stamp = (d) => d + 'T00:00:00Z';
+  return `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>${esc(SITE.name)}: news</title>
+  <id>${SITE.baseUrl}news.html</id>
+  <link rel="self" href="${SITE.baseUrl}news.xml"/>
+  <link href="${SITE.baseUrl}news.html"/>
+  <updated>${stamp(items.length ? items[0].date : SITE.since)}</updated>
+  <author><name>${esc(SITE.operator.name)}</name></author>
+${items.map((n, i) => `  <entry>
+    <id>${SITE.baseUrl}news.html#n${items.length - i}</id>
+    <title>${esc(n.title)}</title>
+${n.url ? `    <link href="${esc(newsHref(n, SITE.baseUrl))}"/>\n` : ''}    <updated>${stamp(n.date)}</updated>
+    <summary>${esc(n.text)}</summary>
+  </entry>`).join('\n')}
+</feed>
+`;
+}
+
+/* The badge that the authors of a listed work can show: no typeface of its own beyond the reader's sans-serif, no script. */
+function badgeSvg() {
+  const l = 'Sophaxis', r = 'listed', w = (t) => 8 + t.length * 7;
+  const a = w(l), b = w(r);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${a + b}" height="20" role="img" aria-label="${l}: ${r}"><title>${l}: ${r}</title><rect width="${a}" height="20" fill="#2f4a7a"/><rect x="${a}" width="${b}" height="20" fill="#555"/><g fill="#fff" font-family="Verdana,DejaVu Sans,sans-serif" font-size="11" text-anchor="middle"><text x="${a / 2}" y="14">${l}</text><text x="${a + b / 2}" y="14">${r}</text></g></svg>
+`;
+}
+function badgeSnippet(p) {
+  if (p.status !== 'listed') return '';
+  const url = SITE.baseUrl + 'abs/' + p.id + '.html', img = SITE.baseUrl + 'badge.svg';
+  return `<h2>Badge</h2>
+<p class="meta">For the authors: show that this work is listed, with a link to this record. See <a href="../brand.html">Name, logo and badge</a>; remove it if the work is withdrawn.</p>
+<p><img src="../badge.svg" alt="${esc(SITE.name)}: listed" width="99" height="20"></p>
+<pre><code>[![${esc(SITE.name)}: listed](${esc(img)})](${esc(url)})</code></pre>
+<pre><code>${esc(`<a href="${url}"><img src="${img}" alt="${SITE.name}: listed"></a>`)}</code></pre>
+`;
+}
 function transparencyPage() {
   return page({ title: 'Transparency | ' + SITE.name, description: 'How ' + SITE.name + ' stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator\'s own assessment.', rel: false, canonical: 'transparency.html', head: rootAlternates('transparency'), body: markdown(transparencySource()) });
 }
@@ -988,7 +1077,7 @@ function contactPage() {
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
 /* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
-const JA_PAGES = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency'];
+const JA_PAGES = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press'];
 const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
 const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
 const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -997,6 +1086,7 @@ const rootAlternates = (slug) => (hasRootJa(slug) || slug === 'index'
 function rootJaPage(slug) {
   const title = rootJaTitle(slug);
   return page({ title: title + ' | ' + SITE.name, description: SITE.name + ' の「' + title + '」の頁。英語の頁の訳です。', rel: false, canonical: slug + '.ja.html', lang: 'ja', head: rootAlternates(slug), body: slug === 'repositories' ? repositoriesFill(markdown(rootJaSource(slug)))
+    : slug === 'press' ? pressFacts(markdown(rootJaSource(slug)), true)
     : slug === 'policy' ? markdown(rootJaSource(slug)).replace('<h2>Sophaxis でないもの</h2>', `<h2>規程の一覧</h2>\n<ul>${POLICIES.filter(([s]) => JA_POLICIES[s]).map(([s]) => `<li><a href="./policies/${s}.ja.html">${esc(jaTitle(s))}</a></li>`).join('')}</ul>\n<h2>Sophaxis でないもの</h2>`)
     : markdown(rootJaSource(slug)) });
 }
@@ -1156,6 +1246,13 @@ function reportProblems(r, file) {
   if (!r.declineReasons || !Object.values(r.declineReasons).every(n)) e.push(file + ': each reason has a count');
   return e;
 }
+/* The year in review: what the operator writes each January beside the counts, in data/reports/<year>.md, with headings of the third level.
+ * The counts are shown above it, so the text names no count of its own. */
+function yearInReview(year) {
+  const f = path.join(ROOT, 'data', 'reports', year + '.md');
+  if (!fs.existsSync(f)) return '';
+  return '<h3>The year in review</h3>\n' + markdown(fs.readFileSync(f, 'utf8').replace(/^## /gm, '### ')) + '\n';
+}
 function decisionsPage(reports) {
   const row = (k, v) => `<tr><td>${esc(k)}</td><td>${v === null || v === undefined ? '–' : esc(String(v))}</td></tr>`;
   const table = (head, rows) => `<div class="table"><table><tr><th scope="col">${esc(head)}</th><th scope="col">Count</th></tr>${rows.join('')}</table></div>`;
@@ -1165,7 +1262,7 @@ ${table('Submissions', [row('Opened', r.submissions.opened), row('Accepted', r.s
 ${table('Reason named for declining', Object.entries(r.declineReasons).map(([k, v]) => row(k, v)))}
 ${table('Days from submission to decision', [row('Median', r.daysToDecision.median), row('Longest', r.daysToDecision.longest)])}
 ${table('Requests and records', [row('Withdrawal requests', r.withdrawalRequests), row('Removal requests made in public', r.removalRequests.opened), row('Upheld', r.removalRequests.upheld), row('Not upheld', r.removalRequests.notUpheld), row('Records withdrawn', r.records.withdrawn), row('Records removed', r.records.removed)])}
-`;
+${yearInReview(r.year)}`;
   const body = `
 <h1>Decisions by year</h1>
 <p>Each year, the decisions of the year before are counted from the public GitHub issues and the records by <a href="${esc(SITE.repo)}/blob/main/tools/report.js">tools/report.js</a>, and recorded here. A declined submission counts once under each reason that the moderator named in the issue. Removal requests sent by email are not public and are not counted. Days are counted in Japan time.</p>
@@ -1191,6 +1288,7 @@ function sitemap(papers) {
     ['disclaimer.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(disclaimerJaSource()) || [, newest])[1]],
     ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
     ['stats.html', newest], ['decisions.html', (loadReports()[0] || {}).asOf || SITE.since]]
+    .concat(Object.keys(PROSE).map((slug) => [slug + '.html', proseDate(slug) || newest]), [['news.html', (loadNews()[0] || {}).date || SITE.since]])
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
@@ -1232,7 +1330,7 @@ function robots(all) {
  * cannot drift apart. Nothing here is written by hand, and nothing says more than the policies do. */
 const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['faq.md', 'faq.html', 'Frequently asked questions'],
   ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['transparency.md', 'transparency.html', 'Transparency: a self-assessment'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
-  ['contact.md', 'contact.html', 'Operator and contact']];
+  ['contact.md', 'contact.html', 'Operator and contact'], ['advisory.md', 'advisory.html', 'Advisory board: a call'], ['brand.md', 'brand.html', 'Name, logo and badge'], ['press.md', 'press.html', 'For anyone introducing Sophaxis']];
 function llmsSources() {
   return POLICIES.map(([slug]) => ['policies/' + slug + '.md', 'policies/' + slug + '.html'])
     .concat(LLM_PAGES.map(([src, url]) => [src, url]))
@@ -1281,9 +1379,11 @@ function build(out, paperDir) {
   });
   if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
   for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));
+  problems.push(...newsProblems(loadNews()));
   if (problems.length) return { problems };
   /* Removed records keep only their notice page; they are left out of every list, feed and search. */
   const papers = all.filter((p) => p.status !== 'removed');
+  pressRecords = all;
   fs.rmSync(out, { recursive: true, force: true });
   fs.mkdirSync(path.join(out, 'abs'), { recursive: true });
   fs.mkdirSync(path.join(out, 'list'), { recursive: true });
@@ -1303,6 +1403,12 @@ function build(out, paperDir) {
     'process.html': processPage(),
     'automation.html': automationPage(),
     'transparency.html': transparencyPage(),
+    'advisory.html': prosePage('advisory'),
+    'brand.html': prosePage('brand'),
+    'press.html': prosePage('press'),
+    'news.html': newsPage(loadNews()),
+    'news.xml': newsFeed(loadNews()),
+    'badge.svg': badgeSvg(),
     'disclaimer.html': disclaimerPage(),
     'disclaimer.ja.html': disclaimerJaPage(),
     'repositories.html': repositoriesPage(),
@@ -1356,7 +1462,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
