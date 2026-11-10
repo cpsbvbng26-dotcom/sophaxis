@@ -42,3 +42,6 @@ node verification/check.js
     `press.html` の事実の表は `site.json` と記録から作る。数を手で書かない。年の振り返りは `data/reports/<year>.md` に置き、数は書かない（上に表が出る）。
 11. 共有カード（`assets/cards/<id>.png`、1200 × 630）は `node tools/cards.js` で描く。記録を足したり題・著者・分野・状態を変えたりしたら描き直す。
     `assets/cards/cards.json` が中身の sha256 を持ち、記録と合わないカードは検査 88 が落とし、記録の頁はロゴに戻る。手で PNG を置かない。
+12. 論文の雛形（`templates/paper.md`・`paper.tex`）は CC0 1.0 で、`build.js` がそのまま `site/templates/` へ写す。沿革の頁（`history.md`）の年表は `data/news.json` から作る。日付を手で書き足さない。
+    投稿の様式の二つ目の要旨（言語の符号と本文）は、記録に `abstract_other: { lang, text }` として入れ、そのまま見せる。訳を確かめない。
+    運営者の手順は `docs/operations.md`。その「Yearly audit」の節が、毎年 10 月 30 日（始まった日）に `audit.yml` が開く issue の本文になる。
