@@ -268,7 +268,7 @@ ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .table { overflow-x: auto; }
-td a { overflow-wrap: anywhere; }
+td a, p code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
@@ -824,6 +824,7 @@ function fieldPage(papers, slug) {
   const body = `
 <h1>${esc(label)}</h1>
 ${fields(papers, slug, '../')}
+<p class="meta">New in this field: <a href="./${esc(slug)}.xml">Atom feed</a>.</p>
 ${listing(mine, '../', 'No preprints are listed in this field yet.')}
 `;
   return page({
@@ -832,6 +833,7 @@ ${listing(mine, '../', 'No preprints are listed in this field yet.')}
     rel: true,
     canonical: 'list/' + slug + '.html',
     body,
+    head: `<link rel="alternate" type="application/atom+xml" title="${esc(SITE.name)}: ${esc(label)}" href="./${esc(slug)}.xml">\n`,
   });
 }
 
@@ -980,7 +982,9 @@ const PROSE = { advisory: 'The call for an advisory board of ' + SITE.name + ': 
   press: 'For anyone introducing ' + SITE.name + ': a sentence, a paragraph, the facts, and what it is not.',
   call: 'A call to researchers in philosophy and mathematics to submit to ' + SITE.name + ': what a listed work gets, what it is not, and what a submission needs.',
   findable: 'How the authors of a work listed on ' + SITE.name + ' can help readers find it: ORCID, Google Scholar, PhilPapers and researchmap.',
-  accessibility: 'The accessibility of ' + SITE.name + ': the aim, what is checked on every change, what is known, and how to report a barrier.' };
+  accessibility: 'The accessibility of ' + SITE.name + ': the aim, what is checked on every change, what is known, and how to report a barrier.',
+  compare: 'How ' + SITE.name + ' differs from arXiv, PhilArchive, SSRN and Zenodo: a layer on top of the repositories, not one of them.',
+  glossary: 'The words used on ' + SITE.name + ', defined: overlay, moderation, record, version, withdrawal, removal and others.' };
 const proseSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.md'), 'utf8');
 const proseDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(proseSource(slug)) || [])[1];
 let pressRecords = [];
@@ -1103,7 +1107,7 @@ function contactPage() {
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
 /* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
-const JA_PAGES = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility'];
+const JA_PAGES = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
 const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
 const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
 const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -1181,8 +1185,9 @@ ${listing(mine, '../', '')}
 }
 
 /* Atom feed of the listing, newest first. */
-function feed(papers, c = null) {
-  const sorted = sortListing(c ? papers.filter((p) => (p.collections || []).includes(c.slug)) : papers);
+/* The Atom feed of every record, of a collection (c), or of a field (field, a slug of site.json categories). */
+function feed(papers, c = null, field = null) {
+  const sorted = sortListing(c ? papers.filter((p) => (p.collections || []).includes(c.slug)) : field ? papers.filter((p) => cats(p).includes(field)) : papers);
   const stamp = (d) => d + 'T00:00:00Z';
   const updated = stamp([SITE.since].concat(sorted.map(changed)).sort().pop());
   const entries = sorted.map((p) => {
@@ -1200,11 +1205,11 @@ ${cats(p).map((c) => `    <category term="${esc(c)}" label="${esc(SITE.categorie
   }).join('\n');
   return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>${esc(SITE.name)}: ${c ? esc(c.name) : 'new preprints'}</title>
+  <title>${esc(SITE.name)}: ${c ? esc(c.name) : field ? esc(SITE.categories[field]) : 'new preprints'}</title>
   <subtitle>${esc(SITE.tagline)}. Moderation, not peer review.</subtitle>
-  <id>${SITE.baseUrl}${c ? 'collection/' + c.slug + '.html' : ''}</id>
-  <link rel="self" href="${SITE.baseUrl}${c ? 'collection/' + c.slug + '.xml' : 'feed.xml'}"/>
-  <link href="${SITE.baseUrl}${c ? 'collection/' + c.slug + '.html' : ''}"/>
+  <id>${SITE.baseUrl}${c ? 'collection/' + c.slug + '.html' : field ? 'list/' + field + '.html' : ''}</id>
+  <link rel="self" href="${SITE.baseUrl}${c ? 'collection/' + c.slug + '.xml' : field ? 'list/' + field + '.xml' : 'feed.xml'}"/>
+  <link href="${SITE.baseUrl}${c ? 'collection/' + c.slug + '.html' : field ? 'list/' + field + '.html' : ''}"/>
   <updated>${updated}</updated>
 ${entries}
 </feed>
@@ -1356,7 +1361,7 @@ function robots(all) {
  * cannot drift apart. Nothing here is written by hand, and nothing says more than the policies do. */
 const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['faq.md', 'faq.html', 'Frequently asked questions'],
   ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['transparency.md', 'transparency.html', 'Transparency: a self-assessment'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
-  ['contact.md', 'contact.html', 'Operator and contact'], ['advisory.md', 'advisory.html', 'Advisory board: a call'], ['brand.md', 'brand.html', 'Name, logo and badge'], ['press.md', 'press.html', 'For anyone introducing Sophaxis'], ['call.md', 'call.html', 'A call to researchers'], ['findable.md', 'findable.html', 'Making a listed work easy to find'], ['accessibility.md', 'accessibility.html', 'Accessibility']];
+  ['contact.md', 'contact.html', 'Operator and contact'], ['advisory.md', 'advisory.html', 'Advisory board: a call'], ['brand.md', 'brand.html', 'Name, logo and badge'], ['press.md', 'press.html', 'For anyone introducing Sophaxis'], ['call.md', 'call.html', 'A call to researchers'], ['findable.md', 'findable.html', 'Making a listed work easy to find'], ['accessibility.md', 'accessibility.html', 'Accessibility'], ['compare.md', 'compare.html', 'How Sophaxis differs from other places'], ['glossary.md', 'glossary.html', 'Glossary']];
 function llmsSources() {
   return POLICIES.map(([slug]) => ['policies/' + slug + '.md', 'policies/' + slug + '.html'])
     .concat(LLM_PAGES.map(([src, url]) => [src, url]))
@@ -1438,6 +1443,8 @@ function build(out, paperDir) {
     'call.html': prosePage('call'),
     'findable.html': prosePage('findable'),
     'accessibility.html': prosePage('accessibility'),
+    'compare.html': prosePage('compare'),
+    'glossary.html': prosePage('glossary'),
     'news.xml': newsFeed(loadNews()),
     'badge.svg': badgeSvg(),
     'disclaimer.html': disclaimerPage(),
@@ -1462,7 +1469,7 @@ function build(out, paperDir) {
     'vercel.json': vercelConfig(all),
     'api/oai.js': oaiFunction(all),
   };
-  Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); });
+  Object.keys(SITE.categories).forEach((slug) => { files['list/' + slug + '.html'] = fieldPage(papers, slug); files['list/' + slug + '.xml'] = feed(papers, null, slug); });
   files['collections.html'] = collectionsPage(papers);
   files['index.ja.html'] = indexJaPage(papers, all);
   JA_PAGES.filter(hasRootJa).forEach((slug) => { files[slug + '.ja.html'] = rootJaPage(slug); });

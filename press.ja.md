@@ -27,6 +27,15 @@ Sophaxis は、著者からも読者からも料金を取らず、日本に住�
 - DOI を発行しません。DOI はリポジトリのものです。
 - [免責事項](./disclaimer.ja.html)にあるとおり、どのリポジトリ・学会・機関とも特別な関係を持ちません。
 
+## Sophaxis 自体を引く
+
+載った作品を引くときは、Sophaxis ではなく、その作品の DOI を引きます。
+Sophaxis そのものを、サービスまたはソフトウェアとして引くときは、Zenodo にあるコードのすべての版の DOI を引きます。この DOI は、いちばん新しい版を指します。
+
+`Nemoto, T. (2026). Sophaxis: an overlay preprint server for philosophy and mathematics [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24033371`
+
+プロジェクトには OSF の頁もあり、その DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。サイトで使う語は[用語集](./glossary.ja.html)で定め、Sophaxis がほかの場とどう違うかは[別の頁](./compare.ja.html)にあります。
+
 ## 名前とロゴ
 
 名前・ロゴ・色・載っている作品のバッジは、[名前・ロゴ・バッジ](./brand.ja.html)の頁にあります。

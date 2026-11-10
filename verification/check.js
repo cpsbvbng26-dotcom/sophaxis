@@ -1414,7 +1414,8 @@ console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
   ok('CITATION.cff, the README in both languages and the contact page give the Zenodo DOI of version 1.0.0 and the DOI of every version',
     ['10.5281/zenodo.24033372', '10.5281/zenodo.24033371'].every((d) => cff.includes('value: "' + d + '"') && (rd.split('(https://doi.org/' + d + ')').length - 1) === 2
       && read(path.join(ROOT, 'contact.md')).includes('(https://doi.org/' + d + ')'))
-    && cff.includes('doi: "10.5281/zenodo.24033371"') && cff.includes('version: "1.0.0"') && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.0.0 was released on 2026-11-07'));
+    && cff.includes('doi: "10.5281/zenodo.24033371"') && cff.includes('version: "1.1.0"') && cff.includes('date-released: "2026-11-10"') && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.0.0 was released on 2026-11-07')
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.1.0 is dated 2026-11-10'));
   ok('the code is tied to the OSF project, with the DOI from site.json, and that DOI is said to name the project',
     z.related_identifiers.some((r) => r.identifier === site.osf.doi && r.relation === 'isPartOf')
     && cff.includes('value: ' + site.osf.doi) && cff.includes('the project, not this code release'));
@@ -2206,7 +2207,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
 {
   const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
   const pages = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'].map((slug) => ({ slug, dir: 'policies/' }))
-    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility'].map((slug) => ({ slug, dir: '' })));
+    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'].map((slug) => ({ slug, dir: '' })));
   for (const { slug, dir } of pages) {
     const en = read(path.join(ROOT, dir, slug + '.md'));
     const ja = read(path.join(ROOT, dir, slug + '.ja.md'));
@@ -3160,7 +3161,7 @@ console.log('\n84. The site in Japanese: the top page and every prose page');
   ok('it says that acceptance is moderation, not peer review, that nothing is charged, and where Sophaxis is not offered, with all ' + site.notOffered.length + ' places by their Japanese names',
     ja.includes('掲載はモデレーションであり、査読ではありません。') && ja.includes('著者からも読者からも料金を取りません。')
     && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + site.notOffered.map((p) => p.ja).join('、') + '）に住んでいる著者') && ja.includes('国籍や人種ではなく'));
-  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility'];
+  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
   const jaPolicies = ['privacy', 'terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'];
   ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the records stay in English',
     jaPages.every((s) => ja.includes('href="./' + s + '.ja.html"')) && jaPolicies.every((s) => ja.includes('href="./policies/' + s + '.ja.html"')) && ja.includes('href="./disclaimer.ja.html"')
@@ -3372,6 +3373,37 @@ console.log('\n90. Outreach: the call to researchers, finding a listed work, acc
     M.weighted('abc') === 3 && M.weighted('日本') === 4 && M.weighted('see https://example.org/x') === 27 && M.monthBefore('2027-01-01') === '2026-12' && M.monthBefore('2026-11-01') === '2026-10'
     && M.weighted(p1.en) <= M.LIMIT && M.weighted(p1.ja) <= M.LIMIT && p1.en.startsWith('Sophaxis in January 2027: 12 new preprints') && M.posts('2027-02', many, []) === null
     && /cron: '17 0 1 \* \*'/.test(read(path.join(ROOT, '.github', 'workflows', 'monthly.yml'))) && /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(read(path.join(ROOT, '.github', 'workflows', 'monthly.yml'))));
+}
+
+console.log('\n91. Positioning: how Sophaxis differs, the glossary, citing Sophaxis itself, and a feed for each field');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const cmp = read(path.join(ROOT, 'compare.md'));
+  const row = (name) => (cmp.match(new RegExp('^\\| ' + name + ' \\|.*$', 'm')) || [''])[0];
+  ok('the comparison says that Sophaxis keeps no file and gives no DOI, that it replaces none of the others, that the summaries are dated and the services\' own pages count, and claims no connection',
+    row('Sophaxis').includes('| No; it keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository |') && row('PhilArchive').includes('| Yes | No |')
+    && ['arXiv', 'PhilArchive', 'SSRN', 'Zenodo'].every((n) => row(n).endsWith('| None |')) && cmp.includes('It replaces none of the places below')
+    && cmp.includes('These are short summaries as of 2026-11-10; the pages of each service are what count.') && cmp.includes('Sophaxis has no connection with any of them')
+    && cmp.includes('Acceptance is moderation, not peer review.') && !/\bbetter\b|\bworse\b|\bbest\b/i.test(cmp));
+  const g = read(path.join(ROOT, 'glossary.md'));
+  const n = Object.keys(site.categories).length;
+  const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  ok('the glossary\'s numbers and days are those of site.json: ' + n + ' fields, ' + site.ownWaitDays + ' days, six months, and the days of vouching and the statements',
+    g.includes('one of the ' + W[n] + ' areas') && g.includes('waits ' + W[site.ownWaitDays] + ' days in public') && site.doiAgeMonths === 6 && g.includes('from which the six months are counted')
+    && g.includes('- Vouching: from ' + site.vouchFrom + ',') && g.includes('from ' + site.statementsFrom + ', on funding') && g.includes('It is not peer review')
+    && read(path.join(ROOT, 'glossary.ja.md')).includes(['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][n] + 'つの領域') && read(path.join(ROOT, 'glossary.ja.md')).includes(['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][site.ownWaitDays] + '日のあいだ公開で待ちます'));
+  const press = read(path.join(ROOT, 'press.md'));
+  ok('the press page says to cite a listed work by its own DOI, and Sophaxis itself by the DOI of every version of its code, from site.json',
+    press.includes('To cite a listed work, cite the DOI of that work, not Sophaxis.') && press.includes('https://doi.org/' + site.zenodo.doi + '`')
+    && press.includes('[' + site.osf.doi + '](https://doi.org/' + site.osf.doi + ')'));
+  const shown = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status !== 'removed');
+  ok('each of the ' + n + ' fields has an Atom feed with its own records only, which its page links',
+    Object.keys(site.categories).every((s) => {
+      const fd = read(path.join(ROOT, 'site', 'list', s + '.xml')), pg = read(path.join(ROOT, 'site', 'list', s + '.html'));
+      const mine = shown.filter((p) => [p.category].concat(p.categories || []).includes(s));
+      return (fd.match(/<entry>/g) || []).length === mine.length && mine.every((p) => fd.includes('<id>' + site.baseUrl + 'abs/' + p.id + '.html</id>'))
+        && fd.includes('<link rel="self" href="' + site.baseUrl + 'list/' + s + '.xml"/>') && pg.includes('<a href="./' + s + '.xml">Atom feed</a>') && pg.includes('href="./' + s + '.xml">');
+    }));
 }
 
 console.log('\n' + '-'.repeat(60));

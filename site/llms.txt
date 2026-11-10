@@ -42,6 +42,8 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [A call to researchers](https://sophaxis.vercel.app/call.html)
 - [Making a listed work easy to find](https://sophaxis.vercel.app/findable.html)
 - [Accessibility](https://sophaxis.vercel.app/accessibility.html)
+- [How Sophaxis differs from other places](https://sophaxis.vercel.app/compare.html)
+- [Glossary](https://sophaxis.vercel.app/glossary.html)
 
 ## Japanese
 
@@ -68,6 +70,8 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [研究者の方へ（日本語訳）](https://sophaxis.vercel.app/call.ja.html)
 - [載った作品を見つけてもらうために（日本語訳）](https://sophaxis.vercel.app/findable.ja.html)
 - [アクセシビリティ（日本語訳）](https://sophaxis.vercel.app/accessibility.ja.html)
+- [ほかの場との違い（日本語訳）](https://sophaxis.vercel.app/compare.ja.html)
+- [用語集（日本語訳）](https://sophaxis.vercel.app/glossary.ja.html)
 
 ## Data
 

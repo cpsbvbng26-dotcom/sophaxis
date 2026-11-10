@@ -24,8 +24,8 @@ keywords:
   - logic
   - open access
 license: MIT
-version: "1.0.0"
-date-released: "2026-11-07"
+version: "1.1.0"
+date-released: "2026-11-10"
 doi: "10.5281/zenodo.24033371"
 identifiers:
   - type: doi
