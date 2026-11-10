@@ -27,6 +27,15 @@ Sophaxis charges nothing, to authors or to readers, and is run unpaid by one per
 - It issues no DOIs: the DOIs are those of the repositories.
 - It has no affiliation with any repository, society or institution, as the [Disclaimer](./disclaimer.html) says.
 
+## Citing Sophaxis itself
+
+To cite a listed work, cite the DOI of that work, not Sophaxis.
+To cite Sophaxis itself, as a service or as software, cite the DOI of every version of its code at Zenodo, which resolves to the latest:
+
+`Nemoto, T. (2026). Sophaxis: an overlay preprint server for philosophy and mathematics [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24033371`
+
+The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The words used on the site are defined in the [Glossary](./glossary.html), and how Sophaxis differs from other places is on [a page of its own](./compare.html).
+
 ## Name and logo
 
 The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
