@@ -103,6 +103,43 @@ body:
         - "Drafting: a generative model drafted text, proofs, code or figures that the authors revised"
     validations:
       required: false
+  - type: textarea
+    id: funding
+    attributes:
+      label: Funding
+      description: Required from 2026-11-24. Name every funder of the work, with grant numbers, or say that the work had no funding.
+      placeholder: |
+        Examples:
+        The work had no funding.
+        JSPS KAKENHI Grant Number JP00K00000.
+    validations:
+      required: false
+  - type: textarea
+    id: competing_interests
+    attributes:
+      label: Competing interests
+      description: Required from 2026-11-24. Any financial or personal interest of an author that bears on the work, or say that there is none.
+      placeholder: |
+        Examples:
+        The authors have no competing interests.
+    validations:
+      required: false
+  - type: textarea
+    id: ethics
+    attributes:
+      label: Human participants and research ethics
+      description: Required from 2026-11-24. Say whether the work involves human participants, such as surveys, interviews or experiments with people. If it does, name the ethics committee that approved it, or say why no approval was needed under the rules that applied, and confirm that every participant who can be identified consented.
+      placeholder: |
+        Examples:
+        The work involves no human participants.
+        The survey was approved by the ethics committee of the University of X (approval 2026-01); every participant consented in writing.
+    validations:
+      required: false
+  - type: textarea
+    id: data
+    attributes:
+      label: Data and code (optional)
+      description: Where the data, code and other materials on which the work rests can be found, such as a repository with a DOI, or that there are none.
   - type: checkboxes
     id: confirm
     attributes:
