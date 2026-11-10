@@ -1,6 +1,6 @@
 # Accessibility
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [アクセシビリティ（日本語訳）](./accessibility.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -34,3 +34,10 @@ Before any change is published, two sets of checks run on every page of the site
 
 A barrier can be reported in [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) with the label `accessibility`, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
+
+## Help to check
+
+No one else has audited the site, so Sophaxis asks for help.
+Anyone who uses a screen reader, a magnifier, voice control, a switch or the keyboard alone can try the site and report what works and what does not, in an issue with the label `accessibility`.
+Nothing is paid and nothing is asked beyond the report itself.
+What is found is fixed where it can be, and recorded under "What is not checked, and what is known" above, with the date and without the reporter's name unless they ask for it.

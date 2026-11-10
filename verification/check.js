@@ -3479,6 +3479,49 @@ console.log('\n92. Before submitting, the history and the name, plain words, the
     && read(path.join(ROOT, 'brand.ja.md')).includes('J-PlatPat と、WIPO Global Brand Database で Sophaxis の名を調べ、その名の商標は見つかりませんでした。') && read(path.join(ROOT, 'brand.ja.md')).includes('法的な助言ではありません。'));
 }
 
+console.log('\n93. A first preprint, libraries, the policies in brief, advisers\' declarations, moderators, help to check, the risks to data, and a fallback host');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const first = read(path.join(ROOT, 'site', 'first.html'));
+  ok('the page on a first preprint lists every accepted repository of site.json (' + Object.keys(site.repositories).length + '), linked to its own page, and compares none of them, in both languages',
+    Object.values(site.repositories).every((n) => first.includes(`<li><a href="${site.repositoryHomes[n]}">${n}</a></li>`) && read(path.join(ROOT, 'site', 'first.ja.html')).includes(`<a href="${site.repositoryHomes[n]}">${n}</a>`))
+    && read(path.join(ROOT, 'first.md')).includes('Sophaxis does not compare them, and their pages are what count.') && read(path.join(ROOT, 'first.md')).includes('From ' + site.doiAgeFrom + ', Sophaxis lists a work only when six months have passed since its first DOI'));
+  const lib = read(path.join(ROOT, 'libraries.md'));
+  ok('the page for libraries gives the OAI-PMH address of the site and the formats the interface serves, and the reuse of record data as the Licence Policy words it',
+    lib.includes('`' + site.baseUrl + 'oai`') && ['oai_dc', 'oai_openaire'].every((f) => lib.includes('`' + f + '`') && read(path.join(ROOT, 'tools', 'oai.js')).includes(f))
+    && read(path.join(ROOT, 'policies', 'licences.md')).includes('The record data in `feed.xml`, `papers.json` and the OAI-PMH interface may be reused freely.') && lib.includes('The record data in `feed.xml`, `papers.json` and the OAI-PMH interface may be reused freely.'));
+  const pols = fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => /^[a-z]+\.md$/.test(f)).map((f) => f.replace('.md', ''));
+  ok('the policies in brief links every policy (' + pols.length + '), in both languages, and says that it binds no one',
+    pols.every((x) => read(path.join(ROOT, 'rules.md')).includes('(./policies/' + x + '.html)') && read(path.join(ROOT, 'rules.ja.md')).includes('(./policies/' + x + '.ja.html)'))
+    && read(path.join(ROOT, 'rules.md')).includes('It is a summary and binds no one; each policy, linked below, is what counts.') && read(path.join(ROOT, 'policy.md')).includes('(./rules.html)'));
+  const adv = read(path.join(ROOT, 'advisory.md')), advJa = read(path.join(ROOT, 'advisory.ja.md'));
+  const items = (t, head) => t.slice(t.indexOf(head)).split('\n').filter((l) => l.startsWith('- ')).length;
+  ok('an adviser declares four things before being named, in both languages, and is not named without the declaration',
+    adv.includes('Before being named, an adviser declares the following') && adv.includes('An adviser who declares nothing is not named.') && advJa.includes('申告をしない委員は、名を挙げません。')
+    && items(adv, 'Before being named') === 4 && items(advJa, '委員は、名を挙げる前に') === 4);
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md')), modJa = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
+  const conds = (t, head, stop) => { const i = t.indexOf(head); return t.slice(i, t.indexOf(stop, i)).split('\n').filter((l) => l.startsWith('- ')).length; };
+  ok('a second moderator is invited only under four conditions, never decides on their own work, and a disagreement is the operator\'s to settle, in both languages',
+    conds(mod, 'A second moderator is invited only when all of these hold:', 'A moderator does not decide') === 4 && conds(modJa, '二人目のモデレーターは、次のすべてに当たるときだけ招きます。', 'モデレーターは、自分の作品や') === 4
+    && mod.includes('When two moderators disagree, the operator decides, and says so in the issue.') && modJa.includes('二人のモデレーターの意見が分かれたときは、運営者が決め、issue にそう書きます。')
+    && mod.includes('under "Research integrity" below') && mod.indexOf('## Research integrity') > mod.indexOf('A second moderator'));
+  ok('the accessibility statement asks for help to check, pays nothing, asks nothing beyond the report, and names no reporter who does not ask it, in both languages',
+    read(path.join(ROOT, 'accessibility.md')).includes('## Help to check') && read(path.join(ROOT, 'accessibility.md')).includes('Nothing is paid and nothing is asked beyond the report itself.')
+    && read(path.join(ROOT, 'accessibility.md')).includes("without the reporter's name unless they ask for it.") && read(path.join(ROOT, 'accessibility.ja.md')).includes('## 確かめる手伝い'));
+  const dpia = read(path.join(ROOT, 'docs', 'impact-assessment.md'));
+  const risk = dpia.split('\n').filter((l) => /^\| \d+ \|/.test(l)).map((l) => l.replace(/^\||\|$/g, '').split('|').map((c) => c.trim()));
+  ok('the assessment of the risks to data numbers its ' + risk.length + ' risks from 1, scores each from 1 to 3, multiplies them right, sorts them by the product, and states a measure for each',
+    risk.length >= 8 && risk.every((r, i) => r[0] === String(i + 1) && [r[2], r[3]].every((x) => /^[123]$/.test(x)) && Number(r[4]) === Number(r[2]) * Number(r[3]) && r[5].length > 20)
+    && risk.every((r, i) => i === 0 || Number(risk[i - 1][4]) >= Number(r[4])) && dpia.includes('it is not legal advice') && read(path.join(ROOT, 'docs', 'operations.md')).includes('(`docs/impact-assessment.md`)'));
+  const htmls = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== '404.html');
+  const rooted = htmls.filter((f) => /(?:href|src)="\/(?!\/)/.test(read(path.join(ROOT, 'site', f))));
+  ok('every page but the one for an address not found links relatively, so that the site can be served from another host under a path (' + htmls.length + ' pages), and the routine says what such a move loses',
+    rooted.length === 0 && read(path.join(ROOT, 'docs', 'operations.md')).includes('## If Vercel cannot serve the site') && read(path.join(ROOT, 'docs', 'operations.md')).includes('The OAI-PMH interface at `/oai`'), rooted.slice(0, 5).join(', '));
+  const joss = read(path.join(ROOT, 'paper', 'paper.md'));
+  ok('the JOSS draft is marked not submitted, names the day its criteria were read, the earliest day, the need for use by others, and the AI usage disclosure it carries',
+    joss.includes('Draft. Not submitted.') && joss.includes('read on 2026-11-11') && joss.includes('2027-05-01 at the earliest') && joss.includes('Aspirational statements do not count.') && joss.includes('# AI usage disclosure') && joss.includes('Claude is not an author.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

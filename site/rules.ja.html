@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-NXSglpEqJJQZUYXj5hbsvCK8JNG2q99qwoOgCyyL794='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>規程の要点（日本語訳） | Sophaxis</title>
+<meta name="description" content="Sophaxis の「規程の要点（日本語訳）」の頁。英語の頁の訳です。">
+<link rel="canonical" href="https://sophaxis.vercel.app/rules.ja.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="規程の要点（日本語訳） | Sophaxis">
+<meta property="og:description" content="Sophaxis の「規程の要点（日本語訳）」の頁。英語の頁の訳です。">
+<meta property="og:url" content="https://sophaxis.vercel.app/rules.ja.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/rules.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/rules.ja.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@SophaxisX">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .25rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a, p code, li code { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>規程の要点（日本語訳）</h1>
+<p>最終更新：2026-11-11。</p>
+<p>これは英語の <a href="./rules.html">The policies in brief</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
+<p>この頁は、それぞれの規程を数文にまとめたものです。まとめであって、誰も縛りません。決まりは、下にリンクしたそれぞれの規程です。</p>
+<h2>利用規約</h2>
+<ul><li>作品とその掲載の責任は、すべて著者が負います。受理はモデレーションであり、査読ではありません。</li><li>Sophaxis は何も保証しません。閉じるときは、運営者が動けない場合を除き、30 日以上前にトップの頁で知らせます。</li><li>日本法が適用されます。争いは、できる限り話し合いで解決します。まず運営者に書き、運営者は 7 日以内に答えます。</li><li>全文：<a href="./policies/terms.ja.html">利用規約</a></li></ul>
+<h2>個人情報の取り扱い</h2>
+<ul><li>サイトは cookie を使わず、アクセス解析をせず、ほかのサーバーから何も読み込みません。</li><li>投稿は公開の GitHub の issue です。ORCID の記録からは、名前・ウェブサイト・業績だけを使います。</li><li>Sophaxis が使うサービスの一部は日本の外にあり、多くは米国です。規程がそれぞれを挙げています。</li><li>全文：<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a></li></ul>
+<h2>投稿の規程</h2>
+<ul><li>著者は、受け付けるリポジトリに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかで預けた作品の DOI で投稿します。投稿者の GitHub のアカウントにつないだ ORCID の記録が要ります。</li><li>すべての著者の同意が要ります。生成モデルの使用は申告します。モデルは著者になれません。</li><li>規程が挙げる場所に住む著者や、そこに滞在する著者には、Sophaxis を提供しません。</li><li>全文：<a href="./policies/submission.ja.html">投稿の規程</a></li></ul>
+<h2>モデレーションの規程</h2>
+<ul><li>モデレーターは、issue の中で公開して判断し、断るときは理由を挙げます。</li><li>投稿者は issue で答えることができ、運営者はもう一度見ます。</li><li>運営者自身の投稿も同じ決まりでモデレーションを受け、その印が付きます。</li><li>全文：<a href="./policies/moderation.ja.html">モデレーションの規程</a></li></ul>
+<h2>ライセンスと著作権の規程</h2>
+<ul><li>著作権は著者に残ります。Sophaxis は、作品のライセンスのもとで要旨を示し、PDF の写しを置きます。</li><li>他者の図・表・長い引用には、許諾か、法の許す使い方が要ります。</li><li>記録のデータは自由に再利用できます。サイトの文は CC BY 4.0、コードは MIT です。</li><li>全文：<a href="./policies/licences.ja.html">ライセンスの規程</a>と<a href="./policies/copyright.ja.html">著作権の規程</a></li></ul>
+<h2>撤回と削除の規程</h2>
+<ul><li>著者は、載った作品を撤回できます。引用が切れないよう記録は注記つきで残り、PDF の写しは外します。</li><li>記録は、法的な理由か著者の求めにより削除できます。削除した記録に何が残るかは、規程が定めます。</li><li>全文：<a href="./policies/withdrawal.ja.html">撤回の規程</a>と<a href="./policies/takedown.ja.html">削除の規程</a></li></ul>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

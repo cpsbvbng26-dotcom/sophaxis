@@ -17,8 +17,14 @@ affiliations:
 bibliography: paper.bib
 ---
 
-<!-- Draft. Not submitted. JOSS asks for a repository public for more than six months; the earliest date is 2027-05-01.
-     The references carry no DOIs yet: add a DOI only after checking it at its source. -->
+<!-- Draft. Not submitted. The references carry no DOIs yet: add a DOI only after checking it at its source.
+     JOSS's submission guide, read on 2026-11-11 from its source (openjournals/joss, docs/submitting.md), asks for:
+     1. More than six months of public history, with active development across that period, not in a burst. Public since 2026-10-30, so 2027-05-01 at the earliest, and only if the work goes on through the months between.
+     2. Evidence that the software is used for research, at least by its developers and ideally by others. Aspirational statements do not count. Today every listed work is the operator's own.
+     3. Open-source practice: for a single author, several of a public commit history over time, releases or a changelog, tests and CI, documentation, a CONTRIBUTING file and stated support. These are present.
+     4. Iterative development over time.
+     It also says that many web-based tools are out of scope unless they expose a core library or show rigorous domain modelling and testing, and that a reviewer must be able to test the software locally.
+     The AI usage disclosure must name the tools and their versions and where each was used, and affirm that the human author reviewed every output and made the core design decisions. The author adds the versions at submission. -->
 
 # Summary
 

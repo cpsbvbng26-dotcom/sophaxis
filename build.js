@@ -274,7 +274,7 @@ ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .table { overflow-x: auto; }
-td a, p code { overflow-wrap: anywhere; }
+td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
@@ -1000,6 +1000,9 @@ const TEMPLATES = ['paper.md', 'paper.tex'];
 const PROSE = { checklist: 'Before submitting to ' + SITE.name + ': what the policies ask, gathered in one list, with examples of a statement on generative models and two paper templates.',
   history: 'How ' + SITE.name + ' began on ' + SITE.since + ', where its name comes from, and what has happened since.',
   leaflet: SITE.name + ' on one page: what it is, what it is not, and how to submit.',
+  first: 'For anyone making a preprint public for the first time: the paper, the licence, choosing a repository, depositing, and then ' + SITE.name + '.',
+  libraries: 'For library staff: what ' + SITE.name + ' is, how to point readers to it, and how to harvest its records.',
+  rules: 'Every policy of ' + SITE.name + ' in brief, with a link to each; the policies themselves govern.',
   easy: SITE.name + ' in plain words: what it is and how to send a paper, in short sentences.',
   advisory: 'The call for an advisory board of ' + SITE.name + ': what an adviser does, who can join and how.',
   brand: 'The name, the logo, the colours of ' + SITE.name + ', and the badge for listed works.',
@@ -1027,6 +1030,11 @@ function pressFacts(html, ja = false) {
   if (!html.includes('<p>&lt;!-- facts --&gt;</p>')) throw new Error('press: the place for the facts is missing');
   return html.replace('<p>&lt;!-- facts --&gt;</p>', table);
 }
+/* The page on a first preprint lists the accepted repositories from site.json, linked to their own pages. */
+function repositoriesFillList(html) {
+  if (!html.includes('<p>&lt;!-- repositories --&gt;</p>')) throw new Error('first: the place for the repositories is missing');
+  return html.replace('<p>&lt;!-- repositories --&gt;</p>', '<ul>' + Object.values(SITE.repositories).map((n) => `<li><a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a></li>`).join('') + '</ul>');
+}
 /* The history page lists every news item, oldest first, from data/news.json, so that no date is typed twice. */
 function historyFill(html, ja = false) {
   if (!html.includes('<p>&lt;!-- timeline --&gt;</p>')) throw new Error('history: the place for the timeline is missing');
@@ -1038,7 +1046,7 @@ function prosePage(slug) {
   const src = proseSource(slug);
   const title = src.split('\n')[0].replace(/^# /, '');
   const body = markdown(src);
-  return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : slug === 'history' ? historyFill(body) : body });
+  return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : slug === 'history' ? historyFill(body) : slug === 'first' ? repositoriesFillList(body) : body });
 }
 
 /* New by month: the records shown, grouped by the month in which they were listed, newest first. */
@@ -1138,7 +1146,7 @@ function contactPage() {
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
 /* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
-const JA_PAGES = ['checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
+const JA_PAGES = ['first', 'libraries', 'rules', 'checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
 const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
 const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
 const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -1149,6 +1157,7 @@ function rootJaPage(slug) {
   return page({ title: title + ' | ' + SITE.name, description: SITE.name + ' の「' + title + '」の頁。英語の頁の訳です。', rel: false, canonical: slug + '.ja.html', lang: 'ja', head: rootAlternates(slug), body: slug === 'repositories' ? repositoriesFill(markdown(rootJaSource(slug)))
     : slug === 'press' ? pressFacts(markdown(rootJaSource(slug)), true)
     : slug === 'history' ? historyFill(markdown(rootJaSource(slug)), true)
+    : slug === 'first' ? repositoriesFillList(markdown(rootJaSource(slug)))
     : slug === 'policy' ? markdown(rootJaSource(slug)).replace('<h2>Sophaxis でないもの</h2>', `<h2>規程の一覧</h2>\n<ul>${POLICIES.filter(([s]) => JA_POLICIES[s]).map(([s]) => `<li><a href="./policies/${s}.ja.html">${esc(jaTitle(s))}</a></li>`).join('')}</ul>\n<h2>Sophaxis でないもの</h2>`)
     : markdown(rootJaSource(slug)) });
 }
@@ -1487,6 +1496,9 @@ function build(out, paperDir) {
     'history.html': prosePage('history'),
     'leaflet.html': prosePage('leaflet'),
     'easy.html': prosePage('easy'),
+    'first.html': prosePage('first'),
+    'libraries.html': prosePage('libraries'),
+    'rules.html': prosePage('rules'),
     'news.xml': newsFeed(loadNews()),
     'badge.svg': badgeSvg(),
     'disclaimer.html': disclaimerPage(),

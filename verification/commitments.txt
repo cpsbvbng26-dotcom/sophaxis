@@ -144,3 +144,4 @@ The PDF carries no notice of rights that contradicts the licence in the DOI meta
 It takes no donations, sponsorship or advertising.
 No repository, funder, institution, author or service can direct a decision.
 No listing is given in return for money, a favour or a citation.
+A moderator does not decide on their own work, or on the work of a close collaborator; another moderator, or the operator, decides it.

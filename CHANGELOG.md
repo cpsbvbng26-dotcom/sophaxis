@@ -5,6 +5,7 @@ The entries are grouped by the date of the merge. Version 1.0.0 was released on 
 
 ## 2026-11-11
 
+- New pages, in both languages: your first preprint (`first.html`), with the accepted repositories listed from `site.json` and compared with none; for libraries (`libraries.html`), with the OAI-PMH address and formats; and the policies in brief (`rules.html`), which binds no one. An adviser declares four things before being named, and is not named without the declaration. The Moderation Policy sets four conditions for a second moderator, who never decides on their own work, and leaves a disagreement to the operator; the commitment is in `verification/commitments.txt`. The accessibility statement asks for help to check. `docs/impact-assessment.md` scores the risks to people's data, and the yearly audit reads it. The routine says how the site would move to another host and what it would lose, and a check keeps every link relative but on the page for an address not found. The JOSS draft records JOSS's criteria as read on 2026-11-11. Code in a list wraps at narrow widths. Check 93 holds these. The previous change is #201.
 - The page on the name, logo and badge, in both languages, records that the operator searched J-PlatPat and the WIPO Global Brand Database for the name Sophaxis on 2026-11-11 (Japan time) and found no trade mark of that name, that a search is not legal advice, and that no registration has been applied for. Check 92 holds it. The previous change is #200.
 
 ## 2026-11-10

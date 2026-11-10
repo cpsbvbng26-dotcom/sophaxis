@@ -1,6 +1,6 @@
 # Advisory board: a call
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [諮問委員の募集（日本語訳）](./advisory.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -38,3 +38,12 @@ Each adviser is named, with an ORCID iD, on the contact page, only after they ag
 
 An adviser who submits a work goes through the same moderation as anyone else, with no priority.
 An adviser does not advise on a case that concerns their own work, or the work of a close collaborator.
+
+Before being named, an adviser declares the following, and the contact page shows the declaration beside the name:
+
+- Any position held now at a repository, publisher, journal, preprint server or index.
+- Any payment received in the last three years from one of them.
+- Any listed work of their own, or of a close collaborator, on Sophaxis.
+- Anything else that a reader might reasonably see as a conflict, or that there is none.
+
+The declaration is updated whenever it changes. An adviser who declares nothing is not named.
