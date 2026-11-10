@@ -318,7 +318,7 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
 <meta property="og:image" content="${esc(image || SITE.baseUrl + 'og.png')}">
-${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">
+${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">${SITE.x ? `\n<meta name="twitter:site" content="@${esc(SITE.x)}">` : ''}
 <style>${CSS}</style>
 </head>
 <body>
