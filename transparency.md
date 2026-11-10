@@ -1,6 +1,6 @@
 # Transparency: a self-assessment
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [透明性の自己評価（日本語訳）](./transparency.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -29,7 +29,7 @@ Each heading gets one of four marks:
 | Preservation | In part |
 | Copyright | In part |
 | Licensing | Met |
-| Publication ethics and related editorial policies | In part |
+| Publication ethics and related editorial policies | Met |
 | Editorial assessment | Met |
 | Peer review | Does not apply |
 | Access | Met |
@@ -87,19 +87,20 @@ The Terms of Use say how GitHub and Vercel may use public content, including to 
 
 ### Publication ethics and related editorial policies
 
-In part.
+Met.
+The statements on funding, competing interests and research ethics are asked from 2026-11-24, after the notice of 14 days that the Terms of Use give.
 
 - Aims and scope: stated on the top page and in the [Submission Policy](./policies/submission.html). Met.
 - Authorship, and the use of AI: only an author can submit, every author must agree, and the use of language models and other generative models must be disclosed, with its extent; a model cannot be an author. Met.
-- Conflicts of interest: the operator's own submissions are marked, get no priority and wait seven days in public before listing ([Moderation Policy](./policies/moderation.html)). Conflicts of interest of the authors are not asked for. In part.
-- Data sharing and reproducibility: no policy. Not met.
-- Funding and support: authors are not asked to disclose funding. Not met.
+- Conflicts of interest: the operator's own submissions are marked, get no priority and wait seven days in public before listing ([Moderation Policy](./policies/moderation.html)). From 2026-11-24, the authors state their competing interests in the form, and the record page shows the statement ([Submission Policy](./policies/submission.html)). Met.
+- Data sharing and reproducibility: the Submission Policy encourages authors to say where the data and code are, and the form asks it as an option; it is not required and not checked. Met.
+- Funding and support: from 2026-11-24, the authors name every funder, with grant numbers, or say that there was none, and the record page shows the statement. Met.
 - Post-publication review: anyone can report an error in a record by a public issue. Met.
 - Corrections, retractions and expressions of concern: corrections are dated notes; the notices that Crossref records, including those from Retraction Watch, are read at submission and each week, and shown on the record. Met.
-- Plagiarism: Sophaxis runs no plagiarism check and has no definition of plagiarism. Not met.
+- Plagiarism: the Moderation Policy defines plagiarism, including the reuse of the authors' own work as new, and a submission found to plagiarise is declined; Sophaxis runs no software check. Met.
 - Complaints and appeals: a declined submitter can answer in the issue, and the operator looks once more; requests to remove follow the [Takedown Policy](./policies/takedown.html). Met.
-- Research ethics: no policy on consent or ethics review, since the fields are philosophy and mathematics; work with personal data of third parties is declined. In part.
-- Allegations of research misconduct: no written process beyond removal requests. Not met.
+- Research ethics: from 2026-11-24, every submission states whether it involves human participants, and one that does names the ethics approval, or why none was needed, and the consent of identifiable participants; work with personal data of third parties is declined. Met.
+- Allegations of research misconduct: the Moderation Policy, under "Research integrity", says how a concern is raised, in public or by email, how the authors answer, that Sophaxis does not investigate and refers to the institution or journal, what a note on the record may say, and that a person who writes by email is not named. It follows the steps that COPE recommends, as far as one person can. Met.
 
 ### Editorial assessment
 
