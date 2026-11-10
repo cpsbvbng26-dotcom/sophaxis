@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-J0NqTczqhQ0uwNXXUW4Iu8ZtkIyQeln112ceWji2buk='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Before you submit: a checklist | Sophaxis</title>
+<meta name="description" content="Before submitting to Sophaxis: what the policies ask, gathered in one list, with examples of a statement on generative models and two paper templates.">
+<link rel="canonical" href="https://sophaxis.vercel.app/checklist.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Before you submit: a checklist | Sophaxis">
+<meta property="og:description" content="Before submitting to Sophaxis: what the policies ask, gathered in one list, with examples of a statement on generative models and two paper templates.">
+<meta property="og:url" content="https://sophaxis.vercel.app/checklist.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/checklist.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/checklist.ja.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@SophaxisX">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .25rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.table { overflow-x: auto; }
+td a, p code { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<h1>Before you submit: a checklist</h1>
+<p>Last updated: 2026-11-10.</p>
+<p>Japanese: <a href="./checklist.ja.html">投稿の前に：確かめること（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
+<p>This list adds no rule. It gathers what the <a href="./policies/submission.html">Submission Policy</a> and the <a href="./policies/moderation.html">Moderation Policy</a> already ask, so that a submission is complete the first time. Where this list and the policies differ, the policies apply.</p>
+<h2>The work</h2>
+<ol><li>The work is deposited in an open repository, and its version has a DOI.</li><li>The DOI metadata carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0. The PDF carries no notice of rights that contradicts it, such as &quot;all rights reserved&quot;.</li><li>The work has a title, an abstract and references, in the ordinary form of a scholarly paper.</li><li>The work belongs mainly to philosophy, mathematics, logic, the philosophy of mathematics or the philosophy of science.</li></ol>
+<h2>The authors</h2>
+<ol start="5"><li>The submitter is an author, and their ORCID record links their GitHub account, as <a href="./process.html">From submission to listing</a> shows.</li><li>Every author agrees to the listing. From 2026-11-21, every other author confirms their own agreement in the issue or by email.</li><li>No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them.</li></ol>
+<h2>The statements</h2>
+<ol start="8"><li>The statement on generative models names each tool and what it did, or says that none was used. From 2026-11-21 it also gives the extent of use.</li><li>From 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are ready.</li></ol>
+<h2>Material from others and personal data</h2>
+<ol start="10"><li>Each figure, table or long quotation from others has permission, or is used in a way the law allows, such as quotation. The <a href="./policies/copyright.html">Copyright Policy</a> explains this.</li><li>The work contains no personal data of third parties. A person who can be identified, for example in an interview or a case, has consented, and the work says so.</li></ol>
+<h2>Examples of a statement on generative models</h2>
+<p>These are examples only. The statement must describe what was actually done.</p>
+<ul><li>&quot;No generative model was used in writing or developing this work.&quot;</li><li>&quot;Claude (Anthropic) was used to edit the language of sections 2 and 3. The authors wrote the text and checked every change.&quot;</li><li>&quot;ChatGPT (OpenAI) was used for a literature search, and its suggestions were checked against the sources. No text was generated.&quot;</li></ul>
+<h2>When there is more than one author</h2>
+<p>Sophaxis records the authors as the DOI metadata lists them, in that order, and records no roles. A work may say who did what in the work itself. The CRediT taxonomy of contributor roles is one common way to do so. Sophaxis does not check such a statement.</p>
+<h2>Templates</h2>
+<p>Two templates for a paper are offered, one in Markdown and one in LaTeX. Each has a title, an abstract, the statements above and a list of references.</p>
+<ul><li><a href="./templates/paper.md">paper.md</a></li><li><a href="./templates/paper.tex">paper.tex</a></li></ul>
+<p>The templates are dedicated to the public domain under CC0 1.0. A work written from them need not mention Sophaxis. Using a template is not required, and a work written from one is moderated like any other.</p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

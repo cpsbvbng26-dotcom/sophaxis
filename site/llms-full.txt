@@ -1219,7 +1219,7 @@ Source: https://sophaxis.vercel.app/policy.html
 
 # Policies
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [規程（日本語訳）](./policy.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1243,6 +1243,7 @@ The DOI stays with the repository where the author deposited the work, and it is
 Sophaxis charges nothing, to authors or to readers.
 There are no submission fees, no listing fees and no paid tiers.
 It will not start charging.
+It takes no donations, sponsorship or advertising.
 
 ## Commitments are never dropped silently
 
@@ -1250,6 +1251,13 @@ A commitment in these policies is never dropped silently.
 The public repository keeps the list of commitments in `verification/commitments.txt`.
 The automatic check fails if one disappears from the policies or from the list, unless the text that replaces it is named in `verification/superseded.txt`.
 A change to a commitment that adds a duty for readers or authors is still announced in advance, as the [Terms of Use](./policies/terms.html) set out.
+
+## Editorial independence
+
+The moderator decides on each submission under the published policies, and on nothing else.
+No repository, funder, institution, author or service can direct a decision.
+No listing is given in return for money, a favour or a citation.
+The reasons for every decision are public in its issue.
 
 ## Operator and conflicts of interest
 
@@ -1283,7 +1291,7 @@ Source: https://sophaxis.vercel.app/disclaimer.html
 
 # Disclaimer
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1311,7 +1319,7 @@ It is not an official identity check.
 
 Sophaxis is an independent, personal project.
 It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.
-Their names are used only to identify their services, and belong to their owners.
+Their names are used only to identify their services, and belong to their owners. Some of them are trade marks.
 They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
 
 ## Who runs Sophaxis, and why
@@ -1399,7 +1407,7 @@ Source: https://sophaxis.vercel.app/faq.html
 
 # Frequently asked questions
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-10.
 
 Japanese: [よくある質問（日本語訳）](./faq.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1514,6 +1522,21 @@ Scholar takes a PDF only from the directory of its record page, so each PDF copy
 When a record page or a PDF copy is new, changed or removed, the search engines that take IndexNow, such as Bing, are told as soon as it is live. A new or changed page is also saved to the Internet Archive. Google reads the sitemap instead.
 Sophaxis cannot promise that a search engine will index a page.
 
+## What should I check before submitting?
+
+The [checklist](./checklist.html) gathers what the policies ask, with examples of a statement on generative models.
+It also offers two paper templates, in Markdown and in LaTeX, under CC0 1.0. Using them is not required.
+
+## Does Sophaxis track readers?
+
+No. The site sets no cookies, runs no analytics and loads nothing from other servers, as the [Privacy Policy](./policies/privacy.html) says.
+It shows no counts of views or downloads.
+
+## Is there a mailing list?
+
+No. Sophaxis sends no newsletter and collects no email addresses for one.
+New records and news can be followed through the Atom feeds: [new preprints](./feed.xml), [news](./news.xml), and one feed for each field.
+
 ## How do I cite a work listed here?
 
 Cite the DOI of the version you read.
@@ -1558,7 +1581,7 @@ The rules themselves are in the [Submission Policy](./policies/submission.html) 
 
 ## Before you start
 
-You need four things.
+You need four things. The [checklist](./checklist.html) gathers the rest of what a submission needs.
 
 1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered, as the [Submission Policy](./policies/submission.html) sets out.
 2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.
@@ -1734,6 +1757,13 @@ The code of each step is public, and each section links to it.
 - Writes: an issue with the counts of the year before: submissions opened, accepted, declined and not decided yet, the reasons named for declining, the days from submission to a decision, the requests, and the records withdrawn and removed.
 - Leaves to the operator: recording the counts in `data/reports/`, from which the [Decisions by year](./decisions.html) page is built.
 - Code: [tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) and [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js), run by [report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml).
+
+## Once a year, on 30 October at 09:17 Japan time
+
+- Reads: the section "Yearly audit" of [docs/operations.md](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md), the operator's routine.
+- Writes: an issue on the day Sophaxis began, with that list to tick, unless an issue of the same title exists.
+- Leaves to the operator: the audit itself.
+- Code: [tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js), run by [audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml).
 
 ## On every push and every pull request
 
@@ -2030,6 +2060,8 @@ The operator keeps it as a hobby, as an extension of a personal reading shelf; w
 - ORCID iD: [0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
 - GitHub: [cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
 
+About the operator, the site shows the name, the ORCID iD and the GitHub account above, and nothing more: no photograph, no telephone number and no postal address, which is given on request as "Postal address" below says.
+
 The operator is also the moderator, and is responsible for the site and its records.
 The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.html).
 The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.html) set out.
@@ -2152,6 +2184,7 @@ Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.html). It i
 
 The name is written Sophaxis, in Latin letters, with a capital S, in every language.
 In Japanese it is read ソファクシス.
+It joins the Greek sophia (σοφία), wisdom, and the Latin axis; the [History and name](./history.html) page says more.
 A record is cited by its Sophaxis id, such as `2026.0001`, and by the DOI of the deposited work.
 
 ## Logo
@@ -2195,6 +2228,10 @@ Last updated: 2026-11-10.
 
 Japanese: [紹介する人のために（日本語訳）](./press.ja.html). It is a translation; where the two differ, the English text applies.
 
+## In a few words
+
+A free overlay preprint server for philosophy and mathematics.
+
 ## In one sentence
 
 Sophaxis is a free overlay preprint server for philosophy and mathematics: it moderates preprints that their authors have already deposited with a DOI, and gives each a stable record page.
@@ -2230,6 +2267,7 @@ The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https:/
 ## Name and logo
 
 The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
+A version of Sophaxis that fits on one sheet, for printing, is [Sophaxis on one page](./leaflet.html).
 
 ## Contact
 
@@ -2303,7 +2341,7 @@ None of these is a promise that any index picks the work up; each decides for it
 
 ## What the authors can do
 
-- ORCID: add the DOI of the work to your ORCID record, so that services that read ORCID connect the work to you.
+- ORCID: add the DOI of the work to your ORCID record, so that services that read ORCID connect the work to you. Each author page on Sophaxis also offers one BibTeX file of all that author's records, which ORCID can import.
 - Google Scholar: it finds works in repositories by itself, often within several weeks. In a Google Scholar profile you can add the work, or confirm it once found.
 - PhilPapers: for philosophy, many readers look in PhilPapers. You can add a record of the work to PhilPapers, and you can deposit it in PhilArchive, its open archive, which has its own moderation. Both are free.
 - researchmap: researchers in Japan can add the work to their researchmap record.
@@ -2331,7 +2369,14 @@ This is the operator's own assessment, made with the checks below; no one else h
 Before any change is published, two sets of checks run on every page of the site.
 
 - In the text of each page: the contrast of every text colour in the light and dark schemes, a link to skip to the content, the language of the page, one main heading, and headers for every table.
-- In a browser, at widths from 1440 down to 360 pixels: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.
+- In a browser, at widths from 1440 down to 360 pixels, among them 640, which is a window 1280 pixels wide zoomed to 200 percent: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.
+
+## Contrast and reading
+
+- When the system asks for more contrast, the site uses a darker grey and a stronger accent in the light scheme, and lighter ones in the dark scheme. Every text colour then has a contrast of at least 7:1, and a check confirms it on every change.
+- In forced colours, as in the high contrast modes of Windows, the focus ring takes the colour the system gives.
+- In the Japanese pages, the [glossary](./glossary.ja.html) gives the reading of hard words in kana, in parentheses. The pages do not use ruby, which screen readers do not all read the same way.
+- [In plain words](./easy.html) tells how to submit in short sentences, in English and in plain Japanese.
 
 ## What is not checked, and what is known
 
@@ -3623,7 +3668,7 @@ Source: https://sophaxis.vercel.app/disclaimer.ja.html
 
 # 免責事項（日本語訳）
 
-最終更新：2026-11-09。
+最終更新：2026-11-10。
 
 これは英語の [Disclaimer](./disclaimer.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3651,7 +3696,7 @@ Sophaxis は証明・論証・データを確かめず、載っている作品�
 
 Sophaxis は、独立した個人のプロジェクトです。
 載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。
-それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。
+それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。その中には商標もあります。
 それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。[預け先と DOI 登録機関へ](./repositories.html)の頁も見てください。
 
 ## 誰が、なぜ Sophaxis を運営するか
@@ -3735,6 +3780,165 @@ Sophaxis は、運営者を日本の消費者契約法の事業者であるも�
 
 ---
 
+Source: https://sophaxis.vercel.app/checklist.ja.html
+
+# 投稿の前に：確かめること（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [Before you submit: a checklist](./checklist.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この一覧は、新しい決まりを足しません。[投稿の規程](./policies/submission.ja.html)と[モデレーションの規程](./policies/moderation.ja.html)が求めていることを集め、一度で欠けのない投稿になるようにしたものです。一覧と規程が食い違うときは、規程が適用されます。
+
+## 作品
+
+1. 作品が開かれたリポジトリに預けてあり、その版に DOI がある。
+2. DOI のメタデータに、受け付けるライセンス（CC BY 4.0、CC BY-SA 4.0、CC0 1.0）のどれかがある。PDF に、それと食い違う権利の表示（「all rights reserved」など）がない。
+3. 作品に、題・要旨・参考文献があり、学術論文の普通の形をしている。
+4. 作品が、主に哲学・数学・論理学・数理哲学・科学哲学に属する。
+
+## 著者
+
+5. 投稿者が著者で、その ORCID の記録が GitHub のアカウントにつないである（[投稿から掲載まで](./process.ja.html)）。
+6. すべての著者が掲載に同意している。2026-11-21 からは、ほかの著者のそれぞれが、issue かメールで自分の同意を確かめる。
+7. Sophaxis を提供しない場所（投稿の規程の一覧）に住む著者や、投稿のあとそこに滞在した著者がいない。
+
+## 申告
+
+8. 生成モデルについての申告が、使った道具とそれぞれの役目を挙げているか、使わなかったと書いている。2026-11-21 からは、使った程度も書く。
+9. 2026-11-24 からは、資金・利益相反・人を対象とする研究と研究倫理の申告を用意してある。
+
+## 他者の素材と個人情報
+
+10. 他者の図・表・長い引用に許諾があるか、引用など法の許す形で使っている。[著作権の規程](./policies/copyright.ja.html)に説明がある。
+11. 作品に、第三者の個人情報がない。聞き取りや事例などで特定できる人がいるときは、その人の同意があり、作品がそう書いている。
+
+## 生成モデルについての申告の例
+
+例にすぎません。申告には、実際にしたことを書きます。
+
+- 「この作品を書き、また練るにあたって、生成モデルは使っていない。」
+- 「第 2 節と第 3 節の言葉の手直しに Claude（Anthropic）を使った。本文は著者が書き、すべての変更を著者が確かめた。」
+- 「文献の探索に ChatGPT（OpenAI）を使い、示されたものを原典と照らし合わせた。文は生成させていない。」
+
+## 著者が二人以上のとき
+
+Sophaxis は、著者を DOI のメタデータが挙げるとおりの順に記し、役割は記しません。
+誰が何をしたかは、作品の中に書くことができます。貢献の役割の分類 CRediT は、その書き方の一つとして広く使われています。
+Sophaxis は、その記述を確かめません。
+
+## 雛形
+
+論文の雛形を二つ置いています。Markdown と LaTeX です。どちらにも、題・要旨・上の申告・参考文献の欄があります。
+
+- [paper.md](./templates/paper.md)
+- [paper.tex](./templates/paper.tex)
+
+雛形は CC0 1.0 によりパブリックドメインに提供しています。雛形から書いた作品に、Sophaxis の名を書く必要はありません。
+雛形を使う決まりはなく、雛形から書いた作品も、ほかの作品と同じようにモデレーションを受けます。
+
+---
+
+Source: https://sophaxis.vercel.app/history.ja.html
+
+# 沿革と名前（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [History and name](./history.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+## 名前
+
+Sophaxis という名は、ギリシア語の sophia（σοφία、知恵）と、ラテン語の axis（軸）を合わせたものです。
+どの言語でも、ラテン文字で頭を大文字にして書き、日本語ではソファクシスと読みます（[名前・ロゴ・バッジ](./brand.ja.html)）。
+
+## 始まり
+
+2026-10-30 に、運営者が規約と設定を置き、載っている記録が 0 件のまま、サイトを初めて生成しました。
+この日を、Sophaxis の始まった日とします。
+始めたのは、運営者が、哲学と数学の公開のプレプリントを並べて載せる場所を一つ探して、見つからなかったからです（[免責事項](./disclaimer.ja.html)）。
+これは運営者の理由であって、ほかのアーカイブへの評価ではありません。
+
+## それから
+
+<!-- timeline -->
+
+---
+
+Source: https://sophaxis.vercel.app/leaflet.ja.html
+
+# 一枚でわかる Sophaxis（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [Sophaxis on one page](./leaflet.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、紙一枚に収まるように作っています。印刷して渡すときに使えます。
+
+## Sophaxis とは
+
+Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のための、無料のオーバーレイ型プレプリントサーバーです。
+著者が DOI 付きで開かれたリポジトリにすでに預けたプレプリントを載せ、一篇ごとに変わらない記録の頁を与えます。
+
+## Sophaxis でないもの
+
+- 査読はしません。受理はモデレーションです。
+- 学術誌ではなく、DOI も発行しません。
+- 著者からも読者からも、料金を取りません。
+
+## 投稿のしかた
+
+1. 作品を、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかで、開かれたリポジトリに預ける。
+2. ORCID の記録を、GitHub のアカウントにつなぐ。
+3. DOI を書いて、投稿の issue を開く。自動の確認が答え、モデレーターが公開の場で判断する。
+
+投稿に要るものは[確かめること](./checklist.ja.html)に、手順の一つ一つは[投稿から掲載まで](./process.ja.html)にあります。
+
+## どこにあるか
+
+- サイト：https://sophaxis.vercel.app/
+- ソースと投稿：https://github.com/cpsbvbng26-dotcom/sophaxis
+
+---
+
+Source: https://sophaxis.vercel.app/easy.ja.html
+
+# やさしいことばで（日本語訳）
+
+最終更新：2026-11-10。
+
+これは英語の [In plain words](./easy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis が何か、論文の送り方を、短い文で書いています。決まりは[規程](./policy.ja.html)にあります。この頁と決まりが違うときは、決まりのほうが正しいです。
+
+## Sophaxis とは
+
+Sophaxis（ソファクシス）は、ウェブサイトです。
+哲学（てつがく）と数学（すうがく）の論文（ろんぶん）を見せます。
+論文は、ほかの場所に置いてあります。その場所を、リポジトリといいます。
+Sophaxis は、論文ごとに一つの頁を作ります。
+Sophaxis は、無料（むりょう）です。
+
+## Sophaxis がしないこと
+
+Sophaxis は、論文が正しいかどうかを調べません。
+人が、論文が決まりに合うかどうかだけを見ます。
+Sophaxis は、お金を取りません。
+
+## 論文の送り方
+
+1. 論文を、Zenodo などのリポジトリに置きます。DOI という番号がもらえます。
+2. ORCID と GitHub で、アカウントを作ります。二つをつなぎます。
+3. GitHub で、用紙（ようし）に書きこみます。DOI を書きます。
+4. プログラムが用紙を調べます。そのあと、人が決めます。
+
+## 送る前に
+
+[確かめること](./checklist.ja.html)を読みます。
+何が要るかが書いてあります。
+
+---
+
 Source: https://sophaxis.vercel.app/process.ja.html
 
 # 投稿から掲載まで（日本語訳）
@@ -3748,7 +3952,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 ## 始める前に
 
-要るものは四つです。
+要るものは四つです。投稿に要るほかのことは、[確かめること](./checklist.ja.html)の頁にまとめてあります。
 
 1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。[投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから六か月以上たっている必要があります。
 2. 預けたものに付けた CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。DOI のメタデータに出ている必要があります。
@@ -3847,7 +4051,7 @@ Source: https://sophaxis.vercel.app/faq.ja.html
 
 # よくある質問（日本語訳）
 
-最終更新：2026-11-08。
+最終更新：2026-11-10。
 
 これは英語の [Frequently asked questions](./faq.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -3963,6 +4167,21 @@ Scholar は記録の頁と同じディレクトリにある PDF だけを取る�
 記録の頁や PDF の写しが新しくなったり、変わったり、外されたりしたときは、公開されしだい、Bing のような IndexNow を受け付ける検索エンジンに知らせます。新しい頁や変わった頁は、Internet Archive にも保存します。Google は、代わりにサイトマップを読みます。
 Sophaxis は、検索エンジンが頁を索引に入れることを約束できません。
 
+## 投稿の前に何を確かめればよいですか？
+
+[確かめること](./checklist.ja.html)の頁が、規程が求めることを、生成モデルについての申告の例とともに集めています。
+論文の雛形も二つ（Markdown と LaTeX）、CC0 1.0 で置いています。使う決まりはありません。
+
+## Sophaxis は読者を追跡しますか？
+
+しません。[個人情報の取り扱いについて](./policies/privacy.ja.html)のとおり、サイトは cookie を使わず、アクセス解析をせず、ほかのサーバーから何も読み込みません。
+閲覧やダウンロードの数も示しません。
+
+## メールでの配信はありますか？
+
+ありません。Sophaxis はニュースレターを送らず、そのためのメールアドレスも集めません。
+新しい記録とお知らせは、Atom の配信で追えます。[新しいプレプリント](./feed.xml)、[お知らせ](./news.xml)、それに分野ごとの配信があります。
+
 ## ここに載っている作品はどう引用しますか？
 
 読んだ版の DOI を引用します。
@@ -4077,6 +4296,13 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 運営者に残すこと：数を `data/reports/` に記録すること。[年ごとの判断](./decisions.html)の頁は、そこから組み立てます。
 - コード：[tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) と [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js)。[report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml) が動かします。
 
+## 年に一度、十月 30 日の日本時間 09:17
+
+- 読むもの：運営者の手順を書いた [docs/operations.md](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md) の「Yearly audit」の節。
+- 書くもの：Sophaxis が始まった日に、その一覧に印を付けるための issue。同じ題の issue があれば開きません。
+- 運営者に残すこと：点検そのもの。
+- コード：[tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js)。[audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml) が動かします。
+
 ## push とプルリクエストのたびに
 
 - 記録・規程・組み立てたサイトに対して、[verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) のすべての検査を走らせます。
@@ -4143,6 +4369,8 @@ Sophaxis がなぜあるのか、それが記録にとって何を意味する�
 
 - ORCID iD：[0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
 - GitHub：[cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
+
+運営者について、サイトが示すのは、上の名前・ORCID iD・GitHub のアカウントだけです。写真・電話番号・住所は載せません。住所は、下の「住所」のとおり、求めがあれば知らせます。
 
 運営者はモデレーターでもあり、サイトとその記録に責任を負います。
 サイトとそのコードは、運営者の求めにより、Claude Code（Anthropic）で作りました。[免責事項](./disclaimer.ja.html)を見てください。
@@ -4278,7 +4506,7 @@ Source: https://sophaxis.vercel.app/policy.ja.html
 
 # 規程（日本語訳）
 
-最終更新：2026-11-09。
+最終更新：2026-11-10。
 
 これは英語の [Policies](./policy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4301,6 +4529,7 @@ DOI は、著者が作品を預けた預け先のものであり続けます。�
 Sophaxis は、著者からも読者からも、何も取りません。
 投稿の料金も、掲載の料金も、有料の段階もありません。
 料金を取り始めることはありません。
+寄付・協賛・広告も受けません。
 
 ## 約束を黙って取り下げることはしません
 
@@ -4308,6 +4537,13 @@ Sophaxis は、著者からも読者からも、何も取りません。
 公開のリポジトリは、約束の一覧を `verification/commitments.txt` に保っています。
 約束が規程や一覧から消えると、自動の確認が失敗します。それに代わる文が `verification/superseded.txt` に挙げてあるときは別です。
 読者や著者の務めを増やす約束の変更は、[利用規約](./policies/terms.ja.html)が定めるとおり、引き続き前もって告知します。
+
+## 編集の独立
+
+モデレーターは、公開した規程に従ってだけ、それぞれの投稿を判断します。
+預け先・資金提供者・機関・著者・サービスのどれも、判断を指図できません。
+お金・便宜・引用と引き換えに載せることはありません。
+どの判断の理由も、その issue で公開されています。
 
 ## 運営者と利益相反
 
@@ -4580,6 +4816,7 @@ Source: https://sophaxis.vercel.app/brand.ja.html
 
 名前は、どの言語でも、ラテン文字で頭を大文字にして Sophaxis と書きます。
 日本語では、ソファクシスと読みます。
+ギリシア語の sophia（σοφία、知恵）と、ラテン語の axis（軸）を合わせた名です。[沿革と名前](./history.ja.html)の頁に詳しく書いてあります。
 記録は、`2026.0001` のような Sophaxis の番号と、預けられた作品の DOI で引きます。
 
 ## ロゴ
@@ -4623,6 +4860,10 @@ Source: https://sophaxis.vercel.app/press.ja.html
 
 これは英語の [For anyone introducing Sophaxis](./press.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
+## 一言で
+
+哲学と数学のための、無料のオーバーレイ型プレプリントサーバー。
+
 ## 一文で
 
 Sophaxis は、哲学と数学のための無料のオーバーレイ型プレプリントサーバーです。著者が DOI 付きで預けたプレプリントをモデレーションし、一篇ごとに変わらない記録の頁を与えます。
@@ -4658,6 +4899,7 @@ Sophaxis そのものを、サービスまたはソフトウェアとして引�
 ## 名前とロゴ
 
 名前・ロゴ・色・載っている作品のバッジは、[名前・ロゴ・バッジ](./brand.ja.html)の頁にあります。
+紙一枚に収まる、印刷用の紹介は[一枚でわかる Sophaxis](./leaflet.ja.html)です。
 
 ## 連絡先
 
@@ -4731,7 +4973,7 @@ Source: https://sophaxis.vercel.app/findable.ja.html
 
 ## 著者ができること
 
-- ORCID：作品の DOI を自分の ORCID の記録に足すと、ORCID を読むサービスが作品とあなたを結び付けます。
+- ORCID：作品の DOI を自分の ORCID の記録に足すと、ORCID を読むサービスが作品とあなたを結び付けます。Sophaxis の著者の頁には、その著者の記録すべてを収めた BibTeX のファイルが一つあり、ORCID に取り込めます。
 - Google Scholar：リポジトリにある作品を自分で見つけます。多くは数週間のうちです。Google Scholar のプロフィールで、作品を足すことも、見つかったものを確かめることもできます。
 - PhilPapers：哲学では、多くの読者が PhilPapers で探します。作品の記録を PhilPapers に足すことができ、その開かれたアーカイブである PhilArchive に預けることもできます。PhilArchive には独自のモデレーションがあります。どちらも無料です。
 - researchmap：日本の研究者は、作品を自分の researchmap の記録に足せます。
@@ -4759,7 +5001,14 @@ Sophaxis は、ウェブコンテンツ・アクセシビリティ・ガイド�
 変更を公開する前に、サイトのすべての頁について二組の検査が動きます。
 
 - 頁の文から：明るい表示と暗い表示での、すべての文字色のコントラスト、本文へ飛ぶリンク、頁の言語、一つの主見出し、すべての表の見出し。
-- ブラウザで、幅 1440 から 360 ピクセルまで：キーボードだけで使えること、フォーカスが読む順に進み、止まらないこと、フォーカスの当たった要素が枠を示すこと、すべての画像に代替テキストがあり、すべての入力欄にラベルがあること、頁が横に動かないこと。
+- ブラウザで、幅 1440 から 360 ピクセルまで（そのうち 640 は、幅 1280 の窓を 200 パーセントに拡大した幅）：キーボードだけで使えること、フォーカスが読む順に進み、止まらないこと、フォーカスの当たった要素が枠を示すこと、すべての画像に代替テキストがあり、すべての入力欄にラベルがあること、頁が横に動かないこと。
+
+## コントラストと読み
+
+- システムがより強いコントラストを求めるときは、明るい表示では濃い灰色と強いアクセントの色を、暗い表示では明るいものを使います。そのとき、すべての文字色のコントラストは 7:1 以上になり、変更のたびに検査が確かめます。
+- Windows のハイコントラストのような強制カラーでは、フォーカスの枠はシステムの与える色になります。
+- 日本語の頁では、[用語集](./glossary.ja.html)が難しい語の読みを、括弧の中に仮名で示します。ルビは使いません。スクリーンリーダーによって読み方がそろわないためです。
+- [やさしいことばで](./easy.ja.html)の頁が、投稿のしかたを短い文で、英語とやさしい日本語で示します。
 
 ## 確かめていないことと、分かっていること
 
@@ -4827,18 +5076,18 @@ Source: https://sophaxis.vercel.app/glossary.ja.html
 - 最初の DOI：投稿された DOI と、そのメタデータが挙げる前の DOI のうち、最も早いもの。六か月はここから数えます。
 - モデレーション：投稿を載せてよいかを、モデレーターが決める確認。査読ではなく、作品が正しいか、重要かは判断しません。
 - 自動の確認：DOI のメタデータと ORCID の記録を読み、分かったことを投稿の issue に書くコード。何も決めません。
-- 仮登録：自動の確認を通り、`verified` のラベルが付いて、モデレーターを待っている投稿。サイトには出ません。
-- 紹介：2026-11-23 から、学術誌の論文・本の章・本を持つ研究者が、初めての投稿が対象の分野に入り、学術論文の形をしていると述べること。審査ではありません。
+- 仮登録（かりとうろく）：自動の確認を通り、`verified` のラベルが付いて、モデレーターを待っている投稿。サイトには出ません。
+- 紹介（しょうかい）：2026-11-23 から、学術誌の論文・本の章・本を持つ研究者が、初めての投稿が対象の分野に入り、学術論文の形をしていると述べること。審査ではありません。
 - 記録：載った作品について Sophaxis が持つもの。題・著者・要旨・ライセンス・版・申告です。
 - Sophaxis の番号：`2026.0001` のような記録の番号。ほかの作品に与えることはありません。
-- 版：作品をリポジトリに預けるたびの、それぞれの DOI と日付。記録に並びます。
-- PDF の写し：預けられた PDF を手を加えずに写したもの。リポジトリが許すときに Sophaxis に置き、検索エンジンが全文を読めるようにします。
-- 分野と集め：分野は、作品を載せる五つの領域の一つです。集めは、モデレーターが選んだ主題ごとの記録のまとまりで、質については何も言いません。
-- 申告：著者が様式に書くもの。生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告です。Sophaxis は示し、確かめはしません。
+- 版（はん）：作品をリポジトリに預けるたびの、それぞれの DOI と日付。記録に並びます。
+- PDF の写し（うつし）：預けられた PDF を手を加えずに写したもの。リポジトリが許すときに Sophaxis に置き、検索エンジンが全文を読めるようにします。
+- 分野と集め（あつめ）：分野は、作品を載せる五つの領域の一つです。集めは、モデレーターが選んだ主題ごとの記録のまとまりで、質については何も言いません。
+- 申告（しんこく）：著者が様式に書くもの。生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告です。Sophaxis は示し、確かめはしません。
 - 通知：Crossref が DOI に記録する撤回・取り下げ・削除・懸念表明・訂正。記録は、その DOI の通知を示します。
-- 訂正の注記：記録に誤りが見つかったときに足す、日付付きの注記。
-- 撤回：著者が、載っている作品をもう載せないよう求めること。引用が切れないよう、記録は注記とともに残ります。[撤回の規程](./policies/withdrawal.ja.html)を見てください。
-- 削除：法的な理由か著者の求めにより、記録を番号・状態・日付だけにすること。[削除の規程](./policies/takedown.ja.html)を見てください。
-- 運営者自身の投稿：運営者の作品。印を付け、優先せず、載せる前に七日のあいだ公開で待ちます。
+- 訂正の注記（ていせいのちゅうき）：記録に誤りが見つかったときに足す、日付付きの注記。
+- 撤回（てっかい）：著者が、載っている作品をもう載せないよう求めること。引用が切れないよう、記録は注記とともに残ります。[撤回の規程](./policies/withdrawal.ja.html)を見てください。
+- 削除（さくじょ）：法的な理由か著者の求めにより、記録を番号・状態・日付だけにすること。[削除の規程](./policies/takedown.ja.html)を見てください。
+- 運営者自身（うんえいしゃじしん）の投稿：運営者の作品。印を付け、優先せず、載せる前に七日のあいだ公開で待ちます。
 - バッジ：載った作品の著者が示せる、記録へのリンク付きの画像。
 
