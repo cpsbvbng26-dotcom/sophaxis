@@ -59,6 +59,8 @@ const FIELDS = {
   'Competing interests': 'competing_interests',
   'Human participants and research ethics': 'ethics',
   'Data and code (optional)': 'data',
+  'Language of the second abstract (optional)': 'abstract_other_lang',
+  'Abstract in a second language (optional)': 'abstract_other',
 };
 
 /* The statements asked from SITE.statementsFrom (Submission Policy), each with the label of its row in the check. Data and code are optional. */
@@ -68,6 +70,13 @@ const STATEMENTS = [
   ['ethics', 'A statement on human participants and research ethics is given'],
 ];
 const STATEMENT_MIN = 4;
+
+/* Pure: the second abstract of the form, { lang, text }, when its language is a two- or three-letter code and its text is given. */
+function otherAbstract(form) {
+  const lang = String(form.abstract_other_lang || '').trim().toLowerCase();
+  const text = String(form.abstract_other || '').trim();
+  return /^[a-z]{2,3}$/.test(lang) && text ? { lang, text: plain(text) } : null;
+}
 
 /* GitHub renders an issue form as "### Label" followed by the answer. */
 function parseIssue(body, fields = FIELDS) {
@@ -617,6 +626,8 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     ...(extentKey(form.llm_extent) ? { llm_extent: extentKey(form.llm_extent) } : {}),
     /* The statements of the Submission Policy, as the authors give them, when given. */
     ...Object.fromEntries(['funding', 'competing_interests', 'ethics', 'data'].filter((k) => String(form[k] || '').trim()).map((k) => [k, plain(form[k])])),
+    /* An abstract in a second language, as the authors give it, when both the language code and the text are given. */
+    ...(otherAbstract(form) ? { abstract_other: otherAbstract(form) } : {}),
     issue: Number(issue),
     /* The day of the draft. The moderator sets it to the day the record is merged. */
     listed: (today || new Date().toISOString()).slice(0, 10),
@@ -879,6 +890,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

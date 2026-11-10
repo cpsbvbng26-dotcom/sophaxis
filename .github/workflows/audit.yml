@@ -1,0 +1,22 @@
+name: audit
+# On 30 October, the day Sophaxis began, at 09:17 Japan time, an issue opens with the yearly audit of docs/operations.md
+# (tools/audit.js). It decides nothing; the operator works through it by hand.
+on:
+  schedule:
+    - cron: '17 0 30 10 *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  audit:
+    name: The yearly audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node tools/audit.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

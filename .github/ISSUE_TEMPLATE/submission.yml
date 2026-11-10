@@ -79,6 +79,16 @@ body:
     attributes:
       label: Abstract (only if the DOI metadata has none)
       description: Leave this empty if the repository already holds the abstract.
+  - type: input
+    id: abstract_other_lang
+    attributes:
+      label: Language of the second abstract (optional)
+      description: "If you give the abstract in a second language below, its two- or three-letter code (ISO 639), for example: ja, de, fr."
+  - type: textarea
+    id: abstract_other
+    attributes:
+      label: Abstract in a second language (optional)
+      description: An abstract in a language other than that of the abstract above, written or checked by the authors. It is shown as given; Sophaxis does not check the translation.
   - type: textarea
     id: llm
     attributes:
