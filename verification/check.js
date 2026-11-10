@@ -286,9 +286,9 @@ console.log('\n6. The logo and the share card');
   const missing = pages.filter((f) => {
     const h = read(path.join(ROOT, 'site', f));
     return !/<link rel="icon" href="(\.\.\/|\.\/|\/)favicon\.svg" type="image\/svg\+xml">/.test(h)
-      || !h.includes('<meta property="og:image" content="https://sophaxis.vercel.app/og.png">');
+      || !h.includes('<meta property="og:image" content="https://sophaxis.vercel.app/' + (/^abs\/(\d{4}\.\d{4})\.html$/.test(f.replace(/\\/g, '/')) && !h.includes('<meta name="robots" content="noindex">') ? 'card/' + f.replace(/\\/g, '/').slice(4, -5) + '.png' : 'og.png') + '">');
   });
-  ok('every page links the logo and the share card', pages.length > 0 && missing.length === 0, missing.join(', '));
+  ok('every page links the logo, and as its share image the card of its record or else the logo', pages.length > 0 && missing.length === 0, missing.join(', '));
 }
 
 /* ------------------------------------------------------------ 7 */
@@ -3302,6 +3302,25 @@ console.log('\n87. Brand: the call for an advisory board, the name and logo, the
   ok('the year in review is shown beside the counts when data/reports/<year>.md exists, and the January issue gives its headings',
     B.yearInReview(1999) === '' && read(path.join(ROOT, 'tools', 'report_issue.js')).includes('The year in review goes beside the counts') && read(path.join(ROOT, 'tools', 'report_issue.js')).includes('## Next year')
     && read(path.join(ROOT, 'build.js')).includes("const f = path.join(ROOT, 'data', 'reports', year + '.md');") && fs.rmSync(dir, { recursive: true }) === undefined);
+}
+
+console.log('\n88. Share cards: one image per record shown, drawn by tools/cards.js, matching its record');
+{
+  const C = require('../tools/cards.js');
+  const B = require('../build.js');
+  const shown = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status !== 'removed');
+  const manifest = JSON.parse(read(path.join(ROOT, 'assets', 'cards', 'cards.json')));
+  const png = (f) => { const b = fs.readFileSync(f); return b.readUInt32BE(0) === 0x89504e47 && b.readUInt32BE(16) === 1200 && b.readUInt32BE(20) === 630; };
+  const stale = shown.filter((p) => manifest[p.id] !== C.cardHash(p) || !fs.existsSync(path.join(ROOT, 'assets', 'cards', p.id + '.png')) || !png(path.join(ROOT, 'assets', 'cards', p.id + '.png')));
+  ok('each of the ' + shown.length + ' records shown has a card of 1200 x 630 that matches its title, authors, fields and status, and no card is kept for a record not shown',
+    stale.length === 0 && Object.keys(manifest).length === shown.length, stale.map((p) => p.id + ': run node tools/cards.js').join(', '));
+  ok('the card is served beside the record, and its page names it as a large image; a changed record falls back to the logo until it is drawn again',
+    shown.every((p) => fs.existsSync(path.join(ROOT, 'site', 'card', p.id + '.png')) && read(path.join(ROOT, 'site', 'abs', p.id + '.html')).includes('<meta name="twitter:card" content="summary_large_image">'))
+    && B.hasCard(Object.assign({}, shown[0], { title: shown[0].title + ' (changed)' })) === false
+    && C.cardText(shown[0]).startsWith(shown[0].id + '\n' + shown[0].title + '\n'));
+  const html = C.cardHtml({ id: '2026.0099', title: '<b>T</b> & co', authors: [{ name: 'A <B>' }], category: 'logic' }, '<svg></svg>');
+  ok('the card escapes what it shows and fetches nothing', html.includes('&lt;b&gt;T&lt;/b&gt; &amp; co') && html.includes('A &lt;B&gt;') && !/https?:\/\//.test(html)
+    && read(path.join(ROOT, 'tools', 'cards.js')).includes("await page.route('**/*', (r) => r.abort());"));
 }
 
 console.log('\n' + '-'.repeat(60));
