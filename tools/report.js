@@ -21,7 +21,7 @@ const UA = 'Sophaxis (' + SITE.repo + ')';
 const REPO = SITE.repo.replace(/^https:\/\/github\.com\//, '');
 
 /* The reasons for declining, word for word as the Moderation Policy names them. */
-const REASONS = ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Where the authors live or stay', 'Spam or abuse'];
+const REASONS = ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Plagiarism', 'Where the authors live or stay', 'Spam or abuse'];
 
 const JST = 9 * 3600 * 1000;
 const day = (t) => (t ? new Date(Date.parse(t) + JST).toISOString().slice(0, 10) : null);

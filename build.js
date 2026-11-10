@@ -54,6 +54,8 @@ const repoPrefix = (doi) => Object.keys(SITE.repositories).find((pre) => String(
 /* Returns a list of problems. An empty list means the record is valid. */
 /* A removed record keeps its id, the fact and the day, and no reason (Takedown Policy).
  * While a removal request is reviewed, it also keeps the reason "under-review" and its submission issue, so that it can be put back. */
+/* The statements of the Submission Policy, with the heading each has on the record page. */
+const STATEMENT_KEYS = [['funding', 'Funding'], ['competing_interests', 'Competing interests'], ['ethics', 'Human participants and research ethics'], ['data', 'Data and code']];
 const REMOVED_KEEP = ['id', 'status', 'removal_date'];
 const HELD_KEEP = REMOVED_KEEP.concat(['removal_reason', 'issue']);
 const UNDER_REVIEW = 'The abstract and the PDF copy are offline while a removal request is reviewed.';
@@ -129,6 +131,11 @@ function validate(p, file) {
   if (typeof p.llm_disclosure === 'string' && p.llm_disclosure.trim().length < 20) {
     e.push(file + ': the language-model statement is too short');
   }
+  /* The statements of the Submission Policy (funding, competing interests, human participants and research ethics, data and code),
+   * each a short text when present. The intake asks the first three from SITE.statementsFrom. */
+  STATEMENT_KEYS.forEach(([k]) => {
+    if (p[k] !== undefined && (typeof p[k] !== 'string' || p[k].trim().length < 4 || p[k].length > 2000)) e.push(file + ': ' + k + ' must be a statement of 4 to 2000 characters');
+  });
   /* The extent of use, one of the levels in site.json. Required for records listed from SITE.llmExtentFrom. */
   if (p.llm_extent !== undefined && !Object.prototype.hasOwnProperty.call(SITE.llmExtents, p.llm_extent)) e.push(file + ': llm_extent must be one of ' + Object.keys(SITE.llmExtents).join(', '));
   if (p.llm_extent === undefined && DATE.test(p.listed || '') && p.listed >= SITE.llmExtentFrom) e.push(file + ': llm_extent is required for records listed from ' + SITE.llmExtentFrom);
@@ -552,6 +559,16 @@ function crossrefNotices(p) {
   const each = p.notices.map((n) => `a ${esc(n.type.replace(/_/g, ' '))} of ${esc(n.date)}: <a href="https://doi.org/${esc(n.doi)}">${esc(n.doi)}</a>`).join('; ');
   return `<div class="notice"><b>Notices.</b> Crossref records ${each}. Read the notice before citing this work.</div>`;
 }
+/* The statements of the authors on funding, competing interests, research ethics, and data and code, as they gave them. */
+function statements(p) {
+  const given = STATEMENT_KEYS.filter(([k]) => p[k]);
+  if (!given.length) return '';
+  return `<h2>Statements by the authors</h2>
+${given.map(([k, h]) => `<p class="meta">${h}</p>
+<p>${esc(p[k])}</p>`).join('\n')}
+<p class="meta">As the authors state them in the submission issue. ${esc(SITE.name)} does not check them.</p>
+`;
+}
 /* APA 7 for the published version: the authors of the record, since the published version shares them, and the venue from its metadata. */
 function publishedCite(p) {
   const names = p.authors.map((a) => (givenOf(a) ? familyOf(a) + ', ' + initials(givenOf(a)) : familyOf(a)));
@@ -629,7 +646,7 @@ ${copies}
 <h2>Use of language models and other generative models</h2>
 ${p.llm_extent ? `<p class="meta">Extent, as the authors state it: ${esc(SITE.llmExtents[p.llm_extent])}</p>
 ` : ''}<p>${esc(p.llm_disclosure)}</p>
-${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
+${statements(p)}${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 <h2>Cite</h2>
 ${p.published ? `<p class="meta">Published version</p>
 <p class="cite">${esc(publishedCite(p))}</p>
@@ -1085,6 +1102,7 @@ function papersJson(papers) {
     status: p.status,
     llm_disclosure: p.llm_disclosure,
     ...(p.llm_extent ? { llm_extent: p.llm_extent } : {}),
+    ...Object.fromEntries(STATEMENT_KEYS.filter(([k]) => p[k]).map(([k]) => [k, p[k]])),
   })), null, 2) + '\n';
 }
 
@@ -1322,7 +1340,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

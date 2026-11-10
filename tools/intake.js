@@ -55,7 +55,19 @@ const FIELDS = {
   'Consent and agreement': 'consent',
   'Saving to the Internet Archive (optional)': 'archive',
   'Where the authors live': 'residence',
+  'Funding': 'funding',
+  'Competing interests': 'competing_interests',
+  'Human participants and research ethics': 'ethics',
+  'Data and code (optional)': 'data',
 };
+
+/* The statements asked from SITE.statementsFrom (Submission Policy), each with the label of its row in the check. Data and code are optional. */
+const STATEMENTS = [
+  ['funding', 'A statement on funding is given'],
+  ['competing_interests', 'A statement on competing interests is given'],
+  ['ethics', 'A statement on human participants and research ethics is given'],
+];
+const STATEMENT_MIN = 4;
 
 /* GitHub renders an issue form as "### Label" followed by the answer. */
 function parseIssue(body, fields = FIELDS) {
@@ -385,6 +397,14 @@ function check({ form, login, meta, person, works, listed, pub, today, age, noti
     const ticked = (String(form.residence || '').match(/^- \[[xX]\] /gm) || []).length;
     if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.residenceFrom) add('No author lives in a place where Sophaxis is not offered', ticked === 1, ticked ? '' : 'the box is not ticked');
   }
+  /* From SITE.statementsFrom, counted on the day the issue was opened: funding, competing interests, and human participants and research ethics. */
+  {
+    const opened = (age && age.opened) || String(today || new Date().toISOString()).slice(0, 10);
+    for (const [k, label] of STATEMENTS) {
+      const given = String(form[k] || '').trim();
+      if (given || opened >= SITE.statementsFrom) add(label, given.length >= STATEMENT_MIN, given ? '' : 'the field is empty');
+    }
+  }
   if (!meta) { add('The DOI metadata could be read', false); return { ok: false, checks }; }
   add('The DOI metadata could be read', true, meta.agency);
   /* A published version given at submission gets the same checks as one reported later (tools/published.js). */
@@ -595,6 +615,8 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     /* The saves to the Internet Archive are a separate, optional consent. A form that asks it and has it unticked keeps the record out of them. */
     ...('archive' in form && !/^- \[[xX]\] /m.test(String(form.archive || '')) ? { archive: false } : {}),
     ...(extentKey(form.llm_extent) ? { llm_extent: extentKey(form.llm_extent) } : {}),
+    /* The statements of the Submission Policy, as the authors give them, when given. */
+    ...Object.fromEntries(['funding', 'competing_interests', 'ethics', 'data'].filter((k) => String(form[k] || '').trim()).map((k) => [k, plain(form[k])])),
     issue: Number(issue),
     /* The day of the draft. The moderator sets it to the day the record is merged. */
     listed: (today || new Date().toISOString()).slice(0, 10),
@@ -857,6 +879,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

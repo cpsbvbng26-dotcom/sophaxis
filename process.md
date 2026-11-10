@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -19,6 +19,7 @@ You need four things.
 Every author of the work must agree to the listing.
 From 2026-11-23, a first submission also needs a researcher to vouch for it, with a journal article, a book chapter or a book, as the [Submission Policy](./policies/submission.html) sets out.
 If you used language models or other generative models, note which tools you used and what for.
+From 2026-11-24, the form also asks for statements on funding, on competing interests, and on human participants and research ethics, and, as an option, where the data and code are.
 
 ## Step 1. Find your GitHub username
 
@@ -42,7 +43,7 @@ Sophaxis reads only the name, the links and the works in your ORCID record; it n
 
 1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens.
 2. After "[Submission]" in the title, add a few words, such as the title of your work.
-3. Give the DOI, your ORCID iD, the category and the statement on generative models, and tick the confirmations.
+3. Give the DOI, your ORCID iD, the category, the statement on generative models and, from 2026-11-24, the statements on funding, competing interests and research ethics, and tick the confirmations.
 4. Press the button at the bottom of the form to create the issue.
 
 The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.

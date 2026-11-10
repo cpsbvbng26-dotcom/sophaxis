@@ -175,7 +175,7 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 
 # Submission Policy
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -304,6 +304,7 @@ A submitter who is already an author of a listed work needs no one to vouch, and
 - The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
 - The work contains no material, such as figures or long quotations, that the authors may not share, and no personal data of third parties.
 - The statement on generative models is complete and true.
+- From 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are complete and true.
 - The authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.html) set out.
 
 ## How to submit
@@ -344,6 +345,27 @@ The authors bear full responsibility for the work, as the [Terms of Use](./terms
 
 If substantial undisclosed use comes to light after listing,
 the record receives a notice, and the authors are asked to add a disclosure.
+
+## Funding, competing interests, research ethics, and data
+
+From 2026-11-24, the form asks three statements, and a work is listed only if each is given.
+The automatic check in the issue confirms that each field is filled in; it does not judge what it says.
+
+- Funding: every funder of the work, with grant numbers, or that the work had no funding.
+- Competing interests: any financial or personal interest of an author that bears on the work, such as employment, consultancy, payments or a close relation to a person the work discusses, or that there is none.
+- Human participants and research ethics: whether the work involves human participants, such as surveys, interviews or experiments with people.
+
+Work that involves human participants must name the ethics committee that approved it, or say why no approval was needed under the rules that applied where the research was done.
+Every participant who can be identified must have consented, and the statement says so.
+Work that contains personal data of third parties is not accepted, as set out above.
+
+The form also asks, as an option, where the data, code and other materials on which the work rests can be found, such as a repository with a DOI, or that there are none.
+Sophaxis encourages authors to make them available, but does not require it and does not check them.
+
+The record page shows each statement as the authors give it.
+Sophaxis does not check the statements beyond reading them.
+A statement found to be untrue is handled under "Research integrity" in the [Moderation Policy](./moderation.html).
+This does not apply to a submission opened before 2026-11-24.
 
 ## Versions and updates
 
@@ -473,7 +495,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.html
 
 # Moderation Policy
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -491,6 +513,7 @@ It does not judge whether the work is correct, original or important.
 - The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
 - The work has a title, an abstract and references, in the ordinary form of a scholarly paper. Where the repository lets Sophaxis fetch the PDF, the automatic check reads its shape (the number of pages, whether its text can be read, and whether the title, an abstract and references can be found) and shows it in the issue. The shape decides nothing; the moderator reads the PDF.
 - The submission includes a statement on the use of language models and other generative models.
+- From 2026-11-24, the submission states the funding, the competing interests, and whether the work involves human participants, with the ethics approval and the consent where it does, as the [Submission Policy](./submission.html) sets out.
 - The submitter has confirmed that every author agrees and that the version may be shared.
 - From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
 - From 2026-11-23, a researcher has vouched for a first submission, as the Submission Policy sets out.
@@ -502,6 +525,8 @@ It does not judge whether the work is correct, original or important.
 
 It does not check proofs, arguments or data.
 It does not run plagiarism checks.
+A moderator who finds plagiarism declines the submission, as set out under "Research integrity" below.
+It does not check the statements on funding, competing interests, research ethics, or data and code, beyond reading them.
 It does not compare the work with the literature.
 
 ## Provisional registration
@@ -528,8 +553,9 @@ A moderator who declines a submission names one or more of these reasons, with a
 - Not in the form of a scholarly paper: it lacks a title, an abstract or references.
 - Licence: the DOI metadata does not carry an accepted licence.
 - Authorship: the submitter could not be confirmed as an author, or not every author agrees.
-- Disclosure: the statement on generative models is missing or does not say how they were used.
+- Disclosure: the statement on generative models is missing or does not say how they were used, or, from 2026-11-24, a statement on funding, competing interests, or human participants and research ethics is missing or incomplete.
 - Rights or personal data: the work contains material that the authors may not share, or personal data of third parties, or the PDF carries a notice of rights that contradicts its licence.
+- Plagiarism: the work presents the words, ideas, proofs or results of others as the authors' own, or presents the authors' own earlier work as new, without saying where they come from.
 - Where the authors live or stay: an author lives in a place where Sophaxis is not offered, or stayed in one between the submission and the listing.
 - Spam or abuse.
 
@@ -554,6 +580,28 @@ The operator's own submissions get no priority: they are moderated in the order 
 From 2026-11-09, a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.
 The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.
 The [Statistics](../stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
+
+## Research integrity
+
+Plagiarism is presenting the words, ideas, proofs or results of others as one's own, without saying where they come from.
+Presenting the authors' own earlier work as new, without citing it, is treated the same way, and so is submitting one work to Sophaxis twice under different DOIs.
+Quoting, paraphrasing or building on the work of others with a clear citation is not plagiarism.
+Sophaxis runs no software to detect plagiarism.
+A moderator who finds it in a submission declines the submission, naming "Plagiarism".
+
+Research misconduct includes plagiarism, fabrication (making up data, results or sources), falsification (changing them so that the work misrepresents them), and an untrue statement in the form.
+Anyone can raise a concern about a listed record, in public through the correction issue linked on its page.
+A concern that should not be public, or that names a person, goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator handles a concern by the steps that COPE, the Committee on Publication Ethics, recommends for journals, as far as one person can; Sophaxis is not a member of COPE.
+
+- The operator reads the concern and, if it concerns a listed record and is not plainly without ground, gives the authors 14 days to answer it.
+- Sophaxis does not investigate misconduct. It has no power to examine data, records or witnesses. Where the research was done at an institution, or a journal has published the work, the operator tells the person who raised the concern that the institution or the journal is the body that investigates, and may inform it.
+- A note is added to the record only for what is established: what the authors confirm, what an institution or a journal finds, or what a notice that Crossref records says. The note says what was found and by whom, and the day; it does not repeat an allegation.
+- Where plagiarism or another problem is established, the authors are asked to correct the work in its repository or to withdraw it under the [Withdrawal Policy](./withdrawal.html). Copying that infringes copyright is removed under the [Takedown Policy](./takedown.html).
+- The person who raised a concern by email is not named to the authors or to anyone else without their consent, unless the law requires it.
+- A concern about a work by the operator follows the same steps, and the operator's answer is posted in the record's correction issue.
+
+The operator closes without action a concern that is plainly made to harass, and says so to the person who raised it.
 
 ## After listing
 
@@ -1500,7 +1548,7 @@ Source: https://sophaxis.vercel.app/process.html
 
 # From submission to listing
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1519,6 +1567,7 @@ You need four things.
 Every author of the work must agree to the listing.
 From 2026-11-23, a first submission also needs a researcher to vouch for it, with a journal article, a book chapter or a book, as the [Submission Policy](./policies/submission.html) sets out.
 If you used language models or other generative models, note which tools you used and what for.
+From 2026-11-24, the form also asks for statements on funding, on competing interests, and on human participants and research ethics, and, as an option, where the data and code are.
 
 ## Step 1. Find your GitHub username
 
@@ -1542,7 +1591,7 @@ Sophaxis reads only the name, the links and the works in your ORCID record; it n
 
 1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens.
 2. After "[Submission]" in the title, add a few words, such as the title of your work.
-3. Give the DOI, your ORCID iD, the category and the statement on generative models, and tick the confirmations.
+3. Give the DOI, your ORCID iD, the category, the statement on generative models and, from 2026-11-24, the statements on funding, competing interests and research ethics, and tick the confirmations.
 4. Press the button at the bottom of the form to create the issue.
 
 The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.
@@ -1607,7 +1656,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [自動で動く手順（日本語訳）](./automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1629,6 +1678,7 @@ The code of each step is public, and each section links to it.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
 - From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
 - From 2026-11-23, it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.
+- From 2026-11-24, it also checks that the statements on funding, on competing interests, and on human participants and research ethics are given. It does not judge what they say.
 - From 2026-11-23, for a submitter who is not yet an author of a listed work, it also counts a researcher who vouches for the work: it reads the name, the websites and the works of that researcher's public ORCID record, and runs again when such a comment is written, edited or deleted.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
@@ -1726,7 +1776,7 @@ Source: https://sophaxis.vercel.app/transparency.html
 
 # Transparency: a self-assessment
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-10.
 
 Japanese: [透明性の自己評価（日本語訳）](./transparency.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1755,7 +1805,7 @@ Each heading gets one of four marks:
 | Preservation | In part |
 | Copyright | In part |
 | Licensing | Met |
-| Publication ethics and related editorial policies | In part |
+| Publication ethics and related editorial policies | Met |
 | Editorial assessment | Met |
 | Peer review | Does not apply |
 | Access | Met |
@@ -1813,19 +1863,20 @@ The Terms of Use say how GitHub and Vercel may use public content, including to 
 
 ### Publication ethics and related editorial policies
 
-In part.
+Met.
+The statements on funding, competing interests and research ethics are asked from 2026-11-24, after the notice of 14 days that the Terms of Use give.
 
 - Aims and scope: stated on the top page and in the [Submission Policy](./policies/submission.html). Met.
 - Authorship, and the use of AI: only an author can submit, every author must agree, and the use of language models and other generative models must be disclosed, with its extent; a model cannot be an author. Met.
-- Conflicts of interest: the operator's own submissions are marked, get no priority and wait seven days in public before listing ([Moderation Policy](./policies/moderation.html)). Conflicts of interest of the authors are not asked for. In part.
-- Data sharing and reproducibility: no policy. Not met.
-- Funding and support: authors are not asked to disclose funding. Not met.
+- Conflicts of interest: the operator's own submissions are marked, get no priority and wait seven days in public before listing ([Moderation Policy](./policies/moderation.html)). From 2026-11-24, the authors state their competing interests in the form, and the record page shows the statement ([Submission Policy](./policies/submission.html)). Met.
+- Data sharing and reproducibility: the Submission Policy encourages authors to say where the data and code are, and the form asks it as an option; it is not required and not checked. Met.
+- Funding and support: from 2026-11-24, the authors name every funder, with grant numbers, or say that there was none, and the record page shows the statement. Met.
 - Post-publication review: anyone can report an error in a record by a public issue. Met.
 - Corrections, retractions and expressions of concern: corrections are dated notes; the notices that Crossref records, including those from Retraction Watch, are read at submission and each week, and shown on the record. Met.
-- Plagiarism: Sophaxis runs no plagiarism check and has no definition of plagiarism. Not met.
+- Plagiarism: the Moderation Policy defines plagiarism, including the reuse of the authors' own work as new, and a submission found to plagiarise is declined; Sophaxis runs no software check. Met.
 - Complaints and appeals: a declined submitter can answer in the issue, and the operator looks once more; requests to remove follow the [Takedown Policy](./policies/takedown.html). Met.
-- Research ethics: no policy on consent or ethics review, since the fields are philosophy and mathematics; work with personal data of third parties is declined. In part.
-- Allegations of research misconduct: no written process beyond removal requests. Not met.
+- Research ethics: from 2026-11-24, every submission states whether it involves human participants, and one that does names the ethics approval, or why none was needed, and the consent of identifiable participants; work with personal data of third parties is declined. Met.
+- Allegations of research misconduct: the Moderation Policy, under "Research integrity", says how a concern is raised, in public or by email, how the authors answer, that Sophaxis does not investigate and refers to the institution or journal, what a note on the record may say, and that a person who writes by email is not named. It follows the steps that COPE recommends, as far as one person can. Met.
 
 ### Editorial assessment
 
@@ -2453,7 +2504,7 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-09。
+最終更新：2026-11-10。
 
 これは英語の [Submission Policy](./submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -2582,6 +2633,7 @@ issue の自動の確認が、共著者のときと同じように、紹介す�
 - 著者は、この版をそのライセンスで共有する権利を持っている。学術誌が出版した作品なら、出版者がそれを許している。
 - 作品には、図や長い引用のように著者が共有してはいけない素材も、第三者の個人データも含まれていない。
 - 生成モデルについての申告は、完全で真実である。
+- 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告は、完全で真実である。
 - [利用規約](./terms.ja.html)が定めるとおり、著者は作品とその掲載についてすべての責任を負う。
 
 ## 投稿の手順
@@ -2622,6 +2674,27 @@ GitHub のユーザー名と、様式に書いたことはすべて、誰でも�
 
 掲載の後に、申告されていない相当の使用が明らかになった場合、
 記録に注記を付け、著者に申告を足すよう求めます。
+
+## 研究資金、利益相反、研究倫理、データ
+
+2026-11-24 から、様式は三つの申告を求めます。作品は、三つすべてが書かれているときに限り載せます。
+issue の自動の確認は、それぞれの欄が埋まっていることを確かめます。書かれた中身は判断しません。
+
+- 研究資金：作品のすべての資金提供者と助成番号。資金がなかったときは、そのこと。
+- 利益相反：著者の金銭上または個人的な利害で、作品に関わるもの。雇用、顧問、報酬、作品が論じる人との近い関係などです。ないときは、そのこと。
+- 人を対象とする研究と研究倫理：作品が、調査、聞き取り、実験など、人を対象とする研究を含むかどうか。
+
+人を対象とする研究を含む作品は、承認した倫理審査委員会の名を挙げるか、研究を行った場所の規則のもとで承認が要らなかった理由を書かなければなりません。
+特定できる参加者は、全員が同意していなければならず、申告はそのことを述べます。
+上に定めるとおり、第三者の個人データを含む作品は受け付けません。
+
+様式は、任意の欄として、作品が拠るデータ、コード、その他の資料の所在（DOI 付きのリポジトリなど）か、それがないことも尋ねます。
+Sophaxis は著者にそれらを公開するよう勧めますが、求めはせず、確かめもしません。
+
+記録の頁は、それぞれの申告を著者が書いたとおりに示します。
+Sophaxis は、申告を読む以上には確かめません。
+申告が真実でないとわかったときは、[モデレーションの規程](./moderation.ja.html)の「研究の公正」に従って扱います。
+2026-11-24 より前に開かれた投稿には掛かりません。
 
 ## 版と更新
 
@@ -2751,7 +2824,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 # モデレーションの規程（日本語訳）
 
-最終更新：2026-11-09。
+最終更新：2026-11-10。
 
 これは英語の [Moderation Policy](./moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -2769,6 +2842,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 - 作品が、受け付けるライセンスの一つ、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを持つ。
 - 作品が、学術論文の通常の形で、題・要旨・参考文献を備えている。リポジトリが Sophaxis に PDF の取得を許しているときは、自動の確認が PDF の形（頁数、文字として読めるか、題・要旨・参考文献が見つかるか）を読み、issue に示します。形は何も決めません。モデレーターが PDF を読みます。
 - 投稿に、言語モデルとその他の生成モデルの使用についての申告がある。
+- 2026-11-24 から、[投稿の規程](./submission.ja.html)が定めるとおり、投稿が研究資金、利益相反、人を対象とする研究を含むかどうかを述べ、含むときは倫理審査の承認と同意を述べている。
 - 投稿者が、著者全員の同意と、その版を共有してよいことを確認している。
 - 2026-11-21 から、[投稿の規程](./submission.ja.html)が定めるとおり、著者が複数いる作品では、ほかの著者全員がそれぞれ自分の同意を確かめている。
 - 2026-11-23 から、投稿の規程が定めるとおり、初めての投稿が研究者の紹介を得ている。
@@ -2780,6 +2854,8 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 証明・論証・データは確かめません。
 剽窃の検査は行いません。
+モデレーターが剽窃を見つけたときは、下の「研究の公正」に定めるとおり、投稿を断ります。
+研究資金、利益相反、研究倫理、データとコードについての申告は、読む以上には確かめません。
 作品を文献と比べることはしません。
 
 ## 仮登録
@@ -2806,8 +2882,9 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 - 学術論文の形でない：題・要旨・参考文献のどれかを欠く。
 - ライセンス：DOI のメタデータに、受け付けるライセンスが記されていない。
 - 著者であること：投稿者が著者であると確かめられない、または著者全員が同意していない。
-- 申告：生成モデルについての申告が無い、またはどう使ったかを書いていない。
+- 申告：生成モデルについての申告が無い、またはどう使ったかを書いていない。または、2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が無い、または足りない。
 - 権利と個人データ：作品に、著者が共有してはいけない素材や第三者の個人データが含まれている。または、PDF にライセンスと食い違う権利の表示がある。
+- 剽窃：作品が、他人の言葉・考え・証明・結果を著者自身のものとして示している。または、著者自身の前の作品を、出どころを言わずに新しいものとして示している。
 - 住んでいる場所と滞在した場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在した。
 - スパムまたは嫌がらせ。
 
@@ -2832,6 +2909,28 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 2026-11-09 から、運営者の投稿は、投稿の issue を開いてから七日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。
 記録は issue を開いた日を持ち、それより早く載せようとすると、サイトの生成が止まります。
 [統計](../stats.html)の頁と `llms.txt` が、表示している記録のうち何件が運営者の投稿かを示します。
+
+## 研究の公正
+
+剽窃とは、他人の言葉・考え・証明・結果を、出どころを言わずに自分のものとして示すことです。
+著者自身の前の作品を、引かずに新しいものとして示すことも同じに扱います。一つの作品を、別の DOI で二度 Sophaxis に投稿することも同じです。
+はっきり引用を示したうえで、他人の作品を引き、言い換え、その上に積み上げることは剽窃ではありません。
+Sophaxis は、剽窃を見つけるソフトウェアを使いません。
+モデレーターが投稿に剽窃を見つけたときは、「剽窃」を挙げて投稿を断ります。
+
+研究の不正には、剽窃、捏造（データ・結果・出典を作り上げること）、改ざん（作品がそれらを偽って示すように変えること）、様式の中の真実でない申告が含まれます。
+掲載された記録への懸念は、だれでも、その頁からつながる訂正の issue で公開して述べることができます。
+公開すべきでない懸念や、人を名指す懸念は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへメールで送ります。
+運営者は、出版倫理委員会（COPE）が学術誌に勧める手順に、一人でできる限り従って懸念を扱います。Sophaxis は COPE の会員ではありません。
+
+- 運営者は懸念を読み、それが掲載された記録に関わり、明らかに根拠を欠くものでなければ、著者に 14 日の答える期間を与えます。
+- Sophaxis は不正を調査しません。データ・記録・証人を調べる権限を持ちません。研究が機関で行われたとき、または学術誌が作品を出版したときは、調査するのはその機関か学術誌であることを、懸念を述べた人に伝え、その機関か学術誌に知らせることがあります。
+- 記録に注記を付けるのは、確かになったことだけです。著者が認めたこと、機関か学術誌が認定したこと、Crossref が記録する通知が述べることです。注記は、何がだれによって認定されたかとその日を述べ、申し立てを繰り返しません。
+- 剽窃やほかの問題が確かになったときは、著者に、リポジトリで作品を訂正するか、[撤回の規程](./withdrawal.ja.html)に従って撤回するよう求めます。著作権を侵害する複製は、[削除の規程](./takedown.ja.html)に従って削除します。
+- メールで懸念を述べた人の名は、その人の同意なしに、著者にもほかのだれにも明かしません。法が求めるときは別です。
+- 運営者の作品への懸念も同じ手順で扱い、運営者の答えはその記録の訂正の issue に載せます。
+
+明らかに嫌がらせのための懸念は、運営者が何もせずに閉じ、述べた人にそう伝えます。
 
 ## 掲載の後
 
@@ -3305,7 +3404,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 # 投稿から掲載まで（日本語訳）
 
-最終更新：2026-11-09。
+最終更新：2026-11-10。
 
 これは英語の [From submission to listing](./process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -3324,6 +3423,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 作品の著者全員が、掲載に同意している必要があります。
 [投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 から、初めての投稿には研究者一人の紹介も要ります。紹介する研究者は、学術誌の論文・本の章・本を持つ人です。
 言語モデルやその他の生成モデルを使った場合は、使った道具と、何に使ったかを書きます。
+2026-11-24 から、様式は研究資金、利益相反、人を対象とする研究と研究倫理についての申告も求めます。任意で、データとコードの所在も尋ねます。
 
 ## 手順 1. GitHub のユーザー名を確かめる
 
@@ -3347,7 +3447,7 @@ Sophaxis が ORCID の記録から読むのは、名前・リンク・業績だ�
 
 1. [投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)を開きます。GitHub がサインインを求めたら、サインインします。そのあと様式が開きます。
 2. 題の「[Submission]」のあとに、作品の題のような短い言葉を足します。
-3. DOI、ORCID iD、分野、生成モデルについての申告を書き、確認の欄に印を付けます。
+3. DOI、ORCID iD、分野、生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告を書き、確認の欄に印を付けます。
 4. 様式のいちばん下のボタンを押して、issue を作ります。
 
 題・著者・要旨・ライセンスは、DOI のメタデータから取ります。手で打ち込むことはありません。
@@ -3563,7 +3663,7 @@ Source: https://sophaxis.vercel.app/automation.ja.html
 
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-09。
+最終更新：2026-11-10。
 
 これは英語の [What runs by itself](./automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -3586,6 +3686,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 2026-11-21 から、[投稿の規程](./policies/submission.ja.html)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
 - 2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから六か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。
 - 2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。
+- 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
 - 2026-11-23 から、載っている作品の著者でまだない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
 - 運営者に残すこと：投稿を受理するか、断るか。
 - コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js)。[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
@@ -3897,7 +3998,7 @@ Source: https://sophaxis.vercel.app/transparency.ja.html
 
 # 透明性の自己評価（日本語訳）
 
-最終更新：2026-11-09。
+最終更新：2026-11-10。
 
 これは英語の [Transparency: a self-assessment](./transparency.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -3927,7 +4028,7 @@ Sophaxis は学術誌ではありません。オーバーレイ型のプレプ�
 | 保存 | 一部 |
 | 著作権 | 一部 |
 | ライセンス | 満たす |
-| 出版倫理と関連する編集の方針 | 一部 |
+| 出版倫理と関連する編集の方針 | 満たす |
 | 編集上の評価 | 満たす |
 | 査読 | 該当しない |
 | アクセス | 満たす |
@@ -3991,19 +4092,20 @@ Sophaxis はファイルを手を加えずに置き、著作権の表示を足�
 
 ### 出版倫理と関連する編集の方針
 
-一部。
+満たす。
+研究資金、利益相反、研究倫理についての申告は、利用規約が定める 14 日の告知を置いて、2026-11-24 から求めます。
 
 - 目的と範囲：トップの頁と[投稿の規程](./policies/submission.ja.html)に書いてあります。満たす。
 - 著者であることと AI の使用：投稿できるのは著者だけで、著者全員の同意が要ります。言語モデルとその他の生成モデルの使用は、その程度とともに申告しなければなりません。モデルは著者になれません。満たす。
-- 利益相反：運営者自身の投稿には印を付け、優先せず、載せる前に七日のあいだ公開で待ちます（[モデレーションの規程](./policies/moderation.ja.html)）。著者の利益相反は尋ねていません。一部。
-- データの共有と再現性：方針はありません。満たさない。
-- 資金と支援：著者に資金の開示を求めていません。満たさない。
+- 利益相反：運営者自身の投稿には印を付け、優先せず、載せる前に七日のあいだ公開で待ちます（[モデレーションの規程](./policies/moderation.ja.html)）。2026-11-24 から、著者は様式で利益相反を申告し、記録の頁がその申告を示します（[投稿の規程](./policies/submission.ja.html)）。満たす。
+- データの共有と再現性：投稿の規程は、データとコードの所在を書くよう著者に勧め、様式は任意の欄としてそれを尋ねます。求めはせず、確かめもしません。満たす。
+- 資金と支援：2026-11-24 から、著者はすべての資金提供者を助成番号とともに挙げるか、資金がなかったことを述べ、記録の頁がその申告を示します。満たす。
 - 公開後の評価：誰でも、公開の issue で記録の誤りを報告できます。満たす。
 - 訂正・撤回・懸念表明：訂正は日付付きの注記です。Crossref が記録している通知は、Retraction Watch からのものも含め、投稿のときと毎週読み、記録に示します。満たす。
-- 剽窃：Sophaxis は剽窃の検査を行わず、剽窃の定義も持ちません。満たさない。
+- 剽窃：モデレーションの規程が、著者自身の作品を新しいものとして使い回すことも含めて剽窃を定め、剽窃が見つかった投稿は断ります。ソフトウェアによる検査は行いません。満たす。
 - 苦情と異議：断られた投稿者は issue で答えることができ、運営者がもう一度見直します。削除の求めは[削除の規程](./policies/takedown.ja.html)に従います。満たす。
-- 研究倫理：分野が哲学と数学なので、同意や倫理審査についての方針はありません。第三者の個人データを扱う作品は断ります。一部。
-- 研究不正の申し立て：削除の求めのほかに、書かれた手続きはありません。満たさない。
+- 研究倫理：2026-11-24 から、どの投稿も人を対象とする研究を含むかどうかを述べ、含むものは、倫理審査の承認か承認が要らなかった理由と、特定できる参加者の同意を述べます。第三者の個人データを扱う作品は断ります。満たす。
+- 研究不正の申し立て：モデレーションの規程の「研究の公正」が、懸念を公開かメールで述べる方法、著者が答えること、Sophaxis は調査せず機関か学術誌に委ねること、記録の注記に書けること、メールで述べた人の名を明かさないことを定めています。COPE が勧める手順に、一人でできる限り従います。満たす。
 
 ### 編集上の評価
 
