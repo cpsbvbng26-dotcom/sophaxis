@@ -2056,6 +2056,7 @@ The operator aims to answer within 7 days.
 - Zenodo: the code and the records, archived with each release. Version 1.0.0 has the DOI [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372); [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) stands for every version. The community <https://zenodo.org/communities/sophaxis> gathers the Zenodo records of works listed on Sophaxis; it is not an affiliation with Zenodo.
 - GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
 - ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).
+- X: the official account [@SophaxisX](https://x.com/SophaxisX), with new records and news. The handle ends in X because @Sophaxis was already taken; that account is not Sophaxis.
 
 ## Security
 
@@ -2216,7 +2217,7 @@ The name, the logo, the colours and the badge for listed works are on the page [
 ## Contact
 
 Questions go to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in [a public issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
-News is on the [News](./news.html) page.
+News is on the [News](./news.html) page and on X, at [@SophaxisX](https://x.com/SophaxisX).
 
 ---
 
@@ -3975,6 +3976,7 @@ issue は公開されます。issue に個人データを書かないでくだ�
 - Zenodo：コードと記録を、版を出すたびに保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。[10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) はすべての版を表します。コミュニティ <https://zenodo.org/communities/sophaxis> は、Sophaxis に載っている作品の Zenodo の記録を集めています。これは、Sophaxis が Zenodo と特別な関係にあることを意味するものではありません。
 - GitHub：コード、記録、投稿を収めた[公開のリポジトリ](https://github.com/cpsbvbng26-dotcom/sophaxis)です。
 - ROAR：Sophaxis は、サウサンプトン大学の Registry of Open Access Repositories の編集の審査を通り、2026-11-06（日本時間）からそこに載っています。[記録 27422](https://roar.eprints.org/27422/) です。
+- X：公式のアカウント [@SophaxisX](https://x.com/SophaxisX) で、新しい記録とお知らせを流します。@Sophaxis はすでに使われていたので、名の末尾に X を付けました。@Sophaxis のアカウントは Sophaxis ではありません。
 
 ## セキュリティ
 
@@ -4448,5 +4450,5 @@ Sophaxis は、著者からも読者からも料金を取らず、日本に住�
 ## 連絡先
 
 質問は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールか、[公開の issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) で受けます。
-お知らせは、[お知らせ](./news.html)の頁にあります（英語）。
+お知らせは、[お知らせ](./news.html)の頁（英語）と、X の [@SophaxisX](https://x.com/SophaxisX) にあります。
 

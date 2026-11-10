@@ -3323,6 +3323,18 @@ console.log('\n88. Share cards: one image per record shown, drawn by tools/cards
     && read(path.join(ROOT, 'tools', 'cards.js')).includes("await page.route('**/*', (r) => r.abort());"));
 }
 
+console.log('\n89. The official account on X');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
+  const handles = new Set(pages.flatMap((f) => [...read(path.join(ROOT, 'site', f)).matchAll(/https:\/\/(?:x|twitter)\.com\/(?!intent\/)([A-Za-z0-9_]+)/g)].map((m) => m[1])));
+  ok('the account is @SophaxisX, named on the contact page, the press page and the news, with why the name ends in X; no page links any other account, and every page names it for share cards',
+    site.x === 'SophaxisX' && [...handles].join() === 'SophaxisX'
+    && read(path.join(ROOT, 'contact.md')).includes('- X: the official account [@SophaxisX](https://x.com/SophaxisX), with new records and news. The handle ends in X because @Sophaxis was already taken; that account is not Sophaxis.')
+    && read(path.join(ROOT, 'contact.ja.md')).includes('@Sophaxis のアカウントは Sophaxis ではありません。') && read(path.join(ROOT, 'site', 'press.html')).includes('href="https://x.com/SophaxisX"')
+    && pages.every((f) => read(path.join(ROOT, 'site', f)).includes('<meta name="twitter:site" content="@SophaxisX">')), [...handles].join(', '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
