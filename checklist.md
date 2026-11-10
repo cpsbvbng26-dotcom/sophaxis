@@ -1,10 +1,11 @@
 # Before you submit: a checklist
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [投稿の前に：確かめること（日本語訳）](./checklist.ja.html). It is a translation; where the two differ, the English text applies.
 
 This list adds no rule. It gathers what the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html) already ask, so that a submission is complete the first time. Where this list and the policies differ, the policies apply.
+For anyone who has never made a preprint public, [Your first preprint](./first.html) comes first.
 
 ## The work
 

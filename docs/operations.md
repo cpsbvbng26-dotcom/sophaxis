@@ -28,6 +28,17 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 - Add the entries to `CHANGELOG.md` and change the version and the date in `CITATION.cff`.
 - The operator creates the GitHub Release and the Zenodo version by hand. Record the DOI that Zenodo gives, and no other.
 
+## If Vercel cannot serve the site
+
+The site is plain files, and every link inside it is relative, except on the page shown when an address is not found; a check holds this. It can therefore be served from GitHub Pages, at an address under the repository, with these losses:
+
+- The short addresses `/abs/<id>` and `/pdf/<id>`, and the copies of a PDF beside its record page, which `site/vercel.json` provides.
+- The OAI-PMH interface at `/oai`, which runs as a function on Vercel.
+- The security headers of `site/vercel.json`. The Content-Security-Policy in each page stays.
+- The address itself: `baseUrl` in `site.json` changes, and every canonical link with it.
+
+Announce the move in the news and in the README, and tell the registries that hold the old address.
+
 ## If the operator cannot work
 
 - Follow "Continuity" in the Terms of Use: after 30 days, the top page says that new submissions are paused, and the listed records stay online.
@@ -38,6 +49,7 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 - [ ] The list of places where Sophaxis is not offered still matches the laws, as the legal review records them.
 - [ ] The weekly watch has no open issue, and every record's DOI still resolves.
 - [ ] The Privacy Policy still describes every piece of personal data that the code reads or writes.
+- [ ] The assessment of the risks to people's data (`docs/impact-assessment.md`) still scores each risk as it stands, and lists every kind of processing.
 - [ ] Every Japanese page still says what its English page says.
 - [ ] The free services of GitHub and Vercel still cover the site.
 - [ ] What the accessibility statement says is known is still accurate.

@@ -1,6 +1,6 @@
 # For anyone introducing Sophaxis
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [紹介する人のために（日本語訳）](./press.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -44,6 +44,7 @@ The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https:/
 
 The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
 A version of Sophaxis that fits on one sheet, for printing, is [Sophaxis on one page](./leaflet.html).
+For library staff, there is [For libraries](./libraries.html).
 
 ## Contact
 

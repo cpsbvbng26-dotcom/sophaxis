@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -74,6 +74,16 @@ The operator is at present the only moderator.
 Other moderators may be invited.
 A researcher in these fields who would like to moderate can write to the operator; the operator decides whom to invite.
 Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
+A second moderator is invited only when all of these hold:
+
+- They have an ORCID iD and a published or listed work in one of the fields of Sophaxis.
+- They agree, in a public issue, to moderate under this policy without pay.
+- They declare their interests as an adviser does, and the contact page shows the declaration.
+- No work of theirs has been declined or removed under "Research integrity" below.
+
+A moderator does not decide on their own work, or on the work of a close collaborator; another moderator, or the operator, decides it.
+When two moderators disagree, the operator decides, and says so in the issue.
+A moderator may stop at any time, and the operator may end a moderator's role; either is recorded on the contact page with the date.
 Since 2026-11-10 the operator has also invited researchers to form an advisory board, which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.html).
 
 ## Conflicts of interest

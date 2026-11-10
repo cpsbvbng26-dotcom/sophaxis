@@ -1,6 +1,6 @@
 # Policies
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [規程（日本語訳）](./policy.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -60,6 +60,7 @@ Abstracts in both keep the licence of their work.
 
 These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
+Each policy is put in a few sentences on [The policies in brief](./rules.html); the policies themselves govern.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
 Every policy and the Disclaimer have Japanese translations, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
 
