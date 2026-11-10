@@ -79,6 +79,12 @@
     "logic": "Logic"
   },
   "categoriesJa": { "philosophy": "哲学", "mathematics": "数学", "philosophy-of-mathematics": "数理哲学", "philosophy-of-science": "科学哲学", "logic": "論理学" },
+  "subfields": {
+    "philosophy": { "ethics": "Ethics", "political": "Political philosophy", "epistemology": "Epistemology", "metaphysics": "Metaphysics", "mind": "Philosophy of mind", "language": "Philosophy of language", "aesthetics": "Aesthetics", "religion": "Philosophy of religion", "history": "History of philosophy", "comparative": "Asian and comparative philosophy" },
+    "mathematics": { "algebra": "Algebra", "analysis": "Analysis", "geometry": "Geometry and topology", "number-theory": "Number theory", "combinatorics": "Combinatorics", "probability": "Probability and statistics", "game-theory": "Game theory", "applied": "Applied mathematics" },
+    "logic": { "proof-theory": "Proof theory", "model-theory": "Model theory", "set-theory": "Set theory", "computability": "Computability", "philosophical-logic": "Philosophical logic" },
+    "philosophy-of-science": { "physics": "Philosophy of physics", "biology": "Philosophy of biology", "social": "Philosophy of the social sciences", "technology": "Philosophy of technology" }
+  },
   "collections": [
     { "slug": "game-theory", "name": "Game theory", "ja": "ゲーム理論", "description": "Repeated games, equilibria and the mathematics of strategy." },
     { "slug": "individual-autonomy", "name": "The individual and autonomy", "ja": "個と自律", "description": "Philosophy of the autonomy, self-cultivation and solitude of the individual." },
