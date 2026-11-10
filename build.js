@@ -291,7 +291,7 @@ const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('
 const CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; base-uri 'none'; form-action 'none'`;
 const SEARCH_CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'`;
 
-function page({ title, description, rel, root, canonical, body, head, csp, lang }) {
+function page({ title, description, rel, root, canonical, body, head, csp, lang, image }) {
   /* The 404 page is served at any address, so it links from the root. */
   const up = root ? '/' : rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
@@ -317,8 +317,8 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang 
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
-<meta property="og:image" content="${esc(SITE.baseUrl)}og.png">
-${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="summary">
+<meta property="og:image" content="${esc(image || SITE.baseUrl + 'og.png')}">
+${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">
 <style>${CSS}</style>
 </head>
 <body>
@@ -591,6 +591,13 @@ function publishedCite(p) {
   return `${andList(names, '&')} (${publishedYear(p.published)}). ${p.published.title}. ${p.published.venue}. https://doi.org/${p.published.doi}`;
 }
 
+/* The share card of a record, drawn by tools/cards.js into assets/cards/, when it matches the record. */
+const CARDS = path.join(__dirname, 'assets', 'cards');
+function hasCard(p) {
+  const m = path.join(CARDS, 'cards.json');
+  if (!fs.existsSync(m) || !fs.existsSync(path.join(CARDS, p.id + '.png'))) return false;
+  return JSON.parse(fs.readFileSync(m, 'utf8'))[p.id] === require('./tools/cards.js').cardHash(p);
+}
 function recordPage(p, all = [p]) {
   if (p.status === 'removed') return removedPage(p);
   const v = latest(p);
@@ -685,6 +692,7 @@ ${recordDoi(p) ? `<p class="meta">Record DOI: <a href="https://doi.org/${esc(rec
     canonical: 'abs/' + p.id + '.html',
     body,
     head: scholarTags(p),
+    image: hasCard(p) ? SITE.baseUrl + 'card/' + p.id + '.png' : null,
   });
 }
 
@@ -1394,6 +1402,7 @@ function build(out, paperDir) {
   fs.mkdirSync(path.join(out, 'cite'), { recursive: true });
   fs.mkdirSync(path.join(out, '.well-known'), { recursive: true });
   fs.mkdirSync(path.join(out, 'api'), { recursive: true });
+  fs.mkdirSync(path.join(out, 'card'), { recursive: true });
   const files = {
     'index.html': indexPage(papers, all),
     'submit.html': submitPage(),
@@ -1456,13 +1465,15 @@ function build(out, paperDir) {
   /* The logo is drawn by hand from rectangles only, and copied as it is. The ICO and the PNGs
    * are the same logo in pixels, for search results and home screens that do not take SVG. */
   for (const f of ['favicon.svg', 'favicon.ico', 'favicon-192.png', 'apple-touch-icon.png', 'og.png']) files[f] = fs.readFileSync(path.join(__dirname, 'assets', f));
+  /* A record whose card is missing or out of date keeps the logo as its image; the check reports it. */
+  papers.filter(hasCard).forEach((p) => { files['card/' + p.id + '.png'] = fs.readFileSync(path.join(CARDS, p.id + '.png')); });
   /* The one script of the site, used only by search.html. */
   files['search.js'] = fs.readFileSync(path.join(__dirname, 'assets', 'search.js'));
   for (const [f, s] of Object.entries(files)) fs.writeFileSync(path.join(out, f), s);
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
