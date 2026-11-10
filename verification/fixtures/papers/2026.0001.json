@@ -46,7 +46,9 @@
       "version": 2,
       "file": "2026.0001v2.pdf",
       "sha256": "4812affd354836277e419f2435243725a71e3e6808f69d5712b8d3e400bcfc02",
-      "source": "https://zenodo.org/api/records/1234999/files/fixture.pdf/content"
+      "source": "https://zenodo.org/api/records/1234999/files/fixture.pdf/content",
+      "pages": 12,
+      "words": 5120
     }
   ],
   "categories": [

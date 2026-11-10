@@ -851,7 +851,7 @@ console.log('\n20. Operator and contact');
     src.includes('Sophaxis is operated by one person, Takuya Nemoto, in Japan.') && c.includes('href="https://orcid.org/0009-0000-1406-0547"') && /Last updated: \d{4}-\d{2}-\d{2}\./.test(src));
   const forms = fs.readdirSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE')).filter((f) => f !== 'config.yml');
   ok('the contact page links every issue form there is, and private requests go only to the ORCID record',
-    forms.length === 5 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
+    forms.length === 6 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
     && src.includes("email to the address on the operator's [ORCID record]") && !/@[a-z0-9-]+\.[a-z]/i.test(src));
   ok('the postal address is not published, and is given on request without delay',
     src.includes('The operator\'s postal address is not published.') && src.includes('It is given on request, without delay, as Japan\'s Act on the Protection of Personal Information provides.'));
@@ -1374,7 +1374,7 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
       const last = (p.pdfs || []).slice(-1)[0];
       const a = (/<p class="access">([\s\S]*?)<\/p>/.exec(h) || [, ''])[1];
       return a.startsWith('<b>Access:</b> ') && a.includes('<a href="../cite/' + p.id + '.bib">BibTeX</a>')
-        && (!last || a.startsWith('<b>Access:</b> <a href="../pdf/' + last.file + '" type="application/pdf">PDF (v' + last.version + ')</a>'))
+        && (!last || a.startsWith('<b>Access:</b> <a href="../pdf/' + last.file + '" type="application/pdf">PDF (v' + last.version + ', ' + last.pages + ' pages)</a>'))
         && h.indexOf('<p class="access">') < h.indexOf('<h2>Abstract</h2>');
     }));
   ok('a withdrawn record page has no Access line', loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers.filter((p) => p.status === 'withdrawn')
@@ -3520,6 +3520,55 @@ console.log('\n93. A first preprint, libraries, the policies in brief, advisers\
   const joss = read(path.join(ROOT, 'paper', 'paper.md'));
   ok('the JOSS draft is marked not submitted, names the day its criteria were read, the earliest day, the need for use by others, and the AI usage disclosure it carries',
     joss.includes('Draft. Not submitted.') && joss.includes('read on 2026-11-11') && joss.includes('2027-05-01 at the earliest') && joss.includes('Aspirational statements do not count.') && joss.includes('# AI usage disclosure') && joss.includes('Claude is not an author.'));
+}
+
+console.log('\n94. The form in Japanese, subfields, a summary in plain words, and the reading time');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js'), I = require('../tools/intake.js');
+  const yaml = (f) => read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', f));
+  const fields = (t) => [...t.matchAll(/^  - type: (\w+)\n(?:    id: (\w+)\n)?/gm)].map((m) => m[1] + ':' + (m[2] || ''));
+  const block = (t, id) => { const i = t.indexOf('    id: ' + id + '\n'); const j = t.indexOf('\n  - type:', i); return t.slice(i, j < 0 ? undefined : j); };
+  const opts = (b) => [...b.matchAll(/^        - (?:label: )?"?(.+?)"?$/gm)].map((m) => m[1]);
+  const req = (b) => (b.match(/required: (true|false)/g) || []).join();
+  const en = yaml('submission.yml'), ja = yaml('submission-ja.yml');
+  const ids = fields(en).filter((x) => !x.endsWith(':')).map((x) => x.split(':')[1]);
+  const label = (t, id) => (/      label: (.+)/.exec(block(t, id)) || [])[1];
+  ok('the Japanese form has the same ' + ids.length + ' fields in the same order and kind, the same required marks, the same English options for every dropdown, and as many boxes in every group',
+    JSON.stringify(fields(en)) === JSON.stringify(fields(ja)) && /labels: \["submission"\]/.test(ja) && ja.includes('title: "[Submission] "')
+    && ids.every((id) => req(block(en, id)) === req(block(ja, id)) && opts(block(en, id)).length === opts(block(ja, id)).length)
+    && ids.filter((id) => /type: dropdown/.test(en.slice(Math.max(0, en.indexOf('    id: ' + id) - 30), en.indexOf('    id: ' + id)))).every((id) => JSON.stringify(opts(block(en, id))) === JSON.stringify(opts(block(ja, id)))));
+  ok('the intake reads every field of both forms by its label to the same key, so that the Japanese form is checked exactly as the English one',
+    ids.filter((id) => id !== 'confirm').every((id) => { const e = I.parseIssue('### ' + label(en, id) + '\n\nx\n'), j = I.parseIssue('### ' + label(ja, id) + '\n\nx\n'); return Object.keys(e).includes(id) && Object.keys(j).includes(id); })
+    && ja.includes('規程と様式の英語の文と食い違うときは、英語の文が適用されます。'));
+  ok('the Japanese form names all ' + site.notOffered.length + ' places where Sophaxis is not offered, by their Japanese names, and India for authors under 18',
+    block(ja, 'residence').includes('（' + site.notOffered.map((p) => p.ja).join('、') + '）') && block(ja, 'residence').includes('インドに住んでいるか滞在している 18 歳未満の著者の作品も載せません。'));
+  const subs = Object.entries(site.subfields).flatMap(([c, d]) => Object.values(d).map((l) => site.categories[c] + ': ' + l));
+  ok('both forms offer exactly the ' + subs.length + ' subfields of site.json, each under a category of site.json, and the intake takes one only within the chosen category',
+    Object.keys(site.subfields).every((c) => site.categories[c]) && JSON.stringify(opts(block(en, 'subfield'))) === JSON.stringify(subs) && JSON.stringify(opts(block(ja, 'subfield'))) === JSON.stringify(subs)
+    && I.subfieldOf({ category: 'mathematics', subfield: 'Mathematics: Game theory' }) === 'game-theory' && I.subfieldOf({ category: 'logic', subfield: 'Mathematics: Game theory' }) === false
+    && I.subfieldOf({ category: 'philosophy', subfield: 'Philosophy: Nothing' }) === false && I.subfieldOf({ category: 'philosophy' }) === null);
+  const good = { id: '2026.0001', title: 'T', authors: [{ name: 'A' }], abstract: 'x', category: 'mathematics', license: Object.keys(site.licenses)[0], versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-11-01' }], llm_disclosure: 'No generative model was used in writing or developing this work.', issue: 1, listed: '2026-11-01', status: 'listed' };
+  const errs = (o) => B.validate(Object.assign({}, good, o), '2026.0001.json').length;
+  ok('a record holds a subfield only of its own category, and a summary in plain words only up to ' + I.LAY_MAX + ' characters, and its page shows both',
+    errs({ subfield: 'game-theory' }) === 0 && errs({ subfield: 'ethics' }) === 1 && errs({ lay_summary: 'Short.' }) === 0 && errs({ lay_summary: 'x'.repeat(601) }) === 1 && errs({ lay_summary: '' }) === 1 && I.LAY_MAX === 600
+    && B.recordPage(Object.assign({}, good, { subfield: 'game-theory', lay_summary: 'Plain & short.' })).includes('<h2>In plain words</h2>\n<p>Plain &amp; short.</p>')
+    && B.recordPage(Object.assign({}, good, { subfield: 'game-theory' })).includes('Mathematics</a> · Game theory'));
+  const recs = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  let stats = '';
+  try { stats = require('child_process').execFileSync('node', [path.join(ROOT, 'tools', 'pdf_stats.js'), '--check'], { encoding: 'utf8' }); } catch (e) { stats = String(e.stdout || e.message); }
+  ok('every PDF copy records its pages and words, the same as pdfinfo and pdftotext count in the file, and the record page shows the reading time from them',
+    stats.includes('every recorded count matches its PDF') && recs.filter((p) => p.status !== 'removed' && p.status !== 'withdrawn' && (p.pdfs || []).length).every((p) => {
+      const x = p.pdfs[p.pdfs.length - 1];
+      return read(path.join(ROOT, 'site', 'abs', p.id + '.html')).includes('<p class="meta">' + B.readingTime(x) + '</p>');
+    }) && B.readingTime({ pages: 10, words: 4818 }).includes('roughly 25 minutes at 200 words a minute') && B.readingTime({ pages: 1, words: 100 }).includes('roughly 5 minutes'), stats.trim().split('\n').slice(0, 2).join(' / '));
+  const Lm = require('../tools/limits.js');
+  const lr = Lm.rows({ busiestDay: 80, pdfTotal: 0, pdfLargest: 0, repoBytes: null });
+  ok('the monthly run measures the free limits, warns at 80 percent and only then opens an issue, and the automation page says what it cannot measure, in both languages',
+    lr.length === 3 && lr[0][4] === true && lr[1][4] === false && Lm.rows({ busiestDay: 79 })[0][4] === false && Lm.DEPLOYS_PER_DAY === 100 && Lm.WARN === 0.8
+    && Lm.busiest(['2026-11-10T14:00:00Z', '2026-11-10T16:00:00Z', '2026-11-11T01:00:00Z']) === 2
+    && read(path.join(ROOT, '.github', 'workflows', 'monthly.yml')).includes('node tools/limits.js') && read(path.join(ROOT, 'automation.md')).includes("Vercel's bandwidth and function use are not measured")
+    && read(path.join(ROOT, 'automation.ja.md')).includes('Vercel の転送量と関数の使用は測りません。'));
 }
 
 console.log('\n' + '-'.repeat(60));
