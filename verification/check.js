@@ -1296,8 +1296,8 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     const rows = (head) => { const i = rd.indexOf(head); return i < 0 ? [] : rd.slice(i).split('\n\n').find((b) => b.startsWith('| ')).split('\n').slice(2); };
     const en = rows('## Sophaxis itself: DOI, listings and registrations under review');
     const ja = rows('### Sophaxis 自体の DOI、掲載先と、審査中の登録');
-    const names = ['DOAPR', 'PhilPapers', 'OpenDOAR'];
-    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same three in both languages, none of them shown as listed',
+    const names = ['DOAPR', 'PhilPapers', 'OpenDOAR', 'ASAPbio'];
+    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same four in both languages, none of them shown as listed',
       rd.indexOf('## Sophaxis itself: DOI, listings and registrations under review') < rd.indexOf('## Submitting') && rd.indexOf('### Sophaxis 自体の DOI、掲載先と、審査中の登録') < rd.indexOf('貢献の窓口')
       && rd.includes('Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
       && rd.includes('サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
@@ -1305,7 +1305,7 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && (rd.match(/\[10\.17605\/OSF\.IO\/MQ7ZA\]\(https:\/\/doi\.org\/10\.17605\/OSF\.IO\/MQ7ZA\)/g) || []).length >= 3
       && en.length === names.length && ja.length === names.length
       && names.every((n, i) => en[i].startsWith('| ' + n) && ja[i].startsWith('| ' + n))
-      && en.every((r) => /\| 2026-\d\d-\d\d \| (Under review|Under editorial review|Requested|Account requested|Asked; likely eligible, but new submissions are paused)/.test(r) && !/\bListed\b|Approved|Accepted/.test(r))
+      && en.every((r) => /\| 2026-\d\d-\d\d \| (Under review|Under editorial review|Requested|Requested by email|Account requested|Asked; likely eligible, but new submissions are paused)/.test(r) && !/\bListed\b|Approved|Accepted/.test(r))
       && ja.every((r) => /\| 2026-\d\d-\d\d \| (審査中|編集の審査中|依頼済み|アカウントを申請中|問い合わせ済み。基準を満たす見込みだが)/.test(r) && !/掲載済み|承認済み|載った/.test(r))
       && rd.includes('only accounts approved by its editor can edit it.') && rd.includes('describes no review of each entry before it appears, so the listing is not a review of Sophaxis.')
       && rd.includes('編集できるのは、編集者が承認したアカウントだけです。') && rd.includes('この掲載は Sophaxis の審査ではありません。')
