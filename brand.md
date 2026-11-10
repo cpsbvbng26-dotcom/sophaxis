@@ -1,6 +1,6 @@
 # Name, logo and badge
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -10,6 +10,7 @@ The name is written Sophaxis, in Latin letters, with a capital S, in every langu
 In Japanese it is read ソファクシス.
 It joins the Greek sophia (σοφία), wisdom, and the Latin axis; the [History and name](./history.html) page says more.
 A record is cited by its Sophaxis id, such as `2026.0001`, and by the DOI of the deposited work.
+On 2026-11-11 (Japan time), the operator searched J-PlatPat, the database of the Japan Patent Office, and the WIPO Global Brand Database for the name Sophaxis, and found no trade mark of that name. A search shows only what those databases held that day, and it is not legal advice. The operator has not applied to register the name.
 
 ## Logo
 
