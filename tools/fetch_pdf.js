@@ -119,7 +119,9 @@ async function main() {
       if (problems.length) { console.log('v' + v.version + ': not kept, ' + problems.join(', ')); continue; }
       const name = id + 'v' + v.version + '.pdf';
       fs.writeFileSync(path.join(dir, name), bytes);
-      p.pdfs.push(Object.assign({ version: v.version, file: name, sha256: crypto.createHash('sha256').update(bytes).digest('hex'), source }, from ? { provided_by: 'authors' } : {}));
+      /* The pages and words, for the reading-time guide on the record page (tools/pdf_stats.js). */
+      const stats = require('./pdf_stats.js').statsOf(path.join(dir, name));
+      p.pdfs.push(Object.assign({ version: v.version, file: name, sha256: crypto.createHash('sha256').update(bytes).digest('hex'), source }, from ? { provided_by: 'authors' } : {}, stats));
       console.log('v' + v.version + ': copied ' + name + ' (' + bytes.length + ' bytes' + (md5 ? ', checksum matches' : '') + ')');
     } catch (e) {
       console.log('v' + v.version + ': not copied, ' + e.message);

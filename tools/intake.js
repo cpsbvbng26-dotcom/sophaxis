@@ -61,7 +61,33 @@ const FIELDS = {
   'Data and code (optional)': 'data',
   'Language of the second abstract (optional)': 'abstract_other_lang',
   'Abstract in a second language (optional)': 'abstract_other',
+  'Summary in plain words (optional)': 'lay_summary',
+  'Subfield (optional)': 'subfield',
+  /* The Japanese form (submission-ja.yml): the same fields under Japanese labels, with the same English options. */
+  '預けたプレプリントの DOI': 'doi',
+  'あなたの ORCID iD': 'orcid',
+  'すでにある Sophaxis の番号（新しい版のときだけ）': 'update',
+  '出版された版の DOI（学術誌が出版した場合だけ）': 'published',
+  '出版された版は査読を受けましたか？': 'peer',
+  '分野': 'category',
+  'ほかの分野（任意）': 'others',
+  '下位の分野（任意）': 'subfield',
+  '要旨（DOI のメタデータに無いときだけ）': 'abstract',
+  '二つ目の要旨の言語（任意）': 'abstract_other_lang',
+  '二つ目の言語の要旨（任意）': 'abstract_other',
+  '平易な要約（任意）': 'lay_summary',
+  '言語モデルとその他の生成モデルの使用': 'llm',
+  '生成モデルを使った程度': 'llm_extent',
+  '同意': 'consent',
+  'Internet Archive への保存（任意）': 'archive',
+  '著者の住んでいる場所': 'residence',
+  '資金': 'funding',
+  '利益相反': 'competing_interests',
+  '人を対象とする研究と研究倫理': 'ethics',
+  'データとコード（任意）': 'data',
 };
+/* The longest summary in plain words, in characters. */
+const LAY_MAX = 600;
 
 /* The statements asked from SITE.statementsFrom (Submission Policy), each with the label of its row in the check. Data and code are optional. */
 const STATEMENTS = [
@@ -70,6 +96,18 @@ const STATEMENTS = [
   ['ethics', 'A statement on human participants and research ethics is given'],
 ];
 const STATEMENT_MIN = 4;
+
+/* Pure: the subfield chosen in the form, as its key, when it is one of site.json and belongs to the chosen category; null if none
+ * was chosen; false if one was chosen that does not fit. */
+function subfieldOf(form) {
+  const t = String(form.subfield || '').trim();
+  if (!t) return null;
+  const i = t.indexOf(': ');
+  const cat = Object.keys(SITE.categories).find((k) => SITE.categories[k] === t.slice(0, i));
+  const subs = (SITE.subfields || {})[cat] || {};
+  const key = Object.keys(subs).find((k) => subs[k] === t.slice(i + 2));
+  return cat && key && cat === form.category ? key : false;
+}
 
 /* Pure: the second abstract of the form, { lang, text }, when its language is a two- or three-letter code and its text is given. */
 function otherAbstract(form) {
@@ -384,6 +422,8 @@ function check({ form, login, meta, person, works, listed, pub, today, age, noti
   add('The DOI is in an accepted repository', pre, pre ? SITE.repositories[pre] : 'accepted: ' + Object.values(SITE.repositories).join(', '));
   add('The ORCID iD is valid', form.orcid && orcidOk(form.orcid));
   add('A category is chosen', form.category);
+  if (String(form.subfield || '').trim()) add('The subfield belongs to the chosen category', subfieldOf(form), form.subfield);
+  if (String(form.lay_summary || '').trim()) add('The summary in plain words has at most ' + LAY_MAX + ' characters', plain(form.lay_summary).length <= LAY_MAX, plain(form.lay_summary).length + ' characters');
   const already = listedAs(form.doi, listed);
   if (form.update) add('The record to update exists and lists this work', already === form.update || (already === null && listed && [...listed.values()].includes(form.update)), form.update);
   else add('The work is not listed yet', !already, already ? 'already listed as ' + already + '; give that id to add a new version' : '');
@@ -628,6 +668,9 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     ...Object.fromEntries(['funding', 'competing_interests', 'ethics', 'data'].filter((k) => String(form[k] || '').trim()).map((k) => [k, plain(form[k])])),
     /* An abstract in a second language, as the authors give it, when both the language code and the text are given. */
     ...(otherAbstract(form) ? { abstract_other: otherAbstract(form) } : {}),
+    /* The authors' summary in plain words, and the subfield, when given and valid. */
+    ...(String(form.lay_summary || '').trim() && plain(form.lay_summary).length <= LAY_MAX ? { lay_summary: plain(form.lay_summary) } : {}),
+    ...(subfieldOf(form) ? { subfield: subfieldOf(form) } : {}),
     issue: Number(issue),
     /* The day of the draft. The moderator sets it to the day the record is merged. */
     listed: (today || new Date().toISOString()).slice(0, 10),
@@ -890,6 +933,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

@@ -20,3 +20,7 @@ jobs:
       - run: node tools/monthly.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Whether Sophaxis still fits its free services: an issue only at 80 percent of a limit.
+      - run: node tools/limits.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
