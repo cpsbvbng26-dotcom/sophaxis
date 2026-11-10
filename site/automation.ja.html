@@ -84,7 +84,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>自動で動く手順（日本語訳）</h1>
-<p>最終更新：2026-11-10。</p>
+<p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./automation.html">What runs by itself</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>Sophaxis には、ひとりでに動く手順がいくつかあります。公開のリポジトリの GitHub Actions として動くものと、Vercel での配信として動くものです。この頁は、そのすべてを挙げます。いつ動くか、何を読むか、何を書くか、何を運営者に残すかです。どの手順のコードも公開しており、各節からリンクしています。</p>
 <ul><li>投稿・撤回・訂正・削除の求めについて判断する自動の手順はありません。判断はすべて運営者が下します。</li><li>運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。</li><li>言語モデルを使う手順はありません。どの手順も通常のコードです。</li><li>どのアカウントにもサインインする手順はありません。鍵は、GitHub が実行ごとに渡すトークンだけで、その権限は手順に要る最小限です。IndexNow の鍵は、仕組みのうえで公開のものです。</li><li>記録を変える手順は、先にサイトを組み立て、すべての検査を走らせます。検査が一つでも落ちれば、何も変えません。</li><li>これらの手順が扱う個人データは、<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a>に書いてあります。</li></ul>
@@ -101,7 +101,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>一日に一度、日本時間の 09:17</h2>
 <ul><li>読むもの：開いている削除の求めと、確かめられた撤回。</li><li>書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる二日前から書きます。</li><li>削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。</li></ul>
 <h2>月に一度、1 日の日本時間 09:17</h2>
-<ul><li>読むもの：記録と <code>data/news.json</code>。</li><li>書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。</li><li>運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js">tools/monthly.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml">monthly.yml</a> が動かします。</li></ul>
+<ul><li>読むもの：記録と <code>data/news.json</code>。</li><li>書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。</li><li>運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。</li><li>あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の一日 100 回と、PDF の写しを <code>site.json</code> の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js">tools/monthly.js</a> と <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js">tools/limits.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml">monthly.yml</a> が動かします。</li></ul>
 <h2>年に一度、一月 2 日の日本時間 12:23</h2>
 <ul><li>読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。</li><li>書くもの：前の年の数を載せた issue。開かれた投稿、受理した投稿、断った投稿、まだ決めていない投稿の数です。断るときに挙げた理由、投稿から判断までの日数、求め、撤回した記録と削除した記録も数えます。</li><li>運営者に残すこと：数を <code>data/reports/</code> に記録すること。<a href="./decisions.html">年ごとの判断</a>の頁は、そこから組み立てます。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js">tools/report.js</a> と <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js">tools/report_issue.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml">report.yml</a> が動かします。</li></ul>
 <h2>年に一度、十月 30 日の日本時間 09:17</h2>

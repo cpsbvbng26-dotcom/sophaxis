@@ -1583,7 +1583,7 @@ Source: https://sophaxis.vercel.app/process.html
 
 # From submission to listing
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1624,9 +1624,9 @@ Sophaxis reads only the name, the links and the works in your ORCID record; it n
 
 ## Step 3. Open a submission issue
 
-1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens.
+1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens. The same form is also [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml).
 2. After "[Submission]" in the title, add a few words, such as the title of your work.
-3. Give the DOI, your ORCID iD, the category, the statement on generative models and, from 2026-11-24, the statements on funding, competing interests and research ethics, and tick the confirmations.
+3. Give the DOI, your ORCID iD, the category (and a subfield, if one fits), the statement on generative models and, from 2026-11-24, the statements on funding, competing interests and research ethics, and tick the confirmations. A summary in plain words and an abstract in a second language are optional.
 4. Press the button at the bottom of the form to create the issue.
 
 The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.
@@ -1691,7 +1691,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [自動で動く手順（日本語訳）](./automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1760,7 +1760,8 @@ The code of each step is public, and each section links to it.
 - Reads: the records and `data/news.json`.
 - Writes: an issue with a post in English and one in Japanese for the official account on X, each within the 280 characters that X counts, naming what was listed and announced in the month before. A month with nothing new gets no issue.
 - Leaves to the operator: posting it. X's API is paid, so nothing is posted to X automatically.
-- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
+- Also measures whether Sophaxis still fits its free services: the deployments on the busiest day of the last 30 days against the 100 a day of Vercel's free plan, the PDF copies against the limits in `site.json`, and the repository against the 1 GB that GitHub recommends. It writes the table to the run's summary, and opens an issue only when a measure reaches 80 percent. Vercel's bandwidth and function use are not measured; only the operator's Vercel account shows them.
+- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) and [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
 
 ## Once a year, on 2 January at 12:23 Japan time
 
@@ -2056,7 +2057,7 @@ Source: https://sophaxis.vercel.app/contact.html
 
 # Operator and contact
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2086,7 +2087,7 @@ Complaints, legal matters and anything about personal data go by email, not to a
 Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.html) sets out.
 
 - Questions, suggestions and problems with the site: [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
-- Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml).
+- Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml).
 - An error in a record: [the correction form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml).
 - Withdrawing a work, as one of its authors: [the withdrawal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml).
 - Reporting the published version of a listed work, as one of its authors: [the published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml).
@@ -4128,7 +4129,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 # 投稿から掲載まで（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [From submission to listing](./process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4169,9 +4170,9 @@ Sophaxis が ORCID の記録から読むのは、名前・リンク・業績だ�
 
 ## 手順 3. 投稿の issue を開く
 
-1. [投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)を開きます。GitHub がサインインを求めたら、サインインします。そのあと様式が開きます。
+1. [投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)を開きます。GitHub がサインインを求めたら、サインインします。そのあと様式が開きます。同じ様式の[日本語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml)もあります。
 2. 題の「[Submission]」のあとに、作品の題のような短い言葉を足します。
-3. DOI、ORCID iD、分野、生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告を書き、確認の欄に印を付けます。
+3. DOI、ORCID iD、分野（合えば下位の分野も）、生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告を書き、確認の欄に印を付けます。平易な要約と二つ目の言語の要旨は任意です。
 4. 様式のいちばん下のボタンを押して、issue を作ります。
 
 題・著者・要旨・ライセンスは、DOI のメタデータから取ります。手で打ち込むことはありません。
@@ -4402,7 +4403,7 @@ Source: https://sophaxis.vercel.app/automation.ja.html
 
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [What runs by itself](./automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4472,7 +4473,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 読むもの：記録と `data/news.json`。
 - 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
 - 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
-- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
+- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の一日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
+- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) と [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
 
 ## 年に一度、一月 2 日の日本時間 12:23
 
@@ -4537,7 +4539,7 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Operator and contact](./contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4571,7 +4573,7 @@ Sophaxis を紹介する人のために、[紹介する人のために](./press.
 [個人情報の取り扱いについて](./policies/privacy.ja.html)が定めるとおり、メールに含まれる個人データは、そのメールに答えるためだけに使います。
 
 - サイトについての質問・提案・問題：[issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new)。
-- プレプリントや新しい版の投稿：[投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)。
+- プレプリントや新しい版の投稿：[投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)、または同じ様式の[日本語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml)。
 - 記録の誤り：[訂正の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml)。
 - 作品の著者の一人として、作品を撤回すること：[撤回の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml)。
 - 作品の著者の一人として、載っている作品の出版された版を報告すること：[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)。
