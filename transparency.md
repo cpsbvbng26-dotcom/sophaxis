@@ -134,6 +134,7 @@ It has no affiliation with any society, institution or sponsor.
 Not met.
 Sophaxis has no editorial board and no advisory body.
 The Moderation Policy says that other moderators may be invited, and names how; none has been invited yet.
+Since 2026-11-10 a call for an advisory board has been open ([Advisory board: a call](./advisory.html)); no adviser has joined yet.
 
 ### Editorial team and contact information
 

@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-10.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -19,6 +19,8 @@ The operator is also the moderator, and is responsible for the site and its reco
 The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.html).
 The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.html) set out.
 Submissions by the operator are moderated under the same rules and are marked as the operator's own.
+There is no advisory board yet; the call for one is on [Advisory board: a call](./advisory.html). Advisers will be named here, with an ORCID iD, once they agree.
+Introducing Sophaxis: [the page for anyone introducing it](./press.html), and [the name, logo and badge](./brand.html).
 
 ## Contact
 
