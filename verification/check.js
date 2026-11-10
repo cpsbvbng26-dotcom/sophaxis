@@ -1296,8 +1296,8 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     const rows = (head) => { const i = rd.indexOf(head); return i < 0 ? [] : rd.slice(i).split('\n\n').find((b) => b.startsWith('| ')).split('\n').slice(2); };
     const en = rows('## Sophaxis itself: DOI, listings and registrations under review');
     const ja = rows('### Sophaxis 自体の DOI、掲載先と、審査中の登録');
-    const names = ['DOAPR', 'PhilPapers', 'OpenDOAR', 'ASAPbio'];
-    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same four in both languages, none of them shown as listed',
+    const names = ['DOAPR', 'PhilPapers', 'OpenDOAR', 'ASAPbio', 'CORE'];
+    ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same five in both languages, none of them shown as listed',
       rd.indexOf('## Sophaxis itself: DOI, listings and registrations under review') < rd.indexOf('## Submitting') && rd.indexOf('### Sophaxis 自体の DOI、掲載先と、審査中の登録') < rd.indexOf('貢献の窓口')
       && rd.includes('Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
       && rd.includes('サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
