@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -41,9 +41,9 @@ Sophaxis reads only the name, the links and the works in your ORCID record; it n
 
 ## Step 3. Open a submission issue
 
-1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens.
+1. Open the [submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml). If GitHub asks you to sign in, do so; the form then opens. The same form is also [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml).
 2. After "[Submission]" in the title, add a few words, such as the title of your work.
-3. Give the DOI, your ORCID iD, the category, the statement on generative models and, from 2026-11-24, the statements on funding, competing interests and research ethics, and tick the confirmations.
+3. Give the DOI, your ORCID iD, the category (and a subfield, if one fits), the statement on generative models and, from 2026-11-24, the statements on funding, competing interests and research ethics, and tick the confirmations. A summary in plain words and an abstract in a second language are optional.
 4. Press the button at the bottom of the form to create the issue.
 
 The title, the authors, the abstract and the licence are taken from the DOI metadata; you do not type them.

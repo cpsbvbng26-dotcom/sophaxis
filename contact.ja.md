@@ -1,6 +1,6 @@
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Operator and contact](./contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -34,7 +34,7 @@ Sophaxis を紹介する人のために、[紹介する人のために](./press.
 [個人情報の取り扱いについて](./policies/privacy.ja.html)が定めるとおり、メールに含まれる個人データは、そのメールに答えるためだけに使います。
 
 - サイトについての質問・提案・問題：[issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new)。
-- プレプリントや新しい版の投稿：[投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)。
+- プレプリントや新しい版の投稿：[投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)、または同じ様式の[日本語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml)。
 - 記録の誤り：[訂正の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml)。
 - 作品の著者の一人として、作品を撤回すること：[撤回の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml)。
 - 作品の著者の一人として、載っている作品の出版された版を報告すること：[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)。

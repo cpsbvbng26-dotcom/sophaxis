@@ -1,6 +1,6 @@
 # What runs by itself
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [自動で動く手順（日本語訳）](./automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -69,7 +69,8 @@ The code of each step is public, and each section links to it.
 - Reads: the records and `data/news.json`.
 - Writes: an issue with a post in English and one in Japanese for the official account on X, each within the 280 characters that X counts, naming what was listed and announced in the month before. A month with nothing new gets no issue.
 - Leaves to the operator: posting it. X's API is paid, so nothing is posted to X automatically.
-- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
+- Also measures whether Sophaxis still fits its free services: the deployments on the busiest day of the last 30 days against the 100 a day of Vercel's free plan, the PDF copies against the limits in `site.json`, and the repository against the 1 GB that GitHub recommends. It writes the table to the run's summary, and opens an issue only when a measure reaches 80 percent. Vercel's bandwidth and function use are not measured; only the operator's Vercel account shows them.
+- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) and [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
 
 ## Once a year, on 2 January at 12:23 Japan time
 

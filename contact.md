@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -30,7 +30,7 @@ Complaints, legal matters and anything about personal data go by email, not to a
 Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.html) sets out.
 
 - Questions, suggestions and problems with the site: [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
-- Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml).
+- Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml).
 - An error in a record: [the correction form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml).
 - Withdrawing a work, as one of its authors: [the withdrawal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml).
 - Reporting the published version of a listed work, as one of its authors: [the published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml).
