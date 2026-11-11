@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-NXSglpEqJJQZUYXj5hbsvCK8JNG2q99qwoOgCyyL794='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>自動で動く手順（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「自動で動く手順（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/automation.ja.html">
@@ -55,6 +55,10 @@ ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 .abstract p { margin: 0; }
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+details.source { margin: .6rem 0 1.4rem; }
+details.source summary { cursor: pointer; color: var(--muted); }
+details.source blockquote { margin: .6rem 0; padding: .25rem 1rem; border-left: 3px solid var(--rule); }
+details.source .from { font-size: .9rem; color: var(--muted); }
 .table { overflow-x: auto; }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
@@ -115,7 +119,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>運営者が毎週の確認のプルリクエストに <code>record</code> のラベルを付けたとき</h2>
 <ul><li>リポジトリの持ち主が付けたラベルにだけ応じます。応じるのはブランチ <code>statutes/record</code> だけで、そのブランチが変えてよいのは <code>verification/statutes.json</code>、<code>verification/statutes-texts.json</code>、変更履歴だけです。</li><li>それを main にマージし、変更履歴にプルリクエストの番号を書き入れます。マージした結果に対して、すべての検査と毎週の確認そのものを走らせ、すべて通ったときだけ push します。マージは、ワークフローを共著者として挙げます。</li><li>運営者に残すこと：違いを読むこと。変更が求めるなら、先に規程を変えること。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/record.js">tools/record.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/record.yml">record.yml</a> が動かします。</li></ul>
 <h2>運営者が動かしたときだけ</h2>
-<ul><li>載っている記録の PDF を預け先から取り、専用のブランチに写します。運営者が見直すプルリクエストのためです。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js">tools/fetch_pdf.js</a>。</li></ul>
+<ul><li>載っている記録の PDF を預け先から取り、専用のブランチに写します。運営者が見直すプルリクエストのためです。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js">tools/fetch_pdf.js</a>。</li><li>法令の頁が引く法令・ライセンス・規約の文を、公式の出どころから取り寄せます。引かれた条を <code>verification/sources-raw.json</code> に書き、新しいブランチ <code>sources/&lt;date&gt;</code> に置きます。main には置きません。運営者は、それを読んでから、<code>verification/sources.json</code> の引用に使います。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js">tools/sources.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml">sources.yml</a> が動かします。</li></ul>
 <h2>手で行うこと</h2>
 <ul><li>すべての判断と、その理由。</li><li>空にした issue の削除。後始末の issue がそれを挙げます。</li><li>リポジトリの履歴から素材を除くよう GitHub に頼むこと。以前の写しを除外するよう Internet Archive に頼むこと。文面は後始末の issue にあります。</li><li>変わった法令や規約の文を、<code>record</code> のラベルで記録すること。</li><li>索引や登録簿に Sophaxis を登録すること。</li><li>メールに答えること。</li></ul>
 </main>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-NXSglpEqJJQZUYXj5hbsvCK8JNG2q99qwoOgCyyL794='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>What runs by itself | Sophaxis</title>
 <meta name="description" content="Every automatic step of Sophaxis: when it runs, what it reads and writes, and what it leaves to the operator.">
 <link rel="canonical" href="https://sophaxis.vercel.app/automation.html">
@@ -55,6 +55,10 @@ ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 .abstract p { margin: 0; }
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+details.source { margin: .6rem 0 1.4rem; }
+details.source summary { cursor: pointer; color: var(--muted); }
+details.source blockquote { margin: .6rem 0; padding: .25rem 1rem; border-left: 3px solid var(--rule); }
+details.source .from { font-size: .9rem; color: var(--muted); }
 .table { overflow-x: auto; }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
@@ -115,7 +119,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2>When the operator labels the watch's pull request <code>record</code></h2>
 <ul><li>Acts only on the label of the repository owner, and only on the branch <code>statutes/record</code>, which may change only <code>verification/statutes.json</code>, <code>verification/statutes-texts.json</code> and the changelog.</li><li>Merges it into main, fills in the changelog's pull request number, runs every check and the watch itself on the merged result, and pushes only if all pass. The merge names the workflow as co-author.</li><li>Leaves to the operator: reading the difference, and changing the policies first if the change requires it.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/record.js">tools/record.js</a>, run by <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/record.yml">record.yml</a>.</li></ul>
 <h2>Only when the operator runs it</h2>
-<ul><li>Copies the PDF of a listed record from its repository onto a branch of its own, for a pull request that the operator reviews.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js">tools/fetch_pdf.js</a>.</li></ul>
+<ul><li>Copies the PDF of a listed record from its repository onto a branch of its own, for a pull request that the operator reviews.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js">tools/fetch_pdf.js</a>.</li><li>Fetches the texts of law, licences and terms that the legal pages cite, from their official sources, and writes the cited articles to <code>verification/sources-raw.json</code> on a new branch <code>sources/&lt;date&gt;</code>, never on main. The operator reads them before any quotation in <code>verification/sources.json</code> is taken from them.</li><li>Code: <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js">tools/sources.js</a>, run by <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml">sources.yml</a>.</li></ul>
 <h2>What stays by hand</h2>
 <ul><li>Every decision, and its grounds.</li><li>Deleting emptied issues, which the follow-up issue lists.</li><li>Asking GitHub to remove material from the repository history, and the Internet Archive to exclude earlier copies, with the drafts in the follow-up issue.</li><li>Recording a changed text of law or terms, by the label <code>record</code>.</li><li>Registering Sophaxis with indexes and registries.</li><li>Answering email.</li></ul>
 </main>

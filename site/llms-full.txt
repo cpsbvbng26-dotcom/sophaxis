@@ -12,6 +12,10 @@ Last updated: 2026-11-11.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Who these terms apply to
 
 These terms apply to everyone who reads Sophaxis or submits to it.
@@ -65,6 +69,31 @@ The operator relies on the confirmations in good faith and does not check them. 
 The confirmations stay in the public issue, so that what was confirmed, and when, can be shown.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
 
+## Acts outside these rules that may come near a law
+
+Sophaxis is run so that the operator's own acts do not meet the elements of the laws that its policies name.
+A person who acts against these terms, or outside them, may still come near the elements of a law by that act.
+The table lists such acts that could happen on Sophaxis, the law that each may come near, and a caution from the operator.
+The table lists possible paths only. It is not complete. It does not say that a listed act is unlawful, or that an act not listed is lawful.
+The articles it names are quoted at the end of this section.
+
+| Act | Law it may come near | Caution |
+| --- | --- | --- |
+| Submitting a version that the authors have no right to share under its licence, such as one whose publisher holds an exclusive licence | Copyright Act, Articles 21 and 23 | Submit only a version that the authors may share under its licence. Such a record is removed under the [Takedown Policy](./takedown.html). |
+| Giving another person's ORCID iD in the form, or signing in to another person's ORCID or GitHub account to pass the identity check | Penal Code, Article 233; Act on the Prohibition of Unauthorized Computer Access, Article 3 | Use only your own iD and your own accounts. |
+| Confirming the agreement of a co-author who did not agree, or confirming anything else that is not true in a form | Penal Code, Article 233; Civil Code, Article 709 | Confirm only what is true. The record is removed as soon as the operator learns of it. |
+| Presenting a listing on Sophaxis as peer review or as publication in a journal, in a CV, an application for funding or an advertisement | Penal Code, Article 246; Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Describe a listing as what it is: a moderated listing of a preprint, which is not peer review ([Moderation Policy](./moderation.html)). |
+| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Unfair Competition Prevention Act, Article 2(1)(i) and (ii); Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](../brand.html) says how they may be used. |
+| Reusing a PDF copy or a record beyond what its licence allows, for example without the credit that the licence asks | Copyright Act, Articles 21 and 23 | Reuse each work under its own licence, which its record page names. |
+| Vouching for a submission with words that are not true, for example about where the researcher lives or stays, or about being an author | Penal Code, Article 233; Civil Code, Article 709 | Vouch only with words that are true. |
+| Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once, under the [Takedown Policy](./takedown.html). |
+
+The responsibility for an act done against these terms, or outside them, lies with the person who did it.
+Except where the law makes the operator responsible, the operator is not responsible for such acts.
+This does not exclude or limit the operator's liability for loss that the operator causes by intent or negligence, which is set out under No warranty below.
+
+<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Unfair Competition Prevention Act 2; Penal Code 230; Penal Code 231 -->
+
 ## No warranty
 
 Sophaxis is provided as it is.
@@ -87,6 +116,8 @@ Other changes, such as clearer wording or new examples, take effect on the date 
 A change is made only as Article 548-4 of Japan's Civil Code allows: when it is in the general interest of authors and readers, or when it is reasonable in the light of the purpose of these terms, the need for it and its content.
 Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
 A person who does not accept a change can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
+
+<!-- text: Civil Code 548-4 -->
 
 ## Continuity
 
@@ -152,6 +183,8 @@ What they say that matters to people who use Sophaxis:
 - Content on the site must also follow Vercel's Acceptable Use Policy, and Vercel may remove or disable content (Vercel Terms, sections 3 and 8).
 - GitHub and Vercel each provide their services "as is", without warranty, and limit their liability (GitHub Terms, O and P; Vercel Terms, sections 20 and 21). Their terms are governed by the law of California, with the courts of San Francisco, and Vercel's also provide for arbitration (GitHub Terms, S.1; Vercel Terms, section 23).
 
+<!-- text: GitHub Terms B.3; GitHub Terms C; GitHub Terms D.2; GitHub Terms M.3; GitHub Terms D.5; GitHub Terms D.8; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 4; Vercel Terms 3; Vercel Terms 8; GitHub Terms O; GitHub Terms P; Vercel Terms 20; Vercel Terms 21; GitHub Terms S.1; Vercel Terms 23 -->
+
 ## General
 
 - The other policies are part of these terms. Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply. The FAQ, the step-by-step page and the Disclaimer explain these terms and do not change them.
@@ -178,6 +211,10 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 Last updated: 2026-11-11.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
+
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Who can submit
 
@@ -239,6 +276,8 @@ If it turns out that an author lives there, or stayed there between the submissi
 | Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported |
 | Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported |
 | Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported |
+
+<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17 -->
 
 ## What can be submitted
 
@@ -498,6 +537,10 @@ Last updated: 2026-11-11.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Moderation is not peer review
 
 Acceptance is moderation, not peer review.
@@ -561,6 +604,8 @@ A moderator who declines a submission names one or more of these reasons, with a
 The submitter can answer in the issue.
 The operator then looks at the submission once more, and that decision is final.
 The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
+
+<!-- text: DSA 21 -->
 
 ## Moderators
 
@@ -638,6 +683,10 @@ Last updated: 2026-11-11.
 
 Japanese: [著作権の規程（日本語訳）](./copyright.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Authors keep their copyright
 
 Sophaxis asks for no transfer of copyright and no exclusive licence.
@@ -678,6 +727,8 @@ CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credit
 - No changes: the PDF copy is the deposited file, byte for byte, with every notice it carries. The abstract is shown as plain text, with formatting tags removed and its words unchanged.
 - No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do.
 - No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work.
+
+<!-- text: CC BY 4.0 3; CC BY 4.0 2 -->
 
 ## Work published in a journal
 
@@ -775,6 +826,10 @@ Last updated: 2026-11-11.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Who handles personal data
 
 The operator of Sophaxis, Takuya Nemoto, handles it.
@@ -810,6 +865,8 @@ Nothing is sent anywhere until a reader follows one, and the service then works 
 The site is hosted on Vercel.
 Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.
 Sophaxis has not turned on Vercel's analytics.
+
+<!-- text: Telecommunications Business Act 27-12 -->
 
 ## Submissions
 
@@ -904,6 +961,8 @@ As the Personal Information Protection Commission's Q&A 7-53 reads Japan's Act, 
 Each publishes the measures it takes: Vercel in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa), Apple in its Privacy Policy.
 Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
 
+<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 25 -->
+
 ## Security
 
 Records are built only from information that is public already.
@@ -957,6 +1016,8 @@ These rights are open to everyone, wherever they live.
 Where a person's own law gives them more rights over their personal data, such as the General Data Protection Regulation in the European Union, the operator honours those rights as far as they apply to Sophaxis.
 Personal data that GitHub or Vercel hold about their own users, such as GitHub accounts, is theirs to handle under their own privacy statements; a request about it goes to them.
 
+<!-- text: APPI 29 -->
+
 ## The right to object
 
 Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
@@ -992,12 +1053,16 @@ People there write to the operator directly, in English or Japanese, at the addr
 The operator answers them, and the data protection authorities, directly, in place of a representative.
 A record of the processing is kept in the public repository, in `docs/records-of-processing.md`.
 
+<!-- text: GDPR 3; UK GDPR 3; GDPR 17; UK GDPR 17; GDPR 49; UK GDPR 49; GDPR 20; GDPR 27 -->
+
 ## People in China
 
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 Article 53 of China's Personal Information Protection Law requires a processor abroad that offers products or services to people in China to set up an agency or designate a representative in China, and Sophaxis has none.
 This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
+
+<!-- text: PIPL 53 -->
 
 ## People in Thailand
 
@@ -1006,6 +1071,8 @@ Section 37(5) of Thailand's Personal Data Protection Act requires a controller a
 Section 38 exempts a controller that engages in the profession or business of processing personal data without a large amount of it; Sophaxis is not a business, so the exemption is not relied on.
 This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
+
+<!-- text: Thailand PDPA 37; Thailand PDPA 38 -->
 
 ## People in the other places
 
@@ -1017,6 +1084,8 @@ From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or 
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
 This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
+
+<!-- text: Russia 152-FZ 1; India DPDP Rules 10 -->
 
 ## Changes to this policy
 
@@ -1104,6 +1173,10 @@ Source: https://sophaxis.vercel.app/policies/takedown.html
 Last updated: 2026-11-11.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.html). It is a translation; where the two differ, the English text applies.
+
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## When a record is removed
 
@@ -1205,10 +1278,14 @@ Sophaxis takes the worst case here too, and follows the Digital Services Act of 
 - Average monthly active recipients (Article 24(3)): Sophaxis keeps no analytics and no identifiers of readers, and will not start keeping them to produce this figure. On request of a Digital Services Coordinator or the Commission, the operator gives, for each of the last six months, the number of people in the Union who submitted, reported or wrote to Sophaxis, counted from the issues and the email, and says that readers are not counted.
 - The [statistics](../stats.html) count the removed records and link to every public removal request.
 
+<!-- text: DSA 11; DSA 12; DSA 13; DSA 16; DSA 17; DSA 20; DSA 21; DSA 18; DSA 14; DSA 24 -->
+
 ## Copyright notices under United States law
 
 Sophaxis has not designated an agent with the United States Copyright Office, which charges a fee, so it does not rely on the limitation of liability in 17 U.S.C. 512.
 A notice of claimed infringement under that law is handled under this policy, like any other request.
+
+<!-- text: 17 U.S.C. 512 -->
 
 ## Requests to disclose who sent material
 
@@ -1407,6 +1484,8 @@ The operator is liable, as Japanese law provides, for loss that the operator cau
 The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
 Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
 This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
+The responsibility for an act done by someone else against the Terms of Use, or outside them, lies with the person who did it.
+Except where the law makes the operator responsible, the operator is not responsible for such acts. The Terms of Use list such acts that may come near a law, under "Acts outside these rules that may come near a law".
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
 Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.html) sets out.
 
@@ -1808,6 +1887,8 @@ The code of each step is public, and each section links to it.
 
 - Copies the PDF of a listed record from its repository onto a branch of its own, for a pull request that the operator reviews.
 - Code: [tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js).
+- Fetches the texts of law, licences and terms that the legal pages cite, from their official sources, and writes the cited articles to `verification/sources-raw.json` on a new branch `sources/<date>`, never on main. The operator reads them before any quotation in `verification/sources.json` is taken from them.
+- Code: [tools/sources.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js), run by [sources.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml).
 
 ## What stays by hand
 
@@ -2059,6 +2140,10 @@ Last updated: 2026-11-11.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Operator
 
 Sophaxis is operated by one person, Takuya Nemoto, in Japan.
@@ -2098,6 +2183,8 @@ The OAI-PMH interface at `/oai` gives a separate address made for harvesters, be
 Write in English or Japanese.
 The email address on the operator's ORCID record, not the one for harvesters, is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
 The operator aims to answer within 7 days.
+
+<!-- text: DSA 11; DSA 12 -->
 
 ## Sophaxis elsewhere
 
@@ -2498,6 +2585,10 @@ Source: https://sophaxis.vercel.app/policies/privacy.ja.html
 
 Sophaxis の個人情報の取り扱いを、日本の個人情報保護法の項目に沿って書いたものです。英語の [Privacy Policy](./privacy.html) の訳で、項目を日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
+
 ## 取り扱う者
 
 Sophaxis の運営者、根本卓哉です。住所は公開していません。求めがあれば、遅滞なく知らせます。
@@ -2525,6 +2616,8 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 これが無いと検査は著者を確かめられず、issue では手続きを進められません。
 その場合も、各規程のとおりメールで求めることができます。
 ほかには何も求めません。
+
+<!-- text: Telecommunications Business Act 27-12 -->
 
 ## 利用目的
 
@@ -2609,6 +2702,8 @@ Vercel は、Sophaxis への閲覧の要求の記録（IP アドレスを含み�
 各社は講じている措置を公表しています。Vercel は[データ処理補遺](https://vercel.com/legal/dpa)の別表 2 に、Apple はプライバシーポリシーに書いています。
 毎週、自動の手順が Vercel と Apple のプライバシーの方針の最終更新日を読みます。日付が変われば issue が開き、運営者が方針を読み直して、そのサービスを使い続けてよいかを決めます。
 
+<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 25 -->
+
 ## 安全のための措置
 
 記録は、DOI の登録情報など、すでに公開されている情報だけで作ります。
@@ -2671,6 +2766,8 @@ OAI-PMH の口にも、収集者のためのアドレスがあります。この
 [個人情報保護委員会](https://www.ppc.go.jp/)に相談することもできます。
 スイスの人は、スイスの連邦データ保護・情報コミッショナーに苦情を申し立てることもできます。
 
+<!-- text: APPI 29 -->
+
 ## 異議を述べる権利
 
 誰でも、いつでも、自分の事情を理由に、Sophaxis での自分の個人データの利用に異議を述べることができます。
@@ -2707,12 +2804,16 @@ Sophaxis は、無報酬で、無料の範囲で運営しています。
 運営者は、その連絡にも、データ保護機関からの連絡にも、代理人に代わって自ら応えます。
 取り扱いの記録は、公開のリポジトリの `docs/records-of-processing.md` に置いています。
 
+<!-- text: GDPR 3; UK GDPR 3; GDPR 17; UK GDPR 17; GDPR 49; UK GDPR 49; GDPR 20; GDPR 27 -->
+
 ## 中国の人へ
 
 2026-11-22 から、Sophaxis は中国の人にもサービスを提供しません。
 中国の個人情報保護法第 53 条は、中国の人に商品やサービスを提供する国外の処理者に、中国国内の機関の設置か代理人の指定を求めています。Sophaxis はどちらも置いていません。
 これは住んでいる場所と滞在している場所だけで決まり、国籍・人種・民族その他の個人の属性によるものではありません。
 それでも、上に書いた本人の求めには、当てはまる限り応えます。
+
+<!-- text: PIPL 53 -->
 
 ## タイの人へ
 
@@ -2721,6 +2822,8 @@ Sophaxis は、無報酬で、無料の範囲で運営しています。
 第 38 条は、個人データの処理を職業や事業とし、その量が多くない管理者を除いています。Sophaxis は事業ではないので、この除外には拠りません。
 これは住んでいる場所と滞在している場所だけで決まり、国籍・人種・民族その他の個人の属性によるものではありません。
 それでも、上に書いた本人の求めには、当てはまる限り応えます。
+
+<!-- text: Thailand PDPA 37; Thailand PDPA 38 -->
 
 ## ほかの国と地域の人へ
 
@@ -2732,6 +2835,8 @@ Sophaxis は、無報酬で、無料の範囲で運営しています。
 インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
 これは住んでいる場所と滞在している場所だけで決まり、国籍・人種・民族その他の個人の属性によるものではありません。
 それでも、上に書いた本人の求めには、当てはまる限り応えます。
+
+<!-- text: Russia 152-FZ 1; India DPDP Rules 10 -->
 
 ## この方針の変更
 
@@ -2747,6 +2852,10 @@ Source: https://sophaxis.vercel.app/policies/terms.ja.html
 最終更新：2026-11-11。
 
 これは英語の [Terms of Use](./terms.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。
+
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## この規約が及ぶ人
 
@@ -2801,6 +2910,31 @@ Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプ�
 確認は公開の issue に残るので、何をいつ確かめたかを示せます。
 投稿者に、違約金や、法令が定める以上の損害の賠償を求めることはありません。
 
+## 規約の外で、法令の要件に近づく行い
+
+Sophaxis は、運営者自身の行いが、規程の挙げる法令の要件に当たらないように運営しています。
+それでも、この規約に反して、または規約の外で行われた行いは、それをした人について、法令の要件に近づくことがあります。
+次の表は、Sophaxis で起こりうるそうした行いと、それぞれが近づくおそれのある法令と、運営者からの注意です。
+表は起こりうる道を挙げたものです。すべてを挙げてはいません。挙げた行いが違法であると言うものでも、挙げていない行いが適法であると言うものでもありません。
+挙げた条の文は、この節の終わりに引いています。
+
+| 行い | 近づくおそれのある法令 | 注意 |
+| --- | --- | --- |
+| 著者がそのライセンスで共有する権利を持たない版を投稿すること。例として、出版社が独占的な許諾を持つ版があります | 著作権法第 21 条・第 23 条 | 著者がそのライセンスで共有できる版だけを投稿してください。そうした記録は[削除の規程](./takedown.ja.html)に沿って削除します。 |
+| 様式に他人の ORCID iD を書くこと。本人確認を通すために、他人の ORCID や GitHub のアカウントにログインすること | 刑法第 233 条、不正アクセス禁止法第 3 条 | 自分の iD と自分のアカウントだけを使ってください。 |
+| 同意していない共著者の同意を確かめること。そのほか、様式で事実でないことを確かめること | 刑法第 233 条、民法第 709 条 | 事実だけを確かめてください。運営者が知った時点で、記録を削除します。 |
+| Sophaxis への掲載を、査読や学術誌への掲載であるかのように、履歴書、研究費の申請、広告で示すこと | 刑法第 246 条、景品表示法第 5 条 | 掲載は、モデレーションを経たプレプリントの掲載であり、査読ではありません（[モデレーションの規程](./moderation.ja.html)）。そのとおりに示してください。 |
+| Sophaxis の名前やロゴを、商品・役務や広告に、Sophaxis から出たものや Sophaxis が推薦するもののように付けること | 不正競争防止法第 2 条第 1 項第 1 号・第 2 号、景品表示法第 5 条 | 名前とロゴを営業に使うことは、認めていません。使い方は[名前・ロゴ・バッジ](../brand.ja.html)の頁にあります。 |
+| PDF の写しや記録を、そのライセンスが認める範囲を超えて再利用すること。例として、ライセンスが求める表示をしない再利用があります | 著作権法第 21 条・第 23 条 | 各作品は、その記録の頁が示すライセンスに沿って再利用してください。 |
+| 事実でない言葉で投稿を保証すること。例として、研究者が住んでいる場所や滞在している場所、著者であるかどうかについての言葉があります | 刑法第 233 条、民法第 709 条 | 事実である言葉だけで保証してください。 |
+| issue、コメント、メールに、他人の個人データや、人の名誉を害することを書くこと | 刑法第 230 条・第 231 条、民法第 709 条 | 書かないでください。個人データが見えているとの報告があれば、[削除の規程](./takedown.ja.html)に沿って、記録の頁をただちに非公開にします。 |
+
+この規約に反して、または規約の外で行われた行いの責任は、行った本人にあります。
+法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。
+これは、運営者が自らの故意または過失で生じさせた損害についての責任を、免除したり制限したりするものではありません。その責任は、下の「保証しないこと」の節に定めています。
+
+<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Unfair Competition Prevention Act 2; Penal Code 230; Penal Code 231 -->
+
 ## 保証しないこと
 
 Sophaxis は、現状のまま提供します。
@@ -2823,6 +2957,8 @@ Sophaxis は、運営者を日本の消費者契約法の事業者であるも�
 変更は、日本の民法第 548 条の 4 が認めるときにだけ行います。著者と読者の一般の利益に合うとき、またはこの規約の目的、変更の必要、変更後の中身に照らして合理的なときです。
 黙っていることや、Sophaxis を使い続けることを、変更への同意とはみなしません。
 変更を受け入れない人は Sophaxis の利用をやめることができ、著者は[撤回の規程](./withdrawal.ja.html)に沿って自分の作品を撤回できます。
+
+<!-- text: Civil Code 548-4 -->
 
 ## 続けるための備え
 
@@ -2888,6 +3024,8 @@ Sophaxis を使う人に関わる定めは、次のとおりです。
 - サイトの内容は、Vercel の許容される利用の方針にも従う必要があります。Vercel は、内容を削除したり無効にしたりできます（Vercel の利用規約 第 3 条・第 8 条）。
 - GitHub と Vercel は、どちらもサービスを「現状のまま」保証なしに提供し、自らの責任を限っています（GitHub の利用規約 O・P、Vercel の利用規約 第 20 条・第 21 条）。どちらの規約も米国カリフォルニア州の法に従い、裁判所はサンフランシスコの裁判所です。Vercel の規約は仲裁も定めています（GitHub の利用規約 S.1、Vercel の利用規約 第 23 条）。
 
+<!-- text: GitHub Terms B.3; GitHub Terms C; GitHub Terms D.2; GitHub Terms M.3; GitHub Terms D.5; GitHub Terms D.8; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 4; Vercel Terms 3; Vercel Terms 8; GitHub Terms O; GitHub Terms P; Vercel Terms 20; Vercel Terms 21; GitHub Terms S.1; Vercel Terms 23 -->
+
 ## 一般
 
 - ほかの規程は、この規約の一部です。ある規程がある事柄をより詳しく扱う場合は、その事柄についてはその規程が適用されます。それ以外で両者が食い違う場合は、この規約が適用されます。FAQ、手順を順に示す頁、免責事項は、この規約を説明するもので、この規約を変えるものではありません。
@@ -2914,6 +3052,10 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 最終更新：2026-11-11。
 
 これは英語の [Submission Policy](./submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 投稿できる人
 
@@ -2975,6 +3117,8 @@ Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか�
 | ボリビア | 国内での個人データの保存 | 電気通信一般法（法律第 164 号） | まだ（報告による） |
 | コスタリカ | 登録 | 法律第 8968 号 第 21 条 | まだ（報告による） |
 | ケベック州 | データを外へ出す前の評価と書面の契約 | 民間部門の個人情報保護法 第 17 条 | まだ（報告による） |
+
+<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17 -->
 
 ## 投稿できるもの
 
@@ -3234,6 +3378,10 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 これは英語の [Moderation Policy](./moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
+
 ## モデレーションは査読ではない
 
 受理はモデレーションであって、査読ではありません。
@@ -3297,6 +3445,8 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 投稿者は issue で答えることができます。
 その後、運営者が投稿をもう一度見直し、その判断が最終のものになります。
 投稿者は、裁判所に訴えることも、デジタルサービス法第 21 条で認証された裁判外の紛争解決機関を使うこともできます。
+
+<!-- text: DSA 21 -->
 
 ## モデレーター
 
@@ -3374,6 +3524,10 @@ Source: https://sophaxis.vercel.app/policies/copyright.ja.html
 
 これは英語の [Copyright Policy](./copyright.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
+
 ## 著作権は著者に残る
 
 Sophaxis は、著作権の譲渡も、独占的な許諾も求めません。
@@ -3414,6 +3568,8 @@ CC BY 4.0 と CC BY-SA 4.0 は表示を求めます。CC0 1.0 は求めません
 - 改変しない：PDF の写しは、預けたファイルを 1 バイトも変えずに、そこに付いている告知ごと置いたものです。要旨は、書式のタグを外し、語を変えずに、素の文として示します。
 - 条件を足さない：Sophaxis は、ライセンスが読者に認めていることを制限する条件も技術的な手段も足しません。
 - 推薦を装わない：Sophaxis のどこにも、著者が Sophaxis やその作品の使い方を推薦していると述べたり、ほのめかしたりするものはありません。
+
+<!-- text: CC BY 4.0 3; CC BY 4.0 2 -->
 
 ## 学術誌が出版した作品
 
@@ -3510,6 +3666,10 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 最終更新：2026-11-11。
 
 これは英語の [Takedown Policy](./takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 記録を削除するとき
 
@@ -3611,10 +3771,14 @@ Sophaxis はここでも最も厳しい場合を想定し、その規模のサ�
 - 月ごとの平均の利用者数（第 24 条第 3 項）：Sophaxis は、アクセス解析も読者を見分ける識別子も持たず、この数を出すために持ち始めることもしません。デジタルサービス調整官か欧州委員会から求められたときは、直近六か月の月ごとに、Sophaxis に投稿・通知・連絡をした欧州連合の人の数を issue とメールから数えて示し、読者は数えていないことを添えます。
 - [統計](../stats.html)は削除した記録を数え、公開の削除の求めのすべてへリンクしています。
 
+<!-- text: DSA 11; DSA 12; DSA 13; DSA 16; DSA 17; DSA 20; DSA 21; DSA 18; DSA 14; DSA 24 -->
+
 ## 米国法による著作権の通知
 
 Sophaxis は、手数料の掛かる米国著作権局への代理人の届け出をしていません。そのため、米国著作権法第 512 条の責任の制限には拠りません。
 その法による侵害の通知も、ほかの求めと同じく、この規程に沿って扱います。
+
+<!-- text: 17 U.S.C. 512 -->
 
 ## 素材を送った人の開示の求め
 
@@ -3812,6 +3976,8 @@ Sophaxis の規程と頁は、Sophaxis の仕組みを説明するものです�
 著者が書いた作品の内容だけ、または GitHub・Vercel・預け先だけが原因で生じた損害については、法令が運営者に責任を負わせる場合を除き、運営者は責任を負いません。
 Sophaxis は、運営者を日本の消費者契約法の事業者であるものとみなして、読者と著者に同法を適用します。
 これは、故意または重大な過失による責任や、法令が免除や制限を認めない責任を、免除したり制限したりするものではありません。
+ほかの人が利用規約に反して、または利用規約の外で行った行いの責任は、行った本人にあります。
+法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。法令の要件に近づくおそれのあるそうした行いは、利用規約の「規約の外で、法令の要件に近づく行い」の節に挙げています。
 これらの定めは日本法に準拠し、この頁のどの定めも、法令が制限を認めない権利を制限しません。
 紛争は、[利用規約](./policies/terms.ja.html)の「紛争」の節が定めるとおり、まず合意で解決します。
 
@@ -4520,6 +4686,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 載っている記録の PDF を預け先から取り、専用のブランチに写します。運営者が見直すプルリクエストのためです。
 - コード：[tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js)。
+- 法令の頁が引く法令・ライセンス・規約の文を、公式の出どころから取り寄せます。引かれた条を `verification/sources-raw.json` に書き、新しいブランチ `sources/<date>` に置きます。main には置きません。運営者は、それを読んでから、`verification/sources.json` の引用に使います。
+- コード：[tools/sources.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js)。[sources.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml) が動かします。
 
 ## 手で行うこと
 
@@ -4539,6 +4707,10 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 最終更新：2026-11-11。
 
 これは英語の [Operator and contact](./contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 運営者
 
@@ -4583,6 +4755,8 @@ issue は公開されます。issue に個人データを書かないでくだ�
 英語か日本語で書いてください。
 欧州連合のデジタルサービス法（第 11 条・第 12 条）のもとで、当局・欧州委員会・Sophaxis を使う人のための単一の連絡窓口も、運営者の ORCID の記録にあるメールアドレスです。収集者のためのアドレスではありません。
 運営者は、7 日以内に答えることを目指します。
+
+<!-- text: DSA 11; DSA 12 -->
 
 ## ほかの場所にある Sophaxis
 
