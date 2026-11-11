@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Making a listed work easy to find | Sophaxis</title>
 <meta name="description" content="How the authors of a work listed on Sophaxis can help readers find it: ORCID, Google Scholar, PhilPapers and researchmap.">
 <link rel="canonical" href="https://sophaxis.vercel.app/findable.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -90,10 +95,11 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h1>Making a listed work easy to find</h1>
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./findable.ja.html">載った作品を見つけてもらうために（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
-<h2>What Sophaxis does by itself</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#what-sophaxis-does-by-itself">What Sophaxis does by itself</a></li><li><a href="#what-the-authors-can-do">What the authors can do</a></li></ul></nav>
+<h2 id="what-sophaxis-does-by-itself">What Sophaxis does by itself</h2>
 <ul><li>Each record page carries the tags that Google Scholar and other indexes read, with a link to the PDF copy where there is one.</li><li>The records are offered to harvesters through OAI-PMH, and new pages are announced to search engines through IndexNow and the sitemap.</li><li>With the consent of every author, the record page and the PDF copy are saved to the Internet Archive each week.</li></ul>
 <p>None of these is a promise that any index picks the work up; each decides for itself.</p>
-<h2>What the authors can do</h2>
+<h2 id="what-the-authors-can-do">What the authors can do</h2>
 <ul><li>ORCID: add the DOI of the work to your ORCID record, so that services that read ORCID connect the work to you. Each author page on Sophaxis also offers one BibTeX file of all that author's records, which ORCID can import.</li><li>Google Scholar: it finds works in repositories by itself, often within several weeks. In a Google Scholar profile you can add the work, or confirm it once found.</li><li>PhilPapers: for philosophy, many readers look in PhilPapers. You can add a record of the work to PhilPapers, and you can deposit it in PhilArchive, its open archive, which has its own moderation. Both are free.</li><li>researchmap: researchers in Japan can add the work to their researchmap record.</li><li>The badge and the card: show the badge from the record page, with its link, and share the address of the record page, which shows the card with the title and the authors.</li></ul>
 <p>Sophaxis has no connection with these services; their names are given only so that authors can find them.</p>
 </main>

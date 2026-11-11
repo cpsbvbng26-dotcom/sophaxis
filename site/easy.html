@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>In plain words | Sophaxis</title>
 <meta name="description" content="Sophaxis in plain words: what it is and how to send a paper, in short sentences.">
 <link rel="canonical" href="https://sophaxis.vercel.app/easy.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -88,16 +93,17 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>In plain words</h1>
-<p>Last updated: 2026-11-10.</p>
+<p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./easy.ja.html">やさしいことばで（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <p>This page says, in short sentences, what Sophaxis is and how to send a work. The rules are in the <a href="./policy.html">policies</a>. If this page and the rules say different things, the rules count.</p>
-<h2>What Sophaxis is</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#what-sophaxis-is">What Sophaxis is</a></li><li><a href="#what-sophaxis-does-not-do">What Sophaxis does not do</a></li><li><a href="#how-to-send-a-paper">How to send a paper</a></li><li><a href="#before-you-send">Before you send</a></li></ul></nav>
+<h2 id="what-sophaxis-is">What Sophaxis is</h2>
 <p>Sophaxis is a website. It shows papers in philosophy and mathematics. The papers are kept in other places, called repositories. Sophaxis shows a page for each paper. Sophaxis is free.</p>
-<h2>What Sophaxis does not do</h2>
+<h2 id="what-sophaxis-does-not-do">What Sophaxis does not do</h2>
 <p>Sophaxis does not check if a paper is right. A person only checks if the paper fits the rules. Sophaxis does not take money.</p>
-<h2>How to send a paper</h2>
+<h2 id="how-to-send-a-paper">How to send a paper</h2>
 <ol><li>Put your paper in a repository, such as Zenodo. You get a DOI.</li><li>Make an account on ORCID and on GitHub. Join them together.</li><li>On GitHub, fill in the form and write the DOI.</li><li>A program checks the form. Then a person decides.</li></ol>
-<h2>Before you send</h2>
+<h2 id="before-you-send">Before you send</h2>
 <p>Read the <a href="./checklist.html">checklist</a>. It shows what you need.</p>
 </main>
 <footer><div class="wrap">

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>よくある質問（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「よくある質問（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/faq.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,59 +96,60 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./faq.html">Frequently asked questions</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>それぞれの答えは、規程を短くしたものです。食い違うところは、規程が適用されます。</p>
-<h2>Sophaxis とは何ですか？</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#sophaxis-とは何ですか">Sophaxis とは何ですか？</a></li><li><a href="#査読ですか">査読ですか？</a></li><li><a href="#費用はかかりますか">費用はかかりますか？</a></li><li><a href="#sophaxis-は作品に-doi-を与えますか">Sophaxis は作品に DOI を与えますか？</a></li><li><a href="#どの預け先を受け付けますか">どの預け先を受け付けますか？</a></li><li><a href="#どのライセンスを受け付けますか">どのライセンスを受け付けますか？</a></li><li><a href="#誰が投稿できますか">誰が投稿できますか？</a></li><li><a href="#なぜ-github-なのですか">なぜ GitHub なのですか？</a></li><li><a href="#sophaxis-は-github-や-orcid-とつながっていますか">Sophaxis は GitHub や ORCID とつながっていますか？</a></li><li><a href="#sophaxis-は言語モデルで作られましたか">Sophaxis は言語モデルで作られましたか？</a></li><li><a href="#言語モデルを使ってもよいですか">言語モデルを使ってもよいですか？</a></li><li><a href="#モデレーションにはどれくらいかかりますか">モデレーションにはどれくらいかかりますか？</a></li><li><a href="#載っている作品に責任を負うのは誰ですか">載っている作品に責任を負うのは誰ですか？</a></li><li><a href="#新しい版はどう加えますか">新しい版はどう加えますか？</a></li><li><a href="#作品が学術誌で出版されました投稿できますか">作品が学術誌で出版されました。投稿できますか？</a></li><li><a href="#載っているプレプリントが出版されましたどうすればよいですか">載っているプレプリントが出版されました。どうすればよいですか？</a></li><li><a href="#sophaxis-は-pdf-の写しを置きますか">Sophaxis は PDF の写しを置きますか？</a></li><li><a href="#作品は-google-scholar-に出ますか">作品は Google Scholar に出ますか？</a></li><li><a href="#投稿の前に何を確かめればよいですか">投稿の前に何を確かめればよいですか？</a></li><li><a href="#sophaxis-は読者を追跡しますか">Sophaxis は読者を追跡しますか？</a></li><li><a href="#メールでの配信はありますか">メールでの配信はありますか？</a></li><li><a href="#ここに載っている作品はどう引用しますか">ここに載っている作品はどう引用しますか？</a></li><li><a href="#記録の誤りはどう報告しますか">記録の誤りはどう報告しますか？</a></li><li><a href="#作品を撤回できますか">作品を撤回できますか？</a></li><li><a href="#素材の削除はどう求めますか">素材の削除はどう求めますか？</a></li><li><a href="#sophaxis-が閉じたら記録はどうなりますか">Sophaxis が閉じたら、記録はどうなりますか？</a></li><li><a href="#誰が-sophaxis-を運営していて運営者にはどう連絡しますか">誰が Sophaxis を運営していて、運営者にはどう連絡しますか？</a></li></ul></nav>
+<h2 id="sophaxis-とは何ですか">Sophaxis とは何ですか？</h2>
 <p>哲学・数学・論理学・数理哲学・科学哲学のための、オーバーレイ型のプレプリントサーバーです。作品そのものは、その預け先が公開します。Sophaxis は、ライセンスが許す場合にだけ、手を加えていない PDF の写しを置きます。著者がすでに公開の預け先に預けたプレプリントを載せ、それぞれに変わらない記録の頁を与えます。</p>
-<h2>査読ですか？</h2>
+<h2 id="査読ですか">査読ですか？</h2>
 <p>いいえ。受理はモデレーションであって、査読ではありません。モデレーションが確かめるのは、投稿者、ライセンス、対象の分野、論文の形、生成モデルについての申告です。証明・論証・データは確かめません。Sophaxis は、載っているどの作品の質も保証しません。<a href="./policies/moderation.ja.html">モデレーションの規程</a>を見てください。</p>
-<h2>費用はかかりますか？</h2>
+<h2 id="費用はかかりますか">費用はかかりますか？</h2>
 <p>いいえ。Sophaxis は、著者からも読者からも料金を取りません。これから取り始めることもありません。</p>
-<h2>Sophaxis は作品に DOI を与えますか？</h2>
+<h2 id="sophaxis-は作品に-doi-を与えますか">Sophaxis は作品に DOI を与えますか？</h2>
 <p>いいえ。DOI は作品を預けた預け先が与えるもので、引用するのはその DOI です。Sophaxis は、それぞれの記録に 2026.0001 のような番号を与えます。この番号は変わらず、ほかの記録に使い回すこともありません。</p>
-<h2>どの預け先を受け付けますか？</h2>
+<h2 id="どの預け先を受け付けますか">どの預け先を受け付けますか？</h2>
 <p>Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv です。作品は、そのどれかから DOI を得ている必要があります。</p>
-<h2>どのライセンスを受け付けますか？</h2>
+<h2 id="どのライセンスを受け付けますか">どのライセンスを受け付けますか？</h2>
 <p>DOI のメタデータに記された CC BY 4.0、CC BY-SA 4.0、CC0 1.0 です。非営利（NonCommercial）や改変禁止（NoDerivatives）の条件を持つライセンスは受け付けません。arXiv の非独占的ライセンスも受け付けません。<a href="./policies/licences.ja.html">ライセンスの規程</a>を見てください。</p>
-<h2>誰が投稿できますか？</h2>
+<h2 id="誰が投稿できますか">誰が投稿できますか？</h2>
 <p>ORCID iD を持つ、作品の著者だけです。ORCID の記録が GitHub のアカウントにリンクしている必要があります。その ORCID iD が作品の著者のものであることは、自動の確認が確かめます。著者全員が、掲載に同意している必要があります。<a href="./policies/submission.ja.html">投稿の規程</a>を見てください。</p>
-<h2>なぜ GitHub なのですか？</h2>
+<h2 id="なぜ-github-なのですか">なぜ GitHub なのですか？</h2>
 <p>投稿は GitHub の issue です。こうすると、すべての段階が公開されます。自動の確認も、issue を開いたアカウントが著者のものであることを確かめられます。Sophaxis は、自前のアカウントもパスワードも持ちません。</p>
-<h2>Sophaxis は GitHub や ORCID とつながっていますか？</h2>
+<h2 id="sophaxis-は-github-や-orcid-とつながっていますか">Sophaxis は GitHub や ORCID とつながっていますか？</h2>
 <p>はい。ただし、公開の範囲でだけです。コード、記録、投稿は GitHub にあり、自動の確認は公開のリポジトリの GitHub Actions として動きます。ORCID は、その公開の API を通して読みます。Sophaxis は GitHub や ORCID でのサインインを使わず、誰にもアカウントへのアクセスを求めません。どちらとも、組織としての関係はありません。<a href="./disclaimer.ja.html">免責事項</a>を見てください。</p>
-<h2>Sophaxis は言語モデルで作られましたか？</h2>
+<h2 id="sophaxis-は言語モデルで作られましたか">Sophaxis は言語モデルで作られましたか？</h2>
 <p>はい。サイト、そのコード、規程は、運営者の求めにより、Claude Code（Anthropic）で書きました。運営者がそれらに責任を負います。Claude は著者ではありません。投稿について判断する言語モデルはありません。<a href="./disclaimer.ja.html">免責事項</a>を見てください。</p>
-<h2>言語モデルを使ってもよいですか？</h2>
+<h2 id="言語モデルを使ってもよいですか">言語モデルを使ってもよいですか？</h2>
 <p>はい。どう使ったかを申告すれば使えます。使った道具の名を挙げ、何に使ったかを書きます。これは、画像やコードを作るものを含め、すべての生成モデルに当てはまります。生成モデルは著者になれません。申告は記録の頁に示します。</p>
-<h2>モデレーションにはどれくらいかかりますか？</h2>
+<h2 id="モデレーションにはどれくらいかかりますか">モデレーションにはどれくらいかかりますか？</h2>
 <p>目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。判断が遅くても、投稿の受け付けを止めているわけではありません。止めているときは、トップの頁がそう示します。<a href="./process.ja.html">投稿から掲載まで</a>の頁が、一つの投稿を順にたどります。</p>
-<h2>載っている作品に責任を負うのは誰ですか？</h2>
+<h2 id="載っている作品に責任を負うのは誰ですか">載っている作品に責任を負うのは誰ですか？</h2>
 <p>作品とその掲載には、著者がすべての責任を負います。内容、共有する権利、他人の素材、作品の中の個人データ、生成モデルについての申告です。<a href="./policies/terms.ja.html">利用規約</a>を見てください。</p>
-<h2>新しい版はどう加えますか？</h2>
+<h2 id="新しい版はどう加えますか">新しい版はどう加えますか？</h2>
 <p>預け先に預けてから、更新として投稿し、既存の Sophaxis の番号を書きます。前の版も載ったままです。</p>
-<h2>作品が学術誌で出版されました。投稿できますか？</h2>
+<h2 id="作品が学術誌で出版されました投稿できますか">作品が学術誌で出版されました。投稿できますか？</h2>
 <p>受け付けるライセンスで共有してよい版に限ります。様式に出版された版の DOI を書くと、記録がそれを示します。</p>
-<h2>載っているプレプリントが出版されました。どうすればよいですか？</h2>
+<h2 id="載っているプレプリントが出版されましたどうすればよいですか">載っているプレプリントが出版されました。どうすればよいですか？</h2>
 <p>著者の一人として、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml">出版された版の様式</a>で報告します。プレプリントは載ったままです。記録の頁は出版された版を先頭に示し、読者にそれを引用するよう求めます。Sophaxis は査読を評価しません。記録は、査読について著者が述べたことをそのまま示します。詳しくは、<a href="./policies/submission.ja.html">投稿の規程</a>の「作品が出版されたとき」にあります。</p>
-<h2>Sophaxis は PDF の写しを置きますか？</h2>
+<h2 id="sophaxis-は-pdf-の写しを置きますか">Sophaxis は PDF の写しを置きますか？</h2>
 <p>預け先がスクリプトによる取得を許す場合、Sophaxis は手を加えていない写しを置きます。検索エンジンが全文を索引に入れられるようにするためです。ほかの預け先の場合は、預けた PDF を投稿の issue に添付できます。写しを置くのは、ファイルが 20 MB までのときだけです。<a href="./policies/copyright.ja.html">著作権の規程</a>を見てください。</p>
-<h2>作品は Google Scholar に出ますか？</h2>
+<h2 id="作品は-google-scholar-に出ますか">作品は Google Scholar に出ますか？</h2>
 <p>それぞれの記録の頁は、Google Scholar が読むタグを持っています。サイトマップは、すべての頁を挙げています。Scholar は記録の頁と同じディレクトリにある PDF だけを取るので、PDF の写しもそれぞれそこから配信しています。記録の頁や PDF の写しが新しくなったり、変わったり、外されたりしたときは、公開されしだい、Bing のような IndexNow を受け付ける検索エンジンに知らせます。新しい頁や変わった頁は、著者全員が同意していれば、Internet Archive にも保存します。Google は、代わりにサイトマップを読みます。Sophaxis は、検索エンジンが頁を索引に入れることを約束できません。</p>
-<h2>投稿の前に何を確かめればよいですか？</h2>
+<h2 id="投稿の前に何を確かめればよいですか">投稿の前に何を確かめればよいですか？</h2>
 <p><a href="./checklist.ja.html">確かめること</a>の頁が、規程が求めることを、生成モデルについての申告の例とともに集めています。論文の雛形も二つ（Markdown と LaTeX）、CC0 1.0 で置いています。使う決まりはありません。</p>
-<h2>Sophaxis は読者を追跡しますか？</h2>
+<h2 id="sophaxis-は読者を追跡しますか">Sophaxis は読者を追跡しますか？</h2>
 <p>しません。<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a>のとおり、サイトは cookie を使わず、アクセス解析をせず、ほかのサーバーから何も読み込みません。閲覧やダウンロードの数も示しません。</p>
-<h2>メールでの配信はありますか？</h2>
+<h2 id="メールでの配信はありますか">メールでの配信はありますか？</h2>
 <p>ありません。Sophaxis はニュースレターを送らず、そのためのメールアドレスも集めません。新しい記録とお知らせは、Atom の配信で追えます。<a href="./feed.xml">新しいプレプリント</a>、<a href="./news.xml">お知らせ</a>、それに分野ごとの配信があります。</p>
-<h2>ここに載っている作品はどう引用しますか？</h2>
+<h2 id="ここに載っている作品はどう引用しますか">ここに載っている作品はどう引用しますか？</h2>
 <p>読んだ版の DOI を引用します。それぞれの記録の頁は、APA、Chicago、BibTeX の形の引用と、BibTeX、RIS、CSL-JSON のファイルを示します。</p>
-<h2>記録の誤りはどう報告しますか？</h2>
+<h2 id="記録の誤りはどう報告しますか">記録の誤りはどう報告しますか？</h2>
 <p>記録の頁にある「Report an error in this record」のリンクを使います。訂正は、日付付きの注記として記録に加えます。</p>
-<h2>作品を撤回できますか？</h2>
+<h2 id="作品を撤回できますか">作品を撤回できますか？</h2>
 <p>はい。著者なら誰でも一人で、載っている作品を撤回できます。引用が切れないよう、記録の頁は撤回の告知とともに残ります。PDF の写しは、サイトから外します。<a href="./policies/withdrawal.ja.html">撤回の規程</a>を見てください。</p>
-<h2>素材の削除はどう求めますか？</h2>
+<h2 id="素材の削除はどう求めますか">素材の削除はどう求めますか？</h2>
 <p>著作権の侵害、個人データの露出、その他の法的な理由がある場合は、<a href="./policies/takedown.ja.html">削除の規程</a>に従います。</p>
-<h2>Sophaxis が閉じたら、記録はどうなりますか？</h2>
+<h2 id="sophaxis-が閉じたら記録はどうなりますか">Sophaxis が閉じたら、記録はどうなりますか？</h2>
 <p>すべての記録を収めたリポジトリは、公開のまま残ります。記録は読めるままです。Sophaxis は毎週、著者全員が同意した作品について、頁と PDF の写しを保存するよう、Internet Archive に頼んでもいます。</p>
-<h2>誰が Sophaxis を運営していて、運営者にはどう連絡しますか？</h2>
+<h2 id="誰が-sophaxis-を運営していて運営者にはどう連絡しますか">誰が Sophaxis を運営していて、運営者にはどう連絡しますか？</h2>
 <p><a href="./contact.ja.html">運営者と連絡先</a>の頁を見てください。</p>
 </main>
 <footer><div class="wrap">

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>モデレーションの規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis のモデレーションの規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/moderation.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,32 +96,33 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./moderation.html">Moderation Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
 <p>この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。</p>
-<h2>モデレーションは査読ではない</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#モデレーションは査読ではない">モデレーションは査読ではない</a></li><li><a href="#モデレーションが確かめること">モデレーションが確かめること</a></li><li><a href="#モデレーションが確かめないこと">モデレーションが確かめないこと</a></li><li><a href="#仮登録">仮登録</a></li><li><a href="#判断">判断</a></li><li><a href="#モデレーター">モデレーター</a></li><li><a href="#利益相反">利益相反</a></li><li><a href="#研究の公正">研究の公正</a></li><li><a href="#掲載の後">掲載の後</a></li></ul></nav>
+<h2 id="モデレーションは査読ではない">モデレーションは査読ではない</h2>
 <p>受理はモデレーションであって、査読ではありません。モデレーションは、投稿を載せてよいかどうかを決めます。作品が正しいか、独創的か、重要かは判断しません。</p>
-<h2>モデレーションが確かめること</h2>
+<h2 id="モデレーションが確かめること">モデレーションが確かめること</h2>
 <ul><li>自動の確認が、投稿者とライセンスを確かめている。</li><li>作品が対象の分野に入る。</li><li>DOI が書かれた作品へ解決し、投稿者がその著者の一人である。</li><li>作品が、受け付けるライセンスの一つ、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを持つ。</li><li>作品が、学術論文の通常の形で、題・要旨・参考文献を備えている。リポジトリが Sophaxis に PDF の取得を許しているときは、自動の確認が PDF の形（頁数、文字として読めるか、題・要旨・参考文献が見つかるか）を読み、issue に示します。形は何も決めません。モデレーターが PDF を読みます。</li><li>投稿に、言語モデルとその他の生成モデルの使用についての申告がある。</li><li>2026-11-24 から、<a href="./submission.ja.html">投稿の規程</a>が定めるとおり、投稿が研究資金と利益相反を述べ、人を対象とする研究を含むかどうかを述べ、含むときは倫理審査の承認と同意を述べている。</li><li>投稿者が、著者全員の同意と、その版を共有してよいことを確認している。</li><li>2026-11-21 から、<a href="./submission.ja.html">投稿の規程</a>が定めるとおり、著者が複数いる作品では、ほかの著者全員がそれぞれ自分の同意を確かめている。</li><li>2026-11-23 から、投稿の規程が定めるとおり、初めての投稿が研究者の紹介を得ている。</li><li>作品がスパムでも嫌がらせでもなく、第三者の個人データを晒していない。</li><li>作品に、<a href="./submission.ja.html">投稿の規程</a>の表にある、Sophaxis を提供しない国と地域の、著者の所属や住所が書かれていない。書かれていれば、モデレーターはその著者がどこに住んでいるか、投稿のあとにそこに滞在したかを投稿者に尋ね、ほかの場所に住み、そこに滞在していないのでなければ断る。</li><li>PDF に、DOI の登録情報のライセンスと食い違う権利の表示（出版社の「無断転載禁止」など）がない。あれば断る。</li></ul>
-<h2>モデレーションが確かめないこと</h2>
+<h2 id="モデレーションが確かめないこと">モデレーションが確かめないこと</h2>
 <p>証明・論証・データは確かめません。剽窃の検査は行いません。モデレーターが剽窃を見つけたときは、下の「研究の公正」に定めるとおり、投稿を断ります。研究資金、利益相反、研究倫理、データとコードについての申告は、読む以上には確かめません。作品を文献と比べることはしません。</p>
-<h2>仮登録</h2>
+<h2 id="仮登録">仮登録</h2>
 <p>自動の確認を通った投稿は、仮登録になります。その issue に <code>verified</code> のラベルが付き、モデレーターの判断を待ちます。仮登録の作品は、サイトに載りません。記録の頁は作らず、OAI-PMH でも渡さず、Internet Archive など記録を保存するほかのサービスにも送りません。仮登録は受理ではありません。モデレーターが受理するか断ると、仮登録は終わります。</p>
-<h2>判断</h2>
+<h2 id="判断">判断</h2>
 <p>モデレーターは、投稿の issue で受理か却下を決め、issue に <code>accepted</code> か <code>declined</code> のラベルを付けます。判断はすべて、その issue で公開されたまま残ります。審査を助けるため、運営者は、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、三つの言語モデル、Claude（Anthropic）、ChatGPT（OpenAI）、Grok（xAI）に読ませ、それぞれの指摘を見比べます。運営者はこれを、各サービスのチャットで手で行います。投稿を自動で送ることはなく、公開されていないものは渡しません。言語モデルは補助にとどまります。言語モデルが投稿を受理したり断ったりすることはなく、判断はすべて、投稿を読んだ運営者かモデレーターが下します。言語モデルの指摘を判断の理由にするのは、運営者がその指摘を確かめた後だけです。目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。毎年 1 月に、前の年の判断を、公開の issue と記録から数えます。断るときに挙げた理由と、判断までの日数も数え、運営者が<a href="../decisions.html">年ごとの判断</a>の頁に記録します。その年の途中の数を、数えた日を添えて記録することもあります。</p>
 <p>投稿を断るモデレーターは、次の理由のうち一つ以上を、短い説明とともに挙げます。</p>
 <ul><li>対象外：作品が主に、哲学・数学・論理学・数理哲学・科学哲学の外の分野に属する。</li><li>学術論文の形でない：題・要旨・参考文献のどれかを欠く。</li><li>ライセンス：DOI のメタデータに、受け付けるライセンスが記されていない。</li><li>著者であること：投稿者が著者であると確かめられない、または著者全員が同意していない。</li><li>申告：生成モデルについての申告が無い、またはどう使ったかを書いていない。または、2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が無い、または足りない。</li><li>権利と個人データ：作品に、著者が共有してはいけない素材や第三者の個人データが含まれている。または、PDF にライセンスと食い違う権利の表示がある。</li><li>剽窃：作品が、他人の言葉・考え・証明・結果を著者自身のものとして示している。または、著者自身の前の作品を、出どころを言わずに新しいものとして示している。</li><li>住んでいる場所と滞在した場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在した。</li><li>スパムまたは嫌がらせ。</li></ul>
 <p>投稿者は issue で答えることができます。その後、運営者が投稿をもう一度見直し、その判断が最終のものになります。投稿者は、裁判所に訴えることも、デジタルサービス法第 21 条で認証された裁判外の紛争解決機関を使うこともできます。</p>
 <details class="source"><summary>原文　デジタルサービス法（EU 2022/2065）第21条第1項第1段</summary><blockquote lang="en"><p>1. Recipients of the service, including individuals or entities that have submitted notices, addressed by the decisions referred to in Article 20(1) shall be entitled to select any out-of-court dispute settlement body that has been certified in accordance with paragraph 3 of this Article in order to resolve disputes relating to those decisions, including complaints that have not been resolved by means of the internal complaint-handling system referred to in that Article.</p></blockquote><p class="from"><a href="https://publications.europa.eu/resource/celex/32022R2065">デジタルサービス法（EU 2022/2065）第21条第1項第1段</a>から、2026-11-11 に取り寄せた文をそのまま引いています。訳は付けていません。</p></details>
-<h2>モデレーター</h2>
+<h2 id="モデレーター">モデレーター</h2>
 <p>いまのモデレーターは運営者だけです。ほかのモデレーターを招くことがあります。これらの分野の研究者でモデレーターを引き受けたい人は、運営者に連絡できます。誰を招くかは運営者が決めます。どのモデレーターも、判断をする前に、<a href="../contact.ja.html">運営者と連絡先</a>の頁に ORCID iD とともに名を挙げ、この規程に沿って無報酬でモデレーションを行います。二人目のモデレーターは、次のすべてに当たるときだけ招きます。</p>
 <ul><li>ORCID iD を持ち、Sophaxis の分野のどれかで、出版されたか載っている作品がある。</li><li>公開の issue で、この規程に沿って無報酬でモデレーションを行うことに同意する。</li><li>諮問委員と同じように利益相反を申告し、連絡先の頁がその申告を示す。</li><li>自分の作品が、下の「研究の公正」によって断られたり外されたりしたことがない。</li></ul>
 <p>モデレーターは、自分の作品や、近い共同研究者の作品について判断しません。ほかのモデレーターか運営者が判断します。二人のモデレーターの意見が分かれたときは、運営者が決め、issue にそう書きます。モデレーターはいつでも降りられ、運営者はモデレーターの役を終えることができます。どちらも、日付とともに連絡先の頁に記します。2026-11-10 から、運営者は、諮問委員会を作るため研究者も募っています。諮問委員会は規程について助言し、どの投稿についても判断しません。募集は<a href="../advisory.ja.html">諮問委員の募集</a>にあります。</p>
-<h2>利益相反</h2>
+<h2 id="利益相反">利益相反</h2>
 <p>運営者の投稿も同じ決まりでモデレーションを受け、記録の頁にその旨の印を付けます。自動の確認は、例外なくそれにも掛かります。運営者が唯一のモデレーターであるあいだは、運営者が自分の投稿についても判断します。記録の頁の印がそれを示します。ほかのモデレーターが加われば、どのモデレーターも、自分の投稿や近い共同研究者の投稿については判断しません。運営者の投稿は優先しません。届いた順にモデレーションを行い、その記録をサイトのほかの記録と違う場所に置くこともしません。2026-11-09 から、運営者の投稿は、投稿の issue を開いてから七日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。記録は issue を開いた日を持ち、それより早く載せようとすると、サイトの生成が止まります。<a href="../stats.html">統計</a>の頁と <code>llms.txt</code> が、表示している記録のうち何件が運営者の投稿かを示します。</p>
-<h2>研究の公正</h2>
+<h2 id="研究の公正">研究の公正</h2>
 <p>剽窃とは、他人の言葉・考え・証明・結果を、出どころを言わずに自分のものとして示すことです。著者自身の前の作品を、引かずに新しいものとして示すことも同じに扱います。一つの作品を、別の DOI で二度 Sophaxis に投稿することも同じです。はっきり引用を示したうえで、他人の作品を引き、言い換え、その上に積み上げることは剽窃ではありません。Sophaxis は、剽窃を見つけるソフトウェアを使いません。モデレーターが投稿に剽窃を見つけたときは、「剽窃」を挙げて投稿を断ります。</p>
 <p>研究の不正には、剽窃、捏造（データ・結果・出典を作り上げること）、改ざん（作品がそれらを偽って示すように変えること）、様式の中の真実でない申告が含まれます。掲載された記録への懸念は、だれでも、その頁からつながる訂正の issue で公開して述べることができます。公開すべきでない懸念や、人を名指す懸念は、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるメールアドレスへメールで送ります。運営者は、出版倫理委員会（COPE）が学術誌に勧める手順に、一人でできる限り従って懸念を扱います。Sophaxis は COPE の会員ではありません。</p>
 <ul><li>運営者は懸念を読み、それが掲載された記録に関わり、明らかに根拠を欠くものでなければ、著者に 14 日の答える期間を与えます。</li><li>Sophaxis は不正を調査しません。データ・記録・証人を調べる権限を持ちません。研究が機関で行われたとき、または学術誌が作品を出版したときは、調査するのはその機関か学術誌であることを、懸念を述べた人に伝え、その機関か学術誌に知らせることがあります。</li><li>記録に注記を付けるのは、確かになったことだけです。著者が認めたこと、機関か学術誌が認定したこと、Crossref が記録する通知が述べることです。注記は、何がだれによって認定されたかとその日を述べ、申し立てを繰り返しません。</li><li>剽窃やほかの問題が確かになったときは、著者に、リポジトリで作品を訂正するか、<a href="./withdrawal.ja.html">撤回の規程</a>に従って撤回するよう求めます。著作権を侵害する複製は、<a href="./takedown.ja.html">削除の規程</a>に従って削除します。</li><li>メールで懸念を述べた人の名は、その人の同意なしに、著者にもほかのだれにも明かしません。法が求めるときは別です。</li><li>運営者の作品への懸念も同じ手順で扱い、運営者の答えはその記録の訂正の issue に載せます。</li></ul>
 <p>明らかに嫌がらせのための懸念は、運営者が何もせずに閉じ、述べた人にそう伝えます。</p>
-<h2>掲載の後</h2>
+<h2 id="掲載の後">掲載の後</h2>
 <p>モデレーターは、載せた記録を、分野とは別に、主題ごとの<a href="../collections.html">集め</a>の一つ以上に入れることがあります。集めは作品の質について何も言いません。著者は、記録の訂正の issue で、集めに入れることや集めから外すことを求められます。</p>
 <p>訂正は、日付付きの注記として記録に加えます。誰でも、記録の頁のリンクから、記録の誤りを報告できます。そのリンクは公開の訂正の issue を開きます。注記が作品に置き換わることはありません。申告されていない生成モデルの使用のような問題が明らかになった場合、記録に告知を付けることがあります。</p>
 <p>毎週、自動の確認が、載っているすべての DOI がまだ解決し、記録にあるライセンスをまだ持っていることを確かめます。同じ確認が、表示している記録の DOI ごとに、Crossref が記録している通知を読みます。撤回・取り下げ・削除・懸念表明・訂正で、Retraction Watch からのものも含みます。運営者は、新しい通知を記録に加えます。記録の頁がそれをリンク付きで示し、運営者は掲載を見直します。問題は公開の issue で報告し、運営者が調べます。</p>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>著作権の規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の著作権の規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/copyright.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,24 +96,25 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./copyright.html">Copyright Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
 <p>この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。</p>
-<h2>著作権は著者に残る</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#著作権は著者に残る">著作権は著者に残る</a></li><li><a href="#sophaxis-が写すものとその根拠">Sophaxis が写すものと、その根拠</a></li><li><a href="#sophaxis-がライセンスを守るやり方">Sophaxis がライセンスを守るやり方</a></li><li><a href="#学術誌が出版した作品">学術誌が出版した作品</a></li><li><a href="#他人の素材">他人の素材</a></li><li><a href="#認めないことの例">認めないことの例</a></li><li><a href="#侵害">侵害</a></li></ul></nav>
+<h2 id="著作権は著者に残る">著作権は著者に残る</h2>
 <p>Sophaxis は、著作権の譲渡も、独占的な許諾も求めません。作品は、著者が預け先で付けたライセンスのままです。</p>
-<h2>Sophaxis が写すものと、その根拠</h2>
+<h2 id="sophaxis-が写すものとその根拠">Sophaxis が写すものと、その根拠</h2>
 <p>題・著者名・ライセンス・日付は、DataCite と Crossref が再利用のために公開している DOI のメタデータから取ります。Jxiv については、JaLC の公開のメタデータから取ります。要旨は作品の一部です。要旨は、作品自身のライセンスのもとで、著者と作品へのリンクを添えて示します。</p>
 <p>Sophaxis は、検索エンジンが本文を索引できるように、載っているそれぞれの版の PDF の写しを、手を加えずに置きます。写すのは、スクリプトでファイルを取らせる預け先からだけです。Zenodo、Figshare、arXiv、Research Square です。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。預けたものに PDF が複数ある場合、Sophaxis はどれが論文かを推測せず、写しを作りません。ほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。その場合、Sophaxis はそのファイルを手を加えずに置き、記録には著者が提供したと書きます。そのようなファイルが無ければ、記録は預け先へのリンクだけになります。写しを置くのは、ファイルが 20 MB 以下で、写し全体が 1 GB 以内に収まるあいだだけです。それより大きいファイルは預け先に置いたままにし、記録はそこへリンクします。</p>
 <p>写しは著者が預けたファイルそのものです。作品自身のライセンスのもとで、著者、ライセンス、原本へのリンクを添えて共有します。受け付けるライセンスは、これを認めています。著者は写しを外すよう求めることができます。その場合、記録は預け先へのリンクだけになります。</p>
 <p>Sophaxis は毎週、著者全員が同意した作品について、Internet Archive に頁と PDF の写しの保存を求めています。このサイトが無くなっても読めるようにするためです。</p>
 <p>記録の頁はどれも、Google Scholar が読む引用のタグを持ちます。検索エンジンが頁を索引するかどうか、いつ索引するかは、Sophaxis には決められません。</p>
-<h2>Sophaxis がライセンスを守るやり方</h2>
+<h2 id="sophaxis-がライセンスを守るやり方">Sophaxis がライセンスを守るやり方</h2>
 <p>Sophaxis は、載っている作品を、作品自身のライセンスのもとで、そのライセンスが認める範囲でだけ共有します。受け付ける三つのライセンスは、どれも、目的を問わず複製と共有を認めています。CC BY 4.0 と CC BY-SA 4.0 は表示を求めます。CC0 1.0 は求めませんが、Sophaxis はそれでも著者を示します。</p>
 <ul><li>表示：記録の頁はどれも、著者と題を挙げ、ライセンスの名をリンク付きで示し、DOI で作品へリンクします。</li><li>改変しない：PDF の写しは、預けたファイルを 1 バイトも変えずに、そこに付いている告知ごと置いたものです。要旨は、書式のタグを外し、語を変えずに、素の文として示します。</li><li>条件を足さない：Sophaxis は、ライセンスが読者に認めていることを制限する条件も技術的な手段も足しません。</li><li>推薦を装わない：Sophaxis のどこにも、著者が Sophaxis やその作品の使い方を推薦していると述べたり、ほのめかしたりするものはありません。</li></ul>
 <details class="source"><summary>原文　クリエイティブ・コモンズ 表示 4.0 国際 第3条(a)(1)</summary><blockquote lang="en"><p>Attribution. If You Share the Licensed Material (including in modified form), You must: retain the following if it is supplied by the Licensor with the Licensed Material: identification of the creator(s) of the Licensed Material and any others designated to receive attribution, in any reasonable manner requested by the Licensor (including by pseudonym if designated); a copyright notice; a notice that refers to this Public License; a notice that refers to the disclaimer of warranties; a URI or hyperlink to the Licensed Material to the extent reasonably practicable; indicate if You modified the Licensed Material and retain an indication of any previous modifications; and indicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License.</p></blockquote><p class="from"><a href="https://creativecommons.org/licenses/by/4.0/legalcode.en">クリエイティブ・コモンズ 表示 4.0 国際 第3条(a)(1)</a>から、2026-11-11 に取り寄せた文をそのまま引いています。訳は付けていません。</p></details>
 <details class="source"><summary>原文　クリエイティブ・コモンズ 表示 4.0 国際 第2条(a)(5)(B)・(a)(6)</summary><blockquote lang="en"><p>No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material. No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).</p></blockquote><p class="from"><a href="https://creativecommons.org/licenses/by/4.0/legalcode.en">クリエイティブ・コモンズ 表示 4.0 国際 第2条(a)(5)(B)・(a)(6)</a>から、2026-11-11 に取り寄せた文をそのまま引いています。訳は付けていません。</p></details>
-<h2>学術誌が出版した作品</h2>
+<h2 id="学術誌が出版した作品">学術誌が出版した作品</h2>
 <p>学術誌が作品を出版すると、著作権や独占的な許諾が出版者に移ることがあります。その場合、著者は、預けた版をそのライセンスで共有してよいことを確かめなければなりません。共有してはいけない場合、その作品は載せられません。</p>
-<h2>他人の素材</h2>
+<h2 id="他人の素材">他人の素材</h2>
 <p>図・表・長い引用その他の他人の素材には、許諾が要ります。または、引用のように法令が認めるやり方で使わなければなりません。その責任は著者が負います。</p>
-<h2>認めないことの例</h2>
+<h2 id="認めないことの例">認めないことの例</h2>
 <p>これらの例は、この規程の当てはめ方を示すものです。すべてを挙げたものではありません。</p>
 <p>共有する版について：</p>
 <ul><li>著作権が出版者に移ったのに、出版者の組版の版を CC BY で預けること。著者はもはやそれを許諾できません。</li><li>出版者が定めるエンバーゴが明ける前に、受理された原稿を預けること。</li><li>新しい草稿、手を入れた写し、学術誌の体裁のように、預けたファイルと異なる PDF を投稿の issue に添付すること。写しは、預けたファイルを手を加えずに置いたものでなければなりません。</li><li>Sophaxis に PDF の写しを変えるよう求めること。変えるなら、預け先での新しい版になります。</li></ul>
@@ -116,7 +122,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul><li>書籍・論文・ウェブサイトから、許しを得ずに、引用の範囲を超えて写した図・表・地図・写真。</li><li>引用の法令が及ばない長さで引いた、ほかの作品の長い一節。</li><li>他人の詩・歌・短編の全文。</li><li>他人の論文の翻訳を、著者自身の作品として預けること、または原作の権利者の許しなく預けること。</li><li>再公開を禁じる条件のある資料館の画像。</li><li>非営利や改変禁止のライセンスの素材を、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 の作品の中に、そのライセンスのもとにあるかのように置くこと。</li><li>ソフトウェア、ウェブの頁、動画の画面写しを、引用として認められる範囲を超えて載せること。</li></ul>
 <p>求めについて：</p>
 <ul><li>公開の削除の issue で、侵害している素材そのものを繰り返すこと。代わりに、それがどこにあるかを書いてください。</li><li>預け先から預けたものを削除するよう Sophaxis に求めること。Sophaxis にはできません。その求めは預け先へ送ります。</li></ul>
-<h2>侵害</h2>
+<h2 id="侵害">侵害</h2>
 <p>載っている作品が自分の権利を侵害していると考える権利者は、<a href="./takedown.ja.html">削除の規程</a>に沿って削除を求めることができます。</p>
 <p class="meta"><a href="../policy.html">All policies</a></p>
 </main>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>A call to researchers | Sophaxis</title>
 <meta name="description" content="A call to researchers in philosophy and mathematics to submit to Sophaxis: what a listed work gets, what it is not, and what a submission needs.">
 <link rel="canonical" href="https://sophaxis.vercel.app/call.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -88,18 +93,19 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>A call to researchers</h1>
-<p>Last updated: 2026-11-10.</p>
+<p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./call.ja.html">研究者の方へ（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
-<h2>Who it is for</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#who-it-is-for">Who it is for</a></li><li><a href="#what-a-listed-work-gets">What a listed work gets</a></li><li><a href="#what-it-is-not">What it is not</a></li><li><a href="#what-a-submission-needs">What a submission needs</a></li><li><a href="#how-to-submit">How to submit</a></li></ul></nav>
+<h2 id="who-it-is-for">Who it is for</h2>
 <p>Sophaxis is for researchers in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. It lists a preprint that you have already deposited, with a DOI, in one of the repositories that the <a href="./policies/submission.html">Submission Policy</a> names. Every work listed so far is by the operator; the first submissions from other researchers are welcome.</p>
-<h2>What a listed work gets</h2>
+<h2 id="what-a-listed-work-gets">What a listed work gets</h2>
 <ul><li>A record page with the abstract, the versions, the licence, the formats for citing it and an unmodified PDF copy where the repository allows one.</li><li>A place beside other work in its fields, in the lists, the feeds, the search and the collections.</li><li>Its record offered to harvesters through OAI-PMH, and a card that shows the title and the authors when the page is shared.</li><li>A badge that the authors can show, with a link to the record.</li></ul>
 <p>Nothing is charged, to authors or to readers. The authors keep their copyright, and the work stays in its repository under its own DOI.</p>
-<h2>What it is not</h2>
+<h2 id="what-it-is-not">What it is not</h2>
 <p>Acceptance is moderation, not peer review. Sophaxis does not judge whether a work is correct or important, and listing does not replace publication in a journal. A listed work can still be published in a journal, and the record page then shows the published version.</p>
-<h2>What a submission needs</h2>
+<h2 id="what-a-submission-needs">What a submission needs</h2>
 <ul><li>A DOI in one of the repositories that the Submission Policy names.</li><li>CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in the DOI metadata.</li><li>An ORCID record that links the GitHub account from which you submit.</li><li>A statement on the use of language models and other generative models.</li><li>From 2026-11-23, six months since the first DOI of the work was registered, and, for a first submission, a researcher who vouches for it.</li><li>From 2026-11-24, statements on funding, on competing interests, and on human participants and research ethics.</li><li>No author who lives in, or stays in, a place where Sophaxis is not offered, as the Submission Policy lists them.</li></ul>
-<h2>How to submit</h2>
+<h2 id="how-to-submit">How to submit</h2>
 <p>The steps are on the page <a href="./process.html">From submission to listing</a>, and the form opens from <a href="./submit.html">Submit</a>. A question before submitting can go in <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new">a public issue</a>, or by email to the address on the operator's <a href="https://orcid.org/0009-0000-1406-0547">ORCID record</a>.</p>
 </main>
 <footer><div class="wrap">

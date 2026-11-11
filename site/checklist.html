@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Before you submit: a checklist | Sophaxis</title>
 <meta name="description" content="Before submitting to Sophaxis: what the policies ask, gathered in one list, with examples of a statement on generative models and two paper templates.">
 <link rel="canonical" href="https://sophaxis.vercel.app/checklist.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,20 +96,21 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./checklist.ja.html">投稿の前に：確かめること（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <p>This list adds no rule. It gathers what the <a href="./policies/submission.html">Submission Policy</a> and the <a href="./policies/moderation.html">Moderation Policy</a> already ask, so that a submission is complete the first time. Where this list and the policies differ, the policies apply. For anyone who has never made a preprint public, <a href="./first.html">Your first preprint</a> comes first.</p>
-<h2>The work</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-work">The work</a></li><li><a href="#the-authors">The authors</a></li><li><a href="#the-statements">The statements</a></li><li><a href="#material-from-others-and-personal-data">Material from others and personal data</a></li><li><a href="#examples-of-a-statement-on-generative-models">Examples of a statement on generative models</a></li><li><a href="#when-there-is-more-than-one-author">When there is more than one author</a></li><li><a href="#templates">Templates</a></li></ul></nav>
+<h2 id="the-work">The work</h2>
 <ol><li>The work is deposited in an open repository, and its version has a DOI.</li><li>The DOI metadata carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0. The PDF carries no notice of rights that contradicts it, such as &quot;all rights reserved&quot;.</li><li>The work has a title, an abstract and references, in the ordinary form of a scholarly paper.</li><li>The work belongs mainly to philosophy, mathematics, logic, the philosophy of mathematics or the philosophy of science.</li></ol>
-<h2>The authors</h2>
+<h2 id="the-authors">The authors</h2>
 <ol start="5"><li>The submitter is an author, and their ORCID record links their GitHub account, as <a href="./process.html">From submission to listing</a> shows.</li><li>Every author agrees to the listing. From 2026-11-21, every other author confirms their own agreement in the issue or by email.</li><li>No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them.</li></ol>
-<h2>The statements</h2>
+<h2 id="the-statements">The statements</h2>
 <ol start="8"><li>The statement on generative models names each tool and what it did, or says that none was used. From 2026-11-21 it also gives the extent of use.</li><li>From 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are ready.</li></ol>
-<h2>Material from others and personal data</h2>
+<h2 id="material-from-others-and-personal-data">Material from others and personal data</h2>
 <ol start="10"><li>Each figure, table or long quotation from others has permission, or is used in a way the law allows, such as quotation. The <a href="./policies/copyright.html">Copyright Policy</a> explains this.</li><li>The work contains no personal data of third parties. A person who can be identified, for example in an interview or a case, has consented, and the work says so.</li></ol>
-<h2>Examples of a statement on generative models</h2>
+<h2 id="examples-of-a-statement-on-generative-models">Examples of a statement on generative models</h2>
 <p>These are examples only. The statement must describe what was actually done.</p>
 <ul><li>&quot;No generative model was used in writing or developing this work.&quot;</li><li>&quot;Claude (Anthropic) was used to edit the language of sections 2 and 3. The authors wrote the text and checked every change.&quot;</li><li>&quot;ChatGPT (OpenAI) was used for a literature search, and its suggestions were checked against the sources. No text was generated.&quot;</li></ul>
-<h2>When there is more than one author</h2>
+<h2 id="when-there-is-more-than-one-author">When there is more than one author</h2>
 <p>Sophaxis records the authors as the DOI metadata lists them, in that order, and records no roles. A work may say who did what in the work itself. The CRediT taxonomy of contributor roles is one common way to do so. Sophaxis does not check such a statement.</p>
-<h2>Templates</h2>
+<h2 id="templates">Templates</h2>
 <p>Two templates for a paper are offered, one in Markdown and one in LaTeX. Each has a title, an abstract, the statements above and a list of references.</p>
 <ul><li><a href="./templates/paper.md">paper.md</a></li><li><a href="./templates/paper.tex">paper.tex</a></li></ul>
 <p>The templates are dedicated to the public domain under CC0 1.0. A work written from them need not mention Sophaxis. Using a template is not required, and a work written from one is moderated like any other.</p>

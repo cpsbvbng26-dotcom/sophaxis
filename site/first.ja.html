@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>はじめてのプレプリント（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「はじめてのプレプリント（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/first.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,18 +96,19 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./first.html">Your first preprint</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>この頁は、大学院生のように、まだプレプリントを公開したことのない人のためのものです。新しい決まりは足しません。<a href="./policy.ja.html">規程</a>が決まりです。</p>
-<h2>プレプリントとは</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#プレプリントとは">プレプリントとは</a></li><li><a href="#預ける前に">預ける前に</a></li><li><a href="#リポジトリを選ぶ">リポジトリを選ぶ</a></li><li><a href="#預ける">預ける</a></li><li><a href="#預けたあと">預けたあと</a></li></ul></nav>
+<h2 id="プレプリントとは">プレプリントとは</h2>
 <p>プレプリントは、著者が自ら公開する論文の版です。学術誌での出版の前の版、または出版とは別の版です。査読は受けていません。それでも、読者は読み、引用し、応答できます。</p>
-<h2>預ける前に</h2>
+<h2 id="預ける前に">預ける前に</h2>
 <ul><li>論文を普通の形にします。題・要旨・参考文献を備えます。</li><li>のちに投稿するかもしれない学術誌の、プレプリントについての方針を読みます。多くは、プレプリントを先に出してよいかを書いており、プレプリントに注記を求める誌もあります。</li><li>ライセンスを選びます。Sophaxis が載せるのは、CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかの作品だけです。預けたものに与えたライセンスは、すでに作られた写しについては取り消せません。</li><li>ORCID iD を取り、これから使う書き方で名前を論文に書きます。</li><li>ほかの人が論文の一部を書いたときは、預ける前にその全員に尋ねます。</li></ul>
-<h2>リポジトリを選ぶ</h2>
+<h2 id="リポジトリを選ぶ">リポジトリを選ぶ</h2>
 <p>Sophaxis が載せるのは、次のリポジトリのどれかに DOI 付きで預けた作品です。</p>
 <ul><li><a href="https://zenodo.org">Zenodo</a></li><li><a href="https://figshare.com">Figshare</a></li><li><a href="https://osf.io/preprints/osf">OSF Preprints</a></li><li><a href="https://osf.io/preprints/socarxiv">SocArXiv</a></li><li><a href="https://osf.io/preprints/metaarxiv">MetaArXiv</a></li><li><a href="https://arxiv.org">arXiv</a></li><li><a href="https://www.preprints.org">Preprints.org</a></li><li><a href="https://www.ssrn.com">SSRN</a></li><li><a href="https://www.researchsquare.com">Research Square</a></li><li><a href="https://preprints.scielo.org">SciELO Preprints</a></li><li><a href="https://www.qeios.com">Qeios</a></li><li><a href="https://www.scienceopen.com">ScienceOpen Preprints</a></li><li><a href="https://advance.sagepub.com">Advance</a></li><li><a href="https://works.hcommons.org">KC Works</a></li><li><a href="https://jxiv.jst.go.jp">Jxiv</a></li></ul>
 <p>選ぶ前に、次の点について、それぞれのリポジトリの頁を読みます。Sophaxis はそれらを比べません。それぞれの頁が決めることです。</p>
 <ul><li>著者や読者から、何か料金を取るか。</li><li>公開の前に審査があるか。あるなら、どれくらいかかるか。</li><li>新しい版をどう足すか。版ごとに DOI が付くか。</li><li>どのライセンスを選べるか。DOI のメタデータのどこにライセンスが出るか。</li></ul>
-<h2>預ける</h2>
+<h2 id="預ける">預ける</h2>
 <ul><li>PDF を上げ、題・ORCID iD 付きの全著者・要旨・キーワード・ライセンスを入れます。</li><li>記録が出たら、名前・ライセンス・DOI を確かめます。</li><li>預けたものは残り続けます。直すときは新しい版を足し、消そうとはしません。</li></ul>
-<h2>預けたあと</h2>
+<h2 id="預けたあと">預けたあと</h2>
 <ul><li>作品を自分の ORCID の記録に足します（<a href="./findable.ja.html">載った作品を見つけてもらうために</a>）。</li><li>Sophaxis に載せるには、<a href="./checklist.ja.html">確かめること</a>を読み、<a href="./process.ja.html">投稿から掲載まで</a>の手順に沿います。</li><li><a href="./policies/submission.ja.html">投稿の規程</a>が定めるとおり、2026-11-23 からは、最初の DOI から六か月たった作品だけを載せます。はじめての投稿には、紹介する研究者が要ります。</li></ul>
 </main>
 <footer><div class="wrap">

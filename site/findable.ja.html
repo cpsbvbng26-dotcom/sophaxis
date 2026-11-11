@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>載った作品を見つけてもらうために（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「載った作品を見つけてもらうために（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/findable.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -90,10 +95,11 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h1>載った作品を見つけてもらうために（日本語訳）</h1>
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./findable.html">Making a listed work easy to find</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
-<h2>Sophaxis がひとりでにすること</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#sophaxis-がひとりでにすること">Sophaxis がひとりでにすること</a></li><li><a href="#著者ができること">著者ができること</a></li></ul></nav>
+<h2 id="sophaxis-がひとりでにすること">Sophaxis がひとりでにすること</h2>
 <ul><li>記録の頁には、Google Scholar などの索引が読む目印を入れ、PDF の写しがあればそれへのリンクも入れています。</li><li>記録は OAI-PMH を通して収集する側へ渡し、新しい頁は IndexNow とサイトマップで検索エンジンに知らせます。</li><li>著者全員の同意があれば、記録の頁と PDF の写しを毎週 Internet Archive に保存します。</li></ul>
 <p>どれも、索引が作品を拾うことを約束するものではありません。拾うかどうかは、それぞれが決めます。</p>
-<h2>著者ができること</h2>
+<h2 id="著者ができること">著者ができること</h2>
 <ul><li>ORCID：作品の DOI を自分の ORCID の記録に足すと、ORCID を読むサービスが作品とあなたを結び付けます。Sophaxis の著者の頁には、その著者の記録すべてを収めた BibTeX のファイルが一つあり、ORCID に取り込めます。</li><li>Google Scholar：リポジトリにある作品を自分で見つけます。多くは数週間のうちです。Google Scholar のプロフィールで、作品を足すことも、見つかったものを確かめることもできます。</li><li>PhilPapers：哲学では、多くの読者が PhilPapers で探します。作品の記録を PhilPapers に足すことができ、その開かれたアーカイブである PhilArchive に預けることもできます。PhilArchive には独自のモデレーションがあります。どちらも無料です。</li><li>researchmap：日本の研究者は、作品を自分の researchmap の記録に足せます。</li><li>バッジとカード：記録の頁のバッジを、そのリンクとともに示します。記録の頁のアドレスを共有すると、題と著者を載せたカードが出ます。</li></ul>
 <p>Sophaxis は、これらのサービスとつながりを持ちません。名を挙げるのは、著者が見つけられるようにするためだけです。</p>
 </main>

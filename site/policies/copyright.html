@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Copyright Policy | Sophaxis</title>
 <meta name="description" content="Copyright Policy of Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/copyright.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,24 +96,25 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./copyright.ja.html">著作権の規程（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <p>The laws, licences and terms that this page cites are quoted at the end of each section that cites them. Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated. A citation whose source could not be fetched is named there as not quoted, with the reason.</p>
-<h2>Authors keep their copyright</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#authors-keep-their-copyright">Authors keep their copyright</a></li><li><a href="#what-sophaxis-copies-and-on-what-basis">What Sophaxis copies, and on what basis</a></li><li><a href="#how-sophaxis-meets-the-licences">How Sophaxis meets the licences</a></li><li><a href="#work-published-in-a-journal">Work published in a journal</a></li><li><a href="#material-from-others">Material from others</a></li><li><a href="#examples-of-what-is-not-allowed">Examples of what is not allowed</a></li><li><a href="#infringement">Infringement</a></li></ul></nav>
+<h2 id="authors-keep-their-copyright">Authors keep their copyright</h2>
 <p>Sophaxis asks for no transfer of copyright and no exclusive licence. The work stays under the licence the authors gave it in the repository.</p>
-<h2>What Sophaxis copies, and on what basis</h2>
+<h2 id="what-sophaxis-copies-and-on-what-basis">What Sophaxis copies, and on what basis</h2>
 <p>Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse; for Jxiv, they come from the public metadata of JaLC. The abstract is part of the work. It is shown under the work's own licence, with its authors and a link to the work.</p>
 <p>Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text. It copies the file only from a repository that lets a script fetch it: Zenodo, Figshare, arXiv and Research Square. Where the repository publishes a checksum, the copy must match it. When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy. For any other repository, the authors can attach the deposited PDF to their submission issue. Sophaxis then keeps that file unmodified, and the record says that the authors provided it. Without such a file, the record links to the repository only. A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB. A larger file stays at its repository, and the record links to it.</p>
 <p>The copy is the file the authors deposited, shared under the work's own licence, with its authors, its licence and a link to the original. The accepted licences allow this. Authors can ask for the copy to be removed; the record then links to the repository only.</p>
 <p>Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, where every author of the work consents to it, so that they stay readable even if this site goes away.</p>
 <p>Every record page carries the citation tags that Google Scholar reads. Sophaxis does not control whether or when a search engine indexes a page.</p>
-<h2>How Sophaxis meets the licences</h2>
+<h2 id="how-sophaxis-meets-the-licences">How Sophaxis meets the licences</h2>
 <p>Sophaxis shares a listed work only under the work's own licence, and only as that licence allows. The three accepted licences permit copying and sharing for any purpose. CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credits the authors anyway.</p>
 <ul><li>Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI.</li><li>No changes: the PDF copy is the deposited file, byte for byte, with every notice it carries. The abstract is shown as plain text, with formatting tags removed and its words unchanged.</li><li>No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do.</li><li>No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work.</li></ul>
 <details class="source"><summary>Text of Creative Commons Attribution 4.0 International, Section 3(a)(1)</summary><blockquote lang="en"><p>Attribution. If You Share the Licensed Material (including in modified form), You must: retain the following if it is supplied by the Licensor with the Licensed Material: identification of the creator(s) of the Licensed Material and any others designated to receive attribution, in any reasonable manner requested by the Licensor (including by pseudonym if designated); a copyright notice; a notice that refers to this Public License; a notice that refers to the disclaimer of warranties; a URI or hyperlink to the Licensed Material to the extent reasonably practicable; indicate if You modified the Licensed Material and retain an indication of any previous modifications; and indicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License.</p></blockquote><p class="from">Quoted word for word from <a href="https://creativecommons.org/licenses/by/4.0/legalcode.en">Creative Commons Attribution 4.0 International, Section 3(a)(1)</a>, as fetched on 2026-11-11.</p></details>
 <details class="source"><summary>Text of Creative Commons Attribution 4.0 International, Section 2(a)(5)(B) and 2(a)(6)</summary><blockquote lang="en"><p>No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material. No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).</p></blockquote><p class="from">Quoted word for word from <a href="https://creativecommons.org/licenses/by/4.0/legalcode.en">Creative Commons Attribution 4.0 International, Section 2(a)(5)(B) and 2(a)(6)</a>, as fetched on 2026-11-11.</p></details>
-<h2>Work published in a journal</h2>
+<h2 id="work-published-in-a-journal">Work published in a journal</h2>
 <p>When a journal publishes a work, the copyright or an exclusive licence may pass to the publisher. The authors must then make sure that the version they deposited may be shared under its licence. If it may not, the work cannot be listed.</p>
-<h2>Material from others</h2>
+<h2 id="material-from-others">Material from others</h2>
 <p>Figures, tables, long quotations and other material from others need permission, or must be used in a way the law allows, such as quotation. The authors are responsible for this.</p>
-<h2>Examples of what is not allowed</h2>
+<h2 id="examples-of-what-is-not-allowed">Examples of what is not allowed</h2>
 <p>These examples show how this policy applies. They are not a complete list.</p>
 <p>The version that is shared:</p>
 <ul><li>Depositing the publisher's typeset version under CC BY when the copyright went to the publisher. The authors can no longer license it.</li><li>Depositing an accepted manuscript before the embargo that the publisher sets has ended.</li><li>Attaching to the submission issue a PDF that differs from the deposited file, such as a newer draft, an edited copy or the journal layout. The copy must be the deposited file, unmodified.</li><li>Asking Sophaxis to change its PDF copy. A change is a new version in the repository.</li></ul>
@@ -116,7 +122,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul><li>A figure, a table, a map or a photograph copied from a book, a paper or a website without permission, beyond quotation.</li><li>A long passage of another work, quoted at a length that the law of quotation does not cover.</li><li>The full text of a poem, a song or a short story by someone else.</li><li>A translation of someone else's paper, deposited as the authors' own work, or without the permission of the original's rights holder.</li><li>Images from an archive whose terms forbid publishing them again.</li><li>Material under a NonCommercial or NoDerivatives licence, placed inside a work that carries CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 as though it were under that licence.</li><li>A screenshot of software, a web page or a video, reproduced beyond what quotation allows.</li></ul>
 <p>Requests:</p>
 <ul><li>Repeating the infringing material itself in a public removal issue. Describe where it is instead.</li><li>Asking Sophaxis to remove a deposit from its repository. Sophaxis cannot; the request goes to the repository.</li></ul>
-<h2>Infringement</h2>
+<h2 id="infringement">Infringement</h2>
 <p>A rights holder who believes that a listed work infringes their rights can ask for its removal under the <a href="./takedown.html">Takedown Policy</a>.</p>
 <p class="meta"><a href="../policy.html">All policies</a></p>
 </main>

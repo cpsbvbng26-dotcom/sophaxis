@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>免責事項（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の免責事項の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/disclaimer.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,34 +96,35 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./disclaimer.html">Disclaimer</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./policies/terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
 <p>この頁は、Sophaxis が約束しないことを一か所にまとめたものです。拘束力を持つのは<a href="./policies/terms.ja.html">利用規約</a>です。この頁と食い違う場合は、利用規約が適用されます。</p>
-<h2>載っている作品</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#載っている作品">載っている作品</a></li><li><a href="#メタデータ">メタデータ</a></li><li><a href="#本人の確認">本人の確認</a></li><li><a href="#提携していないこと">提携していないこと</a></li><li><a href="#誰がなぜ-sophaxis-を運営するか">誰が、なぜ Sophaxis を運営するか</a></li><li><a href="#運営者自身の使い方">運営者自身の使い方</a></li><li><a href="#github-とその他のサービス">GitHub とその他のサービス</a></li><li><a href="#sophaxis-の作り方">Sophaxis の作り方</a></li><li><a href="#リンク">リンク</a></li><li><a href="#利用できること">利用できること</a></li><li><a href="#助言ではないこと">助言ではないこと</a></li><li><a href="#責任">責任</a></li></ul></nav>
+<h2 id="載っている作品">載っている作品</h2>
 <p>掲載はモデレーションであって、査読ではありません。Sophaxis は証明・論証・データを確かめず、載っている作品が正しいこと、独創的であること、完全であること、何らかの質を持つことを保証しません。著者は、生成モデルについての申告を含め、自分の作品にすべての責任を負います。Sophaxis はその申告を検証しません。</p>
-<h2>メタデータ</h2>
+<h2 id="メタデータ">メタデータ</h2>
 <p>題・著者・要旨・ライセンス・版・日付は、DataCite、Crossref、JaLC が保持する DOI のメタデータから取り、受け取ったとおりに示します。メタデータに要旨がない場合は、投稿の様式に書かれた要旨を示します。そこに誤りがあれば、ここにも出ることがあります。誤りは、記録の頁のそれぞれにあるリンクから報告できます。</p>
-<h2>本人の確認</h2>
+<h2 id="本人の確認">本人の確認</h2>
 <p>自動の確認は、ORCID の記録を管理している人が投稿の issue を開いたこと、その ORCID iD が作品の著者のものであることを確かめます。公的な本人確認ではありません。</p>
-<h2>提携していないこと</h2>
+<h2 id="提携していないこと">提携していないこと</h2>
 <p>Sophaxis は、独立した個人のプロジェクトです。載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。その中には商標もあります。それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。<a href="./repositories.ja.html">預け先と DOI 登録機関へ</a>の頁も見てください。</p>
-<h2>誰が、なぜ Sophaxis を運営するか</h2>
+<h2 id="誰がなぜ-sophaxis-を運営するか">誰が、なぜ Sophaxis を運営するか</h2>
 <p>いまは唯一のモデレーターでもある運営者が、無報酬のボランティアとして Sophaxis を運営しています。Sophaxis の仕事で報酬を受ける人はおらず、投稿にも閲覧にも料金は要りません。Sophaxis は、GitHub と Vercel の無料のサービスの範囲だけで、sophaxis.vercel.app のアドレスで配信しており、支払うべきドメインやホスティングはありません。運営者は、サイトとそのコードを書く道具である Claude Code の料金を、個人で払っています（下の「Sophaxis の作り方」を見てください）。Sophaxis は、その費用に充てるお金を誰からも受け取りません。無報酬で務めていても、<a href="./policies/terms.ja.html">利用規約</a>と<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a>のもとで運営者が読者と著者に負う務めは軽くなりません。</p>
 <p>Sophaxis を始めたのは、運営者が、哲学と数学の公開のプレプリントを並べて載せる場所を一つ探して、見つからなかったからです。次の節が述べるとおり、運営者自身が読むために、そして同じ問いに取り組む人のために置いています。これは運営者の理由であって、ほかのアーカイブへの評価ではありません。Sophaxis はそれらに代わるものではなく、ここに載る作品は、それぞれの預け先に置かれたままです。</p>
-<h2>運営者自身の使い方</h2>
+<h2 id="運営者自身の使い方">運営者自身の使い方</h2>
 <p>運営者は、個人の本棚の延長として、趣味で Sophaxis を置いています。哲学と数学の作品を手元に置き、読むための場所です。この使い方によって、何を載せるか、どう載せるかは変わりません。</p>
 <ul><li>作品を投稿できるのは、その作品の著者だけです。運営者は、読んだから、手元に置きたいからといって、他人の作品を載せません。そのような作品は、Sophaxis の外の、運営者自身の本棚に置きます。</li><li>Sophaxis は営利のために運営していません。誰からも料金を取らず、何も売らず、広告を出さず、何の収入も得ません。</li><li>Sophaxis は作品を出版しません。それぞれの作品は、その預け先が DOI のもとで公開し、Sophaxis はそこへリンクします。</li><li>PDF の写しは、著者が預けたファイルを手を加えずに置いたもので、作品のライセンスが認める範囲でだけ、著者、ライセンス、原本へのリンクを添えて共有します。<a href="./policies/copyright.ja.html">著作権の規程</a>を見てください。</li><li>Sophaxis は、どの作品についても、著作権も独占的な許諾も取りません。</li><li>権利者は、<a href="./policies/takedown.ja.html">削除の規程</a>に沿って作品の削除を求めることができます。</li></ul>
 <p>これらの決めによって、Sophaxis は、著者とライセンスが認める範囲に収まるようにしています。これらは法的な助言ではなく、法的な問題が一つも起こりえないと主張するものでもありません。</p>
-<h2>GitHub とその他のサービス</h2>
+<h2 id="github-とその他のサービス">GitHub とその他のサービス</h2>
 <p>Sophaxis は GitHub の上で動いています。コード、記録、投稿（GitHub の issue）はそこに保管し、自動の確認は公開のリポジトリの GitHub Actions として動きます。サイトはそのリポジトリから組み立て、Vercel が配信します。Sophaxis は GitHub や ORCID でのサインインを使わず、誰にもアカウントへのアクセスを求めません。DataCite、Crossref、JaLC、OpenAlex、ORCID、預け先の公開の API を通して、公開のデータだけを読みます。投稿のために GitHub を使うことには、GitHub 自身の規約とプライバシーステートメントが適用されます。GitHub と Vercel は、それぞれ自らの規約で、サービスを「現状のまま」保証なしに提供し、責任を限っています。Sophaxis は、二つのサービスについて、それぞれが約束する以上のことを約束できません。サイトは Vercel の無料の Hobby プランで配信しており、Vercel はこのプランの配信を、予告の有無を問わず止めたり削除したりできます。二つの規約の定めは、<a href="./policies/terms.ja.html">利用規約</a>の「GitHub と Vercel」にあります。</p>
-<h2>Sophaxis の作り方</h2>
+<h2 id="sophaxis-の作り方">Sophaxis の作り方</h2>
 <p>サイト、そのコード、規程、これらの頁は、運営者の求めにより、Anthropic のコーディングの道具である Claude Code で書きました。運営者がそれらを確かめ、責任を負います。Claude は、Sophaxis の著者でも、載っているどの作品の著者でもありません。投稿について判断する言語モデルはありません。自動の確認は通常のコードで、判断はすべてモデレーターが行います。Sophaxis は Anthropic と提携しておらず、推薦も受けていません。Claude Code の名を挙げるのは、サイトの作り方の開示としてであって、推薦や広告としてではありません。運営者は、その普通の有料の利用者です。Sophaxis は Anthropic と何の取り決めもなく、Anthropic から何も受け取らず、その製品へのリンクも置いていません。</p>
-<h2>リンク</h2>
+<h2 id="リンク">リンク</h2>
 <p>Sophaxis は、自らが管理しない預け先、DOI、その他のサイトへリンクしています。それらの内容、利用できるかどうか、その規約について、責任を負いません。</p>
-<h2>利用できること</h2>
+<h2 id="利用できること">利用できること</h2>
 <p>サイトは現状のまま提供し、利用できなくなったり、変わったり、閉じたりすることがあります。閉じた場合も、すべての記録を収めたリポジトリは公開のまま残ります。<a href="./policies/terms.ja.html">利用規約</a>の「続けるための備え」を見てください。</p>
 <p>Sophaxis は、外部のサービスに頼っています。</p>
 <ul><li>Vercel が止まれば、サイトは配信されません。記録は GitHub のリポジトリと Internet Archive に残ります。</li><li>GitHub が止まれば、誰も投稿できず、自動の確認も動きません。サイトは、最後に組み立てたものを示し続けます。</li><li>DataCite、Crossref、JaLC に届かなければ、届くようになるまで投稿を確かめられません。</li><li>預け先が預けたものを削除すれば、その DOI は解決しなくなり、記録は<a href="./policies/withdrawal.ja.html">撤回の規程</a>に沿って撤回します。</li></ul>
-<h2>助言ではないこと</h2>
+<h2 id="助言ではないこと">助言ではないこと</h2>
 <p>Sophaxis の規程と頁は、Sophaxis の仕組みを説明するものです。法的な助言や専門的な助言ではありません。</p>
-<h2>責任</h2>
+<h2 id="責任">責任</h2>
 <p>運営者は、自らの故意または過失で生じさせた損害について、日本の法令の定めるとおり責任を負います。著者が書いた作品の内容だけ、または GitHub・Vercel・預け先だけが原因で生じた損害については、法令が運営者に責任を負わせる場合を除き、運営者は責任を負いません。Sophaxis は、運営者を日本の消費者契約法の事業者であるものとみなして、読者と著者に同法を適用します。これは、故意または重大な過失による責任や、法令が免除や制限を認めない責任を、免除したり制限したりするものではありません。ほかの人が利用規約に反して、または利用規約の外で行った行いの責任は、行った本人にあります。法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。法令の要件に近づくおそれのあるそうした行いは、利用規約の「規約の外で、法令の要件に近づく行い」の節に挙げています。これらの定めは日本法に準拠し、この頁のどの定めも、法令が制限を認めない権利を制限しません。紛争は、<a href="./policies/terms.ja.html">利用規約</a>の「紛争」の節が定めるとおり、まず合意で解決します。</p>
 </main>
 <footer><div class="wrap">

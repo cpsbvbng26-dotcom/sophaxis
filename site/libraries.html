@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>For libraries | Sophaxis</title>
 <meta name="description" content="For library staff: what Sophaxis is, how to point readers to it, and how to harvest its records.">
 <link rel="canonical" href="https://sophaxis.vercel.app/libraries.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,15 +96,16 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./libraries.ja.html">図書館の方へ（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <p>This page is for library staff who help researchers find and share work in philosophy and mathematics.</p>
-<h2>What Sophaxis is</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#what-sophaxis-is">What Sophaxis is</a></li><li><a href="#pointing-readers-to-it">Pointing readers to it</a></li><li><a href="#harvesting-the-records">Harvesting the records</a></li><li><a href="#telling-researchers">Telling researchers</a></li><li><a href="#what-sophaxis-is-not">What Sophaxis is not</a></li></ul></nav>
+<h2 id="what-sophaxis-is">What Sophaxis is</h2>
 <p>Sophaxis is a free overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. It keeps no manuscripts of its own. Each record links a moderated preprint, deposited with a DOI in an open repository, and keeps an unmodified copy of its PDF where the licence allows. Acceptance is moderation, not peer review. It charges nothing, to authors or to readers.</p>
-<h2>Pointing readers to it</h2>
+<h2 id="pointing-readers-to-it">Pointing readers to it</h2>
 <ul><li>Link the <a href="./index.html">listing</a> or one of the field pages from a subject guide.</li><li>Each field has its own Atom feed, such as <a href="./list/philosophy.xml">Philosophy</a>, and every new record is in <a href="./feed.xml">feed.xml</a>.</li><li>A record can be cited by the DOI of the work; the record page gives the citation in several styles and as BibTeX, RIS and CSL-JSON.</li></ul>
-<h2>Harvesting the records</h2>
+<h2 id="harvesting-the-records">Harvesting the records</h2>
 <ul><li>OAI-PMH: the base URL is <code>https://sophaxis.vercel.app/oai</code>, with the formats <code>oai_dc</code> and <code>oai_openaire</code>.</li><li>Every record is also in <a href="./papers.json">papers.json</a>, and the <a href="./sitemap.xml">sitemap</a> lists every page.</li><li>The record data in <code>feed.xml</code>, <code>papers.json</code> and the OAI-PMH interface may be reused freely. The abstracts and the PDF copies keep the licence of each work, as the <a href="./policies/licences.html">Licence Policy</a> says.</li></ul>
-<h2>Telling researchers</h2>
+<h2 id="telling-researchers">Telling researchers</h2>
 <ul><li><a href="./first.html">Your first preprint</a> is for those who have never made a preprint public.</li><li><a href="./checklist.html">Before you submit</a> gathers what a submission needs.</li><li><a href="./leaflet.html">Sophaxis on one page</a> can be printed for a notice board.</li></ul>
-<h2>What Sophaxis is not</h2>
+<h2 id="what-sophaxis-is-not">What Sophaxis is not</h2>
 <ul><li>It is not a journal and issues no DOIs.</li><li>It is not run by an institution. One person runs it unpaid, as the <a href="./disclaimer.html">Disclaimer</a> says.</li><li>It has no affiliation with any library, repository or index.</li></ul>
 </main>
 <footer><div class="wrap">

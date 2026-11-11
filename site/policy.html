@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Policies | Sophaxis</title>
 <meta name="description" content="Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/policy.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,22 +96,23 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./policy.ja.html">規程（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <p>Sophaxis is an overlay preprint server for philosophy and mathematics. It lists preprints that authors have already deposited in an open repository, and it gives each one a stable record page.</p>
-<h2>The policies</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-policies">The policies</a></li><li><a href="#what-sophaxis-is-not">What Sophaxis is not</a></li><li><a href="#no-fees">No fees</a></li><li><a href="#commitments-are-never-dropped-silently">Commitments are never dropped silently</a></li><li><a href="#editorial-independence">Editorial independence</a></li><li><a href="#operator-and-conflicts-of-interest">Operator and conflicts of interest</a></li><li><a href="#finding-work">Finding work</a></li><li><a href="#about-these-pages">About these pages</a></li></ul></nav>
+<h2 id="the-policies">The policies</h2>
 <ul><li><a href="./policies/terms.html">Terms of Use</a>: The rules for everyone who reads or submits.</li><li><a href="./policies/submission.html">Submission Policy</a>: Who can submit what, and what the submitter confirms.</li><li><a href="./policies/moderation.html">Moderation Policy</a>: What moderation checks, and what it does not.</li><li><a href="./policies/copyright.html">Copyright Policy</a>: Authors keep their copyright; what Sophaxis copies and why.</li><li><a href="./policies/licences.html">Licence Policy</a>: The accepted licences, and the licences of this site.</li><li><a href="./policies/privacy.html">Privacy Policy</a>: What the site and the checks read, and what becomes public.</li><li><a href="./policies/withdrawal.html">Withdrawal Policy</a>: How an author withdraws a listed work, and what stays.</li><li><a href="./policies/takedown.html">Takedown Policy</a>: How to ask for removal, and what happens then.</li></ul>
-<h2>What Sophaxis is not</h2>
+<h2 id="what-sophaxis-is-not">What Sophaxis is not</h2>
 <p>Acceptance is moderation, not peer review. A listing on Sophaxis says that a submission passed the checks in the <a href="./policies/moderation.html">Moderation Policy</a>. It does not say that the work is correct, original or important. Sophaxis does not guarantee the quality of any listed work.</p>
 <p>Sophaxis is not a journal. It does not assign DOIs. The DOI stays with the repository where the author deposited the work, and it is the reference to cite.</p>
-<h2>No fees</h2>
+<h2 id="no-fees">No fees</h2>
 <p>Sophaxis charges nothing, to authors or to readers. There are no submission fees, no listing fees and no paid tiers. It will not start charging. It takes no donations, sponsorship or advertising.</p>
-<h2>Commitments are never dropped silently</h2>
+<h2 id="commitments-are-never-dropped-silently">Commitments are never dropped silently</h2>
 <p>A commitment in these policies is never dropped silently. The public repository keeps the list of commitments in <code>verification/commitments.txt</code>. The automatic check fails if one disappears from the policies or from the list, unless the text that replaces it is named in <code>verification/superseded.txt</code>. A change to a commitment that adds a duty for readers or authors is still announced in advance, as the <a href="./policies/terms.html">Terms of Use</a> set out.</p>
-<h2>Editorial independence</h2>
+<h2 id="editorial-independence">Editorial independence</h2>
 <p>The moderator decides on each submission under the published policies, and on nothing else. No repository, funder, institution, author or service can direct a decision. No listing is given in return for money, a favour or a citation. The reasons for every decision are public in its issue.</p>
-<h2>Operator and conflicts of interest</h2>
+<h2 id="operator-and-conflicts-of-interest">Operator and conflicts of interest</h2>
 <p>Sophaxis is operated by Takuya Nemoto, an independent researcher in Japan. The <a href="./contact.html">Operator and contact</a> page says how to reach the operator. Submissions by the operator are moderated under the same rules and are marked on their record pages as the operator's own.</p>
-<h2>Finding work</h2>
+<h2 id="finding-work">Finding work</h2>
 <p>Each record can be listed in more than one field. Authors with an ORCID iD have a page that lists their work on Sophaxis. Authors without one have no such page, because a name alone can belong to several people. New records are announced in an Atom feed, <code>feed.xml</code>. The public part of every record is available as <code>papers.json</code>, for reuse. Abstracts in both keep the licence of their work.</p>
-<h2>About these pages</h2>
+<h2 id="about-these-pages">About these pages</h2>
 <p>These pages describe how Sophaxis works and what it promises. They are not legal advice. Each policy is put in a few sentences on <a href="./rules.html">The policies in brief</a>; the policies themselves govern. Each page shows the date of its last change, and every earlier version is kept in the public repository. Every policy, the Disclaimer and the pages that explain Sophaxis, such as this one, the FAQ and the Glossary, have Japanese translations, which the <a href="./index.ja.html">Japanese top page</a> lists, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.</p>
 <p>This site and its code were built with Claude Code (Anthropic). The operator is responsible for them. Claude is not an author.</p>
 </main>

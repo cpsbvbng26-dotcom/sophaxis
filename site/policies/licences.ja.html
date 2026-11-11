@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>ライセンスの規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis のライセンスの規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/licences.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -88,18 +93,19 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>ライセンスの規程（日本語訳）</h1>
-<p>最終更新：2026-11-08。</p>
+<p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./licences.html">Licence Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
-<h2>受け付けるライセンス</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#受け付けるライセンス">受け付けるライセンス</a></li><li><a href="#ライセンスを記す場所">ライセンスを記す場所</a></li><li><a href="#このサイトのライセンス">このサイトのライセンス</a></li><li><a href="#様式に書かれた文">様式に書かれた文</a></li></ul></nav>
+<h2 id="受け付けるライセンス">受け付けるライセンス</h2>
 <p>Sophaxis が載せるのは、次のライセンスのどれかを持つ作品だけです。</p>
 <ul><li>CC BY 4.0</li><li>CC BY-SA 4.0</li><li>CC0 1.0</li></ul>
 <p>これらのライセンスなら、Sophaxis は著者を示したうえで、要旨を示し、PDF の写しを置けます。読者も、作品を自由に再利用できます。非営利（NonCommercial）や改変禁止（NoDerivatives）の条件を持つライセンスは受け付けません。</p>
-<h2>ライセンスを記す場所</h2>
+<h2 id="ライセンスを記す場所">ライセンスを記す場所</h2>
 <p>ライセンスは、預けたものの DOI のメタデータに記されている必要があります。自動の確認はそこから読みます。ライセンスの条件は、どの預け先でも同じです。arXiv では、投稿のときに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかを選んでください。arXiv の非独占的ライセンスは受け付けません。SSRN の作品は、受け付けるライセンスのどれかを持つ場合に限り受け付けます。</p>
-<h2>このサイトのライセンス</h2>
+<h2 id="このサイトのライセンス">このサイトのライセンス</h2>
 <p>このサイトの文は CC BY 4.0 で許諾しています。コードは MIT で許諾しています。載っている作品は、それぞれ自身のライセンスを保ちます。</p>
 <p><code>feed.xml</code>、<code>papers.json</code>、OAI-PMH の口にある記録のデータは、自由に再利用できます。その中の要旨は、その作品のライセンスを保ちます。</p>
-<h2>様式に書かれた文</h2>
+<h2 id="様式に書かれた文">様式に書かれた文</h2>
 <p>2026-11-21 から、様式で示された要旨は、その作品のライセンスで共有します。2026-11-21 から、生成モデルについての申告、撤回の理由、訂正のような、様式に書かれたほかの文は、書いた人が CC0 1.0 で共有します。これにより、Sophaxis はそれを記録とともに示すことができ、ほかの人も記録のデータとともに再利用できます。2026-11-21 より前に様式に書かれた文は、書いた人が記録のための公開の様式に書いたことで与えた許しにより、記録とともに示します。書いた人は、<a href="./takedown.ja.html">削除の規程</a>に沿って、その削除を求めることができます。</p>
 <p class="meta"><a href="../policy.html">All policies</a></p>
 </main>
