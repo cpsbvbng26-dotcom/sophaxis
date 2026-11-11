@@ -268,6 +268,222 @@
       "article": "27_12",
       "title": "電気通信事業法",
       "sha256": "79544bb2ddce61207c1ab88cbc99135d3de82e151754084ab3d2b15d2b262db9"
+    },
+    {
+      "law": "policies/terms.md: Acts outside these rules that may come near a law",
+      "name": "Penal Code",
+      "label": "Article 233",
+      "law_id": "140AC0000000045",
+      "article": "233",
+      "title": "刑法",
+      "sha256": "065b10d54ea053adf6dd691368a3f1944ed5b3f8356b0cc5b21802457e0615ca"
+    },
+    {
+      "law": "policies/terms.md: Acts outside these rules that may come near a law",
+      "name": "Penal Code",
+      "label": "Article 246",
+      "law_id": "140AC0000000045",
+      "article": "246",
+      "title": "刑法",
+      "sha256": "c6d81bcc7c9d263285c2b04d7b2406408d8aa68765c04ceb95c3498103b1cf37"
+    },
+    {
+      "law": "policies/terms.md: Acts outside these rules that may come near a law",
+      "name": "Act on the Prohibition of Unauthorized Computer Access",
+      "label": "Article 3",
+      "law_id": "411AC0000000128",
+      "article": "3",
+      "title": "不正アクセス行為の禁止等に関する法律",
+      "sha256": "9e3481965cd25ceb9b7bbd70b23e617d3880bdddc55d7f6227954b9151c51a18"
+    },
+    {
+      "law": "Consumer contracts (Consumer Contract Act, Articles 8 and 10)",
+      "name": "Consumer Contract Act",
+      "label": "Article 9",
+      "law_id": "412AC0000000061",
+      "article": "9",
+      "title": "消費者契約法",
+      "sha256": "97d26ffe8a5818e4177677d24962e6372e7556985aadb1581232afcd16a447d4"
+    },
+    {
+      "law": "Copyright (Copyright Act of Japan, Articles 21 and 23)",
+      "name": "Copyright Act",
+      "label": "Article 13",
+      "law_id": "345AC0000000048",
+      "article": "13",
+      "title": "著作権法",
+      "sha256": "1ab0df8c056c46acb67ede3b8d3c7497631a8406cb4a775f4d9eee9aa6d16ce5"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 20",
+      "law_id": "415AC0000000057",
+      "article": "20",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "2f45b4c2bbd6f34eefd15437e3bd333e8176482f17915b11e12ea6c698079470"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 21",
+      "law_id": "415AC0000000057",
+      "article": "21",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "31a2d9bedd9c8222212b10aed08b2fe870b81f01ac4366fc716a4369953e670d"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 22",
+      "law_id": "415AC0000000057",
+      "article": "22",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "9e450a5c0688e0f9515bf839233cdeac9ee07ee57c8e76170b316186b15192f6"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 23",
+      "law_id": "415AC0000000057",
+      "article": "23",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "2519435ab1b7e3cd8444f512ae690c26c24fc777dd06c927f7512a416a899121"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 24",
+      "law_id": "415AC0000000057",
+      "article": "24",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "d021b171175630a56f24c88975fec47ba2752a7fbcacbc636db08b6f74581038"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 25",
+      "law_id": "415AC0000000057",
+      "article": "25",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "65f9d3491caaf1a27b7135b2effe3e991d4b2df86ee88585b048f8b8e441ca89"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 29",
+      "law_id": "415AC0000000057",
+      "article": "29",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "49d365e449f8ad08d72fd847645b570d8f2c3fbb5f77057a67f7fb7c0c00bc33"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 33",
+      "law_id": "415AC0000000057",
+      "article": "33",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "03e6c8cd20328cf92b01ebf29ce01699ccb0488c5515f34a6571b65b0c496f5a"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 34",
+      "law_id": "415AC0000000057",
+      "article": "34",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "da3c1a981ae9a61ea47cb7d5ee7bc49aa0caf79c7677774de2450dd0ca55f60e"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 35",
+      "law_id": "415AC0000000057",
+      "article": "35",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "4590ecd518049fcf8a384ca94028d4dd292e10a606cb0750ab51ed681a68c27d"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 36",
+      "law_id": "415AC0000000057",
+      "article": "36",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "c5f7d0d127b7b1cbf60d3d185b304b342b84dc105b501e9dcaa07ad1e46d42c4"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 37",
+      "law_id": "415AC0000000057",
+      "article": "37",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "88fbb172a08946175bff7db95720ec9ddd293573717d49c89bc36fd98f92a1c2"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 38",
+      "law_id": "415AC0000000057",
+      "article": "38",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "fd639eff0c0133f52ae460fb679e8befcda6dd324929e66c482e3c83dba7b30e"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 39",
+      "law_id": "415AC0000000057",
+      "article": "39",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "16429ec4ebb12038b6cabd5e7a9d11b04f5aca2a21ec4ca1ffd879047ea9427d"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Act on the Protection of Personal Information",
+      "label": "Article 40",
+      "law_id": "415AC0000000057",
+      "article": "40",
+      "title": "個人情報の保護に関する法律",
+      "sha256": "97f0f20ddae334d4f42ec2573223487d6109567601980f1d77cbb5c6364ab62f"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Enforcement Rules of the Act on the Protection of Personal Information",
+      "label": "Article 7",
+      "law_id": "428M60020000003",
+      "article": "7",
+      "title": "個人情報の保護に関する法律施行規則",
+      "sha256": "3c58acd32819a665d7eaa4dac06d2f1e9cb383bdde9854fd2cfefaf8e309bef5"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Enforcement Rules of the Act on the Protection of Personal Information",
+      "label": "Article 8",
+      "law_id": "428M60020000003",
+      "article": "8",
+      "title": "個人情報の保護に関する法律施行規則",
+      "sha256": "1b571a208fa54697a61b33a794e44a0bc2746e975cd633fdb4a13eef750bd626"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Enforcement Rules of the Act on the Protection of Personal Information",
+      "label": "Article 10",
+      "law_id": "428M60020000003",
+      "article": "10",
+      "title": "個人情報の保護に関する法律施行規則",
+      "sha256": "0801aa0a09b677bf4e2ae4a89aa0ceae133db41d61c25ef12b98fde1ec1ce0a1"
+    },
+    {
+      "law": "Personal information (Act on the Protection of Personal Information, Articles 17, 18, 26, 27, 28 and 32)",
+      "name": "Order for Enforcement of the Act on the Protection of Personal Information",
+      "label": "Article 10",
+      "law_id": "415CO0000000507",
+      "article": "10",
+      "title": "個人情報の保護に関する法律施行令",
+      "sha256": "02f2f8e223f83c725819e7c6fd1ebada8b15043260d60b50c0797d415eabd16c"
     }
   ],
   "policies": [
@@ -284,7 +500,7 @@
       "commit": "87906da47c95eda1a39ccc01f31ea2602d263dbe"
     }
   ],
-  "recorded": "2026-11-08",
+  "recorded": "2026-11-11",
   "pages": [
     {
       "name": "Vercel Privacy Notice",
