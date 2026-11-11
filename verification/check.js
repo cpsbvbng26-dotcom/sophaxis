@@ -2036,7 +2036,7 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
   const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
@@ -3579,6 +3579,120 @@ console.log('\n94. The form in Japanese, subfields, a summary in plain words, an
     && Lm.busiest(['2026-11-10T14:00:00Z', '2026-11-10T16:00:00Z', '2026-11-11T01:00:00Z']) === 2
     && read(path.join(ROOT, '.github', 'workflows', 'monthly.yml')).includes('node tools/limits.js') && read(path.join(ROOT, 'automation.md')).includes("Vercel's bandwidth and function use are not measured")
     && read(path.join(ROOT, 'automation.ja.md')).includes('Vercel の転送量と関数の使用は測りません。'));
+}
+
+console.log('\n95. Every citation of a law in the legal pages is to an article in a text that was fetched, and the pages quote what they cite');
+{
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const Cit = require('../tools/citations.js');
+  const REG = J('verification/citations.json'), ST = J('verification/statutes.json'), TX = J('verification/statutes-texts.json');
+  const RAW = J('verification/sources-raw.json'), PRIM = J('verification/sources.json');
+  const sha = (x) => crypto.createHash('sha256').update(x, 'utf8').digest('hex');
+  // The weekly watch keeps the texts it records; tools/sources.js fetched the same articles again, and both must agree.
+  const badSha = ST.statutes.filter((e) => !TX[e.name + ' ' + e.label] || sha(TX[e.name + ' ' + e.label]) !== e.sha256).map((e) => e.name + ' ' + e.label);
+  const disagree = ST.statutes.filter((e) => !e.items).filter((e) => { const r = RAW.sources['egov:' + e.law_id]; const a = e.article.replace(/_/g, '-'); return r && r.sha256 && r.sha256[a] && r.sha256[a] !== e.sha256; }).map((e) => e.name + ' ' + e.label);
+  const titles = Object.entries(RAW.sources).filter(([k]) => k.startsWith('egov:')).filter(([k, r]) => { const st = ST.statutes.find((e) => 'egov:' + e.law_id === k); return r.status !== 200 || !r.title || (st && st.title !== r.title); }).map(([k]) => k);
+  ok('the texts of the weekly watch (' + ST.statutes.length + ') have the SHA-256 recorded, the same articles fetched by tools/sources.js are the same texts, and every Japanese law fetched has its title',
+    badSha.length === 0 && disagree.length === 0 && titles.length === 0, badSha.concat(disagree, titles).join(' / '));
+  const C = Cit.compile(REG);
+  const all = Cit.all(ROOT, REG, C);
+  ok('every numbered citation of a law or of a service\'s terms in the legal pages (' + all.found.length + ') names its law, in the same sentence, paragraph, row or heading',
+    all.unattributed.length === 0 && all.found.length >= 600, all.unattributed.map((u) => u.where + ' ' + u.text).join(' / '));
+  const T = Cit.trace(all.found, REG, ST, TX, RAW);
+  const pairs = (xs) => [...new Set(xs.map((c) => c.law + ' ' + c.article))];
+  ok('every citation is to an article in a fetched text (' + T.covered.length + '), and every paragraph, point and item it names is in that article; none is missing',
+    T.missing.length === 0 && T.badSub.length === 0, T.missing.concat(T.badSub).map((c) => c.where + ' ' + c.law + ' ' + c.article + (c.sub.length ? '(' + c.sub.join(')(') + ')' : '')).join(' / '));
+  // The untraced: each says why, each attempt is in sources-raw.json, none is stale, and the list does not grow.
+  const U = REG.untraced || {};
+  const cited = new Set(pairs(T.untraced));
+  const stale = Object.entries(U).flatMap(([law, u]) => u.articles.filter((a) => !cited.has(law + ' ' + a)).map((a) => law + ' ' + a));
+  const unexplained = Object.entries(U).filter(([law, u]) => !u.why || !u.why_ja || (REG.laws[law].source && (() => { const r = RAW.sources[REG.laws[law].source]; return !r || (r.status === 200 && u.articles.some((a) => r.articles && r.articles[a])); })())).map(([law]) => law);
+  ok('the citations whose source could not be fetched (' + T.untraced.length + ', of ' + cited.size + ' articles) are each listed with why, and a tried source shows its failure in sources-raw.json; none is stale, and there are no more than 27',
+    stale.length === 0 && unexplained.length === 0 && cited.size <= 27, stale.concat(unexplained).join(' / '));
+  const named = Object.entries(REG.laws).filter(([, l]) => l.named);
+  const texts = REG.files.en.concat(REG.files.ja, REG.files.json).map((f) => read(path.join(ROOT, f))).join('\n');
+  const unnamed = named.filter(([, l]) => ![].concat(l.en || [], l.ja || []).some((n) => texts.includes(n))).map(([k]) => k);
+  ok('the laws referred to by name only (' + named.length + ', the allow-list) are never cited with an article, have no source, and are each still named',
+    T.named.length === 0 && named.every(([, l]) => !l.source && !l.egov) && unnamed.length === 0, T.named.map((c) => c.where + ' ' + c.law).concat(unnamed).join(' / '));
+  // The quotations: cut from the fetched article, with only the space before ).,; removed.
+  const squeeze = (x) => x.replace(/ ([).,;])/g, '$1');
+  const badQuote = Object.entries(PRIM.quotes).filter(([k, q]) => { const t = Cit.textOf(q.law, q.article, REG, ST, TX, RAW); return k !== q.law + ' ' + q.article || !t || !squeeze(t.text).includes(q.quote) || q.quote.length < 40; }).map(([k]) => k);
+  ok('the quotations of foreign texts, licences and terms (' + Object.keys(PRIM.quotes).length + ') each occur word for word in the fetched article they name, fetched on ' + RAW.fetched,
+    badQuote.length === 0 && PRIM.fetched === RAW.fetched, badQuote.join(' / '));
+  // The words that verification/duties.json puts in quotation marks are in the article or recital it names.
+  const D = J('verification/duties.json').duties;
+  const norm = (x) => x.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ');
+  const pool = (u) => {
+    if (u.law === 'GDPR' || u.law === 'DSA') { const r = RAW.sources[u.law.toLowerCase()]; return norm(Object.values(r.articles).concat(Object.values(r.recitals || {})).join(' ')); }
+    return ['415AC0000000057', '428M60020000003', '415CO0000000507'].map((id) => Object.values(RAW.sources['egov:' + id].articles).join(' ')).join(' ').replace(/\s+/g, '');
+  };
+  let frags = 0;
+  const misquoted = [];
+  for (const u of D) {
+    const ja = u.law === 'APPI', p = pool(u);
+    for (const f of ja ? [...u.duty.matchAll(/「([^」]+)」/g)].map((m) => m[1]) : [...u.duty.matchAll(/"([^"]+)"/g)].map((m) => m[1])) {
+      for (const piece of f.split(/…|\.\.\./).map((x) => x.trim()).filter((x) => x.length > 3)) {
+        frags++;
+        if (!(ja ? p.includes(piece.replace(/\s+/g, '')) : p.includes(norm(piece)))) misquoted.push(u.law + ' ' + u.article + ': ' + piece);
+      }
+    }
+  }
+  ok('every quoted fragment in verification/duties.json (' + frags + ') is word for word in the fetched article or recital it names', frags >= 130 && misquoted.length === 0, misquoted.join(' / '));
+  // The pages: every section that cites a law ends with a line that names each cited article, and twins name the same.
+  const PAGES = [['policies/privacy.md', 'policies/privacy.ja.md', false], ['policies/submission.md', 'policies/submission.ja.md', true], ['policies/takedown.md', 'policies/takedown.ja.md', true],
+    ['policies/terms.md', 'policies/terms.ja.md', true], ['policies/moderation.md', 'policies/moderation.ja.md', true], ['contact.md', 'contact.ja.md', true], ['policies/copyright.md', 'policies/copyright.ja.md', true]];
+  const marksOf = (t) => [...t.matchAll(/^<!-- text: (.+) -->$/gm)].map((m) => m[1]);
+  const valid = (k) => { const m = /^(.+) (\S+)$/.exec(k); if (!m || !REG.laws[m[1]]) return false; if ((U[m[1]] || { articles: [] }).articles.includes(m[2])) return true; return REG.laws[m[1]].egov ? !!Cit.textOf(m[1], m[2], REG, ST, TX, RAW) : !!PRIM.quotes[k]; };
+  const unquoted = [], twins = [], invalid = [];
+  const RENDERED = REG.files.en.concat(REG.files.ja).filter((f) => !f.startsWith('docs/') && f !== 'README.md');
+  for (const f of RENDERED) {
+    const t = read(path.join(ROOT, f));
+    for (const sec of t.split(/\n(?=## )/)) {
+      const keys = marksOf(sec).join('; ').split(';').map((k) => k.trim()).filter(Boolean);
+      for (const k of keys) if (!valid(k)) invalid.push(f + ': ' + k);
+      const r = Cit.cites(sec, f.endsWith('.ja.md') ? 'ja' : 'en', C, f);
+      for (const c of r.found) if (!keys.includes(c.law + ' ' + c.article)) unquoted.push(f + ' (' + sec.split('\n')[0].slice(0, 40) + '): ' + c.law + ' ' + c.article);
+    }
+  }
+  for (const [en, ja, twin] of PAGES) if (twin && marksOf(read(path.join(ROOT, en))).join('|') !== marksOf(read(path.join(ROOT, ja))).join('|')) twins.push(en);
+  ok('every section of the rendered legal pages that cites a law names each article it cites in its line of texts, every name has a text or is untraced, and the English and Japanese twins name the same',
+    unquoted.length === 0 && invalid.length === 0 && twins.length === 0 && PAGES.every(([en, ja]) => marksOf(read(path.join(ROOT, en))).length > 0 && marksOf(read(path.join(ROOT, ja))).length > 0), unquoted.concat(invalid, twins).join(' / '));
+  // The generated pages quote the recorded texts, and nothing else.
+  const unhtml = (x) => x.replace(/<br>\n?/g, ' ').replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  const jpTexts = new Set(Object.values(TX).concat(Object.values(RAW.sources).filter((r) => r.articles && r.shape).flatMap((r) => Object.values(r.articles))));
+  const quotes = new Set(Object.values(PRIM.quotes).map((q) => q.quote));
+  const badPage = [];
+  let nBlocks = 0, nKeys = 0;
+  for (const f of RENDERED) {
+    const html = read(path.join(ROOT, 'site', f.replace(/\.md$/, '.html')));
+    const keys = marksOf(read(path.join(ROOT, f))).flatMap((m) => m.split(';').map((k) => k.trim()));
+    const quoted = keys.filter((k) => !(U[/^(.+) (\S+)$/.exec(k)[1]] || { articles: [] }).articles.includes(/ (\S+)$/.exec(k)[1]));
+    const ja = [...html.matchAll(/<blockquote lang="ja"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
+    const en = [...html.matchAll(/<blockquote lang="en"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
+    nBlocks += ja.length + en.length; nKeys += quoted.length;
+    if (ja.length + en.length !== quoted.length || !ja.every((x) => jpTexts.has(x)) || !en.every((x) => quotes.has(x))) badPage.push(f);
+    if (keys.length && !html.includes('fetched on ' + RAW.fetched) && !html.includes(RAW.fetched + ' に取り寄せた')) badPage.push(f + ' (date)');
+  }
+  ok('the generated pages quote each named text (' + nBlocks + ' quotations for ' + nKeys + ' names) exactly as recorded, with the day it was fetched', badPage.length === 0 && nBlocks === nKeys && nBlocks > 50, badPage.join(' / '));
+  ok('each page that quotes says near its top where the quotations come from, in both languages',
+    PAGES.every(([en, ja]) => read(path.join(ROOT, en)).split('\n## ')[0].includes('Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on ' + RAW.fetched + ', and are not translated.')
+      && read(path.join(ROOT, ja)).split('\n## ')[0].includes('ほかの文は、公式の出どころから ' + RAW.fetched + ' に取り寄せた文を、語のまま引いています。')));
+  // Acts outside the rules: the same rows in both languages, the caution that the list is neither complete nor a finding, and the responsibility.
+  const te = read(path.join(ROOT, 'policies', 'terms.md')), tj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
+  const rowsIn = (t, h) => { const i = t.indexOf('\n## ' + h + '\n'); const j = t.indexOf('\n## ', i + 5); return i < 0 ? -1 : t.slice(i, j).split('\n').filter((l) => /^\| [^-]/.test(l)).length - 1; };
+  const nEn = rowsIn(te, 'Acts outside these rules that may come near a law'), nJa = rowsIn(tj, '規約の外で、法令の要件に近づく行い');
+  ok('the Terms list acts outside them that may come near a law (' + nEn + ' rows) in both languages, say that the list is neither complete nor a finding, and that the person who did it is responsible, except where the law makes the operator so',
+    nEn >= 8 && nEn === nJa
+    && te.includes('The table lists possible paths only. It is not complete. It does not say that a listed act is unlawful, or that an act not listed is lawful.')
+    && tj.includes('表は起こりうる道を挙げたものです。すべてを挙げてはいません。挙げた行いが違法であると言うものでも、挙げていない行いが適法であると言うものでもありません。')
+    && te.includes('The responsibility for an act done against these terms, or outside them, lies with the person who did it.') && te.includes('Except where the law makes the operator responsible, the operator is not responsible for such acts.')
+    && tj.includes('この規約に反して、または規約の外で行われた行いの責任は、行った本人にあります。') && tj.includes('法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。')
+    && te.includes('This does not exclude or limit the operator\'s liability for loss that the operator causes by intent or negligence')
+    && read(path.join(ROOT, 'disclaimer.md')).includes('Except where the law makes the operator responsible, the operator is not responsible for such acts.')
+    && read(path.join(ROOT, 'disclaimer.ja.md')).includes('法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。'));
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'sources.yml'));
+  ok('the texts are fetched only when the operator runs it, onto a new branch sources/<date>, never main',
+    /on:\n  workflow_dispatch:\n(?!\s+push)/.test(wf) && !/\n  push:|\n  schedule:|\n  pull_request:/.test(wf) && wf.includes('git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)"') && !/push origin (?:main|HEAD:main)/.test(wf));
 }
 
 console.log('\n' + '-'.repeat(60));
