@@ -1,5 +1,5 @@
 {
-  "_": "The laws and terms that the legal pages cite, by the names the pages use. tools/citations.js finds every numbered citation in the files below and gives it a law by these names; verification/check.js fails on a citation with no law, and on one whose article is not in a text that was fetched (verification/statutes-texts.json, kept by the weekly watch, or verification/sources-raw.json, fetched by tools/sources.js). `place` settles a name that laws of several places share. `named` lists what is referred to only by name, never by an article or section: a check fails if one of them is ever cited with a number. `untraced` lists the citations whose source could not be fetched, each with what was tried; nothing may be added to it, and a citation leaves it when its source is fetched.",
+  "_": "The laws and terms that the legal pages cite, by the names the pages use. tools/citations.js finds every numbered citation in the files below and gives it a law by these names; verification/check.js fails on a citation with no law, and on one whose article is not in a text that was fetched (verification/statutes-texts.json, kept by the weekly watch, or verification/sources-raw.json, fetched by tools/sources.js). `place` settles a name that laws of several places share. A law with `named` is referred to only by name, never by an article or section (the allow-list): a check fails if one is ever cited with a number, or is no longer named anywhere. `untraced` lists the citations whose source could not be fetched, each with what was tried; nothing may be added to it, and a citation leaves it when its source is fetched.",
   "files": {
     "en": [
       "policies/copyright.md",
@@ -400,7 +400,6 @@
       "ja": [
         "法律第 058/2021 号"
       ],
-      "source": "rwanda",
       "place": [
         "Rwanda"
       ]
@@ -491,6 +490,108 @@
         "CC0 1.0"
       ],
       "source": "cc0"
+    },
+    "CCPA": {
+      "en": [
+        "California Consumer Privacy Act"
+      ],
+      "named": "The Attorney General's page is cited, not a section of the Act."
+    },
+    "Türkiye Law 6698": {
+      "en": [
+        "Law No. 6698"
+      ],
+      "named": "Named only."
+    },
+    "Türkiye Registry Regulation": {
+      "en": [
+        "Regulation on the Data Controllers' Registry"
+      ],
+      "ja": [
+        "データ管理者登録簿に関する規則"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Peru Regulation": {
+      "en": [
+        "Regulation of Law No. 29733"
+      ],
+      "ja": [
+        "法律第 29733 号の施行規則"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Albania Law 124/2024": {
+      "en": [
+        "Law No. 124/2024"
+      ],
+      "ja": [
+        "法律第 124/2024 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Guernsey Law": {
+      "en": [
+        "Data Protection (Bailiwick of Guernsey) Law"
+      ],
+      "ja": [
+        "ガーンジー管轄区データ保護法"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Indonesia Regulation": {
+      "en": [
+        "Regulation of the Minister of Communication and Informatics No. 5 of 2020"
+      ],
+      "ja": [
+        "通信情報大臣規則 2020 年第 5 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Ethiopia Proclamation": {
+      "en": [
+        "Personal Data Protection Proclamation No. 1321/2024"
+      ],
+      "ja": [
+        "個人データ保護布告"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Tunisia Organic Law": {
+      "en": [
+        "Organic Law No. 2004-63"
+      ],
+      "ja": [
+        "2004 年組織法第 63 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Guinea Law": {
+      "en": [
+        "Law No. L/2016/037/AN"
+      ],
+      "ja": [
+        "L/2016/037/AN"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Madagascar Law": {
+      "en": [
+        "Law No. 2014-038"
+      ],
+      "ja": [
+        "法律第 2014-038 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Bolivia Law 164": {
+      "en": [
+        "Law No. 164"
+      ],
+      "ja": [
+        "法律第 164 号"
+      ],
+      "named": "Named only, as reported."
     }
   },
   "fetchAlso": {
@@ -546,6 +647,117 @@
       "8"
     ]
   },
-  "named": {},
-  "untraced": {}
+  "untraced": {
+    "Russia 152-FZ": {
+      "articles": [
+        "1",
+        "18"
+      ],
+      "why": "kremlin.ru answered 403 to every page of the Law on 2026-11-11 (sources-raw.json, ru-152).",
+      "why_ja": "kremlin.ru が、2026-11-11 の取り寄せで、法律のすべての頁に 403 を返しました（sources-raw.json の ru-152）。"
+    },
+    "India DPDP Rules": {
+      "articles": [
+        "10"
+      ],
+      "why": "The eGazette does not send its intermediate certificate, and the Ministry's copy answered 403 on 2026-11-11 (sources-raw.json, india-rules).",
+      "why_ja": "官報（eGazette）のサーバーが中間証明書を送らず、省の写しは 2026-11-11 に 403 を返しました（sources-raw.json の india-rules）。"
+    },
+    "Kazakhstan Law 94-V": {
+      "articles": [
+        "3",
+        "12"
+      ],
+      "why": "Adilet shows the text only with JavaScript; on 2026-11-11 it answered a page that asks for it (sources-raw.json, kz).",
+      "why_ja": "Adilet は JavaScript がなければ本文を示さず、2026-11-11 にはそれを求める頁を返しました（sources-raw.json の kz）。"
+    },
+    "Egypt Law 151/2020": {
+      "articles": [
+        "3"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Monaco Law 1.565": {
+      "articles": [
+        "25"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Botswana DPA 2024": {
+      "articles": [
+        "54"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Ecuador Regulation": {
+      "articles": [
+        "3"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Iraq Framework Regulations": {
+      "articles": [
+        "4",
+        "5",
+        "4.1",
+        "4.2",
+        "5.1",
+        "5.2"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Rwanda Law 058/2021": {
+      "articles": [
+        "2",
+        "29",
+        "50"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Zambia DPA 2021": {
+      "articles": [
+        "19",
+        "70"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "DRC Digital Code": {
+      "articles": [
+        "184",
+        "186",
+        "188",
+        "201"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Uganda DPPA 2019": {
+      "articles": [
+        "29"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Costa Rica Law 8968": {
+      "articles": [
+        "21"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Quebec Private Sector Act": {
+      "articles": [
+        "17"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    }
+  }
 }
