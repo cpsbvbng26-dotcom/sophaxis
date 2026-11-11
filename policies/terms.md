@@ -104,6 +104,7 @@ No change will introduce fees.
 A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.
 The announcement comes at least 14 days ahead, unless the law or an urgent problem, such as a security or legal risk, requires the change sooner.
 Even then, the change is announced before it takes effect.
+Each change to a policy is also entered, on the day it is published or announced, in the [feed of policy changes](https://sophaxis.vercel.app/policies/changes.xml), which carries nothing else.
 Other changes, such as clearer wording or new examples, take effect on the date the page shows, which is never before the day they are published.
 A change is made only as Article 548-4 of Japan's Civil Code allows: when it is in the general interest of authors and readers, or when it is reasonable in the light of the purpose of these terms, the need for it and its content.
 Silence, or continuing to use Sophaxis, is not taken as agreement to a change.

@@ -139,3 +139,14 @@ Each week, an automatic check confirms that every listed DOI still resolves and 
 The same check reads the notices that Crossref records against each DOI of a record shown: retractions, withdrawals, removals, expressions of concern and corrections, including those from Retraction Watch.
 The operator adds a new notice to the record, where its page shows it with a link, and reviews the listing.
 A problem is reported in a public issue, and the operator looks into it.
+
+## Changes to the criteria
+
+The criteria for listing are those of the [Submission Policy](./submission.md) and of this policy: who can submit, what can be submitted, what moderation checks, and the examples of what is not accepted.
+They change only as "Changes and closure" in the [Terms of Use](./terms.md) allows, as every other policy does.
+
+- They are reviewed at least once a year, in the yearly audit on 30 October, the day Sophaxis began, and also when a law, a repository or a service that Sophaxis relies on changes.
+- A change that narrows what can be listed, or adds a duty for authors, is announced on the top page at least 14 days before it takes effect, with what changes and from which date.
+- A change that only widens what can be listed, or makes the wording clearer, takes effect on the date the policy shows, which is never before the day it is published.
+- Each change is entered in the [feed of policy changes](https://sophaxis.vercel.app/policies/changes.xml) on the day it is published or announced, and in the [news](https://sophaxis.vercel.app/news.html) when it changes what an author has to do.
+- The reasons for a change are given in its pull request in the public repository.

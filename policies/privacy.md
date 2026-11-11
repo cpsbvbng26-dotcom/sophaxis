@@ -43,6 +43,7 @@ Nothing is sent anywhere until a reader follows one, and the service then works 
 The site is hosted on Vercel.
 Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.
 Sophaxis has not turned on Vercel's analytics.
+No page, a record page included, shows a count of views or downloads, and Sophaxis keeps no such count: it runs no analytics that would make one, and it does not count readers from Vercel's request logs.
 
 <!-- text: Telecommunications Business Act 27-12 -->
 
