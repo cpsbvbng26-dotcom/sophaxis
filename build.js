@@ -972,7 +972,7 @@ function operatingCounts(all, reports = loadReports(), ja = false) {
   if (!r) return ja ? `<p class="meta">いま載っている作品 ${listed} 件。年ごとの数は、まだ記していません。</p>\n` : `<p class="meta">Listed now: ${listed}. No year has been counted yet.</p>\n`;
   const med = r.daysToDecision.median;
   if (ja) {
-    return `<p class="meta">運営の数（記録から作っています）：${r.year} 年${r.complete ? '' : '（' + esc(r.asOf) + ' までの数）'}の受付 ${r.submissions.opened} 件、受理 ${r.submissions.accepted} 件、投稿から決定までの日数の中央値 ${med === null ? '–' : med + ' 日'}。いま載っている作品 ${listed} 件${removed ? '、削除した記録 ' + removed + ' 件' : ''}。詳しくは<a href="./decisions.html">年ごとの決定</a>と<a href="./stats.html">統計</a>（どちらも英語）にあります。</p>\n`;
+    return `<p class="meta">運営の数（記録から作っています）：${r.year} 年${r.complete ? '' : '（' + esc(r.asOf) + ' までの数）'}の受付 ${r.submissions.opened} 件、受理 ${r.submissions.accepted} 件、投稿から判断までの日数の中央値 ${med === null ? '–' : med + ' 日'}。いま載っている作品 ${listed} 件${removed ? '、削除した記録 ' + removed + ' 件' : ''}。詳しくは<a href="./decisions.html">年ごとの判断</a>と<a href="./stats.html">統計</a>（どちらも英語）にあります。</p>\n`;
   }
   const n = (k, one, many) => k + ' ' + (k === 1 ? one : many);
   return `<p class="meta">Operating counts, from the records: in ${r.year}${r.complete ? '' : ' (counted up to ' + esc(r.asOf) + ')'}, ${n(r.submissions.opened, 'submission', 'submissions')} received and ${r.submissions.accepted} accepted; median days from submission to a decision: ${med === null ? '–' : med}. Listed now: ${listed}.${removed ? ' Removed: ' + removed + '.' : ''} <a href="./decisions.html">Decisions by year</a> · <a href="./stats.html">Statistics</a></p>\n`;
