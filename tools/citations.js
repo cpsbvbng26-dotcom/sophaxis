@@ -219,8 +219,9 @@ function textOf(law, article, reg, statutes, texts, raw) {
   if (!L) return null;
   if (L.egov) {
     const st = statutes.statutes.find((e) => e.law_id === L.egov && e.article === article.replace(/-/g, '_') && !e.items);
-    if (st && texts[st.name + ' ' + st.label]) return { text: texts[st.name + ' ' + st.label], from: 'statutes', key: st.name + ' ' + st.label, egov: L.egov };
     const r = raw.sources['egov:' + L.egov];
+    // The shape (paragraphs and items) comes from the fetched law, which holds the whole article.
+    if (st && texts[st.name + ' ' + st.label]) return { text: texts[st.name + ' ' + st.label], shape: r && r.shape && r.shape[article], from: 'statutes', key: st.name + ' ' + st.label, egov: L.egov };
     if (r && r.articles && r.articles[article]) return { text: r.articles[article], shape: r.shape && r.shape[article], from: 'egov:' + L.egov, egov: L.egov };
     return null;
   }
