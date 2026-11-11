@@ -2341,6 +2341,10 @@
    "status": 200,
    "final": "http://publications.europa.eu/resource/cellar/3ff67256-55c4-11ed-92ed-01aa75ed71a1.0006.03/DOC_1",
    "length": 415115,
+   "recitals": {
+    "7": "(7) In order to ensure the effectiveness of the rules laid down in this Regulation and a level playing field within the internal market, those rules should apply to providers of intermediary services irrespective of their place of establishment or their location, in so far as they offer services in the Union, as evidenced by a substantial connection to the Union.",
+    "8": "(8) Such a substantial connection to the Union should be considered to exist where the service provider has an establishment in the Union or, in the absence of such an establishment, where the number of recipients of the service in one or more Member States is significant in relation to the population thereof, or on the basis of the targeting of activities towards one or more Member States. The targeting of activities towards one or more Member States can be determined on the basis of all relevant circumstances, including factors such as the use of a language or a currency generally used in that Member State, or the possibility of ordering products or services, or the use of a relevant top-level domain. The targeting of activities towards a Member State could also be derived from the availability of an application in the relevant national application store, from the provision of local advertising or advertising in a language used in that Member State, or from the handling of customer relations such as by providing customer service in a language generally used in that Member State. A substantial connection should also be assumed where a service provider directs its activities to one or more Member States within the meaning of Article 17(1), point (c), of Regulation (EU) No 1215/2012 of the European Parliament and of the Council ( 6 ) . In contrast, mere technical accessibility of a website from the Union cannot, on that ground alone, be considered as establishing a substantial connection to the Union."
+   },
    "headings": [
     "1",
     "2",
@@ -2560,6 +2564,9 @@
    "status": 200,
    "final": "http://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0006.03/DOC_1",
    "length": 350673,
+   "recitals": {
+    "23": "(23) In order to ensure that natural persons are not deprived of the protection to which they are entitled under this Regulation, the processing of personal data of data subjects who are in the Union by a controller or a processor not established in the Union should be subject to this Regulation where the processing activities are related to offering goods or services to such data subjects irrespective of whether connected to a payment. In order to determine whether such a controller or processor is offering goods or services to data subjects who are in the Union, it should be ascertained whether it is apparent that the controller or processor envisages offering services to data subjects in one or more Member States in the Union. Whereas the mere accessibility of the controller's, processor's or an intermediary's website in the Union, of an email address or of other contact details, or the use of a language generally used in the third country where the controller is established, is insufficient to ascertain such intention, factors such as the use of a language or a currency generally used in one or more Member States with the possibility of ordering goods and services in that other language, or the mentioning of customers or users who are in the Union, may make it apparent that the controller envisages offering goods or services to data subjects in the Union."
+   },
    "headings": [
     "1",
     "2",
@@ -2871,10 +2878,10 @@
   "india-rules": {
    "url": "https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf",
    "status": 403,
-   "length": 269,
+   "length": 267,
    "headings": [],
    "articles": {},
-   "head": "Access Denied Access Denied You don't have permission to access \"http://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf\" on this server. Reference #18.6651c317.1794383709.b02a614c https://errors.edgesuite.net/18.6651c317.1794383709.b02a614c",
+   "head": "Access Denied Access Denied You don't have permission to access \"http://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf\" on this server. Reference #18.ede22c17.1794384102.33cff6e https://errors.edgesuite.net/18.ede22c17.1794384102.33cff6e",
    "want": [
     "10"
    ]
@@ -3823,13 +3830,17 @@
    "status": [
     403,
     403,
-    403,
-    403
+    200,
+    200
    ],
-   "length": 135,
-   "headings": [],
+   "length": 44022,
+   "headings": [
+    "11",
+    "12",
+    "13",
+    "131"
+   ],
    "articles": {},
-   "head": "403 Forbidden 403 Forbidden nginx 403 Forbidden 403 Forbidden nginx 403 Forbidden 403 Forbidden nginx 403 Forbidden 403 Forbidden nginx",
    "want": [
     "1",
     "18"
