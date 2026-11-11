@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        これは英語の様式（Submit a preprint）の日本語版です。中身は同じで、自動の確認も同じように動きます。規程と様式の英語の文と食い違うときは、英語の文が適用されます。
+        これは英語の様式（Submit a preprint）の日本語版です。中身は同じで、自動の確認も同じように動きます。規程や様式の英語の文と食い違うときは、英語の文が適用されます。
         この issue は公開されます。あなたの GitHub のユーザー名と、ここに書くことは、だれでも見られます。
         受理はモデレーションであり、査読ではありません。投稿の前に投稿の規程を読んでください：https://sophaxis.vercel.app/policies/submission.ja.html
 
@@ -20,7 +20,7 @@ body:
     id: doi
     attributes:
       label: 預けたプレプリントの DOI
-      description: Zenodo（10.5281/zenodo.…）、Figshare（10.6084/m9.figshare.…）、OSF Preprints（10.31219/osf.io/…）、SocArXiv（10.31235/osf.io/…）、MetaArXiv（10.31222/osf.io/…）、arXiv（10.48550/arXiv.…）、Preprints.org（10.20944/preprints…）、SSRN（10.2139/ssrn.…）、Research Square（10.21203/rs.3.rs-…）、SciELO Preprints（10.1590/SciELOPreprints.…）、Qeios（10.32388/…）、ScienceOpen Preprints（10.14293/PR2199.…）、Advance（10.31124/advance.…）、KC Works（10.17613/…）、Jxiv（10.51094/jxiv.…）の DOI。DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが必要です。2026-11-23 からは、作品の最初の DOI が登録されてから六か月以上たっている必要があります。同じ日から、はじめての投稿には推薦する研究者が要ります（投稿の規程を見てください）。
+      description: Zenodo（10.5281/zenodo.…）、Figshare（10.6084/m9.figshare.…）、OSF Preprints（10.31219/osf.io/…）、SocArXiv（10.31235/osf.io/…）、MetaArXiv（10.31222/osf.io/…）、arXiv（10.48550/arXiv.…）、Preprints.org（10.20944/preprints…）、SSRN（10.2139/ssrn.…）、Research Square（10.21203/rs.3.rs-…）、SciELO Preprints（10.1590/SciELOPreprints.…）、Qeios（10.32388/…）、ScienceOpen Preprints（10.14293/PR2199.…）、Advance（10.31124/advance.…）、KC Works（10.17613/…）、Jxiv（10.51094/jxiv.…）の DOI。DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが必要です。2026-11-23 からは、作品の最初の DOI が登録されてから六か月以上たっている必要があります。同じ日から、はじめての投稿には紹介する研究者が要ります（投稿の規程を見てください）。
       placeholder: 10.5281/zenodo.0000000
     validations:
       required: true
@@ -203,6 +203,10 @@ body:
         - label: 著者はこの版をそのライセンスのもとで共有してよく、学術誌が出版した作品なら、出版者がそれを認めています。
           required: true
         - label: 作品には、著者が共有してはならない素材も、第三者の個人情報も含まれていません。
+          required: true
+        - label: 生成モデルについての申告は、完全で真実です。
+          required: true
+        - label: 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告は、完全で真実です。
           required: true
         - label: 利用規約のとおり、作品とその掲載の責任は、すべて著者が負います。
           required: true
