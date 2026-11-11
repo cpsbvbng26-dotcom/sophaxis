@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-11.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -86,7 +86,7 @@ Sophaxis is run by one person, and is planned so that it can stop without loss.
 
 - A slow decision is not a pause: moderation can take several weeks or a few months. A pause is for when the operator cannot work on Sophaxis at all, for example because of illness. If that lasts for more than 30 days, the top page says that new submissions are paused. Listed records stay online.
 - Unless the operator cannot act, a closure is announced on the top page at least 30 days ahead, and new submissions stop first.
-- If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive.
+- If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive, where every author of the work consents to it.
 - The code and the records are archived at Zenodo with each release, under a DOI that resolves to the latest version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371).
 - The operator may hand Sophaxis over to another person, to an institution or to a legal entity. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
 - Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
@@ -140,7 +140,7 @@ What they say that matters to people who use Sophaxis:
 - GitHub may refuse or remove content that breaks the law or its terms, and may close accounts (GitHub Terms, D.2 and M.3).
 - Content in a public repository and in its issues can be seen by everyone, and GitHub's terms do not restrict its lawful use by others (GitHub Terms, D.5 and D.8). GitHub and its affiliates may store, copy and display it, and use it to train AI features and the models of their affiliates (GitHub Terms, D.4); there is no setting that turns this off for public content (GitHub Terms, J.3).
 - The site is served on Vercel's free Hobby plan, which Vercel allows only for personal or non-commercial use; Sophaxis is non-commercial. Vercel may disable or remove a deployment on that plan with or without notice, so the site can go offline without warning; the records stay in the repository (Vercel Terms, section 4).
-- On the Hobby plan, Vercel may use the content it serves to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (Vercel Terms, section 3).
+- On the Hobby plan, Vercel may use the content it serves to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (Vercel Terms, section 3). The operator has not confirmed that this setting is turned off for the Sophaxis account.
 - Content on the site must also follow Vercel's Acceptable Use Policy, and Vercel may remove or disable content (Vercel Terms, sections 3 and 8).
 - GitHub and Vercel each provide their services "as is", without warranty, and limit their liability (GitHub Terms, O and P; Vercel Terms, sections 20 and 21). Their terms are governed by the law of California, with the courts of San Francisco, and Vercel's also provide for arbitration (GitHub Terms, S.1; Vercel Terms, section 23).
 

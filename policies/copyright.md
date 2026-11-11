@@ -1,6 +1,6 @@
 # Copyright Policy
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-11.
 
 Japanese: [著作権の規程（日本語訳）](./copyright.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -29,7 +29,7 @@ The copy is the file the authors deposited, shared under the work's own licence,
 The accepted licences allow this.
 Authors can ask for the copy to be removed; the record then links to the repository only.
 
-Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, so that they stay readable even if this site goes away.
+Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, where every author of the work consents to it, so that they stay readable even if this site goes away.
 
 Every record page carries the citation tags that Google Scholar reads.
 Sophaxis does not control whether or when a search engine indexes a page.

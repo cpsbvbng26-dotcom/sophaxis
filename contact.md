@@ -50,6 +50,7 @@ The operator aims to answer within 7 days.
 - Zenodo: the code and the records, archived with each release. Version 1.0.0 has the DOI [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372); [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) stands for every version. The community <https://zenodo.org/communities/sophaxis> gathers the Zenodo records of works listed on Sophaxis; it is not an affiliation with Zenodo.
 - GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
 - ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).
+- Open Access Directory: Sophaxis has been listed under Philosophy and under Mathematics on its [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) page since 2026-11-09 (Japan time). The operator added the entry, and the listing is not a review of Sophaxis.
 - X: the official account [@SophaxisX](https://x.com/SophaxisX), with new records and news. The handle ends in X because @Sophaxis was already taken; that account is not Sophaxis.
 
 ## Security

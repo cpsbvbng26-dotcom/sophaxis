@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 

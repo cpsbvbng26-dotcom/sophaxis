@@ -1,6 +1,6 @@
 # Record of processing
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-11.
 
 This record follows Article 30 of the General Data Protection Regulation and the items that Japan's Act on the Protection of Personal Information asks to be made known. The [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) is the public statement; this file lists the same processing in one place.
 
@@ -13,6 +13,8 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 | Purpose | People | Personal data | Source | Recipients | Retention |
 | --- | --- | --- | --- | --- | --- |
 | Confirm that a submitter, a co-author who confirms their agreement, a person who withdraws, or a person who reports a published version is an author | Submitters and co-authors | GitHub username; ORCID iD; name, websites and works from the public ORCID record | The issue; ORCID | GitHub (issue comments) | As long as the issue exists |
+| From 2026-11-23, confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book | Researchers who vouch | GitHub username; ORCID iD; the comment; name, websites and works from the public ORCID record | The issue; ORCID | GitHub (issue comments) | As long as the issue exists |
+| Help the moderator review a submission | Submitters and authors | The public parts of the submission: the issue, the DOI metadata and the abstract | The issue; DOI metadata | Anthropic, OpenAI and xAI (United States), given by hand to their language models Claude, ChatGPT and Grok | Given only while the submission is reviewed, never after a work is listed; what each provider keeps follows its own terms |
 | Publish record pages, author pages, lists and search | Authors | Names, ORCID iDs, abstracts, statements on generative models, notes | DOI metadata (DataCite, Crossref, JaLC); the issues | Vercel (serving); the public | Without a time limit, so that citations do not break |
 | Offer records for reuse | Authors | As above | The records | Readers of `feed.xml` and `papers.json`; OAI-PMH harvesters | As above; copies taken by others are outside Sophaxis's control |
 | Preserve the pages and the PDF copies, for works whose authors consent to it in a separate box | Authors | As above | The site | The Internet Archive (United States) | As the Internet Archive keeps them; saves stop when any author withdraws the consent |
@@ -30,7 +32,7 @@ Legitimate interest in checking authorship, in keeping a public scholarly record
 
 ## Transfers outside Japan and the European Union
 
-GitHub, Vercel, ORCID, Crossref and the Internet Archive are in the United States; DataCite is in Germany. Zenodo is run by CERN, in Switzerland. What each says about its own measures is linked from the Privacy Policy.
+GitHub, Vercel, ORCID, Crossref, Anthropic, OpenAI, xAI, Apple (for email) and the Internet Archive are in the United States; DataCite is in Germany. OpenAlex, also in the United States, is asked about a listed work by its DOI only, never about a person. Zenodo is run by CERN, in Switzerland. What each says about its own measures is linked from the Privacy Policy.
 
 ## Security
 

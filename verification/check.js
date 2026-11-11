@@ -132,7 +132,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'No other generative model can be listed as an author either.',
     'If no generative model was used, the statement says so.',
     'Records are not deleted.',
-    'Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, so that they stay readable even if this site goes away.',
+    'Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, where every author of the work consents to it, so that they stay readable even if this site goes away.',
     'Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record.',
     'The operator also asks the Internet Archive to exclude its earlier copies of the record.',
     'A work is listed once, under one Sophaxis id.',
@@ -174,7 +174,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'A request to disclose who submitted material is handled as Japanese law provides.',
     'Even then, the change is announced before it takes effect.',
     'Sophaxis applies Japan\'s Act on the Protection of Personal Information in full, as if its operator were a business operator under that Act.',
-    'Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan\'s Act on the Protection of Personal Information.',
+    'Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive, and the public parts of a submission that reach Anthropic, OpenAI and xAI while it is reviewed, as provided to a third party in a foreign country, under Article 28 of Japan\'s Act on the Protection of Personal Information.',
     'If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan\'s Personal Information Protection Commission and tells the people concerned.',
     'Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).',
     'The operator has decided not to appoint one.',
@@ -749,7 +749,12 @@ console.log('\n17. The fields of papers.json, as the README describes them');
   const readme = read(path.join(ROOT, 'README.md'));
   const section = (/## Reusing the records\n([\s\S]*?)\n## /.exec(readme) || [, ''])[1];
   const documented = [...section.matchAll(/^\| `([a-z_]+)` \|/gm)].map((m) => m[1]);
-  const emitted = [...new Set(JSON.parse(read(path.join(FIX, 'papers.json'))).flatMap((x) => Object.keys(x)))];
+  /* The fields of the fixtures and of the live records, in the order the build writes them, so that a field that only
+   * the live records carry (collections, llm_extent) is documented too. */
+  const writer = (/function papersJson\([\s\S]*?\n}\n/.exec(read(path.join(ROOT, 'build.js'))) || [''])[0];
+  const place = (k) => { const m = new RegExp('[{ ]' + k + ':').exec(writer); return m ? m.index : writer.indexOf('STATEMENT_KEYS'); };
+  const emitted = [...new Set(JSON.parse(read(path.join(FIX, 'papers.json'))).concat(JSON.parse(read(path.join(ROOT, 'site', 'papers.json')))).flatMap((x) => Object.keys(x)))]
+    .sort((a, b) => place(a) - place(b));
   ok('the README documents every field of papers.json, in order, and no other', documented.length > 0 && documented.join() === emitted.join(),
     'README ' + documented.join(',') + ' / papers.json ' + emitted.join(','));
 }
@@ -1334,7 +1339,7 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     && !/(indexed|listed|harvested) (by|in|on) PhilPapers|added to (the )?(PhilPapers|Open Access Gateway)/i.test(read(path.join(ROOT, 'README.md')))
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['findable.html', 'findable.ja.html'].includes(f)).some((f) => /PhilPapers/i.test(read(path.join(ROOT, 'site', f))))
     && read(path.join(ROOT, 'site', 'findable.html')).includes('Sophaxis has no connection with these services; their names are given only so that authors can find them.')
-    && read(path.join(ROOT, 'site', 'findable.ja.html')).includes('Sophaxis は、これらのサービスと特別な関係を持ちません。')
+    && read(path.join(ROOT, 'site', 'findable.ja.html')).includes('Sophaxis は、これらのサービスとつながりを持ちません。')
     && !/(indexed|listed|harvested) (by|in|on) PhilPapers|Sophaxis (is|was) (in|on) PhilPapers/i.test(read(path.join(ROOT, 'site', 'findable.html'))));
 }
 
@@ -2029,7 +2034,7 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml' };
+  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
     && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
@@ -2044,7 +2049,7 @@ console.log('\n51. What runs by itself, said on the site and in the README');
       'No step signs in to any account.', 'One step acts before the operator decides: when a removal issue reports exposure of personal data'].every((x) => auto.includes(x)));
   const readme = read(path.join(ROOT, 'README.md'));
   ok('the README, in both languages, points to the page', readme.includes('### What runs by itself') && readme.includes('(https://sophaxis.vercel.app/automation.html) (`automation.md`)')
-    && readme.includes('[What runs by itself](https://sophaxis.vercel.app/automation.html) の頁にすべて挙げています。'));
+    && readme.includes('[自動で動く手順](https://sophaxis.vercel.app/automation.ja.html)の頁にすべて挙げています。'));
   const pv = read(path.join(ROOT, 'policies', 'privacy.md'));
   const pj = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
   ok('the Privacy Policy, in both languages, says that no significant decision is made solely by automated means, names the mailbox at Apple, and gives the measures under the Commission\'s headings',
@@ -2768,6 +2773,10 @@ console.log('\n75. GitHub and Vercel: what their own terms provide, read at thei
     && pe.indexOf('section D.4') < pe.indexOf('## Security'));
   ok('no policy says that the operator has turned Vercel\'s model training off, until the operator confirms it and the review records it',
     ![te, tj, pe, pj].some((t) => /has turned (this|it) off|opted out|止めています|止めました/.test(t)) || read(path.join(ROOT, 'docs', 'legal-review.md')).includes('The operator turned Vercel\'s model training off on'));
+  ok('the Terms and the Privacy Policy, in both languages, say that the operator has not confirmed the setting turned off for the Sophaxis account',
+    [te, pe].every((t) => t.includes('The operator has not confirmed that this setting is turned off for the Sophaxis account.'))
+    && [tj, pj].every((t) => t.includes('Sophaxis のアカウントで、この設定を切ったことは確かめていません。'))
+    || read(path.join(ROOT, 'docs', 'legal-review.md')).includes('The operator turned Vercel\'s model training off on'));
   ok('the Submission Policy and the Privacy Policy, in both languages, tell a person worried by these uses not to submit, and how a listed author withdraws',
     read(path.join(ROOT, 'policies', 'submission.md')).includes('to train AI models, do not submit.') && read(path.join(ROOT, 'policies', 'submission.ja.md')).includes('個人情報が心配な方は、投稿しないでください。')
     && pe.includes('If these uses make you worry about your personal data, do not submit, and do not agree to be listed as an author') && pj.includes('これらの利用で個人情報が心配な方は、投稿しないでください。著者として載ることにも同意しないでください。'));
@@ -3384,7 +3393,7 @@ console.log('\n91. Positioning: how Sophaxis differs, the glossary, citing Sopha
   const cmp = read(path.join(ROOT, 'compare.md'));
   const row = (name) => (cmp.match(new RegExp('^\\| ' + name + ' \\|.*$', 'm')) || [''])[0];
   ok('the comparison says that Sophaxis keeps no file and gives no DOI, that it replaces none of the others, that the summaries are dated and the services\' own pages count, and claims no connection',
-    row('Sophaxis').includes('| No; it keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository |') && row('PhilArchive').includes('| Yes | No |')
+    row('Sophaxis').includes('| No; the repository keeps it, and Sophaxis keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository |') && row('PhilArchive').includes('| Yes | No |')
     && ['arXiv', 'PhilArchive', 'SSRN', 'Zenodo'].every((n) => row(n).endsWith('| None |')) && cmp.includes('It replaces none of the places below')
     && cmp.includes('These are short summaries as of 2026-11-10; the pages of each service are what count.') && cmp.includes('Sophaxis has no connection with any of them')
     && cmp.includes('Acceptance is moderation, not peer review.') && !/\bbetter\b|\bworse\b|\bbest\b/i.test(cmp));
@@ -3392,7 +3401,8 @@ console.log('\n91. Positioning: how Sophaxis differs, the glossary, citing Sopha
   const n = Object.keys(site.categories).length;
   const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   ok('the glossary\'s numbers and days are those of site.json: ' + n + ' fields, ' + site.ownWaitDays + ' days, six months, and the days of vouching and the statements',
-    g.includes('one of the ' + W[n] + ' areas') && g.includes('waits ' + W[site.ownWaitDays] + ' days in public') && site.doiAgeMonths === 6 && g.includes('from which the six months are counted')
+    g.includes('one of the ' + W[n] + ' areas') && g.includes('waits ' + W[site.ownWaitDays] + ' days in public') && site.doiAgeMonths === 6 && g.includes('From ' + site.doiAgeFrom + ', a new work is listed only if six months have passed since it was registered.')
+    && read(path.join(ROOT, 'glossary.ja.md')).includes(site.doiAgeFrom + ' から、新しい作品は、これが登録されてから六か月たっているときに限り載せます。')
     && g.includes('- Vouching: from ' + site.vouchFrom + ',') && g.includes('from ' + site.statementsFrom + ', on funding') && g.includes('It is not peer review')
     && read(path.join(ROOT, 'glossary.ja.md')).includes(['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][n] + 'つの領域') && read(path.join(ROOT, 'glossary.ja.md')).includes(['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][site.ownWaitDays] + '日のあいだ公開で待ちます'));
   const press = read(path.join(ROOT, 'press.md'));
@@ -3540,7 +3550,7 @@ console.log('\n94. The form in Japanese, subfields, a summary in plain words, an
     && ids.filter((id) => /type: dropdown/.test(en.slice(Math.max(0, en.indexOf('    id: ' + id) - 30), en.indexOf('    id: ' + id)))).every((id) => JSON.stringify(opts(block(en, id))) === JSON.stringify(opts(block(ja, id)))));
   ok('the intake reads every field of both forms by its label to the same key, so that the Japanese form is checked exactly as the English one',
     ids.filter((id) => id !== 'confirm').every((id) => { const e = I.parseIssue('### ' + label(en, id) + '\n\nx\n'), j = I.parseIssue('### ' + label(ja, id) + '\n\nx\n'); return Object.keys(e).includes(id) && Object.keys(j).includes(id); })
-    && ja.includes('規程と様式の英語の文と食い違うときは、英語の文が適用されます。'));
+    && ja.includes('規程や様式の英語の文と食い違うときは、英語の文が適用されます。'));
   ok('the Japanese form names all ' + site.notOffered.length + ' places where Sophaxis is not offered, by their Japanese names, and India for authors under 18',
     block(ja, 'residence').includes('（' + site.notOffered.map((p) => p.ja).join('、') + '）') && block(ja, 'residence').includes('インドに住んでいるか滞在している 18 歳未満の著者の作品も載せません。'));
   const subs = Object.entries(site.subfields).flatMap(([c, d]) => Object.values(d).map((l) => site.categories[c] + ': ' + l));

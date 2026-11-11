@@ -55,14 +55,14 @@ For a verified submission the comment also gives advice on the DOI metadata from
 Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, Figshare, arXiv and Research Square), the comment asks the authors to attach the deposited PDF to the issue.
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
-notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies.
+notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies of works whose every author consents.
 It also looks in Crossref and DataCite for a published version linked to a listed preprint, and for retraction or correction notices on a recorded one; it records nothing by itself.
 For information, it reads how OpenAlex holds each work shown: whether OpenAlex has the work and its abstract, and whether a Sophaxis record page is among its locations. It writes this to the summary of the run, and to the weekly issue when there is one; it does not open an issue by itself.
 
 When a push to main changes the sitemap (`tools/indexnow.js`, run by `.github/workflows/indexnow.yml`), Sophaxis waits until the new pages are live,
 then tells the search engines that take IndexNow (Bing, Yandex, Naver, Seznam and others) which record pages and PDF copies are new, changed or gone.
 A gone address is one that left the sitemap, such as a removed record, so that the engines visit it again and drop what they held.
-The new and changed pages are saved to the Internet Archive at once; a gone one never is. The weekly check saves every page again.
+The new and changed pages are saved to the Internet Archive at once, where every author of the work consents to it; a gone one never is. The weekly check saves those pages again.
 A push made by the removal workflow starts no other workflow, so that workflow does the same itself after it pushes.
 Only those addresses and the home page are sent. Author pages, whose address carries an ORCID iD, are not.
 Google does not take IndexNow. It reads the sitemap, which `robots.txt` names and which is registered in Google Search Console.
@@ -90,7 +90,7 @@ When a verified submission passes moderation, add the draft record from the issu
 run `node build.js` and `node verification/check.js`, and open a pull request that closes the issue.
 When a record changes later (a new version, a note, a published version), set `updated` to that day. OAI-PMH harvesters read the later of the two as the day the record changed.
 After it is merged, run the `pdf` workflow with the record id. It copies the PDFs onto a branch `claude/pdf-<id>`; open a pull request from it.
-Where the repository does not let a script fetch the file (OSF Preprints, Preprints.org, SSRN), ask the authors to attach the PDF to their submission issue,
+Where the repository does not let a script fetch the file (every repository except Zenodo, Figshare, arXiv and Research Square), ask the authors to attach the PDF to their submission issue,
 and run the workflow with `from` set to that attachment and `version` to the version it is.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
 The id in a draft is provisional. If `data/papers/<id>.json` already exists when the record is added, give the record the next free id instead.
@@ -190,8 +190,10 @@ Every shown record is in `papers.json`, newest first. The fields:
 | `updated` | Only when the record changed later: the day of its last change on Sophaxis. |
 | `pdfs` | The `version` and `url` of each PDF copy kept on Sophaxis, possibly empty. |
 | `published` | Only when a later version has been published: its `doi`, `title`, `venue` (journal, proceedings or book), `date` (YYYY, YYYY-MM or YYYY-MM-DD) and `type` (journal article, conference paper, book chapter or book); `peer_reviewed` as the authors state it (true, false, or null for not stated); `evidence`, "publisher" when the publisher's metadata links the preprint and "authors" when only an author reported it; the date it was `reported`, the `issue` that reported it, and any `updates` (retraction, correction and other notices) with their type, DOI and date. |
+| `collections` | Only when the moderator has put the record in one or more collections by topic: the slug of each, as in `site.json`. |
 | `status` | `listed` or `withdrawn`. Removed records are left out. |
 | `llm_disclosure` | The authors' statement on the use of generative models. |
+| `llm_extent` | Only where the authors state it: the extent of that use, `none`, `editing`, `assistance` or `drafting`. |
 
 The records can also be harvested with OAI-PMH 2.0, at the base URL `https://sophaxis.vercel.app/oai` (for example https://sophaxis.vercel.app/oai?verb=Identify).
 - Metadata: Dublin Core (`oai_dc`). The record page, the DOI and the PDF copy are among its identifiers.
@@ -236,8 +238,8 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 検索、分野ごとの一覧、著者ごとの頁（ORCID iD のある著者）、新着の Atom フィード、記録の JSON、APA・Chicago・BibTeX の引用形式があります。
 - 引用は BibTeX・RIS・CSL-JSON のファイルでも取り出せます。記録の JSON の項目は、上の英語の節に書いてあります。
 - 論文の頁には、関連する記録、誤りを報告する窓口、Internet Archive の保存版へのリンクがあります。
-- main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁、sitemap から外れた頁（削除した記録など）を知らせます（`tools/indexnow.js`）。新しい頁と変わった頁は、その場で Internet Archive にも保存します。外れた頁は保存しません。削除の自動処理が push したときも、同じことをその場で行います。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
-- 自動で動く手順は、いつ動き、何を読み、何を書き、何を運営者に残すかとともに、[What runs by itself](https://sophaxis.vercel.app/automation.html) の頁にすべて挙げています。どの手順も依頼の判断はせず、言語モデルを使わず、実行ごとに GitHub が渡すトークンのほかに鍵を持ちません。
+- main への push で sitemap が変わると、新しい頁が公開されるのを待ってから、IndexNow を受ける検索エンジン（Bing・Yandex・Naver・Seznam など）に、新しく載った論文の頁と PDF の写し、変わった頁、sitemap から外れた頁（削除した記録など）を知らせます（`tools/indexnow.js`）。新しい頁と変わった頁は、著者全員が同意していれば、その場で Internet Archive にも保存します。外れた頁は保存しません。削除の自動処理が push したときも、同じことをその場で行います。送るのはそれらとトップの頁の URL だけです。ORCID iD を含む著者の頁の URL は送りません。
+- 自動で動く手順は、いつ動き、何を読み、何を書き、何を運営者に残すかとともに、[自動で動く手順](https://sophaxis.vercel.app/automation.ja.html)の頁にすべて挙げています。どの手順も依頼の判断はせず、言語モデルを使わず、実行ごとに GitHub が渡すトークンのほかに鍵を持ちません。
 - Google は IndexNow を受けません。Google には、`robots.txt` が示し、Google Search Console に登録した sitemap から読ませます。
 - 言語モデルと、それを使う検索のために、`llms.txt`（https://sophaxis.vercel.app/llms.txt）と `llms-full.txt` を置いています。`llms.txt` は `site.json` と記録から取った事実と、すべての規程と頁へのリンクです。`llms-full.txt` は、すべての規程と頁を、頁と同じ Markdown から一字一句そのまま収めたものです。どちらも `build.js` が作り、食い違うときは規程が優先すると書き、メールアドレスは載せません。
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
@@ -271,7 +273,7 @@ Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に�
 貢献の窓口と、変更を確かめる手順は [CONTRIBUTING.md](CONTRIBUTING.md) に、これまでの変更は [CHANGELOG.md](CHANGELOG.md) にあります（どちらも英語）。
 
 運営は根本卓哉です。
-運営者は、現在ただ一人のモデレーターを兼ね、無報酬のボランティアとして運営しています。配信は GitHub と Vercel の無料の範囲だけで行っています。サイトとコードを書く Claude Code の利用料は、運営者が個人で払っています。哲学と数学の公開済みのプレプリントを並べて載せる場を探し、見つからなかったことが始まりです。運営者自身が読むためであり、同じ問いを考える人のためでもあります。ほかのアーカイブを評価するものではありません。運営者は、趣味の読書棚の延長として Sophaxis を使っています。載せるのは、著者本人が投稿した論文だけです。運営者が読んだからといって、他人の論文を載せることはありません。営利ではなく、投稿料も閲覧料も広告もありません。詳しくは [Disclaimer](https://sophaxis.vercel.app/disclaimer.html) にあります（英語）。
+運営者は、現在ただ一人のモデレーターを兼ね、無報酬のボランティアとして運営しています。配信は GitHub と Vercel の無料の範囲だけで行っています。サイトとコードを書く Claude Code の利用料は、運営者が個人で払っています。哲学と数学の公開済みのプレプリントを並べて載せる場を探し、見つからなかったことが始まりです。運営者自身が読むためであり、同じ問いを考える人のためでもあります。ほかのアーカイブを評価するものではありません。運営者は、趣味の読書棚の延長として Sophaxis を使っています。載せるのは、著者本人が投稿した論文だけです。運営者が読んだからといって、他人の論文を載せることはありません。営利ではなく、投稿料も閲覧料も広告もありません。詳しくは [免責事項](https://sophaxis.vercel.app/disclaimer.ja.html) にあります。
 OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA)）。2026-11-01 に、COAR が運営する DOAPR（Directory of Open Access Preprint Repositories）への掲載を申請しました。掲載するかどうかは DOAPR が決めます。
 2026-11-03（日本時間）に、OAI-PMH の入口（<https://sophaxis.vercel.app/oai>）が Open Archives Initiative の検証ツールの初期テストを通りました。この組織は 2025-07-18 にデータ提供者の登録を終えています。これは検証であって、一覧への掲載ではありません。
 同じ日に、PhilPapers に、Open Access Gateway へ Sophaxis を加えるよう依頼しました。PhilPapers が論文を索引するアーカイブの一覧です。加える前に一件ずつ審査があります。PhilPapers の答えは、これまでに載った作品は運営者のものと見えるので、Sophaxis を Gateway に加えるより、論文を PhilArchive に直接置くことを勧める、というものでした。Sophaxis は Open Access Gateway に入っていません。

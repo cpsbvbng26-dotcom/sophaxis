@@ -1,6 +1,6 @@
 # 免責事項（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
 これは英語の [Disclaimer](./disclaimer.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -29,7 +29,7 @@ Sophaxis は証明・論証・データを確かめず、載っている作品�
 Sophaxis は、独立した個人のプロジェクトです。
 載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。
 それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。その中には商標もあります。
-それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。[預け先と DOI 登録機関へ](./repositories.html)の頁も見てください。
+それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。[預け先と DOI 登録機関へ](./repositories.ja.html)の頁も見てください。
 
 ## 誰が、なぜ Sophaxis を運営するか
 

@@ -1,6 +1,6 @@
 # Making a listed work easy to find
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [載った作品を見つけてもらうために（日本語訳）](./findable.ja.html). It is a translation; where the two differ, the English text applies.
 

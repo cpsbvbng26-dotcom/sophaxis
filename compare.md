@@ -1,6 +1,6 @@
 # How Sophaxis differs from other places
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [ほかの場との違い（日本語訳）](./compare.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -14,7 +14,7 @@ It replaces none of the places below, and a work can be in several of them at on
 
 | | Keeps the file | Gives a DOI | Before a work appears | Fields | Fees to authors |
 | --- | --- | --- | --- | --- | --- |
-| Sophaxis | No; it keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository | An automatic check through ORCID, then moderation in a public issue | Philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science | None |
+| Sophaxis | No; the repository keeps it, and Sophaxis keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository | An automatic check through ORCID, then moderation in a public issue | Philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science | None |
 | arXiv | Yes | Yes | Moderation, and for some first submissions an endorsement | Physics, mathematics, computer science and other sciences | None |
 | PhilArchive | Yes | No | A check by its editors | Philosophy | None |
 | SSRN | Yes | Yes | A check by its staff | Mainly the social sciences and the humanities, with networks for philosophy and mathematics | None |

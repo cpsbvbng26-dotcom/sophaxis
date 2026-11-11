@@ -1,6 +1,6 @@
 # For repositories and DOI registration agencies
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-11.
 
 Japanese: [預け先と DOI 登録機関へ（日本語訳）](./repositories.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -18,7 +18,7 @@ Sophaxis does not harvest or mirror any repository.
 
 - The DOI metadata of a submitted work, from the public REST APIs of DataCite, Crossref and, for Jxiv, JaLC: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence.
 - The list of versions of a work, from the same metadata.
-- The PDF of a version, unmodified, only where the work's licence allows it and the repository offers it to scripts (Zenodo, Figshare, arXiv and Research Square), through their public APIs or download addresses. This happens once per version, when the operator starts it by hand. Where the repository publishes a checksum, the copy must match it.
+- The PDF of a version, unmodified, only where the work's licence allows it and the repository offers it to scripts (Zenodo, Figshare, arXiv and Research Square), through their public APIs or download addresses. The copy is taken once per version, when the operator starts it by hand. The check of a submission, when its issue is opened or edited, also fetches the PDF of the latest version, only to read its shape for the moderator, and deletes it after the reading. Where the repository publishes a checksum, the copy must match it.
 
 Every request that Sophaxis's own code makes names Sophaxis and its repository in its User-Agent: `Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)`. The advice step of the submission check runs [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), which names itself: `deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)`.
 Sophaxis reads no pages meant for people, and does not get around any limit or block.

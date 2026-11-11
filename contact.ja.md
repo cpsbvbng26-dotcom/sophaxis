@@ -23,7 +23,7 @@ Sophaxis がなぜあるのか、それが記録にとって何を意味する�
 運営者はモデレーターでもあり、サイトとその記録に責任を負います。
 サイトとそのコードは、運営者の求めにより、Claude Code（Anthropic）で作りました。[免責事項](./disclaimer.ja.html)を見てください。
 [利用規約](./policies/terms.ja.html)が定めるとおり、著者は自分の作品にすべての責任を負います。
-運営者の投稿も同じ決まりでモデレーションを行い、運営者自身のものである印を付けます。
+運営者の投稿も同じ決まりでモデレーションを受け、運営者自身のものである印を付けます。
 諮問委員会はまだありません。募集は[諮問委員の募集](./advisory.ja.html)にあります。委員は、本人が同意したあと、ORCID iD とともにここに名を載せます。
 Sophaxis を紹介する人のために、[紹介する人のために](./press.ja.html)と[名前・ロゴ・バッジ](./brand.ja.html)の頁があります。
 
@@ -51,9 +51,10 @@ issue は公開されます。issue に個人データを書かないでくだ�
 ## ほかの場所にある Sophaxis
 
 - OSF：プロジェクトの頁 [Sophaxis: An Independent Overlay Preprint Server](https://osf.io/mq7za/) があり、その DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。この DOI が指すのはプロジェクトであって、載っている作品ではありません。
-- Zenodo：コードと記録を、版を出すたびに保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。[10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) はすべての版を表します。コミュニティ <https://zenodo.org/communities/sophaxis> は、Sophaxis に載っている作品の Zenodo の記録を集めています。これは、Sophaxis が Zenodo と特別な関係にあることを意味するものではありません。
+- Zenodo：コードと記録を、版を出すたびに保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。[10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) はすべての版を表します。コミュニティ <https://zenodo.org/communities/sophaxis> は、Sophaxis に載っている作品の Zenodo の記録を集めています。これは、Sophaxis が Zenodo と組織のうえでつながっていることを意味するものではありません。
 - GitHub：コード、記録、投稿を収めた[公開のリポジトリ](https://github.com/cpsbvbng26-dotcom/sophaxis)です。
 - ROAR：Sophaxis は、サウサンプトン大学の Registry of Open Access Repositories の編集の審査を通り、2026-11-06（日本時間）からそこに載っています。[記録 27422](https://roar.eprints.org/27422/) です。
+- Open Access Directory：2026-11-09（日本時間）から、その [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) の頁の Philosophy と Mathematics の二つの節に、Sophaxis が載っています。項目は運営者が足したもので、この掲載は Sophaxis の審査ではありません。
 - X：公式のアカウント [@SophaxisX](https://x.com/SophaxisX) で、新しい記録とお知らせを流します。@Sophaxis はすでに使われていたので、名の末尾に X を付けました。@Sophaxis のアカウントは Sophaxis ではありません。
 
 ## セキュリティ
@@ -82,5 +83,5 @@ Sophaxis は、Web Content Accessibility Guidelines（WCAG）2.2 のレベル AA
 
 サイトは Vercel が配信し、GitHub の公開のリポジトリから組み立てています。
 コード、記録、issue は GitHub に保管し、自動の確認はそこで GitHub Actions として動きます。
-Sophaxis は、GitHub とも Vercel とも、特別な関係を結んでいません。[免責事項](./disclaimer.ja.html)を見てください。
+Sophaxis は、GitHub とも Vercel とも、組織のうえのつながりを持ちません。[免責事項](./disclaimer.ja.html)を見てください。
 預け先と DOI 登録機関は、Sophaxis がそれらから何を取るかを、[専用の頁](./repositories.ja.html)で読めます。
