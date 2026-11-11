@@ -1,6 +1,6 @@
 # 預け先と DOI 登録機関へ（日本語訳）
 
-最終更新：2026-11-08。
+最終更新：2026-11-11。
 
 これは英語の [For repositories and DOI registration agencies](./repositories.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -18,7 +18,7 @@ Sophaxis は、どの預け先からも収集やミラーをしません。
 
 - 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。
 - 作品の版の一覧。同じメタデータから読みます。
-- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先がスクリプトに渡している場合だけです（Zenodo、Figshare、arXiv、Research Square）。それぞれの公開の API かダウンロードのアドレスを通します。これは版ごとに一度で、運営者が手で始めたときに行います。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
+- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先がスクリプトに渡している場合だけです（Zenodo、Figshare、arXiv、Research Square）。それぞれの公開の API かダウンロードのアドレスを通します。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 
 Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書きます。`Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)` です。投稿の確認の助言の段階は [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) を走らせ、deposit-check は自分の名を書きます。`deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)` です。
 Sophaxis は、人が読むための頁を読みません。どんな上限も遮断も、すり抜けません。

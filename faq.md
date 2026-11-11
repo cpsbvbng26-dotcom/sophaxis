@@ -1,6 +1,6 @@
 # Frequently asked questions
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [よくある質問（日本語訳）](./faq.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -112,7 +112,7 @@ See the [Copyright Policy](./policies/copyright.html).
 
 Each record page carries the tags that Google Scholar reads, and the sitemap lists every page.
 Scholar takes a PDF only from the directory of its record page, so each PDF copy is also served there.
-When a record page or a PDF copy is new, changed or removed, the search engines that take IndexNow, such as Bing, are told as soon as it is live. A new or changed page is also saved to the Internet Archive. Google reads the sitemap instead.
+When a record page or a PDF copy is new, changed or removed, the search engines that take IndexNow, such as Bing, are told as soon as it is live. A new or changed page is also saved to the Internet Archive, where every author of the work consents to it. Google reads the sitemap instead.
 Sophaxis cannot promise that a search engine will index a page.
 
 ## What should I check before submitting?
@@ -153,7 +153,7 @@ For copyright infringement, exposure of personal data or another legal reason, f
 ## What happens to the records if Sophaxis closes?
 
 The repository with every record stays public, so that the records stay readable.
-Each week, Sophaxis also asks the Internet Archive to save its pages and the PDF copies.
+Each week, Sophaxis also asks the Internet Archive to save its pages and the PDF copies, where every author of the work consents to it.
 
 ## Who runs Sophaxis, and how do I reach the operator?
 

@@ -2,7 +2,7 @@
 title: 'Sophaxis: an overlay preprint server for philosophy and mathematics'
 tags:
   - preprints
-  - overlay journal
+  - overlay server
   - philosophy
   - mathematics
   - scholarly communication
@@ -21,7 +21,7 @@ bibliography: paper.bib
      JOSS's submission guide, read on 2026-11-11 from its source (openjournals/joss, docs/submitting.md), asks for:
      1. More than six months of public history, with active development across that period, not in a burst. Public since 2026-10-30, so 2027-05-01 at the earliest, and only if the work goes on through the months between.
      2. Evidence that the software is used for research, at least by its developers and ideally by others. Aspirational statements do not count. Today every listed work is the operator's own.
-     3. Open-source practice: for a single author, several of a public commit history over time, releases or a changelog, tests and CI, documentation, a CONTRIBUTING file and stated support. These are present.
+     3. Open-source practice: for a single author, several of: a public commit history over time, releases or a changelog, tests and CI, documentation, a CONTRIBUTING file and stated support. These are present.
      4. Iterative development over time.
      It also says that many web-based tools are out of scope unless they expose a core library or show rigorous domain modelling and testing, and that a reviewer must be able to test the software locally.
      The AI usage disclosure must name the tools and their versions and where each was used, and affirm that the human author reviewed every output and made the core design decisions. The author adds the versions at submission. -->
@@ -68,7 +68,7 @@ A workflow reads the DOI metadata from DataCite, Crossref or JaLC [@datacite; @c
 It checks that the ORCID record links to the GitHub account of the submitter and that the ORCID iD belongs to an author of the work.
 A human then moderates the submission, and a merged pull request lists it.
 
-A weekly workflow checks that each DOI still resolves, looks for new versions, and saves the record pages to the Internet Archive [@wayback].
+A weekly workflow checks that each DOI still resolves, looks for new versions, and saves the record pages to the Internet Archive where every author consents [@wayback].
 When a listed preprint is later published, an author reports the published version, and the same ORCID check applies.
 The record page then leads with the published version and gives peer review only as the authors state it.
 The weekly workflow also looks in Crossref and DataCite for a published version that is linked to a listed preprint, and for retraction or correction notices on a recorded one.
@@ -84,7 +84,7 @@ Its policies, the moderation flow and the code are public, so that the design ca
 
 # AI usage disclosure
 
-The code, the policies and this paper were drafted with Claude Code (Anthropic), a language model, at the author's request.
+The code, the policies and this paper were drafted with Claude Code, a coding tool by Anthropic, at the author's request.
 The author decided the design, reviewed the output, and takes responsibility for it.
 Claude is not an author.
 The repository history records the use in each commit.

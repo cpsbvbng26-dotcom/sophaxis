@@ -1,6 +1,6 @@
 # Transparency: a self-assessment
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [透明性の自己評価（日本語訳）](./transparency.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -106,7 +106,7 @@ The statements on funding, competing interests and research ethics are asked fro
 
 Met.
 The operator, who is at present the only moderator, accepts or declines each submission in its public issue, on the reasons the Moderation Policy lists; no fee exists that could influence a decision.
-Three language models assist the review, given only public parts by hand, and decide nothing; the Moderation Policy says so.
+Three language models, Claude (Anthropic), ChatGPT (OpenAI) and Grok (xAI), assist the review, given only public parts by hand, and decide nothing; the Moderation Policy says so.
 No submission is guaranteed acceptance, and every record page says that acceptance is moderation, not peer review.
 The [Decisions by year](./decisions.html) page counts the decisions, with the reasons and the time to a decision.
 

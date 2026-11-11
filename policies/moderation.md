@@ -126,7 +126,7 @@ A collection says nothing of the quality of a work, and an author can ask, in th
 
 Corrections are added to the record as dated notes.
 Anyone can report an error in a record through the link on its page, which opens a public correction issue.
-They do not replace the work.
+The notes do not replace the work.
 A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.
 
 Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record.

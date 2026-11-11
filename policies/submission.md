@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -15,6 +15,7 @@ Sophaxis confirms this through ORCID, before a moderator reads the work.
 - The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.
 
 A submission that does not pass both is not listed.
+The first check confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
 A submitter under 18 needs the consent of a parent or guardian.
@@ -63,8 +64,6 @@ If it turns out that an author lives there, or stayed there between the submissi
 | Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported |
 | Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported |
 | Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported |
-
-This confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 
 ## What can be submitted
 

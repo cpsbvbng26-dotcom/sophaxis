@@ -40,6 +40,6 @@ Before choosing, read each repository's own pages on these points. Sophaxis does
 
 ## After depositing
 
-- Add the work to your ORCID record, as [finding a listed work](./findable.html) explains.
+- Add the work to your ORCID record, as [Making a listed work easy to find](./findable.html) explains.
 - To have it listed on Sophaxis, read the [checklist](./checklist.html) and follow [From submission to listing](./process.html).
 - From 2026-11-23, Sophaxis lists a work only when six months have passed since its first DOI, and a first submission needs a researcher to vouch for it, as the [Submission Policy](./policies/submission.html) sets out.

@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-11.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.html). It is a translation; where the two differ, the English text applies.
 

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-09.
+Last updated: 2026-11-11.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -90,7 +90,7 @@ Copies that others have already taken are outside Sophaxis's control.
 ## Services outside Japan
 
 Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person. Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts (the issue, the DOI metadata and the abstract), which the operator gives by hand to their language models, Claude, ChatGPT and Grok, to help the review; nothing is given to them after a work is listed.
-Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
+Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive, and the public parts of a submission that reach Anthropic, OpenAI and xAI while it is reviewed, as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
 The submission form asks for each author's consent to this, after giving the information below; the confirmation is required from 2026-11-21.
 Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
 Consent to the Internet Archive is asked in a box of its own, which may be left empty; a record without it is not saved there, and `robots.txt` asks the Internet Archive not to collect it.
@@ -108,19 +108,18 @@ What each service does to protect personal data is set out in its own statement:
 
 - GitHub: [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement). GitHub says it complies with the EU-U.S. Data Privacy Framework.
 - Vercel: [Vercel Privacy Notice](https://vercel.com/legal/privacy-notice). Vercel says it complies with the EU-U.S. Data Privacy Framework.
+- ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
+- Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
+- The Internet Archive: [Terms of Use](https://archive.org/about/terms). It receives only the public pages and PDF copies, which hold no personal data beyond what the records already publish. Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found.
+
+For GitHub, Vercel and ORCID, a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it.
 
 Two uses of the records by GitHub and Vercel themselves come with their terms, which Sophaxis cannot change:
 
 - GitHub's Terms of Service let GitHub and its affiliates use what is posted in issues and public repositories, the records among it, to train AI features and the models of its affiliates (section D.4). There is no setting that turns this off for public content (section J.3).
-- Vercel's Terms of Service let Vercel, on the free Hobby plan on which Sophaxis is served, use the content of the site, the records among it, to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (section 3).
+- Vercel's Terms of Service let Vercel, on the free Hobby plan on which Sophaxis is served, use the content of the site, the records among it, to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (section 3). The operator has not confirmed that this setting is turned off for the Sophaxis account.
 
 If these uses make you worry about your personal data, do not submit, and do not agree to be listed as an author, because Sophaxis cannot list a work without GitHub and Vercel. An author of a listed work can withdraw the consent at any time, and the record is then removed, as set out above.
-- ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
-
-For GitHub, Vercel and ORCID, a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it.
-
-- Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
-- The Internet Archive: [Terms of Use](https://archive.org/about/terms). It receives only the public pages and PDF copies, which hold no personal data beyond what the records already publish. Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found.
 
 Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States), and are kept there only as long as needed to answer them and to show the answer.
 What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).

@@ -97,7 +97,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - Vercel は、リポジトリの `site/` にあるファイルを配信します。そのファイルは、`build.js` が記録から組み立てます。OAI-PMH の口は、同じ記録を読む Vercel 上の小さな関数です。
 - 新しい頁が公開されると、IndexNow を受け付ける検索エンジンに、新しい記録の頁と PDF の写し、変わったもの、消えたものを知らせます。新しいものと変わったものは、著者が同意していれば Internet Archive に保存します。消えた頁は保存しません。
 - Vercel が保つ以前の版のサイトは、公開していません。
-- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。十分たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
+- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。十分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
 - コード：[tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js)。[live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml) が動かします。
 - `robots.txt` は、サイトのほかの部分と一緒に組み立てます。削除した記録と、著者が保存に同意していない記録を集めないよう、Internet Archive のクローラーに求めます。
 - コード：[tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js)。[indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) が動かし、削除の手順の push のあとにも動きます。
@@ -107,7 +107,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
 - 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
-- コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
+- コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
 
 ## 運営者が毎週の確認のプルリクエストに `record` のラベルを付けたとき
 
