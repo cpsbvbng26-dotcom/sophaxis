@@ -810,7 +810,7 @@
       "article": "Art 3(a),(d),(e),(g)(iii),(i), recitals 7-8 (scope)",
       "duty": "Applies to providers that \"offer services in the Union\", i.e. with a \"substantial connection\" (establishment, \"significant number of recipients\", or \"targeting of activities\"); \"mere technical accessibility ... cannot, on that ground alone\" establish it. Hosting = storage of information \"provided by, and at the request of, a recipient\"; online platform = a hosting service that also disseminates it to the public.",
       "applies": false,
-      "reason": "Reasoned view: likely outside. (1) An information society service must be \"normally provided for remuneration\" (Directive 2015/1535 Art 1(1)(b), not in the file); an unpaid, non-commercial personal project may not be one. (2) No EU establishment; recipients are few; no currency, no EU top-level domain, no app, no ads; English and Japanese serve researchers worldwide rather than targeting a Member State. On the policies' own worst-case stance (takedown.md:91) Sophaxis is a hosting service (PDF copies, abstracts, statements and reasons stored at authors' request) and an online platform (record pages disseminated to the public), and a micro enterprise if an enterprise at all: Art 15(1) is lifted by Art 15(2), and Section 3 (Arts 20-28) except Art 24(3) by Art 19 (not in the file). Arts 11-18 bind; the rows below judge them on that stance."
+      "reason": "Reasoned view: likely outside. (1) An information society service must be \"normally provided for remuneration\" (Directive 2015/1535 Art 1(1)(b), not in the file); an unpaid, non-commercial personal project may not be one. (2) No EU establishment; recipients are few; no currency, no EU top-level domain, no app, no ads; English and Japanese serve researchers worldwide rather than targeting a Member State. On the policies' own worst-case stance (takedown.md:91) Sophaxis is a hosting service (PDF copies, abstracts, statements and reasons stored at authors' request) and an online platform (record pages disseminated to the public), and a micro enterprise if an enterprise at all: DSA Art 15(1) is lifted by Art 15(2), and Section 3 of Chapter III (Arts 20-28) except Art 24(3) by Art 19 (not in the file). Arts 11-18 bind; the rows below judge them on that stance."
     },
     {
       "law": "DSA",
@@ -944,7 +944,7 @@
     {
       "law": "DSA",
       "article": "Art 16(2)(a)",
-      "duty": "\"a sufficiently substantiated explanation of the reasons why ... the information in question [is] illegal content\".",
+      "duty": "\"a sufficiently substantiated explanation of the reasons why the individual or entity alleges the information in question to be illegal content\".",
       "applies": true,
       "status": "met",
       "by": [
@@ -1494,7 +1494,7 @@
     {
       "law": "APPI",
       "article": "規則第8条第2項",
-      "duty": "知った日から「三十日以内（…第三号…は六十日以内）」に報告。",
+      "duty": "知った日から「三十日以内（当該事態が前条第三号に定めるものである場合にあっては、六十日以内）」に報告。",
       "applies": true,
       "status": "met",
       "by": [
@@ -1704,7 +1704,7 @@
     {
       "law": "APPI",
       "article": "第32条第1項第四号・施行令第10条第一号",
-      "duty": "第23条により講じた安全管理措置（支障を及ぼすおそれがあるものを除く）。",
+      "duty": "個人情報保護法第23条により講じた安全管理措置（支障を及ぼすおそれがあるものを除く）。",
       "applies": true,
       "status": "met",
       "by": [

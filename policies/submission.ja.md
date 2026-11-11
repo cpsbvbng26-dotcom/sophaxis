@@ -4,6 +4,10 @@
 
 これは英語の [Submission Policy](./submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.html)の「日本国外の方へ」の節に定めています。
 
+この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
+
 ## 投稿できる人
 
 サイトを配信する Vercel や、投稿を保管する GitHub が、置かれたものを AI のモデルの学習に使うことがあるため、個人情報が心配な方は、投稿しないでください。この利用は、[個人情報の取り扱いについて](./privacy.ja.html)に書いてあります。
@@ -64,6 +68,8 @@ Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか�
 | ボリビア | 国内での個人データの保存 | 電気通信一般法（法律第 164 号） | まだ（報告による） |
 | コスタリカ | 登録 | 法律第 8968 号 第 21 条 | まだ（報告による） |
 | ケベック州 | データを外へ出す前の評価と書面の契約 | 民間部門の個人情報保護法 第 17 条 | まだ（報告による） |
+
+<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17 -->
 
 ## 投稿できるもの
 

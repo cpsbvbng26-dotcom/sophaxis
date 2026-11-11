@@ -473,7 +473,7 @@
         }
       ]
     },
-    "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)": {
+    "Consumer contracts (Consumer Contract Act, Articles 8 and 10)": {
       "forms": [
         {
           "elements": [
@@ -710,7 +710,7 @@
       "publish a record": [
         "Copyright (Copyright Act of Japan, Articles 21 and 23)",
         "Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)",
-        "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)"
+        "Consumer contracts (Consumer Contract Act, Articles 8 and 10)"
       ],
       "keep a PDF copy": [
         "Copyright (Copyright Act of Japan, Articles 21 and 23)"
@@ -775,7 +775,7 @@
         "The Digital Services Act of the European Union"
       ],
       "reach abroad": [
-        "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
+        "Consumer contracts (Consumer Contract Act, Articles 8 and 10)",
         "Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)"
       ]
     },

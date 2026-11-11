@@ -276,6 +276,10 @@ ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
 .abstract p { margin: 0; }
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+details.source { margin: .6rem 0 1.4rem; }
+details.source summary { cursor: pointer; color: var(--muted); }
+details.source blockquote { margin: .6rem 0; padding: .25rem 1rem; border-left: 3px solid var(--rule); }
+details.source .from { font-size: .9rem; color: var(--muted); }
 .table { overflow-x: auto; }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
@@ -352,8 +356,81 @@ ${body}
 `;
 }
 
-/* A small Markdown subset: #, ##, ###, paragraphs, ordered and unordered lists, tables with a header row, and **bold**. */
+/* The texts that a legal page cites, quoted at the end of the section that cites them: a line <!-- text: GDPR 27; APPI 28 -->
+ * names them by the law of verification/citations.json and the article. Nothing here is written by hand.
+ * - A Japanese statute is quoted in full, as the e-Gov law API gives it: the text the weekly watch keeps
+ *   (verification/statutes-texts.json), or else the one tools/sources.js fetched (verification/sources-raw.json).
+ *   It is broken into lines only where a paragraph or an item begins.
+ * - A foreign text is the quotation chosen in verification/sources.json, cut word for word from the fetched text.
+ * - A citation whose source could not be fetched (`untraced` in verification/citations.json) is named as not quoted, with why.
+ * verification/check.js confirms that every citation of a section is named in its line, and that the page shows each text as recorded. */
+const CITATIONS = JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'citations.json'), 'utf8'));
+const STATUTES = JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8'));
+const STATUTE_TEXTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes-texts.json'), 'utf8'));
+const PRIMARY = JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'sources.json'), 'utf8'));
+const RAW = JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'sources-raw.json'), 'utf8'));
+const statuteLines = (t) => t.split(/ (?=(?:[０-９]+|[一二三四五六七八九十]+|[イロハニホヘトチリヌルヲワカヨタレソツネナラム]) )/);
+/* A Japanese article: the watched text (with its label) where the watch keeps it, otherwise the fetched one. */
+function statuteText(law, article) {
+  const L = CITATIONS.laws[law];
+  const st = STATUTES.statutes.find((e) => e.law_id === L.egov && e.article === article.replace(/-/g, '_'));
+  if (st && STATUTE_TEXTS[st.name + ' ' + st.label]) return { text: STATUTE_TEXTS[st.name + ' ' + st.label], label: st.label, watched: true, title: st.title, items: st.items };
+  const r = RAW.sources['egov:' + L.egov];
+  if (r && r.articles && r.articles[article]) return { text: r.articles[article], label: 'Article ' + article, watched: false, title: r.title };
+  return null;
+}
+const jaArticle = (a, items) => { const [n, k] = a.split('-'); return '第' + n + '条' + (k ? 'の' + k : '') + (items ? '第1項' + items.map((x) => '第' + x + '号').join('・') : ''); };
+function quoteOne(key, ja) {
+  const m = /^(.+) (\S+)$/.exec(key);
+  if (!m || !CITATIONS.laws[m[1]]) throw new Error('条文の印 ' + key + ' の法令がない');
+  const [, law, article] = m;
+  const L = CITATIONS.laws[law];
+  if (L.egov) {
+    const t = statuteText(law, article);
+    if (!t) throw new Error('条文の印 ' + key + ' の文がない');
+    const api = 'https://laws.e-gov.go.jp/api/1/lawdata/' + L.egov;
+    const when = t.watched ? STATUTES.recorded : RAW.fetched;
+    return `<details class="source"><summary>${ja ? '条文　' + esc(t.title) + ' ' + esc(jaArticle(article, t.items)) : 'Text of ' + esc(L.en[0]) + ', ' + esc(t.label) + ' (Japanese original)'}</summary>`
+      + `<blockquote lang="ja"><p>${statuteLines(t.text).map(esc).join('<br>\n')}</p></blockquote>`
+      + `<p class="from">${ja
+        ? `${when} に <a href="${api}">e-Gov 法令 API</a> から取り寄せた現行の条文を、手を入れずに引いています。${t.watched ? '週に一度の見張りが、記した文と同じかを確かめています。' : 'まだ週に一度の見張りには入っていません。'}`
+        : `The current text, fetched from the <a href="${api}">e-Gov law API</a> on ${when} and quoted without change. ${t.watched ? 'The weekly watch confirms that it is still the same.' : 'It is not yet among the texts the weekly watch confirms.'} Not translated; the Japanese text is the law.`}</p></details>`;
+  }
+  const q = PRIMARY.quotes[key];
+  if (!q) throw new Error('条文の印 ' + key + ' を引くものがない');
+  return `<details class="source"><summary>${ja ? '原文　' + esc(q.name_ja) : 'Text of ' + esc(q.name)}</summary>`
+    + `<blockquote lang="${q.lang}"><p>${esc(q.quote)}</p></blockquote>`
+    + `<p class="from">${ja
+      ? `<a href="${esc(q.url)}">${esc(q.name_ja)}</a>から、${PRIMARY.fetched} に取り寄せた文をそのまま引いています。訳は付けていません。`
+      : `Quoted word for word from <a href="${esc(q.url)}">${esc(q.name)}</a>, as fetched on ${PRIMARY.fetched}.`}</p></details>`;
+}
+/* The citations of a line that could not be quoted, in one note, each with why. */
+function notQuoted(keys, ja) {
+  const by = new Map();
+  for (const key of keys) {
+    const [, law, article] = /^(.+) (\S+)$/.exec(key);
+    const u = CITATIONS.untraced[law];
+    if (!u || !u.articles.includes(article)) throw new Error('条文の印 ' + key + ' を引くものがない');
+    if (!by.has(law)) by.set(law, []);
+    by.get(law).push(article);
+  }
+  const items = [...by].map(([law, arts]) => {
+    const L = CITATIONS.laws[law], u = CITATIONS.untraced[law];
+    return ja ? `<li>${esc((L.ja || L.en)[0])} ${arts.map((a) => '第 ' + a + ' 条').join('・')}：${esc(u.why_ja)}</li>` : `<li>${esc(L.en[0])}, ${arts.length > 1 ? 'Articles or sections' : 'Article or section'} ${esc(arts.join(', '))}: ${esc(u.why)}</li>`;
+  });
+  return `<details class="source"><summary>${ja ? '引いていない条（原文を取り寄せられなかったもの）' : 'Not quoted: the texts that could not be fetched'}</summary><ul>${items.join('')}</ul></details>`;
+}
+function quoteBlock(keys, ja) {
+  const all = keys.split(';').map((k) => k.trim()).filter(Boolean);
+  const quoted = all.filter((k) => { const law = /^(.+) (\S+)$/.exec(k)[1]; return !(CITATIONS.untraced[law] && CITATIONS.untraced[law].articles.includes(/ (\S+)$/.exec(k)[1])); });
+  const rest = all.filter((k) => !quoted.includes(k));
+  return quoted.map((k) => quoteOne(k, ja)).concat(rest.length ? [notQuoted(rest, ja)] : []).join('\n');
+}
+
+/* A small Markdown subset: #, ##, ###, paragraphs, ordered and unordered lists, tables with a header row, and **bold**.
+ * A line <!-- text: … --> becomes the quoted texts (above), in the language of the page. */
 function markdown(src) {
+  const ja = /[\u3040-\u30ff\u4e00-\u9fff]/.test(src.split('\n')[0]);
   const out = [];
   let para = [];
   let list = null;
@@ -379,6 +456,7 @@ function markdown(src) {
   for (const line of src.split('\n')) {
     let m;
     if (/^\s*$/.test(line)) { flush(); continue; }
+    if ((m = /^<!-- text: (.+) -->$/.exec(line))) { flush(); out.push(quoteBlock(m[1], ja)); continue; }
     if (/^\|.*\|\s*$/.test(line)) { flushPara(); flushList(); (table = table || []).push(line); continue; }
     flushTable();
     if ((m = /^(#{1,3}) (.*)$/.exec(line))) { flush(); out.push('<h' + m[1].length + '>' + inline(m[2]) + '</h' + m[1].length + '>'); continue; }

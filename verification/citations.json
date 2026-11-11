@@ -1,0 +1,763 @@
+{
+  "_": "The laws and terms that the legal pages cite, by the names the pages use. tools/citations.js finds every numbered citation in the files below and gives it a law by these names; verification/check.js fails on a citation with no law, and on one whose article is not in a text that was fetched (verification/statutes-texts.json, kept by the weekly watch, or verification/sources-raw.json, fetched by tools/sources.js). `place` settles a name that laws of several places share. A law with `named` is referred to only by name, never by an article or section (the allow-list): a check fails if one is ever cited with a number, or is no longer named anywhere. `untraced` lists the citations whose source could not be fetched, each with what was tried; nothing may be added to it, and a citation leaves it when its source is fetched.",
+  "files": {
+    "en": [
+      "policies/copyright.md",
+      "policies/licences.md",
+      "policies/moderation.md",
+      "policies/privacy.md",
+      "policies/submission.md",
+      "policies/takedown.md",
+      "policies/terms.md",
+      "policies/withdrawal.md",
+      "disclaimer.md",
+      "contact.md",
+      "README.md",
+      "docs/legal-review.md",
+      "docs/impact-assessment.md",
+      "docs/records-of-processing.md"
+    ],
+    "ja": [
+      "policies/copyright.ja.md",
+      "policies/licences.ja.md",
+      "policies/moderation.ja.md",
+      "policies/privacy.ja.md",
+      "policies/submission.ja.md",
+      "policies/takedown.ja.md",
+      "policies/terms.ja.md",
+      "policies/withdrawal.ja.md",
+      "disclaimer.ja.md",
+      "contact.ja.md"
+    ],
+    "json": [
+      "verification/duties.json",
+      "verification/legal-matrix.json"
+    ]
+  },
+  "laws": {
+    "APPI": {
+      "en": [
+        "Act on the Protection of Personal Information",
+        "APPI",
+        "Japan's Act on the Protection of Personal Information",
+        "Japan's Act"
+      ],
+      "ja": [
+        "個人情報保護法",
+        "個人情報の保護に関する法律"
+      ],
+      "egov": "415AC0000000057"
+    },
+    "APPI Rules": {
+      "en": [
+        "APPI Enforcement Rules",
+        "Rules"
+      ],
+      "ja": [
+        "規則"
+      ],
+      "egov": "428M60020000003"
+    },
+    "APPI Order": {
+      "en": [
+        "its Order"
+      ],
+      "ja": [
+        "施行令"
+      ],
+      "egov": "415CO0000000507"
+    },
+    "Copyright Act": {
+      "en": [
+        "Copyright Act"
+      ],
+      "ja": [
+        "著作権法"
+      ],
+      "egov": "345AC0000000048"
+    },
+    "Penal Code": {
+      "en": [
+        "Penal Code"
+      ],
+      "ja": [
+        "刑法"
+      ],
+      "egov": "140AC0000000045"
+    },
+    "Civil Code": {
+      "en": [
+        "Civil Code"
+      ],
+      "ja": [
+        "民法"
+      ],
+      "egov": "129AC0000000089"
+    },
+    "Consumer Contract Act": {
+      "en": [
+        "Consumer Contract Act"
+      ],
+      "ja": [
+        "消費者契約法"
+      ],
+      "egov": "412AC0000000061"
+    },
+    "Providers Act": {
+      "en": [
+        "Act on providers of specified telecommunications services",
+        "Japan's Act on providers of specified telecommunications services"
+      ],
+      "ja": [
+        "情報流通プラットフォーム対処法",
+        "プロバイダ責任制限法"
+      ],
+      "egov": "413AC0000000137"
+    },
+    "Telecommunications Business Act": {
+      "en": [
+        "Telecommunications Business Act"
+      ],
+      "ja": [
+        "電気通信事業法"
+      ],
+      "egov": "359AC0000000086"
+    },
+    "Act on Specified Commercial Transactions": {
+      "en": [
+        "Act on Specified Commercial Transactions"
+      ],
+      "ja": [
+        "特定商取引法"
+      ],
+      "egov": "351AC0000000057"
+    },
+    "Premiums and Representations Act": {
+      "en": [
+        "Act against Unjustifiable Premiums and Misleading Representations"
+      ],
+      "ja": [
+        "景品表示法"
+      ],
+      "egov": "337AC0000000134"
+    },
+    "Trademark Act": {
+      "en": [
+        "Trademark Act"
+      ],
+      "ja": [
+        "商標法"
+      ],
+      "egov": "334AC0000000127"
+    },
+    "Unfair Competition Prevention Act": {
+      "en": [
+        "Unfair Competition Prevention Act"
+      ],
+      "ja": [
+        "不正競争防止法"
+      ],
+      "egov": "405AC0000000047"
+    },
+    "GDPR": {
+      "en": [
+        "GDPR",
+        "General Data Protection Regulation"
+      ],
+      "ja": [
+        "一般データ保護規則"
+      ],
+      "source": "gdpr"
+    },
+    "UK GDPR": {
+      "en": [
+        "UK GDPR"
+      ],
+      "ja": [
+        "英国の一般データ保護規則"
+      ],
+      "source": "uk-gdpr"
+    },
+    "DSA": {
+      "en": [
+        "Digital Services Act",
+        "DSA",
+        "EU Digital Services Act"
+      ],
+      "ja": [
+        "デジタルサービス法"
+      ],
+      "source": "dsa"
+    },
+    "Directive 2019/790": {
+      "en": [
+        "Directive 2019/790",
+        "Directive (EU) 2019/790"
+      ],
+      "source": "dsm"
+    },
+    "Online Safety Act 2023": {
+      "en": [
+        "Online Safety Act 2023"
+      ],
+      "source": "osa"
+    },
+    "COPPA Rule": {
+      "cite": "16 CFR",
+      "en": [
+        "Children's Online Privacy Protection Rule"
+      ],
+      "source": "coppa"
+    },
+    "17 U.S.C.": {
+      "cite": "17 U.S.C.",
+      "ja": [
+        "米国著作権法"
+      ],
+      "source": "usc17"
+    },
+    "GitHub Terms": {
+      "en": [
+        "GitHub Terms",
+        "GitHub's Terms of Service",
+        "GitHub Terms of Service",
+        "GitHub's"
+      ],
+      "ja": [
+        "GitHub の利用規約"
+      ],
+      "source": "github-terms"
+    },
+    "Vercel Terms": {
+      "en": [
+        "Vercel Terms",
+        "Vercel's Terms of Service",
+        "Vercel Terms of Service",
+        "Vercel's"
+      ],
+      "ja": [
+        "Vercel の利用規約"
+      ],
+      "source": "vercel-terms"
+    },
+    "Swiss FADP": {
+      "en": [
+        "Federal Act on Data Protection"
+      ],
+      "source": "fadp"
+    },
+    "ANPD Resolution 2/2022": {
+      "en": [
+        "ANPD Resolution CD/ANPD No. 2 of 2022"
+      ],
+      "source": "anpd"
+    },
+    "LGPD": {
+      "en": [
+        "LGPD",
+        "Law No. 13.709"
+      ],
+      "source": "lgpd"
+    },
+    "PIPL": {
+      "en": [
+        "Personal Information Protection Law",
+        "China's Personal Information Protection Law"
+      ],
+      "ja": [
+        "中国の個人情報保護法",
+        "個人情報保護法"
+      ],
+      "place": [
+        "China",
+        "中国"
+      ],
+      "source": "pipl"
+    },
+    "Thailand PDPA": {
+      "en": [
+        "Personal Data Protection Act B.E. 2562",
+        "Thailand's Personal Data Protection Act",
+        "Personal Data Protection Act",
+        "Thailand's Act"
+      ],
+      "ja": [
+        "タイの個人データ保護法",
+        "個人データ保護法"
+      ],
+      "place": [
+        "Thailand",
+        "タイ"
+      ],
+      "source": "thai-pdpa"
+    },
+    "Saudi PDPL": {
+      "en": [
+        "Personal Data Protection Law"
+      ],
+      "place": [
+        "Saudi Arabia"
+      ],
+      "source": "saudi-pdpl"
+    },
+    "India DPDP Act": {
+      "en": [
+        "Digital Personal Data Protection Act 2023"
+      ],
+      "source": "india-act"
+    },
+    "India DPDP Rules": {
+      "en": [
+        "Digital Personal Data Protection Rules 2025",
+        "India's Digital Personal Data Protection Rules",
+        "Digital Personal Data Protection Rules"
+      ],
+      "ja": [
+        "インドの 2025 年デジタル個人データ保護規則",
+        "デジタル個人データ保護規則"
+      ],
+      "source": "india-rules"
+    },
+    "Korea PIPA": {
+      "en": [
+        "Personal Information Protection Act"
+      ],
+      "place": [
+        "Korea"
+      ],
+      "source": "korea-pipa"
+    },
+    "Korea PIPA Decree": {
+      "en": [
+        "Enforcement Decree"
+      ],
+      "place": [
+        "Korea"
+      ],
+      "source": "korea-decree"
+    },
+    "Russia 152-FZ": {
+      "en": [
+        "Federal Law No. 152-FZ",
+        "Russia's Federal Law No. 152-FZ"
+      ],
+      "ja": [
+        "連邦法第 152-FZ 号",
+        "ロシアの連邦法第 152-FZ 号"
+      ],
+      "source": "ru-152"
+    },
+    "Egypt Law 151/2020": {
+      "en": [
+        "Law No. 151 of 2020 and its Executive Regulation",
+        "Law No. 151 of 2020"
+      ],
+      "ja": [
+        "2020 年法律第 151 号とその施行規則",
+        "2020 年法律第 151 号"
+      ]
+    },
+    "Monaco Law 1.565": {
+      "en": [
+        "Law No. 1.565"
+      ],
+      "ja": [
+        "法律第 1.565 号"
+      ]
+    },
+    "Botswana DPA 2024": {
+      "en": [
+        "Data Protection Act 2024"
+      ],
+      "ja": [
+        "2024 年データ保護法"
+      ]
+    },
+    "Ecuador Regulation": {
+      "en": [
+        "Regulation of the Organic Law on Personal Data Protection"
+      ],
+      "ja": [
+        "個人データ保護組織法の施行規則"
+      ]
+    },
+    "Iraq Framework Regulations": {
+      "en": [
+        "Framework Regulations for Digital Platforms and Services"
+      ],
+      "ja": [
+        "デジタルプラットフォームとサービスの枠組み規則"
+      ],
+      "place": [
+        "Iraq"
+      ]
+    },
+    "Rwanda Law 058/2021": {
+      "en": [
+        "Law No. 058/2021",
+        "Rwanda's Law"
+      ],
+      "ja": [
+        "法律第 058/2021 号"
+      ],
+      "place": [
+        "Rwanda"
+      ]
+    },
+    "Zambia DPA 2021": {
+      "en": [
+        "Data Protection Act 2021"
+      ],
+      "ja": [
+        "2021 年データ保護法"
+      ]
+    },
+    "DRC Digital Code": {
+      "en": [
+        "Ordonnance-loi No. 23/010",
+        "Digital Code"
+      ],
+      "ja": [
+        "デジタル法典"
+      ]
+    },
+    "Kazakhstan Law 94-V": {
+      "en": [
+        "Law No. 94-V on Personal Data"
+      ],
+      "ja": [
+        "個人データ法"
+      ],
+      "source": "kz",
+      "place": [
+        "Kazakhstan"
+      ]
+    },
+    "Uganda DPPA 2019": {
+      "en": [
+        "Data Protection and Privacy Act 2019"
+      ],
+      "ja": [
+        "2019 年データ保護・プライバシー法"
+      ]
+    },
+    "Costa Rica Law 8968": {
+      "en": [
+        "Law No. 8968"
+      ],
+      "ja": [
+        "法律第 8968 号"
+      ]
+    },
+    "Quebec Private Sector Act": {
+      "en": [
+        "Act respecting the protection of personal information in the private sector",
+        "Quebec's Act"
+      ],
+      "ja": [
+        "民間部門の個人情報保護法"
+      ]
+    },
+    "Directive 2015/1535": {
+      "en": [
+        "Directive 2015/1535"
+      ],
+      "source": "directive-2015-1535"
+    },
+    "Unauthorized Computer Access Act": {
+      "en": [
+        "Act on the Prohibition of Unauthorized Computer Access"
+      ],
+      "ja": [
+        "不正アクセス禁止法"
+      ],
+      "egov": "411AC0000000128"
+    },
+    "CC BY 4.0": {
+      "en": [
+        "CC BY 4.0"
+      ],
+      "source": "cc-by"
+    },
+    "CC BY-SA 4.0": {
+      "en": [
+        "CC BY-SA 4.0"
+      ],
+      "source": "cc-by-sa"
+    },
+    "CC0 1.0": {
+      "en": [
+        "CC0 1.0"
+      ],
+      "source": "cc0"
+    },
+    "CCPA": {
+      "en": [
+        "California Consumer Privacy Act"
+      ],
+      "named": "The Attorney General's page is cited, not a section of the Act."
+    },
+    "Türkiye Law 6698": {
+      "en": [
+        "Law No. 6698"
+      ],
+      "named": "Named only."
+    },
+    "Türkiye Registry Regulation": {
+      "en": [
+        "Regulation on the Data Controllers' Registry"
+      ],
+      "ja": [
+        "データ管理者登録簿に関する規則"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Peru Regulation": {
+      "en": [
+        "Regulation of Law No. 29733"
+      ],
+      "ja": [
+        "法律第 29733 号の施行規則"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Albania Law 124/2024": {
+      "en": [
+        "Law No. 124/2024"
+      ],
+      "ja": [
+        "法律第 124/2024 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Guernsey Law": {
+      "en": [
+        "Data Protection (Bailiwick of Guernsey) Law"
+      ],
+      "ja": [
+        "ガーンジー管轄区データ保護法"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Indonesia Regulation": {
+      "en": [
+        "Regulation of the Minister of Communication and Informatics No. 5 of 2020"
+      ],
+      "ja": [
+        "通信情報大臣規則 2020 年第 5 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Ethiopia Proclamation": {
+      "en": [
+        "Personal Data Protection Proclamation No. 1321/2024"
+      ],
+      "ja": [
+        "個人データ保護布告"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Tunisia Organic Law": {
+      "en": [
+        "Organic Law No. 2004-63"
+      ],
+      "ja": [
+        "2004 年組織法第 63 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Guinea Law": {
+      "en": [
+        "Law No. L/2016/037/AN"
+      ],
+      "ja": [
+        "L/2016/037/AN"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Madagascar Law": {
+      "en": [
+        "Law No. 2014-038"
+      ],
+      "ja": [
+        "法律第 2014-038 号"
+      ],
+      "named": "Named only, as reported."
+    },
+    "Bolivia Law 164": {
+      "en": [
+        "Law No. 164"
+      ],
+      "ja": [
+        "法律第 164 号"
+      ],
+      "named": "Named only, as reported."
+    }
+  },
+  "fetchAlso": {
+    "Penal Code": [
+      "233",
+      "246"
+    ],
+    "Unauthorized Computer Access Act": [
+      "3"
+    ],
+    "Copyright Act": [
+      "13"
+    ],
+    "Unfair Competition Prevention Act": [
+      "2"
+    ],
+    "Premiums and Representations Act": [
+      "5"
+    ],
+    "CC BY 4.0": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "CC BY-SA 4.0": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "CC0 1.0": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ]
+  },
+  "recitals": {
+    "gdpr": [
+      "23"
+    ],
+    "dsa": [
+      "7",
+      "8"
+    ]
+  },
+  "untraced": {
+    "Russia 152-FZ": {
+      "articles": [
+        "1",
+        "18"
+      ],
+      "why": "kremlin.ru answered 403 to every page of the Law on 2026-11-11 (sources-raw.json, ru-152).",
+      "why_ja": "kremlin.ru が、2026-11-11 の取り寄せで、法律のすべての頁に 403 を返しました（sources-raw.json の ru-152）。"
+    },
+    "India DPDP Rules": {
+      "articles": [
+        "10"
+      ],
+      "why": "The eGazette does not send its intermediate certificate, and the Ministry's copy answered 403 on 2026-11-11 (sources-raw.json, india-rules).",
+      "why_ja": "官報（eGazette）のサーバーが中間証明書を送らず、省の写しは 2026-11-11 に 403 を返しました（sources-raw.json の india-rules）。"
+    },
+    "Kazakhstan Law 94-V": {
+      "articles": [
+        "3",
+        "12"
+      ],
+      "why": "Adilet shows the text only with JavaScript; on 2026-11-11 it answered a page that asks for it (sources-raw.json, kz).",
+      "why_ja": "Adilet は JavaScript がなければ本文を示さず、2026-11-11 にはそれを求める頁を返しました（sources-raw.json の kz）。"
+    },
+    "Egypt Law 151/2020": {
+      "articles": [
+        "3"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Monaco Law 1.565": {
+      "articles": [
+        "25"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Botswana DPA 2024": {
+      "articles": [
+        "54"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Ecuador Regulation": {
+      "articles": [
+        "3"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Iraq Framework Regulations": {
+      "articles": [
+        "4",
+        "5",
+        "4.1",
+        "4.2",
+        "5.1",
+        "5.2"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Rwanda Law 058/2021": {
+      "articles": [
+        "2",
+        "29",
+        "50"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Zambia DPA 2021": {
+      "articles": [
+        "19",
+        "70"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "DRC Digital Code": {
+      "articles": [
+        "184",
+        "186",
+        "188",
+        "201"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Uganda DPPA 2019": {
+      "articles": [
+        "29"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Costa Rica Law 8968": {
+      "articles": [
+        "21"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    },
+    "Quebec Private Sector Act": {
+      "articles": [
+        "17"
+      ],
+      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
+      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
+    }
+  }
+}

@@ -107,5 +107,7 @@ The operator is liable, as Japanese law provides, for loss that the operator cau
 The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
 Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
 This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
+The responsibility for an act done by someone else against the Terms of Use, or outside them, lies with the person who did it.
+Except where the law makes the operator responsible, the operator is not responsible for such acts. The Terms of Use list such acts that may come near a law, under "Acts outside these rules that may come near a law".
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
 Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.html) sets out.

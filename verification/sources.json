@@ -1,0 +1,426 @@
+{
+  "_": "The foreign texts quoted on the site. Each quotation is cut from a text that tools/sources.js fetched (verification/sources-raw.json, the article named by `law` and `article`), between two places in it, and is not altered except that a space before a closing bracket or punctuation mark is removed. verification/check.js confirms that each occurs in its article with the same removal. Japanese statutes are not listed here: they are quoted in full from verification/statutes-texts.json or from the e-Gov texts in verification/sources-raw.json.",
+  "fetched": "2026-11-11",
+  "quotes": {
+    "GDPR 3": {
+      "law": "GDPR",
+      "article": "3",
+      "from": "gdpr",
+      "name": "General Data Protection Regulation (EU) 2016/679, Article 3(2)",
+      "name_ja": "一般データ保護規則（EU 2016/679）第3条第2項",
+      "url": "https://publications.europa.eu/resource/celex/32016R0679",
+      "lang": "en",
+      "quote": "2. This Regulation applies to the processing of personal data of data subjects who are in the Union by a controller or processor not established in the Union, where the processing activities are related to: (a) the offering of goods or services, irrespective of whether a payment of the data subject is required, to such data subjects in the Union; or (b) the monitoring of their behaviour as far as their behaviour takes place within the Union."
+    },
+    "GDPR 17": {
+      "law": "GDPR",
+      "article": "17",
+      "from": "gdpr",
+      "name": "General Data Protection Regulation (EU) 2016/679, Article 17(3)(a)",
+      "name_ja": "一般データ保護規則（EU 2016/679）第17条第3項(a)",
+      "url": "https://publications.europa.eu/resource/celex/32016R0679",
+      "lang": "en",
+      "quote": "3. Paragraphs 1 and 2 shall not apply to the extent that processing is necessary: (a) for exercising the right of freedom of expression and information;"
+    },
+    "GDPR 20": {
+      "law": "GDPR",
+      "article": "20",
+      "from": "gdpr",
+      "name": "General Data Protection Regulation (EU) 2016/679, Article 20(1)",
+      "name_ja": "一般データ保護規則（EU 2016/679）第20条第1項",
+      "url": "https://publications.europa.eu/resource/celex/32016R0679",
+      "lang": "en",
+      "quote": "1. The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where: (a) the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and (b) the processing is carried out by automated means."
+    },
+    "GDPR 27": {
+      "law": "GDPR",
+      "article": "27",
+      "from": "gdpr",
+      "name": "General Data Protection Regulation (EU) 2016/679, Article 27(1) and (2)",
+      "name_ja": "一般データ保護規則（EU 2016/679）第27条第1項・第2項",
+      "url": "https://publications.europa.eu/resource/celex/32016R0679",
+      "lang": "en",
+      "quote": "1. Where Article 3(2) applies, the controller or the processor shall designate in writing a representative in the Union. 2. The obligation laid down in paragraph 1 of this Article shall not apply to: (a) processing which is occasional, does not include, on a large scale, processing of special categories of data as referred to in Article 9(1) or processing of personal data relating to criminal convictions and offences referred to in Article 10, and is unlikely to result in a risk to the rights and freedoms of natural persons, taking into account the nature, context, scope and purposes of the processing; or (b) a public authority or body."
+    },
+    "GDPR 49": {
+      "law": "GDPR",
+      "article": "49",
+      "from": "gdpr",
+      "name": "General Data Protection Regulation (EU) 2016/679, Article 49(1)(a)",
+      "name_ja": "一般データ保護規則（EU 2016/679）第49条第1項(a)",
+      "url": "https://publications.europa.eu/resource/celex/32016R0679",
+      "lang": "en",
+      "quote": "1. In the absence of an adequacy decision pursuant to Article 45(3), or of appropriate safeguards pursuant to Article 46, including binding corporate rules, a transfer or a set of transfers of personal data to a third country or an international organisation shall take place only on one of the following conditions: (a) the data subject has explicitly consented to the proposed transfer, after having been informed of the possible risks of such transfers for the data subject due to the absence of an adequacy decision and appropriate safeguards;"
+    },
+    "UK GDPR 3": {
+      "law": "UK GDPR",
+      "article": "3",
+      "from": "uk-gdpr",
+      "name": "UK GDPR, Article 3(2) (legislation.gov.uk, with its marks of amendment)",
+      "name_ja": "英国の一般データ保護規則 第3条第2項（legislation.gov.uk。改正の印もそのまま）",
+      "url": "https://www.legislation.gov.uk/eur/2016/679/article/3",
+      "lang": "en",
+      "quote": "2. This Regulation applies to the [ F2 relevant ] processing of personal data of data subjects who are in [ F3 the United Kingdom ] by a controller or processor not established in [ F3 the United Kingdom ], where the processing activities are related to: (a) the offering of goods or services, irrespective of whether a payment of the data subject is required, to such data subjects in [ F3 the United Kingdom ]; or (b) the monitoring of their behaviour as far as their behaviour takes place within [ F3 the United Kingdom ]."
+    },
+    "UK GDPR 17": {
+      "law": "UK GDPR",
+      "article": "17",
+      "from": "uk-gdpr",
+      "name": "UK GDPR, Article 17(3)(a) (legislation.gov.uk)",
+      "name_ja": "英国の一般データ保護規則 第17条第3項(a)（legislation.gov.uk）",
+      "url": "https://www.legislation.gov.uk/eur/2016/679/article/17",
+      "lang": "en",
+      "quote": "3. Paragraphs 1 and 2 shall not apply to the extent that processing is necessary: (a) for exercising the right of freedom of expression and information;"
+    },
+    "UK GDPR 27": {
+      "law": "UK GDPR",
+      "article": "27",
+      "from": "uk-gdpr",
+      "name": "UK GDPR, Article 27(1) and (2) (legislation.gov.uk, with its marks of amendment)",
+      "name_ja": "英国の一般データ保護規則 第27条第1項・第2項（legislation.gov.uk。改正の印もそのまま）",
+      "url": "https://www.legislation.gov.uk/eur/2016/679/article/27",
+      "lang": "en",
+      "quote": "1. Where Article 3(2) applies, the controller or the processor shall designate in writing a representative in [ F2 the United Kingdom ]. 2. The obligation laid down in paragraph 1 of this Article shall not apply to: (a) processing which is occasional, does not include, on a large scale, processing of special categories of data as referred to in Article 9(1) or processing of personal data relating to criminal convictions and offences referred to in Article 10, and is unlikely to result in a risk to the rights and freedoms of natural persons, taking into account the nature, context, scope and purposes of the processing; or (b) a public authority or body."
+    },
+    "UK GDPR 49": {
+      "law": "UK GDPR",
+      "article": "49",
+      "from": "uk-gdpr",
+      "name": "UK GDPR, Article 49(1)(a) (legislation.gov.uk, with its marks of amendment)",
+      "name_ja": "英国の一般データ保護規則 第49条第1項(a)（legislation.gov.uk。改正の印もそのまま）",
+      "url": "https://www.legislation.gov.uk/eur/2016/679/article/49",
+      "lang": "en",
+      "quote": "1. In the absence of [ F1 approval by regulations under Article 45A and of compliance with Article 46 (appropriate safeguards) ], a transfer or a set of transfers of personal data to a third country or an international organisation shall take place only on one of the following conditions: (a) the data subject has explicitly consented to the proposed transfer, after having been informed of the possible risks of such transfers for the data subject due to the absence of [ F2 approval by regulations under Article 45A ] and appropriate safeguards;"
+    },
+    "PIPL 53": {
+      "law": "PIPL",
+      "article": "53",
+      "from": "pipl",
+      "name": "Personal Information Protection Law of the People’s Republic of China, Article 53 (the English text of the National People’s Congress)",
+      "name_ja": "中華人民共和国個人情報保護法 第53条（全国人民代表大会の英文）",
+      "url": "http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559.htm",
+      "lang": "en",
+      "quote": "Article 53 Personal information processors outside the territory of the People’s Republic of China as specified in the second paragraph of Article 3 of this Law shall set up specialized agencies or designate representatives within the territory of the People’s Republic of China to be responsible for handling personal information protection related matters, and shall submit the names, contact information, and other information of the agencies and representatives to the departments with personal information protection duties."
+    },
+    "Thailand PDPA 37": {
+      "law": "Thailand PDPA",
+      "article": "37",
+      "from": "thai-pdpa",
+      "name": "Thailand, Personal Data Protection Act B.E. 2562, section 37(5) (ETDA’s English translation, marked unofficial)",
+      "name_ja": "タイ 個人データ保護法（仏暦2562年）第37条第5号（ETDA の英訳。非公式と記されたもの）",
+      "url": "https://www.etda.or.th/getattachment/e820df2c-848f-4e03-86cb-a9dad38cc713/ENG-Version.aspx",
+      "lang": "en",
+      "quote": "(5) in the event of being the Data Controller pursuant to section 5 paragraph two, the Data Controller shall designate in writing a representative of the Data Controller who must be in the Kingdom of Thailand and be authorized to act on behalf of the Data Controller without any limitation of liability with respect to the collection, use or disclosure of the Personal Data according to the purposes of the Data Controller."
+    },
+    "Thailand PDPA 38": {
+      "law": "Thailand PDPA",
+      "article": "38",
+      "from": "thai-pdpa",
+      "name": "Thailand, Personal Data Protection Act B.E. 2562, section 38 (ETDA’s English translation, marked unofficial; the quotation stops where a page break of the PDF falls)",
+      "name_ja": "タイ 個人データ保護法（仏暦2562年）第38条（ETDA の英訳。非公式と記されたもの。PDF の頁の変わり目の手前までを引く）",
+      "url": "https://www.etda.or.th/getattachment/e820df2c-848f-4e03-86cb-a9dad38cc713/ENG-Version.aspx",
+      "lang": "en",
+      "quote": "Section 38 The provisions of t h e representative designation in section 37 (5) shall not apply to the following Data Controller: (1) the Data Controller which is a public authority as prescribed and announced by the Committee; (2) the Data Controller which engages in the profession or business of collecting, using, or disclosing Personal Data, that does not have the nature pursuant to section 26, and does not have a large amount of Personal Data as prescribed by the Committee"
+    },
+    "DSA 11": {
+      "law": "DSA",
+      "article": "11",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 11(1)",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第11条第1項",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Providers of intermediary services shall designate a single point of contact to enable them to communicate directly, by electronic means, with Member States’ authorities, the Commission and the Board referred to in Article 61 for the application of this Regulation."
+    },
+    "DSA 12": {
+      "law": "DSA",
+      "article": "12",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 12(1)",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第12条第1項",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Providers of intermediary services shall designate a single point of contact to enable recipients of the service to communicate directly and rapidly with them, by electronic means and in a user-friendly manner, including by allowing recipients of the service to choose the means of communication, which shall not solely rely on automated tools."
+    },
+    "DSA 13": {
+      "law": "DSA",
+      "article": "13",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 13(1)",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第13条第1項",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Providers of intermediary services which do not have an establishment in the Union but which offer services in the Union shall designate, in writing, a legal or natural person to act as their legal representative in one of the Member States where the provider offers its services."
+    },
+    "DSA 14": {
+      "law": "DSA",
+      "article": "14",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 14(1), first sentence",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第14条第1項第1文",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Providers of intermediary services shall include information on any restrictions that they impose in relation to the use of their service in respect of information provided by the recipients of the service, in their terms and conditions."
+    },
+    "DSA 16": {
+      "law": "DSA",
+      "article": "16",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 16(1), first sentence",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第16条第1項第1文",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Providers of hosting services shall put mechanisms in place to allow any individual or entity to notify them of the presence on their service of specific items of information that the individual or entity considers to be illegal content."
+    },
+    "DSA 17": {
+      "law": "DSA",
+      "article": "17",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 17(1), opening words",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第17条第1項の柱書き",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Providers of hosting services shall provide a clear and specific statement of reasons to any affected recipients of the service for any of the following restrictions imposed on the ground that the information provided by the recipient of the service is illegal content or incompatible with their terms and conditions:"
+    },
+    "DSA 18": {
+      "law": "DSA",
+      "article": "18",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 18(1)",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第18条第1項",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Where a provider of hosting services becomes aware of any information giving rise to a suspicion that a criminal offence involving a threat to the life or safety of a person or persons has taken place, is taking place or is likely to take place, it shall promptly inform the law enforcement or judicial authorities of the Member State or Member States concerned of its suspicion and provide all relevant information available."
+    },
+    "DSA 20": {
+      "law": "DSA",
+      "article": "20",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 20(1), opening words",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第20条第1項の冒頭",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Providers of online platforms shall provide recipients of the service, including individuals or entities that have submitted a notice, for a period of at least six months following the decision referred to in this paragraph, with access to an effective internal complaint-handling system that enables them to lodge complaints, electronically and free of charge,"
+    },
+    "DSA 21": {
+      "law": "DSA",
+      "article": "21",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 21(1), first subparagraph",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第21条第1項第1段",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "1. Recipients of the service, including individuals or entities that have submitted notices, addressed by the decisions referred to in Article 20(1) shall be entitled to select any out-of-court dispute settlement body that has been certified in accordance with paragraph 3 of this Article in order to resolve disputes relating to those decisions, including complaints that have not been resolved by means of the internal complaint-handling system referred to in that Article."
+    },
+    "DSA 24": {
+      "law": "DSA",
+      "article": "24",
+      "from": "dsa",
+      "name": "Digital Services Act (EU) 2022/2065, Article 24(3), first sentence",
+      "name_ja": "デジタルサービス法（EU 2022/2065）第24条第3項第1文",
+      "url": "https://publications.europa.eu/resource/celex/32022R2065",
+      "lang": "en",
+      "quote": "3. Providers of online platforms or of online search engines shall communicate to the Digital Services Coordinator of establishment and the Commission, upon their request and without undue delay, the information referred to in paragraph 2, updated to the moment of such request."
+    },
+    "17 U.S.C. 512": {
+      "law": "17 U.S.C.",
+      "article": "512",
+      "from": "usc17",
+      "name": "17 U.S.C. 512(c)(2), opening words (Legal Information Institute, Cornell Law School)",
+      "name_ja": "米国著作権法（17 U.S.C.）第512条(c)(2)の冒頭（コーネル大学ロースクール Legal Information Institute）",
+      "url": "https://www.law.cornell.edu/uscode/text/17/512",
+      "lang": "en",
+      "quote": "(2) Designated agent.— The limitations on liability established in this subsection apply to a service provider only if the service provider has designated an agent to receive notifications of claimed infringement described in paragraph (3), by making available through its service, including on its website in a location accessible to the public, and by providing to the Copyright Office, substantially the following information:"
+    },
+    "GitHub Terms B.3": {
+      "law": "GitHub Terms",
+      "article": "B.3",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, B.3",
+      "name_ja": "GitHub の利用規約 B.3",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "You must be age 13 or older. While we are thrilled to see brilliant young coders get excited by learning to program, we must comply with United States law. GitHub does not target our Service to children under 13, and we do not permit any Users under 13 on our Service."
+    },
+    "GitHub Terms C": {
+      "law": "GitHub Terms",
+      "article": "C",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, C",
+      "name_ja": "GitHub の利用規約 C",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "Your use of the Website and Service must not violate any applicable laws, including copyright or trademark laws, export control or sanctions laws, or other laws in your jurisdiction."
+    },
+    "GitHub Terms D.2": {
+      "law": "GitHub Terms",
+      "article": "D.2",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, D.2",
+      "name_ja": "GitHub の利用規約 D.2",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "We may refuse or remove User-Generated Content that violates applicable law or our terms and policies."
+    },
+    "GitHub Terms M.3": {
+      "law": "GitHub Terms",
+      "article": "M.3",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, M.3",
+      "name_ja": "GitHub の利用規約 M.3",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "GitHub has the right to suspend or terminate your access to all or any part of the Website at any time, with or without cause, with or without notice, effective immediately."
+    },
+    "GitHub Terms D.4": {
+      "law": "GitHub Terms",
+      "article": "D.4",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, D.4",
+      "name_ja": "GitHub の利用規約 D.4",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "You grant GitHub and our Affiliates the right to store, host, archive, parse, display, and make copies of Your Content as necessary to provide, develop, and improve the Service, including by training AI Features, and for the purpose of training, developing, and improving artificial intelligence and machine learning models and technologies of our Affiliates."
+    },
+    "GitHub Terms D.5": {
+      "law": "GitHub Terms",
+      "article": "D.5",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, D.5",
+      "name_ja": "GitHub の利用規約 D.5",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "Your Content that you post publicly, including issues, comments, and contributions to other Users' repositories, may be viewed by others."
+    },
+    "GitHub Terms D.8": {
+      "law": "GitHub Terms",
+      "article": "D.8",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, D.8",
+      "name_ja": "GitHub の利用規約 D.8",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "Unless specifically set forth herein, these Terms do not restrict lawful access to or use of the contents of public repositories by third parties, or by GitHub or its Affiliates."
+    },
+    "GitHub Terms J.3": {
+      "law": "GitHub Terms",
+      "article": "J.3",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, J.3, last sentence",
+      "name_ja": "GitHub の利用規約 J.3 の最後の文",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "The opt-out right described in this section applies solely to the use of your Inputs and Outputs as described in this section, and does not apply to the license granted in Sections D.4-D.8 or to any Content that does not constitute Input or Output (including Content stored in public repositories)."
+    },
+    "GitHub Terms O": {
+      "law": "GitHub Terms",
+      "article": "O",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, O",
+      "name_ja": "GitHub の利用規約 O",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "GitHub provides the Website and the Service “as is” and “as available,” without warranty of any kind."
+    },
+    "GitHub Terms P": {
+      "law": "GitHub Terms",
+      "article": "P",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, P, opening words",
+      "name_ja": "GitHub の利用規約 P の冒頭",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "You understand and agree that we will not be liable to you or any third party for any loss of profits, use, goodwill, or data, or for any incidental, indirect, special, consequential or exemplary damages, however arising, that result from"
+    },
+    "GitHub Terms S.1": {
+      "law": "GitHub Terms",
+      "article": "S.1",
+      "from": "github-terms",
+      "name": "GitHub Terms of Service, S.1",
+      "name_ja": "GitHub の利用規約 S.1",
+      "url": "https://github.com/github/site-policy/blob/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-of-service.md",
+      "lang": "en",
+      "quote": "Except to the extent applicable law provides otherwise, this Agreement between you and GitHub and any access to or use of the Website or the Service are governed by the federal laws of the United States of America and the laws of the State of California, without regard to conflict of law provisions. You and GitHub agree to submit to the exclusive jurisdiction and venue of the courts located in the City and County of San Francisco, California."
+    },
+    "Vercel Terms 3": {
+      "law": "Vercel Terms",
+      "article": "3",
+      "from": "vercel-terms",
+      "name": "Vercel Terms of Service, section 3",
+      "name_ja": "Vercel の利用規約 第3条",
+      "url": "https://vercel.com/legal/terms",
+      "lang": "en",
+      "quote": "In addition, if you are on a Hobby plan or trial Pro plan, you agree that we may use Your Content to train our artificial intelligence (“AI”) and machine learning models, and we may share Your Content with third parties for the purpose of developing and improving their products, including training and improving their AI and machine learning models (collectively, “ Model Training ”)."
+    },
+    "Vercel Terms 4": {
+      "law": "Vercel Terms",
+      "article": "4",
+      "from": "vercel-terms",
+      "name": "Vercel Terms of Service, section 4",
+      "name_ja": "Vercel の利用規約 第4条",
+      "url": "https://vercel.com/legal/terms",
+      "lang": "en",
+      "quote": "You shall only use the Services under a Hobby plan for your personal or non-commercial use. We may change the features, limitations, or other conditions applicable to the Hobby plan or discontinue offering the Hobby plan at any time. We reserve the right to disable or remove any Project or website deployment on the Hobby plan with or without notice at our sole discretion."
+    },
+    "Vercel Terms 8": {
+      "law": "Vercel Terms",
+      "article": "8",
+      "from": "vercel-terms",
+      "name": "Vercel Terms of Service, section 8",
+      "name_ja": "Vercel の利用規約 第8条",
+      "url": "https://vercel.com/legal/terms",
+      "lang": "en",
+      "quote": "Your use of the Services (which include, for the purposes of this Section 8, participation in the Vercel Community or similar discussion forums, if applicable) must comply with Vercel’s Acceptable Use Policy, which is incorporated by reference."
+    },
+    "Vercel Terms 20": {
+      "law": "Vercel Terms",
+      "article": "20",
+      "from": "vercel-terms",
+      "name": "Vercel Terms of Service, section 20.1",
+      "name_ja": "Vercel の利用規約 第20条第1項",
+      "url": "https://vercel.com/legal/terms",
+      "lang": "en",
+      "quote": "THE SERVICES AND SUPPORT SERVICES ARE PROVIDED \"AS IS\" AND VERCEL DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT."
+    },
+    "Vercel Terms 21": {
+      "law": "Vercel Terms",
+      "article": "21",
+      "from": "vercel-terms",
+      "name": "Vercel Terms of Service, section 21.1, opening words",
+      "name_ja": "Vercel の利用規約 第21条第1項の冒頭",
+      "url": "https://vercel.com/legal/terms",
+      "lang": "en",
+      "quote": "NEITHER PARTY NOR ITS SUPPLIERS (INCLUDING BUT NOT LIMITED TO ALL EQUIPMENT AND TECHNOLOGY SUPPLIERS), OFFICERS, AFFILIATES, REPRESENTATIVES, CONTRACTORS AND EMPLOYEES SHALL BE RESPONSIBLE OR LIABLE WITH RESPECT TO ANY SUBJECT MATTER OF THIS AGREEMENT OR TERMS AND CONDITIONS RELATED THERETO UNDER ANY CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHER THEORY:"
+    },
+    "Vercel Terms 23": {
+      "law": "Vercel Terms",
+      "article": "23",
+      "from": "vercel-terms",
+      "name": "Vercel Terms of Service, section 23.3.1",
+      "name_ja": "Vercel の利用規約 第23条第3項第1号",
+      "url": "https://vercel.com/legal/terms",
+      "lang": "en",
+      "quote": "This Agreement shall be governed by the laws of the State of California without regard to its conflict of laws provisions and the parties agree to the exclusive jurisdiction of the state and federal courts in the County of San Francisco."
+    },
+    "CC BY 4.0 3": {
+      "law": "CC BY 4.0",
+      "article": "3",
+      "from": "cc-by",
+      "name": "Creative Commons Attribution 4.0 International, Section 3(a)(1)",
+      "name_ja": "クリエイティブ・コモンズ 表示 4.0 国際 第3条(a)(1)",
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode.en",
+      "lang": "en",
+      "quote": "Attribution. If You Share the Licensed Material (including in modified form), You must: retain the following if it is supplied by the Licensor with the Licensed Material: identification of the creator(s) of the Licensed Material and any others designated to receive attribution, in any reasonable manner requested by the Licensor (including by pseudonym if designated); a copyright notice; a notice that refers to this Public License; a notice that refers to the disclaimer of warranties; a URI or hyperlink to the Licensed Material to the extent reasonably practicable; indicate if You modified the Licensed Material and retain an indication of any previous modifications; and indicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License."
+    },
+    "CC BY 4.0 2": {
+      "law": "CC BY 4.0",
+      "article": "2",
+      "from": "cc-by",
+      "name": "Creative Commons Attribution 4.0 International, Section 2(a)(5)(B) and 2(a)(6)",
+      "name_ja": "クリエイティブ・コモンズ 表示 4.0 国際 第2条(a)(5)(B)・(a)(6)",
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode.en",
+      "lang": "en",
+      "quote": "No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material. No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i)."
+    }
+  }
+}

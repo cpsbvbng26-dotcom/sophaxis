@@ -4,6 +4,10 @@ Last updated: 2026-11-11.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Operator
 
 Sophaxis is operated by one person, Takuya Nemoto, in Japan.
@@ -43,6 +47,8 @@ The OAI-PMH interface at `/oai` gives a separate address made for harvesters, be
 Write in English or Japanese.
 The email address on the operator's ORCID record, not the one for harvesters, is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
 The operator aims to answer within 7 days.
+
+<!-- text: DSA 11; DSA 12 -->
 
 ## Sophaxis elsewhere
 
