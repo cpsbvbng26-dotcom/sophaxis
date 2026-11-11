@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [著作権の規程（日本語訳）](./copyright.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [著作権の規程（日本語訳）](./copyright.ja.md). It is a translation; where the two differ, the English text applies.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -90,4 +90,4 @@ Requests:
 
 ## Infringement
 
-A rights holder who believes that a listed work infringes their rights can ask for its removal under the [Takedown Policy](./takedown.html).
+A rights holder who believes that a listed work infringes their rights can ask for its removal under the [Takedown Policy](./takedown.md).

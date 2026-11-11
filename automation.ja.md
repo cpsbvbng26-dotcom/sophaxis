@@ -2,7 +2,7 @@
 
 最終更新：2026-11-11。
 
-これは英語の [What runs by itself](./automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+これは英語の [What runs by itself](./automation.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 Sophaxis には、ひとりでに動く手順がいくつかあります。
 公開のリポジトリの GitHub Actions として動くものと、Vercel での配信として動くものです。
@@ -14,13 +14,14 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 言語モデルを使う手順はありません。どの手順も通常のコードです。
 - どのアカウントにもサインインする手順はありません。鍵は、GitHub が実行ごとに渡すトークンだけで、その権限は手順に要る最小限です。IndexNow の鍵は、仕組みのうえで公開のものです。
 - 記録を変える手順は、先にサイトを組み立て、すべての検査を走らせます。検査が一つでも落ちれば、何も変えません。
-- これらの手順が扱う個人データは、[個人情報の取り扱いについて](./policies/privacy.ja.html)に書いてあります。
+- これらの手順が扱う個人データは、[個人情報の取り扱いについて](./policies/privacy.ja.md)に書いてあります。
 
 ## 投稿の issue が開かれたか編集されたとき、または著者がコメントで確かめたとき
 
 - 読むもの：DataCite、Crossref、JaLC のどれかにある DOI のメタデータ。そのメタデータが作品の前の版として挙げる DOI それぞれの登録の日。Crossref がその DOI について記録している通知。最新の版の PDF。これは預け先がスクリプトに取得を許している場合だけで、モデレーターのために形を読むだけです。読んだあとは消します。issue が開かれた日。様式に書かれた公開の ORCID の記録の、氏名・ウェブサイト・業績。deposit-check によるメタデータについての助言。
 - 書くもの：それぞれの確認の結果と記録の下書きを載せたコメント。`verified` か `unverified` のラベル。
-- 2026-11-21 から、[投稿の規程](./policies/submission.ja.html)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
+- 様式の必須のボックスすべてに印があるかを確かめます。ボックスは、リポジトリにある二つの投稿の様式から読みます。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。[投稿の規程](./policies/submission.ja.md#投稿者が確認すること)にも同じボックスを並べてあります。
+- 2026-11-21 から、[投稿の規程](./policies/submission.ja.md)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
 - 2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから六か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。
 - 2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
@@ -46,7 +47,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：記録と、リポジトリの issue。
 - 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
-- issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.html)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。
+- issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.md)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。
 - 運営者に残すこと：判断。
 - コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
 
@@ -77,7 +78,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。
 - 書くもの：前の年の数を載せた issue。開かれた投稿、受理した投稿、断った投稿、まだ決めていない投稿の数です。断るときに挙げた理由、投稿から判断までの日数、求め、撤回した記録と削除した記録も数えます。
-- 運営者に残すこと：数を `data/reports/` に記録すること。[年ごとの判断](./decisions.html)の頁は、そこから組み立てます。
+- 運営者に残すこと：数を `data/reports/` に記録すること。[年ごとの判断](https://sophaxis.vercel.app/decisions.html)の頁は、そこから組み立てます。
 - コード：[tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) と [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js)。[report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml) が動かします。
 
 ## 年に一度、十月 30 日の日本時間 09:17

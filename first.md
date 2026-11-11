@@ -2,9 +2,9 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [はじめてのプレプリント（日本語訳）](./first.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [はじめてのプレプリント（日本語訳）](./first.ja.md). It is a translation; where the two differ, the English text applies.
 
-This page is for anyone, such as a graduate student, who has not yet made a preprint public. It adds no rule; the [policies](./policy.html) govern.
+This page is for anyone, such as a graduate student, who has not yet made a preprint public. It adds no rule; the [policies](./policy.md) govern.
 
 ## What a preprint is
 
@@ -40,6 +40,6 @@ Before choosing, read each repository's own pages on these points. Sophaxis does
 
 ## After depositing
 
-- Add the work to your ORCID record, as [Making a listed work easy to find](./findable.html) explains.
-- To have it listed on Sophaxis, read the [checklist](./checklist.html) and follow [From submission to listing](./process.html).
-- From 2026-11-23, Sophaxis lists a work only when six months have passed since its first DOI, and a first submission needs a researcher to vouch for it, as the [Submission Policy](./policies/submission.html) sets out.
+- Add the work to your ORCID record, as [Making a listed work easy to find](./findable.md) explains.
+- To have it listed on Sophaxis, read the [checklist](./checklist.md) and follow [From submission to listing](./process.md).
+- From 2026-11-23, Sophaxis lists a work only when six months have passed since its first DOI, and a first submission needs a researcher to vouch for it, as the [Submission Policy](./policies/submission.md) sets out.

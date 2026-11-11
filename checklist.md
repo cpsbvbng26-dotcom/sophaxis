@@ -2,10 +2,10 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [投稿の前に：確かめること（日本語訳）](./checklist.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [投稿の前に：確かめること（日本語訳）](./checklist.ja.md). It is a translation; where the two differ, the English text applies.
 
-This list adds no rule. It gathers what the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html) already ask, so that a submission is complete the first time. Where this list and the policies differ, the policies apply.
-For anyone who has never made a preprint public, [Your first preprint](./first.html) comes first.
+This list adds no rule. It gathers what the [Submission Policy](./policies/submission.md) and the [Moderation Policy](./policies/moderation.md) already ask, so that a submission is complete the first time. Where this list and the policies differ, the policies apply.
+For anyone who has never made a preprint public, [Your first preprint](./first.md) comes first.
 
 ## The work
 
@@ -16,7 +16,7 @@ For anyone who has never made a preprint public, [Your first preprint](./first.h
 
 ## The authors
 
-5. The submitter is an author, and their ORCID record links their GitHub account, as [From submission to listing](./process.html) shows.
+5. The submitter is an author, and their ORCID record links their GitHub account, as [From submission to listing](./process.md) shows.
 6. Every author agrees to the listing. From 2026-11-21, every other author confirms their own agreement in the issue or by email.
 7. No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them.
 
@@ -27,7 +27,7 @@ For anyone who has never made a preprint public, [Your first preprint](./first.h
 
 ## Material from others and personal data
 
-10. Each figure, table or long quotation from others has permission, or is used in a way the law allows, such as quotation. The [Copyright Policy](./policies/copyright.html) explains this.
+10. Each figure, table or long quotation from others has permission, or is used in a way the law allows, such as quotation. The [Copyright Policy](./policies/copyright.md) explains this.
 11. The work contains no personal data of third parties. A person who can be identified, for example in an interview or a case, has consented, and the work says so.
 
 ## Examples of a statement on generative models

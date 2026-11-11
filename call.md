@@ -1,13 +1,13 @@
 # A call to researchers
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
-Japanese: [研究者の方へ（日本語訳）](./call.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [研究者の方へ（日本語訳）](./call.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## Who it is for
 
 Sophaxis is for researchers in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
-It lists a preprint that you have already deposited, with a DOI, in one of the repositories that the [Submission Policy](./policies/submission.html) names.
+It lists a preprint that you have already deposited, with a DOI, in one of the repositories that the [Submission Policy](./policies/submission.md) names.
 Every work listed so far is by the operator; the first submissions from other researchers are welcome.
 
 ## What a listed work gets
@@ -38,5 +38,5 @@ A listed work can still be published in a journal, and the record page then show
 
 ## How to submit
 
-The steps are on the page [From submission to listing](./process.html), and the form opens from [Submit](./submit.html).
+The steps are on the page [From submission to listing](./process.md), and the form opens from [Submit](https://sophaxis.vercel.app/submit.html).
 A question before submitting can go in [a public issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new), or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).

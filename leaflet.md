@@ -1,8 +1,8 @@
 # Sophaxis on one page
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
-Japanese: [一枚でわかる Sophaxis（日本語訳）](./leaflet.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [一枚でわかる Sophaxis（日本語訳）](./leaflet.ja.md). It is a translation; where the two differ, the English text applies.
 
 This page is meant to fit on one sheet of paper, for printing or for handing on.
 
@@ -23,7 +23,7 @@ It lists preprints that their authors have already deposited in an open reposito
 2. Link your ORCID record to your GitHub account.
 3. Open a submission issue with the DOI. An automatic check answers, and a moderator decides in public.
 
-The [checklist](./checklist.html) gathers what a submission needs, and [From submission to listing](./process.html) shows each step.
+The [checklist](./checklist.md) gathers what a submission needs, and [From submission to listing](./process.md) shows each step.
 
 ## Where to find it
 

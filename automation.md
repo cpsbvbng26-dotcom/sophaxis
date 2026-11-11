@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [自動で動く手順（日本語訳）](./automation.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [自動で動く手順（日本語訳）](./automation.ja.md). It is a translation; where the two differ, the English text applies.
 
 Sophaxis runs a number of steps by itself, as GitHub Actions in its public repository and as deployments on Vercel.
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
@@ -13,13 +13,14 @@ The code of each step is public, and each section links to it.
 - No step uses a language model. The steps are ordinary code.
 - No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.
 - A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.
-- The [Privacy Policy](./policies/privacy.html) says what personal data these steps handle.
+- The [Privacy Policy](./policies/privacy.md) says what personal data these steps handle.
 
 ## When a submission issue is opened or edited, or an author confirms in a comment
 
 - Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the PDF of the latest version, where the repository lets a script fetch it, only to read its shape for the moderator, deleted after the reading; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
 - Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
-- From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.html) sets out.
+- It checks that every required box of the form is ticked, reading the boxes from the two submission forms in the repository: the confirmations always, the consent and agreement from 2026-11-21, and where the authors live from 2026-11-22. The [Submission Policy](./policies/submission.md#what-the-submitter-confirms) lists the same boxes.
+- From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](./policies/submission.md) sets out.
 - From 2026-11-23, it also checks that six months have passed since the first DOI of the work was registered, counted to the day the issue was opened, as the Submission Policy sets out.
 - From 2026-11-23, it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.
 - From 2026-11-24, it also checks that the statements on funding, on competing interests, and on human participants and research ethics are given. It does not judge what they say.
@@ -45,7 +46,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the record and the issues of the repository.
 - Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
-- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](./policies/takedown.html) says.
+- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](./policies/takedown.md) says.
 - Leaves to the operator: the decision.
 - Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
 
@@ -76,7 +77,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the public issues labelled submission, withdrawal or removal, the comments of the repository owner on declined submissions, and the records.
 - Writes: an issue with the counts of the year before: submissions opened, accepted, declined and not decided yet, the reasons named for declining, the days from submission to a decision, the requests, and the records withdrawn and removed.
-- Leaves to the operator: recording the counts in `data/reports/`, from which the [Decisions by year](./decisions.html) page is built.
+- Leaves to the operator: recording the counts in `data/reports/`, from which the [Decisions by year](https://sophaxis.vercel.app/decisions.html) page is built.
 - Code: [tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) and [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js), run by [report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml).
 
 ## Once a year, on 30 October at 09:17 Japan time

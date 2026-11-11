@@ -1,10 +1,10 @@
 # In plain words
 
-Last updated: 2026-11-10.
+Last updated: 2026-11-11.
 
-Japanese: [やさしいことばで（日本語訳）](./easy.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [やさしいことばで（日本語訳）](./easy.ja.md). It is a translation; where the two differ, the English text applies.
 
-This page says, in short sentences, what Sophaxis is and how to send a work. The rules are in the [policies](./policy.html). If this page and the rules say different things, the rules count.
+This page says, in short sentences, what Sophaxis is and how to send a work. The rules are in the [policies](./policy.md). If this page and the rules say different things, the rules count.
 
 ## What Sophaxis is
 
@@ -29,5 +29,5 @@ Sophaxis does not take money.
 
 ## Before you send
 
-Read the [checklist](./checklist.html).
+Read the [checklist](./checklist.md).
 It shows what you need.

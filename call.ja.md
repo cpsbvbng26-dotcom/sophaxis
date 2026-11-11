@@ -1,13 +1,13 @@
 # 研究者の方へ（日本語訳）
 
-最終更新：2026-11-10。
+最終更新：2026-11-11。
 
-これは英語の [A call to researchers](./call.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+これは英語の [A call to researchers](./call.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 ## 誰のためか
 
 Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の研究者のためのものです。
-[投稿の規程](./policies/submission.ja.html)が挙げるリポジトリのどれかに、DOI 付きですでに預けたプレプリントを載せます。
+[投稿の規程](./policies/submission.ja.md)が挙げるリポジトリのどれかに、DOI 付きですでに預けたプレプリントを載せます。
 これまでに載った作品は、すべて運営者のものです。ほかの研究者からの最初の投稿を待っています。
 
 ## 載った作品が得るもの
@@ -38,5 +38,5 @@ Sophaxis は作品が正しいか、重要かを判断しません。載るこ�
 
 ## 投稿のしかた
 
-手順は[投稿から掲載まで](./process.ja.html)の頁にあり、様式は[投稿](./submit.html)の頁から開きます。
+手順は[投稿から掲載まで](./process.ja.md)の頁にあり、様式は[投稿](https://sophaxis.vercel.app/submit.html)の頁から開きます。
 投稿の前の質問は、[公開の issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) か、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで受けます。

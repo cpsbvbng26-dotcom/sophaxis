@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -10,7 +10,7 @@ A citation whose source could not be fetched is named there as not quoted, with 
 
 ## Who can submit
 
-If you are worried about your personal data because Vercel, which serves the site, or GitHub, which keeps the submissions, may use what they hold to train AI models, do not submit. The [Privacy Policy](./privacy.html) explains these uses.
+If you are worried about your personal data because Vercel, which serves the site, or GitHub, which keeps the submissions, may use what they hold to train AI models, do not submit. The [Privacy Policy](./privacy.md) explains these uses.
 
 Only an author of a work can submit it.
 Sophaxis confirms this through ORCID, before a moderator reads the work.
@@ -28,7 +28,7 @@ From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025
 From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 28 places in the table below, or who stays in one between the submission and the listing, and the submitter confirms this in the form.
 A stay counts even if it is short, such as for travel, work or study.
 Stays count because the laws of several of these places reach people who are there, not only people who live there; Article 3(2) of the GDPR, for example, speaks of data subjects who are in the Union.
-Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](./privacy.html) says more.
+Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](./privacy.md) says more.
 This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 An author of any nationality who lives elsewhere and does not stay there can submit, and an author who lives or stays there cannot, whatever their nationality.
 The reasons are laws that require a local representative, the storage of personal data in the country, or registration there (among them Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act; Article 53 of China's Personal Information Protection Law; section 37(5) of Thailand's Personal Data Protection Act), which Sophaxis, run unpaid by one person within free services, does not have; the operator has decided not to appoint a representative, as the Privacy Policy explains.
@@ -36,7 +36,7 @@ The rule is that Sophaxis is not offered where a law requires, or is reported to
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
 Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
-If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.html), and the operator reviews the decision on a representative.
+If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md), and the operator reviews the decision on a representative.
 
 | Place | What the law requires | Law | Read at its source |
 | --- | --- | --- | --- |
@@ -77,7 +77,7 @@ Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathe
 Work that belongs mainly to another field is out of scope, even if it uses mathematics.
 
 The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
-It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.html).
+It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.md).
 It must have a title, an abstract and references, in the ordinary form of a scholarly paper.
 
 From 2026-11-23, a new work is listed only if at least six months have passed since its first DOI was registered.
@@ -92,7 +92,7 @@ A submission opened too early is not listed; a new issue can be opened once the 
 This does not apply to a new version of a work that Sophaxis already lists, or to a submission opened before 2026-11-23.
 
 From 2026-11-23, a work for which Crossref records a retraction, a partial retraction, a withdrawal or a removal is not listed.
-A work for which it records an expression of concern goes to the operator, who decides under the [Moderation Policy](./moderation.html).
+A work for which it records an expression of concern goes to the operator, who decides under the [Moderation Policy](./moderation.md).
 Crossref includes the data of the Retraction Watch database.
 The automatic check in the issue reads these notices for the DOI given.
 A notice that a repository shows only on its own page, and not to Crossref, is not seen by the check.
@@ -109,7 +109,7 @@ One is a comment in the submission issue, from a GitHub account that their ORCID
 The comment says "I agree to the listing of this work on Sophaxis." and gives their ORCID iD.
 The automatic check in the issue counts each confirmation.
 The other is an email to the operator, after which the operator confirms them through their ORCID record.
-This consent covers the listing, and the provision of their personal data that the [Privacy Policy](./privacy.html) sets out.
+This consent covers the listing, and the provision of their personal data that the [Privacy Policy](./privacy.md) sets out.
 An email confirmation says the same, and the operator's reply links the Privacy Policy.
 Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
 Any author can withdraw a consent at any time, by a removal issue or by email.
@@ -129,21 +129,57 @@ A submitter who is already an author of a listed work needs no one to vouch, and
 
 ## What the submitter confirms
 
-- The submitter is an author of the work.
-- Every author of the work agrees to its listing on Sophaxis.
-- The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
-- The work contains no material, such as figures or long quotations, that the authors may not share, and no personal data of third parties.
-- The statement on generative models is complete and true.
-- From 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are complete and true.
-- The authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.html) set out.
+Every author of the work agrees to its listing on Sophaxis.
+The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
+The submitter confirms both, and each point below, by ticking its box in the submission form, which has the same 29 boxes, in the same words and order.
+The automatic check in the issue refuses a submission unless every box of a group is ticked: the confirmations always, the consent and agreement from 2026-11-21, and where the authors live from 2026-11-22.
 
+### Confirmations
+
+- I confirm that I am an author of this work.
+- I confirm that the ORCID iD given in this form is my own.
+- I confirm that every author of this work agrees to this submission and to its listing on Sophaxis.
+- I confirm that the licence given in the DOI metadata applies to the deposited version.
+- I confirm that the authors have the right to share this version under that licence, and that, if a journal has published the work, the publisher allows it.
+- I confirm that the work contains no material, such as figures or long quotations, that the authors may not share.
+- I confirm that the work contains no personal data of third parties.
+- I confirm that the statement on generative models is complete and true.
+- I confirm that, from 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are complete and true.
+- I confirm that everything else I state in this form is true.
+- I agree that the authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.md#the-authors-bear-full-responsibility) set out.
+- I agree that a listing is moderation, not peer review, and that it is not to be presented as peer review ([Moderation Policy](./moderation.md#moderation-is-not-peer-review)).
+
+### Consent and agreement
+
+- I confirm that every author consents to the record being published and offered through OAI-PMH.
+- I confirm that every author consents to the record being provided to GitHub, Vercel and ORCID in the United States, as the [Privacy Policy](./privacy.md#services-outside-japan) sets out.
+- I confirm that every author consents to the public parts of this submission being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the [Privacy Policy](./privacy.md#services-outside-japan) sets out.
+- I agree to the [Terms of Use](./terms.md), in their version on the day of submission.
+- I agree to the settlement of disputes, and to the court named, under [Disputes](./terms.md#disputes) in the Terms of Use.
+- I agree that Sophaxis gives no warranty, as [No warranty](./terms.md#no-warranty) in the Terms of Use sets out.
+- I agree to the [Privacy Policy](./privacy.md).
+- I agree to the [Submission Policy](./submission.md).
+- I agree to the [Moderation Policy](./moderation.md), including how a decision can be challenged under [Decisions](./moderation.md#decisions).
+- I agree to the [Takedown Policy](./takedown.md).
+- I agree to the [Copyright Policy](./copyright.md).
+- I agree to the [Licence Policy](./licences.md).
+- I agree to the [Withdrawal Policy](./withdrawal.md).
+- I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit ([Terms of Use](./terms.md#general)).
+- I confirm that, if I am under 18, I submit only with the consent of a parent or guardian.
+
+### Where the authors live
+
+- I confirm that no author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study).
+- I confirm that no author under 18 lives or stays in India.
+
+One more box, on saving the record page and the PDF copies to the Internet Archive, may be left empty; the work is listed either way.
 ## How to submit
 
 1. Deposit the preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, under an accepted licence, and obtain its DOI.
 2. Link your ORCID record to your GitHub account: add `https://github.com/<your username>` under "Websites & social links".
 3. Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.
 4. An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.
-5. A moderator checks the submission under the [Moderation Policy](./moderation.html). If it passes, a record page is published.
+5. A moderator checks the submission under the [Moderation Policy](./moderation.md). If it passes, a record page is published.
 
 The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata, not typed in by hand.
 
@@ -171,7 +207,7 @@ A level of "None" cannot stand beside a statement that names a model.
 
 A language model cannot be listed as an author.
 No other generative model can be listed as an author either.
-The authors bear full responsibility for the work, as the [Terms of Use](./terms.html) set out.
+The authors bear full responsibility for the work, as the [Terms of Use](./terms.md) set out.
 
 If substantial undisclosed use comes to light after listing,
 the record receives a notice, and the authors are asked to add a disclosure.
@@ -194,7 +230,7 @@ Sophaxis encourages authors to make them available, but does not require it and 
 
 The record page shows each statement as the authors give it.
 Sophaxis does not check the statements beyond reading them.
-A statement found to be untrue is handled under "Research integrity" in the [Moderation Policy](./moderation.html).
+A statement found to be untrue is handled under "Research integrity" in the [Moderation Policy](./moderation.md).
 This does not apply to a submission opened before 2026-11-24.
 
 ## Versions and updates
@@ -231,12 +267,12 @@ When the publisher adds a retraction, a correction or another notice to the publ
 
 Some publishers ask authors to remove or change a preprint on publication.
 The authors check the publisher's terms.
-If the listing must go, any one author can withdraw it under the [Withdrawal Policy](./withdrawal.html), and the record page keeps the link to the published version.
+If the listing must go, any one author can withdraw it under the [Withdrawal Policy](./withdrawal.md), and the record page keeps the link to the published version.
 
 ## Examples of what is not accepted
 
 These examples show how the rules above apply. They are not a complete list; the rules decide.
-Each group matches a reason that a moderator names when declining, under the [Moderation Policy](./moderation.html).
+Each group matches a reason that a moderator names when declining, under the [Moderation Policy](./moderation.md).
 
 Authorship: the submitter must be an author, and every author must agree.
 
@@ -314,7 +350,7 @@ Versions.
 
 ## Withdrawal
 
-Any one author can withdraw a listed work under the [Withdrawal Policy](./withdrawal.html).
+Any one author can withdraw a listed work under the [Withdrawal Policy](./withdrawal.md).
 Records are not deleted: a withdrawn work keeps its record page with a withdrawal notice, so that citations to it do not break.
 An author can instead have the record removed, so that only its Sophaxis id stays.
-Removal for legal reasons follows the [Takedown Policy](./takedown.html).
+Removal for legal reasons follows the [Takedown Policy](./takedown.md).

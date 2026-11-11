@@ -2,10 +2,10 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [免責事項（日本語訳）](./disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [免責事項（日本語訳）](./disclaimer.ja.md). It is a translation; where the two differ, the English text applies.
 
 This page gathers in one place what Sophaxis does not promise.
-The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.
+The [Terms of Use](./policies/terms.md) are binding; where this page differs, they apply.
 
 ## Listed work
 
@@ -29,7 +29,7 @@ It is not an official identity check.
 Sophaxis is an independent, personal project.
 It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.
 Their names are used only to identify their services, and belong to their owners. Some of them are trade marks.
-They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.html).
+They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.md).
 
 ## Who runs Sophaxis, and why
 
@@ -38,7 +38,7 @@ No one is paid for work on Sophaxis, and no one pays to submit or to read.
 Sophaxis is served only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and has no domain or hosting to pay for.
 The operator pays personally for Claude Code, the tool with which the site and its code are written (see How Sophaxis was made below).
 Sophaxis takes no money from anyone to cover it.
-Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.html) and the [Privacy Policy](./policies/privacy.html).
+Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.md) and the [Privacy Policy](./policies/privacy.md).
 
 Sophaxis began because the operator looked for one place that lists open preprints in philosophy and in mathematics side by side, and did not find one.
 It is kept for the operator's own reading, as the next section says, and for anyone who works on the same questions.
@@ -53,9 +53,9 @@ This use does not change what is listed or how.
 - Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it; such a work stays on the operator's own shelf, outside Sophaxis.
 - Sophaxis is not run for profit. It charges no one, sells nothing, shows no advertising and earns nothing.
 - Sophaxis does not publish works. Each work is published by its repository under its DOI, and Sophaxis links to it.
-- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](./policies/copyright.html).
+- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](./policies/copyright.md).
 - Sophaxis takes no copyright and no exclusive licence in any work.
-- A rights holder can ask for the removal of a work under the [Takedown Policy](./policies/takedown.html).
+- A rights holder can ask for the removal of a work under the [Takedown Policy](./policies/takedown.md).
 
 These choices keep Sophaxis within what the authors and the licences allow.
 They are not legal advice, and they do not claim that no legal question can arise.
@@ -67,7 +67,7 @@ The site is built from that repository and served by Vercel.
 Sophaxis does not use GitHub or ORCID sign-in and asks no one for access to their accounts; it reads only public data, through the public APIs of DataCite, Crossref, JaLC, OpenAlex, ORCID and the repositories.
 Using GitHub to submit is subject to GitHub's own terms and privacy statement.
 GitHub and Vercel each provide their services "as is", without warranty, and limit their liability under their own terms; Sophaxis cannot promise more about their services than they do.
-The site is served on Vercel's free Hobby plan, on which Vercel may disable or remove a deployment with or without notice. What their terms provide is set out in the [Terms of Use](./policies/terms.html), under "GitHub and Vercel".
+The site is served on Vercel's free Hobby plan, on which Vercel may disable or remove a deployment with or without notice. What their terms provide is set out in the [Terms of Use](./policies/terms.md), under "GitHub and Vercel".
 
 ## How Sophaxis was made
 
@@ -87,14 +87,14 @@ It is not responsible for their content, their availability or their terms.
 ## Availability
 
 The site is provided as it is, and may be unavailable, change or close.
-If it closes, the repository with every record stays public; see Continuity in the [Terms of Use](./policies/terms.html).
+If it closes, the repository with every record stays public; see Continuity in the [Terms of Use](./policies/terms.md).
 
 Sophaxis depends on outside services:
 
 - If Vercel stops, the site is not served; the records stay in the repository on GitHub and in the Internet Archive.
 - If GitHub stops, no one can submit, and the automatic checks do not run; the site keeps showing what it last built.
 - If DataCite, Crossref or JaLC cannot be reached, a submission cannot be checked until they can.
-- If a repository removes a deposit, its DOI stops resolving, and the record is withdrawn under the [Withdrawal Policy](./policies/withdrawal.html).
+- If a repository removes a deposit, its DOI stops resolving, and the record is withdrawn under the [Withdrawal Policy](./policies/withdrawal.md).
 
 ## Not advice
 
@@ -110,4 +110,4 @@ This does not exclude or limit liability for intent or gross negligence, or any 
 The responsibility for an act done by someone else against the Terms of Use, or outside them, lies with the person who did it.
 Except where the law makes the operator responsible, the operator is not responsible for such acts. The Terms of Use list such acts that may come near a law, under "Acts outside these rules that may come near a law".
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
-Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.html) sets out.
+Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](./policies/terms.md) sets out.

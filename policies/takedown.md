@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [削除の規程（日本語訳）](./takedown.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -14,8 +14,8 @@ Records are not deleted.
 Every Sophaxis id stays, even when its record is removed.
 A record is removed in three cases.
 The first is removal required by law, such as copyright infringement or exposure of personal data.
-The second is when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](./withdrawal.html).
-The third is when an author of the work asks for it in a withdrawal issue, as the [Withdrawal Policy](./withdrawal.html) sets out.
+The second is when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](./withdrawal.md).
+The third is when an author of the work asks for it in a withdrawal issue, as the [Withdrawal Policy](./withdrawal.md) sets out.
 A removed record leaves only what the section "What a removed record leaves" below lists.
 
 ## How to ask
@@ -36,7 +36,7 @@ Where the operator removes material, it also asks GitHub to remove it from the r
 
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 That is the address for requests; the address in the OAI-PMH interface is for harvesters.
-For personal data and other serious harm, the operator then takes the record page (its title, authors, abstract and PDF copy) offline while the request is reviewed; authors agree to this in the [Terms of Use](./terms.html).
+For personal data and other serious harm, the operator then takes the record page (its title, authors, abstract and PDF copy) offline while the request is reviewed; authors agree to this in the [Terms of Use](./terms.md).
 
 ## What happens
 
@@ -98,15 +98,15 @@ The Sophaxis id of a removed record is never given to another work.
 From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, or who stays there between the submission and the listing, and does not direct itself to people there, so the operator considers that it has no substantial connection to the Union and does not offer services there in the sense of the Act.
 Sophaxis takes the worst case here too, and follows the Digital Services Act of the European Union as far as it can apply to a service of its size.
 
-- Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12): the email address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), in English or Japanese. Sophaxis has no legal representative in the European Union (Article 13), and the operator has decided not to appoint one, for the reason the [Privacy Policy](./privacy.html) gives. Authorities write to the operator directly at that address. Should the view above be wrong, Sophaxis does not meet Article 13, because it has no legal representative in the European Union.
+- Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12): the email address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), in English or Japanese. Sophaxis has no legal representative in the European Union (Article 13), and the operator has decided not to appoint one, for the reason the [Privacy Policy](./privacy.md) gives. Authorities write to the operator directly at that address. Should the view above be wrong, Sophaxis does not meet Article 13, because it has no legal representative in the European Union.
 - Notices of illegal content (Article 16): a removal issue, or an email. A notice by email names who sends it and gives an email address. A removal issue does not, because it is public; the GitHub account that opens it stands in their place. A notice by email also says that the sender believes in good faith that what it says is accurate and complete. A removal issue is acknowledged automatically; a notice by email is acknowledged by the operator by email, without undue delay. The decision is told in the issue or by email.
 - Reasons for a decision (Article 17): the operator gives the grounds of every decision in the removal issue, or by email. The authors were pointed to that issue when the request arrived. The grounds say whether an automatic step acted: only the step that takes exposed personal data offline at once ever does, and it acts on the kind of problem that the request names. Where material is held to be illegal, the grounds name the law relied on and say why the material breaks it. They also say how far the measure reaches and for how long: a removal applies wherever the site is read, and it is permanent. When a request came by email and is upheld, the grounds, without personal data, are posted in the authors' submission issue before it is emptied, so that GitHub sends them to the authors who follow it; the removal cannot be run without them. An author can also ask the operator for them by email.
 - Challenging a decision (Article 20): the person who sent the notice and the authors can challenge a decision within six months, by answering in the removal issue or by email. It costs nothing. The operator reviews it and answers, and the review is never left to an automatic step.
 - A person can also go to a court, or to an out-of-court dispute settlement body certified under Article 21.
 - Suspicions of serious crime (Article 18): if the operator learns of information that gives rise to a suspicion of a criminal offence that threatens a person's life or safety, the operator promptly tells the law enforcement or judicial authorities of the Member State concerned, with all relevant information it has. Where that Member State cannot be identified with reasonable certainty, the operator tells Europol.
-- The rules that limit what may be listed are in the [Terms of Use](./terms.html) and these policies, in plain English (Article 14).
+- The rules that limit what may be listed are in the [Terms of Use](./terms.md) and these policies, in plain English (Article 14).
 - Average monthly active recipients (Article 24(3)): Sophaxis keeps no analytics and no identifiers of readers, and will not start keeping them to produce this figure. On request of a Digital Services Coordinator or the Commission, the operator gives, for each of the last six months, the number of people in the Union who submitted, reported or wrote to Sophaxis, counted from the issues and the email, and says that readers are not counted.
-- The [statistics](../stats.html) count the removed records and link to every public removal request.
+- The [statistics](https://sophaxis.vercel.app/stats.html) count the removed records and link to every public removal request.
 
 <!-- text: DSA 11; DSA 12; DSA 13; DSA 16; DSA 17; DSA 20; DSA 21; DSA 18; DSA 14; DSA 24 -->
 

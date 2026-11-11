@@ -2,22 +2,22 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [投稿から掲載まで（日本語訳）](./process.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [投稿から掲載まで（日本語訳）](./process.ja.md). It is a translation; where the two differ, the English text applies.
 
 This page follows one submission from start to finish.
-The rules themselves are in the [Submission Policy](./policies/submission.html) and the [Moderation Policy](./policies/moderation.html); where this page differs, they apply.
+The rules themselves are in the [Submission Policy](./policies/submission.md) and the [Moderation Policy](./policies/moderation.md); where this page differs, they apply.
 
 ## Before you start
 
-You need four things. The [checklist](./checklist.html) gathers the rest of what a submission needs.
+You need four things. The [checklist](./checklist.md) gathers the rest of what a submission needs.
 
-1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered, as the [Submission Policy](./policies/submission.html) sets out.
+1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered, as the [Submission Policy](./policies/submission.md) sets out.
 2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.
 3. An [ORCID](https://orcid.org) iD. Registration is free.
 4. A [GitHub](https://github.com) account. Registration is free.
 
 Every author of the work must agree to the listing.
-From 2026-11-23, a first submission also needs a researcher to vouch for it, with a journal article, a book chapter or a book, as the [Submission Policy](./policies/submission.html) sets out.
+From 2026-11-23, a first submission also needs a researcher to vouch for it, with a journal article, a book chapter or a book, as the [Submission Policy](./policies/submission.md) sets out.
 If you used language models or other generative models, note which tools you used and what for.
 From 2026-11-24, the form also asks for statements on funding, on competing interests, and on human participants and research ethics, and, as an option, where the data and code are.
 
@@ -77,7 +77,7 @@ The buttons on GitHub and ORCID may be renamed over time; the steps stay the sam
 
 ## Step 5. A moderator reads the submission
 
-A moderator reads the verified submission against the [Moderation Policy](./policies/moderation.html):
+A moderator reads the verified submission against the [Moderation Policy](./policies/moderation.md):
 the scope, the form of a scholarly paper, the statement on generative models, and the absence of spam, abuse and personal data of third parties.
 Moderation is not peer review. It does not check proofs, arguments or data.
 
@@ -97,7 +97,7 @@ The operator then looks at the submission once more, and that decision is final.
 
 - A new version: deposit it in the repository, then open a submission issue that gives the existing Sophaxis id.
 - An error in the record: use "Report an error in this record" on its page.
-- Withdrawal: any one author can withdraw the work under the [Withdrawal Policy](./policies/withdrawal.html).
+- Withdrawal: any one author can withdraw the work under the [Withdrawal Policy](./policies/withdrawal.md).
 - Publication: when a later version is published in a journal, in proceedings or in a book, any one author reports it with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml). The preprint stays listed.
 
-Short answers to other questions are in the [FAQ](./faq.html).
+Short answers to other questions are in the [FAQ](./faq.md).
