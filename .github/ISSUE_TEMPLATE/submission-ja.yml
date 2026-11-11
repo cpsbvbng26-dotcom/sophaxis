@@ -196,21 +196,29 @@ body:
     attributes:
       label: 確認
       options:
-        - label: 私はこの作品の著者です。
+        - label: "私がこの作品の著者であることを確かめました。"
           required: true
-        - label: この作品のすべての著者が、Sophaxis への掲載に同意しています。
+        - label: "この様式に書いた ORCID iD が私自身のものであることを確かめました。"
           required: true
-        - label: 著者はこの版をそのライセンスのもとで共有してよく、学術誌が出版した作品なら、出版者がそれを認めています。
+        - label: "この作品のすべての著者が、この投稿と Sophaxis への掲載に同意していることを確かめました。"
           required: true
-        - label: 作品には、著者が共有してはならない素材も、第三者の個人情報も含まれていません。
+        - label: "DOI の登録情報にあるライセンスが、預けた版に適用されることを確かめました。"
           required: true
-        - label: 生成モデルについての申告は、完全で真実です。
+        - label: "著者がこの版をそのライセンスのもとで共有する権利を持ち、学術誌が出版した作品なら出版者がそれを認めていることを確かめました。"
           required: true
-        - label: 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告は、完全で真実です。
+        - label: "作品に、図や長い引用のように著者が共有してはならない素材が含まれていないことを確かめました。"
           required: true
-        - label: 利用規約のとおり、作品とその掲載の責任は、すべて著者が負います。
+        - label: "作品に第三者の個人情報が含まれていないことを確かめました。"
           required: true
-        - label: 掲載はモデレーションであり、査読ではないことを理解しています。
+        - label: "生成モデルについての申告が、完全で真実であることを確かめました。"
+          required: true
+        - label: "2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が、完全で真実であることを確かめました。"
+          required: true
+        - label: "この様式に書いたほかのことも、すべて真実であることを確かめました。"
+          required: true
+        - label: "[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html#著者がすべての責任を負う)のとおり、作品とその掲載の責任はすべて著者が負うことに同意します。"
+          required: true
+        - label: "掲載はモデレーションであって査読ではなく、査読として示さないことに同意します（[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#モデレーションは査読ではない)）。"
           required: true
   - type: checkboxes
     id: consent
@@ -218,11 +226,35 @@ body:
       label: 同意
       description: 2026-11-21 から必須です。これらのサービスとその国についての情報は、個人情報の取り扱いの「外国にある事業者の利用」にあります。どの著者も、いつでも、削除の様式かメールでこの同意を取り下げられます。そのときは記録を削除し、それまでにしたことは適法なままです。
       options:
-        - label: すべての著者が、個人情報の取り扱い（https://sophaxis.vercel.app/policies/privacy.ja.html）のとおり、記録が公開されること、OAI-PMH で提供されること、米国の GitHub・Vercel・ORCID に提供されること、そして審査の手助けのために、この投稿の公開の部分が米国の Anthropic・OpenAI・xAI に渡されることに同意します。
+        - label: "すべての著者が、記録が公開され、OAI-PMH で提供されることに同意していることを確かめました。"
           required: false
-        - label: 利用規約とその他の規程（https://sophaxis.vercel.app/policies/terms.ja.html）を、投稿の日の版で読み、同意します。
+        - label: "すべての著者が、[個人情報の取り扱い](https://sophaxis.vercel.app/policies/privacy.ja.html#外国にある事業者の利用)のとおり、記録が米国の GitHub・Vercel・ORCID に提供されることに同意していることを確かめました。"
           required: false
-        - label: 私は 13 歳以上です。18 歳未満なら、親または保護者がこの投稿に同意しています。
+        - label: "すべての著者が、[個人情報の取り扱い](https://sophaxis.vercel.app/policies/privacy.ja.html#外国にある事業者の利用)のとおり、審査の手助けのために、この投稿の公開の部分が米国の Anthropic・OpenAI・xAI に渡されることに同意していることを確かめました。"
+          required: false
+        - label: "投稿の日の版の[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)に同意します。"
+          required: false
+        - label: "利用規約の[紛争](https://sophaxis.vercel.app/policies/terms.ja.html#紛争)の節が定める紛争の解決と、そこに名を挙げた裁判所に同意します。"
+          required: false
+        - label: "利用規約の[保証しないこと](https://sophaxis.vercel.app/policies/terms.ja.html#保証しないこと)のとおり、Sophaxis が保証をしないことに同意します。"
+          required: false
+        - label: "[個人情報の取り扱い](https://sophaxis.vercel.app/policies/privacy.ja.html)に同意します。"
+          required: false
+        - label: "[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)に同意します。"
+          required: false
+        - label: "判断に異議を述べるやり方（[判断](https://sophaxis.vercel.app/policies/moderation.ja.html#判断)）を含め、[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)に同意します。"
+          required: false
+        - label: "[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に同意します。"
+          required: false
+        - label: "[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)に同意します。"
+          required: false
+        - label: "[ライセンスの規程](https://sophaxis.vercel.app/policies/licences.ja.html)に同意します。"
+          required: false
+        - label: "[撤回の規程](https://sophaxis.vercel.app/policies/withdrawal.ja.html)に同意します。"
+          required: false
+        - label: "2026-11-21 から 13 歳未満の人は投稿できないため、私が 13 歳以上であることを確かめました（[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html#一般)）。"
+          required: false
+        - label: "私が 18 歳未満なら、親または保護者の同意がある場合に限って投稿していることを確かめました。"
           required: false
   - type: checkboxes
     id: archive
@@ -230,7 +262,7 @@ body:
       label: Internet Archive への保存（任意）
       description: Sophaxis は、頁と PDF の写しを読めるままに保つため、米国の Internet Archive に保存します。これは別の同意で、空のままでもかまいません。どちらでも作品は載ります。考えられる危険は、個人情報の取り扱いの「欧州連合と英国の人へ」と「外国にある事業者の利用」にあります。どの著者も、いつでも取り下げられ、そのときは審査なしに保存を止めます。
       options:
-        - label: すべての著者が、記録の頁と PDF の写しが米国の Internet Archive に保存されることに同意します。
+        - label: "すべての著者が、記録の頁と PDF の写しが米国の Internet Archive に保存されることに同意していることを確かめました。"
           required: false
   - type: checkboxes
     id: residence
@@ -238,5 +270,7 @@ body:
       label: 著者の住んでいる場所
       description: 2026-11-22 から必須です。Sophaxis は、次の場所のどれかに住んでいる著者、または投稿から掲載までのあいだに短くでもそこに滞在した著者の作品を載せません（欧州連合、欧州経済領域、英国、中国、タイ、ロシア、トルコ、エジプト、ペルー、アルバニア、モナコ、ガーンジー、ボツワナ、エクアドル、イラク、インドネシア、ルワンダ、ザンビア、エチオピア、コンゴ民主共和国、カザフスタン、チュニジア、ウガンダ、ギニア、マダガスカル、ボリビア、コスタリカ、ケベック州）。これは著者が住んでいる場所と滞在した場所だけによるもので、国籍や人種にはよりません。その場所の法律が、代理人、個人データの国内での保存、そこでの登録、またはデータを持ち出す前の条件を求めているか、求めていると伝えられており、Sophaxis はそれを満たしていないためです。それぞれの法律は投稿の規程にあります。インドに住んでいるか滞在している 18 歳未満の著者の作品も載せません。インドの法律が、Sophaxis が確かめない、親の確かめられた同意を求めているためです。
       options:
-        - label: この作品のどの著者も、上に挙げた場所のどれにも住んでおらず、投稿から掲載までのあいだに（旅行・仕事・留学などで）短くでもそこに滞在しません。インドに住んでいるか滞在している 18 歳未満の著者もいません。
+        - label: "この作品のどの著者も、上に挙げた場所のどれにも住んでおらず、投稿から掲載までのあいだに（旅行・仕事・留学などで）短くでもそこに滞在しないことを確かめました。"
+          required: false
+        - label: "インドに住んでいるか滞在している 18 歳未満の著者がいないことを確かめました。"
           required: false
