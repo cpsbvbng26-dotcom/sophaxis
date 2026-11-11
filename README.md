@@ -119,6 +119,7 @@ The top page and the submit page then say that new submissions are paused. Set i
 A change that takes away or narrows a right of authors or readers, or adds a duty, is announced at least 14 days before it takes effect.
 Set `"termsNotice": { "text": "What changes, in one or two sentences.", "from": "YYYY-MM-DD" }` in `site.json`, rebuild and open a pull request; the top page shows it.
 Merge the change itself on or after that date, then set `termsNotice` back to `null`.
+Every change to a policy, narrowing or not, also gets an entry in `data/policy-changes.json` on the day it is published or announced; the build turns it into the Atom feed `policies/changes.xml`, which carries the changes to the policies and nothing else. The check fails if a policy's "Last updated" date has no entry.
 
 ### Withdrawing a record
 
@@ -166,7 +167,7 @@ On the same day the operator submitted a record of Sophaxis to ROAR, the Registr
 On 2026-11-08 (Japan time) the operator asked OpenDOAR, the Directory of Open Access Repositories run by Jisc, whether Sophaxis meets its inclusion criteria. Jisc answered that a preprint server that holds the PDFs on its own server would likely meet them, and that new submissions are paused while OpenDOAR is under review, with an update promised for January 2027. Sophaxis will apply after that update; whether it is listed is OpenDOAR's decision. The application is drafted in [docs/opendoar.md](docs/opendoar.md).
 On 2026-11-10 (Japan time) the operator asked ASAPbio, by email, to add Sophaxis to its directory of preprint servers. Whether it is added is ASAPbio's decision.
 On the same day the operator asked CORE, the aggregator of open access research at the Open University, to harvest Sophaxis through its OAI-PMH base URL. CORE answered that it reviews the request first, and once it is approved indexes the content and tells the contact; this can take up to three weeks. Whether and when it indexes Sophaxis is CORE's decision.
-Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned. JOSS asks for a repository that has been public for more than six months. The first commit here is from 2026-10-30, so the earliest possible submission is 2027-05-01. Nothing has been submitted yet. Whether a preprint server is within the scope of JOSS is for JOSS to decide.
+Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned. JOSS asks for a repository that has been public for more than six months. The first commit here is from 2026-10-30, so the earliest possible submission is 2027-05-01. Nothing has been submitted yet. Whether a preprint server is within the scope of JOSS is for JOSS to decide. The code of [errata-check](https://github.com/cpsbvbng26-dotcom/errata-check), the operator's checker of errata, is to be submitted to JOSS together with it, in May 2027 or later. What JOSS asks, and what is still missing, is in [docs/joss.md](docs/joss.md).
 If the number of listed works reaches 1,000, the operator may, after preparation, consider giving Sophaxis a domain of its own and running it through an international non-governmental organisation (NGO). This is a possibility, not a plan or a promise: nothing has been decided, no such organisation exists, and Sophaxis does not ask for or accept money, donations or members for it. Any such step would be taken only within the law and announced on the top page before it takes effect. Until then, Sophaxis is run by one person in Japan at <https://sophaxis.vercel.app/>.
 Short answers to common questions are in the [FAQ](https://sophaxis.vercel.app/faq.html); where they differ from a policy, the policy applies.
 What Sophaxis does not promise is in the [Disclaimer](https://sophaxis.vercel.app/disclaimer.html). Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of their own](https://sophaxis.vercel.app/repositories.html).
@@ -222,6 +223,11 @@ Text: CC BY 4.0. Code: MIT ([LICENSE](LICENSE)). Each listed work keeps its own 
 
 This repository was built with Claude Code (Anthropic) at the operator's request.
 The operator, Takuya Nemoto, is responsible for it. Claude is not an author.
+
+| Tool | Used for | Checked by |
+| --- | --- | --- |
+| Claude Code (Anthropic) | Writing the code, the pages, the policies and the checks, at the operator's request | The operator, who reads every change before merging it, and `verification/check.js`, which runs on every change |
+| Claude (Anthropic), ChatGPT (OpenAI) and Grok (xAI) | Pointing out problems in the public parts of a submission while it is reviewed, given by hand, as the Moderation Policy says | The operator, who checks what a model points out before giving it as a reason, and takes every decision |
 
 ---
 
@@ -285,5 +291,14 @@ OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [
 2026-11-08（日本時間）に、Jisc が運営する OpenDOAR（Directory of Open Access Repositories）に、Sophaxis が掲載の基準を満たすかを問い合わせました。Jisc からは、PDF を自分のサーバーに置くプレプリントサーバーなら基準を満たす見込みが高いこと、OpenDOAR を見直すあいだ新しい登録を止めていて、2027 年 1 月に案内を出すことの返事がありました。その案内のあとに申請します。載せるかどうかは OpenDOAR が決めます。申請の文は [docs/opendoar.md](docs/opendoar.md) に下書きしてあります。
 2026-11-10（日本時間）に、ASAPbio に、プレプリントサーバーの一覧へ Sophaxis を加えるようメールで依頼しました。加えるかどうかは ASAPbio が決めます。
 同じ日に、英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、OAI-PMH の入口から Sophaxis を収集するよう依頼しました。CORE からは、まず依頼を審査し、認めたあとに収集して連絡先に知らせること、それに最長で三週間かかることの返事がありました。収集して索引に載せるかどうかと、その時期は、CORE が決めます。
-Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。
+Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。運営者の正誤表を検査するソフトウェア [errata-check](https://github.com/cpsbvbng26-dotcom/errata-check) も、これと一緒に、2027 年 5 月以降に JOSS へ投稿します。JOSS が求めることと、まだ足りないことは [docs/joss.md](docs/joss.md)（英語）にあります。
 収録が 1,000 件に達したら、運営者は、準備を経て、Sophaxis に独自のドメインを取ることと、国際的な非政府組織（NGO）として運営することを検討する可能性があります。これは可能性であり、計画でも約束でもありません。まだ何も決まっておらず、そのための団体もありません。Sophaxis は、そのための資金・寄付・会員を求めず、受け取りません。こうした変更は法令の範囲でだけ行い、効力が始まる前にトップの頁で告知します。それまでは、日本に住む一人の運営者が <https://sophaxis.vercel.app/> で運営します。
+
+### 言語モデルの利用
+
+このリポジトリは、運営者の求めに応じて Claude Code（Anthropic）で作りました。運営者の根本卓哉が責任を負います。Claude は著者ではありません。
+
+| 道具 | 使ったところ | 確かめた人 |
+| --- | --- | --- |
+| Claude Code（Anthropic） | 運営者の求めに応じた、コード・頁・規程・検査を書くこと | 運営者（すべての変更を、マージする前に読みます）と、変更のたびに走る `verification/check.js` |
+| Claude（Anthropic）・ChatGPT（OpenAI）・Grok（xAI） | 審査のあいだ、投稿の公開されている部分を手で渡し、問題を指摘させること（モデレーションの規程のとおり） | 運営者（モデルの指摘を、理由に挙げる前に確かめ、すべての判断を自分で行います） |

@@ -24,6 +24,11 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 - On 2 January, an issue gives the counts of the year before. Record them in `data/reports/`.
 - On 30 October, the day Sophaxis began, an issue opens with the yearly audit below.
 
+## On a change to a policy
+
+- Add an entry to `data/policy-changes.json`, newest first, on the day the change is published or announced: the day, the policies it touches, a title, a text, and `from`, the day it takes effect, when that is later. The build makes `policies/changes.xml` from it, and the check fails if a policy's date has no entry.
+- A change that narrows a right or adds a duty also needs `termsNotice` in `site.json`, as the README says.
+
 ## On a release
 
 - Add the entries to `CHANGELOG.md` and change the version and the date in `CITATION.cff`.
@@ -45,6 +50,19 @@ The site is plain files, and every link inside it is relative, except on the pag
 
 Announce the move in the news and in the README, and tell the registries that hold the old address.
 
+## Closing Sophaxis
+
+Follow "Continuity" in the Terms of Use. These are the steps, and where each part of the records ends up.
+
+1. Announce the closure on the top page, in the news and in the README at least 30 days ahead, unless the operator cannot act. Set `"submissionsPaused": true` in `site.json` the same day, so that new submissions stop first.
+2. Decide every open submission, withdrawal and published-version issue, or close it with the reason. Nothing is listed after the closure is announced.
+3. Make the last release: add the entries to `CHANGELOG.md`, change the version and the date in `CITATION.cff`, and let the operator create the GitHub Release and the Zenodo version by hand. The archive at Zenodo, under the DOI of every version in `site.json`, then holds `data/papers/` (the records), `data/pdf/` (the PDF copies, each under the licence of its work) and `site/` (every record page, as built).
+4. Keep the site served from `site/` for as long as Vercel's free service allows. If it cannot be served there, follow "If Vercel cannot serve the site" above, or leave the repository as the place to read the records.
+5. Keep the repository public, with every record. Do not archive it on GitHub: an archived repository takes no issues, and removal requests come in issues. Turn off every scheduled workflow except `removal.yml`.
+6. Removal requests and requests about personal data are still answered after the closure, in issues or by email, as the Takedown Policy says. A record removed after the last release is also asked to be removed from that Zenodo version, whose files the operator cannot change.
+7. Tell the registries that list Sophaxis (`listedIn` in `site.json`) and those it applied to, and close the Zenodo community to new requests.
+8. The DOIs stay with the repositories that issued them. Where every author consented, the Internet Archive keeps its saved copies of the record pages and the PDF copies.
+
 ## If the operator cannot work
 
 - Follow "Continuity" in the Terms of Use: after 30 days, the top page says that new submissions are paused, and the listed records stay online.
@@ -60,4 +78,6 @@ Announce the move in the news and in the README, and tell the registries that ho
 - [ ] The free services of GitHub and Vercel still cover the site.
 - [ ] What the accessibility statement says is known is still accurate.
 - [ ] The transparency self-assessment is still accurate.
+- [ ] The criteria for listing still serve their purpose. A change follows "Changes to the criteria" in the Moderation Policy.
+- [ ] Every change to a policy since the last audit is in `data/policy-changes.json`, and the FAQ adds only questions that were asked.
 - [ ] This page still describes what the operator does.
