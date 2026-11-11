@@ -6,7 +6,7 @@ This record follows Article 30 of the General Data Protection Regulation and the
 
 ## Controller
 
-Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and the operator considers that Article 3(2) does not reach it; should that view be wrong, Sophaxis does not meet Article 27, because the processing is regular and not occasional. The decision is reviewed as the Privacy Policy sets out.
+Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and the operator considers that Article 3(2) of the GDPR and of the UK GDPR does not reach it; should that view be wrong, Sophaxis does not meet Article 27, because the processing is regular and not occasional. The decision is reviewed as the Privacy Policy sets out.
 
 ## Processing
 
@@ -28,7 +28,7 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 
 ## Lawful basis
 
-Legitimate interest in checking authorship, in keeping a public scholarly record, in serving the site safely and in answering the people who write (GDPR Article 6(1)(f)). Records are kept for freedom of expression and information (Article 17(3)(a)). The transfer to the Internet Archive rests on explicit consent (Article 49(1)(a)), asked in a box of its own that may be left empty. Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of the Act): in the submission form, required from 2026-11-21, and until then in the submission issue before a work by an author other than the operator is listed.
+Legitimate interest in checking authorship, in keeping a public scholarly record, in serving the site safely and in answering the people who write (GDPR Article 6(1)(f)). Records are kept for freedom of expression and information (Article 17(3)(a)). The transfer to the Internet Archive rests on explicit consent (Article 49(1)(a)), asked in a box of its own that may be left empty. Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of Japan's Act on the Protection of Personal Information): in the submission form, required from 2026-11-21, and until then in the submission issue before a work by an author other than the operator is listed.
 
 ## Transfers outside Japan and the European Union
 
