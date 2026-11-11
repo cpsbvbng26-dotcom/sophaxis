@@ -4225,6 +4225,56 @@ console.log('\n101. Counts in the prose that no other check held, and the abstra
     z.keywords.length > 0 && JSON.stringify(z.keywords) === JSON.stringify(cffKw) && JSON.stringify(cffKw) === JSON.stringify(tags) && !z.keywords.some((k) => /journal/i.test(k)), z.keywords.join(', ') + ' / ' + cffKw.join(', ') + ' / ' + tags.join(', '));
 }
 
+/* ------------------------------------------------------------ 102 */
+console.log('\n102. Every record page keeps three things apart: where the work is deposited, its listing on Sophaxis, and any peer review or publication');
+{
+  const B102 = require('../build.js');
+  const SITE102 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  /* The rows of the status table, as the page shows them, read back from the HTML. */
+  const statusRows = (html) => {
+    const m = /<div class="table"><table><tr><th scope="col">Status<\/th><th scope="col">For this record<\/th><\/tr>([\s\S]*?)<\/table><\/div>/.exec(html);
+    return m ? [...m[1].matchAll(/<tr><th scope="row">([^<]*)<\/th><td>([\s\S]*?)<\/td><\/tr>/g)].map((r) => [r[1], r[2]]) : null;
+  };
+  const link = (doi) => '<a href="https://doi.org/' + doi + '">' + doi + '</a>';
+  /* What each row must say for a record, from the record alone. */
+  const problems = (p, html) => {
+    const rows = statusRows(html), e = [];
+    if (!rows) return ['no status table'];
+    if (html.split('<th scope="col">Status</th>').length !== 2) e.push('more than one status table');
+    if (JSON.stringify(rows.map((r) => r[0])) !== JSON.stringify(['Deposit', 'Listing on Sophaxis', 'Peer review or publication'])) return e.concat('rows are ' + rows.map((r) => r[0]).join(' / '));
+    if (!(html.indexOf('<th scope="col">Status</th>') < html.indexOf('<article') && html.indexOf('<th scope="col">Status</th>') > html.indexOf('<p class="meta"><span class="id">'))) e.push('not between the meta line and the article');
+    const [dep, lst, rev] = rows.map((r) => r[1]);
+    const v = p.versions[p.versions.length - 1], first = p.versions[0];
+    const dois = (t) => [...t.matchAll(/href="https:\/\/doi\.org\/([^"]+)"/g)].map((m) => m[1]);
+    if (!dep.startsWith(B102.repoName(v.doi) + '. Latest version: v' + v.version + ', ' + link(v.doi) + '. First version (v1): ' + (first.date || 'not recorded'))) e.push('deposit: ' + dep);
+    if (JSON.stringify(dois(dep)) !== JSON.stringify([v.doi])) e.push('deposit names another DOI: ' + dois(dep).join(', '));
+    if (!lst.startsWith('Passed <a href="../policies/moderation.html">moderation</a>, which is not peer review. Listed: ' + (p.listed || 'not recorded') + '. Submission: <a href="' + SITE102.repo + '/issues/' + p.issue + '">issue #' + p.issue + '</a>.')) e.push('listing: ' + lst);
+    if ((p.status === 'withdrawn') !== lst.includes(' Withdrawn: ' + (p.withdrawal_date || 'not recorded') + '; the record stays.') || (p.status !== 'withdrawn' && /withdrawn/i.test(lst))) e.push('listing, withdrawal: ' + lst);
+    if (dois(lst).length) e.push('listing names a DOI');
+    if (p.published) {
+      const q = p.published;
+      const peer = q.peer_reviewed === true ? 'The authors state that it was peer-reviewed.' : q.peer_reviewed === false ? 'The authors state that it was not peer-reviewed.' : 'Whether it was peer-reviewed is not stated.';
+      if (!(rev.startsWith('A later version of this work appeared as a ' + q.type + ' in <i>') && JSON.stringify(dois(rev)) === JSON.stringify([q.doi]) && rev.includes(peer)
+        && rev.includes(q.evidence === 'publisher' ? 'The publisher’s metadata links it to this preprint.' : 'An author reported it; the publisher’s metadata does not link it to this preprint.')
+        && html.includes('<b>Published.</b> ' + rev))) e.push('peer review: ' + rev);
+    } else if (rev !== 'None reported. This is a preprint.') e.push('peer review: ' + rev);
+    return e;
+  };
+  const shown = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status !== 'removed');
+  const live = shown.map((p) => [p.id, problems(p, read(path.join(ROOT, 'site', 'abs', p.id + '.html')))]).filter(([, e]) => e.length);
+  ok('every record page shown has the three rows, Deposit, Listing on Sophaxis, and Peer review or publication, each saying what its record holds (' + shown.length + ' pages)',
+    shown.length > 0 && live.length === 0, live.map(([id, e]) => id + ': ' + e.join('; ')).join(' / '));
+  const fx = ['2026.0001', '2026.0002'].map((id) => JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', id + '.json'))));
+  const fxBad = fx.map((p) => [p.id, problems(p, read(path.join(FIX, 'abs', p.id + '.html')))]).filter(([, e]) => e.length);
+  ok('so do the fixtures: a published version as the authors state it, and a withdrawal with its date',
+    fx[0].published && fx[1].status === 'withdrawn' && fxBad.length === 0, fxBad.map(([id, e]) => id + ': ' + e.join('; ')).join(' / '));
+  const noDate = Object.assign(JSON.parse(JSON.stringify(fx[1])), { listed: undefined, withdrawal_date: undefined });
+  ok('a date the record does not hold is said to be not recorded, never filled in',
+    B102.statusTable(noDate).includes('Listed: not recorded.') && B102.statusTable(noDate).includes('Withdrawn: not recorded;'));
+  const removed = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status === 'removed');
+  ok('a removed record shows no status table', removed.every((p) => !read(path.join(ROOT, 'site', 'abs', p.id + '.html')).includes('<th scope="col">Status</th>')));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

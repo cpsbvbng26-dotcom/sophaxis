@@ -720,15 +720,36 @@ function dataciteRecord(p, conf = SITE.doi) {
 /* The published version of a record, said as the site says it: what it is, where, when, and on whose word.
  * Sophaxis does not judge the peer review of a journal; it repeats what the authors state, and says that it does. */
 const publishedYear = (q) => q.date.slice(0, 4);
-function publishedNotice(p) {
-  const q = p.published;
-  if (!q) return '';
+/* What the authors state of the published version: what it is, where, when, its peer review and how it was confirmed.
+ * The notice at the top and the status table say it in the same words. */
+function publishedSaid(q) {
   const peer = q.peer_reviewed === true ? 'The authors state that it was peer-reviewed.'
     : q.peer_reviewed === false ? 'The authors state that it was not peer-reviewed.' : 'Whether it was peer-reviewed is not stated.';
   const how = q.evidence === 'publisher' ? 'The publisher’s metadata links it to this preprint.'
     : 'An author reported it; the publisher’s metadata does not link it to this preprint.';
+  return `A later version of this work appeared as a ${esc(q.type)} in <i>${esc(q.venue)}</i> (${esc(publishedYear(q))}): <a href="https://doi.org/${esc(q.doi)}">${esc(q.doi)}</a>. ${peer} ${how}`;
+}
+function publishedNotice(p) {
+  const q = p.published;
+  if (!q) return '';
   const upd = (q.updates || []).map((u) => `It has a ${esc(u.type.replace(/_/g, ' '))} notice of ${esc(u.date)}: <a href="https://doi.org/${esc(u.doi)}">${esc(u.doi)}</a>.`).join(' ');
-  return `<div class="notice"><b>Published.</b> A later version of this work appeared as a ${esc(q.type)} in <i>${esc(q.venue)}</i> (${esc(publishedYear(q))}): <a href="https://doi.org/${esc(q.doi)}">${esc(q.doi)}</a>. ${peer} ${how}${upd ? ' ' + upd : ''} Cite the published version.</div>`;
+  return `<div class="notice"><b>Published.</b> ${publishedSaid(q)}${upd ? ' ' + upd : ''} Cite the published version.</div>`;
+}
+/* Three things a reader should not confuse, each in its own row: where the work is deposited, that Sophaxis lists it
+ * (moderation, not peer review), and any peer review or publication that the authors report. Only what the record holds;
+ * a date it does not hold is said to be not recorded. */
+const STATUS_ROWS = ['Deposit', 'Listing on ' + SITE.name, 'Peer review or publication'];
+const NOT_RECORDED = 'not recorded';
+function statusTable(p) {
+  const v = latest(p), first = p.versions[0];
+  const day = (d) => esc(d || NOT_RECORDED);
+  const firstAt = repoName(first.doi) !== repoName(v.doi) ? ', at ' + esc(repoName(first.doi)) : '';
+  const deposit = `${esc(repoName(v.doi))}. Latest version: v${v.version}, <a href="https://doi.org/${esc(v.doi)}">${esc(v.doi)}</a>. First version (v${first.version}): ${day(first.date)}${firstAt}.`;
+  const listing = `Passed <a href="../policies/moderation.html">moderation</a>, which is not peer review. Listed: ${day(p.listed)}. Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a>.`
+    + (p.status === 'withdrawn' ? ` Withdrawn: ${day(p.withdrawal_date)}; the record stays.` : '');
+  const review = p.published ? publishedSaid(p.published) : 'None reported. This is a preprint.';
+  return `<div class="table"><table><tr><th scope="col">Status</th><th scope="col">For this record</th></tr>`
+    + [deposit, listing, review].map((x, i) => `<tr><th scope="row">${STATUS_ROWS[i]}</th><td>${x}</td></tr>`).join('') + '</table></div>';
 }
 /* Notices that Crossref records against the preprint: said on the record page, with the notice, as the Moderation Policy says. */
 function crossrefNotices(p) {
@@ -824,6 +845,7 @@ ${collectionLinks(p)}
 ${withdrawn}
 ${publishedNotice(p)}
 ${crossrefNotices(p)}
+${statusTable(p)}
 <article itemscope itemtype="https://schema.org/ScholarlyArticle">
 ${facts}
 <h1 itemprop="headline">${esc(p.title)}</h1>
@@ -1796,7 +1818,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
