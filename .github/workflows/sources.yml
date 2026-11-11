@@ -1,12 +1,9 @@
 name: sources
 # The primary texts that the legal pages cite are fetched (tools/sources.js) and written to verification/sources-raw.json,
 # on a new branch sources/<date>, never on main. Run by hand. The operator reads what was fetched before any quotation
-# in verification/sources.json is taken from it.
+# in verification/sources.json is taken from it, and brings it in by a pull request of its own.
 on:
   workflow_dispatch:
-  push:
-    branches: ['claude/legal-sources-1111']
-    paths: ['tools/sources.js', 'tools/citations.js', 'verification/citations.json', '.github/workflows/sources.yml']
 permissions:
   contents: write
 jobs:
@@ -25,4 +22,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add verification/sources-raw.json
           git commit -m "Sources: the fetched texts" || exit 0
-          git push
+          git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)"
