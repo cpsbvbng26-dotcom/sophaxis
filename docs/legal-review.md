@@ -1,6 +1,6 @@
 # Legal review
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-11.
 
 This file records how the policies of Sophaxis were checked against the law, and the risks that remain.
 It sets out the operator's understanding; it is neither legal advice nor a guarantee, and it has not been reviewed by a lawyer.
@@ -55,9 +55,10 @@ Notices are received and acted on, and a sender is disclosed only as the law req
 
 The operator considers that Sophaxis has no substantial connection to the Union, and follows the Act all the same. There is a point of contact, every notice is acknowledged, every decision gives its grounds, the law relied on and whether an automatic step acted, courts and certified bodies are named, a decision can be challenged free of charge with no automatic step deciding the challenge, and suspicions of serious crime are reported.
 
-### Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)
+### Consumer contracts (Consumer Contract Act, Articles 8 and 10)
 
 The operator is liable, as Japanese law provides, for intent and negligence, and the Act is applied as if the operator were a business operator under it.
+Article 8(1) voids a clause that exempts a business from all of its liability, and Article 8(3) voids a clause that exempts it from part of its liability for negligence other than gross negligence without making clear that it applies only to such negligence. The Terms exempt the operator from no liability for negligence.
 
 ### Standard terms and their change (Civil Code, Articles 548-2 to 548-4)
 
