@@ -42,4 +42,5 @@ Before choosing, read each repository's own pages on these points. Sophaxis does
 
 - Add the work to your ORCID record, as [Making a listed work easy to find](./findable.md) explains.
 - To have it listed on Sophaxis, read the [checklist](./checklist.md) and follow [From submission to listing](./process.md).
+- [A call to researchers](./call.md) says what a listed work gets, and what to expect from a first submission by someone other than the operator.
 - From 2026-11-23, Sophaxis lists a work only when six months have passed since its first DOI, and a first submission needs a researcher to vouch for it, as the [Submission Policy](./policies/submission.md) sets out.
