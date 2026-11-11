@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>投稿の前に：確かめること（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「投稿の前に：確かめること（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/checklist.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,20 +96,21 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./checklist.html">Before you submit: a checklist</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>この一覧は、新しい決まりを足しません。<a href="./policies/submission.ja.html">投稿の規程</a>と<a href="./policies/moderation.ja.html">モデレーションの規程</a>が求めていることを集め、一度で欠けのない投稿になるようにしたものです。一覧と規程が食い違うときは、規程が適用されます。プレプリントを公開したことのない人は、先に<a href="./first.ja.html">はじめてのプレプリント</a>を読みます。</p>
-<h2>作品</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#作品">作品</a></li><li><a href="#著者">著者</a></li><li><a href="#申告">申告</a></li><li><a href="#他者の素材と個人情報">他者の素材と個人情報</a></li><li><a href="#生成モデルについての申告の例">生成モデルについての申告の例</a></li><li><a href="#著者が二人以上のとき">著者が二人以上のとき</a></li><li><a href="#雛形">雛形</a></li></ul></nav>
+<h2 id="作品">作品</h2>
 <ol><li>作品が開かれたリポジトリに預けてあり、その版に DOI がある。</li><li>DOI のメタデータに、受け付けるライセンス（CC BY 4.0、CC BY-SA 4.0、CC0 1.0）のどれかがある。PDF に、それと食い違う権利の表示（「all rights reserved」など）がない。</li><li>作品に、題・要旨・参考文献があり、学術論文の普通の形をしている。</li><li>作品が、主に哲学・数学・論理学・数理哲学・科学哲学に属する。</li></ol>
-<h2>著者</h2>
+<h2 id="著者">著者</h2>
 <ol start="5"><li>投稿者が著者で、その ORCID の記録が GitHub のアカウントにつないである（<a href="./process.ja.html">投稿から掲載まで</a>）。</li><li>すべての著者が掲載に同意している。2026-11-21 からは、ほかの著者のそれぞれが、issue かメールで自分の同意を確かめる。</li><li>Sophaxis を提供しない場所（投稿の規程の一覧）に住む著者や、投稿のあとそこに滞在した著者がいない。</li></ol>
-<h2>申告</h2>
+<h2 id="申告">申告</h2>
 <ol start="8"><li>生成モデルについての申告が、使った道具とそれぞれの役目を挙げているか、使わなかったと書いている。2026-11-21 からは、使った程度も書く。</li><li>2026-11-24 からは、資金・利益相反・人を対象とする研究と研究倫理の申告を用意してある。</li></ol>
-<h2>他者の素材と個人情報</h2>
+<h2 id="他者の素材と個人情報">他者の素材と個人情報</h2>
 <ol start="10"><li>他者の図・表・長い引用に許諾があるか、引用など法の許す形で使っている。<a href="./policies/copyright.ja.html">著作権の規程</a>に説明がある。</li><li>作品に、第三者の個人情報がない。聞き取りや事例などで特定できる人がいるときは、その人の同意があり、作品がそう書いている。</li></ol>
-<h2>生成モデルについての申告の例</h2>
+<h2 id="生成モデルについての申告の例">生成モデルについての申告の例</h2>
 <p>例にすぎません。申告には、実際にしたことを書きます。</p>
 <ul><li>「この作品を書き、また練るにあたって、生成モデルは使っていない。」</li><li>「第 2 節と第 3 節の言葉の手直しに Claude（Anthropic）を使った。本文は著者が書き、すべての変更を著者が確かめた。」</li><li>「文献の探索に ChatGPT（OpenAI）を使い、示されたものを原典と照らし合わせた。文は生成させていない。」</li></ul>
-<h2>著者が二人以上のとき</h2>
+<h2 id="著者が二人以上のとき">著者が二人以上のとき</h2>
 <p>Sophaxis は、著者を DOI のメタデータが挙げるとおりの順に記し、役割は記しません。誰が何をしたかは、作品の中に書くことができます。貢献の役割の分類 CRediT は、その書き方の一つとして広く使われています。Sophaxis は、その記述を確かめません。</p>
-<h2>雛形</h2>
+<h2 id="雛形">雛形</h2>
 <p>論文の雛形を二つ置いています。Markdown と LaTeX です。どちらにも、題・要旨・上の申告・参考文献の欄があります。</p>
 <ul><li><a href="./templates/paper.md">paper.md</a></li><li><a href="./templates/paper.tex">paper.tex</a></li></ul>
 <p>雛形は CC0 1.0 によりパブリックドメインに提供しています。雛形から書いた作品に、Sophaxis の名を書く必要はありません。雛形を使う決まりはなく、雛形から書いた作品も、ほかの作品と同じようにモデレーションを受けます。</p>

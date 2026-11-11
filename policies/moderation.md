@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.md). It is a translation; where the two differ, the English text applies.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -22,12 +22,12 @@ It does not judge whether the work is correct, original or important.
 - The work carries one of the accepted licences: CC BY 4.0, CC BY-SA 4.0 or CC0 1.0.
 - The work has a title, an abstract and references, in the ordinary form of a scholarly paper. Where the repository lets Sophaxis fetch the PDF, the automatic check reads its shape (the number of pages, whether its text can be read, and whether the title, an abstract and references can be found) and shows it in the issue. The shape decides nothing; the moderator reads the PDF.
 - The submission includes a statement on the use of language models and other generative models.
-- From 2026-11-24, the submission states the funding, the competing interests, and whether the work involves human participants, with the ethics approval and the consent where it does, as the [Submission Policy](./submission.html) sets out.
+- From 2026-11-24, the submission states the funding, the competing interests, and whether the work involves human participants, with the ethics approval and the consent where it does, as the [Submission Policy](./submission.md) sets out.
 - The submitter has confirmed that every author agrees and that the version may be shared.
-- From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.html) sets out.
+- From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.md) sets out.
 - From 2026-11-23, a researcher has vouched for a first submission, as the Submission Policy sets out.
 - The work is not spam, not abusive and does not expose personal data of third parties.
-- The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
+- The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.md) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 - The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
 
 ## What moderation does not check
@@ -53,7 +53,7 @@ The operator does this by hand, in the chat of each service; no submission is se
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 What a model points out is given as a reason for a decision only after the operator has checked it.
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
-Each January, the decisions of the year before are counted from the public issues and the records, with the reasons named for declining and the days to a decision, and the operator records them on the [Decisions by year](../decisions.html) page.
+Each January, the decisions of the year before are counted from the public issues and the records, with the reasons named for declining and the days to a decision, and the operator records them on the [Decisions by year](https://sophaxis.vercel.app/decisions.html) page.
 The counts of the current year can be recorded before it ends, marked with the day they were counted.
 
 A moderator who declines a submission names one or more of these reasons, with a short explanation:
@@ -79,7 +79,7 @@ The submitter can also go to a court, or to an out-of-court dispute settlement b
 The operator is at present the only moderator.
 Other moderators may be invited.
 A researcher in these fields who would like to moderate can write to the operator; the operator decides whom to invite.
-Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision, and moderates under this policy without pay.
+Each is named, with an ORCID iD, on the [Operator and contact](../contact.md) page before taking any decision, and moderates under this policy without pay.
 A second moderator is invited only when all of these hold:
 
 - They have an ORCID iD and a published or listed work in one of the fields of Sophaxis.
@@ -90,7 +90,7 @@ A second moderator is invited only when all of these hold:
 A moderator does not decide on their own work, or on the work of a close collaborator; another moderator, or the operator, decides it.
 When two moderators disagree, the operator decides, and says so in the issue.
 A moderator may stop at any time, and the operator may end a moderator's role; either is recorded on the contact page with the date.
-Since 2026-11-10 the operator has also invited researchers to form an advisory board, which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.html).
+Since 2026-11-10 the operator has also invited researchers to form an advisory board, which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.md).
 
 ## Conflicts of interest
 
@@ -101,7 +101,7 @@ Once there is another moderator, no moderator decides on their own submission or
 The operator's own submissions get no priority: they are moderated in the order they come, and their records have no other place on the site than any other record.
 From 2026-11-09, a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.
 The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.
-The [Statistics](../stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
+The [Statistics](https://sophaxis.vercel.app/stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
 
 ## Research integrity
 
@@ -119,7 +119,7 @@ The operator handles a concern by the steps that COPE, the Committee on Publicat
 - The operator reads the concern and, if it concerns a listed record and is not plainly without ground, gives the authors 14 days to answer it.
 - Sophaxis does not investigate misconduct. It has no power to examine data, records or witnesses. Where the research was done at an institution, or a journal has published the work, the operator tells the person who raised the concern that the institution or the journal is the body that investigates, and may inform it.
 - A note is added to the record only for what is established: what the authors confirm, what an institution or a journal finds, or what a notice that Crossref records says. The note says what was found and by whom, and the day; it does not repeat an allegation.
-- Where plagiarism or another problem is established, the authors are asked to correct the work in its repository or to withdraw it under the [Withdrawal Policy](./withdrawal.html). Copying that infringes copyright is removed under the [Takedown Policy](./takedown.html).
+- Where plagiarism or another problem is established, the authors are asked to correct the work in its repository or to withdraw it under the [Withdrawal Policy](./withdrawal.md). Copying that infringes copyright is removed under the [Takedown Policy](./takedown.md).
 - The person who raised a concern by email is not named to the authors or to anyone else without their consent, unless the law requires it.
 - A concern about a work by the operator follows the same steps, and the operator's answer is posted in the record's correction issue.
 
@@ -127,7 +127,7 @@ The operator closes without action a concern that is plainly made to harass, and
 
 ## After listing
 
-The moderator may put a listed record in one or more [collections](../collections.html) by topic, beside its fields.
+The moderator may put a listed record in one or more [collections](https://sophaxis.vercel.app/collections.html) by topic, beside its fields.
 A collection says nothing of the quality of a work, and an author can ask, in the record's correction issue, for a record to be put in a collection or taken out of one.
 
 Corrections are added to the record as dated notes.

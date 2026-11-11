@@ -2,7 +2,7 @@
 
 最終更新：2026-11-11。
 
-これは英語の [How Sophaxis differs from other places](./compare.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+これは英語の [How Sophaxis differs from other places](./compare.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 ## 要するに
 

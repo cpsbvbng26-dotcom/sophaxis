@@ -2,13 +2,13 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## Name
 
 The name is written Sophaxis, in Latin letters, with a capital S, in every language.
 In Japanese it is read ソファクシス.
-It joins the Greek sophia (σοφία), wisdom, and the Latin axis; the [History and name](./history.html) page says more.
+It joins the Greek sophia (σοφία), wisdom, and the Latin axis; the [History and name](./history.md) page says more.
 A record is cited by its Sophaxis id, such as `2026.0001`, and by the DOI of the deposited work.
 On 2026-11-11 (Japan time), the operator searched J-PlatPat, the database of the Japan Patent Office, and the WIPO Global Brand Database for the name Sophaxis, and found no trade mark of that name. A search shows only what those databases held that day, and it is not legal advice. The operator has not applied to register the name.
 
@@ -16,8 +16,8 @@ On 2026-11-11 (Japan time), the operator searched J-PlatPat, the database of the
 
 The logo is drawn with rectangles and polygons only, so that it looks the same on every device and uses no typeface.
 
-- [favicon.svg](./favicon.svg): the logo as a vector image.
-- [og.png](./og.png): the logo as a square PNG.
+- [favicon.svg](https://sophaxis.vercel.app/favicon.svg): the logo as a vector image.
+- [og.png](https://sophaxis.vercel.app/og.png): the logo as a square PNG.
 
 Use the logo unchanged, to refer to Sophaxis or to link to it.
 Do not use it in a way that suggests that Sophaxis reviewed, recommends or is connected with something it is not.
@@ -32,7 +32,7 @@ Do not use it in a way that suggests that Sophaxis reviewed, recommends or is co
 
 ## Badge for a listed work
 
-An author of a listed work can show that it is listed, with the badge [badge.svg](./badge.svg).
+An author of a listed work can show that it is listed, with the badge [badge.svg](https://sophaxis.vercel.app/badge.svg).
 Each record page gives the badge with a link to that record, ready to paste.
 
 - Use it only for a work that Sophaxis lists, and link it to the record page.

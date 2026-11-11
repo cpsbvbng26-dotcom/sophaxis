@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [運営者と連絡先（日本語訳）](./contact.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [運営者と連絡先（日本語訳）](./contact.ja.md). It is a translation; where the two differ, the English text applies.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -14,7 +14,7 @@ Sophaxis is operated by one person, Takuya Nemoto, in Japan.
 It is a personal, non-commercial project.
 It is not run by a company, a university or a publisher.
 The operator runs it as an unpaid volunteer, and is at present the only moderator. It is served only within free services; the operator pays personally for Claude Code, with which it is written.
-The operator keeps it as a hobby, as an extension of a personal reading shelf; why it exists and what that means for the records is in the [Disclaimer](./disclaimer.html).
+The operator keeps it as a hobby, as an extension of a personal reading shelf; why it exists and what that means for the records is in the [Disclaimer](./disclaimer.md).
 
 - ORCID iD: [0009-0000-1406-0547](https://orcid.org/0009-0000-1406-0547)
 - GitHub: [cpsbvbng26-dotcom](https://github.com/cpsbvbng26-dotcom)
@@ -22,16 +22,16 @@ The operator keeps it as a hobby, as an extension of a personal reading shelf; w
 About the operator, the site shows the name, the ORCID iD and the GitHub account above, and nothing more: no photograph, no telephone number and no postal address, which is given on request as "Postal address" below says.
 
 The operator is also the moderator, and is responsible for the site and its records.
-The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.html).
-The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.html) set out.
+The site and its code were built with Claude Code (Anthropic) at the operator's request; see the [Disclaimer](./disclaimer.md).
+The authors bear full responsibility for their works, as the [Terms of Use](./policies/terms.md) set out.
 Submissions by the operator are moderated under the same rules and are marked as the operator's own.
-There is no advisory board yet; the call for one is on [Advisory board: a call](./advisory.html). Advisers will be named here, with an ORCID iD, once they agree.
-Introducing Sophaxis: [the page for anyone introducing it](./press.html), and [the name, logo and badge](./brand.html).
+There is no advisory board yet; the call for one is on [Advisory board: a call](./advisory.md). Advisers will be named here, with an ORCID iD, once they agree.
+Introducing Sophaxis: [the page for anyone introducing it](./press.md), and [the name, logo and badge](./brand.md).
 
 ## Contact
 
 Complaints, legal matters and anything about personal data go by email, not to a public issue: use the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
-Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.html) sets out.
+Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.md) sets out.
 
 - Questions, suggestions and problems with the site: [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
 - Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml).
@@ -64,7 +64,7 @@ The operator aims to answer within 7 days.
 A security problem goes by email, not to a public issue, so that it can be fixed before it is known.
 Say what you found and how to reproduce it.
 Sophaxis offers no reward, and thanks every report.
-The site gives the same contact in the standard file [security.txt](./.well-known/security.txt).
+The site gives the same contact in the standard file [security.txt](https://sophaxis.vercel.app/.well-known/security.txt).
 
 ## Accessibility
 
@@ -72,7 +72,7 @@ Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at lev
 Its checks confirm the contrast of every text colour in the light and dark schemes, a link to skip to the content, a visible focus for keyboard users, the language of every page, one main heading per page, and headers for every table.
 A barrier can be reported in an issue with the label `accessibility`, or by email.
 If a page cannot be used, the operator provides the same information in another form on request, such as plain text by email.
-The full statement, with what is checked and what is known not to work, is on [Accessibility](./accessibility.html).
+The full statement, with what is checked and what is known not to work, is on [Accessibility](./accessibility.md).
 
 ## Postal address
 
@@ -84,5 +84,5 @@ Ask for it by email.
 
 The site is hosted on Vercel and built from the public repository on GitHub.
 The code, the records and the issues are kept on GitHub, and the automatic checks run as GitHub Actions there.
-Sophaxis is not affiliated with GitHub or Vercel; see the [Disclaimer](./disclaimer.html).
-Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of its own](./repositories.html).
+Sophaxis is not affiliated with GitHub or Vercel; see the [Disclaimer](./disclaimer.md).
+Repositories and DOI registration agencies can read what Sophaxis takes from them on [a page of its own](./repositories.md).

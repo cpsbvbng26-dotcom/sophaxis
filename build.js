@@ -296,18 +296,81 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 `;
 
 const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('base64') + "'";
 
+/* The id of a heading, as GitHub gives it to the same heading of the Markdown source, so that a link to a section works on
+ * the site and on github.com alike: lower case, every character but letters, marks, numbers, "_", "-" and spaces dropped,
+ * spaces made "-"; a repeated id gets "-1", "-2" and so on. */
+const unesc = (s) => String(s).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+function slugger() {
+  const seen = new Set();
+  return (text) => {
+    const base = String(text).toLowerCase().replace(/[^\p{L}\p{M}\p{N}\p{Pc}\- ]/gu, '').replace(/ /g, '-');
+    let id = base;
+    for (let n = 1; seen.has(id); n++) id = base + '-' + n;
+    seen.add(id);
+    return id;
+  };
+}
+/* Every heading gets its id; where there are two sections or more, a list of them goes before the first, in the page's language. */
+function sections(html, ja = false) {
+  const slug = slugger();
+  const list = [];
+  const out = html.replace(/<h([1-3])>([\s\S]*?)<\/h\1>/g, (m, n, inner) => {
+    const id = slug(unesc(inner.replace(/<[^>]+>/g, '')));
+    if (n === '2') list.push(`<li><a href="#${esc(id)}">${inner.replace(/<\/?a\b[^>]*>/g, '')}</a></li>`);
+    /* The title counts for the ids, as on GitHub, but needs none: a link to the page goes to its top. */
+    return n === '1' ? m : `<h${n} id="${esc(id)}">${inner}</h${n}>`;
+  });
+  if (list.length < 2) return out;
+  const label = ja ? 'この頁の節' : 'On this page';
+  const nav = `<nav class="toc" aria-label="${label}"><p>${label}</p><ul>${list.join('')}</ul></nav>\n`;
+  const at = out.indexOf('<h2 ');
+  return out.slice(0, at) + nav + out.slice(at);
+}
+
+/* The Markdown sources link one another as files (./terms.md, ../policy.md#the-policies), so that the links work on github.com,
+ * and link built pages that have no source (the listing, the feeds) by their address on the site. On the site, a link to a
+ * source that is built as a page goes to that page, and a link to the site goes there relatively, so that every link stays
+ * relative. A link to a source that is not built goes to the file on GitHub; one to a template stays, as build.js copies it. */
+const NOT_PAGES = ['README.md', 'CHANGELOG.md', 'CLAUDE.md', 'CONTRIBUTING.md'];
+const SOURCE_PAGES = new Map(fs.readdirSync(ROOT).filter((f) => f.endsWith('.md') && !NOT_PAGES.includes(f)).map((f) => [f, f.replace(/\.md$/, '.html')])
+  .concat(fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => f.endsWith('.md')).map((f) => ['policies/' + f, 'policies/' + f.replace(/\.md$/, '.html')])));
+/* Pure: where a link in the source `src` leads on the site, from the page `at`; null leaves the link as it is. */
+function sitePath(href, src, at) {
+  const rel = (to) => { const r = path.posix.relative(path.posix.dirname(at), to); return r.startsWith('.') ? r : './' + r; };
+  const m = /^\.{1,2}\/[^#?]*\.md(?=[#?]|$)/.exec(href);
+  if (m) {
+    const file = path.posix.normalize(path.posix.join(path.posix.dirname(src), m[0]));
+    const rest = href.slice(m[0].length);
+    if (SOURCE_PAGES.has(file)) return rel(SOURCE_PAGES.get(file)) + rest;
+    if (file.startsWith('templates/')) return null;
+    return SITE.repo + '/blob/main/' + file + rest;
+  }
+  if (href.startsWith(SITE.baseUrl)) return rel(href.slice(SITE.baseUrl.length) || 'index.html');
+  return null;
+}
+function sourceLinks(html, src, at) {
+  return html.replace(/href="([^"]+)"/g, (m, h) => { const to = sitePath(unesc(h), src, at); return to === null ? m : 'href="' + esc(to) + '"'; });
+}
+
 /* Every page forbids scripts. The search page alone may run search.js from this site and read papers.json. */
 const CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; base-uri 'none'; form-action 'none'`;
 const SEARCH_CSP = `default-src 'none'; style-src ${STYLE_HASH}; img-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'`;
 
-function page({ title, description, rel, root, canonical, body, head, csp, lang, image }) {
+function page({ title, description, rel, root, canonical, body, head, csp, lang, image, src }) {
+  /* A page written in Markdown (src) gets its sections linked near the top, and its links to other sources mapped to pages. */
+  if (src) body = sourceLinks(sections(body, lang === 'ja'), src, canonical);
   /* The 404 page is served at any address, so it links from the root. */
   const up = root ? '/' : rel ? '../' : './';
   /* The top page names the site for search engines: WebSite microdata, without a script. */
@@ -982,7 +1045,7 @@ function policyPage() {
   const list = `<h2>The policies</h2>
 <ul>${POLICIES.map(([slug, what]) => `<li><a href="./policies/${slug}.html">${esc(policyTitle(slug))}</a>: ${esc(what)}</li>`).join('')}</ul>`;
   const html = markdown(md).replace('<h2>What Sophaxis is not</h2>', list + '\n<h2>What Sophaxis is not</h2>');
-  return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', head: rootAlternates('policy'), body: html });
+  return page({ title: 'Policies | ' + SITE.name, description: 'Terms, submission, moderation, copyright, licences, privacy, withdrawal and takedown at ' + SITE.name + '.', rel: false, canonical: 'policy.html', head: rootAlternates('policy'), body: html, src: 'policy.md' });
 }
 
 /* Counts taken from the records each time the site is built, and links to every public decision. */
@@ -1039,10 +1102,10 @@ const disclaimerSource = () => fs.readFileSync(path.join(ROOT, 'disclaimer.md'),
 const disclaimerJaSource = () => fs.readFileSync(path.join(ROOT, 'disclaimer.ja.md'), 'utf8');
 const disclaimerAlternates = () => `<link rel="alternate" hreflang="en" href="${esc(SITE.baseUrl)}disclaimer.html">\n<link rel="alternate" hreflang="ja" href="${esc(SITE.baseUrl)}disclaimer.ja.html">\n`;
 function disclaimerPage() {
-  return page({ title: 'Disclaimer | ' + SITE.name, description: 'What ' + SITE.name + ' does not promise: peer review, metadata, identity, affiliation, links, availability and liability.', rel: false, canonical: 'disclaimer.html', head: disclaimerAlternates(), body: markdown(disclaimerSource()) });
+  return page({ title: 'Disclaimer | ' + SITE.name, description: 'What ' + SITE.name + ' does not promise: peer review, metadata, identity, affiliation, links, availability and liability.', rel: false, canonical: 'disclaimer.html', head: disclaimerAlternates(), body: markdown(disclaimerSource()), src: 'disclaimer.md' });
 }
 function disclaimerJaPage() {
-  return page({ title: '免責事項（日本語訳） | ' + SITE.name, description: SITE.name + ' の免責事項の日本語訳。', rel: false, canonical: 'disclaimer.ja.html', lang: 'ja', head: disclaimerAlternates(), body: markdown(disclaimerJaSource()) });
+  return page({ title: '免責事項（日本語訳） | ' + SITE.name, description: SITE.name + ' の免責事項の日本語訳。', rel: false, canonical: 'disclaimer.ja.html', lang: 'ja', head: disclaimerAlternates(), body: markdown(disclaimerJaSource()), src: 'disclaimer.ja.md' });
 }
 
 /* For the repositories and the DOI registration agencies: what Sophaxis reads from them and what it shows.
@@ -1071,13 +1134,13 @@ function repositoriesFill(html) {
 }
 function repositoriesPage() {
   return page({ title: 'For repositories and DOI registration agencies | ' + SITE.name, description: 'What ' + SITE.name + ' reads from repositories and DOI registration agencies, how often, and what it shows.', rel: false, canonical: 'repositories.html', head: rootAlternates('repositories'),
-    body: repositoriesFill(markdown(repositoriesSource())) });
+    body: repositoriesFill(markdown(repositoriesSource())), src: 'repositories.md' });
 }
 
 /* One submission followed from start to finish, for people who come from the site. */
 const processSource = () => fs.readFileSync(path.join(ROOT, 'process.md'), 'utf8');
 function processPage() {
-  return page({ title: 'From submission to listing | ' + SITE.name, description: 'How a submission to ' + SITE.name + ' goes from the form through the automatic check and moderation to a record page.', rel: false, canonical: 'process.html', head: rootAlternates('process'), body: markdown(processSource()) });
+  return page({ title: 'From submission to listing | ' + SITE.name, description: 'How a submission to ' + SITE.name + ' goes from the form through the automatic check and moderation to a record page.', rel: false, canonical: 'process.html', head: rootAlternates('process'), body: markdown(processSource()), src: 'process.md' });
 }
 
 /* Every step that runs by itself: when, what it reads and writes, and what it leaves to the operator. */
@@ -1136,7 +1199,7 @@ function prosePage(slug) {
   const src = proseSource(slug);
   const title = src.split('\n')[0].replace(/^# /, '');
   const body = markdown(src);
-  return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : slug === 'history' ? historyFill(body) : slug === 'first' ? repositoriesFillList(body) : body });
+  return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : slug === 'history' ? historyFill(body) : slug === 'first' ? repositoriesFillList(body) : body, src: slug + '.md' });
 }
 
 /* New by month: the records shown, grouped by the month in which they were listed, newest first. */
@@ -1213,22 +1276,22 @@ function badgeSnippet(p) {
 `;
 }
 function transparencyPage() {
-  return page({ title: 'Transparency | ' + SITE.name, description: 'How ' + SITE.name + ' stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator\'s own assessment.', rel: false, canonical: 'transparency.html', head: rootAlternates('transparency'), body: markdown(transparencySource()) });
+  return page({ title: 'Transparency | ' + SITE.name, description: 'How ' + SITE.name + ' stands against each heading of the Principles of Transparency and Best Practice in Scholarly Publishing: the operator\'s own assessment.', rel: false, canonical: 'transparency.html', head: rootAlternates('transparency'), body: markdown(transparencySource()), src: 'transparency.md' });
 }
 function automationPage() {
-  return page({ title: 'What runs by itself | ' + SITE.name, description: 'Every automatic step of ' + SITE.name + ': when it runs, what it reads and writes, and what it leaves to the operator.', rel: false, canonical: 'automation.html', head: rootAlternates('automation'), body: markdown(automationSource()) });
+  return page({ title: 'What runs by itself | ' + SITE.name, description: 'Every automatic step of ' + SITE.name + ': when it runs, what it reads and writes, and what it leaves to the operator.', rel: false, canonical: 'automation.html', head: rootAlternates('automation'), body: markdown(automationSource()), src: 'automation.md' });
 }
 
 /* Short answers, each drawn from a policy, which applies where they differ. */
 const faqSource = () => fs.readFileSync(path.join(ROOT, 'faq.md'), 'utf8');
 function faqPage() {
-  return page({ title: 'Frequently asked questions | ' + SITE.name, description: 'Short answers about ' + SITE.name + ': moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.', rel: false, canonical: 'faq.html', head: rootAlternates('faq'), body: markdown(faqSource()) });
+  return page({ title: 'Frequently asked questions | ' + SITE.name, description: 'Short answers about ' + SITE.name + ': moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.', rel: false, canonical: 'faq.html', head: rootAlternates('faq'), body: markdown(faqSource()), src: 'faq.md' });
 }
 
 /* Who runs Sophaxis and how to reach the operator. The email address stays on the ORCID record. */
 const contactSource = () => fs.readFileSync(path.join(ROOT, 'contact.md'), 'utf8');
 function contactPage() {
-  return page({ title: 'Operator and contact | ' + SITE.name, description: 'Who operates ' + SITE.name + ', and how to reach the operator.', rel: false, canonical: 'contact.html', head: rootAlternates('contact'), body: markdown(contactSource()) });
+  return page({ title: 'Operator and contact | ' + SITE.name, description: 'Who operates ' + SITE.name + ', and how to reach the operator.', rel: false, canonical: 'contact.html', head: rootAlternates('contact'), body: markdown(contactSource()), src: 'contact.md' });
 }
 
 /* Japanese pages. The page on personal data follows the headings of Japan's Act on the Protection of Personal Information;
@@ -1249,7 +1312,7 @@ function rootJaPage(slug) {
     : slug === 'history' ? historyFill(markdown(rootJaSource(slug)), true)
     : slug === 'first' ? repositoriesFillList(markdown(rootJaSource(slug)))
     : slug === 'policy' ? markdown(rootJaSource(slug)).replace('<h2>Sophaxis でないもの</h2>', `<h2>規程の一覧</h2>\n<ul>${POLICIES.filter(([s]) => JA_POLICIES[s]).map(([s]) => `<li><a href="./policies/${s}.ja.html">${esc(jaTitle(s))}</a></li>`).join('')}</ul>\n<h2>Sophaxis でないもの</h2>`)
-    : markdown(rootJaSource(slug)) });
+    : markdown(rootJaSource(slug)), src: slug + '.ja.md' });
 }
 
 /* The top page in Japanese. The records, the lists and the statistics stay in English: the titles and abstracts are those of
@@ -1288,14 +1351,14 @@ const jaAlternates = (slug) => ['en', slug + '.html', 'ja', slug + '.ja.html']
 const privacyAlternates = () => jaAlternates('privacy');
 function jaPolicyPage(slug) {
   return page({ title: jaTitle(slug) + ' | ' + SITE.name, description: slug === 'privacy' ? SITE.name + ' の個人情報の取り扱い。' : SITE.name + ' の' + jaTitle(slug).replace(/（日本語訳）$/, '') + 'の日本語訳。', rel: true, canonical: 'policies/' + slug + '.ja.html', lang: 'ja', head: jaAlternates(slug),
-    body: markdown(jaSource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
+    body: markdown(jaSource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>', src: 'policies/' + slug + '.ja.md' });
 }
 const privacyJaPage = () => jaPolicyPage('privacy');
 
 function onePolicyPage(slug) {
   return page({ title: policyTitle(slug) + ' | ' + SITE.name, description: policyTitle(slug) + ' of ' + SITE.name + '.', rel: true, canonical: 'policies/' + slug + '.html',
     head: JA_POLICIES[slug] ? jaAlternates(slug) : '',
-    body: markdown(policySource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>' });
+    body: markdown(policySource(slug)) + '\n<p class="meta"><a href="../policy.html">All policies</a></p>', src: 'policies/' + slug + '.md' });
 }
 
 /* One page per ORCID iD. Authors without one get no page: a name alone can belong to several people. */
@@ -1498,6 +1561,14 @@ function robots(all) {
 const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['faq.md', 'faq.html', 'Frequently asked questions'],
   ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['transparency.md', 'transparency.html', 'Transparency: a self-assessment'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
   ['contact.md', 'contact.html', 'Operator and contact'], ['advisory.md', 'advisory.html', 'Advisory board: a call'], ['brand.md', 'brand.html', 'Name, logo and badge'], ['press.md', 'press.html', 'For anyone introducing Sophaxis'], ['call.md', 'call.html', 'A call to researchers'], ['findable.md', 'findable.html', 'Making a listed work easy to find'], ['accessibility.md', 'accessibility.html', 'Accessibility'], ['compare.md', 'compare.html', 'How Sophaxis differs from other places'], ['glossary.md', 'glossary.html', 'Glossary']];
+/* In llms-full.txt, the relative Markdown links of a source lead to the site by their full address, as the "Source:" line does. */
+function absoluteLinks(md, src, url) {
+  return md.replace(/\]\((\.{1,2}\/[^)\s]+)\)/g, (m, h) => {
+    const to = sitePath(h, src, url);
+    if (to === null) return m;
+    return '](' + (/^https:/.test(to) ? to : SITE.baseUrl + path.posix.normalize(path.posix.join(path.posix.dirname(url), to))) + ')';
+  });
+}
 function llmsSources() {
   return POLICIES.map(([slug]) => ['policies/' + slug + '.md', 'policies/' + slug + '.html'])
     .concat(LLM_PAGES.map(([src, url]) => [src, url]))
@@ -1535,7 +1606,7 @@ function llmsTxt(all) {
 }
 function llmsFull() {
   return '# ' + SITE.name + ': the policies and pages in full\n\nEach part below is the Markdown from which the page at its address is built, word for word.\n\n'
-    + llmsSources().map(([src, url]) => '---\n\nSource: ' + SITE.baseUrl + url + '\n\n' + fs.readFileSync(path.join(ROOT, src), 'utf8').trim() + '\n\n').join('');
+    + llmsSources().map(([src, url]) => '---\n\nSource: ' + SITE.baseUrl + url + '\n\n' + absoluteLinks(fs.readFileSync(path.join(ROOT, src), 'utf8').trim(), src, url) + '\n\n').join('');
 }
 
 function build(out, paperDir) {
@@ -1648,7 +1719,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

@@ -46,7 +46,7 @@ Each application is described under [Operator and contact](#operator-and-contact
 ## Submitting
 
 1. Add `https://github.com/<your username>` under "Websites & social links" in your ORCID record.
-2. Open a [submission issue](../../issues/new?template=submission.yml) and give the DOI, your ORCID iD, the category and the statement on generative models. The issue is public.
+2. Open a [submission issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml) and give the DOI, your ORCID iD, the category and the statement on generative models. The issue is public.
 
 The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata.
 An automatic check (`tools/intake.js`, run by `.github/workflows/intake.yml`) confirms that the GitHub account belongs to an author of the work,

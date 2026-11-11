@@ -193,21 +193,29 @@ body:
     attributes:
       label: Confirmations
       options:
-        - label: I am an author of this work.
+        - label: "I confirm that I am an author of this work."
           required: true
-        - label: Every author of this work agrees to its listing on Sophaxis.
+        - label: "I confirm that the ORCID iD given in this form is my own."
           required: true
-        - label: The authors may share this version under its licence; if a journal has published the work, the publisher allows it.
+        - label: "I confirm that every author of this work agrees to this submission and to its listing on Sophaxis."
           required: true
-        - label: The work contains no material that the authors may not share, and no personal data of third parties.
+        - label: "I confirm that the licence given in the DOI metadata applies to the deposited version."
           required: true
-        - label: The statement on generative models is complete and true.
+        - label: "I confirm that the authors have the right to share this version under that licence, and that, if a journal has published the work, the publisher allows it."
           required: true
-        - label: From 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are complete and true.
+        - label: "I confirm that the work contains no material, such as figures or long quotations, that the authors may not share."
           required: true
-        - label: The authors bear full responsibility for the work and its listing, as the Terms of Use set out.
+        - label: "I confirm that the work contains no personal data of third parties."
           required: true
-        - label: I understand that listing is moderation, not peer review.
+        - label: "I confirm that the statement on generative models is complete and true."
+          required: true
+        - label: "I confirm that, from 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are complete and true."
+          required: true
+        - label: "I confirm that everything else I state in this form is true."
+          required: true
+        - label: "I agree that the authors bear full responsibility for the work and its listing, as the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html#the-authors-bear-full-responsibility) set out."
+          required: true
+        - label: "I agree that a listing is moderation, not peer review, and that it is not to be presented as peer review ([Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#moderation-is-not-peer-review))."
           required: true
   - type: checkboxes
     id: consent
@@ -215,11 +223,35 @@ body:
       label: Consent and agreement
       description: Required from 2026-11-21. The Privacy Policy, under "Services outside Japan", gives the information on these services and their countries. Any author can withdraw this consent at any time, by the removal form or by email; the record is then removed, and what was done before stays lawful.
       options:
-        - label: Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States, and to the public parts of this submission being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy (https://sophaxis.vercel.app/policies/privacy.html) sets out.
+        - label: "I confirm that every author consents to the record being published and offered through OAI-PMH."
           required: false
-        - label: I have read and agree to the Terms of Use and the other policies (https://sophaxis.vercel.app/policies/terms.html), in their version on the day of submission.
+        - label: "I confirm that every author consents to the record being provided to GitHub, Vercel and ORCID in the United States, as the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html#services-outside-japan) sets out."
           required: false
-        - label: I am 13 or older, and if I am under 18, a parent or guardian consents to this submission.
+        - label: "I confirm that every author consents to the public parts of this submission being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html#services-outside-japan) sets out."
+          required: false
+        - label: "I agree to the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html), in their version on the day of submission."
+          required: false
+        - label: "I agree to the settlement of disputes, and to the court named, under [Disputes](https://sophaxis.vercel.app/policies/terms.html#disputes) in the Terms of Use."
+          required: false
+        - label: "I agree that Sophaxis gives no warranty, as [No warranty](https://sophaxis.vercel.app/policies/terms.html#no-warranty) in the Terms of Use sets out."
+          required: false
+        - label: "I agree to the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html)."
+          required: false
+        - label: "I agree to the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html)."
+          required: false
+        - label: "I agree to the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html), including how a decision can be challenged under [Decisions](https://sophaxis.vercel.app/policies/moderation.html#decisions)."
+          required: false
+        - label: "I agree to the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html)."
+          required: false
+        - label: "I agree to the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html)."
+          required: false
+        - label: "I agree to the [Licence Policy](https://sophaxis.vercel.app/policies/licences.html)."
+          required: false
+        - label: "I agree to the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html)."
+          required: false
+        - label: "I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit ([Terms of Use](https://sophaxis.vercel.app/policies/terms.html#general))."
+          required: false
+        - label: "I confirm that, if I am under 18, I submit only with the consent of a parent or guardian."
           required: false
   - type: checkboxes
     id: archive
@@ -227,7 +259,7 @@ body:
       label: Saving to the Internet Archive (optional)
       description: Sophaxis saves its pages and PDF copies to the Internet Archive in the United States, so that they stay readable. This is a separate consent and may be left empty; the work is listed either way. The Privacy Policy, under "People in the European Union and the United Kingdom" and "Services outside Japan", gives the possible risks. Any author can withdraw it at any time, and the saves then stop without review.
       options:
-        - label: Every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States.
+        - label: "I confirm that every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States."
           required: false
   - type: checkboxes
     id: residence
@@ -235,5 +267,7 @@ body:
       label: Where the authors live
       description: Required from 2026-11-22. Sophaxis does not list work by an author who lives in any of these places, or who stays in one between the submission and the listing, even briefly (the European Union, the European Economic Area, the United Kingdom, China, Thailand, Russia, Türkiye, Egypt, Peru, Albania, Monaco, Guernsey, Botswana, Ecuador, Iraq, Indonesia, Rwanda, Zambia, Ethiopia, the Democratic Republic of the Congo, Kazakhstan, Tunisia, Uganda, Guinea, Madagascar, Bolivia, Costa Rica and Quebec). This depends only on where an author lives or stays, not on nationality or race; the reason is that a law there requires, or is reported to require, a representative, local storage of personal data, registration there, or conditions before data leaves the place, which Sophaxis does not meet. The Submission Policy gives the law of each. A work by an author under 18 who lives or stays in India is not listed either, because India's law requires a verified consent of a parent that Sophaxis does not check.
       options:
-        - label: No author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study), and no author under 18 lives or stays in India.
+        - label: "I confirm that no author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study)."
+          required: false
+        - label: "I confirm that no author under 18 lives or stays in India."
           required: false

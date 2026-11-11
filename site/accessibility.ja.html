@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>アクセシビリティ（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「アクセシビリティ（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/accessibility.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -90,18 +95,19 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h1>アクセシビリティ（日本語訳）</h1>
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./accessibility.html">Accessibility</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
-<h2>目指すもの</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#目指すもの">目指すもの</a></li><li><a href="#変更のたびに確かめること">変更のたびに確かめること</a></li><li><a href="#コントラストと読み">コントラストと読み</a></li><li><a href="#確かめていないことと分かっていること">確かめていないことと、分かっていること</a></li><li><a href="#障壁を知らせる">障壁を知らせる</a></li><li><a href="#確かめる手伝い">確かめる手伝い</a></li></ul></nav>
+<h2 id="目指すもの">目指すもの</h2>
 <p>Sophaxis は、ウェブコンテンツ・アクセシビリティ・ガイドライン（WCAG）2.2 の適合レベル AA を目指しています。これは、下の検査による運営者自身の評価です。ほかの誰もサイトを監査していません。</p>
-<h2>変更のたびに確かめること</h2>
+<h2 id="変更のたびに確かめること">変更のたびに確かめること</h2>
 <p>変更を公開する前に、サイトのすべての頁について二組の検査が動きます。</p>
 <ul><li>頁の文から：明るい表示と暗い表示での、すべての文字色のコントラスト、本文へ飛ぶリンク、頁の言語、一つの主見出し、すべての表の見出し。</li><li>ブラウザで、幅 1440 から 360 ピクセルまで（そのうち 640 は、幅 1280 の窓を 200 パーセントに拡大した幅）：キーボードだけで使えること、フォーカスが読む順に進み、止まらないこと、フォーカスの当たった要素が枠を示すこと、すべての画像に代替テキストがあり、すべての入力欄にラベルがあること、頁が横に動かないこと。</li></ul>
-<h2>コントラストと読み</h2>
+<h2 id="コントラストと読み">コントラストと読み</h2>
 <ul><li>システムがより強いコントラストを求めるときは、明るい表示では濃い灰色と強いアクセントの色を、暗い表示では明るいものを使います。そのとき、すべての文字色のコントラストは 7:1 以上になり、変更のたびに検査が確かめます。</li><li>Windows のハイコントラストのような強制カラーでは、フォーカスの枠はシステムの与える色になります。</li><li>日本語の頁では、<a href="./glossary.ja.html">用語集</a>が難しい語の読みを、括弧の中に仮名で示します。ルビは使いません。スクリーンリーダーによって読み方がそろわないためです。</li><li><a href="./easy.ja.html">やさしいことばで</a>の頁が、投稿のしかたを短い文で、英語とやさしい日本語で示します。</li></ul>
-<h2>確かめていないことと、分かっていること</h2>
+<h2 id="確かめていないことと分かっていること">確かめていないことと、分かっていること</h2>
 <ul><li>PDF の写しは、著者のファイルを手を加えずに置いたものです。Sophaxis は構造を足せず、スクリーンリーダーで使えないものもありえます。</li><li>題と要旨は DOI のメタデータからの平文なので、数式は読みにくいことがあります。</li><li>検索の頁は、サイトで唯一のスクリプトを使うので、JavaScript を要します。それがなくても、分野ごと・月ごとの一覧と配信で、同じ記録にたどれます。</li><li>記録・一覧・統計は英語です。規程と散文の頁は日本語でもあります。</li></ul>
-<h2>障壁を知らせる</h2>
+<h2 id="障壁を知らせる">障壁を知らせる</h2>
 <p>障壁は、ラベル <code>accessibility</code> を付けた <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new">issue</a> か、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるアドレスへのメールで知らせることができます。頁が使えないときは、求めに応じて、メールでの平文など、別の形で同じ情報を届けます。</p>
-<h2>確かめる手伝い</h2>
+<h2 id="確かめる手伝い">確かめる手伝い</h2>
 <p>サイトはほかの誰の監査も受けていないので、Sophaxis は手伝いを求めています。スクリーンリーダー・拡大鏡・音声操作・スイッチ・キーボードだけで使う人は、だれでもサイトを試し、使えたことと使えなかったことを、ラベル <code>accessibility</code> を付けた issue で知らせることができます。謝礼はなく、知らせのほかに何も求めません。見つかったことは、できる限り直し、上の「確かめていないことと、分かっていること」に日付とともに記します。知らせた人の名は、本人が望まない限り記しません。</p>
 </main>
 <footer><div class="wrap">

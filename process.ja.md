@@ -2,22 +2,22 @@
 
 最終更新：2026-11-11。
 
-これは英語の [From submission to listing](./process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+これは英語の [From submission to listing](./process.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 この頁は、一つの投稿を始めから終わりまでたどります。
-決まりそのものは、[投稿の規程](./policies/submission.ja.html)と[モデレーションの規程](./policies/moderation.ja.html)にあります。この頁と食い違うところは、規程が適用されます。
+決まりそのものは、[投稿の規程](./policies/submission.ja.md)と[モデレーションの規程](./policies/moderation.ja.md)にあります。この頁と食い違うところは、規程が適用されます。
 
 ## 始める前に
 
-要るものは四つです。投稿に要るほかのことは、[確かめること](./checklist.ja.html)の頁にまとめてあります。
+要るものは四つです。投稿に要るほかのことは、[確かめること](./checklist.ja.md)の頁にまとめてあります。
 
-1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。[投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから六か月以上たっている必要があります。
+1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。[投稿の規程](./policies/submission.ja.md)が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから六か月以上たっている必要があります。
 2. 預けたものに付けた CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。DOI のメタデータに出ている必要があります。
 3. [ORCID](https://orcid.org) iD。登録は無料です。
 4. [GitHub](https://github.com) のアカウント。登録は無料です。
 
 作品の著者全員が、掲載に同意している必要があります。
-[投稿の規程](./policies/submission.ja.html)が定めるとおり、2026-11-23 から、初めての投稿には研究者一人の紹介も要ります。紹介する研究者は、学術誌の論文・本の章・本を持つ人です。
+[投稿の規程](./policies/submission.ja.md)が定めるとおり、2026-11-23 から、初めての投稿には研究者一人の紹介も要ります。紹介する研究者は、学術誌の論文・本の章・本を持つ人です。
 言語モデルやその他の生成モデルを使った場合は、使った道具と、何に使ったかを書きます。
 2026-11-24 から、様式は研究資金、利益相反、人を対象とする研究と研究倫理についての申告も求めます。任意で、データとコードの所在も尋ねます。
 
@@ -77,7 +77,7 @@ GitHub と ORCID のボタンの名は、変わることがあります。手順
 
 ## 手順 5. モデレーターが投稿を読む
 
-モデレーターは、確かめられた投稿を、[モデレーションの規程](./policies/moderation.ja.html)に照らして読みます。
+モデレーターは、確かめられた投稿を、[モデレーションの規程](./policies/moderation.ja.md)に照らして読みます。
 見るのは、対象の分野、学術論文の形、生成モデルについての申告、そしてスパム・嫌がらせ・第三者の個人データが無いことです。
 モデレーションは査読ではありません。証明・論証・データは確かめません。
 
@@ -97,7 +97,7 @@ GitHub と ORCID のボタンの名は、変わることがあります。手順
 
 - 新しい版：預け先に預けてから、既存の Sophaxis の番号を書いて投稿の issue を開きます。
 - 記録の誤り：記録の頁にある「Report an error in this record」を使います。
-- 撤回：著者なら誰でも一人で、[撤回の規程](./policies/withdrawal.ja.html)に沿って作品を撤回できます。
+- 撤回：著者なら誰でも一人で、[撤回の規程](./policies/withdrawal.ja.md)に沿って作品を撤回できます。
 - 出版：後の版が学術誌、会議録、書籍で出版されたときは、著者なら誰でも一人で、[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)で報告します。プレプリントは載ったままです。
 
-ほかの問いへの短い答えは、[よくある質問](./faq.ja.html)にあります。
+ほかの問いへの短い答えは、[よくある質問](./faq.ja.md)にあります。

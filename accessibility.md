@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [アクセシビリティ（日本語訳）](./accessibility.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [アクセシビリティ（日本語訳）](./accessibility.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## The aim
 
@@ -20,8 +20,8 @@ Before any change is published, two sets of checks run on every page of the site
 
 - When the system asks for more contrast, the site uses a darker grey and a stronger accent in the light scheme, and lighter ones in the dark scheme. Every text colour then has a contrast of at least 7:1, and a check confirms it on every change.
 - In forced colours, as in the high contrast modes of Windows, the focus ring takes the colour the system gives.
-- In the Japanese pages, the [glossary](./glossary.ja.html) gives the reading of hard words in kana, in parentheses. The pages do not use ruby, which screen readers do not all read the same way.
-- [In plain words](./easy.html) tells how to submit in short sentences, in English and in plain Japanese.
+- In the Japanese pages, the [glossary](./glossary.ja.md) gives the reading of hard words in kana, in parentheses. The pages do not use ruby, which screen readers do not all read the same way.
+- [In plain words](./easy.md) tells how to submit in short sentences, in English and in plain Japanese.
 
 ## What is not checked, and what is known
 

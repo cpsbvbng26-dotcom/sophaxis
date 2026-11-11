@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [預け先と DOI 登録機関へ（日本語訳）](./repositories.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [預け先と DOI 登録機関へ（日本語訳）](./repositories.ja.md). It is a translation; where the two differ, the English text applies.
 
 This page is addressed to the repositories whose deposits Sophaxis lists, and to the agencies that register their DOIs.
 It says what Sophaxis reads from your services, how often, and what it does with it.
@@ -27,7 +27,7 @@ Sophaxis reads no pages meant for people, and does not get around any limit or b
 
 Each record page links to the DOI and names the repository, and asks readers to cite the DOI.
 The DOI stays the reference; Sophaxis gives no DOIs of its own.
-The abstract and any PDF copy are shown under the work's own licence, with its authors, as the [Copyright Policy](./policies/copyright.html) sets out.
+The abstract and any PDF copy are shown under the work's own licence, with its authors, as the [Copyright Policy](./policies/copyright.md) sets out.
 
 ## If something should change
 
@@ -45,7 +45,7 @@ A record on Sophaxis is Sophaxis's own description of a deposit; it is not a sta
 They are not responsible for Sophaxis, for its records, for its moderation, or for any error that Sophaxis introduces when it shows their metadata.
 Their names identify their services only, and their trademarks belong to them; Sophaxis shows none of their logos.
 Sophaxis uses each service through its public interfaces and within its published terms, as Sophaxis understands them; where a service says otherwise, Sophaxis follows the service.
-See also the [Disclaimer](./disclaimer.html).
+See also the [Disclaimer](./disclaimer.md).
 
 ## Acknowledgements
 

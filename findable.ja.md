@@ -2,7 +2,7 @@
 
 最終更新：2026-11-11。
 
-これは英語の [Making a listed work easy to find](./findable.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+これは英語の [Making a listed work easy to find](./findable.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 ## Sophaxis がひとりでにすること
 

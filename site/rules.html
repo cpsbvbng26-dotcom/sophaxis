@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>The policies in brief | Sophaxis</title>
 <meta name="description" content="Every policy of Sophaxis in brief, with a link to each; the policies themselves govern.">
 <link rel="canonical" href="https://sophaxis.vercel.app/rules.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,17 +96,18 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./rules.ja.html">規程の要点（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
 <p>This page puts each policy in a few sentences. It is a summary and binds no one; each policy, linked below, is what counts.</p>
-<h2>Terms of Use</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#terms-of-use">Terms of Use</a></li><li><a href="#privacy-policy">Privacy Policy</a></li><li><a href="#submission-policy">Submission Policy</a></li><li><a href="#moderation-policy">Moderation Policy</a></li><li><a href="#licence-and-copyright-policies">Licence and Copyright Policies</a></li><li><a href="#withdrawal-and-takedown-policies">Withdrawal and Takedown Policies</a></li></ul></nav>
+<h2 id="terms-of-use">Terms of Use</h2>
 <ul><li>The authors bear full responsibility for their works and their listing. Acceptance is moderation, not peer review.</li><li>Sophaxis gives no warranty, and a closure is announced on the top page at least 30 days ahead unless the operator cannot act.</li><li>The laws of Japan apply. A dispute is settled by agreement wherever possible: write to the operator first, and the operator answers within 7 days.</li><li>Read in full: <a href="./policies/terms.html">Terms of Use</a>.</li></ul>
-<h2>Privacy Policy</h2>
+<h2 id="privacy-policy">Privacy Policy</h2>
 <ul><li>The site sets no cookies, runs no analytics and loads nothing from other servers.</li><li>A submission is a public GitHub issue. From an ORCID record, only the name, the websites and the works are used.</li><li>Some services that Sophaxis uses are outside Japan, mostly in the United States; the policy names each.</li><li>Read in full: <a href="./policies/privacy.html">Privacy Policy</a>.</li></ul>
-<h2>Submission Policy</h2>
+<h2 id="submission-policy">Submission Policy</h2>
 <ul><li>An author submits by the DOI of a work deposited in an accepted repository, under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, with an ORCID record that links the submitter's GitHub account.</li><li>Every author must agree. The use of generative models must be disclosed; no model can be an author.</li><li>Sophaxis is not offered to authors who live in, or stay in, certain places, which the policy lists.</li><li>Read in full: <a href="./policies/submission.html">Submission Policy</a>.</li></ul>
-<h2>Moderation Policy</h2>
+<h2 id="moderation-policy">Moderation Policy</h2>
 <ul><li>A moderator decides in public, in the issue, and names the reasons for declining.</li><li>The submitter can answer in the issue, and the operator looks once more.</li><li>The operator's own submissions are moderated under the same rules and marked as such.</li><li>Read in full: <a href="./policies/moderation.html">Moderation Policy</a>.</li></ul>
-<h2>Licence and Copyright Policies</h2>
+<h2 id="licence-and-copyright-policies">Licence and Copyright Policies</h2>
 <ul><li>Authors keep their copyright. Sophaxis shows the abstract and keeps a copy of the PDF under the work's licence.</li><li>Figures, tables and long quotations from others need permission, or a use the law allows.</li><li>The record data may be reused freely; the site's text is under CC BY 4.0 and its code under MIT.</li><li>Read in full: <a href="./policies/licences.html">Licence Policy</a> and <a href="./policies/copyright.html">Copyright Policy</a>.</li></ul>
-<h2>Withdrawal and Takedown Policies</h2>
+<h2 id="withdrawal-and-takedown-policies">Withdrawal and Takedown Policies</h2>
 <ul><li>An author can withdraw a listed work. The record stays, so that citations do not break, with a notice, and the PDF copy is taken down.</li><li>A record can be removed for legal reasons or at an author's request; what a removed record leaves is set out in the policy.</li><li>Read in full: <a href="./policies/withdrawal.html">Withdrawal Policy</a> and <a href="./policies/takedown.html">Takedown Policy</a>.</li></ul>
 </main>
 <footer><div class="wrap">

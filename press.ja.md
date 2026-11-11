@@ -2,7 +2,7 @@
 
 最終更新：2026-11-11。
 
-これは英語の [For anyone introducing Sophaxis](./press.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+これは英語の [For anyone introducing Sophaxis](./press.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 ## 一言で
 
@@ -29,7 +29,7 @@ Sophaxis は、著者からも読者からも料金を取らず、日本に住�
 - 査読は行いません。受理はモデレーションです。
 - 学術誌ではなく、ISSN も持ちません。
 - DOI を発行しません。DOI はリポジトリのものです。
-- [免責事項](./disclaimer.ja.html)にあるとおり、どのリポジトリ・学会・機関とも、組織のうえのつながりを持ちません。
+- [免責事項](./disclaimer.ja.md)にあるとおり、どのリポジトリ・学会・機関とも、組織のうえのつながりを持ちません。
 
 ## Sophaxis 自体を引く
 
@@ -38,15 +38,15 @@ Sophaxis そのものを、サービスまたはソフトウェアとして引�
 
 `Nemoto, T. (2026). Sophaxis: an overlay preprint server for philosophy and mathematics [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24033371`
 
-プロジェクトには OSF の頁もあり、その DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。サイトで使う語は[用語集](./glossary.ja.html)で定め、Sophaxis がほかの場とどう違うかは[別の頁](./compare.ja.html)にあります。
+プロジェクトには OSF の頁もあり、その DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。サイトで使う語は[用語集](./glossary.ja.md)で定め、Sophaxis がほかの場とどう違うかは[別の頁](./compare.ja.md)にあります。
 
 ## 名前とロゴ
 
-名前・ロゴ・色・載っている作品のバッジは、[名前・ロゴ・バッジ](./brand.ja.html)の頁にあります。
-紙一枚に収まる、印刷用の紹介は[一枚でわかる Sophaxis](./leaflet.ja.html)です。
-図書館の方には、[図書館の方へ](./libraries.ja.html)があります。
+名前・ロゴ・色・載っている作品のバッジは、[名前・ロゴ・バッジ](./brand.ja.md)の頁にあります。
+紙一枚に収まる、印刷用の紹介は[一枚でわかる Sophaxis](./leaflet.ja.md)です。
+図書館の方には、[図書館の方へ](./libraries.ja.md)があります。
 
 ## 連絡先
 
 質問は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールか、[公開の issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new) で受けます。
-お知らせは、[お知らせ](./news.html)の頁（英語）と、X の [@SophaxisX](https://x.com/SophaxisX) にあります。
+お知らせは、[お知らせ](https://sophaxis.vercel.app/news.html)の頁（英語）と、X の [@SophaxisX](https://x.com/SophaxisX) にあります。

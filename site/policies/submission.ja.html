@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>投稿の規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の投稿の規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/submission.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,7 +96,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./submission.html">Submission Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
 <p>この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。</p>
-<h2>投稿できる人</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#投稿できる人">投稿できる人</a></li><li><a href="#投稿できるもの">投稿できるもの</a></li><li><a href="#著者が複数いる作品">著者が複数いる作品</a></li><li><a href="#初めての投稿の紹介">初めての投稿の紹介</a></li><li><a href="#投稿者が確認すること">投稿者が確認すること</a></li><li><a href="#投稿の手順">投稿の手順</a></li><li><a href="#言語モデルとその他の生成モデル">言語モデルとその他の生成モデル</a></li><li><a href="#研究資金利益相反研究倫理データ">研究資金、利益相反、研究倫理、データ</a></li><li><a href="#版と更新">版と更新</a></li><li><a href="#作品が出版されたとき">作品が出版されたとき</a></li><li><a href="#受け付けないものの例">受け付けないものの例</a></li><li><a href="#撤回">撤回</a></li></ul></nav>
+<h2 id="投稿できる人">投稿できる人</h2>
 <p>サイトを配信する Vercel や、投稿を保管する GitHub が、置かれたものを AI のモデルの学習に使うことがあるため、個人情報が心配な方は、投稿しないでください。この利用は、<a href="./privacy.ja.html">個人情報の取り扱いについて</a>に書いてあります。</p>
 <p>作品を投稿できるのは、その作品の著者だけです。Sophaxis は、モデレーターが作品を読む前に、ORCID を通してこれを確かめます。</p>
 <ul><li>様式に書かれた ORCID の記録が、issue を開いた GitHub のアカウントにリンクしている。</li><li>その ORCID iD が作品の著者のものである。DOI のメタデータがそれを著者の一人として挙げているか、ORCID の記録がその DOI を業績に挙げ、名前が著者の一人と合う。</li></ul>
@@ -104,23 +110,30 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <details class="source"><summary>原文　中華人民共和国個人情報保護法 第53条（全国人民代表大会の英文）</summary><blockquote lang="en"><p>Article 53 Personal information processors outside the territory of the People’s Republic of China as specified in the second paragraph of Article 3 of this Law shall set up specialized agencies or designate representatives within the territory of the People’s Republic of China to be responsible for handling personal information protection related matters, and shall submit the names, contact information, and other information of the agencies and representatives to the departments with personal information protection duties.</p></blockquote><p class="from"><a href="http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559.htm">中華人民共和国個人情報保護法 第53条（全国人民代表大会の英文）</a>から、2026-11-11 に取り寄せた文をそのまま引いています。訳は付けていません。</p></details>
 <details class="source"><summary>原文　タイ 個人データ保護法（仏暦2562年）第37条第5号（ETDA の英訳。非公式と記されたもの）</summary><blockquote lang="en"><p>(5) in the event of being the Data Controller pursuant to section 5 paragraph two, the Data Controller shall designate in writing a representative of the Data Controller who must be in the Kingdom of Thailand and be authorized to act on behalf of the Data Controller without any limitation of liability with respect to the collection, use or disclosure of the Personal Data according to the purposes of the Data Controller.</p></blockquote><p class="from"><a href="https://www.etda.or.th/getattachment/e820df2c-848f-4e03-86cb-a9dad38cc713/ENG-Version.aspx">タイ 個人データ保護法（仏暦2562年）第37条第5号（ETDA の英訳。非公式と記されたもの）</a>から、2026-11-11 に取り寄せた文をそのまま引いています。訳は付けていません。</p></details>
 <details class="source"><summary>引いていない条（原文を取り寄せられなかったもの）</summary><ul><li>インドの 2025 年デジタル個人データ保護規則 第 10 条：官報（eGazette）のサーバーが中間証明書を送らず、省の写しは 2026-11-11 に 403 を返しました（sources-raw.json の india-rules）。</li><li>連邦法第 152-FZ 号 第 1 条・第 18 条：kremlin.ru が、2026-11-11 の取り寄せで、法律のすべての頁に 403 を返しました（sources-raw.json の ru-152）。</li><li>2020 年法律第 151 号とその施行規則 第 3 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>法律第 1.565 号 第 25 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>2024 年データ保護法 第 54 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>個人データ保護組織法の施行規則 第 3 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>デジタルプラットフォームとサービスの枠組み規則 第 4 条・第 5 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>法律第 058/2021 号 第 2 条・第 29 条・第 50 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>2021 年データ保護法 第 19 条・第 70 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>デジタル法典 第 184 条・第 186 条・第 188 条・第 201 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>個人データ法 第 3 条・第 12 条：Adilet は JavaScript がなければ本文を示さず、2026-11-11 にはそれを求める頁を返しました（sources-raw.json の kz）。</li><li>2019 年データ保護・プライバシー法 第 29 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>法律第 8968 号 第 21 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li><li>民間部門の個人情報保護法 第 17 条：公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。</li></ul></details>
-<h2>投稿できるもの</h2>
+<h2 id="投稿できるもの">投稿できるもの</h2>
 <p>Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作品を受け付けます。主に別の分野に属する作品は、数学を使っていても対象外です。</p>
 <p>作品は、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けてある必要があります。<a href="./licences.ja.html">ライセンスの規程</a>が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。学術論文の通常の形で、題・要旨・参考文献を備えている必要があります。</p>
 <p>2026-11-23 から、新しい作品は、その最初の DOI が登録されてから六か月以上たっているときに限り載せます。六か月は、投稿の issue を開いた日まで、日本時間で数えます。月の同じ日に満了し、短い月ではその月の末日に満了します。最初の DOI とは、投稿された DOI と、そのメタデータが作品の前の版またはすべての版の DOI として挙げる DOI のうち、最も早く登録されたものです。Zenodo ではすべての版の DOI、Figshare では最初の版の DOI がこれに当たります。登録の日は、DataCite または Crossref が記録している日です。メタデータにその日がないとき（Jxiv など）は、運営者が手で確かめます。issue の自動の確認が、これらの日を読み、六か月を数えます。早すぎる投稿は載せません。六か月がたったあとに、新しい issue を開き直せます。すでに Sophaxis に載っている作品の新しい版と、2026-11-23 より前に開かれた投稿には掛かりません。</p>
 <p>2026-11-23 から、Crossref が撤回・一部撤回・取り下げ・削除を記録している作品は載せません。懸念表明（expression of concern）を記録している作品は運営者に回し、運営者が<a href="./moderation.ja.html">モデレーションの規程</a>に従って判断します。Crossref は Retraction Watch のデータベースの記録も含んでいます。issue の自動の確認が、投稿された DOI についてこれらの通知を読みます。リポジトリが自分の頁にだけ示し、Crossref に届けていない通知は、この確認では見えません。</p>
 <p>すでに学術誌が出版した作品は、著者がそのようなライセンスで共有してよい版に限り投稿できます。その条件は出版者によって異なります。投稿者は、下の「作品が出版されたとき」に定めるとおり、出版された版の DOI を様式に書きます。</p>
-<h2>著者が複数いる作品</h2>
+<h2 id="著者が複数いる作品">著者が複数いる作品</h2>
 <p>2026-11-21 から、著者が複数いる作品は、ほかの著者全員がそれぞれ自分の同意を確かめてから載せます。確かめ方は二通りです。一つは、投稿の issue へのコメントです。そのコメントは、その著者の ORCID の記録がリンクしている GitHub のアカウントから書きます。コメントには「I agree to the listing of this work on Sophaxis.」と書き、自分の ORCID iD を添えます。issue の自動の確認が、それぞれの確認を数えます。もう一つは、運営者へのメールです。その後、運営者がその人の ORCID の記録で本人であることを確かめます。この同意は、掲載と、<a href="./privacy.ja.html">個人情報の取り扱いについて</a>が定める個人データの提供に及びます。メールで確かめるときも同じことを書きます。運営者の返信は、個人情報の取り扱いについての頁へのリンクを添えます。記録を Internet Archive に保存するには、著者全員の別の同意が要ります。様式がこれを尋ね、空けておくこともできます。同意がなければ、記録はそこに保存しません。どの著者も、いつでも、削除依頼の issue かメールで同意を撤回できます。</p>
-<h2>初めての投稿の紹介</h2>
+<h2 id="初めての投稿の紹介">初めての投稿の紹介</h2>
 <p>2026-11-23 から、Sophaxis に載っている作品の著者でまだない投稿者は、研究者一人の紹介を得る必要があります。紹介する研究者は、公開の ORCID の記録が DOI 付きの学術誌の論文・本の章・本を挙げ、コメントに使う GitHub のアカウントをリンクしている研究者です。その研究者は、投稿の issue に、次の言葉と自分の ORCID iD をコメントします。「I vouch for this submission to Sophaxis. I am not an author of this work, and I do not live in, or stay in, a place where Sophaxis is not offered.」作品の著者と運営者は紹介できません。著者と同じく、紹介する研究者も、Sophaxis を提供しない国と地域に住んでいたり、滞在していたりしてはいけません。紹介は、作品が対象の分野に入り、学術論文の通常の形をしていることを示すものです。査読ではなく、判断するのはモデレーターです。issue の自動の確認が、共著者のときと同じように、紹介する研究者の公開の ORCID の記録を読み、紹介を数えます。紹介した研究者は、掲載の前ならコメントを消して紹介を取り消せます。すでに載っている作品の著者である投稿者と、載っている作品の新しい版には、紹介は要りません。</p>
-<h2>投稿者が確認すること</h2>
-<ul><li>投稿者は、作品の著者である。</li><li>作品の著者全員が、Sophaxis への掲載に同意している。</li><li>著者は、この版をそのライセンスで共有する権利を持っている。学術誌が出版した作品なら、出版者がそれを許している。</li><li>作品には、図や長い引用のように著者が共有してはいけない素材も、第三者の個人データも含まれていない。</li><li>生成モデルについての申告は、完全で真実である。</li><li>2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告は、完全で真実である。</li><li><a href="./terms.ja.html">利用規約</a>が定めるとおり、著者は作品とその掲載についてすべての責任を負う。</li></ul>
-<h2>投稿の手順</h2>
+<h2 id="投稿者が確認すること">投稿者が確認すること</h2>
+<p>作品の著者全員が、Sophaxis への掲載に同意している。著者は、この版をそのライセンスで共有する権利を持っている。学術誌が出版した作品なら、出版者がそれを許している。投稿者は、この二つと下の一つ一つを、投稿の様式のボックスに印を付けて確かめます。様式には、同じ 29 のボックスが、同じ言葉と順で並んでいます。issue の自動の確認は、群ごとにすべてのボックスに印がなければ投稿を受け付けません。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。</p>
+<h3 id="確認">確認</h3>
+<ul><li>私がこの作品の著者であることを確かめました。</li><li>この様式に書いた ORCID iD が私自身のものであることを確かめました。</li><li>この作品のすべての著者が、この投稿と Sophaxis への掲載に同意していることを確かめました。</li><li>DOI の登録情報にあるライセンスが、預けた版に適用されることを確かめました。</li><li>著者がこの版をそのライセンスのもとで共有する権利を持ち、学術誌が出版した作品なら出版者がそれを認めていることを確かめました。</li><li>作品に、図や長い引用のように著者が共有してはならない素材が含まれていないことを確かめました。</li><li>作品に第三者の個人情報が含まれていないことを確かめました。</li><li>生成モデルについての申告が、完全で真実であることを確かめました。</li><li>2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が、完全で真実であることを確かめました。</li><li>この様式に書いたほかのことも、すべて真実であることを確かめました。</li><li><a href="./terms.ja.html#著者がすべての責任を負う">利用規約</a>のとおり、作品とその掲載の責任はすべて著者が負うことに同意します。</li><li>掲載はモデレーションであって査読ではなく、査読として示さないことに同意します（<a href="./moderation.ja.html#モデレーションは査読ではない">モデレーションの規程</a>）。</li></ul>
+<h3 id="同意">同意</h3>
+<ul><li>すべての著者が、記録が公開され、OAI-PMH で提供されることに同意していることを確かめました。</li><li>すべての著者が、<a href="./privacy.ja.html#外国にある事業者の利用">個人情報の取り扱い</a>のとおり、記録が米国の GitHub・Vercel・ORCID に提供されることに同意していることを確かめました。</li><li>すべての著者が、<a href="./privacy.ja.html#外国にある事業者の利用">個人情報の取り扱い</a>のとおり、審査の手助けのために、この投稿の公開の部分が米国の Anthropic・OpenAI・xAI に渡されることに同意していることを確かめました。</li><li>投稿の日の版の<a href="./terms.ja.html">利用規約</a>に同意します。</li><li>利用規約の<a href="./terms.ja.html#紛争">紛争</a>の節が定める紛争の解決と、そこに名を挙げた裁判所に同意します。</li><li>利用規約の<a href="./terms.ja.html#保証しないこと">保証しないこと</a>のとおり、Sophaxis が保証をしないことに同意します。</li><li><a href="./privacy.ja.html">個人情報の取り扱い</a>に同意します。</li><li><a href="./submission.ja.html">投稿の規程</a>に同意します。</li><li>判断に異議を述べるやり方（<a href="./moderation.ja.html#判断">判断</a>）を含め、<a href="./moderation.ja.html">モデレーションの規程</a>に同意します。</li><li><a href="./takedown.ja.html">削除の規程</a>に同意します。</li><li><a href="./copyright.ja.html">著作権の規程</a>に同意します。</li><li><a href="./licences.ja.html">ライセンスの規程</a>に同意します。</li><li><a href="./withdrawal.ja.html">撤回の規程</a>に同意します。</li><li>2026-11-21 から 13 歳未満の人は投稿できないため、私が 13 歳以上であることを確かめました（<a href="./terms.ja.html#一般">利用規約</a>）。</li><li>私が 18 歳未満なら、親または保護者の同意がある場合に限って投稿していることを確かめました。</li></ul>
+<h3 id="著者の住んでいる場所">著者の住んでいる場所</h3>
+<ul><li>この作品のどの著者も、上に挙げた場所のどれにも住んでおらず、投稿から掲載までのあいだに（旅行・仕事・留学などで）短くでもそこに滞在しないことを確かめました。</li><li>インドに住んでいるか滞在している 18 歳未満の著者がいないことを確かめました。</li></ul>
+<p>Internet Archive への記録の頁と PDF の写しの保存についてのボックスは、もう一つあり、空のままでもかまいません。どちらでも作品は載ります。</p>
+<h2 id="投稿の手順">投稿の手順</h2>
 <ol><li>Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、受け付けるライセンスでプレプリントを預け、DOI を得る。</li><li>ORCID の記録を GitHub のアカウントにリンクする。「Websites &amp; social links」に <code>https://github.com/&lt;your username&gt;</code> を足す。</li><li>Sophaxis のリポジトリで投稿の issue を開き、DOI、ORCID iD、分野、生成モデルについての申告を書く。</li><li>自動の確認が DOI のメタデータと ORCID の記録を読み、結果を issue に書く。</li><li>モデレーターが<a href="./moderation.ja.html">モデレーションの規程</a>に沿って投稿を確かめる。通れば記録の頁を公開する。</li></ol>
 <p>題・著者・要旨・ライセンス・版は、手で打ち込むのではなく、DOI のメタデータから取ります。</p>
 <p>投稿の issue は公開されます。GitHub のユーザー名と、様式に書いたことはすべて、誰でも見られます。</p>
-<h2>言語モデルとその他の生成モデル</h2>
+<h2 id="言語モデルとその他の生成モデル">言語モデルとその他の生成モデル</h2>
 <p>言語モデルを使って書いた作品や開発した作品も、一つの条件で受け付けます。使ったことを申告することです。同じ条件は、画像・図・音声・コードを作るモデルを含め、ほかのすべての生成モデルに当てはまります。</p>
 <p>申告では、使った道具の名を挙げ、何に使ったかを書きます。たとえば、下書き、翻訳、証明、コード、文献探索、編集、図、画像です。生成モデルを使わなかった場合は、申告にそう書きます。</p>
 <p>2026-11-21 から、様式では使った程度も四段階で尋ねます。著者は、当てはまるうちで最も高い段階を選びます。</p>
@@ -128,22 +141,22 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>記録の頁では、著者が選んだ段階を申告の上に示します。段階は申告の代わりにはなりません。申告では引き続き、道具の名と、それぞれが何をしたかを書きます。「None」の段階は、モデルの名を挙げる申告と並んで成り立ちません。</p>
 <p>言語モデルを著者に挙げることはできません。ほかの生成モデルも、著者に挙げることはできません。<a href="./terms.ja.html">利用規約</a>が定めるとおり、著者が作品についてすべての責任を負います。</p>
 <p>掲載の後に、申告されていない相当の使用が明らかになった場合、記録に注記を付け、著者に申告を足すよう求めます。</p>
-<h2>研究資金、利益相反、研究倫理、データ</h2>
+<h2 id="研究資金利益相反研究倫理データ">研究資金、利益相反、研究倫理、データ</h2>
 <p>2026-11-24 から、様式は三つの申告を求めます。作品は、三つすべてが書かれているときに限り載せます。issue の自動の確認は、それぞれの欄が埋まっていることを確かめます。書かれた中身は判断しません。</p>
 <ul><li>研究資金：作品のすべての資金提供者と助成番号。資金がなかったときは、そのこと。</li><li>利益相反：著者の金銭上または個人的な利害で、作品に関わるもの。雇用、顧問、報酬、作品が論じる人との近い関係などです。ないときは、そのこと。</li><li>人を対象とする研究と研究倫理：作品が、調査、聞き取り、実験など、人を対象とする研究を含むかどうか。</li></ul>
 <p>人を対象とする研究を含む作品は、承認した倫理審査委員会の名を挙げるか、研究を行った場所の規則のもとで承認が要らなかった理由を書かなければなりません。特定できる参加者は、全員が同意していなければならず、申告はそのことを述べます。上に定めるとおり、第三者の個人データを含む作品は受け付けません。</p>
 <p>様式は、任意の欄として、作品が拠るデータ、コード、その他の資料の所在（DOI 付きのリポジトリなど）か、それがないことも尋ねます。Sophaxis は著者にそれらを公開するよう勧めますが、求めはせず、確かめもしません。</p>
 <p>記録の頁は、それぞれの申告を著者が書いたとおりに示します。Sophaxis は、申告を読む以上には確かめません。申告が真実でないとわかったときは、<a href="./moderation.ja.html">モデレーションの規程</a>の「研究の公正」に従って扱います。2026-11-24 より前に開かれた投稿には掛かりません。</p>
-<h2>版と更新</h2>
+<h2 id="版と更新">版と更新</h2>
 <p>作品は、一つの Sophaxis の番号のもとで一度だけ載せます。その番号は、記録を撤回したり削除したりした後も、ほかの作品に与えることはありません。</p>
 <p>新しい版とは、預け先での新しい版のことです。多くの預け先は、版ごとに別の DOI を与えます。arXiv はすべての版に一つの DOI を使い、その DOI は最新の版を指します。その場合、記録は同じ DOI を、版ごとの日付とともに挙げます。新しい版は、既存の記録の更新として投稿します。前の版も載ったままです。</p>
-<h2>作品が出版されたとき</h2>
+<h2 id="作品が出版されたとき">作品が出版されたとき</h2>
 <p>載っているプレプリントは、後の版が学術誌、会議録、書籍で出版されても、載ったままです。その場合、記録の頁は出版された版を先頭に示します。何であるか、いつどこで出たか、その DOI です。読者には出版された版を引用するよう求め、載っている版をプレプリントとして示します。</p>
 <p>出版された版は、著者なら誰でも一人で、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml">出版された版の様式</a>で報告できます。報告は、その著者の ORCID の記録がリンクしている GitHub のアカウントから行います。自動の確認が、報告が著者からのものであることを確かめ、出版された版の DOI のメタデータを読みます。出版された版は、学術誌の論文、会議の論文、書籍の章、書籍のどれかでなければなりません。受け付ける預け先のどれかにあるものであってはならず、記録と共通の著者がいなければなりません。その後、モデレーターがそれを記録し、その判断は issue で公開します。出版された版は投稿のときに書くこともでき、そのときも同じ確認が走ります。</p>
 <p>Sophaxis は、学術誌の査読を評価しません。記録は、著者が述べるとおりに書きます。出版された版が査読を受けた、受けていない、または何も述べない、のどれかです。出版者のメタデータが出版された版をプレプリントにリンクしているか、著者が報告しただけかも書きます。</p>
 <p>Sophaxis は毎週、Crossref と DataCite のメタデータから、載っているプレプリントにリンクし、共通の著者を持つ出版された版を探します。自分では何も記録しません。著者に報告を求めます。同じ毎週の確認で、記録した出版された版がまだ解決するかも確かめます。出版者が出版された版に撤回、訂正その他の告知を付けた場合、記録の頁にそれを示します。</p>
 <p>出版者の中には、出版に際してプレプリントを外したり変えたりするよう著者に求めるものがあります。著者は出版者の条件を確かめます。掲載を終える必要がある場合、著者なら誰でも一人で、<a href="./withdrawal.ja.html">撤回の規程</a>に沿って撤回でき、記録の頁は出版された版へのリンクを保ちます。</p>
-<h2>受け付けないものの例</h2>
+<h2 id="受け付けないものの例">受け付けないものの例</h2>
 <p>これらの例は、上の決まりの当てはめ方を示すものです。すべてを挙げたものではなく、決めるのは決まりのほうです。それぞれの組は、<a href="./moderation.ja.html">モデレーションの規程</a>に沿ってモデレーターが断るときに挙げる理由に対応しています。</p>
 <p>著者であること：投稿者は著者でなければならず、著者全員が同意していなければなりません。</p>
 <ul><li>同僚の論文を、本人の許しを得ていても、代わりに投稿すること。投稿できるのは著者だけです。</li><li>先生、指導教員、著名な著者の論文を、読まれる価値があるからと投稿すること。</li><li>研究室のアカウントや二つ目の個人アカウントのように、ORCID の記録がリンクしていない GitHub のアカウントから issue を開くこと。</li><li>共著者の ORCID iD や、issue を開く本人以外の ORCID iD を書くこと。</li><li>DOI のメタデータも ORCID の記録も作品と結び付けていない ORCID iD を書くこと。</li><li>共著者が同意していない、または断ったのに、作品を投稿すること。</li><li>断られた作品を、新しい GitHub のアカウントを作って別の名で投稿し直すこと。</li></ul>
@@ -163,7 +176,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul><li>同じ作品を何度も、または複数の題で投稿すること。</li><li>issue を埋めるために、多くの投稿を一度に開くこと。</li><li>広告、有料のサービスへのリンク、何かを売るために書かれた文。</li><li>名を挙げた人を、嫌がらせ、脅し、または中傷する文。</li><li>欄にコードやマークアップを置くなどして、様式・自動の確認・サイトを壊そうとすること。</li><li>ほかの人、機関、学術誌になりすますこと。</li></ul>
 <p>版。</p>
 <ul><li>新しい版を、既存の Sophaxis の番号の更新としてではなく、新しい作品として投稿すること。</li><li>撤回した記録の新しい版。撤回した記録には、新しい版を加えません。</li></ul>
-<h2>撤回</h2>
+<h2 id="撤回">撤回</h2>
 <p>著者なら誰でも一人で、<a href="./withdrawal.ja.html">撤回の規程</a>に沿って、載っている作品を撤回できます。記録は消しません。撤回した作品は撤回の告知とともに記録の頁を保ち、その作品への引用は切れません。著者は代わりに記録を削除させることもでき、その場合は Sophaxis の番号だけが残ります。法的な理由による削除は、<a href="./takedown.ja.html">削除の規程</a>に従います。</p>
 <p class="meta"><a href="../policy.html">All policies</a></p>
 </main>

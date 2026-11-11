@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>やさしいことばで（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「やさしいことばで（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/easy.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -88,16 +93,17 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>やさしいことばで（日本語訳）</h1>
-<p>最終更新：2026-11-10。</p>
+<p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./easy.html">In plain words</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>この頁は、Sophaxis が何か、論文の送り方を、短い文で書いています。決まりは<a href="./policy.ja.html">規程</a>にあります。この頁と決まりが違うときは、決まりのほうが正しいです。</p>
-<h2>Sophaxis とは</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#sophaxis-とは">Sophaxis とは</a></li><li><a href="#sophaxis-がしないこと">Sophaxis がしないこと</a></li><li><a href="#論文の送り方">論文の送り方</a></li><li><a href="#送る前に">送る前に</a></li></ul></nav>
+<h2 id="sophaxis-とは">Sophaxis とは</h2>
 <p>Sophaxis（ソファクシス）は、ウェブサイトです。哲学（てつがく）と数学（すうがく）の論文（ろんぶん）を見せます。論文は、ほかの場所に置いてあります。その場所を、リポジトリといいます。Sophaxis は、論文ごとに一つの頁を作ります。Sophaxis は、無料（むりょう）です。</p>
-<h2>Sophaxis がしないこと</h2>
+<h2 id="sophaxis-がしないこと">Sophaxis がしないこと</h2>
 <p>Sophaxis は、論文が正しいかどうかを調べません。人が、論文が決まりに合うかどうかだけを見ます。Sophaxis は、お金を取りません。</p>
-<h2>論文の送り方</h2>
+<h2 id="論文の送り方">論文の送り方</h2>
 <ol><li>論文を、Zenodo などのリポジトリに置きます。DOI という番号がもらえます。</li><li>ORCID と GitHub で、アカウントを作ります。二つをつなぎます。</li><li>GitHub で、用紙（ようし）に書きこみます。DOI を書きます。</li><li>プログラムが用紙を調べます。そのあと、人が決めます。</li></ol>
-<h2>送る前に</h2>
+<h2 id="送る前に">送る前に</h2>
 <p><a href="./checklist.ja.html">確かめること</a>を読みます。何が要るかが書いてあります。</p>
 </main>
 <footer><div class="wrap">

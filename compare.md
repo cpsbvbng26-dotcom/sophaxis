@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [ほかの場との違い（日本語訳）](./compare.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [ほかの場との違い（日本語訳）](./compare.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## In short
 

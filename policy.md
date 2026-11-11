@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [規程（日本語訳）](./policy.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [規程（日本語訳）](./policy.ja.md). It is a translation; where the two differ, the English text applies.
 
 Sophaxis is an overlay preprint server for philosophy and mathematics.
 It lists preprints that authors have already deposited in an open repository,
@@ -11,7 +11,7 @@ and it gives each one a stable record page.
 ## What Sophaxis is not
 
 Acceptance is moderation, not peer review.
-A listing on Sophaxis says that a submission passed the checks in the [Moderation Policy](./policies/moderation.html).
+A listing on Sophaxis says that a submission passed the checks in the [Moderation Policy](./policies/moderation.md).
 It does not say that the work is correct, original or important.
 Sophaxis does not guarantee the quality of any listed work.
 
@@ -31,7 +31,7 @@ It takes no donations, sponsorship or advertising.
 A commitment in these policies is never dropped silently.
 The public repository keeps the list of commitments in `verification/commitments.txt`.
 The automatic check fails if one disappears from the policies or from the list, unless the text that replaces it is named in `verification/superseded.txt`.
-A change to a commitment that adds a duty for readers or authors is still announced in advance, as the [Terms of Use](./policies/terms.html) set out.
+A change to a commitment that adds a duty for readers or authors is still announced in advance, as the [Terms of Use](./policies/terms.md) set out.
 
 ## Editorial independence
 
@@ -43,7 +43,7 @@ The reasons for every decision are public in its issue.
 ## Operator and conflicts of interest
 
 Sophaxis is operated by Takuya Nemoto, an independent researcher in Japan.
-The [Operator and contact](./contact.html) page says how to reach the operator.
+The [Operator and contact](./contact.md) page says how to reach the operator.
 Submissions by the operator are moderated under the same rules
 and are marked on their record pages as the operator's own.
 
@@ -60,9 +60,9 @@ Abstracts in both keep the licence of their work.
 
 These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
-Each policy is put in a few sentences on [The policies in brief](./rules.html); the policies themselves govern.
+Each policy is put in a few sentences on [The policies in brief](./rules.md); the policies themselves govern.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
-Every policy, the Disclaimer and the pages that explain Sophaxis, such as this one, the FAQ and the Glossary, have Japanese translations, which the [Japanese top page](./index.ja.html) lists, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
+Every policy, the Disclaimer and the pages that explain Sophaxis, such as this one, the FAQ and the Glossary, have Japanese translations, which the [Japanese top page](https://sophaxis.vercel.app/index.ja.html) lists, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
 
 This site and its code were built with Claude Code (Anthropic).
 The operator is responsible for them. Claude is not an author.

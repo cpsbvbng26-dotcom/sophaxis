@@ -23,11 +23,11 @@
       "by": [
         {
           "file": ".github/ISSUE_TEMPLATE/submission.yml",
-          "text": "Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States"
+          "text": "I confirm that every author consents to the record being provided to GitHub, Vercel and ORCID in the United States"
         },
         {
           "file": ".github/ISSUE_TEMPLATE/submission.yml",
-          "text": "Every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States."
+          "text": "I confirm that every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States."
         }
       ]
     },
@@ -1317,11 +1317,11 @@
       "by": [
         {
           "file": "policies/submission.md",
-          "text": "The work contains no material"
+          "text": "I confirm that the work contains no material, such as figures or long quotations, that the authors may not share."
         },
         {
           "file": "policies/submission.md",
-          "text": "that the authors may not share, and no personal data of third parties."
+          "text": "I confirm that the work contains no personal data of third parties."
         }
       ]
     },
@@ -1347,7 +1347,7 @@
       "by": [
         {
           "file": "contact.md",
-          "text": "Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.html) sets out."
+          "text": "Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.md) sets out."
         }
       ]
     },

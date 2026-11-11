@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>沿革と名前（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「沿革と名前（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/history.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -88,14 +93,15 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>沿革と名前（日本語訳）</h1>
-<p>最終更新：2026-11-10。</p>
+<p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./history.html">History and name</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
-<h2>名前</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#名前">名前</a></li><li><a href="#始まり">始まり</a></li><li><a href="#それから">それから</a></li></ul></nav>
+<h2 id="名前">名前</h2>
 <p>Sophaxis という名は、ギリシア語の sophia（σοφία、知恵）と、ラテン語の axis（軸）を合わせたものです。どの言語でも、ラテン文字で頭を大文字にして書き、日本語ではソファクシスと読みます（<a href="./brand.ja.html">名前・ロゴ・バッジ</a>）。</p>
-<h2>始まり</h2>
+<h2 id="始まり">始まり</h2>
 <p>2026-10-30 に、運営者が規約と設定を置き、載っている記録が 0 件のまま、サイトを初めて生成しました。この日を、Sophaxis の始まった日とします。始めたのは、運営者が、哲学と数学の公開のプレプリントを並べて載せる場所を一つ探して、見つからなかったからです（<a href="./disclaimer.ja.html">免責事項</a>）。これは運営者の理由であって、ほかのアーカイブへの評価ではありません。</p>
-<h2>それから</h2>
-<ul><li>2026-10-30: Sophaxis opens</li><li>2026-11-06: Listed in ROAR</li><li>2026-11-07: Version 1.0.0 archived at Zenodo</li><li>2026-11-09: The site in Japanese</li><li>2026-11-09: Listed in the Open Access Directory</li><li>2026-11-10: Statements on funding, competing interests and research ethics</li><li>2026-11-10: Name, logo and a badge for listed works</li><li>2026-11-10: A call for an advisory board</li><li>2026-11-10: Sophaxis on X</li><li>2026-11-10: A call to researchers, and an accessibility statement</li><li>2026-11-10: How Sophaxis differs, a glossary, and a feed for each field</li><li>2026-11-10: A checklist, paper templates, a history page and a page in plain words</li><li>2026-11-11: The submission form in Japanese, and three new pages</li></ul><p class="meta">お知らせの題は英語のままです。本文は<a href="./news.html">お知らせ</a>にあります。</p>
+<h2 id="それから">それから</h2>
+<ul><li>2026-10-30: Sophaxis opens</li><li>2026-11-06: Listed in ROAR</li><li>2026-11-07: Version 1.0.0 archived at Zenodo</li><li>2026-11-09: The site in Japanese</li><li>2026-11-09: Listed in the Open Access Directory</li><li>2026-11-10: Statements on funding, competing interests and research ethics</li><li>2026-11-10: Name, logo and a badge for listed works</li><li>2026-11-10: A call for an advisory board</li><li>2026-11-10: Sophaxis on X</li><li>2026-11-10: A call to researchers, and an accessibility statement</li><li>2026-11-10: How Sophaxis differs, a glossary, and a feed for each field</li><li>2026-11-10: A checklist, paper templates, a history page and a page in plain words</li><li>2026-11-11: The submission form in Japanese, and three new pages</li><li>2026-11-11: The agreed court, a box for each point of the submission form, and links to sections</li></ul><p class="meta">お知らせの題は英語のままです。本文は<a href="./news.html">お知らせ</a>にあります。</p>
 </main>
 <footer><div class="wrap">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>

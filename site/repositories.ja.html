@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>預け先と DOI 登録機関へ（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「預け先と DOI 登録機関へ（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/repositories.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,20 +96,21 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./repositories.html">For repositories and DOI registration agencies</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>この頁は、Sophaxis が載せている作品の預け先と、その DOI を登録する機関に宛てたものです。Sophaxis がそれぞれのサービスから何を読むか、どのくらいの頻度で読むか、読んだものをどう使うかを書きます。</p>
-<h2>載せている預け先</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#載せている預け先">載せている預け先</a></li><li><a href="#sophaxis-が読むもの">Sophaxis が読むもの</a></li><li><a href="#sophaxis-が示すもの">Sophaxis が示すもの</a></li><li><a href="#何かを変えるべきとき">何かを変えるべきとき</a></li><li><a href="#預け先と登録機関に対する免責">預け先と登録機関に対する免責</a></li><li><a href="#謝辞">謝辞</a></li></ul></nav>
+<h2 id="載せている預け先">載せている預け先</h2>
 <ul><li>Zenodo: DOIs beginning <code>10.5281/zenodo.</code></li><li>Figshare: DOIs beginning <code>10.6084/m9.figshare.</code></li><li>OSF Preprints: DOIs beginning <code>10.31219/osf.io/</code></li><li>SocArXiv: DOIs beginning <code>10.31235/osf.io/</code></li><li>MetaArXiv: DOIs beginning <code>10.31222/osf.io/</code></li><li>arXiv: DOIs beginning <code>10.48550/arXiv.</code></li><li>Preprints.org: DOIs beginning <code>10.20944/preprints</code></li><li>SSRN: DOIs beginning <code>10.2139/ssrn.</code></li><li>Research Square: DOIs beginning <code>10.21203/rs.3.rs-</code></li><li>SciELO Preprints: DOIs beginning <code>10.1590/SciELOPreprints.</code></li><li>Qeios: DOIs beginning <code>10.32388/</code></li><li>ScienceOpen Preprints: DOIs beginning <code>10.14293/PR2199.</code></li><li>Advance: DOIs beginning <code>10.31124/advance.</code></li><li>KC Works: DOIs beginning <code>10.17613/</code></li><li>Jxiv: DOIs beginning <code>10.51094/jxiv.</code></li></ul>
 <p>作品を載せるのは、その著者が投稿したときだけです。DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されていることも要ります。Sophaxis は、どの預け先からも収集やミラーをしません。</p>
-<h2>Sophaxis が読むもの</h2>
+<h2 id="sophaxis-が読むもの">Sophaxis が読むもの</h2>
 <ul><li>投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。</li><li>作品の版の一覧。同じメタデータから読みます。</li><li>版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先がスクリプトに渡している場合だけです（Zenodo、Figshare、arXiv、Research Square）。それぞれの公開の API かダウンロードのアドレスを通します。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。</li></ul>
 <p>Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書きます。<code>Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)</code> です。投稿の確認の助言の段階は <a href="https://github.com/cpsbvbng26-dotcom/deposit-check">deposit-check</a> を走らせ、deposit-check は自分の名を書きます。<code>deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)</code> です。Sophaxis は、人が読むための頁を読みません。どんな上限も遮断も、すり抜けません。</p>
-<h2>Sophaxis が示すもの</h2>
+<h2 id="sophaxis-が示すもの">Sophaxis が示すもの</h2>
 <p>それぞれの記録の頁は、DOI へリンクし、預け先の名を挙げます。読者には、その DOI を引用するよう求めます。引用の先は DOI のままです。Sophaxis は、自分の DOI を与えません。要旨と PDF の写しは、<a href="./policies/copyright.ja.html">著作権の規程</a>が定めるとおり、作品自身のライセンスのもとで、著者とともに示します。</p>
-<h2>何かを変えるべきとき</h2>
+<h2 id="何かを変えるべきとき">何かを変えるべきとき</h2>
 <p>Sophaxis の読む頻度が許す範囲を超えているとき、規約が許さないものを読んでいるとき、サービスからファイルを写すのをやめるべきときは、運営者に知らせてください。Sophaxis は、それを変えるか、やめます。預けたものそのものについての求めは、預け先が扱います。Sophaxis は、預けたものを変えることも削除することもできません。</p>
 <p>運営者には、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues">issue</a> か、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるアドレスへのメールで連絡できます。</p>
-<h2>預け先と登録機関に対する免責</h2>
+<h2 id="預け先と登録機関に対する免責">預け先と登録機関に対する免責</h2>
 <p>Sophaxis は独立しています。どの預け先とも、どの登録機関とも、組織のうえのつながりはなく、後ろ盾も受けておらず、協力関係にもありません。Sophaxis は、載せている作品の Zenodo の記録のために、Zenodo にコミュニティ（&lt;https://zenodo.org/communities/sophaxis&gt;）を置いています。コミュニティは、Zenodo の利用者ならだれでも開けます。これによって Sophaxis が Zenodo の一部になるわけではありません。Sophaxis の記録は、預けたものについての Sophaxis 自身の説明です。預け先や登録機関が述べたものではありません。それらは、Sophaxis にも、その記録にも、そのモデレーションにも、それらのメタデータを示すときに Sophaxis が持ち込んだ誤りにも、責任を負いません。それらの名は、それぞれのサービスを示すためだけに使っています。商標はそれぞれの持ち主に属し、Sophaxis はどのロゴも示しません。Sophaxis は、それぞれのサービスを公開の口を通して使い、公表された規約の範囲で使います。規約の範囲は、Sophaxis が理解しているとおりです。サービスが違うことを述べるときは、Sophaxis はサービスに従います。<a href="./disclaimer.ja.html">免責事項</a>も見てください。</p>
-<h2>謝辞</h2>
+<h2 id="謝辞">謝辞</h2>
 <p>Sophaxis があるのは、これらのサービスが研究とそのメタデータを開かれた形で示しているからです。Sophaxis は、次のサービスに感謝します。</p>
 <ul><li><a href="https://zenodo.org">Zenodo</a>, for keeping the deposits and their DOIs</li><li><a href="https://figshare.com">Figshare</a>, for keeping the deposits and their DOIs</li><li><a href="https://osf.io/preprints/osf">OSF Preprints</a>, for keeping the deposits and their DOIs</li><li><a href="https://osf.io/preprints/socarxiv">SocArXiv</a>, for keeping the deposits and their DOIs</li><li><a href="https://osf.io/preprints/metaarxiv">MetaArXiv</a>, for keeping the deposits and their DOIs</li><li><a href="https://arxiv.org">arXiv</a>, for keeping the deposits and their DOIs</li><li><a href="https://www.preprints.org">Preprints.org</a>, for keeping the deposits and their DOIs</li><li><a href="https://www.ssrn.com">SSRN</a>, for keeping the deposits and their DOIs</li><li><a href="https://www.researchsquare.com">Research Square</a>, for keeping the deposits and their DOIs</li><li><a href="https://preprints.scielo.org">SciELO Preprints</a>, for keeping the deposits and their DOIs</li><li><a href="https://www.qeios.com">Qeios</a>, for keeping the deposits and their DOIs</li><li><a href="https://www.scienceopen.com">ScienceOpen Preprints</a>, for keeping the deposits and their DOIs</li><li><a href="https://advance.sagepub.com">Advance</a>, for keeping the deposits and their DOIs</li><li><a href="https://works.hcommons.org">KC Works</a>, for keeping the deposits and their DOIs</li><li><a href="https://jxiv.jst.go.jp">Jxiv</a>, for keeping the deposits and their DOIs</li><li><a href="https://datacite.org">DataCite</a>, for DOI metadata, openly available under CC0</li><li><a href="https://www.crossref.org">Crossref</a>, for DOI metadata, openly available through its REST API</li><li><a href="https://japanlinkcenter.org">Japan Link Center (JaLC)</a>, for DOI metadata for Jxiv</li><li><a href="https://orcid.org">ORCID</a>, for public records through its public API, for the identity check</li><li><a href="https://archive.org">the Internet Archive</a>, for saved copies of the pages and the PDF copies</li><li><a href="https://github.com">GitHub</a>, for the repository, the submissions and the automatic checks</li><li><a href="https://vercel.com">Vercel</a>, for serving the site</li></ul>
 <p>Thank you to arXiv for use of its open access interoperability. arXiv のオープンアクセスの相互運用性を使えることに、arXiv に感謝します。</p>

@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-11",
+    "title": "The agreed court, a box for each point of the submission form, and links to sections",
+    "text": "From 2026-11-25, the Terms of Use name the Utsunomiya District Court or the Utsunomiya Summary Court as the court of first instance agreed in a form; talks and mediation still come first, and the agreement stays non-exclusive. The submission form now asks a box for each point the submitter confirms or agrees to, and the automatic check refuses a submission until every required box is ticked. Every policy and prose page, in both languages, lists its sections near its top.",
+    "url": "policies/terms.html"
+  },
+  {
+    "date": "2026-11-11",
     "title": "The submission form in Japanese, and three new pages",
     "text": "The submission form is also in Japanese, with the same fields, and the automatic check reads it the same way. New pages, in both languages, guide a first preprint, tell libraries how to harvest the records, and give the policies in brief, which bind no one.",
     "url": "first.html"

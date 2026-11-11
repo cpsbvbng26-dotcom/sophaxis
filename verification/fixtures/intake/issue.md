@@ -32,8 +32,15 @@ No language model or other generative model was used.
 
 ### Confirmations
 
-- [X] I am an author of this work.
-- [X] Every author of this work agrees to its listing on Sophaxis.
-- [X] The authors may share this version under its licence; if a journal has published the work, the publisher allows it.
-- [X] The work contains no material that the authors may not share, and no personal data of third parties.
-- [X] I understand that listing is moderation, not peer review.
+- [X] I confirm that I am an author of this work.
+- [X] I confirm that the ORCID iD given in this form is my own.
+- [X] I confirm that every author of this work agrees to this submission and to its listing on Sophaxis.
+- [X] I confirm that the licence given in the DOI metadata applies to the deposited version.
+- [X] I confirm that the authors have the right to share this version under that licence, and that, if a journal has published the work, the publisher allows it.
+- [X] I confirm that the work contains no material, such as figures or long quotations, that the authors may not share.
+- [X] I confirm that the work contains no personal data of third parties.
+- [X] I confirm that the statement on generative models is complete and true.
+- [X] I confirm that, from 2026-11-24, the statements on funding, competing interests, and human participants and research ethics are complete and true.
+- [X] I confirm that everything else I state in this form is true.
+- [X] I agree that the authors bear full responsibility for the work and its listing, as the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html#the-authors-bear-full-responsibility) set out.
+- [X] I agree that a listing is moderation, not peer review, and that it is not to be presented as peer review ([Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#moderation-is-not-peer-review)).

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>For anyone introducing Sophaxis | Sophaxis</title>
 <meta name="description" content="For anyone introducing Sophaxis: a sentence, a paragraph, the facts, and what it is not.">
 <link rel="canonical" href="https://sophaxis.vercel.app/press.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -90,23 +95,24 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h1>For anyone introducing Sophaxis</h1>
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./press.ja.html">紹介する人のために（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
-<h2>In a few words</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#in-a-few-words">In a few words</a></li><li><a href="#in-one-sentence">In one sentence</a></li><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#facts">Facts</a></li><li><a href="#what-sophaxis-is-not">What Sophaxis is not</a></li><li><a href="#citing-sophaxis-itself">Citing Sophaxis itself</a></li><li><a href="#name-and-logo">Name and logo</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+<h2 id="in-a-few-words">In a few words</h2>
 <p>A free overlay preprint server for philosophy and mathematics.</p>
-<h2>In one sentence</h2>
+<h2 id="in-one-sentence">In one sentence</h2>
 <p>Sophaxis is a free overlay preprint server for philosophy and mathematics: it moderates preprints that their authors have already deposited with a DOI, and gives each a stable record page.</p>
-<h2>In one paragraph</h2>
+<h2 id="in-one-paragraph">In one paragraph</h2>
 <p>Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository, such as Zenodo, arXiv or SSRN, and submit the DOI in a public GitHub issue. An automatic check confirms through ORCID that the submitter is an author and that the work carries an open licence; a moderator then decides in public. Each record page shows the abstract, the versions, an unmodified PDF copy and the authors' statement on the use of generative models. Sophaxis charges nothing, to authors or to readers, and is run unpaid by one person in Japan.</p>
-<h2>Facts</h2>
+<h2 id="facts">Facts</h2>
 <div class="table"><table><tr><th scope="col">Fact</th><th scope="col">Value</th></tr><tr><th scope="row">Started</th><td>2026-10-30</td></tr><tr><th scope="row">Records shown</th><td>5</td></tr><tr><th scope="row">Fields</th><td>Philosophy, Mathematics, Philosophy of Mathematics, Philosophy of Science, Logic</td></tr><tr><th scope="row">Listed in</th><td><a href="https://roar.eprints.org/27422/">ROAR</a> (since 2026-11-06)</td></tr><tr><th scope="row">Licences accepted</th><td>CC BY 4.0, CC BY-SA 4.0, CC0 1.0</td></tr><tr><th scope="row">Fees</th><td>None, to authors or to readers</td></tr><tr><th scope="row">Operator</th><td>Takuya Nemoto (<a href="https://orcid.org/0009-0000-1406-0547">ORCID 0009-0000-1406-0547</a>)</td></tr><tr><th scope="row">Source code</th><td><a href="https://github.com/cpsbvbng26-dotcom/sophaxis">GitHub</a></td></tr><tr><th scope="row">Archived version</th><td><a href="https://doi.org/10.5281/zenodo.24033371">10.5281/zenodo.24033371</a> (Zenodo)</td></tr></table></div>
-<h2>What Sophaxis is not</h2>
+<h2 id="what-sophaxis-is-not">What Sophaxis is not</h2>
 <ul><li>It does not peer review: acceptance is moderation.</li><li>It is not a journal, and it has no ISSN.</li><li>It issues no DOIs: the DOIs are those of the repositories.</li><li>It has no affiliation with any repository, society or institution, as the <a href="./disclaimer.html">Disclaimer</a> says.</li></ul>
-<h2>Citing Sophaxis itself</h2>
+<h2 id="citing-sophaxis-itself">Citing Sophaxis itself</h2>
 <p>To cite a listed work, cite the DOI of that work, not Sophaxis. To cite Sophaxis itself, as a service or as software, cite the DOI of every version of its code at Zenodo, which resolves to the latest:</p>
 <p><code>Nemoto, T. (2026). Sophaxis: an overlay preprint server for philosophy and mathematics [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24033371</code></p>
 <p>The project also has a page at OSF, with the DOI <a href="https://doi.org/10.17605/OSF.IO/MQ7ZA">10.17605/OSF.IO/MQ7ZA</a>. The words used on the site are defined in the <a href="./glossary.html">Glossary</a>, and how Sophaxis differs from other places is on <a href="./compare.html">a page of its own</a>.</p>
-<h2>Name and logo</h2>
+<h2 id="name-and-logo">Name and logo</h2>
 <p>The name, the logo, the colours and the badge for listed works are on the page <a href="./brand.html">Name, logo and badge</a>. A version of Sophaxis that fits on one sheet, for printing, is <a href="./leaflet.html">Sophaxis on one page</a>. For library staff, there is <a href="./libraries.html">For libraries</a>.</p>
-<h2>Contact</h2>
+<h2 id="contact">Contact</h2>
 <p>Questions go to the operator by email, at the address on the operator's <a href="https://orcid.org/0009-0000-1406-0547">ORCID record</a>, or in <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new">a public issue</a>. News is on the <a href="./news.html">News</a> page and on X, at <a href="https://x.com/SophaxisX">@SophaxisX</a>.</p>
 </main>
 <footer><div class="wrap">

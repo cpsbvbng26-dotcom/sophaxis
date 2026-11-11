@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [載った作品を見つけてもらうために（日本語訳）](./findable.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [載った作品を見つけてもらうために（日本語訳）](./findable.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## What Sophaxis does by itself
 

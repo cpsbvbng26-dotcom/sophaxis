@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [利用規約（日本語訳）](./terms.ja.md). It is a translation; where the two differ, the English text applies.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -14,7 +14,7 @@ These terms apply to everyone who reads Sophaxis or submits to it.
 Authors agree to them in the submission form, in their version of the day.
 Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
 The other policies are part of these terms.
-How content is moderated is set out in the Moderation Policy and the Takedown Policy, and every automatic step that takes part in it is listed on the page [What runs by itself](../automation.html).
+How content is moderated is set out in the Moderation Policy and the Takedown Policy, and every automatic step that takes part in it is listed on the page [What runs by itself](../automation.md).
 
 ## What Sophaxis provides
 
@@ -32,20 +32,20 @@ This covers:
 - material from others in the work, and any infringement of copyright or other rights;
 - personal data of third parties in the work;
 - the statement on generative models, and any use that it leaves out;
-- the truth of everything the submitter confirms in the [Submission Policy](./submission.html).
+- the truth of everything the submitter confirms in the [Submission Policy](./submission.md).
 
 Moderation does not move any of this to the operator.
-A listing says only that a submission passed the checks in the [Moderation Policy](./moderation.html).
+A listing says only that a submission passed the checks in the [Moderation Policy](./moderation.md).
 If a third party makes a claim against Sophaxis or its operator because something the submitter confirmed at submission is untrue, the authors are responsible for it, as the law provides.
-Authors agree that the record page (its title, authors, abstract and PDF copy) may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.html), and that OAI-PMH then reports the record as deleted until it is put back.
-Text written in the forms is shared as the [Licence Policy](./licences.html) sets out.
-The operator still acts on requests under the [Takedown Policy](./takedown.html).
+Authors agree that the record page (its title, authors, abstract and PDF copy) may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.md), and that OAI-PMH then reports the record as deleted until it is put back.
+Text written in the forms is shared as the [Licence Policy](./licences.md) sets out.
+The operator still acts on requests under the [Takedown Policy](./takedown.md).
 A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so; for them, this section describes what the law already places on the authors of a work.
 
 ## What readers may do
 
 Readers may read, download and reuse each listed work under its own licence.
-The text of this site may be reused under CC BY 4.0, as set out in the [Licence Policy](./licences.html).
+The text of this site may be reused under CC BY 4.0, as set out in the [Licence Policy](./licences.md).
 
 ## What is not allowed
 
@@ -56,8 +56,8 @@ The text of this site may be reused under CC BY 4.0, as set out in the [Licence 
 - Confirming in a form something that is not true, such as where the authors live or stay, the submitter's age, the agreement of the authors or the statement on generative models.
 
 The operator may decline or remove a submission that breaks these rules.
-If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](./takedown.html) as soon as the operator learns of it. From 2026-11-22, the operator may also decline further submissions from the same GitHub account or ORCID iD.
-The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.html) says it is not.
+If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](./takedown.md) as soon as the operator learns of it. From 2026-11-22, the operator may also decline further submissions from the same GitHub account or ORCID iD.
+The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.md) says it is not.
 The confirmations stay in the public issue, so that what was confirmed, and when, can be shown.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
 
@@ -71,14 +71,14 @@ The articles it names are quoted at the end of this section.
 
 | Act | Law it may come near | Caution |
 | --- | --- | --- |
-| Submitting a version that the authors have no right to share under its licence, such as one whose publisher holds an exclusive licence | Copyright Act, Articles 21 and 23 | Submit only a version that the authors may share under its licence. Such a record is removed under the [Takedown Policy](./takedown.html). |
+| Submitting a version that the authors have no right to share under its licence, such as one whose publisher holds an exclusive licence | Copyright Act, Articles 21 and 23 | Submit only a version that the authors may share under its licence. Such a record is removed under the [Takedown Policy](./takedown.md). |
 | Giving another person's ORCID iD in the form, or signing in to another person's ORCID or GitHub account to pass the identity check | Penal Code, Article 233; Act on the Prohibition of Unauthorized Computer Access, Article 3 | Use only your own iD and your own accounts. |
 | Confirming the agreement of a co-author who did not agree, or confirming anything else that is not true in a form | Penal Code, Article 233; Civil Code, Article 709 | Confirm only what is true. The record is removed as soon as the operator learns of it. |
-| Presenting a listing on Sophaxis as peer review or as publication in a journal, in a CV, an application for funding or an advertisement | Penal Code, Article 246; Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Describe a listing as what it is: a moderated listing of a preprint, which is not peer review ([Moderation Policy](./moderation.html)). |
-| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Unfair Competition Prevention Act, Article 2(1)(i) and (ii); Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](../brand.html) says how they may be used. |
+| Presenting a listing on Sophaxis as peer review or as publication in a journal, in a CV, an application for funding or an advertisement | Penal Code, Article 246; Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Describe a listing as what it is: a moderated listing of a preprint, which is not peer review ([Moderation Policy](./moderation.md)). |
+| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Unfair Competition Prevention Act, Article 2(1)(i) and (ii); Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](../brand.md) says how they may be used. |
 | Reusing a PDF copy or a record beyond what its licence allows, for example without the credit that the licence asks | Copyright Act, Articles 21 and 23 | Reuse each work under its own licence, which its record page names. |
 | Vouching for a submission with words that are not true, for example about where the researcher lives or stays, or about being an author | Penal Code, Article 233; Civil Code, Article 709 | Vouch only with words that are true. |
-| Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once, under the [Takedown Policy](./takedown.html). |
+| Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once, under the [Takedown Policy](./takedown.md). |
 
 The responsibility for an act done against these terms, or outside them, lies with the person who did it.
 Except where the law makes the operator responsible, the operator is not responsible for such acts.
@@ -107,7 +107,7 @@ Even then, the change is announced before it takes effect.
 Other changes, such as clearer wording or new examples, take effect on the date the page shows, which is never before the day they are published.
 A change is made only as Article 548-4 of Japan's Civil Code allows: when it is in the general interest of authors and readers, or when it is reasonable in the light of the purpose of these terms, the need for it and its content.
 Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
-A person who does not accept a change can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
+A person who does not accept a change can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.md).
 
 <!-- text: Civil Code 548-4 -->
 
@@ -137,11 +137,12 @@ A dispute about Sophaxis or a listed work is settled by agreement wherever possi
 2. Both sides then try, in good faith, to reach an agreement by talking. The operator answers within 7 days and does not leave a dispute without reply.
 3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
 
-If a dispute is not settled in these ways, it goes to the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
+From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
+Until then, the court of first instance by agreement is, on the same terms, the district court or the summary court that has jurisdiction over the operator's place of residence.
 For anyone else, the court that the law sets has jurisdiction.
-The operator's address is given on request, as the [Operator and contact](../contact.html) page says.
+The operator's address is given on request, as the [Operator and contact](../contact.md) page says.
 This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
-Nothing in this section stops anyone from asking a court for urgent relief, or from using the [Takedown Policy](./takedown.html).
+Nothing in this section stops anyone from asking a court for urgent relief, or from using the [Takedown Policy](./takedown.md).
 
 ## People outside Japan
 
@@ -160,7 +161,7 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 - Reading Sophaxis means receiving pages from Vercel, which handles each request, including the IP address, under its own terms and privacy policy, possibly in countries other than Japan or the reader's own.
 - These terms bind the operator and the people who use Sophaxis. They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel, or against the operator for what GitHub or Vercel does.
 - A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court. The steps in Disputes above cover only the operator and Sophaxis.
-- Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](./takedown.html) whether or not GitHub or Vercel has acted.
+- Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](./takedown.md) whether or not GitHub or Vercel has acted.
 - If GitHub or Vercel removes, limits or blocks something on their side, for example under the law of the United States, Sophaxis may not be able to restore it.
 
 Their terms were read at their sources on 2026-11-09: GitHub's [Terms of Service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (effective 2026-04-27), [Acceptable Use Policies](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies) and [General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) (effective 2026-04-27); Vercel's [Terms of Service](https://vercel.com/legal/terms) (last updated 2026-10-19), [Acceptable Use Policy](https://vercel.com/legal/acceptable-use-policy) (last updated 2026-04-21) and [Privacy Notice](https://vercel.com/legal/privacy-notice) (last updated 2026-06-01).
@@ -184,12 +185,12 @@ What they say that matters to people who use Sophaxis:
 - If the operator does not enforce a part of these terms at one time, that does not waive it.
 - From 2026-11-21, a person under 13 cannot submit.
 - A person under 18 may submit only with the consent of a parent or guardian.
-- Where the law gives a person who submitted as a minor a right to have the listing removed, the [Takedown Policy](./takedown.html) applies.
+- Where the law gives a person who submitted as a minor a right to have the listing removed, the [Takedown Policy](./takedown.md) applies.
 - A notice to the operator is given by email to the address on the ORCID record, or in an issue. A notice to an author is given in their submission issue.
 
 ## Contact
 
-The operator and every way to reach the operator are on the [Operator and contact](../contact.html) page.
+The operator and every way to reach the operator are on the [Operator and contact](../contact.md) page.
 Questions go to the [issues of the repository](https://github.com/cpsbvbng26-dotcom/sophaxis/issues).
 Anything that should not be public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
-Requests to remove material follow the [Takedown Policy](./takedown.html).
+Requests to remove material follow the [Takedown Policy](./takedown.md).

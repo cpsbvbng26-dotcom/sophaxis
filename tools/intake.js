@@ -52,6 +52,7 @@ const FIELDS = {
   'Abstract (only if the DOI metadata has none)': 'abstract',
   'Use of language models and other generative models': 'llm',
   'Extent of use of generative models': 'llm_extent',
+  'Confirmations': 'confirm',
   'Consent and agreement': 'consent',
   'Saving to the Internet Archive (optional)': 'archive',
   'Where the authors live': 'residence',
@@ -78,6 +79,7 @@ const FIELDS = {
   '平易な要約（任意）': 'lay_summary',
   '言語モデルとその他の生成モデルの使用': 'llm',
   '生成モデルを使った程度': 'llm_extent',
+  '確認': 'confirm',
   '同意': 'consent',
   'Internet Archive への保存（任意）': 'archive',
   '著者の住んでいる場所': 'residence',
@@ -412,8 +414,44 @@ function listedDois(paperDir) {
   return out;
 }
 
+/* Every box that the submission forms require, group by group, in the order of the forms, in English and in Japanese,
+ * read from the forms themselves (.github/ISSUE_TEMPLATE/submission.yml and submission-ja.yml), so that a box added to a
+ * form is enforced at once. The Submission Policy lists the same boxes under "What the submitter confirms", and
+ * verification/check.js holds the three together. A submission is refused unless every box of a group is ticked: the
+ * confirmations always, the consent and agreement from SITE.consentFrom, and where the authors live from SITE.residenceFrom,
+ * or as soon as any box of that group is ticked. The box on the Internet Archive is optional and is not read here. */
+const FORMS = ['submission.yml', 'submission-ja.yml'];
+/* Pure: the labels of every checkbox group of a form, { id: [label, ...] }, as the form gives them. */
+function formBoxes(text) {
+  const out = {};
+  for (const part of String(text || '').replace(/\r\n/g, '\n').split(/^  - type: /m).slice(1)) {
+    if (!part.startsWith('checkboxes\n')) continue;
+    const id = (/^    id: (\w+)$/m.exec(part) || [])[1];
+    if (id) out[id] = [...part.matchAll(/^        - label: (?:"((?:[^"\\]|\\.)*)"|(.+))$/gm)].map((m) => (m[1] !== undefined ? m[1].replace(/\\(.)/g, '$1') : m[2].trim()));
+  }
+  return out;
+}
+/* The day from which each group is required; the confirmations are required by the form itself, from the start. */
+const BOXES_FROM = { confirm: null, consent: 'consentFrom', residence: 'residenceFrom' };
+/* Each required box as [English, Japanese]: the two forms have the same boxes in the same order. */
+const BOXES = (() => {
+  const [en, ja] = FORMS.map((f) => formBoxes(fs.readFileSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', f), 'utf8')));
+  return Object.fromEntries(Object.keys(BOXES_FROM).map((g) => [g, (en[g] || []).map((l, i) => [l, (ja[g] || [])[i]])]));
+})();
 /* The number of boxes in the "Consent and agreement" part of the submission form. */
-const CONSENTS = 3;
+const CONSENTS = BOXES.consent.length;
+/* Pure: the labels ticked in one group of a form, as GitHub writes them: "- [X] label". */
+const tickedIn = (text) => [...String(text || '').replace(/\r\n/g, '\n').matchAll(/^- \[[xX]\] (.+)$/gm)].map((m) => m[1].trim());
+/* Pure: the boxes of a group that are not ticked, by their number in the group (from 1); a box counts in either language. */
+const unticked = (group, text) => { const t = new Set(tickedIn(text)); return BOXES[group].map((b, i) => (t.has(b[0]) || t.has(b[1]) ? 0 : i + 1)).filter(Boolean); };
+/* Pure: a group with every box ticked, as GitHub writes it, in English (0) or Japanese (1). */
+const allTicked = (group, lang = 0) => BOXES[group].map((b) => '- [X] ' + b[lang]).join('\n');
+/* The label of the check row of each group. */
+const BOX_LABELS = {
+  confirm: 'Every confirmation is ticked',
+  consent: 'Consent, agreement to the policies and age are confirmed',
+  residence: 'No author lives in a place where Sophaxis is not offered',
+};
 
 function check({ form, login, meta, person, works, listed, pub, today, age, notices }) {
   const checks = [];
@@ -435,16 +473,15 @@ function check({ form, login, meta, person, works, listed, pub, today, age, noti
     if (key || String(today || new Date().toISOString()).slice(0, 10) >= SITE.llmExtentFrom) add('The extent of use of generative models is chosen', !!key, key || '');
     if (key === 'none') add('The extent "None" agrees with the statement', !MODEL_NAMES.test(form.llm || ''));
   }
-  /* From SITE.consentFrom, the form asks each author's consent to publication and to the services outside Japan,
-   * agreement to the policies, and the age. All CONSENTS boxes must be ticked. */
-  {
-    const ticked = (String(form.consent || '').match(/^- \[[xX]\] /gm) || []).length;
-    if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.consentFrom) add('Consent, agreement to the policies and age are confirmed', ticked === CONSENTS, ticked + ' of ' + CONSENTS);
-  }
-  /* From SITE.residenceFrom, no author may live in a place where Sophaxis is not offered (SITE.notOffered). */
-  {
-    const ticked = (String(form.residence || '').match(/^- \[[xX]\] /gm) || []).length;
-    if (ticked || String(today || new Date().toISOString()).slice(0, 10) >= SITE.residenceFrom) add('No author lives in a place where Sophaxis is not offered', ticked === 1, ticked ? '' : 'the box is not ticked');
+  /* Every required box of the form, group by group (BOXES): the confirmations always; the consent to publication and to the
+   * services outside Japan, the agreement to each policy and the age from SITE.consentFrom; where the authors live from
+   * SITE.residenceFrom (SITE.notOffered). A group is also checked as soon as any of its boxes is ticked. */
+  for (const group of Object.keys(BOXES)) {
+    const from = BOXES_FROM[group] && SITE[BOXES_FROM[group]];
+    const missing = unticked(group, form[group]);
+    if (!from || tickedIn(form[group]).length || String(today || new Date().toISOString()).slice(0, 10) >= from) {
+      add(BOX_LABELS[group], missing.length === 0 && BOXES[group].length > 0, missing.length ? (BOXES[group].length - missing.length) + ' of ' + BOXES[group].length + '; not ticked: ' + missing.join(', ') : BOXES[group].length + ' of ' + BOXES[group].length);
+    }
   }
   /* From SITE.statementsFrom, counted on the day the issue was opened: funding, competing interests, and human participants and research ethics. */
   {
@@ -933,6 +970,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>ほかの場との違い（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「ほかの場との違い（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/compare.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -90,12 +95,13 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h1>ほかの場との違い（日本語訳）</h1>
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./compare.html">How Sophaxis differs from other places</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
-<h2>要するに</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#要するに">要するに</a></li><li><a href="#並べて">並べて</a></li><li><a href="#なぜ層なのか">なぜ層なのか</a></li></ul></nav>
+<h2 id="要するに">要するに</h2>
 <p>Sophaxis はリポジトリの上に重ねる層であって、リポジトリの一つではありません。作品はまずリポジトリに預けられ、リポジトリがファイルを保ち、DOI を与えます。そのあと Sophaxis がモデレーションをして、同じ分野のほかの作品と並べて載せます。下に挙げる場のどれの代わりにもならず、一つの作品がいくつかの場に同時にあってかまいません。</p>
-<h2>並べて</h2>
+<h2 id="並べて">並べて</h2>
 <div class="table"><table><tr><th scope="col"></th><th scope="col">ファイルを保つ</th><th scope="col">DOI を与える</th><th scope="col">作品が出る前</th><th scope="col">分野</th><th scope="col">著者の料金</th></tr><tr><td>Sophaxis</td><td>保たない。ファイルはリポジトリが保つ。Sophaxis は手を加えない PDF の写しを置き、リポジトリへリンクする</td><td>与えない。リポジトリの DOI を使う</td><td>ORCID を通した自動の確認のあと、公開の issue でのモデレーション</td><td>哲学・数学・論理学・数理哲学・科学哲学</td><td>なし</td></tr><tr><td>arXiv</td><td>保つ</td><td>与える</td><td>モデレーション。初めての投稿の一部には紹介</td><td>物理学・数学・計算機科学ほかの科学</td><td>なし</td></tr><tr><td>PhilArchive</td><td>保つ</td><td>与えない</td><td>編集者による確認</td><td>哲学</td><td>なし</td></tr><tr><td>SSRN</td><td>保つ</td><td>与える</td><td>担当者による確認</td><td>主に社会科学と人文学。哲学と数学のネットワークもある</td><td>なし</td></tr><tr><td>Zenodo</td><td>保つ</td><td>与える</td><td>中身の審査はない</td><td>すべての分野</td><td>なし</td></tr></table></div>
 <p>これは 2026-11-10 の時点の短いまとめです。決めるのは、それぞれのサービスの頁です。Sophaxis はどれともつながりを持ちません。名を挙げるのは、違いを示すためだけです。</p>
-<h2>なぜ層なのか</h2>
+<h2 id="なぜ層なのか">なぜ層なのか</h2>
 <p>すべての分野を受けるリポジトリは、作品を引けるものにします。けれども、哲学や数学の読者は、ほかのすべてのものの中から作品を探すことになります。Sophaxis は、これらの分野のそうした作品を一つの場に集め、投稿者が著者であることとライセンスが開かれていることを公開の場で確かめ、一篇ごとに変わらない記録の頁を与えます。受理はモデレーションであって、査読ではありません。</p>
 </main>
 <footer><div class="wrap">

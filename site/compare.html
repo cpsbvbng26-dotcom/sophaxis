@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>How Sophaxis differs from other places | Sophaxis</title>
 <meta name="description" content="How Sophaxis differs from arXiv, PhilArchive, SSRN and Zenodo: a layer on top of the repositories, not one of them.">
 <link rel="canonical" href="https://sophaxis.vercel.app/compare.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -90,12 +95,13 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h1>How Sophaxis differs from other places</h1>
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./compare.ja.html">ほかの場との違い（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
-<h2>In short</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#in-short">In short</a></li><li><a href="#side-by-side">Side by side</a></li><li><a href="#why-a-layer">Why a layer</a></li></ul></nav>
+<h2 id="in-short">In short</h2>
 <p>Sophaxis is a layer on top of the repositories, not one of them. A work is first deposited in a repository, which keeps the file and gives the DOI; Sophaxis then moderates it and lists it beside other work in its fields. It replaces none of the places below, and a work can be in several of them at once.</p>
-<h2>Side by side</h2>
+<h2 id="side-by-side">Side by side</h2>
 <div class="table"><table><tr><th scope="col"></th><th scope="col">Keeps the file</th><th scope="col">Gives a DOI</th><th scope="col">Before a work appears</th><th scope="col">Fields</th><th scope="col">Fees to authors</th></tr><tr><td>Sophaxis</td><td>No; the repository keeps it, and Sophaxis keeps an unmodified PDF copy and links the repository</td><td>No; it uses the DOI of the repository</td><td>An automatic check through ORCID, then moderation in a public issue</td><td>Philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science</td><td>None</td></tr><tr><td>arXiv</td><td>Yes</td><td>Yes</td><td>Moderation, and for some first submissions an endorsement</td><td>Physics, mathematics, computer science and other sciences</td><td>None</td></tr><tr><td>PhilArchive</td><td>Yes</td><td>No</td><td>A check by its editors</td><td>Philosophy</td><td>None</td></tr><tr><td>SSRN</td><td>Yes</td><td>Yes</td><td>A check by its staff</td><td>Mainly the social sciences and the humanities, with networks for philosophy and mathematics</td><td>None</td></tr><tr><td>Zenodo</td><td>Yes</td><td>Yes</td><td>No review of the content</td><td>Every field</td><td>None</td></tr></table></div>
 <p>These are short summaries as of 2026-11-10; the pages of each service are what count. Sophaxis has no connection with any of them; they are named only to show the difference.</p>
-<h2>Why a layer</h2>
+<h2 id="why-a-layer">Why a layer</h2>
 <p>Repositories that take every field make a work citable, but leave a reader in philosophy or mathematics to find it among everything else. Sophaxis gathers such works in one place for these fields, checks in public that the submitter is an author and that the licence is open, and gives each a stable record page. Acceptance is moderation, not peer review.</p>
 </main>
 <footer><div class="wrap">

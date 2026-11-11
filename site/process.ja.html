@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>投稿から掲載まで（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「投稿から掲載まで（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/process.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,34 +96,35 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./process.html">From submission to listing</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>この頁は、一つの投稿を始めから終わりまでたどります。決まりそのものは、<a href="./policies/submission.ja.html">投稿の規程</a>と<a href="./policies/moderation.ja.html">モデレーションの規程</a>にあります。この頁と食い違うところは、規程が適用されます。</p>
-<h2>始める前に</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#始める前に">始める前に</a></li><li><a href="#手順-1-github-のユーザー名を確かめる">手順 1. GitHub のユーザー名を確かめる</a></li><li><a href="#手順-2-orcid-の記録を-github-にリンクする">手順 2. ORCID の記録を GitHub にリンクする</a></li><li><a href="#手順-3-投稿の-issue-を開く">手順 3. 投稿の issue を開く</a></li><li><a href="#手順-4-自動の確認が答える">手順 4. 自動の確認が答える</a></li><li><a href="#手順-5-モデレーターが投稿を読む">手順 5. モデレーターが投稿を読む</a></li><li><a href="#手順-6-判断">手順 6. 判断</a></li><li><a href="#掲載のあと">掲載のあと</a></li></ul></nav>
+<h2 id="始める前に">始める前に</h2>
 <p>要るものは四つです。投稿に要るほかのことは、<a href="./checklist.ja.html">確かめること</a>の頁にまとめてあります。</p>
 <ol><li>Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。<a href="./policies/submission.ja.html">投稿の規程</a>が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから六か月以上たっている必要があります。</li><li>預けたものに付けた CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。DOI のメタデータに出ている必要があります。</li><li><a href="https://orcid.org">ORCID</a> iD。登録は無料です。</li><li><a href="https://github.com">GitHub</a> のアカウント。登録は無料です。</li></ol>
 <p>作品の著者全員が、掲載に同意している必要があります。<a href="./policies/submission.ja.html">投稿の規程</a>が定めるとおり、2026-11-23 から、初めての投稿には研究者一人の紹介も要ります。紹介する研究者は、学術誌の論文・本の章・本を持つ人です。言語モデルやその他の生成モデルを使った場合は、使った道具と、何に使ったかを書きます。2026-11-24 から、様式は研究資金、利益相反、人を対象とする研究と研究倫理についての申告も求めます。任意で、データとコードの所在も尋ねます。</p>
-<h2>手順 1. GitHub のユーザー名を確かめる</h2>
+<h2 id="手順-1-github-のユーザー名を確かめる">手順 1. GitHub のユーザー名を確かめる</h2>
 <p>投稿は GitHub の issue です。Sophaxis のリポジトリに公開で置く投稿で、その下にコメントが付きます。GitHub のアカウントが無い場合は、<a href="https://github.com/signup">github.com/signup</a> で作れます。</p>
 <p>ユーザー名は、GitHub のプロフィールのアドレス <code>https://github.com/&lt;your username&gt;</code> の最後の部分です。サインインしたあとは、右上の自分の画像の下のメニューにも出ます。</p>
-<h2>手順 2. ORCID の記録を GitHub にリンクする</h2>
+<h2 id="手順-2-orcid-の記録を-github-にリンクする">手順 2. ORCID の記録を GitHub にリンクする</h2>
 <ol><li><a href="https://orcid.org">orcid.org</a> でサインインすると、ORCID の記録が開きます。ORCID iD は、名前の下にある 16 桁の番号です。</li><li>「Websites &amp; social links」の節を探し、その編集のボタン（鉛筆）を押します。</li><li>「Add link」を選びます。GitHub のような題と、アドレス <code>https://github.com/&lt;your username&gt;</code> を書きます。</li><li>公開の範囲を「Everyone」にして、保存します。</li></ol>
 <p>Sophaxis は、こうして、投稿を開いた人が作品の著者であることを確かめます。Sophaxis が ORCID の記録から読むのは、名前・リンク・業績だけです。ORCID にメールアドレスや国を問い合わせることはありません。</p>
-<h2>手順 3. 投稿の issue を開く</h2>
+<h2 id="手順-3-投稿の-issue-を開く">手順 3. 投稿の issue を開く</h2>
 <ol><li><a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml">投稿の様式</a>を開きます。GitHub がサインインを求めたら、サインインします。そのあと様式が開きます。同じ様式の<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml">日本語版</a>もあります。</li><li>題の「[Submission]」のあとに、作品の題のような短い言葉を足します。</li><li>DOI、ORCID iD、分野（合えば下位の分野も）、生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告を書き、確認の欄に印を付けます。平易な要約と二つ目の言語の要旨は任意です。</li><li>様式のいちばん下のボタンを押して、issue を作ります。</li></ol>
 <p>題・著者・要旨・ライセンスは、DOI のメタデータから取ります。手で打ち込むことはありません。</p>
 <p>issue は公開されます。GitHub のユーザー名と、そこに書いたことはすべて、誰でも読めます。自分が開いた issue に新しいコメントが付くと、GitHub が知らせます。知らせは github.com に出て、初期の設定ではメールでも届きます。</p>
-<h2>手順 4. 自動の確認が答える</h2>
+<h2 id="手順-4-自動の確認が答える">手順 4. 自動の確認が答える</h2>
 <p>ふつうは数分のうちに、「Automatic checks」という題のコメントが issue に付きます。コメントは、預け先、ライセンス、DOI のメタデータ、ORCID の記録からのリンク、著者であることを、それぞれ通ったか通らなかったかで示します。issue には <code>verified</code> か <code>unverified</code> のラベルが付きます。</p>
 <p>確認が通らなかった場合は、コメントがその理由を書きます。ORCID の記録のリンクのような原因を直してから、issue を編集します。すると、確認がもう一度走ります。issue を編集するには、最初の投稿の右上のメニュー（⋯）を開き、「Edit」を選び、要るところを変えて保存します。何も変えない編集では、確認は走りません。</p>
 <p>預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo、Figshare、arXiv、Research Square 以外のすべての預け先がこれに当たります。添付は任意で、ファイルは 20 MB までです。添付するには、ファイルを issue のいちばん下のコメントの欄に引き入れ、そのリンクが出るのを待ってから、コメントを投稿します。</p>
 <p>投稿が確かめられた場合、コメントは、預け先にある DOI のメタデータについての助言を添えることもあります。たとえば、要旨、ライセンス、キーワードが欠けていることです。助言は <a href="https://github.com/cpsbvbng26-dotcom/deposit-check">deposit-check</a> から来ます。掲載を決めるものではありません。検索エンジンや索引は、PDF ではなくこのメタデータを読みます。多くの預け先では、新しい版を作らずにそれを直せます。</p>
 <p>確認を通っても、受理ではありません。</p>
 <p>GitHub と ORCID のボタンの名は、変わることがあります。手順は変わりません。</p>
-<h2>手順 5. モデレーターが投稿を読む</h2>
+<h2 id="手順-5-モデレーターが投稿を読む">手順 5. モデレーターが投稿を読む</h2>
 <p>モデレーターは、確かめられた投稿を、<a href="./policies/moderation.ja.html">モデレーションの規程</a>に照らして読みます。見るのは、対象の分野、学術論文の形、生成モデルについての申告、そしてスパム・嫌がらせ・第三者の個人データが無いことです。モデレーションは査読ではありません。証明・論証・データは確かめません。</p>
 <p>目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。判断は issue に書きます。</p>
-<h2>手順 6. 判断</h2>
+<h2 id="手順-6-判断">手順 6. 判断</h2>
 <p>受理した場合は、2026.0001 のような Sophaxis の番号を付けて記録の頁を公開し、issue を閉じます。預け先が許す場合は、そのあとで、手を加えていない PDF の写しを加えます。</p>
 <p>断る場合は、モデレーターが issue に短い理由を書きます。投稿者は、そこで答えることができます。その後、運営者が投稿をもう一度見直し、その判断が最終のものになります。</p>
-<h2>掲載のあと</h2>
+<h2 id="掲載のあと">掲載のあと</h2>
 <ul><li>新しい版：預け先に預けてから、既存の Sophaxis の番号を書いて投稿の issue を開きます。</li><li>記録の誤り：記録の頁にある「Report an error in this record」を使います。</li><li>撤回：著者なら誰でも一人で、<a href="./policies/withdrawal.ja.html">撤回の規程</a>に沿って作品を撤回できます。</li><li>出版：後の版が学術誌、会議録、書籍で出版されたときは、著者なら誰でも一人で、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml">出版された版の様式</a>で報告します。プレプリントは載ったままです。</li></ul>
 <p>ほかの問いへの短い答えは、<a href="./faq.ja.html">よくある質問</a>にあります。</p>
 </main>

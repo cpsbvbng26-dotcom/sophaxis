@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Name, logo and badge | Sophaxis</title>
 <meta name="description" content="The name, the logo, the colours of Sophaxis, and the badge for listed works.">
 <link rel="canonical" href="https://sophaxis.vercel.app/brand.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -90,18 +95,19 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h1>Name, logo and badge</h1>
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./brand.ja.html">名前・ロゴ・バッジ（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
-<h2>Name</h2>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#name">Name</a></li><li><a href="#logo">Logo</a></li><li><a href="#colours">Colours</a></li><li><a href="#badge-for-a-listed-work">Badge for a listed work</a></li><li><a href="#text-of-the-site">Text of the site</a></li></ul></nav>
+<h2 id="name">Name</h2>
 <p>The name is written Sophaxis, in Latin letters, with a capital S, in every language. In Japanese it is read ソファクシス. It joins the Greek sophia (σοφία), wisdom, and the Latin axis; the <a href="./history.html">History and name</a> page says more. A record is cited by its Sophaxis id, such as <code>2026.0001</code>, and by the DOI of the deposited work. On 2026-11-11 (Japan time), the operator searched J-PlatPat, the database of the Japan Patent Office, and the WIPO Global Brand Database for the name Sophaxis, and found no trade mark of that name. A search shows only what those databases held that day, and it is not legal advice. The operator has not applied to register the name.</p>
-<h2>Logo</h2>
+<h2 id="logo">Logo</h2>
 <p>The logo is drawn with rectangles and polygons only, so that it looks the same on every device and uses no typeface.</p>
 <ul><li><a href="./favicon.svg">favicon.svg</a>: the logo as a vector image.</li><li><a href="./og.png">og.png</a>: the logo as a square PNG.</li></ul>
 <p>Use the logo unchanged, to refer to Sophaxis or to link to it. Do not use it in a way that suggests that Sophaxis reviewed, recommends or is connected with something it is not.</p>
-<h2>Colours</h2>
+<h2 id="colours">Colours</h2>
 <div class="table"><table><tr><th scope="col">Use</th><th scope="col">Light</th><th scope="col">Dark</th></tr><tr><td>Background</td><td><code>#f7f5f0</code></td><td><code>#14171f</code></td></tr><tr><td>Text</td><td><code>#1d2330</code></td><td><code>#e6e2d8</code></td></tr><tr><td>Accent</td><td><code>#2f4a7a</code></td><td><code>#9fb6e0</code></td></tr></table></div>
-<h2>Badge for a listed work</h2>
+<h2 id="badge-for-a-listed-work">Badge for a listed work</h2>
 <p>An author of a listed work can show that it is listed, with the badge <a href="./badge.svg">badge.svg</a>. Each record page gives the badge with a link to that record, ready to paste.</p>
 <ul><li>Use it only for a work that Sophaxis lists, and link it to the record page.</li><li>Remove it if the work is withdrawn or its record is removed.</li><li>The badge says that the work passed moderation. It does not say that the work was peer-reviewed, and it says nothing of its quality.</li></ul>
-<h2>Text of the site</h2>
+<h2 id="text-of-the-site">Text of the site</h2>
 <p>The text of the site is shared under CC BY 4.0 and its code under MIT, as every page says.</p>
 </main>
 <footer><div class="wrap">

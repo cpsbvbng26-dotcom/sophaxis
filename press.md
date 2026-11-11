@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [紹介する人のために（日本語訳）](./press.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [紹介する人のために（日本語訳）](./press.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## In a few words
 
@@ -29,7 +29,7 @@ Sophaxis charges nothing, to authors or to readers, and is run unpaid by one per
 - It does not peer review: acceptance is moderation.
 - It is not a journal, and it has no ISSN.
 - It issues no DOIs: the DOIs are those of the repositories.
-- It has no affiliation with any repository, society or institution, as the [Disclaimer](./disclaimer.html) says.
+- It has no affiliation with any repository, society or institution, as the [Disclaimer](./disclaimer.md) says.
 
 ## Citing Sophaxis itself
 
@@ -38,15 +38,15 @@ To cite Sophaxis itself, as a service or as software, cite the DOI of every vers
 
 `Nemoto, T. (2026). Sophaxis: an overlay preprint server for philosophy and mathematics [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24033371`
 
-The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The words used on the site are defined in the [Glossary](./glossary.html), and how Sophaxis differs from other places is on [a page of its own](./compare.html).
+The project also has a page at OSF, with the DOI [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA). The words used on the site are defined in the [Glossary](./glossary.md), and how Sophaxis differs from other places is on [a page of its own](./compare.md).
 
 ## Name and logo
 
-The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.html).
-A version of Sophaxis that fits on one sheet, for printing, is [Sophaxis on one page](./leaflet.html).
-For library staff, there is [For libraries](./libraries.html).
+The name, the logo, the colours and the badge for listed works are on the page [Name, logo and badge](./brand.md).
+A version of Sophaxis that fits on one sheet, for printing, is [Sophaxis on one page](./leaflet.md).
+For library staff, there is [For libraries](./libraries.md).
 
 ## Contact
 
 Questions go to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in [a public issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
-News is on the [News](./news.html) page and on X, at [@SophaxisX](https://x.com/SophaxisX).
+News is on the [News](https://sophaxis.vercel.app/news.html) page and on X, at [@SophaxisX](https://x.com/SophaxisX).

@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-11.
 
-Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
+Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -76,7 +76,7 @@ A record also gives the number of its submission issue, which shows the submitte
 Sophaxis keeps records without a time limit, so that citations do not break.
 The issues, with the GitHub usernames in them, stay as long as GitHub keeps them; removing a record empties the issues that name it, and the operator then deletes them.
 Vercel keeps its request logs for the period its service sets, and the operator does not copy them.
-A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](./takedown.html) sets out.
+A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](./takedown.md) sets out.
 Earlier versions stay in the history of the public repository and in the saves of the Internet Archive; the operator asks GitHub and the Internet Archive to remove them.
 
 ## Reuse and copies elsewhere
@@ -146,7 +146,7 @@ Each week, an automatic step reads the date of the last update of Vercel's and A
 Records are built only from information that is public already.
 The automatic checks keep nothing from an ORCID record except the name, the websites and the works.
 The automatic checks run with the least permissions they need.
-Only the operator can change the records, except that the automatic step of the [Takedown Policy](./takedown.html) takes the record page (its title, authors, abstract and PDF copy) offline when a removal issue reports exposure of personal data.
+Only the operator can change the records, except that the automatic step of the [Takedown Policy](./takedown.md) takes the record page (its title, authors, abstract and PDF copy) offline when a removal issue reports exposure of personal data.
 If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned.
 A leak must be reported when it involves sensitive personal information, data whose misuse could cause financial loss, data leaked through an act done for an improper purpose, such as an attack on the operator's accounts, or the data of more than 1,000 people.
 The operator reports promptly after learning of it, and gives the full report within 30 days, or within 60 days when the leak may come from an act done for an improper purpose.
@@ -165,12 +165,12 @@ The automatic checks compare public records and post the result in the issue. Th
 No decision with legal or similarly significant effects on a person is made solely by automated means.
 The language models that help the review make no decision; every decision on a submission is taken by a person, as the Moderation Policy sets out.
 One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.
-Every automatic step is listed on the page [What runs by itself](../automation.html).
+Every automatic step is listed on the page [What runs by itself](../automation.md).
 
 ## Your choices
 
 An author can withdraw a work, have its record removed so that only the Sophaxis id stays, or ask for the PDF copy to be removed.
-A person whose personal data appears in a record can ask for its removal under the [Takedown Policy](./takedown.html).
+A person whose personal data appears in a record can ask for its removal under the [Takedown Policy](./takedown.md).
 A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 A person can also ask to be told the purposes for which their data is used, to have its use restricted while its accuracy or an objection is checked, and to have its provision to third parties stopped.
 While a restriction lasts, the operator takes the part concerned offline.
@@ -254,7 +254,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 
 ## People in the other places
 
-From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.html) lists either.
+From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.md) lists either.
 Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
 Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.

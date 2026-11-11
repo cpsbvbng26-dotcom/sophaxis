@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-+Bj0g5CbAko+oGRBVEa0mTE9SsivTVFLxlYNSgMH0AY='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>運営者と連絡先（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「運営者と連絡先（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/contact.ja.html">
@@ -75,8 +75,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
-@media print { header.top nav, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
@@ -91,26 +96,27 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./contact.html">Operator and contact</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。</p>
-<h2>運営者</h2>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#運営者">運営者</a></li><li><a href="#連絡先">連絡先</a></li><li><a href="#ほかの場所にある-sophaxis">ほかの場所にある Sophaxis</a></li><li><a href="#セキュリティ">セキュリティ</a></li><li><a href="#アクセシビリティ">アクセシビリティ</a></li><li><a href="#住所">住所</a></li><li><a href="#サイトが動いている場所">サイトが動いている場所</a></li></ul></nav>
+<h2 id="運営者">運営者</h2>
 <p>Sophaxis は、日本にいる一人の個人、根本卓哉（Takuya Nemoto）が運営しています。個人の、営利を目的としないプロジェクトです。会社や大学や出版者が運営しているものではありません。運営者は、無報酬のボランティアとして運営しています。いまは唯一のモデレーターでもあります。Sophaxis は、無料のサービスの範囲だけで配信しています。運営者は、Sophaxis を書く道具である Claude Code の料金を、個人で払っています。運営者は、個人の本棚の延長として、趣味で Sophaxis を置いています。Sophaxis がなぜあるのか、それが記録にとって何を意味するのかは、<a href="./disclaimer.ja.html">免責事項</a>にあります。</p>
 <ul><li>ORCID iD：<a href="https://orcid.org/0009-0000-1406-0547">0009-0000-1406-0547</a></li><li>GitHub：<a href="https://github.com/cpsbvbng26-dotcom">cpsbvbng26-dotcom</a></li></ul>
 <p>運営者について、サイトが示すのは、上の名前・ORCID iD・GitHub のアカウントだけです。写真・電話番号・住所は載せません。住所は、下の「住所」のとおり、求めがあれば知らせます。</p>
 <p>運営者はモデレーターでもあり、サイトとその記録に責任を負います。サイトとそのコードは、運営者の求めにより、Claude Code（Anthropic）で作りました。<a href="./disclaimer.ja.html">免責事項</a>を見てください。<a href="./policies/terms.ja.html">利用規約</a>が定めるとおり、著者は自分の作品にすべての責任を負います。運営者の投稿も同じ決まりでモデレーションを受け、運営者自身のものである印を付けます。諮問委員会はまだありません。募集は<a href="./advisory.ja.html">諮問委員の募集</a>にあります。委員は、本人が同意したあと、ORCID iD とともにここに名を載せます。Sophaxis を紹介する人のために、<a href="./press.ja.html">紹介する人のために</a>と<a href="./brand.ja.html">名前・ロゴ・バッジ</a>の頁があります。</p>
-<h2>連絡先</h2>
+<h2 id="連絡先">連絡先</h2>
 <p>苦情、法的な事柄、個人データについてのことは、公開の issue ではなく、メールで送ります。宛先は、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるアドレスです。<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a>が定めるとおり、メールに含まれる個人データは、そのメールに答えるためだけに使います。</p>
 <ul><li>サイトについての質問・提案・問題：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new">issue</a>。</li><li>プレプリントや新しい版の投稿：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml">投稿の様式</a>、または同じ様式の<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml">日本語版</a>。</li><li>記録の誤り：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml">訂正の様式</a>。</li><li>作品の著者の一人として、作品を撤回すること：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml">撤回の様式</a>。</li><li>作品の著者の一人として、載っている作品の出版された版を報告すること：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml">出版された版の様式</a>。</li><li>法的な理由による削除：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml">削除の様式</a>。</li><li>公開すべきでないこと：運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるアドレスへのメール。</li></ul>
 <p>issue は公開されます。issue に個人データを書かないでください。求めのためのメールアドレスは、このサイトではなく、ORCID の記録に置いています。<code>/oai</code> の OAI-PMH の口には、収集者のための別のアドレスがあります。この規格がアドレスを求めるためです。英語か日本語で書いてください。欧州連合のデジタルサービス法（第 11 条・第 12 条）のもとで、当局・欧州委員会・Sophaxis を使う人のための単一の連絡窓口も、運営者の ORCID の記録にあるメールアドレスです。収集者のためのアドレスではありません。運営者は、7 日以内に答えることを目指します。</p>
 <details class="source"><summary>原文　デジタルサービス法（EU 2022/2065）第11条第1項</summary><blockquote lang="en"><p>1. Providers of intermediary services shall designate a single point of contact to enable them to communicate directly, by electronic means, with Member States’ authorities, the Commission and the Board referred to in Article 61 for the application of this Regulation.</p></blockquote><p class="from"><a href="https://publications.europa.eu/resource/celex/32022R2065">デジタルサービス法（EU 2022/2065）第11条第1項</a>から、2026-11-11 に取り寄せた文をそのまま引いています。訳は付けていません。</p></details>
 <details class="source"><summary>原文　デジタルサービス法（EU 2022/2065）第12条第1項</summary><blockquote lang="en"><p>1. Providers of intermediary services shall designate a single point of contact to enable recipients of the service to communicate directly and rapidly with them, by electronic means and in a user-friendly manner, including by allowing recipients of the service to choose the means of communication, which shall not solely rely on automated tools.</p></blockquote><p class="from"><a href="https://publications.europa.eu/resource/celex/32022R2065">デジタルサービス法（EU 2022/2065）第12条第1項</a>から、2026-11-11 に取り寄せた文をそのまま引いています。訳は付けていません。</p></details>
-<h2>ほかの場所にある Sophaxis</h2>
+<h2 id="ほかの場所にある-sophaxis">ほかの場所にある Sophaxis</h2>
 <ul><li>OSF：プロジェクトの頁 <a href="https://osf.io/mq7za/">Sophaxis: An Independent Overlay Preprint Server</a> があり、その DOI は <a href="https://doi.org/10.17605/OSF.IO/MQ7ZA">10.17605/OSF.IO/MQ7ZA</a> です。この DOI が指すのはプロジェクトであって、載っている作品ではありません。</li><li>Zenodo：コードと記録を、版を出すたびに保存しています。版 1.0.0 の DOI は <a href="https://doi.org/10.5281/zenodo.24033372">10.5281/zenodo.24033372</a> です。<a href="https://doi.org/10.5281/zenodo.24033371">10.5281/zenodo.24033371</a> はすべての版を表します。コミュニティ &lt;https://zenodo.org/communities/sophaxis&gt; は、Sophaxis に載っている作品の Zenodo の記録を集めています。これは、Sophaxis が Zenodo と組織のうえでつながっていることを意味するものではありません。</li><li>GitHub：コード、記録、投稿を収めた<a href="https://github.com/cpsbvbng26-dotcom/sophaxis">公開のリポジトリ</a>です。</li><li>ROAR：Sophaxis は、サウサンプトン大学の Registry of Open Access Repositories の編集の審査を通り、2026-11-06（日本時間）からそこに載っています。<a href="https://roar.eprints.org/27422/">記録 27422</a> です。</li><li>Open Access Directory：2026-11-09（日本時間）から、その <a href="https://oad.simmons.edu/oadwiki/Disciplinary_repositories">Disciplinary repositories</a> の頁の Philosophy と Mathematics の二つの節に、Sophaxis が載っています。項目は運営者が足したもので、この掲載は Sophaxis の審査ではありません。</li><li>X：公式のアカウント <a href="https://x.com/SophaxisX">@SophaxisX</a> で、新しい記録とお知らせを流します。@Sophaxis はすでに使われていたので、名の末尾に X を付けました。@Sophaxis のアカウントは Sophaxis ではありません。</li></ul>
-<h2>セキュリティ</h2>
-<p>セキュリティの問題は、公開の issue ではなく、メールで送ります。知られる前に直せるようにするためです。見つけたことと、それを再現する手順を書いてください。Sophaxis は報酬を出しません。どの報告にも感謝します。サイトは、同じ連絡先を標準のファイル <a href="./.well-known/security.txt">security.txt</a> でも示しています。</p>
-<h2>アクセシビリティ</h2>
+<h2 id="セキュリティ">セキュリティ</h2>
+<p>セキュリティの問題は、公開の issue ではなく、メールで送ります。知られる前に直せるようにするためです。見つけたことと、それを再現する手順を書いてください。Sophaxis は報酬を出しません。どの報告にも感謝します。サイトは、同じ連絡先を標準のファイル <a href=".well-known/security.txt">security.txt</a> でも示しています。</p>
+<h2 id="アクセシビリティ">アクセシビリティ</h2>
 <p>Sophaxis は、Web Content Accessibility Guidelines（WCAG）2.2 のレベル AA を満たすことを目指しています。自動の確認は、明るい配色と暗い配色のそれぞれで、すべての文字の色のコントラストを確かめます。同じ確認は、本文へ飛ぶリンク、キーボードで操作する人に見えるフォーカス、すべての頁の言語、頁ごとに一つの主見出し、すべての表の見出しも確かめます。使いにくいところは、<code>accessibility</code> のラベルを付けた issue か、メールで報告できます。頁が使えないときは、求めに応じて、運営者が同じ情報を別の形で届けます。たとえば、メールでの平文です。確かめていることと、うまく働かないと分かっていることを含む全文は、<a href="./accessibility.ja.html">アクセシビリティ</a>にあります。</p>
-<h2>住所</h2>
+<h2 id="住所">住所</h2>
 <p>運営者の住所は公開していません。日本の個人情報保護法の定めるとおり、求めがあれば遅滞なく知らせます。メールで求めてください。</p>
-<h2>サイトが動いている場所</h2>
+<h2 id="サイトが動いている場所">サイトが動いている場所</h2>
 <p>サイトは Vercel が配信し、GitHub の公開のリポジトリから組み立てています。コード、記録、issue は GitHub に保管し、自動の確認はそこで GitHub Actions として動きます。Sophaxis は、GitHub とも Vercel とも、組織のうえのつながりを持ちません。<a href="./disclaimer.ja.html">免責事項</a>を見てください。預け先と DOI 登録機関は、Sophaxis がそれらから何を取るかを、<a href="./repositories.ja.html">専用の頁</a>で読めます。</p>
 </main>
 <footer><div class="wrap">

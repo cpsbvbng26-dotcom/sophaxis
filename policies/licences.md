@@ -1,8 +1,8 @@
 # Licence Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-11.
 
-Japanese: [ライセンスの規程（日本語訳）](./licences.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [ライセンスの規程（日本語訳）](./licences.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## Accepted licences
 
@@ -37,4 +37,4 @@ Abstracts in them keep the licence of their work.
 From 2026-11-21, an abstract given in a form is shared under the licence of the work.
 From 2026-11-21, other text written in the forms, such as the statement on generative models, a reason for withdrawal or a correction, is shared under CC0 1.0 by the person who writes it.
 This lets Sophaxis show it with the record, and lets others reuse it with the record data.
-Text written in the forms before 2026-11-21 is shown with the record by the permission its writer gave by writing it in a public form for the record; anyone who wrote it can ask for it to be removed under the [Takedown Policy](./takedown.html).
+Text written in the forms before 2026-11-21 is shown with the record by the permission its writer gave by writing it in a public form for the record; anyone who wrote it can ask for it to be removed under the [Takedown Policy](./takedown.md).

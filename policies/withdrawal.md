@@ -1,8 +1,8 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-11.
 
-Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
+Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.md). It is a translation; where the two differ, the English text applies.
 
 ## Who can withdraw
 
@@ -39,7 +39,7 @@ The form asks which of the two the author wants.
 The same check confirms that the account asking belongs to an author of the work.
 A record that is already withdrawn can still be removed.
 The operator removes the record by labelling the verified issue `upheld`, and aims to do so within 7 days.
-Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.html) sets out.
+Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.md) sets out.
 No reason is shown, and the withdrawal issue itself is emptied, closed and locked.
 
 ## An author's name
@@ -64,4 +64,4 @@ The authors can report the published version before they ask for withdrawal; a w
 
 Withdrawal is the authors' decision, and the record stays.
 Removal is for legal reasons, such as copyright infringement or exposure of personal data, or at an author's request, and takes the title, the authors, the abstract and the PDF copy off the site.
-It follows the [Takedown Policy](./takedown.html).
+It follows the [Takedown Policy](./takedown.md).
