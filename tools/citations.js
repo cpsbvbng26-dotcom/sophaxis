@@ -41,6 +41,7 @@ const JA_NUM = '(?:\\d+|[' + KANJI + ']+)';
 const JA_CITE = new RegExp([
   '第 ?(' + JA_NUM + ') ?条(?:の ?(\\d+|[' + KANJI + ']+))?((?:第 ?[\\d.' + KANJI + ']+ ?[項号])*)(?: ?([a-z]))?',
   'GitHub の利用規約 (' + SEC + '(?:・' + SEC + ')*)',
+  '（([A-S]\\.\\d+)）',
 ].join('|'), 'g');
 
 const kanji = (s) => {
@@ -89,15 +90,21 @@ function sections(text) {
 /* Every citation in a text, with its law. `lang` is 'en' or 'ja'. Returns { found, unattributed }. */
 function cites(text, lang, C, file) {
   const found = [], unattributed = [];
+  // The lines that name the quoted texts (<!-- text: … -->) are not citations.
+  text = text.replace(/^<!-- text: .* -->$/gm, '');
   const reg = C.reg;
   const refsOf = (m) => {
     let refs;
     if (m.ja) {
-      if (m[5]) refs = m[5].split('・');
+      if (m[5] || m[6]) refs = (m[5] || m[6]).split('・');
       else {
-        const sub = [...(m[3] || '').matchAll(/第 ?([\d.]+|[〇一二三四五六七八九十百]+) ?([項号])/g)].map((x) => (/^\d/.test(x[1]) ? x[1] : String(kanji(x[1]))));
+        const parts = [...(m[3] || '').matchAll(/第 ?([\d.]+|[〇一二三四五六七八九十百]+) ?([項号])/g)];
+        const sub = parts.map((x) => (/^\d/.test(x[1]) ? x[1] : String(kanji(x[1]))));
+        // An item named without its paragraph (第 10 条第二号) is in the first paragraph.
+        const implicit = parts.length > 0 && parts[0][2] === '号';
+        if (implicit) sub.unshift('1');
         if (m[4]) sub.push(m[4]);
-        refs = [{ article: kanji(m[1]) + (m[2] ? '-' + kanji(m[2]) : ''), sub }];
+        refs = [{ article: kanji(m[1]) + (m[2] ? '-' + kanji(m[2]) : ''), sub, implicit }];
       }
     } else if (m[2]) refs = [{ article: m[4].replace(/\(.*$/, ''), sub: [...m[4].matchAll(/\(([0-9a-z]+)\)/g)].map((x) => x[1]) }];
     else refs = expand(m[1] || m[5] || m[6]);
@@ -140,7 +147,7 @@ function cites(text, lang, C, file) {
         const laws = same.length ? lawsOf(same[same.length - 1]) : [];
         const where = (file || '') + ':' + lineAt(at);
         if (!laws.length || laws.some((l) => !l)) { unattributed.push({ text: m[0] + body.slice(end, end + 12), where, names: [] }); continue; }
-        for (const law of laws) for (const r of refsOf(m)) found.push({ law, article: r.article, sub: r.sub.map((x) => (ROMAN[x] ? String(ROMAN[x]) : x)), text: m[0], where });
+        for (const law of laws) for (const r of refsOf(m)) found.push({ law, article: r.article, sub: r.sub.map((x) => (ROMAN[x] ? String(ROMAN[x]) : x)), implicit: !!r.implicit, text: m[0], where });
         continue;
       }
       const code = m[2] ? Object.keys(reg.laws).find((k) => reg.laws[k].cite === m[2] + ' ' + m[3]) : null;
@@ -169,7 +176,7 @@ function cites(text, lang, C, file) {
       const laws = g ? (g.laws || lawsOf(g)) : [];
       const where = (file || '') + ':' + lineAt(at);
       if (!laws.length || laws.some((l) => !l)) { unattributed.push({ text: m[0], where, names: g ? g.names : [] }); continue; }
-      for (const law of laws) for (const r of refs) found.push({ law, article: r.article, sub: r.sub.map((s) => (ROMAN[s] ? String(ROMAN[s]) : s)), text: m[0], where });
+      for (const law of laws) for (const r of refs) found.push({ law, article: r.article, sub: r.sub.map((s) => (ROMAN[s] ? String(ROMAN[s]) : s)), implicit: !!r.implicit, text: m[0], where });
     }
   }
   return { found, unattributed };
@@ -200,3 +207,55 @@ function all(root, reg, C) {
 }
 
 module.exports = { compile, cites, sections, kanji, jsonText, all };
+
+/* Whether each citation is to an article in a fetched text. `statutes` and `texts` are verification/statutes.json and
+ * statutes-texts.json (the weekly watch), `raw` is verification/sources-raw.json (tools/sources.js). A citation is
+ * - covered: its article is in a fetched text, and every paragraph, point or item it names is in that article;
+ * - untraced: its source could not be fetched, and verification/citations.json lists it under `untraced`;
+ * - named: its law is listed as referred to by name only (an error: a numbered citation of such a law);
+ * - missing: none of these (an error). */
+function textOf(law, article, reg, statutes, texts, raw) {
+  const L = reg.laws[law];
+  if (!L) return null;
+  if (L.egov) {
+    const st = statutes.statutes.find((e) => e.law_id === L.egov && e.article === article.replace(/-/g, '_') && !e.items);
+    if (st && texts[st.name + ' ' + st.label]) return { text: texts[st.name + ' ' + st.label], from: 'statutes', key: st.name + ' ' + st.label, egov: L.egov };
+    const r = raw.sources['egov:' + L.egov];
+    if (r && r.articles && r.articles[article]) return { text: r.articles[article], shape: r.shape && r.shape[article], from: 'egov:' + L.egov, egov: L.egov };
+    return null;
+  }
+  const r = L.source && raw.sources[L.source];
+  if (r && r.articles && r.articles[article]) return { text: r.articles[article], from: L.source };
+  return null;
+}
+
+function subOk(c, t) {
+  if (t.shape) {
+    const [p, i] = c.sub.map(Number);
+    if (c.sub.length === 0) return true;
+    if (!(p >= 1 && p <= t.shape.length)) return false;
+    return c.sub.length < 2 || (i >= 1 && i <= t.shape[p - 1]);
+  }
+  if (t.egov) {
+    // A Japanese article without its shape (kept by the watch only): its paragraphs are numbered ２, ３, …
+    const fw = (n) => String(n).replace(/\d/g, (d) => '０１２３４５６７８９'[d]);
+    return c.sub.length === 0 || c.sub[0] === '1' || t.text.includes(' ' + fw(c.sub[0]) + ' ');
+  }
+  return (c.implicit ? c.sub.slice(1) : c.sub).every((s) => t.text.includes('(' + s + ')') || new RegExp('(^|[ :;.])' + s.replace('.', '\\.') + '\\. ').test(t.text) || t.text.includes('(' + s + ' '));
+}
+
+function trace(found, reg, statutes, texts, raw) {
+  const out = { covered: [], untraced: [], named: [], missing: [], badSub: [] };
+  for (const c of found) {
+    const L = reg.laws[c.law];
+    if (L && L.named) { out.named.push(c); continue; }
+    const t = textOf(c.law, c.article, reg, statutes, texts, raw);
+    if (t) { (subOk(c, t) ? out.covered : out.badSub).push(c); continue; }
+    const u = (reg.untraced || {})[c.law];
+    if (u && u.articles.includes(c.article)) out.untraced.push(c); else out.missing.push(c);
+  }
+  return out;
+}
+
+module.exports.trace = trace;
+module.exports.textOf = textOf;
