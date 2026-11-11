@@ -896,7 +896,7 @@ console.log('\n21. The FAQ agrees with the policies');
     qs.length >= 10 && qs.every((q) => q.endsWith('?')) && faq.includes('Where they differ, the policy applies.'));
   ok('every page links the FAQ from its navigation, and the sitemap lists it',
     fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
-      .every((f) => /<nav>[^\n]*href="(\.\/|\.\.\/|\/)faq\.html">FAQ<\/a><\/nav>/.test(read(path.join(ROOT, 'site', f))))
+      .every((f) => /<nav(?: lang="en")?>[^\n]*href="(\.\/|\.\.\/|\/)faq\.html">FAQ<\/a><\/nav>/.test(read(path.join(ROOT, 'site', f))))
     && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/faq.html</loc>'));
 }
 
@@ -1108,7 +1108,7 @@ console.log('\n28. Sophaxis ids are never reused, and DOIs of its own are ready'
     shallow === 'false' && changed.length === 0, shallow !== 'false' ? 'the history is not available (' + shallow + ')' : changed.join('; '));
   const runsCheck = fs.readdirSync(path.join(ROOT, '.github', 'workflows')).filter((f) => read(path.join(ROOT, '.github', 'workflows', f)).includes('node verification/check.js'));
   ok('every workflow that runs the checks reads the whole history (check and pdf)', runsCheck.includes('check.yml') && runsCheck.includes('pdf.yml')
-    && runsCheck.every((f) => /actions\/checkout@v7\n\s+with:\n\s+fetch-depth: 0/.test(read(path.join(ROOT, '.github', 'workflows', f)))), runsCheck.join(', '));
+    && runsCheck.every((f) => /actions\/checkout@[0-9a-f]{40} # v\d[\d.]*\n\s+with:\n\s+fetch-depth: 0/.test(read(path.join(ROOT, '.github', 'workflows', f)))), runsCheck.join(', '));
   ok('the draft says that its id is provisional', read(path.join(ROOT, 'tools', 'intake.js')).includes('The id is provisional: if another record takes it first, the record is listed under the next free id.'));
 
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
@@ -1251,7 +1251,7 @@ console.log('\n34. Accessibility of every page, and the security contact');
 {
   const pages = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'));
   const bad = (test) => pages.filter((f) => !test(read(path.join(ROOT, 'site', f))));
-  const noSkip = bad((h) => /<body>\n<a class="skip" href="#main">Skip to content<\/a>/.test(h) && h.includes('<main class="wrap" id="main">'));
+  const noSkip = bad((h) => /<body>\n<a class="skip" href="#main"(?: lang="en")?>Skip to content<\/a>/.test(h) && h.includes('<main class="wrap" id="main">'));
   ok('every page starts with a link that skips to the content, which it reaches', pages.length > 0 && noSkip.length === 0, noSkip.join(', '));
   const lang = bad((h) => /^<!doctype html>\n<html lang="(en|ja)">/.test(h));
   ok('every page names its language', lang.length === 0, lang.join(', '));
@@ -1767,7 +1767,7 @@ console.log('\n46. Advice on the DOI metadata (deposit-check)');
   fs.rmSync(fake, { recursive: true, force: true });
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   ok('the intake checks out deposit-check at a pinned commit, beside the site, before it runs',
-    /- uses: actions\/checkout@v7\n        with:\n          repository: cpsbvbng26-dotcom\/deposit-check\n          ref: [0-9a-f]{40}\n          path: deposit-check\n/.test(wf)
+    /- uses: actions\/checkout@[0-9a-f]{40} # v\d[\d.]*\n        with:\n          repository: cpsbvbng26-dotcom\/deposit-check\n          ref: [0-9a-f]{40}\n          path: deposit-check\n/.test(wf)
     && wf.indexOf('repository: cpsbvbng26-dotcom/deposit-check') < wf.indexOf('node tools/intake.js'));
   ok('the README and the steps say that the advice does not decide the listing', read(path.join(ROOT, 'README.md')).includes('The advice does not decide the listing.')
     && read(path.join(ROOT, 'process.md')).includes('It does not decide the listing.'));
@@ -2378,7 +2378,8 @@ console.log('\n61. OAI-PMH also gives oai_openaire, the profile of the OpenAIRE 
 console.log('\n62. The workflows use actions that run on Node.js 24, and Dependabot watches their versions');
 {
   const dir = path.join(ROOT, '.github', 'workflows');
-  const uses = fs.readdirSync(dir).flatMap((f) => [...read(path.join(dir, f)).matchAll(/uses: (actions\/(?:checkout|setup-node))@v(\d+)/g)].map((m) => ({ f, a: m[1], v: Number(m[2]) })));
+  /* Each action is pinned to a full commit, with its version in a comment, which Dependabot keeps up to date together. */
+  const uses = fs.readdirSync(dir).flatMap((f) => [...read(path.join(dir, f)).matchAll(/uses: (actions\/(?:checkout|setup-node))@[0-9a-f]{40} # v(\d+)[\d.]*$/gm)].map((m) => ({ f, a: m[1], v: Number(m[2]) })));
   const old = uses.filter((u) => u.v < 5).map((u) => u.f + ': ' + u.a + '@v' + u.v);
   ok('every checkout and setup-node (' + uses.length + ') is v5 or later, which runs on Node.js 24', uses.length > 0 && old.length === 0, old.join(', '));
   ok('Dependabot watches the versions of the GitHub Actions, monthly', /package-ecosystem: github-actions[\s\S]*interval: monthly/.test(read(path.join(ROOT, '.github', 'dependabot.yml'))));
@@ -3922,6 +3923,306 @@ console.log('\n97. The type and status of Sophaxis, the links of its archive, th
   const pages = fs.readdirSync(path.join(ROOT, 'site', 'policies')).map((f) => 'policies/' + f).concat(['contact.html', 'contact.ja.html']);
   ok('every Japanese article that a policy or the contact page quotes is one the weekly watch confirms, and no page says one is not yet among them',
     unwatched.length === 0 && pages.every((f) => !read(path.join(ROOT, 'site', f)).includes('It is not yet among the texts the weekly watch confirms.') && !read(path.join(ROOT, 'site', f)).includes('まだ週に一度の見張りには入っていません。')), unwatched.join(' / '));
+}
+
+/* ------------------------------------------------------------ 98 */
+console.log('\n98. No dependencies, workflows with the least they need, pinned actions, and a scan for keys and addresses');
+{
+  const cp = require('child_process');
+  const tracked = cp.execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' }).split('\0').filter(Boolean);
+  /* No package to install: no lockfile and no node_modules, a package.json (if one is added) with no dependencies,
+   * and every module required by name is one of Node.js. playwright, for the browser, is the one exception, in the two tools that draw or drive a page. */
+  const locks = tracked.filter((f) => /(^|\/)(package-lock\.json|npm-shrinkwrap\.json|yarn\.lock|pnpm-lock\.yaml|node_modules\/)/.test(f));
+  const pkg = tracked.includes('package.json') ? JSON.parse(read(path.join(ROOT, 'package.json'))) : {};
+  const deps = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'].filter((k) => pkg[k] && Object.keys(pkg[k]).length);
+  const builtins = new Set(require('module').builtinModules);
+  const BROWSER = ['verification/check_keyboard.js', 'tools/cards.js'];
+  const foreign = tracked.filter((f) => f.endsWith('.js')).flatMap((f) => [...read(path.join(ROOT, f)).matchAll(/\brequire\(\s*'([^']+)'\s*\)/g)].map((m) => [f, m[1]]))
+    .filter(([f, m]) => !m.startsWith('.') && !builtins.has(m.replace(/^node:/, '')) && !(m === 'playwright' && BROWSER.includes(f))).map(([f, m]) => f + ': ' + m);
+  ok('nothing is installed from a package registry: no lockfile or node_modules, no dependencies, and every module required by name is part of Node.js (playwright only in ' + BROWSER.join(' and ') + ')',
+    locks.length === 0 && deps.length === 0 && foreign.length === 0, locks.concat(deps, foreign).join(', '));
+  const wfDir = path.join(ROOT, '.github', 'workflows');
+  const wfs = fs.readdirSync(wfDir).filter((f) => /\.ya?ml$/.test(f)).map((f) => ({ f, t: read(path.join(wfDir, f)) }));
+  const installs = wfs.flatMap(({ f, t }) => [...t.matchAll(/npm (?:install|i|ci)\b([^\n]*)/g)].map((m) => f + ':' + m[1].trim()));
+  ok('the only package a workflow installs is playwright, at an exact version, for the browser check (' + installs.join(', ') + ')',
+    installs.length === 1 && /^check\.yml:-g playwright@\d+\.\d+\.\d+$/.test(installs[0]), installs.join(', '));
+  /* Least privilege: every workflow says what its token may do, at the top, and asks for writing only where it writes. */
+  const perms = (t) => { const m = /^permissions:\n((?:  [a-z-]+: (?:read|write)\n)+)/m.exec(t); return m ? Object.fromEntries([...m[1].matchAll(/  ([a-z-]+): (read|write)/g)].map((x) => [x[1], x[2]])) : null; };
+  const noPerm = wfs.filter(({ t }) => !perms(t)).map(({ f }) => f);
+  const broad = wfs.filter(({ t }) => /write-all|read-all|^\s+permissions: (?:write|read)/m.test(t) || /^ {4}permissions:/m.test(t)).map(({ f }) => f);
+  const pushes = (t) => /git push/.test(t) || [...t.matchAll(/node (tools\/\w+\.js)/g)].some((m) => /'push'|git push|\['push'/.test(read(path.join(ROOT, m[1]))));
+  const writesUnused = wfs.filter(({ t }) => { const p = perms(t) || {}; return (p.contents === 'write' && !pushes(t)) || (p['pull-requests'] === 'write' && !/pull/.test(t.replace(/^permissions:[\s\S]*?\n(?! )/m, '') + [...t.matchAll(/node (tools\/\w+\.js)/g)].map((m) => read(path.join(ROOT, m[1]))).join(''))); }).map(({ f }) => f);
+  ok('every workflow (' + wfs.length + ') declares the permissions of its token at the top, none per job or in bulk, and the checks only read',
+    noPerm.length === 0 && broad.length === 0 && JSON.stringify(perms(read(path.join(wfDir, 'check.yml')))) === '{"contents":"read"}', noPerm.concat(broad).join(', '));
+  ok('a workflow may write the repository only if it pushes, and open pull requests only if it makes them', writesUnused.length === 0, writesUnused.join(', '));
+  /* Every action is pinned to the full commit, with its tag in a comment; Dependabot updates both together. */
+  const uses = wfs.flatMap(({ f, t }) => [...t.matchAll(/^\s*-?\s*uses: (\S+)(.*)$/gm)].map((m) => ({ f, ref: m[1], rest: m[2] })));
+  const loose = uses.filter((u) => !u.ref.startsWith('./') && !(/@[0-9a-f]{40}$/.test(u.ref) && /^ # v\d[\w.]*$/.test(u.rest))).map((u) => u.f + ': ' + u.ref + u.rest);
+  const sha = {}; uses.forEach((u) => { const [a, s] = u.ref.split('@'); (sha[a] = sha[a] || new Set()).add(s + u.rest); });
+  ok('every action (' + uses.length + ' uses) is pinned to a full commit with its tag in a comment, and each action to one commit everywhere',
+    uses.length > 0 && loose.length === 0 && Object.values(sha).every((s) => s.size === 1), loose.join(', '));
+  /* The scan for keys, tokens and addresses: every file in the repository that is text, the built site included. */
+  const KEYS = [/-----BEGIN [A-Z ]*PRIVATE KEY-----/, /\bgh[pousr]_[A-Za-z0-9]{36}\b/, /\bgithub_pat_[A-Za-z0-9_]{60,}/, /\bAKIA[0-9A-Z]{16}\b/, /\bxox[abprs]-[A-Za-z0-9-]{10,}/, /\bAIza[0-9A-Za-z_-]{35}\b/, /\bsk-(?:ant-)?[A-Za-z0-9_-]{32,}/];
+  const MAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g;
+  /* The address the operator made for harvesters (site.json oai.adminEmails, given in OAI-PMH Identify), the Internet Archive's and
+   * Creative Commons' published addresses, quoted where their process or text is quoted, and the address of the commit trailers. */
+  const site98 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const ALLOWED = [...site98.oai.adminEmails, 'info@archive.org', 'info@creativecommons.org', 'noreply@anthropic.com'];
+  const PHONE = /(?:\+81[ -]?|\b0)[789]0[ -]?\d{4}[ -]?\d{4}\b/;
+  const scan = (files, at) => {
+    const hits = [];
+    for (const f of files) {
+      const buf = fs.readFileSync(path.join(at, f));
+      if (buf.includes(0) || /\.(pdf|png|ico|jpe?g|gif|webp)$/i.test(f)) continue;
+      const t = buf.toString('utf8');
+      KEYS.forEach((re) => { if (re.test(t)) hits.push(f + ': ' + re.source.slice(0, 18)); });
+      (t.match(MAIL) || []).filter((m) => !ALLOWED.includes(m) && !m.endsWith('@users.noreply.github.com')).forEach((m) => hits.push(f + ': ' + m));
+      if (PHONE.test(t)) hits.push(f + ': a telephone number');
+    }
+    return hits;
+  };
+  const hits = scan(tracked, ROOT);
+  ok('no file of the repository (' + tracked.length + ') holds a private key, a token, a telephone number or an email address other than the ' + ALLOWED.length + ' allowed',
+    site98.oai.adminEmails.length === 1 && hits.length === 0, hits.slice(0, 8).join(', '));
+  /* The scan must catch what it looks for: a key, a token and an address, written into a scratch copy. */
+  const probe = tmp();
+  fs.writeFileSync(path.join(probe, 'a.md'), 'x ' + 'ghp_' + 'A'.repeat(36) + '\n');
+  fs.writeFileSync(path.join(probe, 'b.json'), '"someone' + '@' + 'example.org"\n');
+  fs.writeFileSync(path.join(probe, 'c.txt'), '-----BEGIN ' + 'RSA PRIVATE KEY-----\n');
+  fs.writeFileSync(path.join(probe, 'd.md'), 'call 090-' + '1234-5678\n');
+  ok('the scan finds a planted token, address, private key and telephone number', scan(['a.md', 'b.json', 'c.txt', 'd.md'], probe).length === 4);
+  const autoEn = read(path.join(ROOT, 'automation.md')), autoJa = read(path.join(ROOT, 'automation.ja.md'));
+  const cron98 = (/schedule:\n(?:\s*#.*\n)*\s*- cron: '(\d+) (\d+) \* \* (\d)'/.exec(read(path.join(wfDir, 'check.yml'))) || []).slice(1).map(Number);
+  const jst = cron98.length ? String((cron98[1] + 9) % 24).padStart(2, '0') + ':' + String(cron98[0]).padStart(2, '0') : '';
+  ok('the checks also run once a week on Monday, at the time the automation page gives in both languages (' + jst + ' Japan time), and the page names the scan',
+    cron98[2] === 1 && cron98[1] + 9 < 24 && autoEn.includes('once a week, on Monday at ' + jst + ' Japan time') && autoJa.includes('月曜日の日本時間 ' + jst + ' にも')
+    && autoEn.includes('a scan of every file in the repository for keys, tokens and email addresses') && autoJa.includes('鍵・トークンと、検査が認めた少数のほかのメールアドレスを探す走査'));
+  const sec = fs.existsSync(path.join(ROOT, 'SECURITY.md')) ? read(path.join(ROOT, 'SECURITY.md')) : '';
+  ok('SECURITY.md, in Japanese and English, sends a security problem by email to the address on the ORCID record, not to a public issue, with the 7 days and no bounty of the contact page',
+    ['## 日本語', '## English', 'https://orcid.org/0009-0000-1406-0547', 'security.txt', '7 日以内', 'within 7 days', 'There is no bounty.', '報奨金はありません。'].every((x) => sec.includes(x))
+    && read(path.join(ROOT, 'contact.md')).includes('A security problem goes by email, not to a public issue') && read(path.join(ROOT, 'contact.md')).includes('Sophaxis offers no reward'));
+}
+
+/* ------------------------------------------------------------ 99 */
+console.log('\n99. Every page: the language switch, the footer, the canonical address and the sitemap, its weight, alt texts and the dark scheme');
+{
+  const S = path.join(ROOT, 'site');
+  const site99 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const html = fs.readdirSync(S, { recursive: true }).map((f) => f.split(path.sep).join('/')).filter((f) => f.endsWith('.html')).sort();
+  const H = Object.fromEntries(html.map((f) => [f, read(path.join(S, f))]));
+  /* The other language: linked at the end of the header, in the same place on every page that has a twin, and back again. */
+  const sw = [];
+  for (const f of html) {
+    const h = H[f];
+    const lang = /^<!doctype html>\n<html lang="(en|ja)">/.exec(h)[1];
+    const alts = [...h.matchAll(/<link rel="alternate" hreflang="(en|ja)" href="([^"]+)">/g)].map((m) => ({ lang: m[1], url: m[2] }));
+    const other = alts.find((a) => a.lang !== lang);
+    const head = (/<header class="top">[\s\S]*?<\/header>/.exec(h) || [''])[0];
+    const links = [...h.matchAll(/<p class="lang">/g)].length;
+    if (!other) { if (links) sw.push(f + ': a switch without a twin'); continue; }
+    const twin = path.posix.join(path.posix.dirname(f), other.url.split('/').pop() || 'index.html');
+    const want = '</nav>\n<p class="lang"><a href="./' + path.posix.basename(twin) + '" hreflang="' + other.lang + '" lang="' + other.lang + '">' + (other.lang === 'ja' ? '日本語' : 'English') + '</a></p>\n</div></header>';
+    if (links !== 1 || !head.endsWith(want)) sw.push(f + ': no switch at the end of the header');
+    else if (!H[twin] || !H[twin].includes('hreflang="' + lang + '" lang="' + lang + '">')) sw.push(f + ': ' + twin + ' does not link back');
+  }
+  const pairs = html.filter((f) => H[f].includes('<p class="lang">')).length;
+  ok('every page with a version in the other language links it at the end of its header, and that version links back (' + pairs + ' pages); no other page has a switch', pairs >= 60 && sw.length === 0, sw.slice(0, 6).join(', '));
+  const enParts = html.filter((f) => H[f].startsWith('<!doctype html>\n<html lang="ja">'))
+    .filter((f) => !(H[f].includes('<a class="skip" href="#main" lang="en">') && /<nav lang="en">/.test(H[f]) && H[f].includes('<footer><div class="wrap" lang="en">')));
+  ok('on a Japanese page, the skip link, the navigation and the footer, which are in English, are marked as English', enParts.length === 0, enParts.join(', '));
+  /* The footer: the same fields on every page, and nothing that links Nusquama, here or anywhere in the repository. */
+  const foot = (h) => (/<footer>[\s\S]*<\/footer>/.exec(h) || [''])[0];
+  const FIELDS = ['Operated by ' + site99.operator.name + '.', 'contact.html">Contact</a>', 'disclaimer.html">Disclaimer</a>', 'policies/privacy.html">Privacy</a>', 'policies/terms.html">Terms of Use</a>', 'href="' + site99.repo + '">Source</a>', 'Claude is not an author.'];
+  const lacking = html.filter((f) => !FIELDS.every((x) => foot(H[f]).includes(x)));
+  ok('every footer names the operator and links the contact page, the Disclaimer, the Privacy Policy, the Terms of Use and the source, with the disclosure (' + FIELDS.length + ' fields)', lacking.length === 0, lacking.join(', '));
+  const tracked = require('child_process').execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' }).split('\0').filter((f) => f && !/\.(pdf|png|ico)$/.test(f));
+  /* Sophaxis and Nusquama share tools/live.js, whose comment names it; nothing links it, and no page names it. */
+  const nus = tracked.filter((f) => f !== 'verification/check.js' && (/nusquama\.vercel\.app|cpsbvbng26-dotcom\/nusquama/i.test(read(path.join(ROOT, f))) || (f.startsWith('site/') && /nusquama/i.test(read(path.join(ROOT, f))))));
+  ok('no file of the repository links Nusquama, and no page of the site names it', nus.length === 0, nus.join(', '));
+  /* Canonical addresses and the sitemap: each page names itself, and every page that may be indexed is in the sitemap, which lists only what exists. */
+  const sm = read(path.join(S, 'sitemap.xml'));
+  const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  const own = (f) => site99.baseUrl + (f === 'index.html' ? '' : f);
+  const canon = html.filter((f) => f !== '404.html' && ((/<link rel="canonical" href="([^"]+)">/.exec(H[f]) || [])[1] !== own(f))).map((f) => f);
+  const unlisted = html.filter((f) => !H[f].includes('<meta name="robots" content="noindex">') && !locs.includes(own(f)));
+  const ghost = locs.filter((u) => !u.startsWith(site99.baseUrl) || !fs.existsSync(path.join(S, u.slice(site99.baseUrl.length) || 'index.html')));
+  ok('every page but the one for an address not found names itself as canonical (' + (html.length - 1) + ')', canon.length === 0, canon.join(', '));
+  ok('every page that may be indexed is in the sitemap, the sitemap lists only files that exist (' + locs.length + '), and robots.txt names it',
+    unlisted.length === 0 && ghost.length === 0 && read(path.join(S, 'robots.txt')).endsWith('Sitemap: ' + site99.baseUrl + 'sitemap.xml\n'), unlisted.concat(ghost).join(', '));
+  /* The weight of a page: its HTML with every image, icon and script it loads from the site. */
+  const LIMIT = 100000;
+  const weigh = (f) => {
+    const h = H[f];
+    const refs = [...h.matchAll(/<(?:img|script)[^>]* src="([^"]+)"|<link rel="(?:icon|apple-touch-icon)" href="([^"]+)"/g)].map((m) => m[1] || m[2]).filter((u) => !/^https?:/.test(u));
+    const at = (u) => path.join(S, u.startsWith('/') ? u.slice(1) : path.posix.join(path.posix.dirname(f), u));
+    return Buffer.byteLength(h) + [...new Set(refs)].reduce((n, u) => n + (fs.existsSync(at(u)) ? fs.statSync(at(u)).size : 0), 0);
+  };
+  const weights = html.map((f) => [f, weigh(f)]).sort((a, b) => b[1] - a[1]);
+  const acc = read(path.join(ROOT, 'accessibility.md')), accJa = read(path.join(ROOT, 'accessibility.ja.md'));
+  const fmt = LIMIT.toLocaleString('en-US');
+  ok('every page, with what it loads from the site, weighs at most ' + fmt + ' bytes (the heaviest: ' + weights[0][0] + ', ' + weights[0][1] + '), as the accessibility statement says in both languages',
+    weights[0][1] <= LIMIT && acc.includes('weighs at most ' + fmt + ' bytes') && accJa.includes(fmt + ' バイトまで'), weights.filter((w) => w[1] > LIMIT).map((w) => w.join(' ')).join(', '));
+  /* Alt texts: what the image says, never a file name or "image of"; empty only for decoration. */
+  const imgs = html.flatMap((f) => [...H[f].matchAll(/<img\b[^>]*>/g)].map((m) => [f, m[0]]));
+  const badAlt = imgs.filter(([, t]) => { const a = /\balt="([^"]*)"/.exec(t); return !a || /^(image|picture|photo|logo|icon|画像|写真)\b/i.test(a[1]) || /\.(png|svg|jpe?g|gif|webp|ico)$/i.test(a[1]); });
+  ok('every image (' + imgs.length + ') has an alt text that is not a file name and does not begin "image of", as the accessibility statement says', imgs.length > 0 && badAlt.length === 0
+    && acc.includes('The alt text does not begin with words such as "image of", and it is never a file name.') && accJa.includes('代替テキストを「画像：」のような語で始めず、ファイル名にもしません。'), badAlt.map((x) => x.join(' ')).join(', '));
+  /* The dark scheme follows the system; there is no switch, because no page but the search page runs a script. */
+  const cssDark = /@media \(prefers-color-scheme: dark\) \{ :root \{ --bg: #[0-9a-f]{6}; --fg: #[0-9a-f]{6};/.test(read(path.join(ROOT, 'build.js')));
+  const scripted = html.filter((f) => /<script\b/.test(H[f])).join();
+  ok('the colours follow the system, light or dark, with no switch, and only the search page runs a script, as the accessibility statement says in both languages',
+    cssDark && scripted === 'search.html' && acc.includes('There is no switch on the page, because no page but the search page runs a script.') && accJa.includes('頁に切り替えのボタンはありません。'), scripted);
+  /* The text alone at 200 %: the browser check does it at the width that the statement names. */
+  const kb = read(path.join(__dirname, 'check_keyboard.js'));
+  const tz = (/const TEXT_ZOOM_WIDTH = (\d+);/.exec(kb) || [])[1];
+  ok('the browser check doubles the text alone at ' + tz + ' px, and the accessibility statement names that width in both languages, with the language switch',
+    tz && kb.includes("html { font-size: 200% !important; } body { font-size: 34px !important; }") && /font: 17px\/1\.65 /.test(read(path.join(ROOT, 'build.js')))
+    && acc.includes('doubles the size of the text alone, in a window ' + tz + ' pixels wide') && accJa.includes('幅 ' + tz + ' ピクセルの窓で文字だけを二倍に')
+    && acc.includes('links it at the end of its header') && accJa.includes('見出しの帯の終わり'));
+}
+
+/* ------------------------------------------------------------ 100 */
+console.log('\n100. Closing, questions actually asked, the criteria for listing, a feed of policy changes, no counts of views, the JOSS checklist and the disclosure table');
+{
+  const cp = require('child_process');
+  const site100 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js');
+  const ops = read(path.join(ROOT, 'docs', 'operations.md'));
+  const terms = read(path.join(ROOT, 'policies', 'terms.md')), termsJa = read(path.join(ROOT, 'policies', 'terms.ja.md'));
+  /* 365: closing, step by step, and where the records go. */
+  const close = (ops.split('\n## Closing Sophaxis\n')[1] || '').split('\n## ')[0];
+  const steps = [...close.matchAll(/^(\d+)\. /gm)].map((m) => Number(m[1]));
+  const ahead = (/a closure is announced on the top page at least (\d+) days ahead/.exec(terms) || [])[1];
+  ok('the routine says how to close Sophaxis in numbered steps (' + steps.length + '): the notice as many days ahead as the Terms (' + ahead + '), and where the records, the PDF copies and the record pages go',
+    steps.length >= 5 && steps.every((n, i) => n === i + 1) && ahead && close.includes('at least ' + ahead + ' days ahead') && termsJa.includes('閉鎖は少なくとも ' + ahead + ' 日前に')
+    && ['`data/papers/` (the records)', '`data/pdf/` (the PDF copies', '`site/` (every record page', 'Do not archive it on GitHub', 'except `removal.yml`', '`"submissionsPaused": true`', '`listedIn`'].every((x) => close.includes(x))
+    && fs.existsSync(path.join(ROOT, '.github', 'workflows', 'removal.yml')) && Array.isArray(site100.listedIn));
+  /* 366: a question is added to the FAQ only when it was asked; the questions of 2026-11-11 are those at the commit below. */
+  const BASE = '52bf5512cb1c827014f51fe0077eb2ec5c3a4442';
+  let before = null;
+  try { before = { en: cp.execFileSync('git', ['show', BASE + ':faq.md'], { cwd: ROOT, encoding: 'utf8' }), ja: cp.execFileSync('git', ['show', BASE + ':faq.ja.md'], { cwd: ROOT, encoding: 'utf8' }) }; } catch (e) { before = null; }
+  const faqCheck = (en, ja, old) => {
+    const qs = (t) => t.split(/^## /m).slice(1).map((s) => ({ q: s.split('\n')[0], first: (s.split('\n').slice(1).find((l) => l.trim()) || '') }));
+    const known = (t) => new Set(qs(t).map((x) => x.q));
+    const oldEn = known(old.en), oldJa = known(old.ja);
+    const newEn = qs(en).filter((x) => !oldEn.has(x.q)), newJa = qs(ja).filter((x) => !oldJa.has(x.q));
+    return newEn.length === newJa.length
+      && newEn.every((x) => /^Asked on \d{4}-\d{2}-\d{2}, (in issue #\d+|by email)\.$/.test(x.first))
+      && newJa.every((x) => /^\d{4}-\d{2}-\d{2} に(issue #\d+ で|メールで)問われました。$/.test(x.first));
+  };
+  const faqEn = read(path.join(ROOT, 'faq.md')), faqJa = read(path.join(ROOT, 'faq.ja.md'));
+  ok('every question added to the FAQ since 2026-11-11 begins with when and where it was asked, in both languages, and the FAQ says so',
+    before !== null && faqCheck(faqEn, faqJa, before) && faqEn.includes('A question is added here only when someone has actually asked it, in an issue or by email.')
+    && faqJa.includes('ここに問いを足すのは、だれかが issue かメールで実際に問うたときだけです。'), before === null ? 'the history is not available' : '');
+  ok('a question added without that line fails the check, and one with it passes',
+    before !== null && !faqCheck(faqEn + '\n## Is it new?\n\nYes.\n', faqJa + '\n## 新しいですか？\n\nはい。\n', before)
+    && faqCheck(faqEn + '\n## Is it new?\n\nAsked on 2026-12-01, by email.\nYes.\n', faqJa + '\n## 新しいですか？\n\n2026-12-01 にメールで問われました。\nはい。\n', before));
+  /* 368: the criteria change under the same rules as every policy, with the same 14 days, reviewed in the yearly audit. */
+  const mod = read(path.join(ROOT, 'policies', 'moderation.md')), modJa = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
+  const days = (/The announcement comes at least (\d+) days ahead/.exec(terms) || [])[1];
+  const since = new Date(site100.since + 'T00:00:00Z');
+  const dayName = since.getUTCDate() + ' ' + since.toLocaleString('en-GB', { month: 'long', timeZone: 'UTC' });
+  ok('the Moderation Policy, in both languages, says how the criteria for listing are reviewed (yearly, on ' + dayName + ') and changed, with the ' + days + ' days of the Terms, and the yearly audit asks it',
+    mod.includes('\n## Changes to the criteria\n') && modJa.includes('\n## 基準の変更\n') && days && mod.includes('at least ' + days + ' days before it takes effect') && modJa.includes('少なくとも ' + days + ' 日前に')
+    && mod.includes('in the yearly audit on ' + dayName + ', the day Sophaxis began') && modJa.includes('十月 ' + since.getUTCDate() + ' 日の年ごとの点検') && since.getUTCMonth() === 9
+    && ops.includes('- [ ] The criteria for listing still serve their purpose. A change follows "Changes to the criteria" in the Moderation Policy.'));
+  /* 369: the feed of policy changes. Each policy's last change has an entry of that day; an announced change has one with its date. */
+  const changes = B.loadPolicyChanges();
+  const slugs = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'privacy', 'withdrawal', 'takedown'];
+  const stale = slugs.filter((s) => { const d = (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(read(path.join(ROOT, 'policies', s + '.md'))) || [])[1]; const e = changes.find((c) => c.policies.includes(s)); return !e || e.date !== d; });
+  ok('the newest entry of the feed for each of the ' + slugs.length + ' policies is dated its "Last updated" day, and an announced change has an entry from its first day',
+    B.policyChangeProblems(changes).length === 0 && stale.length === 0 && (!site100.termsNotice || changes.some((c) => c.from === site100.termsNotice.from)), stale.join(', ') + B.policyChangeProblems(changes).join(' / '));
+  ok('the data refuses an entry that names no policy, one out of order, and a day of effect that is not later',
+    B.policyChangeProblems([{ date: '2026-11-12', title: 't', text: 'x', policies: [] }]).length > 0 && B.policyChangeProblems([{ date: '2026-11-10', title: 't', text: 'x', policies: ['terms'] }, { date: '2026-11-11', title: 't', text: 'x', policies: ['terms'] }]).length > 0
+    && B.policyChangeProblems([{ date: '2026-11-12', from: '2026-11-12', title: 't', text: 'x', policies: ['terms'] }]).length > 0 && B.policyChangeProblems([{ date: '2026-11-12', title: 't', text: 'x', policies: ['terms'] }]).length === 0);
+  const feed = read(path.join(ROOT, 'site', 'policies', 'changes.xml'));
+  const entries = (feed.match(/<entry>/g) || []).length;
+  const heads = html100();
+  function html100() { return ['policy.html', 'policy.ja.html'].concat(slugs.flatMap((s) => ['policies/' + s + '.html', 'policies/' + s + '.ja.html'])).filter((f) => !read(path.join(ROOT, 'site', f)).includes('<link rel="alternate" type="application/atom+xml" title="Sophaxis: changes to the policies" href="' + (f.startsWith('policies/') ? '../' : './') + 'policies/changes.xml">')); }
+  ok('policies/changes.xml carries one entry per change (' + entries + '), each with the policies it touches, and every policy page and the Policies page announce it',
+    entries === changes.length && entries > 0 && !/news\.html#/.test(feed) && heads.length === 0 && (feed.match(/<link href="https:\/\/sophaxis\.vercel\.app\/policies\/[a-z]+\.html" title="/g) || []).length === changes.reduce((n, c) => n + c.policies.length, 0), heads.join(', '));
+  ok('the Terms, the Policies page and the Moderation Policy, in both languages, say that each change goes into the feed, which carries nothing else, and the README and the routine say how to add one',
+    [terms, termsJa, read(path.join(ROOT, 'policy.md')), read(path.join(ROOT, 'policy.ja.md')), mod, modJa].every((t) => t.includes('(https://sophaxis.vercel.app/policies/changes.xml)'))
+    && terms.includes('which carries nothing else.') && termsJa.includes('この配信には、ほかのものを載せません。')
+    && read(path.join(ROOT, 'README.md')).includes('`data/policy-changes.json`') && ops.includes('## On a change to a policy'));
+  ok('the first entries say that the eight policies were last changed on their day, and the words "eight policies" match the count (' + slugs.length + ')',
+    slugs.length === 8 && B.loadPolicyChanges().some((c) => c.text.includes('Each of the eight policies was last changed on ' + c.date + '.') && c.policies.length === slugs.length));
+  /* 370: no counts of views or downloads, anywhere, and no analytics. */
+  const priv = read(path.join(ROOT, 'policies', 'privacy.md')), privJa = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  const counted = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).filter((f) => /\b\d[\d,]*\s*(views|downloads|閲覧|ダウンロード)|(閲覧|ダウンロード)(数|回数)[：:]\s*\d|view count|download count/i.test(read(path.join(ROOT, 'site', f))));
+  ok('no page shows a count of views or downloads, and the Privacy Policy, in both languages, and the FAQ say that none is shown or kept',
+    counted.length === 0 && priv.includes('No page, a record page included, shows a count of views or downloads, and Sophaxis keeps no such count') && privJa.includes('どの頁も、閲覧やダウンロードの数を示しません。Sophaxis はその数を持ちません。')
+    && read(path.join(ROOT, 'faq.md')).includes('It shows no counts of views or downloads.') && read(path.join(ROOT, 'verification', 'commitments.txt')).includes('shows a count of views or downloads'), counted.join(', '));
+  /* 352 and 351: the JOSS checklist, beside the README, and errata-check with it. */
+  const joss = read(path.join(ROOT, 'docs', 'joss.md'));
+  const readme = read(path.join(ROOT, 'README.md'));
+  let first = '';
+  try { first = cp.execFileSync('git', ['log', '--reverse', '--format=%as'], { cwd: ROOT, encoding: 'utf8' }).split('\n')[0].trim(); } catch (e) { first = ''; }
+  const d = new Date(first + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + 6); d.setUTCDate(d.getUTCDate() + 1);
+  const earliest = first ? d.toISOString().slice(0, 10) : '';
+  const rows = joss.split('\n').filter((l) => /^\| /.test(l) && !/^\| (Criterion|---)/.test(l)).map((l) => l.split('|').map((c) => c.trim()));
+  const STATES = ['met', 'partly met', 'not yet', 'at submission', 'for JOSS'];
+  const named = [...joss.matchAll(/Check (\d+)/g)].map((m) => Number(m[1]));
+  const TOPIC = { 38: 'The JOSS plan', 39: 'Metadata for a release DOI', 40: 'CONTRIBUTING.md and CHANGELOG.md', 41: 'The draft JOSS paper' };
+  const src = read(__filename);
+  ok('docs/joss.md is marked not submitted, gives the first commit and the earliest day from git (' + earliest + '), and a state from the list for every row (' + rows.length + ')',
+    joss.startsWith('# Readiness for the Journal of Open Source Software (JOSS)\n\nNot submitted.') && first !== '' && joss.includes('The first commit here is from ' + first + ', so the earliest possible submission is ' + earliest + '.')
+    && rows.length >= 10 && rows.every((r) => STATES.includes(r[2])), rows.filter((r) => !STATES.includes(r[2])).map((r) => r[1]).join(', '));
+  ok('every check that docs/joss.md names is the check of that topic (' + [...new Set(named)].join(', ') + ')',
+    named.length > 0 && named.every((n) => TOPIC[n] && src.includes("console.log('\\n" + n + '. ' + TOPIC[n])));
+  ok('errata-check goes to JOSS together with the Sophaxis code, in May 2027 or later, in docs/joss.md and the README in both languages, which link the checklist',
+    joss.includes('is to be submitted to JOSS together with it, in May 2027 or later.') && earliest.startsWith('2027-05')
+    && readme.includes("The code of [errata-check](https://github.com/cpsbvbng26-dotcom/errata-check), the operator's checker of errata, is to be submitted to JOSS together with it, in May 2027 or later.")
+    && readme.includes('これと一緒に、2027 年 5 月以降に JOSS へ投稿します。') && (readme.match(/\(docs\/joss\.md\)/g) || []).length === 2
+    && joss.includes('JOSS charges no fees for submitting or publishing'));
+  /* 348: the disclosure as a table, of one shape in both languages, naming every model that the Moderation Policy names. */
+  const table = (head) => { const i = readme.indexOf(head); if (i < 0) return []; return readme.slice(i).split('\n').slice(2).filter((l, k, a) => a.slice(0, k + 1).every((x) => x.startsWith('| '))); };
+  const en = table('| Tool | Used for | Checked by |\n| --- | --- | --- |'), ja = table('| 道具 | 使ったところ | 確かめた人 |\n| --- | --- | --- |');
+  const models = ['Claude Code', 'Claude', 'ChatGPT', 'Grok'];
+  ok('the README discloses the use of language models in a table of the same shape in both languages (' + en.length + ' rows), naming every model the Moderation Policy names, and no model as an author',
+    en.length > 0 && en.length === ja.length && models.every((m) => en.join('').includes(m) && ja.join('').includes(m) && mod.includes(m.split(' ')[0]))
+    && en.every((r) => r.split('|').length === 5 && /The operator/.test(r)) && ja.every((r) => r.split('|').length === 5 && /運営者/.test(r)) && readme.includes('Claude is not an author.') && readme.includes('Claude は著者ではありません。'));
+}
+
+/* ------------------------------------------------------------ 101 */
+console.log('\n101. Counts in the prose that no other check held, and the abstract and the keywords kept in step');
+{
+  const site101 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  const K = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+  const readme = read(path.join(ROOT, 'README.md'));
+  const n = site101.notOffered.length;
+  ok('the README gives the number of places where Sophaxis is not offered, in both languages, from site.json (' + n + ')',
+    readme.includes('- **Not offered in ' + n + ' places**') && readme.includes('Sophaxis を提供しない ' + n + ' の国と地域'));
+  const lic = Object.keys(site101.licenses).length;
+  ok('the Copyright Policy counts the accepted licences of site.json (' + lic + '), in both languages',
+    read(path.join(ROOT, 'policies', 'copyright.md')).includes('The ' + W[lic] + ' accepted licences permit') && read(path.join(ROOT, 'policies', 'copyright.ja.md')).includes('受け付ける' + K[lic] + 'つのライセンスは'));
+  const cats = Object.keys(site101.categories).length;
+  ok('the glossary counts the fields of site.json (' + cats + '), in both languages',
+    read(path.join(ROOT, 'glossary.md')).includes('a field is one of the ' + W[cats] + ' areas') && read(path.join(ROOT, 'glossary.ja.md')).includes('作品を載せる' + K[cats] + 'つの領域'));
+  const tk = read(path.join(ROOT, 'policies', 'takedown.md')), tkJa = read(path.join(ROOT, 'policies', 'takedown.ja.md'));
+  const ORD = ['The first is', 'The second is', 'The third is', 'The fourth is'], ORDJ = ['一つ目は', '二つ目は', '三つ目は', '四つ目は'];
+  const cases = ORD.filter((o) => tk.includes('\n' + o + ' ')).length, casesJa = ORDJ.filter((o) => tkJa.includes('\n' + o)).length;
+  ok('the Takedown Policy says in how many cases a record is removed, and lists as many, in both languages (' + cases + ')',
+    cases > 0 && cases === casesJa && tk.includes('A record is removed in ' + W[cases] + ' cases.') && tkJa.includes('記録を削除するのは、' + K[cases] + 'つの場合です。'));
+  /* The abstract of Sophaxis itself: the same fields wherever it is told, in English and in Japanese. */
+  const FIELDS = 'philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science';
+  const z = JSON.parse(read(path.join(ROOT, '.zenodo.json'))), cff = read(path.join(ROOT, 'CITATION.cff'));
+  const paper = read(path.join(ROOT, 'paper', 'paper.md'));
+  const flat = (t) => t.replace(/\s+/g, ' ');
+  ok('the abstract names the same five fields in the README in both languages, .zenodo.json, CITATION.cff, the JOSS draft and the top pages, and says that acceptance is moderation',
+    Object.keys(site101.categories).length === 5 && readme.includes('Sophaxis is an overlay preprint server for ' + FIELDS + '.') && z.description.includes(FIELDS) && flat(cff).includes(FIELDS) && paper.includes(FIELDS)
+    && readme.includes('哲学・数学・論理学・数理哲学・科学哲学のための') && read(path.join(ROOT, 'site', 'index.ja.html')).includes('哲学・数学・論理学・数理哲学・科学哲学のプレプリント')
+    && read(path.join(ROOT, 'site', 'index.html')).includes('lists preprints in ' + FIELDS + '.')
+    && [readme, z.description, flat(cff)].every((t) => t.includes('Acceptance is moderation, not peer review.')) && readme.includes('受理はモデレーションであり、査読ではありません。'));
+  const reps = [...new Set(Object.values(site101.repositories))];
+  ok('the README names the same repositories as site.json, in the same order, in both languages (' + reps.length + ')',
+    typeof reps[0] === 'string' && readme.includes('Authors deposit their preprint in ' + reps.slice(0, -1).join(', ') + ' or ' + reps[reps.length - 1] + ';') && readme.includes('著者が ' + reps.join('・') + ' のどれかに置いた稿'));
+  /* The keywords: one list in .zenodo.json, CITATION.cff and the tags of the JOSS draft, and never "journal", which Sophaxis is not. */
+  const cffKw = [...(/keywords:\n((?:  - .*\n)+)/.exec(cff) || ['', ''])[1].matchAll(/  - (.*)/g)].map((m) => m[1]);
+  const tags = [...(/tags:\n((?:  - .*\n)+)/.exec(paper) || ['', ''])[1].matchAll(/  - (.*)/g)].map((m) => m[1]);
+  ok('.zenodo.json, CITATION.cff and the JOSS draft have the same keywords, in the same order (' + z.keywords.length + '), and none says journal',
+    z.keywords.length > 0 && JSON.stringify(z.keywords) === JSON.stringify(cffKw) && JSON.stringify(cffKw) === JSON.stringify(tags) && !z.keywords.some((k) => /journal/i.test(k)), z.keywords.join(', ') + ' / ' + cffKw.join(', ') + ' / ' + tags.join(', '));
 }
 
 console.log('\n' + '-'.repeat(60));
