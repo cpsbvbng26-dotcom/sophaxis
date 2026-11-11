@@ -49,16 +49,17 @@ const SOURCES = {
   'india-act': { url: 'https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf', split: / (\d+)\. (?=\(1\) |[A-Z])/g, max: 44, after: 'BE it enacted' },
   // The eGazette's server does not send its intermediate certificate, so the Ministry's own copy is read.
   'india-rules': { url: 'https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf', split: / (\d+)\. (?=[A-Z])/g, max: 23 },
-  'korea-pipa': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389', split: /\bArticle (\d+(?:-\d+)?) ?\(/g },
-  'korea-decree': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=66066', split: /\bArticle (\d+(?:-\d+)?) ?\(/g },
+  'korea-pipa': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
+  'korea-decree': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=66066', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
   'ru-152': { pages: ['http://www.kremlin.ru/acts/bank/24154/page/1', 'http://www.kremlin.ru/acts/bank/24154/page/2', 'http://www.kremlin.ru/acts/bank/24154/page/3', 'http://www.kremlin.ru/acts/bank/24154/page/4'], split: /Статья (\d+(?:\.\d+)?)\. /g },
   kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g },
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
   'github-terms': { url: 'https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/Policies/github-terms/github-terms-of-service.md', markdown: true },
   'vercel-terms': { url: 'https://vercel.com/legal/terms', split: /(?:^| )(\d+)\. (?=[A-Z][A-Za-z ,&'’-]{2,60} )/g },
-  'cc-by': { url: 'https://creativecommons.org/licenses/by/4.0/legalcode.en', split: /Section (\d+) – /g },
-  'cc-by-sa': { url: 'https://creativecommons.org/licenses/by-sa/4.0/legalcode.en', split: /Section (\d+) – /g },
-  cc0: { url: 'https://creativecommons.org/publicdomain/zero/1.0/legalcode.en', split: /(?:^| )(\d+)\. (?=[A-Z])/g },
+  // The legal codes open with a list of their sections; the sections themselves start at the last heading of section 1.
+  'cc-by': { url: 'https://creativecommons.org/licenses/by/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
+  'cc-by-sa': { url: 'https://creativecommons.org/licenses/by-sa/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
+  cc0: { url: 'https://creativecommons.org/publicdomain/zero/1.0/legalcode.en', split: /(?:^| )(\d+)\. (?=[A-Z])/g, fromLast: '1. Copyright and Related Rights' },
 };
 
 const plain = (h) => h.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ')
@@ -188,7 +189,7 @@ async function foreign(key, s, articles) {
     const hits = [...raw.matchAll(s.html)].map((m) => ({ n: m[1], at: m.index }));
     hits.forEach((h, i) => { all[h.n] = plain(raw.slice(h.at, i + 1 < hits.length ? hits[i + 1].at : h.at + 60000)); });
     if (!hits.length) all = cut(text, /\bArticle (\d+) (?=[A-Z])/g);
-  } else all = cut(s.after && text.includes(s.after) ? text.slice(text.indexOf(s.after)) : text, s.split, s.max);
+  } else all = cut(s.after && text.includes(s.after) ? text.slice(text.indexOf(s.after)) : s.fromLast && text.includes(s.fromLast) ? text.slice(text.lastIndexOf(s.fromLast)) : text, s.split, s.max);
   if (s.split && s.whole) Object.assign(all, cut(text, s.split));
   out.headings = Object.keys(all);
   out.articles = {};
