@@ -191,6 +191,16 @@ async function foreign(key, s, articles) {
     if (!hits.length) all = cut(text, /\bArticle (\d+) (?=[A-Z])/g);
   } else all = cut(s.after && text.includes(s.after) ? text.slice(text.indexOf(s.after)) : s.fromLast && text.includes(s.fromLast) ? text.slice(text.lastIndexOf(s.fromLast)) : text, s.split, s.max);
   if (s.split && s.whole) Object.assign(all, cut(text, s.split));
+  // The recitals that verification/duties.json quotes, from the preamble ("(23) In order to ensure ... (24) ...").
+  const want = (REG.recitals || {})[key];
+  if (want && s.html) {
+    const pre = text.slice(0, text.search(/HAVE ADOPTED THIS (?:REGULATION|DIRECTIVE)/));
+    out.recitals = {};
+    for (const n of want) {
+      const m = new RegExp('\\(' + n + '\\) ([\\s\\S]*?) \\(' + (Number(n) + 1) + '\\) ').exec(pre);
+      if (m) out.recitals[n] = '(' + n + ') ' + m[1];
+    }
+  }
   out.headings = Object.keys(all);
   out.articles = {};
   for (const a of articles) if (all[a] !== undefined) out.articles[a] = all[a];
