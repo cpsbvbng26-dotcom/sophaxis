@@ -46,10 +46,11 @@ const SOURCES = {
   pipl: { pages: ['http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559.htm', 'http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559_2.htm', 'http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559_3.htm', 'http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559_4.htm'], split: /\bArticle (\d+) /g },
   'thai-pdpa': { url: 'https://www.etda.or.th/getattachment/e820df2c-848f-4e03-86cb-a9dad38cc713/ENG-Version.aspx', split: /\bSection (\d+) /g },
   'saudi-pdpl': { url: 'https://sdaia.gov.sa/en/SDAIA/about/Documents/Personal%20Data%20English%20V2-23April2023-%20Reviewed-.pdf', split: /\bArticle \(?(\d+|One|Two|Three)\)? /g },
-  'india-act': { url: 'https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf', split: /(?:^|\. )(\d+)\. \(1\) /g },
-  'india-rules': { url: 'https://egazette.gov.in/WriteReadData/2025/267650.pdf', split: /(?:^|\. )(\d+)\. [A-Z]/g },
-  'korea-pipa': { url: 'https://elaw.klri.re.kr/eng_service/lawView.do?hseq=62389&lang=ENG', split: /\bArticle (\d+(?:-\d+)?) \(/g },
-  'korea-decree': { url: 'https://www.law.go.kr/법령/개인정보보호법시행령/제32조의3', split: /제(\d+조(?:의\d+)?)\(/g },
+  'india-act': { url: 'https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf', split: / (\d+)\. (?=\(1\) |[A-Z])/g, max: 44, after: 'BE it enacted' },
+  // The eGazette's server does not send its intermediate certificate, so the Ministry's own copy is read.
+  'india-rules': { url: 'https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf', split: / (\d+)\. (?=[A-Z])/g, max: 23 },
+  'korea-pipa': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389', split: /\bArticle (\d+(?:-\d+)?) ?\(/g },
+  'korea-decree': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=66066', split: /\bArticle (\d+(?:-\d+)?) ?\(/g },
   'ru-152': { pages: ['http://www.kremlin.ru/acts/bank/24154/page/1', 'http://www.kremlin.ru/acts/bank/24154/page/2', 'http://www.kremlin.ru/acts/bank/24154/page/3', 'http://www.kremlin.ru/acts/bank/24154/page/4'], split: /Статья (\d+(?:\.\d+)?)\. /g },
   kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g },
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
@@ -91,12 +92,12 @@ function curl(url, s = {}) {
 
 /* The articles of a plain text, by a heading pattern: { number: text from its heading to the next }.
  * Only headings that come in rising order count, so that a mention of an article in the text is not taken for its heading. */
-function cut(text, re) {
+function cut(text, re, max = Infinity) {
   const hits = [];
   for (const m of text.matchAll(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'))) hits.push({ n: m[1], at: m.index });
   const num = (n) => parseFloat(String(n).replace(/[^\d.-]/g, '').replace('-', '.')) || 0;
   const rising = [];
-  for (const h of hits) if (!rising.length || num(h.n) > num(rising[rising.length - 1].n)) rising.push(h);
+  for (const h of hits) if (num(h.n) <= max && (!rising.length || num(h.n) > num(rising[rising.length - 1].n))) rising.push(h);
   const out = {};
   rising.forEach((h, i) => { out[h.n] = text.slice(h.at, i + 1 < rising.length ? rising[i + 1].at : Math.min(text.length, h.at + 30000)).trim(); });
   return out;
@@ -167,9 +168,11 @@ async function foreign(key, s, articles) {
     return out;
   }
   let text = '', raw = '';
+  const statuses = [];
   for (const u of s.pages || [s.url]) {
     const r = curl(u, s);
-    out.status = r.status || r.error;
+    statuses.push(r.status || r.error);
+    out.status = s.pages ? statuses : statuses[0];
     if (r.error) { out.error = r.error; break; }
     if (r.final && r.final !== u) out.final = r.final;
     if (r.pdf) out.pdf = true;
@@ -185,7 +188,7 @@ async function foreign(key, s, articles) {
     const hits = [...raw.matchAll(s.html)].map((m) => ({ n: m[1], at: m.index }));
     hits.forEach((h, i) => { all[h.n] = plain(raw.slice(h.at, i + 1 < hits.length ? hits[i + 1].at : h.at + 60000)); });
     if (!hits.length) all = cut(text, /\bArticle (\d+) (?=[A-Z])/g);
-  } else all = cut(text, s.split);
+  } else all = cut(s.after && text.includes(s.after) ? text.slice(text.indexOf(s.after)) : text, s.split, s.max);
   if (s.split && s.whole) Object.assign(all, cut(text, s.split));
   out.headings = Object.keys(all);
   out.articles = {};
