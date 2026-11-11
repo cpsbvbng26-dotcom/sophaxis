@@ -1,0 +1,28 @@
+name: sources
+# The primary texts that the legal pages cite are fetched (tools/sources.js) and written to verification/sources-raw.json,
+# on a new branch sources/<date>, never on main. Run by hand. The operator reads what was fetched before any quotation
+# in verification/sources.json is taken from it.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['claude/legal-sources-1111']
+    paths: ['tools/sources.js', 'tools/citations.js', 'verification/citations.json', '.github/workflows/sources.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    name: Fetch the cited texts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: sudo apt-get install -y -q poppler-utils > /dev/null
+      - run: node tools/sources.js
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add verification/sources-raw.json
+          git commit -m "Sources: the fetched texts" || exit 0
+          git push
