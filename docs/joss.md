@@ -33,7 +33,7 @@ The state is one of: met, partly met, not yet, at submission (to be done on the 
 | A paper of 250 to 1000 words with the sections JOSS asks for | met | `paper/paper.md`. Check 41 counts the words and the sections. |
 | References with DOIs | at submission | `paper/paper.bib` holds no DOI until one is checked at its source. Check 41. |
 | A disclosure of generative models, in the section JOSS names `AI usage disclosure`: the tools and their versions, where they were used, and that the author reviewed every output and made the core design decisions | at submission | The section is in the paper, and Claude is not an author. The versions are added on the day. |
-| The author, the ORCID iD and the affiliation | at submission | One author, with the ORCID iD. The operator decides the affiliation line of the paper before submitting, and gives no title that the operator does not hold. |
+| The author, the ORCID iD and the affiliation | at submission | One author, with the ORCID iD. The affiliation line is "ZEN University, Japan", decided by the operator on 2026-11-11; the paper gives no title. |
 | A release and an archive DOI of the reviewed version | at submission | After the review, the operator makes the release and the Zenodo version by hand, and records the DOI that Zenodo gives. |
 
 ## What the operator does on the day
