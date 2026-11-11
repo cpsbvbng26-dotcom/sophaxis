@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-11",
+    "title": "A feed of the changes to the policies, and the other language at the top of each page",
+    "text": "Changes to the policies now have an Atom feed of their own, apart from the news. The Moderation Policy says how the criteria for listing are reviewed and changed, and the Privacy Policy that no page shows a count of views or downloads. A page in English or Japanese links its other version at the end of its header.",
+    "url": "policy.html"
+  },
+  {
+    "date": "2026-11-11",
     "title": "The agreed court, a box for each point of the submission form, and links to sections",
     "text": "From 2026-11-25, the Terms of Use name the Utsunomiya District Court or the Utsunomiya Summary Court as the court of first instance agreed in a form; talks and mediation still come first, and the agreement stays non-exclusive. The submission form now asks a box for each point the submitter confirms or agrees to, and the automatic check refuses a submission until every required box is ticked. Every policy and prose page, in both languages, lists its sections near its top.",
     "url": "policies/terms.html"
