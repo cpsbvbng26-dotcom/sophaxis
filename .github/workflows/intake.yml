@@ -21,14 +21,14 @@ jobs:
     name: Look up the DOI and check the submitter
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # deposit-check reads the DOI metadata and gives advice in the comment. It is pinned to a commit, and it does not decide the listing.
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: cpsbvbng26-dotcom/deposit-check
           ref: 780899e3ae97a4330e037ba8096fac7178066f69
           path: deposit-check
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       # poppler-utils reads the shape of the PDF for the moderator. If it cannot be installed, the comment says the shape was not read.
@@ -45,8 +45,8 @@ jobs:
     name: Check that an author asks for withdrawal
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       # The issue text reaches the script only through the environment, never through the shell.
@@ -61,8 +61,8 @@ jobs:
     name: Check a reported published version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       # The issue text reaches the script only through the environment, never through the shell.

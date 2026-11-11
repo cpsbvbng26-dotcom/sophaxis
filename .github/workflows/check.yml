@@ -1,15 +1,24 @@
 name: check
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  # Once a week on main as well, so that the checks that depend on the date (the expiry of security.txt)
+  # and the scan for keys and addresses run even when nothing is pushed: Monday 14:07 Japan time.
+  schedule:
+    - cron: '7 5 * * 1'
+# The checks only read the repository.
+permissions:
+  contents: read
 jobs:
   check:
     name: Records and site
     runs-on: ubuntu-latest
     steps:
       # The whole history: the check confirms that no Sophaxis id was ever given to a second work.
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       # pdfinfo and pdftotext, to confirm the pages and words recorded for each PDF copy.
@@ -22,8 +31,8 @@ jobs:
     # playwright 1.56.1 cannot install Chromium on ubuntu 26.04; the profile site moved to 24.04 for the same reason.
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       - name: Install playwright and Chromium

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「規程（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policy.ja.html">
@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://sophaxis.vercel.app/og.png">
 <link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policy.html">
 <link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/policy.ja.html">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: changes to the policies" href="./policies/changes.xml">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@SophaxisX">
 <style>
@@ -43,6 +44,7 @@ header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justif
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 nav a { margin-left: 1rem; font-size: .95rem; }
 nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
@@ -86,10 +88,11 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" lang="en">Skip to content</a>
 <header class="top"><div class="wrap">
-<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
-<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<a class="brand" href="./index.html" lang="en">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav lang="en"><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<p class="lang"><a href="./policy.html" hreflang="en" lang="en">English</a></p>
 </div></header>
 <main class="wrap" id="main">
 <h1>規程（日本語訳）</h1>
@@ -109,14 +112,14 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2 id="編集の独立">編集の独立</h2>
 <p>モデレーターは、公開した規程だけに従って、それぞれの投稿を判断します。預け先・資金提供者・機関・著者・サービスのどれも、判断を指図できません。お金・便宜・引用と引き換えに載せることはありません。どの判断の理由も、その issue で公開されています。</p>
 <h2 id="運営者と利益相反">運営者と利益相反</h2>
-<p>Sophaxis は、日本の独立した研究者、根本卓哉（Takuya Nemoto）が運営しています。運営者への連絡の仕方は、<a href="./contact.ja.html">運営者と連絡先</a>の頁にあります。運営者の投稿も同じ決まりでモデレーションを受けます。その記録の頁には、運営者自身のものである印を付けます。</p>
+<p>Sophaxis は、日本にいる根本卓哉（Takuya Nemoto）が運営しています。運営者への連絡の仕方は、<a href="./contact.ja.html">運営者と連絡先</a>の頁にあります。運営者の投稿も同じ決まりでモデレーションを受けます。その記録の頁には、運営者自身のものである印を付けます。</p>
 <h2 id="作品を見つける">作品を見つける</h2>
 <p>それぞれの記録は、二つ以上の分野に載せることができます。ORCID iD を持つ著者には、Sophaxis に載っているその人の作品を挙げる頁があります。ORCID iD を持たない著者には、そのような頁はありません。名前だけでは、何人もの人に当てはまりうるためです。新しい記録は、Atom のフィード <code>feed.xml</code> で知らせます。すべての記録の公開の部分は、再利用のために <code>papers.json</code> で手に入ります。どちらの要旨も、その作品のライセンスを保ちます。</p>
 <h2 id="これらの頁について">これらの頁について</h2>
-<p>これらの頁は、Sophaxis がどう動き、何を約束するかを述べるものです。法的な助言ではありません。それぞれの規程を数文にまとめた<a href="./rules.ja.html">規程の要点</a>もあります。決まりは規程そのものです。どの頁も最後に変えた日を示し、それより前の版はすべて公開のリポジトリに残ります。すべての規程と免責事項、そしてこの頁や FAQ、用語集のように Sophaxis を説明する頁には、日本語訳があります。<a href="./index.ja.html">日本語のトップの頁</a>が、それらを挙げています。個人データについての頁には、日本の法律の見出しに沿った日本語版があります。それぞれの訳は、英語の頁の冒頭からリンクしています。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
+<p>これらの頁は、Sophaxis がどう動き、何を約束するかを述べるものです。法的な助言ではありません。それぞれの規程を数文にまとめた<a href="./rules.ja.html">規程の要点</a>もあります。決まりは規程そのものです。どの頁も最後に変えた日を示し、それより前の版はすべて公開のリポジトリに残ります。規程の変更だけを、新しいものから順に、お知らせとは別の Atom の配信でも出しています（<a href="./policies/changes.xml">policies/changes.xml</a>）。掲載の基準をどう見直し、どう変えるかは、<a href="./policies/moderation.ja.html#基準の変更">モデレーションの規程</a>にあります。すべての規程と免責事項、そしてこの頁や FAQ、用語集のように Sophaxis を説明する頁には、日本語訳があります。<a href="./index.ja.html">日本語のトップの頁</a>が、それらを挙げています。個人データについての頁には、日本の法律の見出しに沿った日本語版があります。それぞれの訳は、英語の頁の冒頭からリンクしています。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>このサイトとそのコードは、Claude Code（Anthropic）で作りました。運営者がそれらに責任を負います。Claude は著者ではありません。</p>
 </main>
-<footer><div class="wrap">
+<footer><div class="wrap" lang="en">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
 <p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>

@@ -6,6 +6,10 @@ Japanese: [よくある質問（日本語訳）](./faq.ja.md). It is a translati
 
 Each answer is a short form of a policy. Where they differ, the policy applies.
 
+A question is added here only when someone has actually asked it, in an issue or by email.
+Its answer then begins with a line that says when and where it was asked, such as "Asked on 2026-12-01, in issue #300." or "Asked on 2026-12-01, by email.", without the name of the person who asked.
+The questions without such a line were already here on 2026-11-11, when this rule began; they were written from the policies.
+
 ## What is Sophaxis?
 
 An overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.

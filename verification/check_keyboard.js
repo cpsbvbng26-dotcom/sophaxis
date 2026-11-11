@@ -20,6 +20,8 @@ const path = require('path');
 const SITE = path.resolve(__dirname, '..', 'site');
 /* Wide and narrow: a page can overflow at 360 px and not at 390 px. 640 px is a window 1280 px wide zoomed to 200 %. */
 const WIDTHS = [1440, 1200, 900, 640, 390, 360];
+/* The text alone doubled, in a window of the width that accessibility.md names. */
+const TEXT_ZOOM_WIDTH = 1280;
 
 function pages(dir = SITE, rel = '') {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -124,7 +126,7 @@ async function walk(pg) {
   const server = await serve();
   const base = 'http://127.0.0.1:' + server.address().port + '/';
   const list = pages();
-  console.log('Keyboard and layout: ' + list.length + ' pages, Tab through each, ' + WIDTHS.join(' / ') + ' px wide');
+  console.log('Keyboard and layout: ' + list.length + ' pages, Tab through each, ' + WIDTHS.join(' / ') + ' px wide, and the text alone at 200 % at ' + TEXT_ZOOM_WIDTH + ' px');
 
   for (const page of list) {
     const ctx = await browser.newContext({ viewport: { width: 1200, height: 800 } });
@@ -172,6 +174,17 @@ async function walk(pg) {
         ok(page + ': at ' + w + ' px the text keeps at least 12 px from both edges', g.L >= 12 && g.R >= 12, 'left ' + g.L + ' / right ' + g.R);
       }
       await c2.close();
+    }
+    /* The text alone at 200 %, as a browser's text zoom or a larger default font gives it (WCAG 1.4.4): every size on the site
+     * is in rem or em from the 17 px of the body, so doubling the root and the body doubles every text and nothing else. */
+    {
+      const c4 = await browser.newContext({ viewport: { width: TEXT_ZOOM_WIDTH, height: 900 }, bypassCSP: true });
+      const p4 = await c4.newPage();
+      await p4.goto(base + page, { waitUntil: 'load' });
+      await p4.addStyleTag({ content: 'html { font-size: 200% !important; } body { font-size: 34px !important; }' });
+      const over = await p4.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      ok(page + ': with the text alone at 200 % in a window ' + TEXT_ZOOM_WIDTH + ' px wide, it does not scroll sideways', over <= 1, over + ' px too wide');
+      await c4.close();
     }
   }
   /* The leaflet says that it fits one sheet: print it to A4 and count the pages. */

@@ -1,12 +1,15 @@
 ---
 title: 'Sophaxis: an overlay preprint server for philosophy and mathematics'
 tags:
-  - preprints
-  - overlay server
+  - preprint server
   - philosophy
   - mathematics
-  - scholarly communication
+  - logic
   - open access
+  - scholarly communication
+  - ORCID
+  - DataCite
+  - static site
 authors:
   - name: Takuya Nemoto
     orcid: 0009-0000-1406-0547

@@ -42,7 +42,7 @@ The reasons for every decision are public in its issue.
 
 ## Operator and conflicts of interest
 
-Sophaxis is operated by Takuya Nemoto, an independent researcher in Japan.
+Sophaxis is operated by Takuya Nemoto, in Japan.
 The [Operator and contact](./contact.md) page says how to reach the operator.
 Submissions by the operator are moderated under the same rules
 and are marked on their record pages as the operator's own.
@@ -62,6 +62,8 @@ These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
 Each policy is put in a few sentences on [The policies in brief](./rules.md); the policies themselves govern.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
+The changes to the policies alone are also given, newest first, in an Atom feed of their own, apart from the news: [policies/changes.xml](https://sophaxis.vercel.app/policies/changes.xml).
+How the criteria for listing are reviewed and changed is said in the [Moderation Policy](./policies/moderation.md#changes-to-the-criteria).
 Every policy, the Disclaimer and the pages that explain Sophaxis, such as this one, the FAQ and the Glossary, have Japanese translations, which the [Japanese top page](https://sophaxis.vercel.app/index.ja.html) lists, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
 
 This site and its code were built with Claude Code (Anthropic).

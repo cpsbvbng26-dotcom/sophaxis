@@ -87,9 +87,11 @@ The code of each step is public, and each section links to it.
 - Leaves to the operator: the audit itself.
 - Code: [tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js), run by [audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml).
 
-## On every push and every pull request
+## On every push and every pull request, and once a week
 
 - Runs every check of [verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) against the records, the policies and the built site.
+- Among them, a scan of every file in the repository for keys, tokens and email addresses other than the few the checks allow.
+- The same checks also run on main once a week, on Monday at 14:07 Japan time, so that a check that depends on the date, and the scan, run even when nothing is pushed. A failure is shown in the repository's Actions, and the operator is told by GitHub.
 - The operator merges a change only when the checks pass.
 
 ## When the site changes

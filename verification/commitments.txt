@@ -149,3 +149,4 @@ The responsibility for an act done against these terms, or outside them, lies wi
 Except where the law makes the operator responsible, the operator is not responsible for such acts.
 The table lists possible paths only. It is not complete. It does not say that a listed act is unlawful, or that an act not listed is lawful.
 This does not exclude or limit the operator's liability for loss that the operator causes by intent or negligence, which is set out under No warranty below.
+No page, a record page included, shows a count of views or downloads, and Sophaxis keeps no such count: it runs no analytics that would make one, and it does not count readers from Vercel's request logs.

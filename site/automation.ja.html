@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>自動で動く手順（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「自動で動く手順（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/automation.ja.html">
@@ -43,6 +43,7 @@ header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justif
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 nav a { margin-left: 1rem; font-size: .95rem; }
 nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
@@ -86,10 +87,11 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" lang="en">Skip to content</a>
 <header class="top"><div class="wrap">
-<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
-<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<a class="brand" href="./index.html" lang="en">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav lang="en"><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<p class="lang"><a href="./automation.html" hreflang="en" lang="en">English</a></p>
 </div></header>
 <main class="wrap" id="main">
 <h1>自動で動く手順（日本語訳）</h1>
@@ -97,7 +99,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>これは英語の <a href="./automation.html">What runs by itself</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>Sophaxis には、ひとりでに動く手順がいくつかあります。公開のリポジトリの GitHub Actions として動くものと、Vercel での配信として動くものです。この頁は、そのすべてを挙げます。いつ動くか、何を読むか、何を書くか、何を運営者に残すかです。どの手順のコードも公開しており、各節からリンクしています。</p>
 <ul><li>投稿・撤回・訂正・削除の求めについて判断する自動の手順はありません。判断はすべて運営者が下します。</li><li>運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。</li><li>言語モデルを使う手順はありません。どの手順も通常のコードです。</li><li>どのアカウントにもサインインする手順はありません。鍵は、GitHub が実行ごとに渡すトークンだけで、その権限は手順に要る最小限です。IndexNow の鍵は、仕組みのうえで公開のものです。</li><li>記録を変える手順は、先にサイトを組み立て、すべての検査を走らせます。検査が一つでも落ちれば、何も変えません。</li><li>これらの手順が扱う個人データは、<a href="./policies/privacy.ja.html">個人情報の取り扱いについて</a>に書いてあります。</li></ul>
-<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#投稿の-issue-が開かれたか編集されたときまたは著者がコメントで確かめたとき">投稿の issue が開かれたか編集されたとき、または著者がコメントで確かめたとき</a></li><li><a href="#撤回の-issue-が開かれたか編集されたとき">撤回の issue が開かれたか編集されたとき</a></li><li><a href="#出版された版が報告されたとき">出版された版が報告されたとき</a></li><li><a href="#削除依頼の-issue-が開かれたか編集されたとき">削除依頼の issue が開かれたか編集されたとき</a></li><li><a href="#運営者が求めに-upheld-か-not-upheld-のラベルを付けたとき">運営者が求めに <code>upheld</code> か <code>not-upheld</code> のラベルを付けたとき</a></li><li><a href="#一日に一度日本時間の-0917">一日に一度、日本時間の 09:17</a></li><li><a href="#月に一度1-日の日本時間-0917">月に一度、1 日の日本時間 09:17</a></li><li><a href="#年に一度一月-2-日の日本時間-1223">年に一度、一月 2 日の日本時間 12:23</a></li><li><a href="#年に一度十月-30-日の日本時間-0917">年に一度、十月 30 日の日本時間 09:17</a></li><li><a href="#push-とプルリクエストのたびに">push とプルリクエストのたびに</a></li><li><a href="#サイトが変わったとき">サイトが変わったとき</a></li><li><a href="#週に一度月曜日の日本時間-1337">週に一度、月曜日の日本時間 13:37</a></li><li><a href="#運営者が毎週の確認のプルリクエストに-record-のラベルを付けたとき">運営者が毎週の確認のプルリクエストに <code>record</code> のラベルを付けたとき</a></li><li><a href="#運営者が動かしたときだけ">運営者が動かしたときだけ</a></li><li><a href="#手で行うこと">手で行うこと</a></li></ul></nav>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#投稿の-issue-が開かれたか編集されたときまたは著者がコメントで確かめたとき">投稿の issue が開かれたか編集されたとき、または著者がコメントで確かめたとき</a></li><li><a href="#撤回の-issue-が開かれたか編集されたとき">撤回の issue が開かれたか編集されたとき</a></li><li><a href="#出版された版が報告されたとき">出版された版が報告されたとき</a></li><li><a href="#削除依頼の-issue-が開かれたか編集されたとき">削除依頼の issue が開かれたか編集されたとき</a></li><li><a href="#運営者が求めに-upheld-か-not-upheld-のラベルを付けたとき">運営者が求めに <code>upheld</code> か <code>not-upheld</code> のラベルを付けたとき</a></li><li><a href="#一日に一度日本時間の-0917">一日に一度、日本時間の 09:17</a></li><li><a href="#月に一度1-日の日本時間-0917">月に一度、1 日の日本時間 09:17</a></li><li><a href="#年に一度一月-2-日の日本時間-1223">年に一度、一月 2 日の日本時間 12:23</a></li><li><a href="#年に一度十月-30-日の日本時間-0917">年に一度、十月 30 日の日本時間 09:17</a></li><li><a href="#push-とプルリクエストのたびにと週に一度">push とプルリクエストのたびに、と週に一度</a></li><li><a href="#サイトが変わったとき">サイトが変わったとき</a></li><li><a href="#週に一度月曜日の日本時間-1337">週に一度、月曜日の日本時間 13:37</a></li><li><a href="#運営者が毎週の確認のプルリクエストに-record-のラベルを付けたとき">運営者が毎週の確認のプルリクエストに <code>record</code> のラベルを付けたとき</a></li><li><a href="#運営者が動かしたときだけ">運営者が動かしたときだけ</a></li><li><a href="#手で行うこと">手で行うこと</a></li></ul></nav>
 <h2 id="投稿の-issue-が開かれたか編集されたときまたは著者がコメントで確かめたとき">投稿の issue が開かれたか編集されたとき、または著者がコメントで確かめたとき</h2>
 <ul><li>読むもの：DataCite、Crossref、JaLC のどれかにある DOI のメタデータ。そのメタデータが作品の前の版として挙げる DOI それぞれの登録の日。Crossref がその DOI について記録している通知。最新の版の PDF。これは預け先がスクリプトに取得を許している場合だけで、モデレーターのために形を読むだけです。読んだあとは消します。issue が開かれた日。様式に書かれた公開の ORCID の記録の、氏名・ウェブサイト・業績。deposit-check によるメタデータについての助言。</li><li>書くもの：それぞれの確認の結果と記録の下書きを載せたコメント。<code>verified</code> か <code>unverified</code> のラベル。</li><li>様式の必須のボックスすべてに印があるかを確かめます。ボックスは、リポジトリにある二つの投稿の様式から読みます。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。<a href="./policies/submission.ja.html#投稿者が確認すること">投稿の規程</a>にも同じボックスを並べてあります。</li><li>2026-11-21 から、<a href="./policies/submission.ja.html">投稿の規程</a>が定めるとおり、ほかの著者それぞれの同意の確認も数えます。</li><li>2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから六か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。</li><li>2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。</li><li>2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。</li><li>2026-11-23 から、載っている作品の著者でまだない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。</li><li>運営者に残すこと：投稿を受理するか、断るか。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js">tools/intake.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml">intake.yml</a> が動かします。</li></ul>
 <h2 id="撤回の-issue-が開かれたか編集されたとき">撤回の issue が開かれたか編集されたとき</h2>
@@ -116,8 +118,8 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul><li>読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。</li><li>書くもの：前の年の数を載せた issue。開かれた投稿、受理した投稿、断った投稿、まだ決めていない投稿の数です。断るときに挙げた理由、投稿から判断までの日数、求め、撤回した記録と削除した記録も数えます。</li><li>運営者に残すこと：数を <code>data/reports/</code> に記録すること。<a href="./decisions.html">年ごとの判断</a>の頁は、そこから組み立てます。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js">tools/report.js</a> と <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js">tools/report_issue.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml">report.yml</a> が動かします。</li></ul>
 <h2 id="年に一度十月-30-日の日本時間-0917">年に一度、十月 30 日の日本時間 09:17</h2>
 <ul><li>読むもの：運営者の手順を書いた <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md">docs/operations.md</a> の「Yearly audit」の節。</li><li>書くもの：Sophaxis が始まった日に、その一覧に印を付けるための issue。同じ題の issue があれば開きません。</li><li>運営者に残すこと：点検そのもの。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js">tools/audit.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml">audit.yml</a> が動かします。</li></ul>
-<h2 id="push-とプルリクエストのたびに">push とプルリクエストのたびに</h2>
-<ul><li>記録・規程・組み立てたサイトに対して、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js">verification/check.js</a> のすべての検査を走らせます。</li><li>運営者は、検査が通ったときだけ、変更をマージします。</li></ul>
+<h2 id="push-とプルリクエストのたびにと週に一度">push とプルリクエストのたびに、と週に一度</h2>
+<ul><li>記録・規程・組み立てたサイトに対して、<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js">verification/check.js</a> のすべての検査を走らせます。</li><li>その中に、リポジトリのすべてのファイルから、鍵・トークンと、検査が認めた少数のほかのメールアドレスを探す走査があります。</li><li>同じ検査は、週に一度、月曜日の日本時間 14:07 にも main に対して走ります。日付に掛かる検査と走査を、push が無いときにも走らせるためです。落ちたときは、リポジトリの Actions に出て、GitHub が運営者に知らせます。</li><li>運営者は、検査が通ったときだけ、変更をマージします。</li></ul>
 <h2 id="サイトが変わったとき">サイトが変わったとき</h2>
 <ul><li>Vercel は、リポジトリの <code>site/</code> にあるファイルを配信します。そのファイルは、<code>build.js</code> が記録から組み立てます。OAI-PMH の口は、同じ記録を読む Vercel 上の小さな関数です。</li><li>新しい頁が公開されると、IndexNow を受け付ける検索エンジンに、新しい記録の頁と PDF の写し、変わったもの、消えたものを知らせます。新しいものと変わったものは、著者が同意していれば Internet Archive に保存します。消えた頁は保存しません。</li><li>Vercel が保つ以前の版のサイトは、公開していません。</li><li>main への push のたびと、一日に一度、日本時間の 11:41 に、<code>site/</code> のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。十分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js">tools/live.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml">live.yml</a> が動かします。</li><li><code>robots.txt</code> は、サイトのほかの部分と一緒に組み立てます。削除した記録と、著者が保存に同意していない記録を集めないよう、Internet Archive のクローラーに求めます。</li><li>コード：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js">tools/indexnow.js</a>。<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml">indexnow.yml</a> が動かし、削除の手順の push のあとにも動きます。</li></ul>
 <h2 id="週に一度月曜日の日本時間-1337">週に一度、月曜日の日本時間 13:37</h2>
@@ -129,7 +131,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2 id="手で行うこと">手で行うこと</h2>
 <ul><li>すべての判断と、その理由。</li><li>空にした issue の削除。後始末の issue がそれを挙げます。</li><li>リポジトリの履歴から素材を除くよう GitHub に頼むこと。以前の写しを除外するよう Internet Archive に頼むこと。文面は後始末の issue にあります。</li><li>変わった法令や規約の文を、<code>record</code> のラベルで記録すること。</li><li>索引や登録簿に Sophaxis を登録すること。</li><li>メールに答えること。</li></ul>
 </main>
-<footer><div class="wrap">
+<footer><div class="wrap" lang="en">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
 <p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>

@@ -264,6 +264,7 @@ header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justif
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 nav a { margin-left: 1rem; font-size: .95rem; }
 nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
@@ -343,7 +344,7 @@ function sections(html, ja = false) {
  * and link built pages that have no source (the listing, the feeds) by their address on the site. On the site, a link to a
  * source that is built as a page goes to that page, and a link to the site goes there relatively, so that every link stays
  * relative. A link to a source that is not built goes to the file on GitHub; one to a template stays, as build.js copies it. */
-const NOT_PAGES = ['README.md', 'CHANGELOG.md', 'CLAUDE.md', 'CONTRIBUTING.md'];
+const NOT_PAGES = ['README.md', 'CHANGELOG.md', 'CLAUDE.md', 'CONTRIBUTING.md', 'SECURITY.md'];
 const SOURCE_PAGES = new Map(fs.readdirSync(ROOT).filter((f) => f.endsWith('.md') && !NOT_PAGES.includes(f)).map((f) => [f, f.replace(/\.md$/, '.html')])
   .concat(fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => f.endsWith('.md')).map((f) => ['policies/' + f, 'policies/' + f.replace(/\.md$/, '.html')])));
 /* Pure: where a link in the source `src` leads on the site, from the page `at`; null leaves the link as it is. */
@@ -377,6 +378,13 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
   const home = canonical === '';
   const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">${SITE.osf ? `<link itemprop="sameAs" href="${esc(SITE.osf.url)}"><link itemprop="sameAs" href="https://doi.org/${esc(SITE.osf.doi)}">` : ''}${SITE.zenodo ? `<link itemprop="sameAs" href="https://doi.org/${esc(SITE.zenodo.doi)}">` : ''}` : '>';
   const brand = home ? 'href="./" itemprop="url"' : `href="${up}index.html"`;
+  /* A page with a version in the other language links it at the end of the header, in the same place on every page.
+   * The twin is the alternate that the head names; both versions sit in the same directory. */
+  const twin = [...(head || '').matchAll(/<link rel="alternate" hreflang="(en|ja)" href="([^"]+)">/g)]
+    .map((m) => ({ lang: m[1], file: m[2].split('/').pop() || 'index.html' })).find((t) => t.lang !== (lang || 'en'));
+  const switcher = twin ? `\n<p class="lang"><a href="./${twin.file}" hreflang="${twin.lang}" lang="${twin.lang}">${twin.lang === 'ja' ? '日本語' : 'English'}</a></p>` : '';
+  /* On a Japanese page, the header and the footer stay in English, and say so to screen readers. */
+  const en = lang === 'ja' ? ' lang="en"' : '';
   return `<!doctype html>
 <html lang="${lang || 'en'}">
 <head>
@@ -397,19 +405,19 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
 <meta property="og:image" content="${esc(image || SITE.baseUrl + 'og.png')}">
-${head || ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">${SITE.x ? `\n<meta name="twitter:site" content="@${esc(SITE.x)}">` : ''}
+${head || ''}${/^(policies\/|policy(\.ja)?\.html$)/.test(canonical) ? POLICY_FEED(up) : ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">${SITE.x ? `\n<meta name="twitter:site" content="@${esc(SITE.x)}">` : ''}
 <style>${CSS}</style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main"${en}>Skip to content</a>
 <header class="top"><div class="wrap"${site}
-<a class="brand" ${brand}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
-<nav><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a><a href="${up}faq.html">FAQ</a></nav>
+<a class="brand" ${brand}${en}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
+<nav${en}><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a><a href="${up}faq.html">FAQ</a></nav>${switcher}
 </div></header>
 <main class="wrap" id="main">
 ${body}
 </main>
-<footer><div class="wrap">
+<footer><div class="wrap"${en}>
 <p>${esc(SITE.name)} is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by ${esc(SITE.operator.name)}. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="${up}policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="${esc(SITE.repo)}">Source</a>.</p>
 <p><a href="${up}policies/terms.html">Terms of Use</a> · <a href="${up}policies/privacy.html">Privacy</a> · <a href="${up}policies/takedown.html">Takedown</a> · <a href="${up}disclaimer.html">Disclaimer</a> · <a href="${up}repositories.html">For repositories</a> · <a href="${up}automation.html">What runs by itself</a> · <a href="${up}stats.html">Statistics</a> · <a href="${up}transparency.html">Transparency</a> · <a href="${up}news.html">News</a> · <a href="${up}press.html">Press</a> · <a href="${up}history.html">History</a> · <a href="${up}accessibility.html">Accessibility</a> · <a href="${up}easy.html">In plain words</a> · <a href="${up}contact.html">Contact</a></p>
@@ -977,7 +985,6 @@ function indexPage(papers, all = papers) {
 ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
-<p class="meta"><a href="./index.ja.html" hreflang="ja" lang="ja">日本語</a></p>
 ${operatingCounts(all)}${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
 ${ownNotice(all)}
 ${fields(papers, '', './')}
@@ -1286,6 +1293,44 @@ ${n.url ? `    <link href="${esc(newsHref(n, SITE.baseUrl))}"/>\n` : ''}    <upd
 </feed>
 `;
 }
+
+/* Changes to the policies alone, as an Atom feed apart from the news (policies/changes.xml), from data/policy-changes.json:
+ * newest first, each with the day it was published, the policies it touches, a title and a text, and `from`,
+ * the day it takes effect, when that is later. verification/check.js holds every policy's "Last updated" date to an entry. */
+const loadPolicyChanges = () => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'policy-changes.json'), 'utf8'));
+function policyChangeProblems(items) {
+  const e = [], slugs = POLICIES.map(([s]) => s);
+  if (!Array.isArray(items) || !items.length) return ['data/policy-changes.json: a list of changes, newest first'];
+  items.forEach((c, i) => {
+    const at = 'data/policy-changes.json: change ' + (i + 1);
+    if (!DATE.test(c.date || '') || !c.title || !c.text) e.push(at + ' needs a date, a title and a text');
+    if (!Array.isArray(c.policies) || !c.policies.length || !c.policies.every((x) => slugs.includes(x))) e.push(at + ' names one or more of the policies: ' + slugs.join(', '));
+    if (c.from !== undefined && !(DATE.test(c.from) && c.from > c.date)) e.push(at + ': from is a day after the date');
+    if (i > 0 && c.date > items[i - 1].date) e.push('data/policy-changes.json: changes are newest first');
+  });
+  return e;
+}
+function policyChangesFeed(items) {
+  const stamp = (d) => d + 'T00:00:00Z';
+  return `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>${esc(SITE.name)}: changes to the policies</title>
+  <subtitle>Only the changes to the policies, newest first. A change that narrows a right is entered when it is announced, with the day it takes effect.</subtitle>
+  <id>${SITE.baseUrl}policies/changes.xml</id>
+  <link rel="self" href="${SITE.baseUrl}policies/changes.xml"/>
+  <link href="${SITE.baseUrl}policy.html"/>
+  <updated>${stamp(items[0].date)}</updated>
+  <author><name>${esc(SITE.operator.name)}</name></author>
+${items.map((c, i) => `  <entry>
+    <id>${SITE.baseUrl}policies/changes.xml#c${items.length - i}</id>
+    <title>${esc(c.title)}</title>
+${c.policies.map((x) => `    <link href="${SITE.baseUrl}policies/${x}.html" title="${esc(policyTitle(x))}"/>\n`).join('')}    <updated>${stamp(c.date)}</updated>
+    <summary>${esc(c.text)}${c.from ? ' In effect from ' + esc(c.from) + '.' : ''} Policies: ${esc(c.policies.map(policyTitle).join(', '))}.</summary>
+  </entry>`).join('\n')}
+</feed>
+`;
+}
+const POLICY_FEED = (up) => `<link rel="alternate" type="application/atom+xml" title="${esc(SITE.name)}: changes to the policies" href="${up}policies/changes.xml">\n`;
 
 /* The badge that the authors of a listed work can show: no typeface of its own beyond the reader's sans-serif, no script. */
 function badgeSvg() {
@@ -1648,6 +1693,7 @@ function build(out, paperDir) {
   if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
   for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));
   problems.push(...newsProblems(loadNews()));
+  problems.push(...policyChangeProblems(loadPolicyChanges()));
   if (problems.length) return { problems };
   /* Removed records keep only their notice page; they are left out of every list, feed and search. */
   const papers = all.filter((p) => p.status !== 'removed');
@@ -1691,6 +1737,7 @@ function build(out, paperDir) {
     'libraries.html': prosePage('libraries'),
     'rules.html': prosePage('rules'),
     'news.xml': newsFeed(loadNews()),
+    'policies/changes.xml': policyChangesFeed(loadPolicyChanges()),
     'badge.svg': badgeSvg(),
     'disclaimer.html': disclaimerPage(),
     'disclaimer.ja.html': disclaimerJaPage(),
@@ -1749,7 +1796,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

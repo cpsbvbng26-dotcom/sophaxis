@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Accessibility | Sophaxis</title>
 <meta name="description" content="The accessibility of Sophaxis: the aim, what is checked on every change, what is known, and how to report a barrier.">
 <link rel="canonical" href="https://sophaxis.vercel.app/accessibility.html">
@@ -43,6 +43,7 @@ header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justif
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 nav a { margin-left: 1rem; font-size: .95rem; }
 nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
@@ -90,17 +91,20 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <header class="top"><div class="wrap">
 <a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
 <nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<p class="lang"><a href="./accessibility.ja.html" hreflang="ja" lang="ja">日本語</a></p>
 </div></header>
 <main class="wrap" id="main">
 <h1>Accessibility</h1>
 <p>Last updated: 2026-11-11.</p>
 <p>Japanese: <a href="./accessibility.ja.html">アクセシビリティ（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
-<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-aim">The aim</a></li><li><a href="#what-is-checked-on-every-change">What is checked on every change</a></li><li><a href="#contrast-and-reading">Contrast and reading</a></li><li><a href="#what-is-not-checked-and-what-is-known">What is not checked, and what is known</a></li><li><a href="#reporting-a-barrier">Reporting a barrier</a></li><li><a href="#help-to-check">Help to check</a></li></ul></nav>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-aim">The aim</a></li><li><a href="#what-is-checked-on-every-change">What is checked on every change</a></li><li><a href="#how-the-pages-are-made">How the pages are made</a></li><li><a href="#contrast-and-reading">Contrast and reading</a></li><li><a href="#what-is-not-checked-and-what-is-known">What is not checked, and what is known</a></li><li><a href="#reporting-a-barrier">Reporting a barrier</a></li><li><a href="#help-to-check">Help to check</a></li></ul></nav>
 <h2 id="the-aim">The aim</h2>
 <p>Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA. This is the operator's own assessment, made with the checks below; no one else has audited the site.</p>
 <h2 id="what-is-checked-on-every-change">What is checked on every change</h2>
 <p>Before any change is published, two sets of checks run on every page of the site.</p>
 <ul><li>In the text of each page: the contrast of every text colour in the light and dark schemes, a link to skip to the content, the language of the page, one main heading, and headers for every table.</li><li>In a browser, at widths from 1440 down to 360 pixels, among them 640, which is a window 1280 pixels wide zoomed to 200 percent: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.</li></ul>
+<h2 id="how-the-pages-are-made">How the pages are made</h2>
+<ul><li>The colours follow the reader's system: a light scheme, and a dark one when the system asks for it. There is no switch on the page, because no page but the search page runs a script. Both schemes are checked for contrast on every change.</li><li>An image that carries meaning has an alt text that says what the image says, as the badge on a record page says &quot;Sophaxis: listed&quot;. The alt text does not begin with words such as &quot;image of&quot;, and it is never a file name. An image that only decorates has an empty alt text. A check holds every image of the site to this.</li><li>Every page, with the images and the script that it loads from the site, weighs at most 100,000 bytes, so that it loads on a slow connection. A check weighs every page on every change. The PDF copies are the authors' files and are not counted.</li><li>A page that has a version in the other language links it at the end of its header, on the right of a wide screen: &quot;日本語&quot; on an English page and &quot;English&quot; on a Japanese page. The header, the navigation and the footer of a Japanese page are in English, and are marked as English for screen readers.</li><li>Besides the zoom of the whole page, the browser check also doubles the size of the text alone, in a window 1280 pixels wide, and the page must still not scroll sideways.</li></ul>
 <h2 id="contrast-and-reading">Contrast and reading</h2>
 <ul><li>When the system asks for more contrast, the site uses a darker grey and a stronger accent in the light scheme, and lighter ones in the dark scheme. Every text colour then has a contrast of at least 7:1, and a check confirms it on every change.</li><li>In forced colours, as in the high contrast modes of Windows, the focus ring takes the colour the system gives.</li><li>In the Japanese pages, the <a href="./glossary.ja.html">glossary</a> gives the reading of hard words in kana, in parentheses. The pages do not use ruby, which screen readers do not all read the same way.</li><li><a href="./easy.html">In plain words</a> tells how to submit in short sentences, in English and in plain Japanese.</li></ul>
 <h2 id="what-is-not-checked-and-what-is-known">What is not checked, and what is known</h2>

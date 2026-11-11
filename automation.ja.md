@@ -88,9 +88,11 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 運営者に残すこと：点検そのもの。
 - コード：[tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js)。[audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml) が動かします。
 
-## push とプルリクエストのたびに
+## push とプルリクエストのたびに、と週に一度
 
 - 記録・規程・組み立てたサイトに対して、[verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) のすべての検査を走らせます。
+- その中に、リポジトリのすべてのファイルから、鍵・トークンと、検査が認めた少数のほかのメールアドレスを探す走査があります。
+- 同じ検査は、週に一度、月曜日の日本時間 14:07 にも main に対して走ります。日付に掛かる検査と走査を、push が無いときにも走らせるためです。落ちたときは、リポジトリの Actions に出て、GitHub が運営者に知らせます。
 - 運営者は、検査が通ったときだけ、変更をマージします。
 
 ## サイトが変わったとき

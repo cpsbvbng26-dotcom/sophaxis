@@ -16,6 +16,14 @@ Before any change is published, two sets of checks run on every page of the site
 - In the text of each page: the contrast of every text colour in the light and dark schemes, a link to skip to the content, the language of the page, one main heading, and headers for every table.
 - In a browser, at widths from 1440 down to 360 pixels, among them 640, which is a window 1280 pixels wide zoomed to 200 percent: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.
 
+## How the pages are made
+
+- The colours follow the reader's system: a light scheme, and a dark one when the system asks for it. There is no switch on the page, because no page but the search page runs a script. Both schemes are checked for contrast on every change.
+- An image that carries meaning has an alt text that says what the image says, as the badge on a record page says "Sophaxis: listed". The alt text does not begin with words such as "image of", and it is never a file name. An image that only decorates has an empty alt text. A check holds every image of the site to this.
+- Every page, with the images and the script that it loads from the site, weighs at most 100,000 bytes, so that it loads on a slow connection. A check weighs every page on every change. The PDF copies are the authors' files and are not counted.
+- A page that has a version in the other language links it at the end of its header, on the right of a wide screen: "日本語" on an English page and "English" on a Japanese page. The header, the navigation and the footer of a Japanese page are in English, and are marked as English for screen readers.
+- Besides the zoom of the whole page, the browser check also doubles the size of the text alone, in a window 1280 pixels wide, and the page must still not scroll sideways.
+
 ## Contrast and reading
 
 - When the system asks for more contrast, the site uses a darker grey and a stronger accent in the light scheme, and lighter ones in the dark scheme. Every text colour then has a contrast of at least 7:1, and a check confirms it on every change.

@@ -1,0 +1,21 @@
+[
+  {
+    "date": "2026-11-11",
+    "policies": ["moderation", "terms", "privacy"],
+    "title": "How the criteria for listing change, a feed for policy changes, and no counts of views",
+    "text": "The Moderation Policy says how the criteria for listing are reviewed and changed: at least once a year and when a law or a service changes, under the same rules as every other policy, with 14 days' notice for a change that narrows what can be listed. The Terms of Use say that each change to a policy is entered in this feed, which carries nothing else. The Privacy Policy says that no page shows a count of views or downloads, and that Sophaxis keeps no such count. None of these narrows a right or adds a duty."
+  },
+  {
+    "date": "2026-11-11",
+    "from": "2026-11-21",
+    "policies": ["terms", "submission", "moderation", "licences", "privacy", "takedown"],
+    "title": "Changes announced on the top page, before this feed began",
+    "text": "Changes to these policies were announced on the top page before this feed began. They take effect in steps, from 2026-11-21 to 2026-11-25, as the notice on the top page and each policy say."
+  },
+  {
+    "date": "2026-11-11",
+    "policies": ["terms", "submission", "moderation", "copyright", "licences", "privacy", "withdrawal", "takedown"],
+    "title": "The feed begins",
+    "text": "Each of the eight policies was last changed on 2026-11-11. Earlier versions, and every change to them, are kept in the history of the public repository. From this day, each change to a policy is also entered here."
+  }
+]
