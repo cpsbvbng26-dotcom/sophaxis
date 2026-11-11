@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sophaxis: changes to the policies</title>
+  <subtitle>Only the changes to the policies, newest first. A change that narrows a right is entered when it is announced, with the day it takes effect.</subtitle>
+  <id>https://sophaxis.vercel.app/policies/changes.xml</id>
+  <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
+  <link href="https://sophaxis.vercel.app/policy.html"/>
+  <updated>2026-11-11T00:00:00Z</updated>
+  <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c3</id>
+    <title>How the criteria for listing change, a feed for policy changes, and no counts of views</title>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-11T00:00:00Z</updated>
+    <summary>The Moderation Policy says how the criteria for listing are reviewed and changed: at least once a year and when a law or a service changes, under the same rules as every other policy, with 14 days' notice for a change that narrows what can be listed. The Terms of Use say that each change to a policy is entered in this feed, which carries nothing else. The Privacy Policy says that no page shows a count of views or downloads, and that Sophaxis keeps no such count. None of these narrows a right or adds a duty. Policies: Moderation Policy, Terms of Use, Privacy Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c2</id>
+    <title>Changes announced on the top page, before this feed began</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/licences.html" title="Licence Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-11T00:00:00Z</updated>
+    <summary>Changes to these policies were announced on the top page before this feed began. They take effect in steps, from 2026-11-21 to 2026-11-25, as the notice on the top page and each policy say. In effect from 2026-11-21. Policies: Terms of Use, Submission Policy, Moderation Policy, Licence Policy, Privacy Policy, Takedown Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c1</id>
+    <title>The feed begins</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/licences.html" title="Licence Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/withdrawal.html" title="Withdrawal Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-11T00:00:00Z</updated>
+    <summary>Each of the eight policies was last changed on 2026-11-11. Earlier versions, and every change to them, are kept in the history of the public repository. From this day, each change to a policy is also entered here. Policies: Terms of Use, Submission Policy, Moderation Policy, Copyright Policy, Licence Policy, Privacy Policy, Withdrawal Policy, Takedown Policy.</summary>
+  </entry>
+</feed>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>モデレーションの規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis のモデレーションの規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/moderation.ja.html">
@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://sophaxis.vercel.app/og.png">
 <link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/moderation.html">
 <link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/policies/moderation.ja.html">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: changes to the policies" href="../policies/changes.xml">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@SophaxisX">
 <style>
@@ -43,6 +44,7 @@ header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justif
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 nav a { margin-left: 1rem; font-size: .95rem; }
 nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
@@ -86,17 +88,18 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" lang="en">Skip to content</a>
 <header class="top"><div class="wrap">
-<a class="brand" href="../index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
-<nav><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a><a href="../faq.html">FAQ</a></nav>
+<a class="brand" href="../index.html" lang="en">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav lang="en"><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a><a href="../faq.html">FAQ</a></nav>
+<p class="lang"><a href="./moderation.html" hreflang="en" lang="en">English</a></p>
 </div></header>
 <main class="wrap" id="main">
 <h1>モデレーションの規程（日本語訳）</h1>
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./moderation.html">Moderation Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
 <p>この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。</p>
-<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#モデレーションは査読ではない">モデレーションは査読ではない</a></li><li><a href="#モデレーションが確かめること">モデレーションが確かめること</a></li><li><a href="#モデレーションが確かめないこと">モデレーションが確かめないこと</a></li><li><a href="#仮登録">仮登録</a></li><li><a href="#判断">判断</a></li><li><a href="#モデレーター">モデレーター</a></li><li><a href="#利益相反">利益相反</a></li><li><a href="#研究の公正">研究の公正</a></li><li><a href="#掲載の後">掲載の後</a></li></ul></nav>
+<nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#モデレーションは査読ではない">モデレーションは査読ではない</a></li><li><a href="#モデレーションが確かめること">モデレーションが確かめること</a></li><li><a href="#モデレーションが確かめないこと">モデレーションが確かめないこと</a></li><li><a href="#仮登録">仮登録</a></li><li><a href="#判断">判断</a></li><li><a href="#モデレーター">モデレーター</a></li><li><a href="#利益相反">利益相反</a></li><li><a href="#研究の公正">研究の公正</a></li><li><a href="#掲載の後">掲載の後</a></li><li><a href="#基準の変更">基準の変更</a></li></ul></nav>
 <h2 id="モデレーションは査読ではない">モデレーションは査読ではない</h2>
 <p>受理はモデレーションであって、査読ではありません。モデレーションは、投稿を載せてよいかどうかを決めます。作品が正しいか、独創的か、重要かは判断しません。</p>
 <h2 id="モデレーションが確かめること">モデレーションが確かめること</h2>
@@ -126,9 +129,12 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>モデレーターは、載せた記録を、分野とは別に、主題ごとの<a href="../collections.html">集め</a>の一つ以上に入れることがあります。集めは作品の質について何も言いません。著者は、記録の訂正の issue で、集めに入れることや集めから外すことを求められます。</p>
 <p>訂正は、日付付きの注記として記録に加えます。誰でも、記録の頁のリンクから、記録の誤りを報告できます。そのリンクは公開の訂正の issue を開きます。注記が作品に置き換わることはありません。申告されていない生成モデルの使用のような問題が明らかになった場合、記録に告知を付けることがあります。</p>
 <p>毎週、自動の確認が、載っているすべての DOI がまだ解決し、記録にあるライセンスをまだ持っていることを確かめます。同じ確認が、表示している記録の DOI ごとに、Crossref が記録している通知を読みます。撤回・取り下げ・削除・懸念表明・訂正で、Retraction Watch からのものも含みます。運営者は、新しい通知を記録に加えます。記録の頁がそれをリンク付きで示し、運営者は掲載を見直します。問題は公開の issue で報告し、運営者が調べます。</p>
+<h2 id="基準の変更">基準の変更</h2>
+<p>掲載の基準は、<a href="./submission.ja.html">投稿の規程</a>とこの規程にある基準です。だれが投稿できるか、何を投稿できるか、モデレーションが何を確かめるか、受け付けないものの例です。基準は、ほかの規程と同じく、<a href="./terms.ja.html">利用規約</a>の「変更と終了」が認める形でだけ変わります。</p>
+<ul><li>基準は、少なくとも年に一度、Sophaxis が始まった日である十月 30 日の年ごとの点検で見直します。Sophaxis が頼る法令・預け先・サービスが変わったときにも見直します。</li><li>載せられるものを狭める変更と、著者に義務を加える変更は、効力を持つ少なくとも 14 日前に、変わる中身とその開始日を添えて、トップの頁で告知します。</li><li>載せられるものを広げるだけの変更と、言い回しを明らかにする変更は、規程が示す日に効力を持ちます。その日は、公表した日より前にはなりません。</li><li>どの変更も、公表または告知した日に、<a href="./changes.xml">規程の変更の配信</a>に載せます。著者がすることを変えるときは、<a href="../news.html">お知らせ</a>にも載せます。</li><li>変更の理由は、公開のリポジトリの、その変更のプルリクエストに書きます。</li></ul>
 <p class="meta"><a href="../policy.html">All policies</a></p>
 </main>
-<footer><div class="wrap">
+<footer><div class="wrap" lang="en">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="../policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
 <p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../transparency.html">Transparency</a> · <a href="../news.html">News</a> · <a href="../press.html">Press</a> · <a href="../history.html">History</a> · <a href="../accessibility.html">Accessibility</a> · <a href="../easy.html">In plain words</a> · <a href="../contact.html">Contact</a></p>

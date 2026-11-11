@@ -112,6 +112,7 @@ No change will introduce fees.
 A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.
 The announcement comes at least 14 days ahead, unless the law or an urgent problem, such as a security or legal risk, requires the change sooner.
 Even then, the change is announced before it takes effect.
+Each change to a policy is also entered, on the day it is published or announced, in the [feed of policy changes](https://sophaxis.vercel.app/policies/changes.xml), which carries nothing else.
 Other changes, such as clearer wording or new examples, take effect on the date the page shows, which is never before the day they are published.
 A change is made only as Article 548-4 of Japan's Civil Code allows: when it is in the general interest of authors and readers, or when it is reasonable in the light of the purpose of these terms, the need for it and its content.
 Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
@@ -710,6 +711,17 @@ The same check reads the notices that Crossref records against each DOI of a rec
 The operator adds a new notice to the record, where its page shows it with a link, and reviews the listing.
 A problem is reported in a public issue, and the operator looks into it.
 
+## Changes to the criteria
+
+The criteria for listing are those of the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) and of this policy: who can submit, what can be submitted, what moderation checks, and the examples of what is not accepted.
+They change only as "Changes and closure" in the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) allows, as every other policy does.
+
+- They are reviewed at least once a year, in the yearly audit on 30 October, the day Sophaxis began, and also when a law, a repository or a service that Sophaxis relies on changes.
+- A change that narrows what can be listed, or adds a duty for authors, is announced on the top page at least 14 days before it takes effect, with what changes and from which date.
+- A change that only widens what can be listed, or makes the wording clearer, takes effect on the date the policy shows, which is never before the day it is published.
+- Each change is entered in the [feed of policy changes](https://sophaxis.vercel.app/policies/changes.xml) on the day it is published or announced, and in the [news](https://sophaxis.vercel.app/news.html) when it changes what an author has to do.
+- The reasons for a change are given in its pull request in the public repository.
+
 ---
 
 Source: https://sophaxis.vercel.app/policies/copyright.html
@@ -902,6 +914,7 @@ Nothing is sent anywhere until a reader follows one, and the service then works 
 The site is hosted on Vercel.
 Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.
 Sophaxis has not turned on Vercel's analytics.
+No page, a record page included, shows a count of views or downloads, and Sophaxis keeps no such count: it runs no analytics that would make one, and it does not count readers from Vercel's request logs.
 
 <!-- text: Telecommunications Business Act 27-12 -->
 
@@ -1383,7 +1396,7 @@ The reasons for every decision are public in its issue.
 
 ## Operator and conflicts of interest
 
-Sophaxis is operated by Takuya Nemoto, an independent researcher in Japan.
+Sophaxis is operated by Takuya Nemoto, in Japan.
 The [Operator and contact](https://sophaxis.vercel.app/contact.html) page says how to reach the operator.
 Submissions by the operator are moderated under the same rules
 and are marked on their record pages as the operator's own.
@@ -1403,6 +1416,8 @@ These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
 Each policy is put in a few sentences on [The policies in brief](https://sophaxis.vercel.app/rules.html); the policies themselves govern.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
+The changes to the policies alone are also given, newest first, in an Atom feed of their own, apart from the news: [policies/changes.xml](https://sophaxis.vercel.app/policies/changes.xml).
+How the criteria for listing are reviewed and changed is said in the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#changes-to-the-criteria).
 Every policy, the Disclaimer and the pages that explain Sophaxis, such as this one, the FAQ and the Glossary, have Japanese translations, which the [Japanese top page](https://sophaxis.vercel.app/index.ja.html) lists, and the page on personal data has a Japanese version under the headings of Japan's Act; each is linked from the top of its English page. Where a translation differs from the English text, the English text applies.
 
 This site and its code were built with Claude Code (Anthropic).
@@ -1537,6 +1552,10 @@ Last updated: 2026-11-11.
 Japanese: [よくある質問（日本語訳）](https://sophaxis.vercel.app/faq.ja.html). It is a translation; where the two differ, the English text applies.
 
 Each answer is a short form of a policy. Where they differ, the policy applies.
+
+A question is added here only when someone has actually asked it, in an issue or by email.
+Its answer then begins with a line that says when and where it was asked, such as "Asked on 2026-12-01, in issue #300." or "Asked on 2026-12-01, by email.", without the name of the person who asked.
+The questions without such a line were already here on 2026-11-11, when this rule began; they were written from the policies.
 
 ## What is Sophaxis?
 
@@ -1892,9 +1911,11 @@ The code of each step is public, and each section links to it.
 - Leaves to the operator: the audit itself.
 - Code: [tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js), run by [audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml).
 
-## On every push and every pull request
+## On every push and every pull request, and once a week
 
 - Runs every check of [verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) against the records, the policies and the built site.
+- Among them, a scan of every file in the repository for keys, tokens and email addresses other than the few the checks allow.
+- The same checks also run on main once a week, on Monday at 14:07 Japan time, so that a check that depends on the date, and the scan, run even when nothing is pushed. A failure is shown in the repository's Actions, and the operator is told by GitHub.
 - The operator merges a change only when the checks pass.
 
 ## When the site changes
@@ -2529,6 +2550,14 @@ Before any change is published, two sets of checks run on every page of the site
 - In the text of each page: the contrast of every text colour in the light and dark schemes, a link to skip to the content, the language of the page, one main heading, and headers for every table.
 - In a browser, at widths from 1440 down to 360 pixels, among them 640, which is a window 1280 pixels wide zoomed to 200 percent: the page can be used with the keyboard alone, the focus moves on in reading order and never gets stuck, every focused element shows a focus ring, every image has an alt text and every field a label, and the page does not scroll sideways.
 
+## How the pages are made
+
+- The colours follow the reader's system: a light scheme, and a dark one when the system asks for it. There is no switch on the page, because no page but the search page runs a script. Both schemes are checked for contrast on every change.
+- An image that carries meaning has an alt text that says what the image says, as the badge on a record page says "Sophaxis: listed". The alt text does not begin with words such as "image of", and it is never a file name. An image that only decorates has an empty alt text. A check holds every image of the site to this.
+- Every page, with the images and the script that it loads from the site, weighs at most 100,000 bytes, so that it loads on a slow connection. A check weighs every page on every change. The PDF copies are the authors' files and are not counted.
+- A page that has a version in the other language links it at the end of its header, on the right of a wide screen: "日本語" on an English page and "English" on a Japanese page. The header, the navigation and the footer of a Japanese page are in English, and are marked as English for screen readers.
+- Besides the zoom of the whole page, the browser check also doubles the size of the text alone, in a window 1280 pixels wide, and the page must still not scroll sideways.
+
 ## Contrast and reading
 
 - When the system asks for more contrast, the site uses a darker grey and a stronger accent in the light scheme, and lighter ones in the dark scheme. Every text colour then has a contrast of at least 7:1, and a check confirms it on every change.
@@ -2660,6 +2689,7 @@ Sophaxis の運営者、根本卓哉です。住所は公開していません�
 検索の頁は、Sophaxis 自身が配るスクリプトを一つだけ動かします。Sophaxis から記録の一覧を読み、閲覧者のブラウザの中で検索し、どこにも何も送りません。ほかの頁はスクリプトを動かしません。
 記録の頁には、X・Bluesky・Facebook・LinkedIn・メールへの共有のリンクがあります。どれも各サービスの頁への普通のリンクで、閲覧者がたどるまで何も送られず、たどった先では各サービスの方針が掛かります。
 Sophaxis は、Vercel のアクセス解析を有効にしていません。
+記録の頁を含め、どの頁も、閲覧やダウンロードの数を示しません。Sophaxis はその数を持ちません。数を作るアクセス解析を動かさず、Vercel の閲覧の要求の記録から読者を数えることもしません。
 
 投稿・撤回・出版版の報告には、ORCID iD と、その ORCID の記録がリンクする GitHub のアカウントが要ります。
 これが無いと検査は著者を確かめられず、issue では手続きを進められません。
@@ -3002,6 +3032,7 @@ Sophaxis は、運営者を日本の消費者契約法の事業者であるも�
 著者や読者の権利を奪い、または狭める変更と、義務を加える変更は、効力を持つ前に、変わる中身とその開始日を添えて、トップの頁で告知します。
 告知は少なくとも 14 日前に行います。ただし、法令や、安全や法的なリスクのような差し迫った問題が、より早い変更を求める場合は、この限りではありません。
 その場合でも、変更は効力を持つ前に告知します。
+規程の変更は、公表または告知した日に、[規程の変更の配信](https://sophaxis.vercel.app/policies/changes.xml)にも載せます。この配信には、ほかのものを載せません。
 文をわかりやすくすることや、例を足すことのようなほかの変更は、頁に示した日に効力を持ちます。その日が公開の日より前になることはありません。
 変更は、日本の民法第 548 条の 4 が認めるときにだけ行います。著者と読者の一般の利益に合うとき、またはこの規約の目的、変更の必要、変更後の中身に照らして合理的なときです。
 黙っていることや、Sophaxis を使い続けることを、変更への同意とはみなしません。
@@ -3599,6 +3630,17 @@ Sophaxis は、剽窃を見つけるソフトウェアを使いません。
 同じ確認が、表示している記録の DOI ごとに、Crossref が記録している通知を読みます。撤回・取り下げ・削除・懸念表明・訂正で、Retraction Watch からのものも含みます。
 運営者は、新しい通知を記録に加えます。記録の頁がそれをリンク付きで示し、運営者は掲載を見直します。
 問題は公開の issue で報告し、運営者が調べます。
+
+## 基準の変更
+
+掲載の基準は、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)とこの規程にある基準です。だれが投稿できるか、何を投稿できるか、モデレーションが何を確かめるか、受け付けないものの例です。
+基準は、ほかの規程と同じく、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「変更と終了」が認める形でだけ変わります。
+
+- 基準は、少なくとも年に一度、Sophaxis が始まった日である十月 30 日の年ごとの点検で見直します。Sophaxis が頼る法令・預け先・サービスが変わったときにも見直します。
+- 載せられるものを狭める変更と、著者に義務を加える変更は、効力を持つ少なくとも 14 日前に、変わる中身とその開始日を添えて、トップの頁で告知します。
+- 載せられるものを広げるだけの変更と、言い回しを明らかにする変更は、規程が示す日に効力を持ちます。その日は、公表した日より前にはなりません。
+- どの変更も、公表または告知した日に、[規程の変更の配信](https://sophaxis.vercel.app/policies/changes.xml)に載せます。著者がすることを変えるときは、[お知らせ](https://sophaxis.vercel.app/news.html)にも載せます。
+- 変更の理由は、公開のリポジトリの、その変更のプルリクエストに書きます。
 
 ---
 
@@ -4493,6 +4535,10 @@ Source: https://sophaxis.vercel.app/faq.ja.html
 
 それぞれの答えは、規程を短くしたものです。食い違うところは、規程が適用されます。
 
+ここに問いを足すのは、だれかが issue かメールで実際に問うたときだけです。
+そのときは、答えの最初の行に、いつどこで問われたかを、「2026-12-01 に issue #300 で問われました。」や「2026-12-01 にメールで問われました。」の形で書きます。問うた人の名前は書きません。
+その行の無い問いは、この決まりを始めた 2026-11-11 にはすでにあったもので、規程から書いたものです。
+
 ## Sophaxis とは何ですか？
 
 哲学・数学・論理学・数理哲学・科学哲学のための、オーバーレイ型のプレプリントサーバーです。
@@ -4741,9 +4787,11 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 運営者に残すこと：点検そのもの。
 - コード：[tools/audit.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/audit.js)。[audit.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/audit.yml) が動かします。
 
-## push とプルリクエストのたびに
+## push とプルリクエストのたびに、と週に一度
 
 - 記録・規程・組み立てたサイトに対して、[verification/check.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/verification/check.js) のすべての検査を走らせます。
+- その中に、リポジトリのすべてのファイルから、鍵・トークンと、検査が認めた少数のほかのメールアドレスを探す走査があります。
+- 同じ検査は、週に一度、月曜日の日本時間 14:07 にも main に対して走ります。日付に掛かる検査と走査を、push が無いときにも走らせるためです。落ちたときは、リポジトリの Actions に出て、GitHub が運営者に知らせます。
 - 運営者は、検査が通ったときだけ、変更をマージします。
 
 ## サイトが変わったとき
@@ -4994,7 +5042,7 @@ Sophaxis は、著者からも読者からも、何も取りません。
 
 ## 運営者と利益相反
 
-Sophaxis は、日本の独立した研究者、根本卓哉（Takuya Nemoto）が運営しています。
+Sophaxis は、日本にいる根本卓哉（Takuya Nemoto）が運営しています。
 運営者への連絡の仕方は、[運営者と連絡先](https://sophaxis.vercel.app/contact.ja.html)の頁にあります。
 運営者の投稿も同じ決まりでモデレーションを受けます。
 その記録の頁には、運営者自身のものである印を付けます。
@@ -5014,6 +5062,8 @@ ORCID iD を持たない著者には、そのような頁はありません。�
 法的な助言ではありません。
 それぞれの規程を数文にまとめた[規程の要点](https://sophaxis.vercel.app/rules.ja.html)もあります。決まりは規程そのものです。
 どの頁も最後に変えた日を示し、それより前の版はすべて公開のリポジトリに残ります。
+規程の変更だけを、新しいものから順に、お知らせとは別の Atom の配信でも出しています（[policies/changes.xml](https://sophaxis.vercel.app/policies/changes.xml)）。
+掲載の基準をどう見直し、どう変えるかは、[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#基準の変更)にあります。
 すべての規程と免責事項、そしてこの頁や FAQ、用語集のように Sophaxis を説明する頁には、日本語訳があります。[日本語のトップの頁](https://sophaxis.vercel.app/index.ja.html)が、それらを挙げています。
 個人データについての頁には、日本の法律の見出しに沿った日本語版があります。
 それぞれの訳は、英語の頁の冒頭からリンクしています。
@@ -5472,6 +5522,14 @@ Sophaxis は、ウェブコンテンツ・アクセシビリティ・ガイド�
 
 - 頁の文から：明るい表示と暗い表示での、すべての文字色のコントラスト、本文へ飛ぶリンク、頁の言語、一つの主見出し、すべての表の見出し。
 - ブラウザで、幅 1440 から 360 ピクセルまで（そのうち 640 は、幅 1280 の窓を 200 パーセントに拡大した幅）：キーボードだけで使えること、フォーカスが読む順に進み、止まらないこと、フォーカスの当たった要素が枠を示すこと、すべての画像に代替テキストがあり、すべての入力欄にラベルがあること、頁が横に動かないこと。
+
+## 頁の作り
+
+- 色は、読む人のシステムに従います。ふだんは明るい表示で、システムが求めるときは暗い表示です。頁に切り替えのボタンはありません。検索の頁のほかはスクリプトを動かさないためです。どちらの表示も、変更のたびにコントラストを確かめます。
+- 意味を持つ画像には、画像が伝えることを書いた代替テキストを付けます。記録の頁のバッジなら「Sophaxis: listed」です。代替テキストを「画像：」のような語で始めず、ファイル名にもしません。飾るだけの画像の代替テキストは空にします。サイトのすべての画像を、検査がこの形に保ちます。
+- どの頁も、サイトから読み込む画像とスクリプトを合わせて 100,000 バイトまでにします。通信の遅いところでも読み込めるようにするためです。変更のたびに、検査がすべての頁を量ります。PDF の写しは著者のファイルなので、数えません。
+- もう一方の言語の版がある頁は、見出しの帯の終わり、広い画面では右に、その版へのリンクを置きます。英語の頁では「日本語」、日本語の頁では「English」です。日本語の頁の見出しの帯・案内・頁の下の欄は英語で、スクリーンリーダーにも英語と示しています。
+- 頁全体の拡大のほかに、ブラウザの検査は、幅 1280 ピクセルの窓で文字だけを二倍にし、そのときも頁が横に動かないことを確かめます。
 
 ## コントラストと読み
 

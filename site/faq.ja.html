@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>よくある質問（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「よくある質問（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/faq.ja.html">
@@ -43,6 +43,7 @@ header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justif
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 nav a { margin-left: 1rem; font-size: .95rem; }
 nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
@@ -86,16 +87,18 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" lang="en">Skip to content</a>
 <header class="top"><div class="wrap">
-<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
-<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<a class="brand" href="./index.html" lang="en">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav lang="en"><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<p class="lang"><a href="./faq.html" hreflang="en" lang="en">English</a></p>
 </div></header>
 <main class="wrap" id="main">
 <h1>よくある質問（日本語訳）</h1>
 <p>最終更新：2026-11-11。</p>
 <p>これは英語の <a href="./faq.html">Frequently asked questions</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
 <p>それぞれの答えは、規程を短くしたものです。食い違うところは、規程が適用されます。</p>
+<p>ここに問いを足すのは、だれかが issue かメールで実際に問うたときだけです。そのときは、答えの最初の行に、いつどこで問われたかを、「2026-12-01 に issue #300 で問われました。」や「2026-12-01 にメールで問われました。」の形で書きます。問うた人の名前は書きません。その行の無い問いは、この決まりを始めた 2026-11-11 にはすでにあったもので、規程から書いたものです。</p>
 <nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#sophaxis-とは何ですか">Sophaxis とは何ですか？</a></li><li><a href="#査読ですか">査読ですか？</a></li><li><a href="#費用はかかりますか">費用はかかりますか？</a></li><li><a href="#sophaxis-は作品に-doi-を与えますか">Sophaxis は作品に DOI を与えますか？</a></li><li><a href="#どの預け先を受け付けますか">どの預け先を受け付けますか？</a></li><li><a href="#どのライセンスを受け付けますか">どのライセンスを受け付けますか？</a></li><li><a href="#誰が投稿できますか">誰が投稿できますか？</a></li><li><a href="#なぜ-github-なのですか">なぜ GitHub なのですか？</a></li><li><a href="#sophaxis-は-github-や-orcid-とつながっていますか">Sophaxis は GitHub や ORCID とつながっていますか？</a></li><li><a href="#sophaxis-は言語モデルで作られましたか">Sophaxis は言語モデルで作られましたか？</a></li><li><a href="#言語モデルを使ってもよいですか">言語モデルを使ってもよいですか？</a></li><li><a href="#モデレーションにはどれくらいかかりますか">モデレーションにはどれくらいかかりますか？</a></li><li><a href="#載っている作品に責任を負うのは誰ですか">載っている作品に責任を負うのは誰ですか？</a></li><li><a href="#新しい版はどう加えますか">新しい版はどう加えますか？</a></li><li><a href="#作品が学術誌で出版されました投稿できますか">作品が学術誌で出版されました。投稿できますか？</a></li><li><a href="#載っているプレプリントが出版されましたどうすればよいですか">載っているプレプリントが出版されました。どうすればよいですか？</a></li><li><a href="#sophaxis-は-pdf-の写しを置きますか">Sophaxis は PDF の写しを置きますか？</a></li><li><a href="#作品は-google-scholar-に出ますか">作品は Google Scholar に出ますか？</a></li><li><a href="#投稿の前に何を確かめればよいですか">投稿の前に何を確かめればよいですか？</a></li><li><a href="#sophaxis-は読者を追跡しますか">Sophaxis は読者を追跡しますか？</a></li><li><a href="#メールでの配信はありますか">メールでの配信はありますか？</a></li><li><a href="#ここに載っている作品はどう引用しますか">ここに載っている作品はどう引用しますか？</a></li><li><a href="#記録の誤りはどう報告しますか">記録の誤りはどう報告しますか？</a></li><li><a href="#作品を撤回できますか">作品を撤回できますか？</a></li><li><a href="#素材の削除はどう求めますか">素材の削除はどう求めますか？</a></li><li><a href="#sophaxis-が閉じたら記録はどうなりますか">Sophaxis が閉じたら、記録はどうなりますか？</a></li><li><a href="#誰が-sophaxis-を運営していて運営者にはどう連絡しますか">誰が Sophaxis を運営していて、運営者にはどう連絡しますか？</a></li></ul></nav>
 <h2 id="sophaxis-とは何ですか">Sophaxis とは何ですか？</h2>
 <p>哲学・数学・論理学・数理哲学・科学哲学のための、オーバーレイ型のプレプリントサーバーです。作品そのものは、その預け先が公開します。Sophaxis は、ライセンスが許す場合にだけ、手を加えていない PDF の写しを置きます。著者がすでに公開の預け先に預けたプレプリントを載せ、それぞれに変わらない記録の頁を与えます。</p>
@@ -152,7 +155,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2 id="誰が-sophaxis-を運営していて運営者にはどう連絡しますか">誰が Sophaxis を運営していて、運営者にはどう連絡しますか？</h2>
 <p><a href="./contact.ja.html">運営者と連絡先</a>の頁を見てください。</p>
 </main>
-<footer><div class="wrap">
+<footer><div class="wrap" lang="en">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
 <p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>

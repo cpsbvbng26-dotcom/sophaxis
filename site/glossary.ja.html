@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gi0KJ0Nd4arS8fiQISVyghyOV11AlHZL1atTuJjtiTA='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>用語集（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「用語集（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/glossary.ja.html">
@@ -43,6 +43,7 @@ header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justif
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 nav a { margin-left: 1rem; font-size: .95rem; }
 nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
 h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
 h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
@@ -86,10 +87,11 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" lang="en">Skip to content</a>
 <header class="top"><div class="wrap">
-<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
-<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<a class="brand" href="./index.html" lang="en">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav lang="en"><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<p class="lang"><a href="./glossary.html" hreflang="en" lang="en">English</a></p>
 </div></header>
 <main class="wrap" id="main">
 <h1>用語集（日本語訳）</h1>
@@ -98,7 +100,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2 id="用語">用語</h2>
 <ul><li>オーバーレイ：ほかの場所にある作品を載せるサービス。Sophaxis は自分の作品を持たず、作品はそれぞれのリポジトリに残ります。</li><li>プレプリント：著者が公開した作品の版。学術誌での出版の前の版、または出版とは別の版です。</li><li>リポジトリ：著者が作品を預け、作品に DOI を与える場。Zenodo、arXiv、SSRN などです。Sophaxis が受けるものは、<a href="./policies/submission.ja.html">投稿の規程</a>が挙げています。</li><li>DOI：リポジトリが作品に登録する、変わらない識別子。Sophaxis は DOI を与えません。</li><li>最初の DOI：投稿された DOI と、そのメタデータが挙げる前の DOI のうち、最も早いもの。2026-11-23 から、新しい作品は、これが登録されてから六か月たっているときに限り載せます。</li><li>モデレーション：投稿を載せてよいかを、モデレーターが決める確認。査読ではなく、作品が正しいか、重要かは判断しません。</li><li>自動の確認：DOI のメタデータと ORCID の記録を読み、分かったことを投稿の issue に書くコード。何も決めません。</li><li>仮登録（かりとうろく）：自動の確認を通り、<code>verified</code> のラベルが付いて、モデレーターを待っている投稿。サイトには出ません。</li><li>紹介（しょうかい）：2026-11-23 から、学術誌の論文・本の章・本を持つ研究者が、初めての投稿が対象の分野に入り、学術論文の形をしていると述べること。審査ではありません。</li><li>記録：載った作品について Sophaxis が持つもの。題・著者・要旨・ライセンス・版・申告です。</li><li>Sophaxis の番号：<code>2026.0001</code> のような記録の番号。ほかの作品に与えることはありません。</li><li>版（はん）：作品をリポジトリに預けるたびの、それぞれの DOI と日付。記録に並びます。</li><li>PDF の写し（うつし）：預けられた PDF を手を加えずに写したもの。リポジトリが許すときに Sophaxis に置き、検索エンジンが全文を読めるようにします。</li><li>分野と集め（あつめ）：分野は、作品を載せる五つの領域の一つです。集めは、モデレーターが選んだ主題ごとの記録のまとまりで、質については何も言いません。</li><li>申告（しんこく）：著者が様式に書くもの。生成モデルについての申告と、2026-11-24 からは研究資金・利益相反・研究倫理についての申告です。Sophaxis は示し、確かめはしません。</li><li>通知：Crossref が DOI に記録する撤回・取り下げ・削除・懸念表明・訂正。記録は、その DOI の通知を示します。ここでの撤回と取り下げは学術誌の側のもので、下の「撤回」とは別です。</li><li>訂正の注記（ていせいのちゅうき）：記録に誤りが見つかったときに足す、日付付きの注記。</li><li>撤回（てっかい）：著者が、載っている作品をもう載せないよう求めること。引用が切れないよう、記録は注記とともに残ります。<a href="./policies/withdrawal.ja.html">撤回の規程</a>を見てください。</li><li>削除（さくじょ）：法的な理由か著者の求めにより、記録を番号・状態・日付だけにすること。<a href="./policies/takedown.ja.html">削除の規程</a>を見てください。</li><li>運営者自身（うんえいしゃじしん）の投稿：運営者の作品。印を付け、優先せず、載せる前に七日のあいだ公開で待ちます。</li><li>バッジ：載った作品の著者が示せる、記録へのリンク付きの画像。</li></ul>
 </main>
-<footer><div class="wrap">
+<footer><div class="wrap" lang="en">
 <p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
 <p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
 <p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>
