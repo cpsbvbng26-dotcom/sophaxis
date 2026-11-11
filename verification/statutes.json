@@ -167,7 +167,7 @@
       "sha256": "9f05c7e2fe9ecab1efe8ede9c10d514666a5608c63b71baff767ccf15e8f3f32"
     },
     {
-      "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
+      "law": "Consumer contracts (Consumer Contract Act, Articles 8 and 10)",
       "name": "Consumer Contract Act",
       "label": "Article 8",
       "law_id": "412AC0000000061",
@@ -176,16 +176,7 @@
       "sha256": "e448b8aeb7b5a1e82040051acc71a04a083dfd3ff1b40fa48183e7b250cf1820"
     },
     {
-      "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
-      "name": "Consumer Contract Act",
-      "label": "Article 8-3",
-      "law_id": "412AC0000000061",
-      "article": "8_3",
-      "title": "消費者契約法",
-      "sha256": "966857117514fcc2aba70f7f9100019648ce6b7c8a91268b082870e9af0a7132"
-    },
-    {
-      "law": "Consumer contracts (Consumer Contract Act, Articles 8, 8-3 and 10)",
+      "law": "Consumer contracts (Consumer Contract Act, Articles 8 and 10)",
       "name": "Consumer Contract Act",
       "label": "Article 10",
       "law_id": "412AC0000000061",
