@@ -2455,8 +2455,23 @@ console.log('\n64. The statutes and GitHub terms the legal review relies on are 
     for (const n of nums) if (!mine.some((e) => e.article === n)) gaps.push(h + ': Article ' + n.replace('_', '-') + ' not watched');
   }
   ok('every Japanese law of docs/legal-review.md, and every article its heading names, is watched (' + S.statutes.length + ' articles)', gaps.length === 0, gaps.join(' / '));
-  const unrec = S.statutes.filter((e) => !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !e.title || !/^\d{3}(?:AC\d{10}|CO\d{10}|M\d{11})$/.test(e.law_id) || !(e.law in M.laws))  // e-Gov ids: an Act (AC), a Cabinet Order (CO) or a ministerial or commission rule (M).map((e) => e.name + ' ' + e.label);
-  ok('every watched article has its e-Gov law id, its law title, the SHA-256 of its text and a law of the review', unrec.length === 0, unrec.join(' / '));
+  // An article that no law of the review names, but a section of a policy cites, names that section as "<file>: <heading>";
+  // the section's line <!-- text: ... --> must quote that very article.
+  const REG = JSON.parse(read(at('verification/citations.json')));
+  const inSection = (e) => {
+    const m = /^(policies\/[a-z]+\.md): (.+)$/.exec(e.law || '');
+    if (!m || !fs.existsSync(at(m[1]))) return false;
+    const md = read(at(m[1]));
+    const i = md.indexOf('\n## ' + m[2] + '\n');
+    if (i < 0) return false;
+    const j = md.indexOf('\n## ', i + 4);
+    const line = (/<!-- text: ([^>]*) -->/.exec(md.slice(i, j < 0 ? md.length : j)) || [])[1] || '';
+    const L = Object.entries(REG.laws).find(([, v]) => v.egov === e.law_id);
+    return !!L && line.split('; ').includes(L[0] + ' ' + e.article.replace(/_/g, '-'));
+  };
+  // e-Gov ids: an Act (AC), a Cabinet Order (CO) or a ministerial or commission rule (M).
+  const unrec = S.statutes.filter((e) => !/^[0-9a-f]{64}$/.test(e.sha256 || '') || !e.title || !/^\d{3}(?:AC\d{10}|CO\d{10}|M\d{11})$/.test(e.law_id) || !(e.law in M.laws || inSection(e))).map((e) => e.name + ' ' + e.label);
+  ok('every watched article has its e-Gov law id, its law title, the SHA-256 of its text, and a law of the review or the section of a policy that quotes it', unrec.length === 0, unrec.join(' / '));
   ok('the privacy statements of Vercel and Apple, which handle data for Sophaxis, are watched by the date of their last update',
     ['Vercel Privacy Notice', 'Apple Privacy Policy'].every((n) => (S.pages || []).some((p) => p.name === n)) && S.pages.every((p) => /^https:\/\//.test(p.url) && new RegExp(p.pattern).source.split('(').length === 2 && /^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(p.value || ''))
     && read(at('tools/statutes.js')).includes('for (const [i, e] of (CONF.pages || []).entries())'));
@@ -3818,6 +3833,95 @@ console.log('\n96. Links that work on GitHub and on the site, sections linked ne
     JSON.stringify(listOf(se, 'What the submitter confirms')) === JSON.stringify(want(0)) && JSON.stringify(listOf(sj, '投稿者が確認すること')) === JSON.stringify(want(1))
     && se.includes('which has the same ' + total + ' boxes, in the same words and order.') && sj.includes('様式には、同じ ' + total + ' のボックスが、同じ言葉と順で並んでいます。')
     && se.includes('the consent and agreement from ' + site.consentFrom + ', and where the authors live from ' + site.residenceFrom + '.'));
+}
+
+console.log('\n97. The type and status of Sophaxis, the links of its archive, the counts and the operator\'s own work on the top page, a first submission, the OpenDOAR draft, and the quoted statutes watched');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js');
+  const readme = read(path.join(ROOT, 'README.md'));
+  const firstLineAfter = (t, head) => { const i = t.indexOf(head + '\n'); return i < 0 ? null : (t.slice(i + head.length + 1).split('\n').find((l) => l.trim()) || null); };
+  // The label under each title, in both languages, and the type of the citation files.
+  const z = JSON.parse(read(path.join(ROOT, '.zenodo.json')));
+  ok('the README says "Type: Project · Status: Running" under its title and "種類：プロジェクト　状態：運営中" under "## 日本語"; CITATION.cff and .zenodo.json give the type software',
+    readme.startsWith('# Sophaxis\n') && firstLineAfter(readme, '# Sophaxis') === 'Type: Project · Status: Running' && firstLineAfter(readme, '\n## 日本語') === '種類：プロジェクト　状態：運営中'
+    && /^type: software$/m.test(read(path.join(ROOT, 'CITATION.cff'))) && z.upload_type === 'software');
+  // The archive names the DOI of every version of each work shown as a source it is derived from, with the relations kept to three.
+  const recs = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  const shown = recs.filter((p) => p.status !== 'removed');
+  const rel = z.related_identifiers || [];
+  const derived = rel.filter((r) => r.relation === 'isDerivedFrom').map((r) => r.identifier);
+  const wantDois = shown.flatMap((p) => p.versions.map((v) => v.doi));
+  const lacking = wantDois.filter((d) => !derived.includes(d));
+  ok('.zenodo.json names, as isDerivedFrom, the DOI of every version of each record shown (' + wantDois.length + '), each a DOI once, and uses no relation but isPartOf, isSupplementTo and isDerivedFrom',
+    lacking.length === 0 && rel.every((r) => ['isPartOf', 'isSupplementTo', 'isDerivedFrom'].includes(r.relation))
+    && rel.filter((r) => r.relation === 'isDerivedFrom').every((r) => r.scheme === 'doi' && /^10\.\d{4,9}\/\S+$/.test(r.identifier)) && new Set(derived).size === derived.length,
+    lacking.length ? 'add to .zenodo.json: ' + lacking.join(', ') : '');
+  ok('the README, in both languages, and the routine say that the archive is derived from the listed works from the next release, and how the list is kept',
+    readme.includes('(`isDerivedFrom` in `.zenodo.json`)') && readme.includes('（`.zenodo.json` の `isDerivedFrom`）')
+    && read(path.join(ROOT, 'docs', 'operations.md')).includes('add the DOI of each of its versions to `related_identifiers` in `.zenodo.json` with the relation `isDerivedFrom`')
+    && read(path.join(ROOT, 'docs', 'operations.md')).includes('A removal does not change the file, so that nothing delays it.'));
+  // The operating counts on the top page, counted again here from data/reports and the records.
+  const reps = fs.readdirSync(path.join(ROOT, 'data', 'reports')).filter((f) => /^\d{4}\.json$/.test(f)).sort().map((f) => JSON.parse(read(path.join(ROOT, 'data', 'reports', f))));
+  const last = reps[reps.length - 1];
+  const listedN = recs.filter((p) => p.status === 'listed').length, removedN = recs.filter((p) => p.status === 'removed').length;
+  const idx = read(path.join(ROOT, 'site', 'index.html')), idxJa = read(path.join(ROOT, 'site', 'index.ja.html'));
+  const med = last.daysToDecision.median;
+  const en = 'in ' + last.year + (last.complete ? '' : ' (counted up to ' + last.asOf + ')') + ', ' + last.submissions.opened + ' submission' + (last.submissions.opened === 1 ? '' : 's') + ' received and ' + last.submissions.accepted + ' accepted; median days from submission to a decision: ' + (med === null ? '–' : med) + '. Listed now: ' + listedN + '.' + (removedN ? ' Removed: ' + removedN + '.' : '');
+  const ja = last.year + ' 年' + (last.complete ? '' : '（' + last.asOf + ' までの数）') + 'の受付 ' + last.submissions.opened + ' 件、受理 ' + last.submissions.accepted + ' 件、投稿から決定までの日数の中央値 ' + (med === null ? '–' : med + ' 日') + '。いま載っている作品 ' + listedN + ' 件' + (removedN ? '、削除した記録 ' + removedN + ' 件' : '') + '。';
+  ok('the top page, in both languages, gives the submissions received and accepted and the median days to a decision of the latest year recorded, and the records listed now, as counted from data/reports and the records',
+    idx.includes('Operating counts, from the records: ' + en) && idxJa.includes('運営の数（記録から作っています）：' + ja), en);
+  const oc = B.operatingCounts([{ status: 'listed' }], [{ year: 2030, complete: true, asOf: '2031-01-02', submissions: { opened: 1, accepted: 0 }, daysToDecision: { median: null } }]);
+  ok('the counts read one submission in the singular, a year with no decision as “–”, and no year as none counted',
+    oc.includes('in 2030, 1 submission received and 0 accepted; median days from submission to a decision: –. Listed now: 1.') && B.operatingCounts([], []).includes('No year has been counted yet.'));
+  // The operator's own work: said on the top page from the records, and marked in the listing.
+  const own = shown.filter((p) => p.operator_own === true).length;
+  const every = own > 0 && own === shown.length;
+  const flags = (idx.split('<ol class="list">')[1] || '').split('operator’s own submission</span>').length - 1;
+  ok('the top page says, from the records, how many of the works shown are the operator’s own (' + own + ' of ' + shown.length + '), that Sophaxis is not a shelf for them, and marks each in the listing',
+    idx.includes(every ? 'Every work listed so far is by the operator (' + own + ' of the ' + shown.length + ' records shown).' : own + ' of the ' + shown.length + ' records shown')
+    && idx.includes('is not a shelf for the operator’s own work: it lists work by any researcher in its fields.')
+    && idxJa.includes(every ? 'これまでに載った作品は、すべて運営者のものです（示している記録 ' + shown.length + ' 件のうち ' + own + ' 件）。' : '示している記録 ' + shown.length + ' 件のうち ' + own + ' 件は、運営者の作品です。')
+    && idxJa.includes('Sophaxis は運営者の作品を並べるための場ではありません。') && flags === own, flags + ' flags');
+  const mixed = [{ status: 'listed', operator_own: true }, { status: 'listed' }, { status: 'removed', operator_own: true }];
+  ok('when another researcher’s work is shown, the notice gives the share and no longer says “every”; with none of the operator’s, it is not shown',
+    B.ownNotice(mixed).includes('1 of the 2 records shown is the operator’s own submissions.') && !B.ownNotice(mixed).includes('Every work') && !B.ownNotice(mixed, true).includes('すべて')
+    && B.ownNotice([{ status: 'listed' }]) === '' && B.ownNotice([{ status: 'listed' }], true) === '');
+  ok('the call in Japanese says that every work listed so far is the operator’s only while that is true',
+    read(path.join(ROOT, 'call.ja.md')).includes('これまでに載った作品は、すべて運営者のものです。') === shown.every((p) => p.operator_own === true));
+  // The page for a first submission from another researcher: the call, in both languages, pointing to the first-preprint page and back.
+  const call = read(path.join(ROOT, 'call.md')), callJa = read(path.join(ROOT, 'call.ja.md'));
+  ok('the call, in both languages, has a section for a first submission from another researcher that sends to the first-preprint page, the checklist and the steps, with the day of vouching from site.json; the first-preprint page links back',
+    call.includes('## A first submission from another researcher') && ['(./first.md)', '(./checklist.md)', '(./process.md)'].every((l) => call.split('## A first submission from another researcher')[1].split('\n## ')[0].includes(l))
+    && call.includes('- From ' + site.vouchFrom + ', a first submission needs a researcher to vouch for it.')
+    && callJa.includes('## ほかの研究者からの最初の投稿') && ['(./first.ja.md)', '(./checklist.ja.md)', '(./process.ja.md)'].every((l) => callJa.split('## ほかの研究者からの最初の投稿')[1].split('\n## ')[0].includes(l))
+    && callJa.includes('- ' + site.vouchFrom + ' から、初めての投稿には、作品を紹介する研究者一人が要ります。')
+    && read(path.join(ROOT, 'first.md')).includes('[A call to researchers](./call.md)') && read(path.join(ROOT, 'first.ja.md')).includes('[研究者の方へ](./call.ja.md)'));
+  // The OpenDOAR draft: marked a draft, its facts those of site.json and the code, and no address written in it.
+  const od = read(path.join(ROOT, 'docs', 'opendoar.md'));
+  const line = (k) => ((new RegExp('^- ' + k + ': (.+)$', 'm').exec(od)) || [])[1] || '';
+  const subjects = line('Subjects').split(', ');
+  const oai = read(path.join(ROOT, 'tools', 'oai.js'));
+  const pol = [...od.matchAll(/\(https:\/\/sophaxis\.vercel\.app\/policies\/([a-z]+)\.html\)/g)].map((m) => m[1]);
+  ok('docs/opendoar.md is marked as a draft not sent, and its address, OAI-PMH base URL, formats, subjects, start, operator, identifiers and policy links agree with site.json and the code; it writes no email address',
+    od.startsWith('# Draft: the application to OpenDOAR\n\nDraft, not sent.') && line('Address') === site.baseUrl && line('OAI-PMH base URL') === site.baseUrl + 'oai'
+    && line('Metadata formats') === '`oai_dc` and `oai_openaire`' && oai.includes('oai_dc') && oai.includes('oai_openaire')
+    && subjects.length === Object.keys(site.categories).length && Object.values(site.categories).every((c) => subjects.includes(c))
+    && line('Began') === site.since && line('Organisation').includes('(ORCID ' + site.operator.orcid + ')') && line('Identifiers of Sophaxis itself').includes('DOI ' + site.osf.doi + ';') && line('Identifiers of Sophaxis itself').includes('DOI ' + site.zenodo.doi + ' (every version)')
+    && pol.length >= 7 && pol.every((p) => fs.existsSync(path.join(ROOT, 'policies', p + '.md'))) && !/@/.test(od)
+    && readme.includes('The application is drafted in [docs/opendoar.md](docs/opendoar.md).') && readme.includes('申請の文は [docs/opendoar.md](docs/opendoar.md) に下書きしてあります。')
+    && read(path.join(ROOT, 'docs', 'operations.md')).includes('The application to OpenDOAR is drafted in [opendoar.md](./opendoar.md)'), pol.join(', '));
+  // Every Japanese article that a page quotes is one the weekly watch confirms.
+  const REG = JSON.parse(read(path.join(ROOT, 'verification', 'citations.json'))), ST = JSON.parse(read(path.join(ROOT, 'verification', 'statutes.json')));
+  const mdFiles = ['contact.md', 'contact.ja.md'].concat(fs.readdirSync(path.join(ROOT, 'policies')).map((f) => 'policies/' + f));
+  const unwatched = [];
+  for (const f of mdFiles) for (const m of read(path.join(ROOT, f)).matchAll(/<!-- text: ([^>]*) -->/g)) for (const k of m[1].split('; ')) {
+    const mm = /^(.+) (\S+)$/.exec(k); const L = mm && REG.laws[mm[1]];
+    if (L && L.egov && !ST.statutes.some((e) => e.law_id === L.egov && e.article === mm[2].replace(/-/g, '_'))) unwatched.push(f + ': ' + k);
+  }
+  const pages = fs.readdirSync(path.join(ROOT, 'site', 'policies')).map((f) => 'policies/' + f).concat(['contact.html', 'contact.ja.html']);
+  ok('every Japanese article that a policy or the contact page quotes is one the weekly watch confirms, and no page says one is not yet among them',
+    unwatched.length === 0 && pages.every((f) => !read(path.join(ROOT, 'site', f)).includes('It is not yet among the texts the weekly watch confirms.') && !read(path.join(ROOT, 'site', f)).includes('まだ週に一度の見張りには入っていません。')), unwatched.join(' / '));
 }
 
 console.log('\n' + '-'.repeat(60));

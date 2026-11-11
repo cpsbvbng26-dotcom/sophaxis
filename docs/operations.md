@@ -6,7 +6,7 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 
 - Read the new issues: submissions, withdrawals, published versions, corrections and removal requests. The automatic check has commented on each and decides nothing.
 - Decide each submission under the Moderation Policy, and give the reasons in the issue.
-- On acceptance, take the draft record from the comment of the automatic check, make it `data/papers/<id>.json` in a pull request, draw the share card with `node tools/cards.js`, then run `node build.js` and `node verification/check.js`. Merge only when every check passes.
+- On acceptance, take the draft record from the comment of the automatic check, make it `data/papers/<id>.json` in a pull request, draw the share card with `node tools/cards.js`, add the DOI of each of its versions to `related_identifiers` in `.zenodo.json` with the relation `isDerivedFrom`, then run `node build.js` and `node verification/check.js`. Merge only when every check passes.
 - Answer a removal request by the day that its acknowledgement names.
 
 ## Every week
@@ -27,7 +27,12 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 ## On a release
 
 - Add the entries to `CHANGELOG.md` and change the version and the date in `CITATION.cff`.
+- In `.zenodo.json`, take out the `isDerivedFrom` DOIs of works removed since the last release. A removal does not change the file, so that nothing delays it.
 - The operator creates the GitHub Release and the Zenodo version by hand. Record the DOI that Zenodo gives, and no other.
+
+## Registries
+
+- The application to OpenDOAR is drafted in [opendoar.md](./opendoar.md), for the day it takes new submissions again. Read its first section before sending it.
 
 ## If Vercel cannot serve the site
 

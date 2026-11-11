@@ -32,6 +32,36 @@
       "identifier": "https://sophaxis.vercel.app/",
       "relation": "isSupplementTo",
       "scheme": "url"
+    },
+    {
+      "identifier": "10.6084/m9.figshare.34419198.v1",
+      "relation": "isDerivedFrom",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.6084/m9.figshare.34419198.v2",
+      "relation": "isDerivedFrom",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.2139/ssrn.7537983",
+      "relation": "isDerivedFrom",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.22057583",
+      "relation": "isDerivedFrom",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.22058254",
+      "relation": "isDerivedFrom",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.22064241",
+      "relation": "isDerivedFrom",
+      "scheme": "doi"
     }
   ],
   "notes": "Built with Claude Code (Anthropic) at the author's request. The author reviewed the work and is responsible for it. Claude is not an author. The text of the site is CC BY 4.0; the code is MIT."

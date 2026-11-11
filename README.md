@@ -1,5 +1,7 @@
 # Sophaxis
 
+Type: Project · Status: Running
+
 **Preprints in Philosophy and Mathematics**
 
 Sophaxis is an overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
@@ -22,7 +24,7 @@ Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.
 The [OSF project page](https://osf.io/mq7za/) describes Sophaxis and gives it a DOI: [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
 The DOI names Sophaxis as a project, not a listed work. Cite it to refer to Sophaxis itself.
 
-The code and the records are archived at Zenodo with each release. Version 1.0.0: [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372). Every version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371), which resolves to the latest. Cite these for the software; `CITATION.cff` gives the citation.
+The code and the records are archived at Zenodo with each release. Version 1.0.0: [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372). Every version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371), which resolves to the latest. Cite these for the software; `CITATION.cff` gives the citation. From the next version, the archive also names the DOI of every version of each work listed then as a source it is derived from (`isDerivedFrom` in `.zenodo.json`), because the records and the PDF copies come from those works; the operator makes each release at Zenodo.
 
 Sophaxis keeps a community at Zenodo, opened on 2026-11-07: <https://zenodo.org/communities/sophaxis>. It gathers the Zenodo records of works listed on Sophaxis. A record is added only when the same version is listed on Sophaxis, and every addition is reviewed. A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms. Any Zenodo user can open a community; it is not an affiliation with Zenodo, and Zenodo does not endorse Sophaxis.
 
@@ -161,7 +163,7 @@ On 2026-11-01 the operator applied for Sophaxis to be listed in DOAPR, the Direc
 On 2026-11-03 (Japan time) the OAI-PMH base URL, <https://sophaxis.vercel.app/oai>, passed the initial tests of the validator of the Open Archives Initiative. The Initiative stopped registering data providers on 2025-07-18, so this is a validation, not a listing.
 On the same day the operator asked PhilPapers to add Sophaxis to its Open Access Gateway, the list of archives whose papers PhilPapers indexes. Each archive is vetted before it is added. PhilPapers answered that, as the works listed so far appear to be by the operator, it recommends depositing them in PhilArchive rather than adding Sophaxis to the Gateway. Sophaxis is not in the Open Access Gateway.
 On the same day the operator submitted a record of Sophaxis to ROAR, the Registry of Open Access Repositories at the University of Southampton. It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.
-On 2026-11-08 (Japan time) the operator asked OpenDOAR, the Directory of Open Access Repositories run by Jisc, whether Sophaxis meets its inclusion criteria. Jisc answered that a preprint server that holds the PDFs on its own server would likely meet them, and that new submissions are paused while OpenDOAR is under review, with an update promised for January 2027. Sophaxis will apply after that update; whether it is listed is OpenDOAR's decision.
+On 2026-11-08 (Japan time) the operator asked OpenDOAR, the Directory of Open Access Repositories run by Jisc, whether Sophaxis meets its inclusion criteria. Jisc answered that a preprint server that holds the PDFs on its own server would likely meet them, and that new submissions are paused while OpenDOAR is under review, with an update promised for January 2027. Sophaxis will apply after that update; whether it is listed is OpenDOAR's decision. The application is drafted in [docs/opendoar.md](docs/opendoar.md).
 On 2026-11-10 (Japan time) the operator asked ASAPbio, by email, to add Sophaxis to its directory of preprint servers. Whether it is added is ASAPbio's decision.
 On the same day the operator asked CORE, the aggregator of open access research at the Open University, to harvest Sophaxis through its OAI-PMH base URL. CORE answered that it reviews the request first, and once it is approved indexes the content and tells the contact; this can take up to three weeks. Whether and when it indexes Sophaxis is CORE's decision.
 Submission of the Sophaxis code to the Journal of Open Source Software (JOSS) is planned. JOSS asks for a repository that has been public for more than six months. The first commit here is from 2026-10-30, so the earliest possible submission is 2027-05-01. Nothing has been submitted yet. Whether a preprint server is within the scope of JOSS is for JOSS to decide.
@@ -225,6 +227,8 @@ The operator, Takuya Nemoto, is responsible for it. Claude is not an author.
 
 ## 日本語
 
+種類：プロジェクト　状態：運営中
+
 Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学・科学哲学のための、重ね合わせ型（オーバーレイ型）のプレプリントサーバーです。
 著者が Zenodo・Figshare・OSF Preprints・SocArXiv・MetaArXiv・arXiv・Preprints.org・SSRN・Research Square・SciELO Preprints・Qeios・ScienceOpen Preprints・Advance・KC Works・Jxiv のどれかに置いた稿を、モデレーションのうえで一覧に載せ、固定の頁を与えます。
 
@@ -251,7 +255,7 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 [OSF のプロジェクトの頁](https://osf.io/mq7za/)が Sophaxis を説明し、DOI を与えています。DOI は [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA) です。
 この DOI が指すのは、プロジェクトとしての Sophaxis です。載っている稿ではありません。Sophaxis そのものを挙げるときに引きます。
 
-コードと記録は、版を出すたびに Zenodo に保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。すべての版に共通する DOI は [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) で、いちばん新しい版を指します。ソフトウェアとして挙げるときは、こちらを引きます。
+コードと記録は、版を出すたびに Zenodo に保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。すべての版に共通する DOI は [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) で、いちばん新しい版を指します。ソフトウェアとして挙げるときは、こちらを引きます。次の版からは、そのとき載っている作品のすべての版の DOI を、保存版の関連識別子に、もとにしたものとして挙げます（`.zenodo.json` の `isDerivedFrom`）。記録と PDF の写しは、それらの作品から取っているためです。Zenodo で版を出すのは運営者です。
 
 Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に開きました（<https://zenodo.org/communities/sophaxis>）。Sophaxis に載っている稿のうち、Zenodo にあるものを集めています。入れるのは、同じ版が Sophaxis に載っているものだけです。追加はどれも審査を経ます。2026-11-22 から、著者のだれかが Sophaxis を提供しない国と地域（投稿の規程の表にあります）に住んでいる作品については、記録を足す依頼を断ります。その作品は Sophaxis に載らないためです。依頼そのものは、CERN の規約のもとで Zenodo に残ります。コミュニティは Zenodo の利用者なら誰でも開けるもので、Zenodo との提携ではありません。Zenodo が Sophaxis を推薦しているわけでもありません。
 
@@ -278,7 +282,7 @@ OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [
 2026-11-03（日本時間）に、OAI-PMH の入口（<https://sophaxis.vercel.app/oai>）が Open Archives Initiative の検証ツールの初期テストを通りました。この組織は 2025-07-18 にデータ提供者の登録を終えています。これは検証であって、一覧への掲載ではありません。
 同じ日に、PhilPapers に、Open Access Gateway へ Sophaxis を加えるよう依頼しました。PhilPapers が論文を索引するアーカイブの一覧です。加える前に一件ずつ審査があります。PhilPapers の答えは、これまでに載った作品は運営者のものと見えるので、Sophaxis を Gateway に加えるより、論文を PhilArchive に直接置くことを勧める、というものでした。Sophaxis は Open Access Gateway に入っていません。
 同じ日に、サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
-2026-11-08（日本時間）に、Jisc が運営する OpenDOAR（Directory of Open Access Repositories）に、Sophaxis が掲載の基準を満たすかを問い合わせました。Jisc からは、PDF を自分のサーバーに置くプレプリントサーバーなら基準を満たす見込みが高いこと、OpenDOAR を見直すあいだ新しい登録を止めていて、2027 年 1 月に案内を出すことの返事がありました。その案内のあとに申請します。載せるかどうかは OpenDOAR が決めます。
+2026-11-08（日本時間）に、Jisc が運営する OpenDOAR（Directory of Open Access Repositories）に、Sophaxis が掲載の基準を満たすかを問い合わせました。Jisc からは、PDF を自分のサーバーに置くプレプリントサーバーなら基準を満たす見込みが高いこと、OpenDOAR を見直すあいだ新しい登録を止めていて、2027 年 1 月に案内を出すことの返事がありました。その案内のあとに申請します。載せるかどうかは OpenDOAR が決めます。申請の文は [docs/opendoar.md](docs/opendoar.md) に下書きしてあります。
 2026-11-10（日本時間）に、ASAPbio に、プレプリントサーバーの一覧へ Sophaxis を加えるようメールで依頼しました。加えるかどうかは ASAPbio が決めます。
 同じ日に、英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、OAI-PMH の入口から Sophaxis を収集するよう依頼しました。CORE からは、まず依頼を審査し、認めたあとに収集して連絡先に知らせること、それに最長で三週間かかることの返事がありました。収集して索引に載せるかどうかと、その時期は、CORE が決めます。
 Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。

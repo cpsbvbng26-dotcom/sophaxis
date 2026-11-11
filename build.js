@@ -875,7 +875,7 @@ function sortListing(papers) {
 function listing(papers, up, empty) {
   if (!papers.length) return `<p class="meta">${empty}</p>`;
   const items = sortListing(papers).map((p) => `<li>
-<p class="meta"><span class="id">${esc(p.id)}</span> · ${esc(SITE.categories[p.category])} · ${esc(p.versions[0].date)}${p.status === 'withdrawn' ? '<span class="flag">withdrawn</span>' : ''}${p.published ? '<span class="flag">published</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(p.id)}</span> · ${esc(SITE.categories[p.category])} · ${esc(p.versions[0].date)}${p.status === 'withdrawn' ? '<span class="flag">withdrawn</span>' : ''}${p.published ? '<span class="flag">published</span>' : ''}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
 <a href="${up}abs/${esc(p.id)}.html"><b>${esc(p.title)}</b></a>
 <p class="meta">${esc(authorsText(p))}</p>
 </li>`).join('\n');
@@ -942,6 +942,34 @@ function ownIdentifiers() {
   return parts.length ? `<p class="meta">${esc(SITE.name)} itself: ${parts.join(' · ')}. Neither names a listed work; cite a work by its own DOI.</p>\n` : '';
 }
 
+/* Conflicts of interest, on the top page: how many of the records shown are the operator's own, from the records, so that
+ * Sophaxis is not taken for a shelf of the operator's own work. Nothing is said when none is. */
+function ownNotice(all, ja = false) {
+  const shown = all.filter((p) => p.status !== 'removed');
+  const own = shown.filter((p) => p.operator_own === true).length;
+  if (!own) return '';
+  const every = own === shown.length;
+  if (ja) {
+    return `<div class="notice">${every ? `これまでに載った作品は、すべて運営者のものです（示している記録 ${shown.length} 件のうち ${own} 件）。` : `示している記録 ${shown.length} 件のうち ${own} 件は、運営者の作品です。`}運営者は Sophaxis を一人で運営し、いまはただ一人のモデレーターでもあります。運営者の作品には、一覧と記録の頁で「operator’s own submission」の印を付けています。ほかの作品より先に扱うことはしません（<a href="./policies/moderation.ja.html">モデレーションの規程</a>の「利益相反」）。Sophaxis は運営者の作品を並べるための場ではありません。分野に合う研究者の作品を載せる場です。${every ? 'ほかの研究者からの最初の投稿を待っています。' : ''}<a href="./call.ja.html">研究者の方へ</a></div>\n`;
+  }
+  return `<div class="notice">${every ? `Every work listed so far is by the operator (${own} of the ${shown.length} records shown).` : esc(ownShare(all))} The operator runs ${esc(SITE.name)} alone and is at present its only moderator. Each of these works is marked “operator’s own submission” in the listing and on its record page, and gets no priority (<a href="./policies/moderation.html">Moderation Policy</a>, “Conflicts of interest”). ${esc(SITE.name)} is not a shelf for the operator’s own work: it lists work by any researcher in its fields.${every ? ' The first submissions from other researchers are welcome.' : ''} <a href="./call.html">A call to researchers</a></div>\n`;
+}
+
+/* Operating counts on the top page: submissions received and accepted, and the median days to a decision, in the latest year
+ * recorded in data/reports (tools/report.js counts them from the public issues), and the records listed now. None is written by hand. */
+function operatingCounts(all, reports = loadReports(), ja = false) {
+  const listed = all.filter((p) => p.status === 'listed').length;
+  const removed = all.filter((p) => p.status === 'removed').length;
+  const r = reports[0];
+  if (!r) return ja ? `<p class="meta">いま載っている作品 ${listed} 件。年ごとの数は、まだ記していません。</p>\n` : `<p class="meta">Listed now: ${listed}. No year has been counted yet.</p>\n`;
+  const med = r.daysToDecision.median;
+  if (ja) {
+    return `<p class="meta">運営の数（記録から作っています）：${r.year} 年${r.complete ? '' : '（' + esc(r.asOf) + ' までの数）'}の受付 ${r.submissions.opened} 件、受理 ${r.submissions.accepted} 件、投稿から決定までの日数の中央値 ${med === null ? '–' : med + ' 日'}。いま載っている作品 ${listed} 件${removed ? '、削除した記録 ' + removed + ' 件' : ''}。詳しくは<a href="./decisions.html">年ごとの決定</a>と<a href="./stats.html">統計</a>（どちらも英語）にあります。</p>\n`;
+  }
+  const n = (k, one, many) => k + ' ' + (k === 1 ? one : many);
+  return `<p class="meta">Operating counts, from the records: in ${r.year}${r.complete ? '' : ' (counted up to ' + esc(r.asOf) + ')'}, ${n(r.submissions.opened, 'submission', 'submissions')} received and ${r.submissions.accepted} accepted; median days from submission to a decision: ${med === null ? '–' : med}. Listed now: ${listed}.${removed ? ' Removed: ' + removed + '.' : ''} <a href="./decisions.html">Decisions by year</a> · <a href="./stats.html">Statistics</a></p>\n`;
+}
+
 function indexPage(papers, all = papers) {
   const last = lastUpdated(all);
   const body = `
@@ -950,7 +978,8 @@ ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists prep
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
 <p class="meta"><a href="./index.ja.html" hreflang="ja" lang="ja">日本語</a></p>
-${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
+${operatingCounts(all)}${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
+${ownNotice(all)}
 ${fields(papers, '', './')}
 <p class="meta">By topic: <a href="./collections.html">Collections</a>. By month: <a href="./months.html">New by month</a>. Researchers: <a href="./call.html">a call to submit</a>.</p>
 ${listing(papers, './', 'No preprints are listed yet.')}
@@ -1330,13 +1359,14 @@ function indexJaPage(papers, all = papers) {
 ${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${esc(SITE.termsNotice.from)} から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
 ` : ''}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">記録の頁・一覧・統計は英語です。作品の題と要旨は、DOI の登録情報のとおりに載せています。</p>
+${operatingCounts(all, loadReports(), true)}
 <h2>日本語の頁</h2>
 <ul>${jaLinks}</ul>
 <h2>分野と集め</h2>
 <ul class="fields" aria-label="分野">${Object.entries(SITE.categories).map(([slug]) => `<li><a href="./list/${slug}.html">${esc(SITE.categoriesJa[slug])}（${papers.filter((p) => cats(p).includes(slug)).length}）</a></li>`).join('')}</ul>
 <ul class="fields" aria-label="集め">${(SITE.collections || []).map((c) => `<li><a href="./collection/${esc(c.slug)}.html">${esc(c.ja)}（${papers.filter((p) => (p.collections || []).includes(c.slug)).length}）</a></li>`).join('')}</ul>
 <h2>載っている作品</h2>
-${listing(papers, './', 'まだ作品は載っていません。')}
+${ownNotice(all, true)}${listing(papers, './', 'まだ作品は載っていません。')}
 `;
   return page({ title: SITE.name + '：哲学と数学のプレプリント', description: SITE.name + ' は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。', rel: false, canonical: 'index.ja.html', lang: 'ja', head: rootAlternates('index'), body });
 }
@@ -1719,7 +1749,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

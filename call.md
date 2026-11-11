@@ -36,6 +36,17 @@ A listed work can still be published in a journal, and the record page then show
 - From 2026-11-24, statements on funding, on competing interests, and on human participants and research ethics.
 - No author who lives in, or stays in, a place where Sophaxis is not offered, as the Submission Policy lists them.
 
+## A first submission from another researcher
+
+This section is for the first researcher, other than the operator, who submits to Sophaxis.
+
+- If you have not made a preprint public before, start with [Your first preprint](./first.md). It covers the deposit, which comes before a submission.
+- Then read the [checklist](./checklist.md), and follow [From submission to listing](./process.md) step by step.
+- Your submission is moderated under the same rules as the operator's own, in the order it comes. The operator's own submissions get no priority.
+- The operator is at present the only moderator. As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+- From 2026-11-23, a first submission needs a researcher to vouch for it. The authors of the work and the operator cannot vouch.
+- If a step is unclear, ask before submitting, as the next section says. A question is not a submission.
+
 ## How to submit
 
 The steps are on the page [From submission to listing](./process.md), and the form opens from [Submit](https://sophaxis.vercel.app/submit.html).

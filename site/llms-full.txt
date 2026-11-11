@@ -2463,6 +2463,17 @@ A listed work can still be published in a journal, and the record page then show
 - From 2026-11-24, statements on funding, on competing interests, and on human participants and research ethics.
 - No author who lives in, or stays in, a place where Sophaxis is not offered, as the Submission Policy lists them.
 
+## A first submission from another researcher
+
+This section is for the first researcher, other than the operator, who submits to Sophaxis.
+
+- If you have not made a preprint public before, start with [Your first preprint](https://sophaxis.vercel.app/first.html). It covers the deposit, which comes before a submission.
+- Then read the [checklist](https://sophaxis.vercel.app/checklist.html), and follow [From submission to listing](https://sophaxis.vercel.app/process.html) step by step.
+- Your submission is moderated under the same rules as the operator's own, in the order it comes. The operator's own submissions get no priority.
+- The operator is at present the only moderator. As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
+- From 2026-11-23, a first submission needs a researcher to vouch for it. The authors of the work and the operator cannot vouch.
+- If a step is unclear, ask before submitting, as the next section says. A question is not a submission.
+
 ## How to submit
 
 The steps are on the page [From submission to listing](https://sophaxis.vercel.app/process.html), and the form opens from [Submit](https://sophaxis.vercel.app/submit.html).
@@ -4104,6 +4115,7 @@ Sophaxis が載せるのは、次のリポジトリのどれかに DOI 付きで
 
 - 作品を自分の ORCID の記録に足します（[載った作品を見つけてもらうために](https://sophaxis.vercel.app/findable.ja.html)）。
 - Sophaxis に載せるには、[確かめること](https://sophaxis.vercel.app/checklist.ja.html)を読み、[投稿から掲載まで](https://sophaxis.vercel.app/process.ja.html)の手順に沿います。
+- [研究者の方へ](https://sophaxis.vercel.app/call.ja.html)に、載った作品が得るものと、運営者のほかの人による初めての投稿で起きることを書いています。
 - [投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が定めるとおり、2026-11-23 からは、最初の DOI から六か月たった作品だけを載せます。はじめての投稿には、紹介する研究者が要ります。
 
 ---
@@ -5394,6 +5406,17 @@ Sophaxis は作品が正しいか、重要かを判断しません。載るこ�
 - 2026-11-23 から、作品の最初の DOI の登録から六か月がたっていること。初めての投稿では、作品を紹介する研究者一人も要ります。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告。
 - 投稿の規程が挙げる、Sophaxis を提供しない国と地域に、住んでいる著者も滞在している著者もいないこと。
+
+## ほかの研究者からの最初の投稿
+
+この節は、運営者のほかに初めて Sophaxis に投稿する研究者のためのものです。
+
+- プレプリントを公開したことがなければ、[はじめてのプレプリント](https://sophaxis.vercel.app/first.ja.html)から読みます。投稿の前の、リポジトリに預けるところまでを扱っています。
+- 次に[確かめること](https://sophaxis.vercel.app/checklist.ja.html)を読み、[投稿から掲載まで](https://sophaxis.vercel.app/process.ja.html)の手順に一つずつ沿います。
+- 投稿は、運営者自身の投稿と同じ決まりで、届いた順にモデレーションします。運営者の投稿を先に扱うことはしません。
+- いまのモデレーターは運営者一人です。目安として、決定は投稿の日に出ることもあれば、数週間から数か月かかることもあります。
+- 2026-11-23 から、初めての投稿には、作品を紹介する研究者一人が要ります。作品の著者と運営者は紹介できません。
+- 手順にわからないところがあれば、投稿の前に、次の節のとおりに尋ねられます。尋ねることは投稿ではありません。
 
 ## 投稿のしかた
 
