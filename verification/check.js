@@ -221,7 +221,7 @@ console.log('\n4. The policy keeps its promises in writing');
 }
 
 /* ------------------------------------------------------------ 5 */
-console.log('\n5. Every page: no requests to other servers, valid CSP, links that resolve');
+console.log('\n5. Every page: no requests to other servers, valid CSP, links that resolve, to their sections too');
 {
   for (const [label, dir] of [['site', path.join(ROOT, 'site')], ['fixtures', FIX]]) {
     const pages = fs.readdirSync(dir, { recursive: true }).filter((f) => f.endsWith('.html'));
@@ -248,6 +248,14 @@ console.log('\n5. Every page: no requests to other servers, valid CSP, links tha
         const target = path.resolve(path.dirname(path.join(dir, f)), m[1]);
         if (!fs.existsSync(target)) bad.push(f + ': broken link ' + m[1]);
       });
+      /* A link to a section, on the same page or another, leads to an element with that id. */
+      [...h.matchAll(/href="((?:\.{1,2}\/[^"#]*\.html)?)#([^"]+)"/g)].forEach((m) => {
+        const target = m[1] ? path.resolve(path.dirname(path.join(dir, f)), m[1]) : path.join(dir, f);
+        const id = m[2].replace(/&amp;/g, '&');
+        if (fs.existsSync(target) && !read(target).includes(' id="' + id + '"')) bad.push(f + ': no section ' + m[1] + '#' + id);
+      });
+      /* A link to a Markdown source is mapped to its page by build.js; only the templates are served as Markdown. */
+      [...h.matchAll(/href="([^"]*\.md)(?:#[^"]*)?"/g)].forEach((m) => { if (!/^(\.\/|\.\.\/)*templates\/|^https:\/\/github\.com\//.test(m[1])) bad.push(f + ': link to a Markdown file ' + m[1]); });
     });
     ok(label + ': ' + pages.length + ' pages pass', pages.length > 0 && bad.length === 0, bad.join(' / '));
   }
@@ -553,7 +561,7 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
   const ja = read(path.join(ROOT, 'site', 'policies', 'privacy.ja.html'));
   ok('the Japanese page on personal data covers the headings of the Act: handler, data, purposes, provision, foreign services, safety, retention, requests',
     ja.startsWith('<!doctype html>\n<html lang="ja">') && /最終更新：\d{4}-\d{2}-\d{2}。/.test(ja)
-    && ['取り扱う者', '取り扱う個人情報', '利用目的', '公開と第三者への提供', '外国にある事業者の利用', '安全のための措置', '保存の期間', '開示・訂正・利用停止・削除の求め'].every((h) => ja.includes('<h2>' + h + '</h2>')));
+    && ['取り扱う者', '取り扱う個人情報', '利用目的', '公開と第三者への提供', '外国にある事業者の利用', '安全のための措置', '保存の期間', '開示・訂正・利用停止・削除の求め'].every((h) => new RegExp('<h2 id="[^"]+">' + h + '</h2>').test(ja)));
   ok('the Japanese page names every foreign service the English policy names, and links back to it', ['GitHub（米国）', 'Vercel（米国）', 'DataCite（ドイツ）', 'Crossref（米国）', 'ORCID（米国）', 'Internet Archive（米国）'].every((s) => ja.includes(s))
     && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>' + /最終更新：(\d{4}-\d{2}-\d{2})。/.exec(read(path.join(ROOT, 'policies', 'privacy.ja.md')))[1]));
   ok('Japanese lines join without a space, English lines with one', ja.includes('どこにも書き写しません。サイトは、閲覧者の個人情報を集めません。') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
@@ -574,8 +582,8 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
   ok('every page links the Terms of Use, the Privacy Policy and the Takedown Policy', fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
     .every((f) => ['terms', 'privacy', 'takedown'].every((s) => new RegExp('href="(\\./|\\.\\./|/)policies/' + s + '\\.html"').test(read(path.join(ROOT, 'site', f))))));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
-  ok('the submission form requires consent of every author and the right to share the version', /- label: Every author of this work agrees to its listing on Sophaxis\.\n\s+required: true/.test(form)
-    && /- label: The authors may share this version under its licence; if a journal has published the work, the publisher allows it\.\n\s+required: true/.test(form));
+  ok('the submission form requires consent of every author and the right to share the version', /- label: "I confirm that every author of this work agrees to this submission and to its listing on Sophaxis\."\n\s+required: true/.test(form)
+    && /- label: "I confirm that the authors have the right to share this version under that licence, and that, if a journal has published the work, the publisher allows it\."\n\s+required: true/.test(form));
   const rem = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'removal.yml'));
   /* The private channel is the email on the operator's ORCID record. The address itself is never copied here. */
   const allPolicies = [read(path.join(ROOT, 'policy.md'))].concat(fs.readdirSync(path.join(ROOT, 'policies')).map((f) => read(path.join(ROOT, 'policies', f)))).join('\n');
@@ -810,7 +818,7 @@ console.log('\n18. Withdrawal: the policy, the form and the check');
     && rsrc.includes("if (form.mode !== 'remove') return say(") && rsrc.includes("if (!labels.includes('verified')) return say("));
   ok('the Withdrawal Policy lets an author have the record removed, and points to what removal leaves',
     ['## Removal at an author\'s request', 'An author can ask, in the same issue, for the record to be removed instead of withdrawn.', 'A record that is already withdrawn can still be removed.',
-      'Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.html) sets out.'].every((x) => pol.includes(x)));
+      'Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.md) sets out.'].every((x) => pol.includes(x)));
   const tk = read(path.join(ROOT, 'policies', 'takedown.md'));
   ok('the Takedown Policy sets out exactly what a removed record leaves, for every reason, on the site, in the records, in the issues and outside',
     ['A record is removed in three cases.', 'The third is when an author of the work asks for it in a withdrawal issue', '## What a removed record leaves', 'This section applies to every removed record, whatever the reason.',
@@ -823,8 +831,8 @@ console.log('\n18. Withdrawal: the policy, the form and the check');
     && read(path.join(ROOT, 'policies', 'submission.md')).includes('An author can instead have the record removed, so that only its Sophaxis id stays.'));
   ok('the Withdrawal Policy says who may withdraw, that the record stays, that the PDF copies go, and how it differs from removal',
     ['Any one author of a listed work can withdraw it.', 'An automatic check confirms both and posts the result in the issue.', 'The PDF copies are taken off the site, and the record links to the repository only.',
-      'A withdrawn record takes no new versions.', 'Withdrawal on Sophaxis does not touch the deposit.', 'It follows the [Takedown Policy](./takedown.html).'].every((x) => pol.includes(x))
-    && read(path.join(ROOT, 'policies', 'submission.md')).includes('[Withdrawal Policy](./withdrawal.html)'));
+      'A withdrawn record takes no new versions.', 'Withdrawal on Sophaxis does not touch the deposit.', 'It follows the [Takedown Policy](./takedown.md).'].every((x) => pol.includes(x))
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('[Withdrawal Policy](./withdrawal.md)'));
 }
 
 /* ------------------------------------------------------------ 19 */
@@ -838,11 +846,11 @@ console.log('\n19. The authors bear full responsibility');
   ok('moderation moves none of it to the operator; a claim from a third party is the authors\u2019, as the law provides; takedown still applies',
     terms.includes('Moderation does not move any of this to the operator.')
     && terms.includes('the authors are responsible for it, as the law provides.') && terms.includes('Nothing in them limits a right that the law does not allow to be limited.')
-    && terms.includes('The operator still acts on requests under the [Takedown Policy](./takedown.html).'));
+    && terms.includes('The operator still acts on requests under the [Takedown Policy](./takedown.md).'));
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   ok('the submitter confirms it in the form and in the Submission Policy',
-    form.includes('- label: The authors bear full responsibility for the work and its listing, as the Terms of Use set out.\n          required: true')
-    && read(path.join(ROOT, 'policies', 'submission.md')).includes('- The authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.html) set out.'));
+    form.includes('- label: "I agree that the authors bear full responsibility for the work and its listing, as the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html#the-authors-bear-full-responsibility) set out."\n          required: true')
+    && read(path.join(ROOT, 'policies', 'submission.md')).includes('- I agree that the authors bear full responsibility for the work and its listing, as the [Terms of Use](./terms.md#the-authors-bear-full-responsibility) set out.'));
   ok('every record page says so beside the notice that it is not peer-reviewed',
     read(path.join(FIX, 'abs', '2026.0001.html')).includes('does not guarantee its quality. The authors bear full responsibility for its content.</div>'));
 }
@@ -881,7 +889,7 @@ console.log('\n21. The FAQ agrees with the policies');
   const time = (/^(As a guide, a decision can come [^\n]+)$/m.exec(read(path.join(ROOT, 'policies', 'moderation.md'))) || [, '(none)'])[1];
   ok('the FAQ gives the moderation time and the PDF limit that the policy and site.json set',
     faq.includes(time) && faq.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
-  const links = [...faq.matchAll(/\]\(\.\/([^)]+)\)/g)].map((m) => m[1]);
+  const links = [...faq.matchAll(/\]\((\.\/[^)#]+)[^)]*\)/g)].map((m) => require('../build.js').sitePath(m[1], 'faq.md', 'faq.html') || m[1]);
   ok('every link in the FAQ leads to a page of the site', links.length >= 8 && links.every((l) => fs.existsSync(path.join(ROOT, 'site', l))), links.filter((l) => !fs.existsSync(path.join(ROOT, 'site', l))).join(', '));
   const qs = [...faq.matchAll(/^## (.*)$/gm)].map((m) => m[1]);
   ok('every heading of the FAQ is a question, and the page says that the policies apply where they differ',
@@ -916,7 +924,7 @@ console.log('\n22. From submission to listing: the page agrees with the form, th
     && intake.includes("verified ? 'verified' : 'unverified'") && pr.includes('the label `verified` or `unverified`')
     && /types: \[[^\]]*edited/.test(wf) && pr.includes('then edit the issue; the check runs again.'));
   ok('the page sends the reader to the policies, which apply where it differs, and every link leads to a page of the site',
-    pr.includes('where this page differs, they apply.') && [...pr.matchAll(/\]\(\.\/([^)]+)\)/g)].every((m) => fs.existsSync(path.join(ROOT, 'site', m[1]))));
+    pr.includes('where this page differs, they apply.') && [...pr.matchAll(/\]\((\.\/[^)#]+)[^)]*\)/g)].every((m) => fs.existsSync(path.join(ROOT, 'site', require('../build.js').sitePath(m[1], 'process.md', 'process.html') || m[1]))));
   ok('the submit page and the FAQ lead to it, and the sitemap lists it', read(path.join(ROOT, 'site', 'submit.html')).includes('<a href="./process.html">From submission to listing</a>')
     && read(path.join(ROOT, 'site', 'faq.html')).includes('href="./process.html"') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('<loc>https://sophaxis.vercel.app/process.html</loc>'));
 }
@@ -941,7 +949,7 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
   ok('the disclaimer covers peer review, metadata, the identity check, affiliation, GitHub, links, availability, advice and liability, and defers to the Terms',
     ['## Listed work', '## Metadata', '## The identity check', '## No affiliation', '## GitHub and other services', '## Links', '## Availability', '## Not advice', '## Liability'].every((h) => dis.includes(h))
-    && dis.includes('The [Terms of Use](./policies/terms.html) are binding; where this page differs, they apply.')
+    && dis.includes('The [Terms of Use](./policies/terms.md) are binding; where this page differs, they apply.')
     && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.')
     && dis.includes('Sophaxis does not use GitHub or ORCID sign-in')
     && dis.includes('through the public APIs of DataCite, Crossref, JaLC, OpenAlex, ORCID and the repositories.'));
@@ -949,7 +957,7 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     ['The operator, who is at present also the only moderator, runs Sophaxis as an unpaid volunteer.', 'No one is paid for work on Sophaxis, and no one pays to submit or to read.',
       'Sophaxis is served only within the free services of GitHub and Vercel, at the address sophaxis.vercel.app, and has no domain or hosting to pay for.',
       'The operator pays personally for Claude Code, the tool with which the site and its code are written (see How Sophaxis was made below).', 'Sophaxis takes no money from anyone to cover it.',
-      'Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.html) and the [Privacy Policy](./policies/privacy.html).',
+      'Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.md) and the [Privacy Policy](./policies/privacy.md).',
       'This is the operator\'s reason, not a judgement on other archives.', 'Sophaxis does not replace them, and a work listed here stays in its own repository.'].every((x) => dis.includes(x))
     && dis.indexOf('## Who runs Sophaxis, and why') < dis.indexOf('## The operator\'s own use')
     && read(path.join(ROOT, 'policies', 'moderation.md')).includes('moderates under this policy without pay')
@@ -963,7 +971,7 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     && dis.includes('Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it')
     && dis.includes('Sophaxis is not run for profit. It charges no one, sells nothing, shows no advertising and earns nothing.')
     && dis.includes('Sophaxis does not publish works.') && dis.includes('Sophaxis takes no copyright and no exclusive licence in any work.')
-    && dis.includes('(./policies/takedown.html)') && dis.includes('They are not legal advice, and they do not claim that no legal question can arise.')
+    && dis.includes('(./policies/takedown.md)') && dis.includes('They are not legal advice, and they do not claim that no legal question can arise.')
     && !/(no|free of|without) legal risk|legally safe|risk-free/i.test(dis)
     && read(path.join(ROOT, 'contact.md')).includes('The operator keeps it as a hobby, as an extension of a personal reading shelf')
     && read(path.join(ROOT, 'README.md')).includes('The operator keeps Sophaxis as a hobby, as an extension of a personal reading shelf.')
@@ -1016,7 +1024,7 @@ console.log('\n26. One operator: decisions, continuity, dependencies and statist
     mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 9
     && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Plagiarism', 'Where the authors live', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
   ok('the policy says the operator is the only moderator for now, how others are named, and who may not decide on what',
-    mod.includes('The operator is at present the only moderator.') && mod.includes('Each is named, with an ORCID iD, on the [Operator and contact](../contact.html) page before taking any decision')
+    mod.includes('The operator is at present the only moderator.') && mod.includes('Each is named, with an ORCID iD, on the [Operator and contact](../contact.md) page before taking any decision')
     && mod.includes('While the operator is the only moderator, the operator also decides on their own submissions') && mod.includes('no moderator decides on their own submission or on one by a close collaborator.'));
   const terms = read(path.join(ROOT, 'policies', 'terms.md'));
   const lic = read(path.join(ROOT, 'policies', 'licences.md'));
@@ -1181,11 +1189,25 @@ console.log('\n31. Disputes: agreement first, then the court named in the Terms'
   const d = (/## Disputes\n([\s\S]*?)\n## /.exec(terms) || [, ''])[1];
   ok('a dispute goes first to the operator, then to good-faith talks, then to mediation, and only then to court',
     d.includes('settled by agreement wherever possible') && /1\. Write to the operator first/.test(d) && /2\. Both sides then try, in good faith, to reach an agreement by talking\./.test(d)
-    && /3\. If talking does not settle it within 60 days, either side may propose mediation/.test(d) && d.indexOf('mediation') < d.indexOf('district court'));
-  ok('the court of first instance is the district or summary court of the operator\'s place of residence, by a non-exclusive agreement made in a form, without taking away the rights of consumers or of people outside Japan',
-    d.includes("the district court or the summary court that has jurisdiction over the operator's place of residence, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.")
+    && /3\. If talking does not settle it within 60 days, either side may propose mediation/.test(d) && d.indexOf('mediation') < d.indexOf('Utsunomiya District Court'));
+  /* The court is named from a day at least 14 days after the change, as "Changes and closure" asks of a change that may narrow a right,
+   * and the top-page notice says so. Until that day, the court of the operator's place of residence stays the agreed court. */
+  const courtFrom = (/^From (\d{4}-\d{2}-\d{2}), if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, /m.exec(d) || [])[1] || '';
+  const changed = (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(terms) || [])[1] || '';
+  const tj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
+  const dj = (/## 紛争\n([\s\S]*?)\n## /.exec(tj) || [, ''])[1];
+  const notice = JSON.parse(read(path.join(ROOT, 'site.json'))).termsNotice || {};
+  ok('the court of first instance is, from ' + (courtFrom || '(no day)') + ', the Utsunomiya District Court or the Utsunomiya Summary Court, by a non-exclusive agreement made in a form, without taking away the rights of consumers or of people outside Japan, in both languages',
+    d.includes('From ' + courtFrom + ", if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.")
+    && dj.includes(courtFrom + ' から、これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、宇都宮地方裁判所または宇都宮簡易裁判所を、第一審の合意管轄裁判所とします。この合意は専属的なものではありません。')
     && d.includes('This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.')
     && d.includes('urgent relief') && terms.includes('These terms are governed by the laws of Japan.'));
+  ok('the court is named at least 14 days after the change, the court of the operator\'s place of residence stays until then, and the top page announces it',
+    /^\d{4}-\d{2}-\d{2}$/.test(courtFrom) && /^\d{4}-\d{2}-\d{2}$/.test(changed) && (Date.parse(courtFrom) - Date.parse(changed)) / 86400000 >= 14
+    && d.includes("Until then, the court of first instance by agreement is, on the same terms, the district court or the summary court that has jurisdiction over the operator's place of residence.")
+    && dj.includes('それまでは、同じ条件で、運営者の住所地を管轄する地方裁判所または簡易裁判所を、第一審の合意管轄裁判所とします。')
+    && String(notice.text || '').includes('From ' + courtFrom + ', the court of first instance agreed in a form, for a dispute not settled by talks or mediation, is the Utsunomiya District Court or the Utsunomiya Summary Court'),
+    courtFrom + ' / ' + changed);
   ok('the reply time in a dispute is the 7 days the contact page promises', d.includes('The operator answers within 7 days') && read(path.join(ROOT, 'contact.md')).includes('The operator aims to answer within 7 days.')
     && read(path.join(ROOT, 'disclaimer.md')).includes('Disputes are settled by agreement first'));
 }
@@ -2164,7 +2186,7 @@ console.log('\n55. The extent of use of generative models, at one of the levels 
   const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
   const person = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
   const works = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
-  const run = (form, today) => I.check({ form: Object.assign({ consent: '- [X] a\n- [X] b\n- [X] c' }, form), login: 'jcarberry', meta: dc, person, works, today });
+  const run = (form, today) => I.check({ form: Object.assign({ consent: I.allTicked('consent') }, form), login: 'jcarberry', meta: dc, person, works, today });
   ok('before the day the level may be left out; from the day it is required', run(ix, '2026-11-20').ok && !run(ix, '2026-11-21').ok
     && run(Object.assign({}, ix, { llm_extent: L.drafting }), '2026-11-21').ok);
   ok('"None" beside a statement that names a model is refused; beside a statement of no use it passes',
@@ -2230,7 +2252,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
     const miss = (a, b) => [...a].filter((x) => !b.has(x));
     const name = dir + slug + '.ja.md';
     ok(name + ': a translation that says the English applies, of the same day, with as many sections',
-      /^# .+（日本語訳）\n/.test(ja) && ja.includes('これは英語の [') && ja.includes('](./' + slug + '.html) の訳です。') && ja.includes('英語の文が適用されます。')
+      /^# .+（日本語訳）\n/.test(ja) && ja.includes('これは英語の [') && ja.includes('](./' + slug + '.md) の訳です。') && ja.includes('英語の文が適用されます。')
       && enDate && enDate === jaDate && heads(en) === heads(ja),
       'dates ' + enDate + ' / ' + jaDate + ', sections ' + heads(en) + ' / ' + heads(ja));
     ok(name + ': the same numbers, addresses and code names as the English',
@@ -2241,7 +2263,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
     const jaHtml = read(path.join(ROOT, 'site', dir, slug + '.ja.html'));
     const pair = '<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/' + dir + slug + '.html">\n<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/' + dir + slug + '.ja.html">';
     ok(dir + slug + ': the English page links the translation, both pages name each other, and the sitemap has the translation with its day',
-      en.includes('Japanese: [') && en.includes('](./' + slug + '.ja.html). It is a translation; where the two differ, the English text applies.')
+      en.includes('Japanese: [') && en.includes('](./' + slug + '.ja.md). It is a translation; where the two differ, the English text applies.')
       && enHtml.includes(pair) && jaHtml.includes(pair) && /<html lang="ja"/.test(jaHtml)
       && sitemap.includes(dir + slug + '.ja.html</loc><lastmod>' + jaDate + '</lastmod>'));
   }
@@ -2272,13 +2294,18 @@ console.log('\n59. Consent to publication and to services outside Japan, agreeme
   const I = require('../tools/intake.js');
   const form = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml'));
   const part = (/id: consent[\s\S]*?options:\n([\s\S]*?)(?:\n  - type:|$)/.exec(form) || [])[1] || '';
-  const opts = [...part.matchAll(/^        - label: (.+)$/gm)].map((m) => m[1]);
+  const opts = [...part.matchAll(/^        - label: "?(.+?)"?$/gm)].map((m) => m[1]);
   ok('the form has ' + I.CONSENTS + ' boxes under "Consent and agreement", not required by the form itself before ' + site.consentFrom,
     form.includes('label: Consent and agreement') && form.includes('Required from ' + site.consentFrom + '.') && opts.length === I.CONSENTS
     && (part.match(/required: false/g) || []).length === I.CONSENTS);
-  ok('the boxes name the services in the United States, the policies and their version, and the age',
-    /provided to GitHub, Vercel and ORCID in the United States/.test(opts[0] || '') && !/Internet Archive/.test(part) && /agree to the Terms of Use and the other policies .*version on the day of submission/.test(opts[1] || '')
-    && /13 or older, and if I am under 18, a parent or guardian consents/.test(opts[2] || ''));
+  const policyOf = (s) => opts.some((o) => o.includes('I agree to the [' + policyTitleOf(s) + '](' + site.baseUrl + 'policies/' + s + '.html)'));
+  const policyTitleOf = (s) => read(path.join(ROOT, 'policies', s + '.md')).split('\n')[0].replace(/^# /, '');
+  ok('the boxes name the services in the United States, each of the eight policies and the version of the Terms, the court, the warranty, and the age in the words of the Terms',
+    opts.some((o) => /consents to the record being provided to GitHub, Vercel and ORCID in the United States/.test(o)) && opts.some((o) => /to Anthropic, OpenAI and xAI in the United States/.test(o)) && !/Internet Archive/.test(part)
+    && /agree to the \[Terms of Use\]\([^)]+\), in their version on the day of submission/.test(opts.join('\n')) && ['privacy', 'submission', 'moderation', 'takedown', 'copyright', 'licences', 'withdrawal'].every(policyOf)
+    && opts.some((o) => o.includes('#disputes) in the Terms of Use') && o.includes('court')) && opts.some((o) => o.includes('#no-warranty)'))
+    && read(path.join(ROOT, 'policies', 'terms.md')).includes('- From 2026-11-21, a person under 13 cannot submit.') && opts.some((o) => o.startsWith('I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit'))
+    && read(path.join(ROOT, 'policies', 'terms.md')).includes('- A person under 18 may submit only with the consent of a parent or guardian.') && opts.includes('I confirm that, if I am under 18, I submit only with the consent of a parent or guardian.'));
   ok('the day is the day of the notice of the change', site.consentFrom === site.termsNotice.from);
   const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
   const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
@@ -2287,11 +2314,12 @@ console.log('\n59. Consent to publication and to services outside Japan, agreeme
   const ext = { llm_extent: site.llmExtents.assistance };
   const run = (consent, today) => I.check({ form: Object.assign({}, ix, ext, consent === null ? {} : { consent }), login: 'jcarberry', meta: dc, person, works, today });
   const row = (r) => r.checks.find((c) => c[0] === 'Consent, agreement to the policies and age are confirmed');
-  ok('before the day the boxes may be left empty; from the day all of them are needed',
-    run(null, '2026-11-20').ok && !row(run(null, '2026-11-20')) && !run(null, '2026-11-21').ok && !run('- [X] a\n- [ ] b\n- [X] c', '2026-11-21').ok
-    && run('- [X] a\n- [X] b\n- [X] c', '2026-11-21').ok && !run('- [X] a', '2026-11-20').ok);
-  ok('the form label is read into the consent field', I.parseIssue('### Consent and agreement\n\n- [X] a\n- [X] b\n- [X] c\n').consent === '- [X] a\n- [X] b\n- [X] c');
-  const lic = (licences) => I.check({ form: Object.assign({}, ix, ext, { consent: '- [X] a\n- [X] b\n- [X] c' }), login: 'jcarberry', meta: Object.assign({}, dc, { licences }), person, works, today: '2026-11-21' })
+  const all = I.allTicked('consent'), allJa = I.allTicked('consent', 1);
+  ok('before the day the boxes may be left empty; from the day all of them are needed, in either language',
+    run(null, '2026-11-20').ok && !row(run(null, '2026-11-20')) && !run(null, '2026-11-21').ok && !run(all.replace('- [X] ', '- [ ] '), '2026-11-21').ok
+    && run(all, '2026-11-21').ok && run(allJa, '2026-11-21').ok && !run(all.split('\n')[0], '2026-11-20').ok);
+  ok('the form label is read into the consent field', I.parseIssue('### Consent and agreement\n\n' + all + '\n').consent === all);
+  const lic = (licences) => I.check({ form: Object.assign({}, ix, ext, { consent: all }), login: 'jcarberry', meta: Object.assign({}, dc, { licences }), person, works, today: '2026-11-21' })
     .checks.find((c) => c[0] === 'The work carries an accepted licence');
   const Rm = require('../tools/removal.js');
   ok('a record put back after a hold takes today as its update, so that harvesters pick it up again',
@@ -2449,7 +2477,7 @@ console.log('\n65. The separate consent to the Internet Archive, the residence o
   const arc = group('archive'), res = group('residence');
   ok('the Internet Archive has a box of its own, which the form does not require and the check does not count',
     arc.includes('label: Saving to the Internet Archive (optional)') && /required: false/.test(arc) && !/required: true/.test(arc) && arc.includes('may be left empty')
-    && arc.includes('withdraw it at any time') && I.CONSENTS === 3);
+    && arc.includes('withdraw it at any time') && !('archive' in I.BOXES) && Object.values(I.BOXES).every((g) => g.every((b) => !/Internet Archive/.test(b[0]))));
   const listed = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
   const off = Object.assign({}, listed, { archive: false });
   ok('a record without that consent is not saved, and robots.txt asks the Internet Archive not to collect it',
@@ -2460,17 +2488,17 @@ console.log('\n65. The separate consent to the Internet Archive, the residence o
   ok('the draft record keeps the record out of the saves when the box is left empty, and only then',
     /'archive' in form && !\/\^- \\\[\[xX\]\\\] \/m\.test/.test(read(path.join(ROOT, 'tools', 'intake.js'))));
   ok('from ' + site.residenceFrom + ' the form names every place where Sophaxis is not offered, asks that no author lives in one, and the check needs the box',
-    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('No author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study), and no author under 18 lives or stays in India.') && site.notOffered.length >= 23 && res.includes('who lives in any of these places, or who stays in one between the submission and the listing, even briefly (' + B.notOfferedPlaces() + ').')
+    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('I confirm that no author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study).') && res.includes('I confirm that no author under 18 lives or stays in India.') && site.notOffered.length >= 23 && res.includes('who lives in any of these places, or who stays in one between the submission and the listing, even briefly (' + B.notOfferedPlaces() + ').')
     && site.residenceFrom === '2026-11-22' && read(path.join(ROOT, 'policies', 'submission.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not list work by an author who lives in any of the ' + site.notOffered.length + ' places in the table below')
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not offer its service to people in the European Union'));
   const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
   const dc = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
   const person = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
   const works = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
-  const runR = (residence, today) => I.check({ form: Object.assign({}, ix, { llm_extent: site.llmExtents.assistance, consent: '- [X] a\n- [X] b\n- [X] c' }, residence === null ? {} : { residence }), login: 'jcarberry', meta: dc, person, works, today });
+  const runR = (residence, today) => I.check({ form: Object.assign({}, ix, { llm_extent: site.llmExtents.assistance, consent: I.allTicked('consent') }, residence === null ? {} : { residence }), login: 'jcarberry', meta: dc, person, works, today });
   const rowR = (r) => r.checks.find((c) => c[0] === 'No author lives in a place where Sophaxis is not offered');
   ok('the residence box may be empty before the day and is needed from it',
-    !rowR(runR(null, '2026-11-21')) && runR(null, '2026-11-21').ok && rowR(runR(null, '2026-11-22')) && !runR(null, '2026-11-22').ok && runR('- [X] a', '2026-11-22').ok && !runR('- [ ] a', '2026-11-22').ok);
+    !rowR(runR(null, '2026-11-21')) && runR(null, '2026-11-21').ok && rowR(runR(null, '2026-11-22')) && !runR(null, '2026-11-22').ok && runR(I.allTicked('residence'), '2026-11-22').ok && !runR(I.allTicked('residence').replace('- [X] ', '- [ ] '), '2026-11-22').ok && !runR(I.allTicked('residence').split('\n')[0], '2026-11-22').ok);
   /* The right to object, presented separately (GDPR Article 21(4)), and the purposes, in every form a person fills in. */
   const OBJ = 'Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation';
   const forms = ['submission', 'removal', 'withdrawal', 'published', 'correction'].map((f) => read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', f + '.yml')));
@@ -2704,8 +2732,8 @@ console.log('\n72. An untrue confirmation: not allowed, the record removed, reli
   const te = read(path.join(ROOT, 'policies', 'terms.md')), tj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
   ok('the Terms, in both languages, forbid an untrue confirmation and say what follows',
     te.includes('- Confirming in a form something that is not true, such as where the authors live') && tj.includes('- 様式で、事実でないことを確かめること。')
-    && te.includes('If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](./takedown.html) as soon as the operator learns of it.')
-    && tj.includes('確認が事実でないと分かったときは、運営者は、知った時点で[削除の規程](./takedown.ja.html)に沿って記録を削除します。')
+    && te.includes('If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](./takedown.md) as soon as the operator learns of it.')
+    && tj.includes('確認が事実でないと分かったときは、運営者は、知った時点で[削除の規程](./takedown.ja.md)に沿って記録を削除します。')
     && te.includes('From 2026-11-22, the operator may also decline further submissions from the same GitHub account or ORCID iD.') && tj.includes('2026-11-22 からは、同じ GitHub アカウントや ORCID iD からのその後の投稿を断ることもあります。'));
   ok('the operator relies on the confirmations in good faith, keeps them public, and asks no penalty (Consumer Contract Act Articles 9 and 10)',
     te.includes('The operator relies on the confirmations in good faith and does not check them.') && tj.includes('運営者は、確認を信頼して受け、確かめません。')
@@ -2743,7 +2771,9 @@ console.log('\n74. llms.txt and llms-full.txt: the facts and every policy, for l
     && lt.includes('or stays in one between the submission and the listing, even briefly') && (!SITEJ.termsNotice || lt.includes(SITEJ.termsNotice.text)));
   ok('it gives no email address: requests go through the ORCID record', !/[\w.+-]+@[\w-]+\.[\w.]+/.test(lt) && !/[\w.+-]+@[\w-]+\.[\w.]+/.test(lf.replace(/noreply@[\w.]+/g, '')) && lt.includes('the address on that ORCID record'));
   ok('llms-full.txt holds each policy and page word for word, with the address it is built into (' + B.llmsSources().length + ' parts)',
-    B.llmsSources().every(([src, url]) => lf.includes('Source: ' + SITEJ.baseUrl + url + '\n\n' + read(path.join(ROOT, src)).trim() + '\n')) && (lf.match(/^Source: /gm) || []).length === B.llmsSources().length);
+    B.llmsSources().every(([src, url]) => lf.includes('Source: ' + SITEJ.baseUrl + url + '\n\n' + B.absoluteLinks(read(path.join(ROOT, src)).trim(), src, url) + '\n')) && (lf.match(/^Source: /gm) || []).length === B.llmsSources().length);
+  ok('in llms-full.txt every link of a source leads to the site or to GitHub by its full address, none to a Markdown file',
+    !/\]\(\.{1,2}\//.test(lf.replace(/\]\(\.\/templates\/paper\.(md|tex)\)/g, '')) && lf.includes('](' + SITEJ.baseUrl + 'policies/terms.html#disputes)'));
   const vj = JSON.parse(read(path.join(ROOT, 'site', 'vercel.json')));
   ok('both are served as UTF-8 text, and robots.txt lets every crawler read them', vj.headers.some((h) => h.source === '/(llms|llms-full)\\.txt' && h.headers.some((x) => x.key === 'Content-Type' && x.value === 'text/plain; charset=utf-8'))
     && read(path.join(ROOT, 'site', 'robots.txt')).startsWith('User-agent: *\nAllow: /\n'));
@@ -3271,7 +3301,7 @@ console.log('\n86. The Markdown of the prose pages is rendered, not shown: table
   const t = read(path.join(ROOT, 'site', 'transparency.html')), tj = read(path.join(ROOT, 'site', 'transparency.ja.html'));
   const sub = read(path.join(ROOT, 'site', 'policies', 'submission.html'));
   ok('the transparency page shows its summary as a table and its 17 headings as headings, in both languages, and the Submission Policy its ' + site.notOffered.length + ' places as a table',
-    t.includes('<tr><td>Publication ethics and related editorial policies</td><td>Met</td></tr>') && (t.match(/<h3>/g) || []).length === 17 && (tj.match(/<h3>/g) || []).length === 17 && tj.includes('<table>')
+    t.includes('<tr><td>Publication ethics and related editorial policies</td><td>Met</td></tr>') && (t.match(/<h3 id="[^"]+">/g) || []).length === 17 && (tj.match(/<h3 id="[^"]+">/g) || []).length === 17 && tj.includes('<table>')
     && sub.includes('<th scope="col">Place</th>') && (sub.split('<th scope="col">Place</th>')[1].split('</table>')[0].match(/<tr>/g) || []).length === site.notOffered.length);
 }
 
@@ -3281,11 +3311,11 @@ console.log('\n87. Brand: the call for an advisory board, the name and logo, the
   const B = require('../build.js');
   const adv = read(path.join(ROOT, 'advisory.md')), t = read(path.join(ROOT, 'transparency.md'));
   ok('the call says what an adviser does and does not do, who can join, that it is unpaid and named only after agreeing; until then there is no board, and the self-assessment stays "Not met"',
-    adv.includes('Until someone agrees and is named on the [Operator and contact](./contact.html) page, there is no board.') && adv.includes('- Gives no decision on any submission.')
+    adv.includes('Until someone agrees and is named on the [Operator and contact](./contact.md) page, there is no board.') && adv.includes('- Gives no decision on any submission.')
     && adv.includes('Advising Sophaxis says nothing about the quality of any listed work, and does not involve the adviser\'s institution.') && adv.includes('An adviser is not paid and pays nothing.')
     && adv.includes('Each adviser is named, with an ORCID iD, on the contact page, only after they agree to it.') && adv.includes('An adviser who submits a work goes through the same moderation as anyone else, with no priority.')
-    && /\| Editorial board or advisory body \| Not met \|/.test(t) && t.includes('Since 2026-11-10 a call for an advisory board has been open ([Advisory board: a call](./advisory.html)); no adviser has joined yet.')
-    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.html).')
+    && /\| Editorial board or advisory body \| Not met \|/.test(t) && t.includes('Since 2026-11-10 a call for an advisory board has been open ([Advisory board: a call](./advisory.md)); no adviser has joined yet.')
+    && read(path.join(ROOT, 'policies', 'moderation.md')).includes('which advises on the policies and decides no submission; the call is on [Advisory board: a call](../advisory.md).')
     && read(path.join(ROOT, 'contact.md')).includes('There is no advisory board yet;'));
   const css = read(path.join(ROOT, 'build.js'));
   const tok = (dark, k) => ((dark ? /@media \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/ : /\n:root \{([^}]*)\}/).exec(css) || [])[1].match(new RegExp('--' + k + ': (#[0-9a-f]{6})'))[1];
@@ -3369,7 +3399,7 @@ console.log('\n90. Outreach: the call to researchers, finding a listed work, acc
   ok('the accessibility statement names the widths that the browser check uses (' + Math.max(...widths) + ' to ' + Math.min(...widths) + '), says it is not audited, and the contact page and every footer point to it',
     acc.includes('at widths from ' + Math.max(...widths) + ' down to ' + Math.min(...widths) + ' pixels') && acc.includes('no one else has audited the site.')
     && acc.includes('Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.') && read(path.join(ROOT, 'contact.md')).includes('Sophaxis aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.')
-    && read(path.join(ROOT, 'contact.md')).includes('is on [Accessibility](./accessibility.html).')
+    && read(path.join(ROOT, 'contact.md')).includes('is on [Accessibility](./accessibility.md).')
     && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== '404.html').every((f) => /<footer>[\s\S]*accessibility\.html">Accessibility<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f)))));
   ok('the page on finding a listed work promises no index, and says that Sophaxis has no connection with the services it names',
     read(path.join(ROOT, 'findable.md')).includes('None of these is a promise that any index picks the work up; each decides for itself.') && read(path.join(ROOT, 'findable.md')).includes('Sophaxis has no connection with these services'));
@@ -3502,8 +3532,8 @@ console.log('\n93. A first preprint, libraries, the policies in brief, advisers\
     && read(path.join(ROOT, 'policies', 'licences.md')).includes('The record data in `feed.xml`, `papers.json` and the OAI-PMH interface may be reused freely.') && lib.includes('The record data in `feed.xml`, `papers.json` and the OAI-PMH interface may be reused freely.'));
   const pols = fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => /^[a-z]+\.md$/.test(f)).map((f) => f.replace('.md', ''));
   ok('the policies in brief links every policy (' + pols.length + '), in both languages, and says that it binds no one',
-    pols.every((x) => read(path.join(ROOT, 'rules.md')).includes('(./policies/' + x + '.html)') && read(path.join(ROOT, 'rules.ja.md')).includes('(./policies/' + x + '.ja.html)'))
-    && read(path.join(ROOT, 'rules.md')).includes('It is a summary and binds no one; each policy, linked below, is what counts.') && read(path.join(ROOT, 'policy.md')).includes('(./rules.html)'));
+    pols.every((x) => read(path.join(ROOT, 'rules.md')).includes('(./policies/' + x + '.md)') && read(path.join(ROOT, 'rules.ja.md')).includes('(./policies/' + x + '.ja.md)'))
+    && read(path.join(ROOT, 'rules.md')).includes('It is a summary and binds no one; each policy, linked below, is what counts.') && read(path.join(ROOT, 'policy.md')).includes('(./rules.md)'));
   const adv = read(path.join(ROOT, 'advisory.md')), advJa = read(path.join(ROOT, 'advisory.ja.md'));
   const items = (t, head) => t.slice(t.indexOf(head)).split('\n').filter((l) => l.startsWith('- ')).length;
   ok('an adviser declares four things before being named, in both languages, and is not named without the declaration',
@@ -3693,6 +3723,101 @@ console.log('\n95. Every citation of a law in the legal pages is to an article i
   const wf = read(path.join(ROOT, '.github', 'workflows', 'sources.yml'));
   ok('the texts are fetched only when the operator runs it, onto a new branch sources/<date>, never main',
     /on:\n  workflow_dispatch:\n(?!\s+push)/.test(wf) && !/\n  push:|\n  schedule:|\n  pull_request:/.test(wf) && wf.includes('git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)"') && !/push origin (?:main|HEAD:main)/.test(wf));
+}
+
+console.log('\n96. Links that work on GitHub and on the site, sections linked near the top, and every box of the forms enforced and listed');
+{
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const B = require('../build.js'), I = require('../tools/intake.js'), M = require('../tools/mdlinks.js');
+  // D. Every relative link in every Markdown file of the repository leads to a file that is there, and to a heading GitHub gives that id.
+  const scan = M.scan(ROOT);
+  ok('every relative link in the ' + scan.files + ' Markdown files (' + scan.links + ' links) leads to a file of the repository, and every link to a section to a heading of that file',
+    scan.files >= 70 && scan.links >= 400 && scan.bad.length === 0, scan.bad.slice(0, 6).map((b) => b[0] + ':' + b[1] + ' ' + b[2] + ' (' + b[3] + ')').join(' / '));
+  // A source links a built page by its address on the site only when no Markdown source is built into it; then build.js maps it back to a relative link.
+  const pagesBuilt = [...B.SOURCE_PAGES.values()];
+  const toSite = [];
+  M.markdownFiles(ROOT).forEach((f) => M.links(read(path.join(ROOT, f))).forEach(([n, t]) => {
+    if (B.SOURCE_PAGES.has(f) && t.startsWith(site.baseUrl) && pagesBuilt.includes(t.slice(site.baseUrl.length).split('#')[0])) toSite.push(f + ':' + n + ' ' + t);
+    if (/^\.{1,2}\/.*\.html(#|$)/.test(t)) toSite.push(f + ':' + n + ' ' + t);
+  }));
+  ok('no Markdown file links a built page as .html, and no source of a page links by its address a page that has a Markdown source (' + pagesBuilt.length + ' pages built from sources)',
+    toSite.length === 0 && pagesBuilt.every((p) => fs.existsSync(path.join(ROOT, 'site', p))), toSite.slice(0, 5).join(' / '));
+  ok('build.js maps a source to its page, keeps the section, sends the site relatively and a source that is not built to GitHub',
+    B.sitePath('./terms.md#disputes', 'policies/submission.md', 'policies/submission.html') === './terms.html#disputes'
+    && B.sitePath('../contact.ja.md', 'policies/terms.ja.md', 'policies/terms.ja.html') === '../contact.ja.html'
+    && B.sitePath('./policies/terms.md', 'faq.md', 'faq.html') === './policies/terms.html'
+    && B.sitePath(site.baseUrl + 'stats.html', 'policies/moderation.md', 'policies/moderation.html') === '../stats.html'
+    && B.sitePath(site.baseUrl, 'faq.md', 'faq.html') === './index.html'
+    && B.sitePath('../docs/operations.md#yearly-audit', 'policies/moderation.md', 'policies/moderation.html') === site.repo + '/blob/main/docs/operations.md#yearly-audit'
+    && B.sitePath('./templates/paper.md', 'checklist.md', 'checklist.html') === null && B.sitePath('https://doi.org/10.1/x', 'faq.md', 'faq.html') === null);
+  // B. Every page built from a Markdown source with two sections or more lists them near its top, in its language, with the ids GitHub gives them.
+  const missing = [];
+  for (const [src, html] of B.SOURCE_PAGES) {
+    const h = read(path.join(ROOT, 'site', html));
+    const ids = [...h.matchAll(/<h2 id="([^"]+)">/g)].map((m) => m[1]);
+    const toc = (/<nav class="toc" aria-label="([^"]+)"><p>\1<\/p><ul>([\s\S]*?)<\/ul><\/nav>\n<h2 /.exec(h) || []);
+    const listed = [...String(toc[2] || '').matchAll(/<li><a href="#([^"]+)">/g)].map((m) => m[1]);
+    const gh = M.anchors(read(path.join(ROOT, src)));
+    const ja = /\.ja\.md$/.test(src) || src === 'policies/privacy.ja.md';
+    if (ids.length !== (h.match(/<h2[ >]/g) || []).length) missing.push(html + ': a section without an id');
+    if (ids.length >= 2 && (JSON.stringify(listed) !== JSON.stringify(ids) || toc[1] !== (ja ? 'この頁の節' : 'On this page') || h.indexOf('<nav class="toc"') > h.indexOf('<h2 '))) missing.push(html + ': no list of its sections before the first');
+    if (ids.length < 2 && h.includes('class="toc"')) missing.push(html + ': a list of one section');
+    const fromSource = (read(path.join(ROOT, src)).match(/^## /gm) || []).length;
+    if (ids.slice(0, fromSource).some((id) => !gh.has(id)) && !['policy.md', 'policy.ja.md'].includes(src)) missing.push(html + ': an id that GitHub does not give: ' + ids.filter((id) => !gh.has(id)).join(','));
+  }
+  const withToc = [...B.SOURCE_PAGES.values()].filter((p) => read(path.join(ROOT, 'site', p)).includes('<nav class="toc"'));
+  ok('every page built from a source (' + B.SOURCE_PAGES.size + '), English and Japanese, gives each section the id GitHub gives it, and the ' + withToc.length + ' with two sections or more list them before the first',
+    missing.length === 0 && withToc.length >= 60 && withToc.filter((p) => !/\.ja\.html$/.test(p)).length >= 30, missing.slice(0, 5).join(' / '));
+  ok('the list of sections is hidden on paper, so that the leaflet still fits one sheet', /@media print \{[^}]*\.toc[^}]*\{ display: none; \}/.test(read(path.join(ROOT, 'site', 'leaflet.html'))));
+  // C. Both forms have the same required boxes in the same order; each starts "I agree" or "I confirm", or ends 「に同意します」 or 「を確かめました」.
+  const yml = (f) => read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', f));
+  const [en, ja] = I.FORMS.map((f) => I.formBoxes(yml(f)));
+  const groups = Object.keys(I.BOXES_FROM);
+  const total = groups.reduce((a, g) => a + (en[g] || []).length, 0);
+  const strip = (l) => l.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  ok('both forms have the same ' + total + ' required boxes in the same groups and order (' + groups.map((g) => g + ' ' + (en[g] || []).length).join(', ') + '), and the box on the Internet Archive in neither',
+    JSON.stringify(Object.keys(en)) === JSON.stringify(Object.keys(ja)) && groups.every((g) => (en[g] || []).length > 0 && (en[g] || []).length === (ja[g] || []).length)
+    && (en.archive || []).length === 1 && (ja.archive || []).length === 1 && Object.keys(en).filter((g) => !groups.includes(g)).join() === 'archive' && total >= 25);
+  const badWords = groups.flatMap((g) => en[g].filter((l) => !/^I (agree|confirm) /.test(l)).concat(ja[g].filter((l) => !/(に同意します|を確かめました)。$/.test(strip(l).replace(/（[^）]*）。$/, '。')))))
+    .concat(en.archive.filter((l) => !/^I confirm /.test(l)), ja.archive.filter((l) => !/を確かめました。$/.test(l)));
+  ok('each box is one sentence that starts "I agree" or "I confirm", or ends 「に同意します」 or 「を確かめました」, and links to its section on the site',
+    badWords.length === 0 && groups.every((g) => en[g].concat(ja[g]).every((l) => (strip(l).match(/[.。](?=.)/g) || []).filter((x) => x === '。').length === 0 && [...l.matchAll(/\]\(([^)]+)\)/g)].every((m) => m[1].startsWith(site.baseUrl)))),
+    badWords.slice(0, 3).join(' / '));
+  // Every link of a box leads to a page and section that the site has.
+  const deadBox = groups.flatMap((g) => en[g].concat(ja[g])).flatMap((l) => [...l.matchAll(/\]\(([^)]+)\)/g)].map((m) => m[1].slice(site.baseUrl.length)))
+    .filter((u) => { const [p, id] = u.split('#'); return !fs.existsSync(path.join(ROOT, 'site', p)) || (id && !read(path.join(ROOT, 'site', p)).includes(' id="' + id + '"')); });
+  ok('every link in a box leads to a page of the site, and to a section that it has', deadBox.length === 0, deadBox.join(', '));
+  // Each required box is enforced by the intake: with every box of its group ticked but that one, the check fails; with all ticked, it passes.
+  const fx = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
+  const dcx = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const personx = I.orcidPerson(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-person.json'))));
+  const worksx = I.orcidDois(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'orcid-works.json'))));
+  const day = [site.consentFrom, site.residenceFrom, site.llmExtentFrom].sort().pop();
+  const full = (lang) => Object.assign({}, fx, { llm_extent: site.llmExtents.assistance }, ...groups.map((g) => ({ [g]: I.allTicked(g, lang) })));
+  const runB = (form) => I.check({ form, login: 'jcarberry', meta: dcx, person: personx, works: worksx, today: day });
+  const unenforced = [];
+  for (const lang of [0, 1]) {
+    groups.forEach((g) => (lang ? ja : en)[g].forEach((label, i) => {
+      const f = full(lang);
+      f[g] = f[g].split('\n').map((l, j) => (j === i ? l.replace('- [X] ', '- [ ] ') : l)).join('\n');
+      const r = runB(f);
+      if (r.ok || !r.checks.some((c) => c[0] === I.BOX_LABELS[g] && !c[1] && c[2].includes('not ticked: ' + (i + 1)))) unenforced.push((lang ? 'ja ' : 'en ') + g + ' ' + (i + 1));
+      const gone = Object.assign({}, full(lang), { [g]: f[g].split('\n').filter((l, j) => j !== i).join('\n') });
+      if (runB(gone).ok) unenforced.push((lang ? 'ja ' : 'en ') + g + ' ' + (i + 1) + ' removed');
+    }));
+  }
+  const noGroup = groups.filter((g) => runB(Object.assign({}, full(0), { [g]: '' })).ok);
+  ok('the intake refuses a submission unless every one of the ' + total + ' required boxes is ticked, in either form, and passes it when all are; the box on the Internet Archive is never required',
+    runB(full(0)).ok && runB(full(1)).ok && unenforced.length === 0 && noGroup.length === 0
+    && runB(Object.assign({}, full(0), { archive: '- [ ] ' + en.archive[0] })).ok && !('archive' in I.BOXES), unenforced.concat(noGroup).slice(0, 6).join(', '));
+  // The Submission Policy lists the same boxes, in the same words (links aside) and order, in both languages, and states their number.
+  const listOf = (t, head) => { const i = t.indexOf('\n## ' + head + '\n'); const j = t.indexOf('\n## ', i + 4); return t.slice(i, j).split('\n').filter((l) => l.startsWith('- ')).map((l) => strip(l.slice(2))); };
+  const se = read(path.join(ROOT, 'policies', 'submission.md')), sj = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  const want = (lang) => groups.flatMap((g) => (lang ? ja : en)[g]).map(strip);
+  ok('the Submission Policy, under "What the submitter confirms", lists the ' + total + ' boxes of the forms in their words and order, in both languages, and says how many there are',
+    JSON.stringify(listOf(se, 'What the submitter confirms')) === JSON.stringify(want(0)) && JSON.stringify(listOf(sj, '投稿者が確認すること')) === JSON.stringify(want(1))
+    && se.includes('which has the same ' + total + ' boxes, in the same words and order.') && sj.includes('様式には、同じ ' + total + ' のボックスが、同じ言葉と順で並んでいます。')
+    && se.includes('the consent and agreement from ' + site.consentFrom + ', and where the authors live from ' + site.residenceFrom + '.'));
 }
 
 console.log('\n' + '-'.repeat(60));

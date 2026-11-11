@@ -127,7 +127,11 @@
           "by": [
             {
               "file": ".github/ISSUE_TEMPLATE/submission.yml",
-              "text": "Every author consents to the record being published, offered through OAI-PMH, and provided to GitHub, Vercel and ORCID in the United States"
+              "text": "I confirm that every author consents to the record being published and offered through OAI-PMH."
+            },
+            {
+              "file": ".github/ISSUE_TEMPLATE/submission.yml",
+              "text": "I confirm that every author consents to the record being provided to GitHub, Vercel and ORCID in the United States"
             }
           ]
         },
@@ -181,7 +185,7 @@
           "by": [
             {
               "file": ".github/ISSUE_TEMPLATE/submission.yml",
-              "text": "Every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States."
+              "text": "I confirm that every author consents to the record page and the PDF copies being saved to the Internet Archive in the United States."
             },
             {
               "file": "policies/privacy.md",
@@ -523,7 +527,7 @@
           "by": [
             {
               "file": ".github/ISSUE_TEMPLATE/submission.yml",
-              "text": "I have read and agree to the Terms of Use and the other policies"
+              "text": "I agree to the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html), in their version on the day of submission."
             }
           ]
         },

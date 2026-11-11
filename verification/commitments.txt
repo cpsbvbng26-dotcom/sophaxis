@@ -85,7 +85,7 @@ Earlier versions of the site that Vercel keeps are not open to the public.
 The Sophaxis id of a removed record is never given to another work.
 The operator discloses nothing that the law does not require.
 An author can ask, in the same issue, for the record to be removed instead of withdrawn.
-Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.html) and the [Privacy Policy](./policies/privacy.html).
+Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.md) and the [Privacy Policy](./policies/privacy.md).
 Claude Code is named as a disclosure of how the site was made, not as an endorsement or an advertisement.
 Sophaxis has no arrangement with Anthropic, receives nothing from it, and does not link to its products.
 No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
@@ -137,9 +137,9 @@ Each change to the list is announced on the top page before it takes effect, as 
 A provisionally registered work is not on the site.
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
-The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.html) says it is not.
+The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.md) says it is not.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
-The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.html) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
+The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.md) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
 It takes no donations, sponsorship or advertising.
 No repository, funder, institution, author or service can direct a decision.
