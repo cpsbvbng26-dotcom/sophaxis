@@ -11,7 +11,7 @@ The same condition applies to every other generative model, including models tha
 No other generative model can be listed as an author either.
 If no generative model was used, the statement says so.
 Records are not deleted.
-Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, so that they stay readable even if this site goes away.
+Each week, Sophaxis asks the Internet Archive to save its pages and the PDF copies, where every author of the work consents to it, so that they stay readable even if this site goes away.
 Each week, an automatic check confirms that every listed DOI still resolves and still carries the licence in the record.
 The operator also asks the Internet Archive to exclude its earlier copies of the record.
 A work is listed once, under one Sophaxis id.
@@ -50,7 +50,7 @@ Material that was taken offline while the request was reviewed is put back.
 A request to disclose who submitted material is handled as Japanese law provides.
 Even then, the change is announced before it takes effect.
 Sophaxis applies Japan's Act on the Protection of Personal Information in full, as if its operator were a business operator under that Act.
-Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
+Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive, and the public parts of a submission that reach Anthropic, OpenAI and xAI while it is reviewed, as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
 If personal data leaks in a way that the law requires to be reported, the operator reports it to Japan's Personal Information Protection Commission and tells the people concerned.
 Sophaxis has not appointed a representative in the European Union or the United Kingdom (Article 27).
 The operator has decided not to appoint one.

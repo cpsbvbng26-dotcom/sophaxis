@@ -1250,7 +1250,7 @@
       "by": [
         {
           "file": "policies/privacy.ja.md",
-          "text": "取り下げ・訂正・削除の求めと、個人情報についての求めに応えるため"
+          "text": "撤回・訂正・削除の求めと、個人情報についての求めに応えるため"
         },
         {
           "file": "policies/privacy.ja.md",
@@ -1881,7 +1881,7 @@
       "by": [
         {
           "file": "policies/privacy.ja.md",
-          "text": "Sophaxis の id と求めの種類だけを書く形にします。"
+          "text": "Sophaxis の番号と求めの種類だけを書く形にします。"
         }
       ]
     },
