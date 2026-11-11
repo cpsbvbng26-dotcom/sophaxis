@@ -119,6 +119,8 @@ The code of each step is public, and each section links to it.
 
 - Copies the PDF of a listed record from its repository onto a branch of its own, for a pull request that the operator reviews.
 - Code: [tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js).
+- Fetches the texts of law, licences and terms that the legal pages cite, from their official sources, and writes the cited articles to `verification/sources-raw.json` on a new branch `sources/<date>`, never on main. The operator reads them before any quotation in `verification/sources.json` is taken from them.
+- Code: [tools/sources.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js), run by [sources.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml).
 
 ## What stays by hand
 

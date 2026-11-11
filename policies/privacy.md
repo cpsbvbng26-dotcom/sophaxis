@@ -4,6 +4,10 @@ Last updated: 2026-11-11.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Who handles personal data
 
 The operator of Sophaxis, Takuya Nemoto, handles it.
@@ -39,6 +43,8 @@ Nothing is sent anywhere until a reader follows one, and the service then works 
 The site is hosted on Vercel.
 Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.
 Sophaxis has not turned on Vercel's analytics.
+
+<!-- text: Telecommunications Business Act 27-12 -->
 
 ## Submissions
 
@@ -133,6 +139,8 @@ As the Personal Information Protection Commission's Q&A 7-53 reads Japan's Act, 
 Each publishes the measures it takes: Vercel in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa), Apple in its Privacy Policy.
 Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
 
+<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 25 -->
+
 ## Security
 
 Records are built only from information that is public already.
@@ -186,6 +194,8 @@ These rights are open to everyone, wherever they live.
 Where a person's own law gives them more rights over their personal data, such as the General Data Protection Regulation in the European Union, the operator honours those rights as far as they apply to Sophaxis.
 Personal data that GitHub or Vercel hold about their own users, such as GitHub accounts, is theirs to handle under their own privacy statements; a request about it goes to them.
 
+<!-- text: APPI 29 -->
+
 ## The right to object
 
 Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
@@ -221,12 +231,16 @@ People there write to the operator directly, in English or Japanese, at the addr
 The operator answers them, and the data protection authorities, directly, in place of a representative.
 A record of the processing is kept in the public repository, in `docs/records-of-processing.md`.
 
+<!-- text: GDPR 3; UK GDPR 3; GDPR 17; UK GDPR 17; GDPR 49; UK GDPR 49; GDPR 20; GDPR 27 -->
+
 ## People in China
 
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 Article 53 of China's Personal Information Protection Law requires a processor abroad that offers products or services to people in China to set up an agency or designate a representative in China, and Sophaxis has none.
 This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
+
+<!-- text: PIPL 53 -->
 
 ## People in Thailand
 
@@ -235,6 +249,8 @@ Section 37(5) of Thailand's Personal Data Protection Act requires a controller a
 Section 38 exempts a controller that engages in the profession or business of processing personal data without a large amount of it; Sophaxis is not a business, so the exemption is not relied on.
 This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
+
+<!-- text: Thailand PDPA 37; Thailand PDPA 38 -->
 
 ## People in the other places
 
@@ -246,6 +262,8 @@ From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or 
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
 This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 The rights in "Your choices" are honoured all the same, as far as they apply.
+
+<!-- text: Russia 152-FZ 1; India DPDP Rules 10 -->
 
 ## Changes to this policy
 

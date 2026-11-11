@@ -4,6 +4,10 @@ Last updated: 2026-11-11.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Who can submit
 
 If you are worried about your personal data because Vercel, which serves the site, or GitHub, which keeps the submissions, may use what they hold to train AI models, do not submit. The [Privacy Policy](./privacy.html) explains these uses.
@@ -64,6 +68,8 @@ If it turns out that an author lives there, or stayed there between the submissi
 | Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported |
 | Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported |
 | Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported |
+
+<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17 -->
 
 ## What can be submitted
 

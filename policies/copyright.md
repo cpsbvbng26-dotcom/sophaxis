@@ -4,6 +4,10 @@ Last updated: 2026-11-11.
 
 Japanese: [著作権の規程（日本語訳）](./copyright.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Authors keep their copyright
 
 Sophaxis asks for no transfer of copyright and no exclusive licence.
@@ -44,6 +48,8 @@ CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credit
 - No changes: the PDF copy is the deposited file, byte for byte, with every notice it carries. The abstract is shown as plain text, with formatting tags removed and its words unchanged.
 - No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do.
 - No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work.
+
+<!-- text: CC BY 4.0 3; CC BY 4.0 2 -->
 
 ## Work published in a journal
 

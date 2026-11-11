@@ -120,6 +120,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 載っている記録の PDF を預け先から取り、専用のブランチに写します。運営者が見直すプルリクエストのためです。
 - コード：[tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js)。
+- 法令の頁が引く法令・ライセンス・規約の文を、公式の出どころから取り寄せます。引かれた条を `verification/sources-raw.json` に書き、新しいブランチ `sources/<date>` に置きます。main には置きません。運営者は、それを読んでから、`verification/sources.json` の引用に使います。
+- コード：[tools/sources.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js)。[sources.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml) が動かします。
 
 ## 手で行うこと
 

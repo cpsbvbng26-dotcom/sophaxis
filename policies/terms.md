@@ -4,6 +4,10 @@ Last updated: 2026-11-11.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## Who these terms apply to
 
 These terms apply to everyone who reads Sophaxis or submits to it.
@@ -57,6 +61,31 @@ The operator relies on the confirmations in good faith and does not check them. 
 The confirmations stay in the public issue, so that what was confirmed, and when, can be shown.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
 
+## Acts outside these rules that may come near a law
+
+Sophaxis is run so that the operator's own acts do not meet the elements of the laws that its policies name.
+A person who acts against these terms, or outside them, may still come near the elements of a law by that act.
+The table lists such acts that could happen on Sophaxis, the law that each may come near, and a caution from the operator.
+The table lists possible paths only. It is not complete. It does not say that a listed act is unlawful, or that an act not listed is lawful.
+The articles it names are quoted at the end of this section.
+
+| Act | Law it may come near | Caution |
+| --- | --- | --- |
+| Submitting a version that the authors have no right to share under its licence, such as one whose publisher holds an exclusive licence | Copyright Act, Articles 21 and 23 | Submit only a version that the authors may share under its licence. Such a record is removed under the [Takedown Policy](./takedown.html). |
+| Giving another person's ORCID iD in the form, or signing in to another person's ORCID or GitHub account to pass the identity check | Penal Code, Article 233; Act on the Prohibition of Unauthorized Computer Access, Article 3 | Use only your own iD and your own accounts. |
+| Confirming the agreement of a co-author who did not agree, or confirming anything else that is not true in a form | Penal Code, Article 233; Civil Code, Article 709 | Confirm only what is true. The record is removed as soon as the operator learns of it. |
+| Presenting a listing on Sophaxis as peer review or as publication in a journal, in a CV, an application for funding or an advertisement | Penal Code, Article 246; Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Describe a listing as what it is: a moderated listing of a preprint, which is not peer review ([Moderation Policy](./moderation.html)). |
+| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Unfair Competition Prevention Act, Article 2(1)(i) and (ii); Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](../brand.html) says how they may be used. |
+| Reusing a PDF copy or a record beyond what its licence allows, for example without the credit that the licence asks | Copyright Act, Articles 21 and 23 | Reuse each work under its own licence, which its record page names. |
+| Vouching for a submission with words that are not true, for example about where the researcher lives or stays, or about being an author | Penal Code, Article 233; Civil Code, Article 709 | Vouch only with words that are true. |
+| Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once, under the [Takedown Policy](./takedown.html). |
+
+The responsibility for an act done against these terms, or outside them, lies with the person who did it.
+Except where the law makes the operator responsible, the operator is not responsible for such acts.
+This does not exclude or limit the operator's liability for loss that the operator causes by intent or negligence, which is set out under No warranty below.
+
+<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Unfair Competition Prevention Act 2; Penal Code 230; Penal Code 231 -->
+
 ## No warranty
 
 Sophaxis is provided as it is.
@@ -79,6 +108,8 @@ Other changes, such as clearer wording or new examples, take effect on the date 
 A change is made only as Article 548-4 of Japan's Civil Code allows: when it is in the general interest of authors and readers, or when it is reasonable in the light of the purpose of these terms, the need for it and its content.
 Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
 A person who does not accept a change can stop using Sophaxis, and an author can withdraw their works under the [Withdrawal Policy](./withdrawal.html).
+
+<!-- text: Civil Code 548-4 -->
 
 ## Continuity
 
@@ -143,6 +174,8 @@ What they say that matters to people who use Sophaxis:
 - On the Hobby plan, Vercel may use the content it serves to train AI and machine learning models, and share it with third parties for that purpose, unless the account turns this off in its team settings (Vercel Terms, section 3). The operator has not confirmed that this setting is turned off for the Sophaxis account.
 - Content on the site must also follow Vercel's Acceptable Use Policy, and Vercel may remove or disable content (Vercel Terms, sections 3 and 8).
 - GitHub and Vercel each provide their services "as is", without warranty, and limit their liability (GitHub Terms, O and P; Vercel Terms, sections 20 and 21). Their terms are governed by the law of California, with the courts of San Francisco, and Vercel's also provide for arbitration (GitHub Terms, S.1; Vercel Terms, section 23).
+
+<!-- text: GitHub Terms B.3; GitHub Terms C; GitHub Terms D.2; GitHub Terms M.3; GitHub Terms D.5; GitHub Terms D.8; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 4; Vercel Terms 3; Vercel Terms 8; GitHub Terms O; GitHub Terms P; Vercel Terms 20; Vercel Terms 21; GitHub Terms S.1; Vercel Terms 23 -->
 
 ## General
 

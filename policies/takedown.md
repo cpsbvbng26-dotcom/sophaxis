@@ -4,6 +4,10 @@ Last updated: 2026-11-11.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.html). It is a translation; where the two differ, the English text applies.
 
+The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+A citation whose source could not be fetched is named there as not quoted, with the reason.
+
 ## When a record is removed
 
 Records are not deleted.
@@ -104,10 +108,14 @@ Sophaxis takes the worst case here too, and follows the Digital Services Act of 
 - Average monthly active recipients (Article 24(3)): Sophaxis keeps no analytics and no identifiers of readers, and will not start keeping them to produce this figure. On request of a Digital Services Coordinator or the Commission, the operator gives, for each of the last six months, the number of people in the Union who submitted, reported or wrote to Sophaxis, counted from the issues and the email, and says that readers are not counted.
 - The [statistics](../stats.html) count the removed records and link to every public removal request.
 
+<!-- text: DSA 11; DSA 12; DSA 13; DSA 16; DSA 17; DSA 20; DSA 21; DSA 18; DSA 14; DSA 24 -->
+
 ## Copyright notices under United States law
 
 Sophaxis has not designated an agent with the United States Copyright Office, which charges a fee, so it does not rely on the limitation of liability in 17 U.S.C. 512.
 A notice of claimed infringement under that law is handled under this policy, like any other request.
+
+<!-- text: 17 U.S.C. 512 -->
 
 ## Requests to disclose who sent material
 
