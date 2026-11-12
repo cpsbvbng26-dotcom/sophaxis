@@ -1,6 +1,19 @@
 [
   {
     "date": "2026-11-12",
+    "policies": ["terms"],
+    "from": "2026-11-26",
+    "title": "In a dispute, the operator aims to answer within 7 days, and a pause holds the answer",
+    "text": "From 2026-11-26, the Terms of Use say that, in a dispute, the operator aims to answer within 7 days and does not leave a dispute without reply, and that during a pause described under \"Continuity\" the answer waits until the pause ends. Until then, the operator answers within 7 days. The words promised an answer in 7 days even while the operator cannot work on Sophaxis at all, which the Terms already allow for; this weakens a promise, so it is announced 14 days ahead. The call for advisers and the policies in brief say the same from the same day."
+  },
+  {
+    "date": "2026-11-12",
+    "policies": ["licences", "terms"],
+    "title": "Texts by others kept for verification are not under CC BY 4.0",
+    "text": "The Licence Policy and the Terms of Use now say that texts by others that the repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'. They never were the operator's to license. From today the repository keeps whole only laws and other texts that Japan's Copyright Act, Article 13, leaves outside copyright; of every other text it keeps the address, the day, the SHA-256 of the text as fetched, and the parts it quotes or relies on. This narrows no right that anyone held."
+  },
+  {
+    "date": "2026-11-12",
     "policies": ["submission", "privacy"],
     "from": "2026-11-26",
     "title": "Fifteen more places where Sophaxis is not offered, and what a person in New Zealand is told",

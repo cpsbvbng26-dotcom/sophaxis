@@ -218,7 +218,7 @@ Where each kind of contribution goes, and how to build and check a change, is in
 
 ## Licence
 
-Text: CC BY 4.0. Code: MIT ([LICENSE](LICENSE)). Each listed work keeps its own licence.
+Text: CC BY 4.0. Code: MIT ([LICENSE](LICENSE)). Each listed work keeps its own licence. Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'.
 
 ## Use of language models
 

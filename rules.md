@@ -1,6 +1,6 @@
 # The policies in brief
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [規程の要点（日本語訳）](./rules.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -10,7 +10,7 @@ This page puts each policy in a few sentences. It is a summary and binds no one;
 
 - The authors bear full responsibility for their works and their listing. Acceptance is moderation, not peer review.
 - Sophaxis gives no warranty, and a closure is announced on the top page at least 30 days ahead unless the operator cannot act.
-- The laws of Japan apply. A dispute is settled by agreement wherever possible: write to the operator first, and the operator answers within 7 days.
+- The laws of Japan apply. A dispute is settled by agreement wherever possible: write to the operator first. Until 2026-11-25, the operator answers within 7 days; from 2026-11-26, the operator aims to answer within 7 days, and during a pause under "Continuity" the answer waits until the pause ends.
 - Read in full: [Terms of Use](./policies/terms.md).
 
 ## Privacy Policy

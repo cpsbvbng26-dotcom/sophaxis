@@ -28,6 +28,7 @@ Work on SSRN is accepted only if it carries one of the accepted licences.
 ## Licences of this site
 
 The text of this site is licensed under CC BY 4.0.
+Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'.
 The code is licensed under MIT.
 Each listed work keeps its own licence.
 

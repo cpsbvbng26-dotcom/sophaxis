@@ -33,7 +33,7 @@ An adviser can leave at any time by saying so; their name then leaves the contac
 ## How to join
 
 Write to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), with your ORCID iD and a sentence on why you would like to advise.
-The operator decides whom to invite, and answers every message.
+The operator decides whom to invite. Until 2026-11-25, the operator answers every message. From 2026-11-26, the operator aims to answer every message within 7 days; during a pause under "Continuity" in the [Terms of Use](./policies/terms.md), the answer waits until the pause ends.
 Each adviser is named, with an ORCID iD, on the contact page, only after they agree to it.
 
 ## Conflicts of interest
