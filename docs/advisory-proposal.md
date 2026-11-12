@@ -1,6 +1,6 @@
 # Proposal: the advisory board
 
-Draft, not decided: 案（利用者が確かめる）. The operator confirms or changes it before any of it is announced. Until then the [call for an advisory board](../advisory.md) is what holds, and there is no board.
+Adopted as the plan on 2026-11-12. The [call for an advisory board](../advisory.md) stays as it is, and there is no adviser yet.
 
 An outside assessment of 2026-11-12 named the dependence on one person as the largest weakness of Sophaxis; see [outside-assessments.md](./outside-assessments.md). This proposal answers how many advisers there are, from which fields, how they are chosen, and what each declares.
 
@@ -43,12 +43,14 @@ Date:
 
 The declaration is shown beside the name, updated whenever it changes, and kept with its date when it changes.
 
-## What the operator decides
+## What was decided
 
-- Whether to adopt this proposal, and whether the board has a seat per field.
-- Whether the rule on different institutions and the period for comment are as above.
-- When the call on the site changes to match. A change to the call is a change to a page, not to a policy, and goes through a pull request.
+Decided on 2026-11-12:
+
+- The proposal is adopted as the plan, with one seat per field. The outside assessment named the dependence on one person as the largest weakness, and a seat per field answers it without a board larger than the fields it covers.
+- The rule on different institutions and the period for comment are as above.
+- The call on the site stays as it is. It already says who can join and what an adviser declares, and nothing in this plan narrows it. A later change to the call is a change to a page, not to a policy, and goes through a pull request.
 
 ## 要約（日本語）
 
-これは案で、利用者が確かめます。決まるまでは、サイトの募集の頁がそのまま効いています。委員は分野ごとに一人で、`site.json` が 5 分野を挙げているあいだは、合わせて 5 人です。候補の名は公開の issue に出し、規程の変更の告知と同じ期間だけ意見を受けてから決めます。委員は名を載せる前に利害を申告し、申告は連絡先の頁で名の横に示します。
+この案は、2026-11-12 に計画として採りました。サイトの募集の頁はそのままで、委員はまだいません。委員は分野ごとに一人で、`site.json` が 5 分野を挙げているあいだは、合わせて 5 人です。候補の名は公開の issue に出し、規程の変更の告知と同じ期間だけ意見を受けてから決めます。委員は名を載せる前に利害を申告し、申告は連絡先の頁で名の横に示します。
