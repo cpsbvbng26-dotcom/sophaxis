@@ -24,7 +24,7 @@ const Cit = require('./citations.js');
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'verification', 'sources-raw.json');
 const REG = JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'citations.json'), 'utf8'));
-const UA = 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)';
+const { UA, curl: curlUA } = require('./ua.js');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* The foreign sources. `split` finds the headings in the plain text (the number is the first group);
@@ -112,8 +112,11 @@ const IA = (u) => 'https://web.archive.org/web/2026id_/' + u;
  * edX (11.6: no "spiders, robots, crawlers, and data mining tools"), DataCite's website ("any systematic or automated data
  * collection activities ... on or in relation to this website") and PhilPapers, whose terms PhilArchive applies "regarding
  * scraping". Nothing here is fetched from them directly; the check refuses an address on one of them that is not the
- * Internet Archive's copy. api.datacite.org is DataCite's API, for machines, and is not among them. */
-const NO_DIRECT = /^https?:\/\/(?:[a-z0-9-]+\.)*(?:ssrn\.com|edx\.org|philpapers\.org|philarchive\.org|datacite\.org)(?:[\/:?#]|$)/i;
+ * Internet Archive's copy. api.datacite.org is DataCite's API, for machines, and is not among them.
+ * Figshare ("use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape,
+ * spider or mine", except as Figshare authorizes in writing) and Research Square ("any robot, spider, other automated device,
+ * or manual process to monitor or copy any content from the Web Sites") joined them on 2026-11-12 (the fifth pass). */
+const NO_DIRECT = /^https?:\/\/(?:[a-z0-9-]+\.)*(?:ssrn\.com|edx\.org|philpapers\.org|philarchive\.org|datacite\.org|figshare\.com|researchsquare\.com)(?:[\/:?#]|$)/i;
 const direct = (u) => NO_DIRECT.test(u) && !/^https?:\/\/api\.(?:test\.)?datacite\.org(?:[\/:?#]|$)/i.test(u);
 const PPC_LINKS = /\.pdf|guideline|gaikoku|offshore|kaigai|foreign|outside|外国|ガイドライン|Ｑ＆Ａ|Q&A/i;
 const PAGES = {
@@ -268,6 +271,17 @@ const PAGES = {
   'ke-odpc': PAGE('https://www.odpc.go.ke/', { links: /\.pdf|act|law|legislation|regist/i, follow: { re: /dpa|data-protection-act|\.pdf/i, max: 3 }, keep: 150000 }),
   'za-inforeg': PAGE('https://inforegulator.org.za/popia/', { links: /\.pdf|act|popia|regist/i, follow: { re: /\.pdf/i, max: 2 }, keep: 250000 }),
   'ae-portal': PAGE('https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws', { links: /\.pdf|legislation|decree|law/i, keep: 60000 }),
+  /* Added on 2026-11-12 (the fifth pass): the terms of the repositories from which tools/fetch_pdf.js copied PDFs by script,
+   * which had not been read. Zenodo and arXiv are read directly; Figshare's and Research Square's terms forbid robots and
+   * scripts, so their pages are read from the Internet Archive's copies (NO_DIRECT). */
+  'zenodo-developers': PAGE('https://developers.zenodo.org/', { keep: 60000 }),
+  'arxiv-api-tou': PAGE('https://info.arxiv.org/help/api/tou.html'),
+  'arxiv-bulk-data': PAGE('https://info.arxiv.org/help/bulk_data.html'),
+  'arxiv-export-robots': PAGE('https://export.arxiv.org/robots.txt'),
+  'figshare-terms': PAGE(IA('https://figshare.com/terms')),
+  'figshare-api-docs': PAGE(IA('https://docs.figshare.com/'), { keep: 60000 }),
+  'researchsquare-terms': PAGE(IA('https://www.researchsquare.com/legal/terms-of-service')),
+  'researchsquare-robots': PAGE(IA('https://www.researchsquare.com/robots.txt')),
   'conatus-submissions': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions', { alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions' }),
 };
 
@@ -305,10 +319,10 @@ function curl(url, s = {}) {
   if (direct(url)) return { error: 'not fetched: the terms of ' + new URL(url).hostname + ' forbid automated requests; its Internet Archive copy is read instead' };
   const tmp = path.join(require('os').tmpdir(), 'sophaxis-source');
   // --compressed: the Internet Archive sends its copies gzipped. The content type is read for the character set.
-  const args = ['-sSL', '--compressed', '--max-time', '90', '-A', UA, '-o', tmp, '-w', '%{http_code} %{url_effective} %{content_type}', '-H', 'Accept-Language: ' + (s.lang || 'en'), url];
+  const args = ['-sSL', '--compressed', '--max-time', '90', '-o', tmp, '-w', '%{http_code} %{url_effective} %{content_type}', '-H', 'Accept-Language: ' + (s.lang || 'en'), url];
   if (s.accept) args.splice(0, 0, '-H', 'Accept: ' + s.accept);
   let out;
-  try { out = execFileSync('curl', args, { encoding: 'utf8' }); } catch (e) { return { error: String(e.stderr || e.message).trim().slice(0, 300) }; }
+  try { out = curlUA(args, { encoding: 'utf8' }); } catch (e) { return { error: String(e.stderr || e.message).trim().slice(0, 300) }; }
   const [status, final, ...ctype] = out.trim().split(' ');
   const buf = fs.readFileSync(tmp);
   let text;
@@ -564,15 +578,15 @@ function postForm(url, p) {
   const jar = path.join(require('os').tmpdir(), 'sophaxis-jar');
   const tmp = path.join(require('os').tmpdir(), 'sophaxis-form');
   try {
-    execFileSync('curl', ['-sSL', '--compressed', '--max-time', '60', '-A', UA, '-c', jar, '-o', tmp, url]);
+    curlUA(['-sSL', '--compressed', '--max-time', '60', '-c', jar, '-o', tmp, url]);
     const page = fs.readFileSync(tmp, 'utf8');
     const token = (/name="_csrf" value="([^"]+)"/.exec(page) || [])[1];
     const form = /<form\b[^>]*action="([^"]+)"[^>]*method="post"|<form\b[^>]*method="post"[^>]*action="([^"]+)"/i.exec(page);
     const action = new URL(form ? form[1] || form[2] : url, url).href;
-    const args = ['-sSL', '--compressed', '--max-time', '90', '-A', UA, '-b', jar, '-c', jar, '-o', tmp, '-w', '%{http_code} %{url_effective}', '--data-urlencode', '_csrf=' + (token || '')];
+    const args = ['-sSL', '--compressed', '--max-time', '90', '-b', jar, '-c', jar, '-o', tmp, '-w', '%{http_code} %{url_effective}', '--data-urlencode', '_csrf=' + (token || '')];
     for (const [k, v] of Object.entries(p.post)) args.push('--data-urlencode', k + '=' + v);
     args.push(action);
-    const [status, final] = execFileSync('curl', args, { encoding: 'utf8' }).trim().split(' ');
+    const [status, final] = curlUA(args, { encoding: 'utf8' }).trim().split(' ');
     const raw = fs.readFileSync(tmp, 'utf8');
     return { status: +status, final, text: plain(raw), raw };
   } catch (e) { return { error: String(e.stderr || e.message).trim().slice(0, 300) }; }

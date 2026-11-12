@@ -8,7 +8,11 @@
  * and adds { version, file, sha256, source } to the record's "pdfs". Versions that already
  * have a copy are left alone.
  *
- * Only repositories that let a script fetch the file are used. Where the repository does not, the
+ * Only repositories whose own pages let a script fetch the file are used: Zenodo, whose developer documentation lists
+ * "Files — download/upload of files." among what its REST API supports, and arXiv, whose page on bulk data access asks
+ * scripts to use export.arxiv.org, "specifically set aside for programmatic access". Figshare and Research Square were used
+ * until 2026-11-12; their terms, fetched that day, forbid robots and scripts (docs/legal-audit-2026-11-12.md), so from
+ * 2026-11-13 they are not. Where the repository does not let a script fetch the file, the
  * authors can attach the deposited PDF to their submission issue; --from takes that attachment,
  * and the copy is marked as provided by the authors. Where the repository
  * publishes a checksum, the copy must match it. A file over the limits of site.json is not kept;
@@ -16,13 +20,13 @@
  * CC BY-SA 4.0 or CC0 1.0, which allow an unmodified copy with credit and the licence.
  */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
 const ROOT = path.join(__dirname, '..');
-const UA = 'Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)';
 /* The limits are those of site.json, the same ones build.js enforces. */
 const LIMITS = (() => {
   const l = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8')).pdfLimits;
@@ -32,9 +36,6 @@ const LIMITS = (() => {
 /* Where the PDF of one version lives. Pure: no network. `n` is the version number in the record. */
 function sourceFor(doi, n) {
   let m;
-  if ((m = /^10\.6084\/m9\.figshare\.(\d+)\.v(\d+)$/i.exec(doi))) {
-    return { kind: 'figshare', api: `https://api.figshare.com/v2/articles/${m[1]}/versions/${m[2]}` };
-  }
   if ((m = /^10\.5281\/zenodo\.(\d+)$/i.exec(doi))) {
     return { kind: 'zenodo', api: `https://zenodo.org/api/records/${m[1]}` };
   }
@@ -42,9 +43,7 @@ function sourceFor(doi, n) {
     /* arXiv asks scripts to use export.arxiv.org, not the site that people read. */
     return { kind: 'direct', url: `https://export.arxiv.org/pdf/${m[1]}v${n}` };
   }
-  if ((m = /^10\.21203\/rs\.3\.rs-(\d+)\/v(\d+)$/i.exec(doi))) {
-    return { kind: 'direct', url: `https://www.researchsquare.com/article/rs-${m[1]}/v${m[2]}.pdf` };
-  }
+  /* Figshare (10.6084/m9.figshare.…) and Research Square (10.21203/rs.3.rs-…): their terms forbid scripts; no copy. */
   return null;
 }
 
@@ -60,7 +59,7 @@ function attachmentOk(url) {
 const PDF_ACCEPT = 'application/pdf, */*;q=0.8';
 
 async function get(url, accept) {
-  const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: accept || '*/*' }, redirect: 'follow' });
+  const r = await request(url, { headers: { Accept: accept || '*/*' }, redirect: 'follow' });
   if (!r.ok) throw new Error(url + ': HTTP ' + r.status);
   return r;
 }
@@ -68,12 +67,7 @@ async function get(url, accept) {
 /* Returns { bytes, source, md5 } where md5 is the repository's own checksum, if it gives one. */
 async function download(src) {
   let url, md5 = null, source;
-  if (src.kind === 'figshare') {
-    const a = await (await get(src.api, 'application/json')).json();
-    const f = (a.files || []).filter((x) => x.mimetype === 'application/pdf' || isPdfName(x.name));
-    if (f.length !== 1) throw new Error('Figshare: expected one PDF, found ' + f.length);
-    url = f[0].download_url; md5 = f[0].computed_md5; source = f[0].download_url;
-  } else if (src.kind === 'zenodo') {
+  if (src.kind === 'zenodo') {
     const a = await (await get(src.api, 'application/json')).json();
     const f = (a.files || []).filter((x) => isPdfName(x.key));
     if (f.length !== 1) throw new Error('zenodo: expected one PDF, found ' + f.length);
