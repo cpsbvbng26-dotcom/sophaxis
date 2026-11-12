@@ -56,6 +56,12 @@ const SOURCES = {
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
   'github-terms': { url: 'https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/Policies/github-terms/github-terms-of-service.md', markdown: true },
   'vercel-terms': { url: 'https://vercel.com/legal/terms', split: /(?:^| )(\d+)\. (?=[A-Z][A-Za-z ,&'’-]{2,60} )/g },
+  'jacar-top': { url: 'https://www.jacar.go.jp/', whole: 'all', links: true, lang: 'ja' },
+  'jacar-record': { url: 'https://www.jacar.archives.go.jp/das/meta/C12070491000', whole: 'all', links: true, lang: 'ja' },
+  'jacar-guide': { pages: ['https://www.jacar.go.jp/about/', 'https://www.jacar.go.jp/glossary/', 'https://www.jacar.go.jp/about/riyou.html', 'https://www.jacar.go.jp/riyou/', 'https://www.jacar.go.jp/policy/'], whole: 'all', links: true, lang: 'ja', keepGoing: true },
+  'zenodo-terms': { url: 'https://about.zenodo.org/terms/', whole: 'all', links: true },
+  'zenodo-policies': { url: 'https://about.zenodo.org/policies/', whole: 'all', links: true },
+  'vercel-fair-use': { url: 'https://vercel.com/docs/limits/fair-use-guidelines', whole: 'all' },
   // The legal codes open with a list of their sections; the sections themselves start at the last heading of section 1.
   'cc-by': { url: 'https://creativecommons.org/licenses/by/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
   'cc-by-sa': { url: 'https://creativecommons.org/licenses/by-sa/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
@@ -174,7 +180,9 @@ async function foreign(key, s, articles) {
     const r = curl(u, s);
     statuses.push(r.status || r.error);
     out.status = s.pages ? statuses : statuses[0];
-    if (r.error) { out.error = r.error; break; }
+    if (s.links && r.raw) out.links = [...new Set([...(out.links || []), ...[...r.raw.matchAll(/href=["']([^"'#]+)["']/g)].map((m) => m[1])])].slice(0, 400);
+    if (s.keepGoing) { out.each = out.each || {}; out.each[u] = { status: r.status || r.error, text: (r.text || '').slice(0, 40000) }; }
+    if (r.error) { if (s.keepGoing) continue; out.error = r.error; break; }
     if (r.final && r.final !== u) out.final = r.final;
     if (r.pdf) out.pdf = true;
     text += (text ? ' ' : '') + r.text; raw += r.raw;
