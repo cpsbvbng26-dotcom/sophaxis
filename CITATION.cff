@@ -2,6 +2,11 @@ cff-version: 1.2.0
 message: >-
   To cite the code of Sophaxis, use this record.
   To cite a listed work, use the DOI of that work, not Sophaxis.
+  The text of the site is CC BY 4.0; the code is MIT.
+  The licence field of this record covers the code only.
+  Each listed work, with its PDF copy and its abstract, keeps its own licence.
+  Texts by others that this repository quotes, or keeps to verify its quotations,
+  are not licensed under CC BY 4.0 and remain their owners'.
 title: "Sophaxis: an overlay preprint server for philosophy and mathematics"
 type: software
 authors:
