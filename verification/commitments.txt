@@ -45,7 +45,7 @@ It is not an official identity check.
 It does not ask for the person section as a whole, so public email addresses and the country are never received.
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
 Records are kept to preserve the scholarly record, for freedom of expression and information (Article 17(3)(a)).
-The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
+The OAI-PMH interface gives the same email address as the operator's ORCID record, because the protocol requires one.
 Material that was taken offline while the request was reviewed is put back.
 A request to disclose who submitted material is handled as Japanese law provides.
 Even then, the change is announced before it takes effect.

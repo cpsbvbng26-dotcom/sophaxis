@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-13",
+    "policies": ["privacy", "takedown"],
+    "title": "The address in the OAI-PMH interface is the address for requests",
+    "text": "The Privacy Policy said that the OAI-PMH interface gives an email address made for harvesters, and the Takedown Policy said that the address in the OAI-PMH interface is for harvesters, apart from the address for requests. That was untrue: the interface gives the same address as the operator's ORCID record, where requests go. Both policies, in both languages, and the contact page now say so. This is a correction of an untrue statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes, and no right is narrowed."
+  },
+  {
+    "date": "2026-11-13",
     "policies": ["takedown", "terms"],
     "title": "The automatic steps run while GitHub Actions runs",
     "text": "The Takedown Policy and the Terms of Use now say that the automatic steps run as GitHub Actions, that GitHub's terms let it restrict the use of GitHub Actions, and that while Actions does not run the operator takes the steps by hand. A record page reported for exposed personal data is then taken offline by the operator, not at once. The pages promised \"at once\" without this condition, which Sophaxis could never promise: the step has always run as GitHub Actions. This is a correction of an untrue promise, effective on publication, 2026-11-13. Nothing that Sophaxis does while Actions runs changes, and no right that Sophaxis could give is narrowed."

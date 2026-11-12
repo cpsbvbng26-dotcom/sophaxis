@@ -46,10 +46,10 @@ No consent is asked of anyone who writes. The Privacy Policy, under "Services ou
 - Anything that should not be public: email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 
 Issues are public. Do not put personal data in them.
-The email address for requests is kept on the ORCID record, not on this site.
-The OAI-PMH interface at `/oai` gives a separate address made for harvesters, because the protocol requires one.
+The email address for requests is the one on the operator's ORCID record.
+The OAI-PMH interface at `/oai` gives the same address, because the protocol requires one; requests go to that address.
 Write in English or Japanese.
-The email address on the operator's ORCID record, not the one for harvesters, is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
+The email address on the operator's ORCID record is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
 The operator aims to answer within 7 days.
 
 <!-- text: DSA 11; DSA 12 -->

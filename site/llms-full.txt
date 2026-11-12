@@ -1020,7 +1020,7 @@ Earlier versions stay in the history of the public repository and in the saves o
 
 The records are offered for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`.
 Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there.
-The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
+The OAI-PMH interface gives the same email address as the operator's ORCID record, because the protocol requires one.
 Requests about personal data go to the address on the operator's ORCID record, as below.
 The pages and the PDF copies of a work whose authors consent to it are saved to the Internet Archive.
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
@@ -1343,7 +1343,7 @@ They decide under their own terms; the operator decides on Sophaxis under this p
 Where the operator removes material, it also asks GitHub to remove it from the repository history, as set out below.
 
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
-That is the address for requests; the address in the OAI-PMH interface is for harvesters.
+That is the address for requests; the OAI-PMH interface gives the same address, because the protocol requires one.
 For personal data and other serious harm, the operator then takes the record page (its title, authors, abstract and PDF copy) offline while the request is reviewed; authors agree to this in the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html).
 
 ## What happens
@@ -2343,10 +2343,10 @@ No consent is asked of anyone who writes. The Privacy Policy, under "Services ou
 - Anything that should not be public: email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 
 Issues are public. Do not put personal data in them.
-The email address for requests is kept on the ORCID record, not on this site.
-The OAI-PMH interface at `/oai` gives a separate address made for harvesters, because the protocol requires one.
+The email address for requests is the one on the operator's ORCID record.
+The OAI-PMH interface at `/oai` gives the same address, because the protocol requires one; requests go to that address.
 Write in English or Japanese.
-The email address on the operator's ORCID record, not the one for harvesters, is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
+The email address on the operator's ORCID record is also the single point of contact under the Digital Services Act of the European Union (Articles 11 and 12), for authorities, the European Commission and people who use Sophaxis.
 The operator aims to answer within 7 days.
 
 <!-- text: DSA 11; DSA 12 -->
@@ -2990,7 +2990,7 @@ issue は公開されるので、個人情報は書かず、Sophaxis の番号�
 個人データについての求めに答える前に、運営者は、ORCID の記録かメールで、求めた人が誰かを確かめます。
 求めは、親権者・保護者や本人が選んだ人などの代理人を通してもできます。そのときは、本人であることに加えて、代理の権限を確かめます。
 個人データの開示は、メールで、広く使われる電子の形か、本人が求める方法で行います。issue には書きません。
-OAI-PMH の口にも、収集者のためのアドレスがあります。この規格がアドレスを求めるためです。個人情報についての求めは、ORCID の記録のアドレスで受け付けます。
+OAI-PMH の口も、運営者の ORCID の記録と同じメールアドレスを示します。この規格がアドレスを求めるためです。個人情報についての求めは、そのアドレスで受け付けます。
 運営者は、7 日以内に応えることを目安にします。
 個人データについての求めには、遅くとも 1 か月以内に応えます。
 もっと時間が要るときは、その 1 か月のうちに理由を添えて知らせ、求めから 3 か月以内に応えます。
@@ -4038,7 +4038,7 @@ GitHub と Vercel は、それぞれの規約で判断します。運営者は�
 運営者が素材を削除する場合は、下に定めるとおり、リポジトリの履歴からの削除も GitHub に求めます。
 
 公開の場で行えない求めは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへメールで送ります。
-それが求めのための宛先です。OAI-PMH の口にある宛先は、収集者のためのものです。
+それが求めのための宛先です。OAI-PMH の口も、この規格が宛先を求めるため、同じ宛先を示します。
 個人データやそのほかの重大な害については、運営者は、求めを検討するあいだ、記録の頁（題・著者・要旨・PDF の写し）を公開から外します。著者は[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)でこれに同意しています。
 
 ## 求めを受けた後
@@ -5122,10 +5122,10 @@ Sophaxis を紹介する人のために、[紹介する人のために](https://
 - 公開すべきでないこと：運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメール。
 
 issue は公開されます。issue に個人データを書かないでください。
-求めのためのメールアドレスは、このサイトではなく、ORCID の記録に置いています。
-`/oai` の OAI-PMH の口には、収集者のための別のアドレスがあります。この規格がアドレスを求めるためです。
+求めのためのメールアドレスは、運営者の ORCID の記録にあるアドレスです。
+`/oai` の OAI-PMH の口も、同じアドレスを示します。この規格がアドレスを求めるためです。求めは、そのアドレスへ送ります。
 英語か日本語で書いてください。
-欧州連合のデジタルサービス法（第 11 条・第 12 条）のもとで、当局・欧州委員会・Sophaxis を使う人のための単一の連絡窓口も、運営者の ORCID の記録にあるメールアドレスです。収集者のためのアドレスではありません。
+欧州連合のデジタルサービス法（第 11 条・第 12 条）のもとで、当局・欧州委員会・Sophaxis を使う人のための単一の連絡窓口も、運営者の ORCID の記録にあるメールアドレスです。
 運営者は、7 日以内に答えることを目指します。
 
 <!-- text: DSA 11; DSA 12 -->

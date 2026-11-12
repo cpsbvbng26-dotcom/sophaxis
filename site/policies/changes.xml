@@ -8,6 +8,14 @@
   <updated>2026-11-13T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c16</id>
+    <title>The address in the OAI-PMH interface is the address for requests</title>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>The Privacy Policy said that the OAI-PMH interface gives an email address made for harvesters, and the Takedown Policy said that the address in the OAI-PMH interface is for harvesters, apart from the address for requests. That was untrue: the interface gives the same address as the operator's ORCID record, where requests go. Both policies, in both languages, and the contact page now say so. This is a correction of an untrue statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes, and no right is narrowed. Policies: Privacy Policy, Takedown Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c15</id>
     <title>The automatic steps run while GitHub Actions runs</title>
     <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>

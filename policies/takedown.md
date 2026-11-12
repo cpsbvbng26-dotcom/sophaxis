@@ -37,7 +37,7 @@ They decide under their own terms; the operator decides on Sophaxis under this p
 Where the operator removes material, it also asks GitHub to remove it from the repository history, as set out below.
 
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
-That is the address for requests; the address in the OAI-PMH interface is for harvesters.
+That is the address for requests; the OAI-PMH interface gives the same address, because the protocol requires one.
 For personal data and other serious harm, the operator then takes the record page (its title, authors, abstract and PDF copy) offline while the request is reviewed; authors agree to this in the [Terms of Use](./terms.md).
 
 ## What happens

@@ -169,7 +169,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'It does not ask for the person section as a whole, so public email addresses and the country are never received.',
     'The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.',
     'Records are kept to preserve the scholarly record, for freedom of expression and information (Article 17(3)(a)).',
-    'The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.',
+    'The OAI-PMH interface gives the same email address as the operator\'s ORCID record, because the protocol requires one.',
     'Material that was taken offline while the request was reviewed is put back.',
     'A request to disclose who submitted material is handled as Japanese law provides.',
     'Even then, the change is announced before it takes effect.',
@@ -4066,7 +4066,7 @@ console.log('\n98. No dependencies, workflows with the least they need, pinned a
   /* The scan for keys, tokens and addresses: every file in the repository that is text, the built site included. */
   const KEYS = [/-----BEGIN [A-Z ]*PRIVATE KEY-----/, /\bgh[pousr]_[A-Za-z0-9]{36}\b/, /\bgithub_pat_[A-Za-z0-9_]{60,}/, /\bAKIA[0-9A-Z]{16}\b/, /\bxox[abprs]-[A-Za-z0-9-]{10,}/, /\bAIza[0-9A-Za-z_-]{35}\b/, /\bsk-(?:ant-)?[A-Za-z0-9_-]{32,}/];
   const MAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g;
-  /* The address the operator made for harvesters (site.json oai.adminEmails, given in OAI-PMH Identify), the Internet Archive's and
+  /* The address given in OAI-PMH Identify (site.json oai.adminEmails, the same as on the operator's ORCID record), the Internet Archive's and
    * Creative Commons' published addresses, quoted where their process or text is quoted, and the address of the commit trailers. */
   const site98 = JSON.parse(read(path.join(ROOT, 'site.json')));
   /* The example address that the Personal Information Protection Commission's Guidelines print in their own text (example.com is
@@ -5916,6 +5916,100 @@ console.log('\n123. What an eighth, read-only pass found: GitHub\'s terms for Ac
   const missed = breaks.filter(([, b]) => b.length === 0).map(([k]) => k);
   ok('break on purpose: the terms not watched or not fetched, a quoted part lost, another SHA-256, a whole text kept, a new workflow without a row, a row for a workflow taken away, a row dropped, the count, a decision without its maker, a quotation altered, the posts for X written again, the condition taken out of a policy in either language, a new unconditioned "at once", the Disclaimer without the hand steps (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
+}
+/* ------------------------------------------------------------ 124 */
+console.log('\n124. What a ninth, read-only pass found: the OAI-PMH interface gives the same address as the operator\'s ORCID record, and no page calls it a separate address');
+{
+  /* The contact page, the Privacy Policy, the Takedown Policy (both languages) and the README said that the OAI-PMH
+   * interface gives a separate address made for harvesters, and that the address for requests is not on this site.
+   * Identify gives the address in site.json (oai.adminEmails), which is the public address of the operator's ORCID
+   * record, where requests go. Two things are pinned: no page calls the address of the interface separate from, or
+   * other than, the address for requests; and the address is written in no file but the two that the ninth section of
+   * the audit names. A failure names files only, never the address. The record of the audit, the changelog (whose
+   * entry for #91 and #92 stays as the record of that release) and the checks keep the old wording as history; the
+   * entries of the feed of policy changes that correct it are read without their own text. */
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const AUD = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const HEAD9 = '\n## 2026-11-12 の続き：九度目の見落とし\n';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const listed = require('child_process').execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' }).split('\0').filter(Boolean);
+  const walk = (d) => fs.readdirSync(path.join(ROOT, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(d + '/' + e.name) : [d + '/' + e.name]));
+  const files = [...new Set(listed.concat(walk('site')))].filter((f) => fs.existsSync(path.join(ROOT, f)) && !/\.(pdf|png|ico|jpe?g|gif|webp|woff2?)$/i.test(f));
+  const texts = Object.fromEntries(files.map((f) => [f, read(path.join(ROOT, f))]));
+  const HISTORY = /^(?:docs\/legal-audit-2026-11-12\.md|CHANGELOG\.md|verification\/)/;
+  const unesc = (x) => x.replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  /* A sentence about the address that calls it separate, other, made for harvesters, or not on this site. */
+  const ABOUT = /OAI|adminEmail|address|アドレス|宛先/;
+  const APART = /separate (?:e-?mail )?address|different (?:e-?mail )?address|another (?:e-?mail )?address|made for (?:harvesters|this use)|address the operator made|(?:is|are) for harvesters|not the one for harvesters|for the administrators of harvesters|not on this site|収集者のため|別のアドレス|別の宛先|異なるアドレス|異なる宛先|このサイトではなく|このサイトには(?:無|な)い/i;
+  const sentences = (x) => String(x).split(/\n|(?<=[.。])\s+|(?<=。)/);
+  function problems(c) {
+    const bad = [];
+    const fixes = (c.changes || []).filter((e) => /correction of an untrue statement/.test(e.text || '')).map((e) => e.text);
+    for (const [f, x0] of Object.entries(c.texts)) {
+      if (HISTORY.test(f)) continue;
+      let x = unesc(x0);
+      for (const t of fixes) x = x.split(t).join('');
+      if (sentences(x).some((s) => ABOUT.test(s) && APART.test(s))) bad.push(f + ' calls the address of the interface separate');
+    }
+    /* The places named in the record, and the address nowhere else. */
+    const sec = (c.aud.split(HEAD9)[1] || '').split('\n## ')[0];
+    if (!sec) return bad.concat(['no ninth section']);
+    const m = /アドレスを書くのは、(.+?)だけです。/.exec(sec);
+    const places = m ? [...m[1].matchAll(/`([^`]+)`/g)].map((y) => y[1]) : [];
+    if (places.length === 0) bad.push('the record names no place for the address');
+    const mails = (c.site.oai || {}).adminEmails || [];
+    if (mails.length !== 1) bad.push('site.json gives ' + mails.length + ' addresses for Identify');
+    for (const [f, x] of Object.entries(c.texts)) if (mails.some((e) => x.includes(e)) && !places.includes(f)) bad.push(f + ' holds the address of the interface');
+    for (const p of places) if (!mails.every((e) => String(c.texts[p] || '').includes(e))) bad.push(p + ' does not hold the address');
+    if (/[^\s@<>"`]+@[^\s@<>"`]+\.[a-z]{2,}/i.test(sec)) bad.push('the record writes an address');
+    /* The record: the table, its count, the decisions, and the sentence on lawyers. */
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    rows.forEach((x, i) => { if (x.length !== 6 || !JUDGE.includes(x[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((x) => x[4] === j)).map((j) => j + ' ' + rows.filter((x) => x[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    for (const x of rows.filter((y) => y[4] !== '問題なし')) if (!/2026-11-13 に Claude が決めました。[^|]*ためです$/.test(x[5])) bad.push('a decision without its maker or reason: ' + x[0].slice(0, 30));
+    if (!rows.some((x) => x[0].startsWith('検査') && x[4] === '漏れ')) bad.push('the check as a gap');
+    if (!sec.includes('この変更は、事実と違う文の訂正です。誰の権利も狭めず、利用者の務めも足しません。')) bad.push('which kind of change');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。')) bad.push('the sentence on lawyers');
+    /* The policy change: in the feed as a correction, and the commitment moved with its old line kept. */
+    const OLD = 'The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.';
+    const NEW = 'The OAI-PMH interface gives the same email address as the operator\'s ORCID record, because the protocol requires one.';
+    if (!(c.changes || []).some((e) => e.date === '2026-11-13' && !e.from && ['privacy', 'takedown'].every((p) => e.policies.includes(p)) && /correction of an untrue statement, effective on publication, 2026-11-13/.test(e.text) && /no right is narrowed/.test(e.text))) bad.push('the feed');
+    if (c.com.includes(OLD) || !c.com.includes(NEW) || !c.sup.split('\n').includes(OLD + '\t' + NEW)) bad.push('the commitment');
+    for (const f of ['policies/privacy.md', 'policies/privacy.ja.md', 'policies/takedown.md', 'policies/takedown.ja.md', 'contact.md', 'contact.ja.md']) if (!/^(?:Last updated: |最終更新：)2026-11-1[3-9]|^(?:Last updated: |最終更新：)2026-1[12]-[23]\d/m.test(String(c.texts[f] || ''))) bad.push(f + ': the last update');
+    return bad;
+  }
+  const real = { texts, aud: AUD, site: J('site.json'), changes: J('data/policy-changes.json'), com: read(path.join(__dirname, 'commitments.txt')), sup: read(path.join(__dirname, 'superseded.txt')) };
+  const now = problems(real);
+  const mail = (real.site.oai || {}).adminEmails || [];
+  ok('no page of ' + files.filter((f) => !HISTORY.test(f)).length + ' calls the address of the OAI-PMH interface separate from the address for requests, the address in site.json is written only where the ninth section of the audit says, the change is in the feed as a correction, and the record is complete',
+    now.length === 0 && mail.length === 1, now.slice(0, 6).join(' / '));
+  const tx = (f, a, b) => Object.assign({}, real, { texts: Object.assign({}, texts, { [f]: String(texts[f]).replace(a, b) }) });
+  const other = 'docs/operations.md';
+  const breaks = [
+    ['the separate address back on the contact page', tx('contact.md', 'The OAI-PMH interface at `/oai` gives the same address, because', 'The OAI-PMH interface at `/oai` gives a separate address made for harvesters, because')],
+    ['the separate address back in Japanese', tx('contact.ja.md', '`/oai` の OAI-PMH の口も、同じアドレスを示します。', '`/oai` の OAI-PMH の口には、収集者のための別のアドレスがあります。')],
+    ['"not on this site" back', tx('contact.md', 'The email address for requests is the one on the operator\'s ORCID record.', 'The email address for requests is kept on the ORCID record, not on this site.')],
+    ['the Privacy Policy as before', tx('policies/privacy.md', 'gives the same email address as the operator\'s ORCID record, because', 'gives an email address made for harvesters, because')],
+    ['the Japanese Takedown Policy as before', tx('policies/takedown.ja.md', 'OAI-PMH の口も、この規格が宛先を求めるため、同じ宛先を示します。', 'OAI-PMH の口にある宛先は、収集者のためのものです。')],
+    ['a built page as before', tx('site/policies/privacy.html', 'gives the same email address as the operator\'s ORCID record', 'gives an email address made for harvesters')],
+    ['llms-full.txt as before', tx('site/llms-full.txt', 'gives the same email address as the operator\'s ORCID record', 'gives a different address')],
+    ['the README as before', tx('README.md', 'It is the same address as the one on the operator\'s ORCID record', 'It is an address the operator made for this use')],
+    ['the address written into another file', tx(other, /$/, '\n' + (mail[0] || 'x') + '\n')],
+    ['the places taken out of the record', Object.assign({}, real, { aud: AUD.replace('アドレスを書くのは、`site.json` と、そこから作る `site/api/oai.js` だけです。', '') })],
+    ['a place dropped from the record', Object.assign({}, real, { aud: AUD.replace('アドレスを書くのは、`site.json` と、そこから作る `site/api/oai.js` だけです。', 'アドレスを書くのは、`site.json` だけです。') })],
+    ['the count', Object.assign({}, real, { aud: AUD.replace('この表の判定は、誤り 3、漏れ 1、表現 1 です。', 'この表の判定は、誤り 2、漏れ 1、表現 1 です。') })],
+    ['a decision without its reason', Object.assign({}, real, { aud: AUD.replace('説明の頁でも同じに書くためです |\n| 変更履歴', '説明の頁でも同じに書きます |\n| 変更履歴') })],
+    ['the kind of change not said', Object.assign({}, real, { aud: AUD.replace('この変更は、事実と違う文の訂正です。誰の権利も狭めず、利用者の務めも足しません。', '') })],
+    ['the feed without the change', Object.assign({}, real, { changes: real.changes.filter((e) => !/the same address as the operator's ORCID record/.test(e.text)) })],
+    ['the old commitment back', Object.assign({}, real, { com: real.com.replace('gives the same email address as the operator\'s ORCID record, because', 'gives an email address made for harvesters, because') })],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  /* The message of a failure names files, not the address. */
+  const leak = breaks.some(([, b]) => mail.some((e) => problems(b).join(' ').includes(e)));
+  ok('break on purpose: the separate address back on the contact page (both languages), "not on this site", the Privacy Policy, the Japanese Takedown Policy, a built page, llms-full.txt and the README as before, the address written into another file, the places taken out of or dropped from the record, the count, a decision without its reason, the kind of change, the feed and the old commitment all fail, and no failure prints the address (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0 && !leak, missed.join(' / ') + (leak ? ' / the address printed' : ''));
 }
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
