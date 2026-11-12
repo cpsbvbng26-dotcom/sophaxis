@@ -4498,10 +4498,10 @@ console.log('\n110. Outside assessments and the proposal for the advisory board 
   const n = Object.keys(S110.categories).length;
   const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   const fieldsLine = (/^- One seat each for (.+)\.$/m.exec(prop) || [, ''])[1];
-  ok('the proposal for the advisory board says it was adopted as the plan on 2026-11-12, with the call unchanged and no adviser yet, in both languages, and its count is the number of fields in site.json (' + n + '), each field named',
-    prop.includes('Adopted as the plan on 2026-11-12. The [call for an advisory board](../advisory.md) stays as it is, and there is no adviser yet.')
-    && prop.includes('この案は、2026-11-12 に計画として採りました。サイトの募集の頁はそのままで、委員はまだいません。')
-    && prop.includes('\n## What was decided\n\nDecided on 2026-11-12:\n') && !/案（|Draft, not decided/.test(prop) && prop.includes('One adviser for each field that Sophaxis lists, ' + W[n] + ' in all while `site.json` names ' + W[n] + ' fields.')
+  ok('the proposal for the advisory board says that Claude adopted it as the plan on 2026-11-12, with the call unchanged and no adviser yet, in both languages, and its count is the number of fields in site.json (' + n + '), each field named',
+    prop.includes('Adopted as the plan by Claude on 2026-11-12. The [call for an advisory board](../advisory.md) stays as it is, and there is no adviser yet.')
+    && prop.includes('この案は、2026-11-12 に Claude が計画として採りました。サイトの募集の頁はそのままで、委員はまだいません。')
+    && prop.includes('\n## What was decided\n\nDecided by Claude on 2026-11-12:\n') && !/Decided on 2026-11-12|Adopted as the plan on/.test(prop) && !/案（|Draft, not decided/.test(prop) && prop.includes('One adviser for each field that Sophaxis lists, ' + W[n] + ' in all while `site.json` names ' + W[n] + ' fields.')
     && prop.includes('`site.json` が ' + n + ' 分野を挙げているあいだは、合わせて ' + n + ' 人です。')
     && Object.values(S110.categories).every((c) => fieldsLine.toLowerCase().includes(c.toLowerCase())) && fieldsLine.split(/, | and /).length === n);
   const adv = read(path.join(ROOT, 'advisory.md'));
