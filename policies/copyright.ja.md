@@ -1,6 +1,6 @@
 # 著作権の規程（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Copyright Policy](./copyright.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.md)の「日本国外の方へ」の節に定めています。
 
@@ -26,7 +26,7 @@ Sophaxis は、検索エンジンが本文を索引できるように、載っ�
 Zenodo の開発者向けの文書は、REST API でできることに「Files — download/upload of files.」を挙げます。
 arXiv の一括取得の頁は「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と書きます。Sophaxis は、その所から取ります。
 arXiv の API の利用規約は、e-print を保って配ることを禁じます。例外は「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合です。載せる作品は、どれも受け付ける三つのライセンスのどれかを持ち、そのライセンスがこれを認めています。
-2026-11-12 までは、Figshare と Research Square からもスクリプトで写していました。2026-11-13 からは写しません。どちらの規約も、これを禁じているためです。
+この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。どちらの規約も、これを禁じているためです。
 Figshare の規約は、利用者がしてはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げます。例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。
 Research Square の規約は「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。
 Figshare からすでに写したものは、作品のライセンスのもとで残します。
