@@ -88,7 +88,7 @@ The articles it names are quoted at the end of this section.
 | Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Unfair Competition Prevention Act, Article 2(1)(i) and (ii); Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](https://sophaxis.vercel.app/brand.html) says how they may be used. |
 | Reusing a PDF copy or a record beyond what its licence allows, for example without the credit that the licence asks | Copyright Act, Articles 21 and 23 | Reuse each work under its own licence, which its record page names. |
 | Vouching for a submission with words that are not true, for example about where the researcher lives or stays, or about being an author | Penal Code, Article 233; Civil Code, Article 709 | Vouch only with words that are true. |
-| Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once, under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html). |
+| Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once while GitHub Actions runs for Sophaxis, and by the operator's hand when it does not, under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html). |
 
 The responsibility for an act done against these terms, or outside them, lies with the person who did it.
 Except where the law makes the operator responsible, the operator is not responsible for such acts.
@@ -143,7 +143,7 @@ What happens while the operator cannot work on Sophaxis at all, step by step.
 1. Who is told: the top page and the submit page say that new submissions are paused, as above, and a news item says the same. Each open submission issue is told that its decision waits. Where the operator can foresee the pause, this is done before it begins.
 2. What is paused: no submission is accepted or declined, and the operator adds, changes or withdraws no record. A submission issue opened during the pause still gets the automatic check, and waits for a decision. The only change to a record made without the operator is the one in step 4.
 3. What stays online: every record page, the PDF copies, the listing, the search, the feeds, the records as JSON and the OAI-PMH interface. The weekly check of the DOIs keeps running by itself, and so do the weekly saves to the Internet Archive, where every author of the work consents to them.
-4. What still works without the operator: a removal request that reports exposure of personal data still takes the record's title, authors, abstract and PDF copy offline at once, as the Takedown Policy says. The decision on it waits for the operator.
+4. What still works without the operator: a removal request that reports exposure of personal data still takes the record's title, authors, abstract and PDF copy offline at once, as the Takedown Policy says, while GitHub Actions runs for Sophaxis. If GitHub restricts or stops Actions, this step also waits for the operator. The decision on it waits for the operator.
 5. Who could take over: the records are public in the repository and archived at Zenodo with each release, so a successor, or a custodian who keeps the records readable, needs nothing that only the operator holds. A hand-over of Sophaxis itself is announced first, as below. Anyone may also copy the records and continue elsewhere under the licences below.
 6. When the operator returns, the notice goes, the waiting issues are decided in the order they came, and a news item says that submissions are open again.
 
@@ -1306,7 +1306,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.html
 
 # Takedown Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1349,7 +1349,8 @@ For personal data and other serious harm, the operator then takes the record pag
 ## What happens
 
 The operator aims to answer each request within 7 days.
-For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.
+For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted until it is put back.
+The automatic steps below run as GitHub Actions. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, the operator takes these steps by hand, as soon as the operator learns of the request, and the record page is then not taken offline at once.
 A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
 When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
 The automatic steps decide nothing; the operator decides every request.
@@ -1525,7 +1526,7 @@ Source: https://sophaxis.vercel.app/disclaimer.html
 
 # Disclaimer
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-13.
 
 Japanese: [免責事項（日本語訳）](https://sophaxis.vercel.app/disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1618,6 +1619,7 @@ Sophaxis depends on outside services:
 
 - If Vercel stops, the site is not served; the records stay in the repository on GitHub and in the Internet Archive.
 - If GitHub stops, no one can submit, and the automatic checks do not run; the site keeps showing what it last built.
+- GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no step on the page [What runs by itself](https://sophaxis.vercel.app/automation.html) runs by itself. The operator takes those steps by hand, as soon as the operator can; a record page reported for exposed personal data is then taken offline by the operator, not at once.
 - If DataCite, Crossref or JaLC cannot be reached, a submission cannot be checked until they can.
 - If a repository removes a deposit, its DOI stops resolving, and the record is withdrawn under the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html).
 
@@ -1922,7 +1924,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [自動で動く手順（日本語訳）](https://sophaxis.vercel.app/automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1931,7 +1933,8 @@ This page lists every one of them: when it runs, what it reads, what it writes, 
 The code of each step is public, and each section links to it.
 
 - No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
-- One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
+- Every step on this page that runs as GitHub Actions depends on GitHub. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no such step runs by itself: the operator takes the steps by hand, as soon as the operator can, and none of them happens at once.
+- One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once, while GitHub Actions runs. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
 - No step uses a language model. The steps are ordinary code.
 - No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.
 - A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.
@@ -1968,7 +1971,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the record and the issues of the repository.
 - Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
-- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) says.
+- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) says. If GitHub Actions does not run, the operator does it by hand, not at once.
 - Leaves to the operator: the decision.
 - Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
 
@@ -1989,11 +1992,9 @@ The code of each step is public, and each section links to it.
 
 ## Once a month, on the 1st at 09:17 Japan time
 
-- Reads: the records and `data/news.json`.
-- Writes: an issue with a post in English and one in Japanese for the official account on X, each within the 280 characters that X counts, naming what was listed and announced in the month before. A month with nothing new gets no issue.
-- Leaves to the operator: posting it. X's API is paid, so nothing is posted to X automatically.
-- Also measures whether Sophaxis still fits its free services: the deployments on the busiest day of the last 30 days against the 100 a day of Vercel's free plan, the PDF copies against the limits in `site.json`, and the repository against the 1 GB that GitHub recommends. It writes the table to the run's summary, and opens an issue only when a measure reaches 80 percent. Vercel's bandwidth and function use are not measured; only the operator's Vercel account shows them.
-- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) and [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
+- Measures whether Sophaxis still fits its free services: the deployments on the busiest day of the last 30 days against the 100 a day of Vercel's free plan, the PDF copies against the limits in `site.json`, and the repository against the 1 GB that GitHub recommends. It writes the table to the run's summary, and opens an issue only when a measure reaches 80 percent. Vercel's bandwidth and function use are not measured; only the operator's Vercel account shows them.
+- Until 2026-11-13, this run also wrote an issue with posts for the official account on X. It no longer does: GitHub's terms allow GitHub Actions on GitHub's runners only for the production, testing, deployment or publication of the software project, and the posts serve none of them. Nothing is posted to X automatically.
+- Code: [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
 
 ## Once a year, on 2 January at 12:23 Japan time
 
@@ -3164,7 +3165,7 @@ Sophaxis は、運営者自身の行いが、規程の挙げる法令の要件�
 | Sophaxis の名前やロゴを、商品・役務や広告に、Sophaxis から出たものや Sophaxis が推薦するもののように付けること | 不正競争防止法第 2 条第 1 項第 1 号・第 2 号、景品表示法第 5 条 | 名前とロゴを営業に使うことは、認めていません。使い方は[名前・ロゴ・バッジ](https://sophaxis.vercel.app/brand.ja.html)の頁にあります。 |
 | PDF の写しや記録を、そのライセンスが認める範囲を超えて再利用すること。例として、ライセンスが求める表示をしない再利用があります | 著作権法第 21 条・第 23 条 | 各作品は、その記録の頁が示すライセンスに沿って再利用してください。 |
 | 事実でない言葉で投稿を保証すること。例として、研究者が住んでいる場所や滞在している場所、著者であるかどうかについての言葉があります | 刑法第 233 条、民法第 709 条 | 事実である言葉だけで保証してください。 |
-| issue、コメント、メールに、他人の個人データや、人の名誉を害することを書くこと | 刑法第 230 条・第 231 条、民法第 709 条 | 書かないでください。個人データが見えているとの報告があれば、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って、記録の頁をただちに非公開にします。 |
+| issue、コメント、メールに、他人の個人データや、人の名誉を害することを書くこと | 刑法第 230 条・第 231 条、民法第 709 条 | 書かないでください。個人データが見えているとの報告があれば、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って、Sophaxis の GitHub Actions が動いている限り、記録の頁をただちに非公開にします。動かないときは、運営者が手で非公開にします。 |
 
 この規約に反して、または規約の外で行われた行いの責任は、行った本人にあります。
 法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。
@@ -3219,7 +3220,7 @@ Sophaxis は一人で運営しており、失うものなく止められるよ�
 1. 知らせる先：上のとおり、トップの頁と投稿の頁で新しい投稿の受け付けを休止していることを示し、お知らせでも同じことを伝えます。開いている投稿の issue には、それぞれ判断を待つことを伝えます。運営者が休止を前もって見込めるときは、休止の前にこれらを済ませます。
 2. 止まるもの：投稿を受理することも断ることもせず、運営者は記録を足すことも、変えることも、撤回することもしません。休止のあいだに開かれた投稿の issue にも自動の確認は付き、判断を待ちます。運営者なしに記録が変わるのは、4 番の場合だけです。
 3. 公開のまま残るもの：すべての記録の頁、PDF の写し、一覧、検索、フィード、JSON の記録、OAI-PMH の入口です。DOI の週ごとの確認はひとりでに続きます。Internet Archive への週ごとの保存も、作品の著者全員が同意したものについて続きます。
-4. 運営者がいなくても働くもの：個人情報の露出を報告する削除の申し立ては、削除の規程のとおり、記録の題・著者・要旨・PDF の写しをすぐに下げます。申し立ての判断は、運営者を待ちます。
+4. 運営者がいなくても働くもの：個人情報の露出を報告する削除の申し立ては、削除の規程のとおり、Sophaxis の GitHub Actions が動いている限り、記録の題・著者・要旨・PDF の写しをすぐに下げます。GitHub が Actions を制限するか止めたときは、この手順も運営者を待ちます。申し立ての判断は、運営者を待ちます。
 5. 引き継げる人：記録はリポジトリで公開しており、版を出すたびに Zenodo に保存しています。そのため、後を継ぐ人や、記録を読める状態に保つ預かり手は、運営者だけが持つものを要しません。Sophaxis そのものの引き継ぎは、下のとおり先に告知します。誰でも、下のライセンスのもとで記録を写し、ほかの場所で続けることもできます。
 6. 運営者が戻ったら、休止の知らせを外し、待っていた issue を届いた順に判断し、投稿の受け付けを再び始めたことをお知らせで伝えます。
 
@@ -4000,7 +4001,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 
 # 削除の規程（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4043,7 +4044,8 @@ GitHub と Vercel は、それぞれの規約で判断します。運営者は�
 ## 求めを受けた後
 
 運営者は、それぞれの求めに 7 日以内に答えることを目指します。
-個人データやそのほかの重大な害については、判断の前に、記録の頁（題・著者・要旨・PDF の写し）をただちに公開から外し、戻すまで OAI-PMH はその記録を削除済みとして示します。
+個人データやそのほかの重大な害については、Sophaxis の GitHub Actions が動いている限り、判断の前に、記録の頁（題・著者・要旨・PDF の写し）をただちに公開から外し、戻すまで OAI-PMH はその記録を削除済みとして示します。
+この下の自動の手順は、GitHub Actions として動きます。GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、運営者が求めを知りしだい、これらの手順を手で行います。そのときは、記録の頁はただちには外れません。
 削除の issue には、運営者が答える目安の日を添えた受領の知らせが自動で付きます。
 削除の issue が個人データの露出を報告している場合、運営者が読む前に、記録の頁（題・著者・要旨・PDF の写し）が自動で公開から外れます。
 自動の処理は何も決めません。どの求めも運営者が判断します。
@@ -4218,7 +4220,7 @@ Source: https://sophaxis.vercel.app/disclaimer.ja.html
 
 # 免責事項（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-13。
 
 これは英語の [Disclaimer](https://sophaxis.vercel.app/disclaimer.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4311,6 +4313,7 @@ Sophaxis は、外部のサービスに頼っています。
 
 - Vercel が止まれば、サイトは配信されません。記録は GitHub のリポジトリと Internet Archive に残ります。
 - GitHub が止まれば、誰も投稿できず、自動の確認も動きません。サイトは、最後に組み立てたものを示し続けます。
+- GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、[自動で動く手順](https://sophaxis.vercel.app/automation.ja.html)の頁の手順は、どれもひとりでには動きません。運営者ができしだい手で行います。個人データの露出が報告された記録の頁も、運営者が手で外し、すぐには外れません。
 - DataCite、Crossref、JaLC に届かなければ、届くようになるまで投稿を確かめられません。
 - 預け先が預けたものを削除すれば、その DOI は解決しなくなり、記録は[撤回の規程](https://sophaxis.vercel.app/policies/withdrawal.ja.html)に沿って撤回します。
 
@@ -4928,7 +4931,7 @@ Source: https://sophaxis.vercel.app/automation.ja.html
 
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [What runs by itself](https://sophaxis.vercel.app/automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4938,7 +4941,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 どの手順のコードも公開しており、各節からリンクしています。
 
 - 投稿・撤回・訂正・削除の求めについて判断する自動の手順はありません。判断はすべて運営者が下します。
-- 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
+- この頁の手順のうち GitHub Actions として動くものは、GitHub に頼っています。GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、どの手順もひとりでには動きません。運営者ができしだい手で行い、どれもすぐには行われません。
+- 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
 - 言語モデルを使う手順はありません。どの手順も通常のコードです。
 - どのアカウントにもサインインする手順はありません。鍵は、GitHub が実行ごとに渡すトークンだけで、その権限は手順に要る最小限です。IndexNow の鍵は、仕組みのうえで公開のものです。
 - 記録を変える手順は、先にサイトを組み立て、すべての検査を走らせます。検査が一つでも落ちれば、何も変えません。
@@ -4975,7 +4979,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：記録と、リポジトリの issue。
 - 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
-- issue が個人情報の露出を報告しているときは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。
+- issue が個人情報の露出を報告しているときは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。GitHub Actions が動かないときは、運営者が手で下げ、すぐには下がりません。
 - 運営者に残すこと：判断。
 - コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
 
@@ -4996,11 +5000,9 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 ## 月に一度、1 日の日本時間 09:17
 
-- 読むもの：記録と `data/news.json`。
-- 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
-- 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
-- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の 1 日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
-- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) と [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
+- Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の 1 日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
+- 2026-11-13 までは、X の公式アカウントのための投稿文を載せた issue も書いていました。いまは書きません。GitHub の規約は、GitHub の実行環境での GitHub Actions を、ソフトウェアのプロジェクトの制作・検査・配備・公開のためにだけ認めており、投稿文はそのどれにも当たらないからです。X へは何も自動で投稿しません。
+- コード：[tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
 
 ## 年に一度、1 月 2 日の日本時間 12:23
 
