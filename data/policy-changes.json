@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-12",
+    "policies": ["privacy", "takedown", "terms", "submission", "moderation", "copyright"],
+    "title": "Why the rules on sending users' information do not apply, Sophaxis as the sender of its records, and the texts fetched again",
+    "text": "The Privacy Policy says why the operator considers that the rules of Japan's Telecommunications Business Act on sending users' information outside do not apply: Sophaxis charges for nothing and earns nothing, so it runs no telecommunications business. The Takedown Policy says that, for the record pages and the PDF copies, Sophaxis is itself the sender under Japan's Act on providers of specified telecommunications services, so it does not rely on that Act's limitation of liability, and the operator is liable as Japanese law provides. The texts that the policies quote were fetched again on 2026-11-12, and the Privacy and Submission Policies now quote Article 1 of Russia's Federal Law No. 152-FZ. None of these narrows a right or adds a duty."
+  },
+  {
+    "date": "2026-11-12",
     "policies": ["terms", "submission", "moderation", "copyright", "licences", "privacy", "withdrawal", "takedown"],
     "title": "A first sentence for each policy, the steps while the operator cannot work, and numbers in the Japanese translations",
     "text": "Each policy now opens with a sentence that says what it is. The Terms of Use set out, under Continuity, what happens while the operator cannot work at all: who is told, what is paused, what stays online, what still works without the operator, and who could take over. The Japanese translations write durations and dates in Arabic digits, as the English does. None of these narrows a right or adds a duty."
