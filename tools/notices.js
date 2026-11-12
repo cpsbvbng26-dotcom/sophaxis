@@ -11,13 +11,13 @@
  * The notices decide nothing by themselves: the operator decides under the Moderation Policy.
  */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
-const UA = 'Sophaxis (' + SITE.repo + ')';
 
 /* A work with one of these is not listed (Submission Policy). */
 const BLOCKING = ['retraction', 'partial_retraction', 'withdrawal', 'removal'];
@@ -75,7 +75,7 @@ function newNotices(p, found) {
 }
 
 async function lookUpNotices(doi) {
-  const r = await fetch('https://api.crossref.org/works?rows=100&filter=updates:' + encodeURIComponent(bare(doi)), { headers: { 'User-Agent': UA, Accept: 'application/json' } });
+  const r = await request('https://api.crossref.org/works?rows=100&filter=updates:' + encodeURIComponent(bare(doi)), { headers: { Accept: 'application/json' } });
   if (!r.ok) throw new Error('Crossref notices for ' + doi + ': HTTP ' + r.status);
   return noticesFrom(await r.json(), doi);
 }

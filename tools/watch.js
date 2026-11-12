@@ -12,6 +12,7 @@
  * Saving to the Internet Archive is best effort and never fails the run.
  */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -135,7 +136,7 @@ async function saveToArchive(urls, list = records(path.join(ROOT, 'data', 'paper
     for (let attempt = 0; attempt <= RETRY_WAITS_MS.length; attempt++) {
       if (attempt) await pause(RETRY_WAITS_MS[attempt - 1]);
       try {
-        const r = await fetch('https://web.archive.org/save/' + u, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
+        const r = await request('https://web.archive.org/save/' + u);
         console.log('archive ' + r.status + ' ' + u);
         if (r.ok) break;
       } catch (e) { console.log('archive failed ' + u + ': ' + describe(e)); }
@@ -242,7 +243,7 @@ async function main() {
     const doi = p.versions[p.versions.length - 1].doi;
     let oa = 'error';
     try {
-      const r = await fetch('https://api.openalex.org/works/https://doi.org/' + doi, { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' } });
+      const r = await request('https://api.openalex.org/works/https://doi.org/' + doi);
       oa = r.status === 404 ? null : r.ok ? fromOpenAlex(await r.json()) : 'error';
       if (oa === 'error') console.log('OpenAlex ' + doi + ': HTTP ' + r.status);
     } catch (e) { console.log('OpenAlex ' + doi + ': ' + describe(e)); }
@@ -262,7 +263,7 @@ async function main() {
   for (const u of archiveUrls(list)) {
     if (dry) break;
     try {
-      const r = await fetch('https://archive.org/wayback/available?url=' + encodeURIComponent(u), { headers: { 'User-Agent': 'Sophaxis (' + SITE.repo + ')' }, signal: AbortSignal.timeout(60000) });
+      const r = await request('https://archive.org/wayback/available?url=' + encodeURIComponent(u), { signal: AbortSignal.timeout(60000) });
       const c = ((await r.json()).archived_snapshots || {}).closest;
       console.log('latest copy ' + (c && c.available ? c.timestamp + ' ' + c.url : 'none') + ' for ' + u);
     } catch (e) { console.log('latest copy unknown for ' + u + ': ' + describe(e)); }

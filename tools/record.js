@@ -12,6 +12,7 @@
  *   PR=12 BRANCH=statutes/record TITLE="..." node tools/record.js
  */
 'use strict';
+const { request } = require('./ua.js');
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
@@ -38,8 +39,8 @@ function allowed(branch, changed) {
 const fillNumber = (log, n) => log.split('(#PR)').join('(#' + n + ')');
 
 async function github(method, p, body) {
-  const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
-    method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', 'User-Agent': 'record' },
+  const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
+    method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
   });
   if (!r.ok) throw new Error(method + ' ' + p + ': HTTP ' + r.status);

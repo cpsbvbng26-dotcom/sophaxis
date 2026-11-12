@@ -16,6 +16,7 @@
  * ORCID iD in their address, are not sent.
  */
 'use strict';
+const ua = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -24,7 +25,6 @@ const { execFileSync } = require('child_process');
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
-const UA = 'Sophaxis (' + SITE.repo + ')';
 /* IndexNow takes a key of 8 to 128 letters, digits and dashes. */
 const KEY_FORM = /^[A-Za-z0-9-]{8,128}$/;
 /* Vercel deploys a push in about a minute; wait up to ten. */
@@ -88,7 +88,7 @@ const pause = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function text(url) {
   try {
-    const r = await fetch(url, { headers: { 'User-Agent': UA }, cache: 'no-store' });
+    const r = await ua.request(url, { cache: 'no-store' });
     return r.ok ? await r.text() : null;
   } catch (e) {
     return null;
@@ -128,7 +128,7 @@ async function run() {
   const body = request(urls);
   if ((await text(body.keyLocation)) !== SITE.indexNowKey) throw new Error(body.keyLocation + ' does not serve the key; nothing was sent');
 
-  const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8', 'User-Agent': UA }, body: JSON.stringify(body) });
+  const r = await ua.request(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, body: JSON.stringify(body) });
   console.log('IndexNow: HTTP ' + r.status + ', ' + meaning(r.status));
   if (r.status !== 200 && r.status !== 202) throw new Error('IndexNow refused the request: ' + (await r.text()).slice(0, 300));
   /* The new and changed pages go to the Internet Archive too; a gone one never does. Sending everything leaves this to the weekly watch. */

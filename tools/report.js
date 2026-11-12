@@ -11,13 +11,13 @@
  * on declined submissions, and the records. Removal requests sent by email are not public, and are not counted here.
  */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
-const UA = 'Sophaxis (' + SITE.repo + ')';
 const REPO = SITE.repo.replace(/^https:\/\/github\.com\//, '');
 
 /* The reasons for declining, word for word as the Moderation Policy names them. */
@@ -69,9 +69,9 @@ function tally({ issues, records, year, asOf, owner }) {
 }
 
 async function get(url) {
-  const headers = { 'User-Agent': UA, Accept: 'application/vnd.github+json' };
+  const headers = { Accept: 'application/vnd.github+json' };
   if (process.env.GITHUB_TOKEN) headers.Authorization = 'Bearer ' + process.env.GITHUB_TOKEN;
-  const r = await fetch(url, { headers });
+  const r = await request(url, { headers });
   if (!r.ok) throw new Error(url.split('?')[0] + ': HTTP ' + r.status);
   return r.json();
 }
