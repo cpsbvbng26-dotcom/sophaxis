@@ -16350,8 +16350,20 @@
      "text": "Record"
     },
     {
+     "at": 374,
+     "text": "Sophaxis is an overlay preprint server for philosophy and mathematics, run by an independent researcher."
+    },
+    {
+     "at": 479,
+     "text": "Each record points to a deposit with a DOI (Zenodo, Figshare or OSF) and is listed after moderation, not peer review."
+    },
+    {
      "at": 619,
      "text": "authors"
+    },
+    {
+     "at": 639,
+     "text": "Each record has an unmodified PDF copy of the deposited file"
     },
     {
      "at": 791,
