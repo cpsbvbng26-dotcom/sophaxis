@@ -214,6 +214,14 @@ module.exports = { compile, cites, sections, kanji, jsonText, all };
  * - untraced: its source could not be fetched, and verification/citations.json lists it under `untraced`;
  * - named: its law is listed as referred to by name only (an error: a numbered citation of such a law);
  * - missing: none of these (an error). */
+/* A kept text: a law kept whole is a string; any other text is kept only in the parts that the repository quotes or relies on
+ * (tools/sources.js, `spans`), each with its place in the whole, and reads as those parts joined by " […] ". */
+const SEP = ' […] ';
+function kept(x) {
+  if (Array.isArray(x)) return x.map((s) => s.text).join(SEP);
+  return x === undefined || x === null ? '' : String(x);
+}
+
 function textOf(law, article, reg, statutes, texts, raw) {
   const L = reg.laws[law];
   if (!L) return null;
@@ -226,7 +234,7 @@ function textOf(law, article, reg, statutes, texts, raw) {
     return null;
   }
   const r = L.source && raw.sources[L.source];
-  if (r && r.articles && r.articles[article]) return { text: r.articles[article], from: L.source, flat: !!L.flatSuperscript };
+  if (r && r.articles && r.articles[article]) return { text: kept(r.articles[article]), from: L.source, flat: !!L.flatSuperscript, spans: Array.isArray(r.articles[article]) };
   return null;
 }
 
@@ -262,3 +270,5 @@ function trace(found, reg, statutes, texts, raw) {
 
 module.exports.trace = trace;
 module.exports.textOf = textOf;
+module.exports.kept = kept;
+module.exports.SEP = SEP;

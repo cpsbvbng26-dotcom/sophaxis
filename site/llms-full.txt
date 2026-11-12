@@ -131,7 +131,7 @@ Sophaxis is run by one person, and is planned so that it can stop without loss.
 - If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive, where every author of the work consents to it.
 - The code and the records are archived at Zenodo with each release, under a DOI that resolves to the latest version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371).
 - The operator may hand Sophaxis over to another person, to an institution or to a legal entity. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
-- Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
+- Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence. Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'.
 - The DOIs stay with the repositories that issued them, whatever happens to Sophaxis.
 
 ### If the operator cannot work
@@ -156,7 +156,7 @@ In particular, nothing in them excludes or limits liability for intent or gross 
 A dispute about Sophaxis or a listed work is settled by agreement wherever possible.
 
 1. Write to the operator first, by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in an issue if the matter can be public. Say what the dispute is about and what would settle it.
-2. Both sides then try, in good faith, to reach an agreement by talking. The operator answers within 7 days and does not leave a dispute without reply.
+2. Both sides then try, in good faith, to reach an agreement by talking. Until 2026-11-25, the operator answers within 7 days and does not leave a dispute without reply. From 2026-11-26, the operator aims to answer within 7 days and does not leave a dispute without reply; during a pause described under "Continuity" above, the answer waits until the pause ends.
 3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
 
 From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
@@ -894,6 +894,7 @@ Work on SSRN is accepted only if it carries one of the accepted licences.
 ## Licences of this site
 
 The text of this site is licensed under CC BY 4.0.
+Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'.
 The code is licensed under MIT.
 Each listed work keeps its own licence.
 
@@ -2033,6 +2034,7 @@ The code of each step is public, and each section links to it.
 - Copies the PDF of a listed record from its repository onto a branch of its own, for a pull request that the operator reviews.
 - Code: [tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js).
 - Fetches the texts of law, licences and terms that the legal pages cite, from their official sources, and writes the cited articles to `verification/sources-raw.json` on a new branch `sources/<date>`, never on main. The operator reads them before any quotation in `verification/sources.json` is taken from them.
+- Keeps laws whole. Of every other text, such as the terms of a service, a licence or a guidance page, it commits only the address, the day, the SHA-256 of the text as fetched and the parts that the repository quotes or relies on. The whole texts of the run are kept as an artifact of the run for 90 days, not in the repository. It fetches nothing directly from a site whose terms forbid automated requests or collection, such as SSRN, edX or DataCite's website; it reads the pages of such sites from the Internet Archive's copies.
 - Code: [tools/sources.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js), run by [sources.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml).
 
 ## What stays by hand
@@ -2413,7 +2415,7 @@ An adviser can leave at any time by saying so; their name then leaves the contac
 ## How to join
 
 Write to the operator by email, at the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), with your ORCID iD and a sentence on why you would like to advise.
-The operator decides whom to invite, and answers every message.
+The operator decides whom to invite. Until 2026-11-25, the operator answers every message. From 2026-11-26, the operator aims to answer every message within 7 days; during a pause under "Continuity" in the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html), the answer waits until the pause ends.
 Each adviser is named, with an ORCID iD, on the contact page, only after they agree to it.
 
 ## Conflicts of interest
@@ -3193,7 +3195,7 @@ Sophaxis は一人で運営しており、失うものなく止められるよ�
 - Sophaxis を閉じる場合、運営者は、すべての記録を収めたリポジトリを公開のまま残し、記録を読めるようにします。著者全員が同意した作品の頁と PDF の写しは、毎週 Internet Archive にも保存しています。
 - コードと記録は、版を出すたびに Zenodo に保存しています。いちばん新しい版を指す DOI は [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) です。
 - 運営者は、Sophaxis をほかの人、機関、または法人に引き継ぐことがあります。引き継ぎは先にサイトで告知し、新しい運営者が通常の手続きで変えるまで、この規約は効力を保ちます。
-- 誰でも、リポジトリを写し、そのライセンスのもとで、ほかの場所で作業を続けられます。文は CC BY 4.0、コードは MIT です。載っている作品は、それぞれ自身のライセンスを保ちます。
+- 誰でも、リポジトリを写し、そのライセンスのもとで、ほかの場所で作業を続けられます。文は CC BY 4.0、コードは MIT です。載っている作品は、それぞれ自身のライセンスを保ちます。このリポジトリが引き、または引用を確かめるために置いている他人の文は、CC BY 4.0 で許諾しておらず、それぞれの権利者のものです。
 - DOI は、Sophaxis に何があっても、それを発行した預け先に残ります。
 
 ### 運営者が作業できないとき
@@ -3218,7 +3220,7 @@ Sophaxis は一人で運営しており、失うものなく止められるよ�
 Sophaxis や載っている作品についての紛争は、できるかぎり合意で解決します。
 
 1. まず運営者に連絡します。運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスへ送るか、公開してよい事柄なら issue に書きます。何についての紛争か、何があれば解決するかを書きます。
-2. その後、双方が誠実に話し合い、合意を目指します。運営者は 7 日以内に答え、紛争を返事のないまま放置しません。
+2. その後、双方が誠実に話し合い、合意を目指します。2026-11-25 までは、運営者は 7 日以内に答え、紛争を返事のないまま放置しません。2026-11-26 からは、運営者は 7 日以内に答えることを目指し、紛争を返事のないまま放置しません。上の「続けるための備え」の休止のあいだは、答えは休止が終わるまで待ちます。
 3. 話し合いで 60 日以内に解決しない場合、どちらの側も、裁判の前に、日本の簡易裁判所の民事調停のような調停を申し出ることができます。
 
 2026-11-25 から、これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、宇都宮地方裁判所または宇都宮簡易裁判所を、第一審の合意管轄裁判所とします。この合意は専属的なものではありません。
@@ -3956,6 +3958,7 @@ SSRN の作品は、受け付けるライセンスのどれかを持つ場合に
 ## このサイトのライセンス
 
 このサイトの文は CC BY 4.0 で許諾しています。
+このリポジトリが引き、または引用を確かめるために置いている他人の文は、CC BY 4.0 で許諾しておらず、それぞれの権利者のものです。
 コードは MIT で許諾しています。
 載っている作品は、それぞれ自身のライセンスを保ちます。
 
@@ -4404,7 +4407,7 @@ Source: https://sophaxis.vercel.app/rules.ja.html
 
 # 規程の要点（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [The policies in brief](https://sophaxis.vercel.app/rules.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4414,7 +4417,7 @@ Source: https://sophaxis.vercel.app/rules.ja.html
 
 - 作品とその掲載の責任は、すべて著者が負います。受理はモデレーションであり、査読ではありません。
 - Sophaxis は何も保証しません。閉じるときは、運営者が動けない場合を除き、30 日以上前にトップの頁で知らせます。
-- 日本法が適用されます。争いは、できる限り話し合いで解決します。まず運営者に連絡し、運営者は 7 日以内に答えます。
+- 日本法が適用されます。争いは、できる限り話し合いで解決します。まず運営者に連絡します。2026-11-25 までは、運営者は 7 日以内に答えます。2026-11-26 からは、7 日以内に答えることを目指し、「続けるための備え」の休止のあいだは、答えは休止が終わるまで待ちます。
 - 全文：[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)
 
 ## 個人情報の取り扱い
@@ -5027,6 +5030,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 載っている記録の PDF を預け先から取り、専用のブランチに写します。運営者が見直すプルリクエストのためです。
 - コード：[tools/fetch_pdf.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/fetch_pdf.js)。
 - 法令の頁が引く法令・ライセンス・規約の文を、公式の出どころから取り寄せます。引かれた条を `verification/sources-raw.json` に書き、新しいブランチ `sources/<date>` に置きます。main には置きません。運営者は、それを読んでから、`verification/sources.json` の引用に使います。
+- 法令は丸ごと残します。サービスの規約・ライセンス・手引きの頁のような、ほかの文は、所在・日付・取り寄せた文の SHA-256 と、リポジトリが引くか拠る部分だけをコミットします。取り寄せた文の全体は、その実行の成果物として 90 日のあいだ残し、リポジトリには置きません。SSRN・edX・DataCite のサイトのように、規約が機械による要求や収集を禁じている所からは、直に取り寄せません。そうした所の頁は、Internet Archive の写しから読みます。
 - コード：[tools/sources.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/sources.js)。[sources.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/sources.yml) が動かします。
 
 ## 手で行うこと
@@ -5504,7 +5508,7 @@ Sophaxis には、編集委員会も諮問機関もありません。[透明性�
 ## 加わり方
 
 運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、ORCID iD と、助言したい理由を一文添えて、メールを送ります。
-だれを招くかは運営者が決め、すべてのメールに返事をします。
+だれを招くかは運営者が決めます。2026-11-25 までは、運営者はすべてのメールに返事をします。2026-11-26 からは、すべてのメールに 7 日以内に返事をすることを目指し、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「続けるための備え」の休止のあいだは、返事は休止が終わるまで待ちます。
 委員の名は ORCID iD とともに連絡先の頁に載せます。載せるのは、本人が同意したあとだけです。
 
 ## 利益相反

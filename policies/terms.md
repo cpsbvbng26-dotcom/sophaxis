@@ -123,7 +123,7 @@ Sophaxis is run by one person, and is planned so that it can stop without loss.
 - If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive, where every author of the work consents to it.
 - The code and the records are archived at Zenodo with each release, under a DOI that resolves to the latest version: [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371).
 - The operator may hand Sophaxis over to another person, to an institution or to a legal entity. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
-- Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
+- Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence. Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'.
 - The DOIs stay with the repositories that issued them, whatever happens to Sophaxis.
 
 ### If the operator cannot work
@@ -148,7 +148,7 @@ In particular, nothing in them excludes or limits liability for intent or gross 
 A dispute about Sophaxis or a listed work is settled by agreement wherever possible.
 
 1. Write to the operator first, by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or in an issue if the matter can be public. Say what the dispute is about and what would settle it.
-2. Both sides then try, in good faith, to reach an agreement by talking. The operator answers within 7 days and does not leave a dispute without reply.
+2. Both sides then try, in good faith, to reach an agreement by talking. Until 2026-11-25, the operator answers within 7 days and does not leave a dispute without reply. From 2026-11-26, the operator aims to answer within 7 days and does not leave a dispute without reply; during a pause described under "Continuity" above, the answer waits until the pause ends.
 3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
 
 From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
