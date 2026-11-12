@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-12",
+    "policies": ["privacy"],
+    "title": "The day from which each place is not offered, in the Privacy Policy",
+    "text": "The Privacy Policy said, of the Zenodo community and of the people in the other places that the Submission Policy lists, that the rule applies from 2026-11-22. The Submission Policy gives 2026-11-26 for 15 of the 43 places, as announced. The Privacy Policy now says that the rule applies from the date the Submission Policy gives for each place: 2026-11-22, or 2026-11-26 for 15 of them. Nothing that Sophaxis does changes, and no right is narrowed."
+  },
+  {
+    "date": "2026-11-12",
     "policies": ["copyright"],
     "from": "2026-11-13",
     "title": "PDFs are no longer copied by script from Figshare or Research Square",
