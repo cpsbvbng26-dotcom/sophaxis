@@ -255,7 +255,14 @@
       "en": [
         "Federal Act on Data Protection"
       ],
-      "source": "fadp"
+      "source": "fadp",
+      "ja": [
+        "スイスの連邦データ保護法"
+      ],
+      "place": [
+        "Switzerland",
+        "スイス"
+      ]
     },
     "ANPD Resolution 2/2022": {
       "en": [
@@ -307,9 +314,13 @@
         "Personal Data Protection Law"
       ],
       "place": [
-        "Saudi Arabia"
+        "Saudi Arabia",
+        "サウジアラビア"
       ],
-      "source": "saudi-pdpl"
+      "source": "saudi-pdpl",
+      "ja": [
+        "サウジアラビアの個人データ保護法"
+      ]
     },
     "India DPDP Act": {
       "en": [
@@ -334,9 +345,13 @@
         "Personal Information Protection Act"
       ],
       "place": [
-        "Korea"
+        "Korea",
+        "大韓民国"
       ],
-      "source": "korea-pipa"
+      "source": "korea-pipa",
+      "ja": [
+        "韓国の個人情報保護法"
+      ]
     },
     "Korea PIPA Decree": {
       "en": [
@@ -1120,13 +1135,6 @@
     "Egypt Law 151/2020": {
       "articles": [
         "3"
-      ],
-      "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
-      "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
-    },
-    "Monaco Law 1.565": {
-      "articles": [
-        "25"
       ],
       "why": "No official address of the text is known to tools/sources.js, so it was not fetched. The legal review gives what was read, and where.",
       "why_ja": "公式の文の所在を tools/sources.js が知らないため、取り寄せていません。何をどこで読んだかは、適法性の審査（docs/legal-review.md）にあります。"
