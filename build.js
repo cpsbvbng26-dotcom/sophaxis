@@ -1121,7 +1121,14 @@ function termsNotice(n = SITE.termsNotice) {
  * nationality or race, because a law there requires, or is reported to require, a representative, local storage or
  * registration (site.json "notOffered" and "scopeNotice"). */
 const placeList = (names) => names.length < 2 ? names.join('') : names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1];
-const notOfferedPlaces = (L = SITE.notOffered || []) => placeList(L.map((p) => p.place));
+/* A place added later carries its own day ("from" in site.json); it is named after the others, with that day. */
+const placeGroups = (L) => {
+  const later = {};
+  for (const p of L) if (p.from && p.from > SITE.residenceFrom) (later[p.from] = later[p.from] || []).push(p);
+  return [L.filter((p) => !p.from || p.from <= SITE.residenceFrom), Object.entries(later).sort()];
+};
+const notOfferedPlaces = (L = SITE.notOffered || []) => { const [first, later] = placeGroups(L); return placeList(first.map((p) => p.place)) + later.map(([d, ps]) => '; and, from ' + d + ', ' + placeList(ps.map((p) => p.place))).join(''); };
+const notOfferedPlacesJa = (L = SITE.notOffered || []) => { const [first, later] = placeGroups(L); return first.map((p) => p.ja).join('、') + later.map(([d, ps]) => '、' + d + ' からは' + ps.map((p) => p.ja).join('、')).join(''); };
 function scopeNotice(text = SITE.scopeNotice, L = SITE.notOffered || []) {
   return text ? `<div class="notice"><b>Not offered in ${L.length} places.</b> ${esc(text)} The places are ${esc(notOfferedPlaces(L))}. See the <a href="./policies/submission.html">Submission Policy</a>, which gives the law of each, and the <a href="./policies/privacy.html">Privacy Policy</a>.</div>\n` : '';
 }
@@ -1620,7 +1627,7 @@ function indexJaPage(papers, all = papers) {
 <h1>${esc(SITE.name)}：哲学と数学のプレプリント</h1>
 <p>${esc(SITE.name)} は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、${esc(SITE.name)} がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>
 <div class="notice">掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。${esc(SITE.name)} は、著者からも読者からも料金を取りません。</div>
-<div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(L.map((p) => p.ja).join('、'))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
+<div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
 ${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${esc(SITE.termsNotice.from)} から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
 ` : ''}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
@@ -2019,7 +2026,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

@@ -2719,16 +2719,18 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
   /* The list of places is kept once, in site.json; the policies, the README and the legal review must agree with it, counts included. */
   const L = JSON.parse(read(path.join(ROOT, 'site.json'))).notOffered;
   const cap = (t) => t[0].toUpperCase() + t.slice(1);
-  const readEn = (r) => r === true ? 'Yes' : r === 'in part' ? 'In part' : 'No, as reported', readJa = (r) => r === true ? '読んだ' : r === 'in part' ? '一部' : 'まだ（報告による）';
+  const readEn = (r) => r === true ? 'Yes' : r === 'in part' ? 'In part' : r === 'not fetched' ? 'No, not fetched' : 'No, as reported', readJa = (r) => r === true ? '読んだ' : r === 'in part' ? '一部' : r === 'not fetched' ? '取り寄せられない' : 'まだ（報告による）';
+  const fromOf = (p) => p.from || '2026-11-22';
   const sj = read(path.join(ROOT, 'policies', 'submission.ja.md')), readme = read(path.join(ROOT, 'README.md'));
   const rowsEn = sp.split('\n').filter((l) => /^\| (?!Place |---)/.test(l)), rowsJa = sj.split('\n').filter((l) => /^\| (?!国と地域 |---)/.test(l));
   ok('the Submission Policy, in both languages, has one row for each of the ' + L.length + ' places in site.json, with its law and whether it was read, and gives the count',
-    rowsEn.length === L.length && rowsJa.length === L.length && L.every((p, i) => rowsEn[i].startsWith('| ' + cap(p.place) + ' | ') && rowsEn[i].includes(' | ' + p.law + ' | ' + readEn(p.read) + ' |')
-      && rowsJa[i].startsWith('| ' + p.ja + ' | ') && rowsJa[i].endsWith(' | ' + p.lawJa + ' | ' + readJa(p.read) + ' |'))
+    rowsEn.length === L.length && rowsJa.length === L.length && L.every((p, i) => rowsEn[i].startsWith('| ' + cap(p.place) + ' | ') && rowsEn[i].endsWith(' | ' + p.law + ' | ' + readEn(p.read) + ' | ' + fromOf(p) + ' |')
+      && rowsJa[i].startsWith('| ' + p.ja + ' | ') && rowsJa[i].endsWith(' | ' + p.lawJa + ' | ' + readJa(p.read) + ' | ' + fromOf(p) + ' |'))
     && sp.includes('who lives in any of the ' + L.length + ' places in the table below, or who stays in one between the submission and the listing') && sj.includes('2026-11-22 から、著者のだれかが下の表の ' + L.length + ' の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。')
     && readme.includes('**Not offered in ' + L.length + ' places**') && readme.includes('- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない ' + L.length + ' の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。旅行・出張・留学のような短い滞在も含みます。'));
   const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
-  const reported = L.filter((p) => p.read !== true);
+  // The places of 2026-11-26, from the survey of the laws of 195 countries, are held by check 115.
+  const reported = L.filter((p) => p.read !== true && !p.from);
   const rsec = rv.slice(rv.indexOf('### Places not offered on a reported duty'), rv.indexOf('### Read at their sources after the screening'));
   const rrows = rsec.split('\n').filter((l) => /^\| (?!Place |---)/.test(l));
   /* Places of the screening read at their sources since: they leave the table above, stay on the list, and still count among the places added. */
@@ -3259,7 +3261,7 @@ console.log('\n84. The site in Japanese: the top page and every prose page');
     && en.includes('<a href="./index.ja.html" hreflang="ja" lang="ja">日本語</a>') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes(site.baseUrl + 'index.ja.html</loc>'));
   ok('it says that acceptance is moderation, not peer review, that nothing is charged, and where Sophaxis is not offered, with all ' + site.notOffered.length + ' places by their Japanese names',
     ja.includes('掲載はモデレーションであり、査読ではありません。') && ja.includes('著者からも読者からも料金を取りません。')
-    && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + site.notOffered.map((p) => p.ja).join('、') + '）に住んでいる著者') && ja.includes('国籍や人種ではなく'));
+    && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + require('../build.js').notOfferedPlacesJa() + '）に住んでいる著者') && site.notOffered.every((p) => ja.includes(p.ja)) && ja.includes('国籍や人種ではなく'));
   const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
   const jaPolicies = ['privacy', 'terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'];
   ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the lists stay in English and the records have Japanese pages',
@@ -3639,7 +3641,7 @@ console.log('\n94. The form in Japanese, subfields, a summary in plain words, an
     ids.filter((id) => id !== 'confirm').every((id) => { const e = I.parseIssue('### ' + label(en, id) + '\n\nx\n'), j = I.parseIssue('### ' + label(ja, id) + '\n\nx\n'); return Object.keys(e).includes(id) && Object.keys(j).includes(id); })
     && ja.includes('規程や様式の英語の文と食い違うときは、英語の文が適用されます。'));
   ok('the Japanese form names all ' + site.notOffered.length + ' places where Sophaxis is not offered, by their Japanese names, and India for authors under 18',
-    block(ja, 'residence').includes('（' + site.notOffered.map((p) => p.ja).join('、') + '）') && block(ja, 'residence').includes('インドに住んでいるか滞在している 18 歳未満の著者の作品も載せません。'));
+    block(ja, 'residence').includes('（' + require('../build.js').notOfferedPlacesJa() + '）') && site.notOffered.every((p) => block(ja, 'residence').includes(p.ja)) && block(ja, 'residence').includes('インドに住んでいるか滞在している 18 歳未満の著者の作品も載せません。'));
   const subs = Object.entries(site.subfields).flatMap(([c, d]) => Object.values(d).map((l) => site.categories[c] + ': ' + l));
   ok('both forms offer exactly the ' + subs.length + ' subfields of site.json, each under a category of site.json, and the intake takes one only within the chosen category',
     Object.keys(site.subfields).every((c) => site.categories[c]) && JSON.stringify(opts(block(en, 'subfield'))) === JSON.stringify(subs) && JSON.stringify(opts(block(ja, 'subfield'))) === JSON.stringify(subs)
@@ -4820,6 +4822,91 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
   ok('the checks fail on a changed text whose hash is not changed, an altered article of a whole law, a page that tools/sources.js does not name, an altered quotation, a wrong count, a wrong judgement, a fetched text listed as not fetched, a safer choice without its maker, an item without its reason, a lost safer wording, a lost notice, and a change announced less than 14 days ahead',
     hashProblems(rawBad1).length > 0 && hashProblems(rawBad2).length > 0 && hashProblems(rawBad3).length > 0 && hashProblems(RAW).length === 0
     && brokenAudit.every((b) => b !== audit && contProblems(b, pool).length > 0) && brokenSafer.every((a) => saferProblems(...a).length > 0));
+}
+
+/* ------------------------------------------------------------ 115 */
+console.log('\n115. The laws of 195 countries applied: fifteen more places from 2026-11-26, read at their sources or marked as not fetched, announced 14 days ahead, and the wording for New Zealand and Switzerland');
+{
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const PLACES = { Argentina: 'ar-25326', Colombia: 'co-1581', Ghana: 'gh-dpa', Korea: 'korea-pipa', Mexico: 'mx-lfpdppp', 'the Philippines': 'ph-dpa', 'Saudi Arabia': 'saudi-pdpl', Uruguay: 'uy-18331',
+    Zimbabwe: 'zw-dpa', Kenya: 'ke-dpa', Tanzania: null, 'South Africa': 'za-popia', Singapore: 'sg-pdpa', 'the United Arab Emirates': 'ae-pdpl', Qatar: 'qa-pdpl' };
+  const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+  const listedNow = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status === 'listed');
+  const problems = (c) => {
+    const bad = [];
+    const later = c.site.notOffered.filter((p) => p.from);
+    const n = later.length;
+    if (n !== Object.keys(PLACES).length || !Object.keys(PLACES).every((k) => later.some((p) => p.place === k && p.from === '2026-11-26'))) bad.push('the fifteen places of 2026-11-26 in site.json');
+    if (!later.every((p) => [true, 'in part', false, 'not fetched'].includes(p.read))) bad.push('a place with no state of reading');
+    // A place read at its source has its text fetched with status 200 and the articles its row cites; one not fetched has none.
+    for (const p of later) {
+      const key = PLACES[p.place], r = key && c.RAW.sources[key];
+      const arts = r ? Object.keys(r.articles || {}).filter((a) => a !== 'all') : [];
+      if ((p.read === true || p.read === 'in part') && (!r || r.status !== 200 || !arts.length)) bad.push(p.place + ' is said to be read, but its text was not fetched');
+      if (p.read === 'not fetched' && arts.length) bad.push(p.place + ' is said not to be fetched, but its articles were');
+      if (p.read === 'not fetched' && !/^not known/.test(p.requires)) bad.push(p.place + ': what its law requires is not known');
+    }
+    const e = c.changes.find((x) => x.from === '2026-11-26' && x.policies.includes('submission'));
+    if (!e || (Date.parse(e.from) - Date.parse(e.date)) / 86400000 < 14 || !later.every((p) => e.text.includes(p.place)) || !e.text.includes('in ' + n + ' more places')) bad.push('the change in the feed of policy changes, 14 days ahead');
+    if (!c.site.termsNotice.text.includes('From 2026-11-26, Sophaxis is also not offered in ' + n + ' more places') || !later.every((p) => c.site.termsNotice.text.includes(p.place))) bad.push('the notice on the top page');
+    if (!c.news.some((x) => x.date === e?.date && later.every((p) => x.text.includes(p.place)))) bad.push('the news');
+    const RULE = ['From 2026-11-26, the rule also covers two more kinds of duty that Sophaxis cannot meet.',
+      'One is a duty to give people there, before their personal data is collected, a postal address or a telephone number of the operator, which Sophaxis does not publish.',
+      'The other is a duty to process the personal data of a minor there only with a parent\'s consent that the service confirms, or not at all.',
+      'could not be read at its source, through its official address and one other route; the table gives such a place as "No, not fetched".',
+      'For the ' + n + ' places for which the table gives 2026-11-26, this applies from 2026-11-26.'];
+    if (!RULE.every((s) => c.sub.includes(s))) bad.push('the rule in the Submission Policy');
+    if (!c.subj.includes('表で 2026-11-26 とした ' + n + ' の国と地域については、2026-11-26 からです。') || !c.subj.includes('2026-11-26 から、決まりは、Sophaxis が満たせない務めをもう二つ含みます。') || !c.subj.includes('表では、そうした国と地域を「取り寄せられない」としています。')) bad.push('the rule in the Japanese Submission Policy');
+    const NZ = 'Section 22 of New Zealand\'s Privacy Act 2020, in its information privacy principle 12, lets personal information be disclosed abroad on the person\'s authorisation after the person is told this expressly';
+    const NZJ = 'ニュージーランドの 2020 年プライバシー法第 22 条の情報プライバシー原則 12 は、このことをはっきり告げたうえで本人が認めれば、国外への開示を許します。';
+    if (!c.pv.includes(NZ) || !c.pvj.includes(NZJ) || !c.pv.includes('which Article 17 of Switzerland\'s Federal Act on Data Protection allows.') || !c.pvj.includes('スイスの連邦データ保護法第 17 条がこれを認めています。')) bad.push('the wording for New Zealand and Switzerland in the Privacy Policy');
+    if (!c.form.includes('may not be required to protect personal data in a way that, overall, provides safeguards comparable to those of the law of the place where an author lives, such as New Zealand\'s Privacy Act 2020.') || !c.formj.includes('全体として同等の保護で個人データを守るよう求められていないことがあります。')) bad.push('the wording next to the consent in the forms');
+    // The legal review: one row for each place added, and the count in words.
+    const rsec = (c.rv.split('\n## The laws of 195 countries (2026-11-12)\n')[1] || '').split('\n## ')[0];
+    const rrows = rsec.split('\n').filter((l) => /^\| (?!Place |---)/.test(l));
+    const cap = (x) => x[0].toUpperCase() + x.slice(1);
+    if (!later.every((p) => rrows.some((r) => r.startsWith('| ' + cap(p.place) + ' | ') && r.includes('Added from 2026-11-26'))) || rrows.filter((r) => r.includes('Added from 2026-11-26')).length !== n || !rsec.includes('The ' + W[n] + ' places added are not offered from 2026-11-26')) bad.push('the rows of the legal review');
+    const HABEAS = ['Angola', 'Bolivia', 'Brazil', 'Colombia', 'Cape Verde', 'Cuba', 'Ecuador', 'Honduras', 'Mozambique', 'Nicaragua', 'Panama', 'Peru', 'Sweden', 'Venezuela'];
+    if (!rsec.includes('The survey also found 30 articles of constitutions') || !HABEAS.every((x) => rsec.includes(x))) bad.push('the constitutions on habeas data');
+    // The audit: six columns, five judgements counted, every place named, every narrowing decided and dated, every text not fetched listed.
+    const asec = (c.audit.split('\n## 2026-11-12 の続き：各国の法令の当てはめ\n')[1] || '').split('\n## ')[0];
+    const arows = asec.split('\n').filter((l) => /^\| (?!箇所 |---)/.test(l));
+    const JUD = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+    const judged = arows.map((r) => r.split(' | ')[4]);
+    const count = (k) => judged.filter((x) => x === k).length;
+    const tally = 'この表の判定は、' + JUD.filter((k) => count(k)).map((k) => k + ' ' + count(k)).join('、') + ' です。';
+    if (!arows.length || !arows.every((r) => r.split(' | ').length === 6 && JUD.includes(r.split(' | ')[4])) || !asec.includes(tally)) bad.push('the table of the audit and its tally');
+    if (!later.every((p) => asec.includes(p.ja))) bad.push('a place missing from the audit');
+    if (!arows.filter((r) => r.includes('提供しない国に足しました')).every((r) => r.includes('2026-11-12 に Claude が決めました。'))) bad.push('a narrowing without its maker');
+    const nf = asec.split('\n### 取り寄せられなかった文\n')[1] || '';
+    if (!later.filter((p) => p.read === 'not fetched' || (p.read === false && p.place !== 'Tanzania' && p.place !== 'Kenya') || p.place === 'Kenya' || p.place === 'Tanzania').every((p) => nf.split('\n### ')[0].includes(p.ja))) bad.push('a text not fetched that is not listed');
+    if (!asec.includes('いま載っている ' + c.listed.length + ' 件の記録は、どれも日本に住む運営者だけが著者で') || !c.listed.every((p) => (p.authors || []).every((a) => a.orcid === c.site.operator.orcid))) bad.push('the listed records');
+    if (!asec.includes('選び方は、2026-11-12 に Claude が決めました。') || !asec.includes('### 下げられずに残る危険')) bad.push('the rule of choice, or the risks that remain');
+    return bad;
+  };
+  const ctx = { site: J('site.json'), changes: J('data/policy-changes.json'), news: J('data/news.json'), sub: read(path.join(ROOT, 'policies', 'submission.md')), subj: read(path.join(ROOT, 'policies', 'submission.ja.md')),
+    pv: read(path.join(ROOT, 'policies', 'privacy.md')), pvj: read(path.join(ROOT, 'policies', 'privacy.ja.md')), form: read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')),
+    formj: read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission-ja.yml')), rv: read(path.join(ROOT, 'docs', 'legal-review.md')), audit: read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md')),
+    RAW: J('verification/sources-raw.json'), listed: listedNow };
+  const pr = problems(ctx);
+  ok('the ' + ctx.site.notOffered.filter((p) => p.from).length + ' places of 2026-11-26 are in site.json, the Submission Policy, the legal review and the audit, each read at its source or marked as not fetched as the fetched texts show, and announced on the top page, in the feed and in the news 14 days ahead',
+    pr.length === 0, pr.join(' / '));
+  // Breaking on purpose.
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const with_ = (k, v) => ({ ...ctx, [k]: v });
+  const s1 = clone(ctx.site); s1.notOffered = s1.notOffered.filter((p) => p.place !== 'Korea');
+  const s2 = clone(ctx.site); s2.notOffered.find((p) => p.place === 'Singapore').read = true;
+  const s3 = clone(ctx.site); s3.notOffered.find((p) => p.place === 'Argentina').read = 'not fetched';
+  const s4 = clone(ctx.site); s4.termsNotice.text = s4.termsNotice.text.replace('Saudi Arabia, ', '');
+  const c1 = clone(ctx.changes); c1.find((x) => x.from === '2026-11-26' && x.policies.includes('submission')).from = '2026-11-20';
+  const broken = [with_('site', s1), with_('site', s2), with_('site', s3), with_('site', s4), with_('changes', c1),
+    with_('sub', ctx.sub.replace('or a telephone number of the operator', 'of the operator')), with_('subj', ctx.subj.replace('表で 2026-11-26 とした 15 の', '表で 2026-11-26 とした 14 の')),
+    with_('pv', ctx.pv.replace('after the person is told this expressly', 'after the person agrees')), with_('formj', ctx.formj.replace('全体として同等の保護で', '同等の保護で')),
+    with_('rv', ctx.rv.replace('The fifteen places added', 'The fourteen places added')), with_('audit', ctx.audit.replace('この表の判定は、根拠不足 1、漏れ 12、', 'この表の判定は、根拠不足 1、漏れ 11、')),
+    with_('audit', ctx.audit.replace('| 根拠不足 | 2026-11-12 に Claude が決めました。読めない法令', '| 表現 | 読めない法令')), with_('audit', ctx.audit.replace('カタールの 2016 年法律第 13 号は、Al Meezan', 'Al Meezan')),
+    with_('listed', ctx.listed.concat([{ authors: [{ orcid: '0000-0002-1825-0097' }] }]))];
+  ok('the check fails on a place dropped, a text said to be read that was not, a text fetched said not to be, a place left out of the notice, a change announced less than 14 days ahead, a lost duty, a wrong count, a lost word for New Zealand, a wrong count in the review or the audit, a narrowing without its maker, a text not fetched left unlisted, and a listed record by another author',
+    broken.every((b) => problems(b).length > 0));
 }
 
 console.log('\n' + '-'.repeat(60));

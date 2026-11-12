@@ -441,6 +441,236 @@
       "url": "http://www.kremlin.ru/acts/bank/24154",
       "lang": "ru",
       "quote": "При сборе персональных данных, в том числе посредством информационно-телекоммуникационной сети \"Интернет\", запись, систематизация, накопление, хранение, уточнение (обновление, изменение), извлечение персональных данных граждан Российской Федерации с использованием баз данных, находящихся за пределами территории Российской Федерации, не допускаются, за исключением случаев, указанных в пунктах 2, 3, 4, 8 части 1 статьи 6 настоящего Федерального закона."
+    },
+    "Monaco Law 1.565 25": {
+      "law": "Monaco Law 1.565",
+      "article": "25",
+      "from": "mc-1565",
+      "name": "Law No. 1.565 of 3 December 2024 on the protection of personal data (Monaco), Article 25",
+      "name_ja": "個人データの保護に関する 2024 年 12 月 3 日の法律第 1.565 号（モナコ）第 25 条",
+      "url": "https://legimonaco.mc/tnc/loi/2024/12-03-1.565/",
+      "lang": "fr",
+      "quote": "Lorsque le traitement concerne le second tiret du chiffre 1 de l'article 3, le responsable du traitement ou le sous-traitant désigne par tous moyens écrits un représentant dans la Principauté de Monaco ou, à défaut, au sein d'un État membre de l'Union européenne. Ce dernier est mandaté pour être le contact des personnes concernées par le traitement et de l'autorité de protection à qui elles peuvent s'adresser pour toutes questions. Cette obligation ne s'applique pas : à un traitement occasionnel, qui n'implique pas un traitement à grande échelle de données sensibles"
+    },
+    "Argentina Law 25.326 6": {
+      "law": "Argentina Law 25.326",
+      "article": "6",
+      "from": "ar-25326",
+      "name": "Law No. 25.326 on the Protection of Personal Data (Argentina), Article 6(b)",
+      "name_ja": "個人データ保護法（アルゼンチン、法律第 25.326 号）第 6 条 b",
+      "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/texact.htm",
+      "lang": "es",
+      "quote": "Cuando se recaben datos personales se deberá informar previamente a sus titulares en forma expresa y clara: a) La finalidad para la que serán tratados y quiénes pueden ser sus destinatarios o clase de destinatarios; b) La existencia del archivo, registro, banco de datos, electrónico o de cualquier otro tipo, de que se trate y la identidad y domicilio de su responsable;"
+    },
+    "Argentina Law 25.326 12": {
+      "law": "Argentina Law 25.326",
+      "article": "12",
+      "from": "ar-25326",
+      "name": "Law No. 25.326 on the Protection of Personal Data (Argentina), Article 12(1)",
+      "name_ja": "個人データ保護法（アルゼンチン、法律第 25.326 号）第 12 条第 1 項",
+      "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/texact.htm",
+      "lang": "es",
+      "quote": "1. Es prohibida la transferencia de datos personales de cualquier tipo con países u organismos internacionales o supranacionales, que no propocionen niveles de protección adecuados."
+    },
+    "Argentina Law 25.326 21": {
+      "law": "Argentina Law 25.326",
+      "article": "21",
+      "from": "ar-25326",
+      "name": "Law No. 25.326 on the Protection of Personal Data (Argentina), Article 21(1)",
+      "name_ja": "個人データ保護法（アルゼンチン、法律第 25.326 号）第 21 条第 1 項",
+      "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/texact.htm",
+      "lang": "es",
+      "quote": "1. Todo archivo, registro, base o banco de datos público, y privado destinado a proporcionar informes debe inscribirse en el Registro que al efecto habilite el organismo de control."
+    },
+    "Uruguay Law 18.331 3": {
+      "law": "Uruguay Law 18.331",
+      "article": "3",
+      "from": "uy-18331",
+      "name": "Law No. 18.331 on the Protection of Personal Data (Uruguay), Article 3",
+      "name_ja": "個人データ保護法（ウルグアイ、法律第 18.331 号）第 3 条",
+      "url": "https://www.impo.com.uy/bases/leyes/18331-2008",
+      "lang": "es",
+      "quote": "El régimen de la presente ley será de aplicación a los datos personales registrados en cualquier soporte que los haga susceptibles de tratamiento, y a toda modalidad de uso posterior de estos datos por los ámbitos público o privado."
+    },
+    "Uruguay Law 18.331 13": {
+      "law": "Uruguay Law 18.331",
+      "article": "13",
+      "from": "uy-18331",
+      "name": "Law No. 18.331 on the Protection of Personal Data (Uruguay), Article 13(B)",
+      "name_ja": "個人データ保護法（ウルグアイ、法律第 18.331 号）第 13 条 B",
+      "url": "https://www.impo.com.uy/bases/leyes/18331-2008",
+      "lang": "es",
+      "quote": "Cuando se recaben datos personales se deberá informar previamente a sus titulares en forma expresa, precisa e inequívoca: A) La finalidad para la que serán tratados y quiénes pueden ser sus destinatarios o clase de destinatarios. B) La existencia de la base de datos, electrónico o de cualquier otro tipo, de que se trate, la identidad y domicilio de su responsable."
+    },
+    "Uruguay Law 18.331 29": {
+      "law": "Uruguay Law 18.331",
+      "article": "29",
+      "from": "uy-18331",
+      "name": "Law No. 18.331 on the Protection of Personal Data (Uruguay), Article 29",
+      "name_ja": "個人データ保護法（ウルグアイ、法律第 18.331 号）第 29 条",
+      "url": "https://www.impo.com.uy/bases/leyes/18331-2008",
+      "lang": "es",
+      "quote": "Toda base de datos pública o privada debe inscribirse en el Registro que al efecto habilite el Organo de Control, de acuerdo a los criterios reglamentarios que se establezcan."
+    },
+    "Colombia Law 1581 7": {
+      "law": "Colombia Law 1581",
+      "article": "7",
+      "from": "co-1581",
+      "name": "Law 1581 of 2012 (Colombia), Article 7",
+      "name_ja": "2012 年法律第 1581 号（コロンビア）第 7 条",
+      "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html",
+      "lang": "es",
+      "quote": "Queda proscrito el Tratamiento de datos personales de niños, niñas y adolescentes, salvo aquellos datos que sean de naturaleza pública."
+    },
+    "Colombia Law 1581 12": {
+      "law": "Colombia Law 1581",
+      "article": "12",
+      "from": "co-1581",
+      "name": "Law 1581 of 2012 (Colombia), Article 12(d)",
+      "name_ja": "2012 年法律第 1581 号（コロンビア）第 12 条 d",
+      "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html",
+      "lang": "es",
+      "quote": "El Responsable del Tratamiento, al momento de solicitar al Titular la autorización, deberá informarle de manera clara y expresa lo siguiente: a) El Tratamiento al cual serán sometidos sus datos personales y la finalidad del mismo; b) El carácter facultativo de la respuesta a las preguntas que le sean hechas, cuando estas versen sobre datos sensibles o sobre los datos de las niñas, niños y adolescentes; c) Los derechos que le asisten como Titular; d) La identificación, dirección física o electrónica y teléfono del Responsable del Tratamiento."
+    },
+    "Mexico LFPDPPP 1": {
+      "law": "Mexico LFPDPPP",
+      "article": "1",
+      "from": "mx-lfpdppp",
+      "name": "Federal Law on the Protection of Personal Data Held by Private Parties (Mexico), Article 1",
+      "name_ja": "私人が保有する個人データの保護に関する連邦法（メキシコ）第 1 条",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf",
+      "lang": "es",
+      "quote": "La presente Ley es de orden público y de observancia general en todo el territorio nacional y tiene por objeto la protección de los datos personales en posesión de los particulares"
+    },
+    "Mexico LFPDPPP 15": {
+      "law": "Mexico LFPDPPP",
+      "article": "15",
+      "from": "mx-lfpdppp",
+      "name": "Federal Law on the Protection of Personal Data Held by Private Parties (Mexico), Article 15(I)",
+      "name_ja": "私人が保有する個人データの保護に関する連邦法（メキシコ）第 15 条第 I 号",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf",
+      "lang": "es",
+      "quote": "El aviso de privacidad deberá contener, al menos, la siguiente información: I. La identidad y domicilio del responsable;"
+    },
+    "Ghana DPA 2012 45": {
+      "law": "Ghana DPA 2012",
+      "article": "45",
+      "from": "gh-dpa",
+      "name": "Data Protection Act, 2012 (Act 843) (Ghana), section 45(1)",
+      "name_ja": "2012 年データ保護法（ガーナ、法律第 843 号）第 45 条第 1 項",
+      "url": "https://dpc.gov.gh/wp-content/uploads/2025/05/data-protection-act-2012-act-843.pdf",
+      "lang": "en",
+      "quote": "(1) Except as otherwise provided, this Act applies to a data control- ler in respect of data where (a) the data controller is established in this country and the data is processed in this country, (b) the data controller is not established in this country but uses equipment or a data processor carrying on business in this country to process the data, or (c) processing is in respect of information which originates partly or wholly from this country."
+    },
+    "Ghana DPA 2012 46": {
+      "law": "Ghana DPA 2012",
+      "article": "46",
+      "from": "gh-dpa",
+      "name": "Data Protection Act, 2012 (Act 843) (Ghana), section 46(3)",
+      "name_ja": "2012 年データ保護法（ガーナ、法律第 843 号）第 46 条第 3 項",
+      "url": "https://dpc.gov.gh/wp-content/uploads/2025/05/data-protection-act-2012-act-843.pdf",
+      "lang": "en",
+      "quote": "(3) A data controller shall register with the Commission."
+    },
+    "Ghana DPA 2012 53": {
+      "law": "Ghana DPA 2012",
+      "article": "53",
+      "from": "gh-dpa",
+      "name": "Data Protection Act, 2012 (Act 843) (Ghana), section 53",
+      "name_ja": "2012 年データ保護法（ガーナ、法律第 843 号）第 53 条",
+      "url": "https://dpc.gov.gh/wp-content/uploads/2025/05/data-protection-act-2012-act-843.pdf",
+      "lang": "en",
+      "quote": "A data controller who has not been registered under this Act shall not process personal data."
+    },
+    "Korea PIPA 22-2": {
+      "law": "Korea PIPA",
+      "article": "22-2",
+      "from": "korea-pipa",
+      "name": "Personal Information Protection Act (Korea; KLRI's English translation), Article 22-2(1)",
+      "name_ja": "個人情報保護法（大韓民国、韓国法制研究院の英訳）第 22 条の 2 第 1 項",
+      "url": "https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389",
+      "lang": "en",
+      "quote": "(1) When the consent of a child under 14 years of age is required to process the personal information of such child, a personal information controller shall obtain the consent of his or her legal representative and confirm whether the legal representative has granted consent."
+    },
+    "Korea PIPA 28-8": {
+      "law": "Korea PIPA",
+      "article": "28-8",
+      "from": "korea-pipa",
+      "name": "Personal Information Protection Act (Korea; KLRI's English translation), Article 28-8(2)",
+      "name_ja": "個人情報保護法（大韓民国、韓国法制研究院の英訳）第 28 条の 8 第 2 項",
+      "url": "https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389",
+      "lang": "en",
+      "quote": "(2) A personal information controller shall inform data subjects of the following matters in advance when obtaining consent under paragraph (1) 1: 1. Particulars of the personal information to be transferred; 2. The country to which the personal information is transferred, transfer date, and method; 3. Name of the recipient of personal information (referring to the name of a corporation and the contact information of the corporation, if the recipient is a corporation); 4. The purpose of using personal information by the recipient of personal information and the period of retention and use of personal information; 5. The method and procedure for refusing the transfer of personal information and the effect of such refusal."
+    },
+    "Saudi PDPL 29": {
+      "law": "Saudi PDPL",
+      "article": "29",
+      "from": "saudi-pdpl",
+      "name": "Personal Data Protection Law (Saudi Arabia; SDAIA's English translation), Article 29",
+      "name_ja": "個人データ保護法（サウジアラビア、SDAIA の英訳）第 29 条",
+      "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/Personal%20Data%20English%20V2-23April2023-%20Reviewed-.pdf",
+      "lang": "en",
+      "quote": "2-The conditions that must be met when there is a Transfer or Disclosure of Personal Data, according to what is stated in Paragraph (1) of this Article, are as follows: A. The Transfer or Disclosure shall not cause any prejudice to national security or the vital interests of the Kingdom. B. There is an adequate level of protection for Personal Data outside the Kingdom. Such level of protection shall be at least equivalent to the level of protection guaranteed by the Law and Regulations, according to the results of an assessment conducted by the Competent Authority in coordination with whomever it deems appropriate from the other relevant authorities."
+    },
+    "Philippines DPA 2012 6": {
+      "law": "Philippines DPA 2012",
+      "article": "6",
+      "from": "ph-dpa",
+      "name": "Data Privacy Act of 2012 (the Philippines), section 6",
+      "name_ja": "2012 年データプライバシー法（フィリピン）第 6 条",
+      "url": "https://privacy.gov.ph/data-privacy-act/",
+      "lang": "en",
+      "quote": "This Act applies to an act done or practice engaged in and outside of the Philippines by an entity if: (a) The act, practice or processing relates to personal information about a Philippine citizen or a resident;"
+    },
+    "Philippines DPA 2012 21": {
+      "law": "Philippines DPA 2012",
+      "article": "21",
+      "from": "ph-dpa",
+      "name": "Data Privacy Act of 2012 (the Philippines), section 21(a)",
+      "name_ja": "2012 年データプライバシー法（フィリピン）第 21 条 a",
+      "url": "https://privacy.gov.ph/data-privacy-act/",
+      "lang": "en",
+      "quote": "(a) The personal information controller is accountable for complying with the requirements of this Act and shall use contractual or other reasonable means to provide a comparable level of protection while the information are being processed by a third party."
+    },
+    "Zimbabwe DPA 4": {
+      "law": "Zimbabwe DPA",
+      "article": "4",
+      "from": "zw-dpa",
+      "name": "Cyber and Data Protection Act [Chapter 12:07] (Zimbabwe), section 4(2)(a), as ZimLII gives it",
+      "name_ja": "サイバー・データ保護法（ジンバブエ、第 12 章 07）第 4 条第 2 項 a（ZimLII の写し）",
+      "url": "https://zimlii.org/akn/zw/act/2021/5",
+      "lang": "en",
+      "quote": "(2) Subject to subsection (1) this Act shall be applicable— (a) to the processing of data carried out in the context of the effective and actual activities of any data controller;"
+    },
+    "Zimbabwe DPA 28": {
+      "law": "Zimbabwe DPA",
+      "article": "28",
+      "from": "zw-dpa",
+      "name": "Cyber and Data Protection Act [Chapter 12:07] (Zimbabwe), section 28(1), as ZimLII gives it",
+      "name_ja": "サイバー・データ保護法（ジンバブエ、第 12 章 07）第 28 条第 1 項（ZimLII の写し）",
+      "url": "https://zimlii.org/akn/zw/act/2021/5",
+      "lang": "en",
+      "quote": "(1) Subject to the provisions of this Act, a data controller may not transfer personal information about a data subject to a third party who is in a foreign country unless an adequate level of protection is ensured in the country of the recipient or within the recipient international organisation and the data is transferred solely to allow tasks covered by the competence of the controller to be carried out."
+    },
+    "New Zealand Privacy Act 2020 22": {
+      "law": "New Zealand Privacy Act 2020",
+      "article": "22",
+      "from": "nz-privacy",
+      "name": "Privacy Act 2020 (New Zealand), section 22, information privacy principle 12(1)(a), as the Internet Archive kept it on 2026-09-26",
+      "name_ja": "2020 年プライバシー法（ニュージーランド）第 22 条、情報プライバシー原則 12 第 1 項 a（Internet Archive の 2026-09-26 の写し）",
+      "url": "https://www.legislation.govt.nz/act/public/2020/0031/latest/whole.html",
+      "lang": "en",
+      "quote": "Information privacy principle 12 Disclosure of personal information outside New Zealand (1) An agency ( A) may disclose personal information to a foreign person or entity ( B) in reliance on IPP 11(1) (a), (c), (e), (f), (h), or (i) only if— (a) the individual concerned authorises the disclosure to B after being expressly informed by A that B may not be required to protect the information in a way that, overall, provides comparable safeguards to those in this Act;"
+    },
+    "Swiss FADP 17": {
+      "law": "Swiss FADP",
+      "article": "17",
+      "from": "fadp",
+      "name": "Federal Act on Data Protection (Switzerland; Fedlex's English translation, which has no legal force), Article 17(1)(a)",
+      "name_ja": "連邦データ保護法（スイス、Fedlex の英訳、法的効力のない訳）第 17 条第 1 項 a",
+      "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2022/491/20230901/en/html/fedlex-data-admin-ch-eli-cc-2022-491-20230901-en-html-5.html",
+      "lang": "en",
+      "quote": "1 In derogation from Article 16 paragraphs 1 and 2, personal data may be disclosed abroad in the following cases: a. The data subject has explicitly consented to disclosure."
     }
   }
 }

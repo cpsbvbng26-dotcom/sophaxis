@@ -27,7 +27,8 @@ From 2026-11-21, a person under 13 cannot submit.
 A submitter under 18 needs the consent of a parent or guardian.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
-From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 28 places in the table below, or who stays in one between the submission and the listing, and the submitter confirms this in the form.
+From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 43 places in the table below, or who stays in one between the submission and the listing, and the submitter confirms this in the form.
+For the 15 places for which the table gives 2026-11-26, this applies from 2026-11-26.
 A stay counts even if it is short, such as for travel, work or study.
 Stays count because the laws of several of these places reach people who are there, not only people who live there; Article 3(2) of the GDPR, for example, speaks of data subjects who are in the Union.
 Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](./privacy.md) says more.
@@ -35,43 +36,62 @@ This rule depends only on where an author lives or stays, not on nationality, ra
 An author of any nationality who lives elsewhere and does not stay there can submit, and an author who lives or stays there cannot, whatever their nationality.
 The reasons are laws that require a local representative, the storage of personal data in the country, or registration there (among them Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act; Article 53 of China's Personal Information Protection Law; section 37(5) of Thailand's Personal Data Protection Act), which Sophaxis, run unpaid by one person within free services, does not have; the operator has decided not to appoint a representative, as the Privacy Policy explains.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
+From 2026-11-26, the rule also covers two more kinds of duty that Sophaxis cannot meet.
+One is a duty to give people there, before their personal data is collected, a postal address or a telephone number of the operator, which Sophaxis does not publish.
+The other is a duty to process the personal data of a minor there only with a parent's consent that the service confirms, or not at all.
+From the same day, a place is also not offered when its data protection law, found by a survey of the laws of 195 countries made on 2026-11-12, could not be read at its source, through its official address and one other route; the table gives such a place as "No, not fetched".
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
 Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
 If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md), and the operator reviews the decision on a representative.
 
-| Place | What the law requires | Law | Read at its source |
-| --- | --- | --- | --- |
-| The European Union | A representative | GDPR Article 27; Digital Services Act Article 13 | Yes |
-| The European Economic Area | A representative | GDPR Article 27, as applied in the EEA | Yes |
-| The United Kingdom | A representative | UK GDPR Article 27 | Yes |
-| China | A representative | Personal Information Protection Law, Article 53 | Yes |
-| Thailand | A representative | Personal Data Protection Act, section 37(5) | Yes |
-| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes |
-| Türkiye | Registration through a representative there | Regulation on the Data Controllers' Registry | No, as reported |
-| Egypt | A representative and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 | No, as reported |
-| Peru | A representative | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) | No, as reported |
-| Albania | A representative | Law No. 124/2024 on Personal Data Protection | No, as reported |
-| Monaco | A representative | Law No. 1.565, Article 25 | No, as reported |
-| Guernsey | A representative | Data Protection (Bailiwick of Guernsey) Law, 2017 | No, as reported |
-| Botswana | A representative | Data Protection Act 2024, section 54 | No, as reported |
-| Ecuador | A representative | Regulation of the Organic Law on Personal Data Protection, Article 3 | No, as reported |
-| Iraq | Notice to the regulator before the service starts | Framework Regulations for Digital Platforms and Services (2025), Articles 4 and 5 | Yes |
-| Indonesia | Registration | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended | No, as reported |
-| Rwanda | Registration and storage of personal data there | Law No. 058/2021, Articles 2, 29 and 50 | Yes |
-| Zambia | Registration and storage of personal data there | Data Protection Act 2021, sections 19 and 70 | No, as reported |
-| Ethiopia | Storage of personal data there | Personal Data Protection Proclamation No. 1321/2024 | No, as reported |
-| The Democratic Republic of the Congo | Storage of personal data there and an authorisation | Ordonnance-loi No. 23/010 (Digital Code), Articles 184, 186, 188 and 201 (read in a copy that is not the official journal) | In part |
-| Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Articles 3 and 12(2) | Yes |
-| Tunisia | A declaration by a controller who resides there | Organic Law No. 2004-63 | No, as reported |
-| Uganda | Registration | Data Protection and Privacy Act 2019, section 29 | No, as reported |
-| Guinea | Storage of personal data there | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection | No, as reported |
-| Madagascar | Storage of personal data there | Law No. 2014-038 on Personal Data Protection | No, as reported |
-| Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported |
-| Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported |
-| Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported |
+| Place | What the law requires | Law | Read at its source | From |
+| --- | --- | --- | --- | --- |
+| The European Union | A representative | GDPR Article 27; Digital Services Act Article 13 | Yes | 2026-11-22 |
+| The European Economic Area | A representative | GDPR Article 27, as applied in the EEA | Yes | 2026-11-22 |
+| The United Kingdom | A representative | UK GDPR Article 27 | Yes | 2026-11-22 |
+| China | A representative | Personal Information Protection Law, Article 53 | Yes | 2026-11-22 |
+| Thailand | A representative | Personal Data Protection Act, section 37(5) | Yes | 2026-11-22 |
+| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes | 2026-11-22 |
+| Türkiye | Registration through a representative there | Regulation on the Data Controllers' Registry | No, as reported | 2026-11-22 |
+| Egypt | A representative and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 | No, as reported | 2026-11-22 |
+| Peru | A representative | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) | No, as reported | 2026-11-22 |
+| Albania | A representative | Law No. 124/2024 on Personal Data Protection | No, as reported | 2026-11-22 |
+| Monaco | A representative | Law No. 1.565, Article 25 | Yes | 2026-11-22 |
+| Guernsey | A representative | Data Protection (Bailiwick of Guernsey) Law, 2017 | No, as reported | 2026-11-22 |
+| Botswana | A representative | Data Protection Act 2024, section 54 | No, as reported | 2026-11-22 |
+| Ecuador | A representative | Regulation of the Organic Law on Personal Data Protection, Article 3 | No, as reported | 2026-11-22 |
+| Iraq | Notice to the regulator before the service starts | Framework Regulations for Digital Platforms and Services (2025), Articles 4 and 5 | Yes | 2026-11-22 |
+| Indonesia | Registration | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended | No, as reported | 2026-11-22 |
+| Rwanda | Registration and storage of personal data there | Law No. 058/2021, Articles 2, 29 and 50 | Yes | 2026-11-22 |
+| Zambia | Registration and storage of personal data there | Data Protection Act 2021, sections 19 and 70 | No, as reported | 2026-11-22 |
+| Ethiopia | Storage of personal data there | Personal Data Protection Proclamation No. 1321/2024 | No, as reported | 2026-11-22 |
+| The Democratic Republic of the Congo | Storage of personal data there and an authorisation | Ordonnance-loi No. 23/010 (Digital Code), Articles 184, 186, 188 and 201 (read in a copy that is not the official journal) | In part | 2026-11-22 |
+| Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Articles 3 and 12(2) | Yes | 2026-11-22 |
+| Tunisia | A declaration by a controller who resides there | Organic Law No. 2004-63 | No, as reported | 2026-11-22 |
+| Uganda | Registration | Data Protection and Privacy Act 2019, section 29 | No, as reported | 2026-11-22 |
+| Guinea | Storage of personal data there | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection | No, as reported | 2026-11-22 |
+| Madagascar | Storage of personal data there | Law No. 2014-038 on Personal Data Protection | No, as reported | 2026-11-22 |
+| Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported | 2026-11-22 |
+| Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported | 2026-11-22 |
+| Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported | 2026-11-22 |
+| Argentina | Registration of its databases, the operator's postal address before personal data is collected, and an adequate level of protection before personal data leaves it | Law No. 25.326, Articles 6, 12 and 21 | Yes | 2026-11-26 |
+| Colombia | The operator's telephone number before personal data is collected, and no processing of the personal data of minors | Law 1581 of 2012, Articles 7 and 12 | Yes | 2026-11-26 |
+| Ghana | Registration | Data Protection Act, 2012 (Act 843), sections 45, 46 and 53 | Yes | 2026-11-26 |
+| Korea | A parent's consent, confirmed, for a child under 14, and, for consent to a transfer abroad, each recipient's period of retention | Personal Information Protection Act, Articles 22-2 and 28-8 | Yes | 2026-11-26 |
+| Mexico | The operator's postal address in the privacy notice | Federal Law on the Protection of Personal Data Held by Private Parties, Articles 1 and 15 | Yes | 2026-11-26 |
+| The Philippines | A comparable level of protection by every recipient | Data Privacy Act of 2012, sections 6 and 21 | Yes | 2026-11-26 |
+| Saudi Arabia | Conditions before personal data leaves it | Personal Data Protection Law, Article 29 | Yes | 2026-11-26 |
+| Uruguay | Registration of its databases, and the operator's postal address before personal data is collected | Law No. 18.331, Articles 3, 13 and 29 | Yes | 2026-11-26 |
+| Zimbabwe | An adequate level of protection before personal data leaves it | Cyber and Data Protection Act [Chapter 12:07], sections 4 and 28 (read in a copy that is not the official journal) | In part | 2026-11-26 |
+| Kenya | Registration | Data Protection Act 2019 | No, as reported | 2026-11-26 |
+| Tanzania | Registration | Personal Data Protection Act, 2022 | No, as reported | 2026-11-26 |
+| South Africa | Not known: its data protection law could not be read | Protection of Personal Information Act 4 of 2013 | No, not fetched | 2026-11-26 |
+| Singapore | Not known: its data protection law could not be read | Personal Data Protection Act 2012 | No, not fetched | 2026-11-26 |
+| The United Arab Emirates | Not known: its data protection law could not be read | Federal Decree-Law No. 45 of 2021 | No, not fetched | 2026-11-26 |
+| Qatar | Not known: its data protection law could not be read | Law No. 13 of 2016 | No, not fetched | 2026-11-26 |
 
-<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17 -->
+<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17; Argentina Law 25.326 6; Argentina Law 25.326 12; Argentina Law 25.326 21; Colombia Law 1581 7; Colombia Law 1581 12; Ghana DPA 2012 45; Ghana DPA 2012 46; Ghana DPA 2012 53; Korea PIPA 22-2; Korea PIPA 28-8; Mexico LFPDPPP 1; Mexico LFPDPPP 15; Philippines DPA 2012 6; Philippines DPA 2012 21; Saudi PDPL 29; Uruguay Law 18.331 3; Uruguay Law 18.331 13; Uruguay Law 18.331 29; Zimbabwe DPA 4; Zimbabwe DPA 28 -->
 
 ## What can be submitted
 

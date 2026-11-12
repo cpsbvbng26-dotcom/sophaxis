@@ -583,7 +583,7 @@ The agreement also covers the provision of the author's personal data that the [
 Saving to the Internet Archive is a separate consent, given in the form above or not at all.
 Any author can withdraw a consent at any time, by the removal form or by email.
 Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
-From ${SITE.residenceFrom}, Sophaxis does not list work by an author who lives in any of these places, or who stays in one between the submission and the listing, even briefly: ${(SITE.notOffered || []).map((p) => p.place).join(', ')}.
+From ${SITE.residenceFrom}, Sophaxis does not list work by an author who lives in any of these places, or who stays in one between the submission and the listing, even briefly: ${(SITE.notOffered || []).map((p) => p.place + (p.from && p.from > SITE.residenceFrom ? ' (from ' + p.from + ')' : '')).join(', ')}.
 Nor does it list work by an author under 18 who lives or stays in India.
 `;
 }
