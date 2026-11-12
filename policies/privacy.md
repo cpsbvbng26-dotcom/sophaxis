@@ -95,7 +95,7 @@ Earlier versions stay in the history of the public repository and in the saves o
 
 The records are offered for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`.
 Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there.
-The OAI-PMH interface gives an email address made for harvesters, because the protocol requires one.
+The OAI-PMH interface gives the same email address as the operator's ORCID record, because the protocol requires one.
 Requests about personal data go to the address on the operator's ORCID record, as below.
 The pages and the PDF copies of a work whose authors consent to it are saved to the Internet Archive.
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
