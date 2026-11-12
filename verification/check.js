@@ -4926,6 +4926,141 @@ console.log('\n115. The laws of 195 countries applied: fifteen more places from 
     broken.every((b) => problems(b).length > 0));
 }
 
+/* ------------------------------------------------------------ 116 */
+console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct requests where terms forbid them, texts by others kept only in parts, and the reply time an aim from 2026-11-26');
+{
+  const S = require('../tools/sources.js');
+  const kept = require('../tools/citations.js').kept;
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const RAW = J('verification/sources-raw.json');
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  /* Pure: every address that tools/sources.js would fetch directly from a host whose terms forbid automated requests. */
+  const addresses = (src, pages) => Object.entries(src).flatMap(([k, s]) => [].concat(s.url || [], s.each || [], s.pages || [], s.alt || [], s.altPrefix ? (s.pages || []).map((u) => s.altPrefix + u) : []).map((u) => [k, u]))
+    .concat(Object.entries(pages).flatMap(([k, p]) => [].concat(p.url || [], p.alt || []).map((u) => [k, u])));
+  const directProblems = (src, pages) => addresses(src, pages).filter(([, u]) => S.direct(u)).map(([k, u]) => k + ': ' + u);
+  const NAMED = ['ssrn-terms', 'philpapers-terms', 'philarchive-home', 'philarchive-about', 'philarchive-faq', 'edx-terms', 'datacite-privacy', 'datacite-imprint', 'datacite-terms', 'datacite-api-docs'];
+  const namedProblems = (pages, raw) => NAMED.filter((k) => !pages[k] || !pages[k].url.startsWith('https://web.archive.org/web/2026id_/') || pages[k].alt
+    || !raw.pages[k] || raw.pages[k].url !== pages[k].url || (raw.pages[k].tried && S.direct(raw.pages[k].tried.url)));
+  const dp = directProblems(S.SOURCES, S.PAGES), np = namedProblems(S.PAGES, RAW);
+  const hostsOk = ['https://www.ssrn.com/', 'https://papers.ssrn.com/sol3/papers.cfm', 'https://philpapers.org/help/terms.html', 'https://philarchive.org/', 'https://www.edx.org/', 'https://datacite.org/imprint/', 'https://support.datacite.org/docs/api'].every(S.direct)
+    && !['https://api.datacite.org/dois/10.5281/zenodo.1', 'https://api.test.datacite.org/dois', 'https://web.archive.org/web/2026id_/https://www.ssrn.com/', 'https://notdatacite.org/', 'https://www.ssrn.com.example/'].some(S.direct);
+  ok('tools/sources.js fetches nothing directly from SSRN, PhilPapers, PhilArchive, edX or DataCite\'s website, whose terms forbid automated requests or collection: the ' + NAMED.length + ' pages on them are read from the Internet Archive\'s copies, as recorded, and api.datacite.org stays open',
+    dp.length === 0 && np.length === 0 && hostsOk, dp.concat(np).join(', '));
+  /* The workflow: the whole texts go to an artifact of the run after the kept parts are verified against them, and only
+   * sources-raw.json is committed; sources-full.json is ignored by git and not tracked. */
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'sources.yml'));
+  const tracked = require('child_process').execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8' }).split('\n');
+  const wfProblems = (y, ignore, files) => {
+    const bad = [];
+    const at = (x) => y.indexOf(x);
+    if (!(at('node tools/sources.js\n') >= 0 && at('node tools/sources.js verify') > at('node tools/sources.js\n') && at('actions/upload-artifact@') > at('node tools/sources.js verify') && at('git add') > at('actions/upload-artifact@'))) bad.push('the order: fetch, verify, artifact, commit');
+    if (!/name: sources-full\n\s+path: verification\/sources-full\.json\n\s+retention-days: 90\n\s+if-no-files-found: error/.test(y)) bad.push('the artifact');
+    if (!/git add verification\/sources-raw\.json\n/.test(y) || /git add (?!verification\/sources-raw\.json\n)/.test(y)) bad.push('what is committed');
+    if (!ignore.split('\n').includes('verification/sources-full.json') || files.includes('verification/sources-full.json')) bad.push('sources-full.json in git');
+    return bad;
+  };
+  const wp = wfProblems(wf, read(path.join(ROOT, '.gitignore')), tracked);
+  /* What is kept: laws whole, every other text in parts with its SHA-256, and no whole text, links or forms of a page. */
+  const PARTS = ['cc-by', 'cc-by-sa', 'cc0', 'github-terms', 'vercel-terms', 'mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa', 'korea-pipa', 'korea-decree', 'usc17'];
+  const nonLaw = Object.keys(RAW.sources).filter((k) => !S.wholeSource(k)).sort();
+  const kp = S.keptProblems(RAW);
+  const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256).length;
+  ok('only laws are kept whole; every page (' + pages + ') and every other text (' + nonLaw.length + ': licences, terms, guidance and translations not made by a state) is kept as its address, day, SHA-256 and the parts quoted or relied on; the whole texts of a run go to its artifact for 90 days after the parts are verified against them, and are not in git',
+    kp.length === 0 && JSON.stringify(nonLaw) === JSON.stringify(PARTS.slice().sort()) && Object.keys(RAW.sources).every((k) => S.wholeSource(k) || PARTS.includes(k)) && wp.length === 0, kp.concat(wp).slice(0, 6).join(', '));
+  /* The licence statements say, in both languages, that texts by others are not under CC BY 4.0. */
+  const LIC = 'Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners\'.';
+  const LIC_JA = 'このリポジトリが引き、または引用を確かめるために置いている他人の文は、CC BY 4.0 で許諾しておらず、それぞれの権利者のものです。';
+  const licFiles = { 'README.md': LIC, 'policies/licences.md': LIC, 'policies/terms.md': LIC, 'policies/licences.ja.md': LIC_JA, 'policies/terms.ja.md': LIC_JA };
+  const licProblems = (get) => Object.entries(licFiles).filter(([f, x]) => !get(f).includes(x)).map(([f]) => f);
+  const lp = licProblems((f) => read(path.join(ROOT, f)));
+  ok('the README, the Licence Policy and the Terms, in both languages, say that texts by others quoted or kept to verify quotations are not under CC BY 4.0 and remain their owners\'', lp.length === 0, lp.join(', '));
+  /* The reply time: a promise until 2026-11-25, an aim from 2026-11-26 that waits during a pause, announced 14 days ahead. */
+  const DAY = '2026-11-26';
+  const REPLY = {
+    'policies/terms.md': ['Until 2026-11-25, the operator answers within 7 days and does not leave a dispute without reply. From 2026-11-26, the operator aims to answer within 7 days and does not leave a dispute without reply; during a pause described under "Continuity" above, the answer waits until the pause ends.'],
+    'policies/terms.ja.md': ['2026-11-25 までは、運営者は 7 日以内に答え、紛争を返事のないまま放置しません。2026-11-26 からは、運営者は 7 日以内に答えることを目指し、紛争を返事のないまま放置しません。上の「続けるための備え」の休止のあいだは、答えは休止が終わるまで待ちます。'],
+    'rules.md': ['Until 2026-11-25, the operator answers within 7 days; from 2026-11-26, the operator aims to answer within 7 days, and during a pause under "Continuity" the answer waits until the pause ends.'],
+    'rules.ja.md': ['2026-11-25 までは、運営者は 7 日以内に答えます。2026-11-26 からは、7 日以内に答えることを目指し、「続けるための備え」の休止のあいだは、答えは休止が終わるまで待ちます。'],
+    'advisory.md': ['Until 2026-11-25, the operator answers every message. From 2026-11-26, the operator aims to answer every message within 7 days; during a pause under "Continuity" in the [Terms of Use](./policies/terms.md), the answer waits until the pause ends.'],
+    'advisory.ja.md': ['2026-11-25 までは、運営者はすべてのメールに返事をします。2026-11-26 からは、すべてのメールに 7 日以内に返事をすることを目指し、[利用規約](./policies/terms.ja.md)の「続けるための備え」の休止のあいだは、返事は休止が終わるまで待ちます。'],
+  };
+  const NOTICE = 'From 2026-11-26, in a dispute the operator aims to answer within 7 days rather than promising to, and during a pause described under "Continuity" in the Terms of Use the answer waits until the pause ends; the call for advisers says the same of its messages.';
+  const replyProblems = (get, notice, changes, changed) => {
+    const bad = Object.entries(REPLY).filter(([f, xs]) => !xs.every((x) => get(f).includes(x))).map(([f]) => f);
+    if (/(^|\n|\. |\d\. )The operator answers within 7 days|and answers every message\.|すべてのメールに返事をします。\n/.test(get('policies/terms.md') + '\n' + get('advisory.md') + '\n' + get('advisory.ja.md'))) bad.push('an old promise without its last day');
+    if (!String(notice.text || '').includes(NOTICE)) bad.push('the notice on the top page');
+    const e = changes.find((c) => c.from === DAY && c.policies.includes('terms') && /aims to answer within 7 days/.test(c.text));
+    if (!e || (Date.parse(DAY) - Date.parse(e.date)) / 86400000 < 14 || !/^\d{4}-\d{2}-\d{2}$/.test(changed) || (Date.parse(DAY) - Date.parse(changed)) / 86400000 < 14) bad.push('not announced 14 days ahead');
+    return bad;
+  };
+  const site = J('site.json'), changes = J('data/policy-changes.json');
+  let changed = '';
+  try { changed = require('child_process').execFileSync('git', ['log', '--reverse', '--format=%cs', '-S', 'From 2026-11-26, the operator aims to answer within 7 days', '--', 'policies/terms.md'], { cwd: ROOT, encoding: 'utf8' }).split('\n')[0] || ''; } catch (e) { changed = ''; }
+  if (!changed) changed = new Date().toISOString().slice(0, 10);
+  const get = (f) => read(path.join(ROOT, f));
+  const rp = replyProblems(get, site.termsNotice || {}, changes, changed);
+  ok('the reply time is a promise until 2026-11-25 and an aim from 2026-11-26 that waits during a pause under "Continuity", in the Terms, the policies in brief and the call for advisers, in both languages, announced on the top page and in the feed 14 days ahead',
+    rp.length === 0, rp.join(', ') + ' ' + changed);
+  /* The record: a table of six columns, each judged one of the five ways and counted, every narrowing decided by Claude,
+   * every quotation of a fetched text (in the column of facts) in the parts kept, and the counts of what was kept whole. */
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const TX = J('verification/statutes-texts.json');
+  const pool = flat(Object.values(RAW.pages).map((o) => kept(o.spans)).join('') + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map(kept).join('')).join('') + Object.values(TX).join(''));
+  const auditProblems = (t, poolFlat, raw) => {
+    const bad = [];
+    const sec = (t.split('\n## 2026-11-12 の続き：見落としていたもの\n')[1] || '').split('\n## ')[0];
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length < 8) bad.push('too few rows');
+    rows.forEach((r, i) => { if (r.length !== 6 || !JUDGE.includes(r[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    for (const r of rows.filter((x) => x[4] === '漏れ' || x[4] === '根拠不足')) if (!r[5].includes('2026-11-12 に Claude が決めました。')) bad.push('a decision without its maker: ' + r[0]);
+    const qs = rows.flatMap((r) => [...(r[3] || '').matchAll(/「([^「」]+)」/g)].map((m) => m[1]));
+    if (qs.length < 10) bad.push('too few quotations');
+    for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
+    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
+    if (!sec.includes('ファイルは、' + nPages + ' の頁と、ライセンス・規約・手引き・私人の英訳など ' + nParts + ' の文を、全文で置いていました')) bad.push('the counts of the texts');
+    for (const x of ['公開した履歴は書き換えません。2026-11-12 に Claude が決めました。', '最後に全体を置いていたのは、main のコミット 8fcaef4 です。', 'その実行の成果物 `sources-full` として 90 日のあいだ残り', '点検の表の「規約や外国の法令の訳の引用」の行は、頁に置く短い一節だけを見て問題なしとしました。', '### 下げられずに残る危険']) if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
+    return bad;
+  };
+  const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const ap = auditProblems(audit, pool, RAW);
+  const nRows = ((audit.split('\n## 2026-11-12 の続き：見落としていたもの\n')[1] || '').split('\n## ')[0].match(/^\| (?!---|箇所 \|)/gm) || []).length;
+  ok('the audit records what the second pass found in a table of ' + nRows + ' rows with the six columns, judged and counted, each omission decided by Claude, every quotation in the column of facts in a kept text, the counts of what was kept whole, the history left as it is, and the risks that remain',
+    ap.length === 0, ap.join(' / '));
+  // Breaking on purpose.
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const rawWhole = clone(RAW); rawWhole.pages['edx-terms'].text = 'the whole text';
+  const rawSrc = clone(RAW); rawSrc.sources['cc-by'].articles['3'] = 'Section 3 – License Conditions.';
+  const rawLinks = clone(RAW); rawLinks.pages['datacite-terms'].links = [['Terms', 'https://datacite.org/terms-and-conditions/']];
+  const rawDirect = clone(RAW); rawDirect.pages['edx-terms'].url = 'https://www.edx.org/edx-terms-service';
+  const rawTried = clone(RAW); rawTried.pages['ssrn-terms'].tried = { url: 'https://www.ssrn.com/index.cfm/en/terms-of-use/', status: 403 };
+  const notice2 = { text: String((site.termsNotice || {}).text || '').replace(NOTICE, '') };
+  const ch2 = clone(changes); const e2 = ch2.find((c) => c.from === DAY && /aims to answer within 7 days/.test(c.text)); if (e2) e2.from = '2026-11-20';
+  ok('the checks fail on a direct address for edX, for SSRN as an alternative, or for a source fetched page by page; on a host that slips through; on a recorded page fetched directly; on a whole text, links or a whole source kept; on a workflow that commits the whole texts, skips the verification or keeps no artifact; on a lost licence sentence; on a reply promised again, a lost notice, an entry announced late or a change made late; and on a wrong count, a wrong judgement, a decision without its maker, an altered quotation, a lost history sentence and a wrong count of texts',
+    directProblems(S.SOURCES, { ...S.PAGES, 'edx-terms': { url: 'https://www.edx.org/edx-terms-service' } }).length > 0
+    && directProblems(S.SOURCES, { ...S.PAGES, 'ssrn-terms': { url: S.PAGES['ssrn-terms'].url, alt: 'https://www.ssrn.com/index.cfm/en/terms-of-use/' } }).length > 0
+    && directProblems({ x: { pages: ['https://philarchive.org/help/faq.html'] } }, {}).length > 0 && directProblems({ x: { each: 'https://datacite.org/a/{n}' } }, {}).length > 0
+    && !S.direct('https://www.ssrn.com.example/') && S.direct('https://SSRN.com/x')
+    && namedProblems(S.PAGES, rawDirect).length > 0 && namedProblems(S.PAGES, rawTried).length > 0 && namedProblems({ ...S.PAGES, 'edx-terms': { url: 'https://www.edx.org/edx-terms-service' } }, RAW).length > 0
+    && S.keptProblems(rawWhole).length > 0 && S.keptProblems(rawSrc).length > 0 && S.keptProblems(rawLinks).length > 0
+    && wfProblems(wf.replace('git add verification/sources-raw.json\n', 'git add verification/sources-raw.json verification/sources-full.json\n'), read(path.join(ROOT, '.gitignore')), tracked).length > 0
+    && wfProblems(wf.replace('      - run: node tools/sources.js verify\n', ''), read(path.join(ROOT, '.gitignore')), tracked).length > 0
+    && wfProblems(wf.replace('retention-days: 90', 'retention-days: 1'), read(path.join(ROOT, '.gitignore')), tracked).length > 0
+    && wfProblems(wf, '', tracked).length > 0 && wfProblems(wf, read(path.join(ROOT, '.gitignore')), tracked.concat(['verification/sources-full.json'])).length > 0
+    && licProblems((f) => f === 'policies/licences.ja.md' ? '' : read(path.join(ROOT, f))).length > 0
+    && replyProblems((f) => f === 'advisory.md' ? get(f).replace(REPLY['advisory.md'][0], 'The operator answers every message.') : get(f), site.termsNotice || {}, changes, changed).length > 0
+    && replyProblems((f) => f === 'policies/terms.md' ? get(f) + '\nThe operator answers within 7 days and does not leave a dispute without reply.\n' : get(f), site.termsNotice || {}, changes, changed).length > 0
+    && replyProblems(get, notice2, changes, changed).length > 0 && replyProblems(get, site.termsNotice || {}, ch2, changed).length > 0 && replyProblems(get, site.termsNotice || {}, changes, '2026-11-20').length > 0
+    && [audit.replace('この表の判定は、根拠不足 1、漏れ 5、表現 2 です。', 'この表の判定は、根拠不足 1、漏れ 4、表現 2 です。'),
+      audit.replace('| 漏れ | 2026-11-12 に Claude が決めました。直の所在を外し、Internet Archive の写しだけを読みます |', '| 軽微 | 2026-11-12 に Claude が決めました。直の所在を外し、Internet Archive の写しだけを読みます |'),
+      audit.replace('| 漏れ | 2026-11-12 に Claude が決めました。直の所在を外し、Internet Archive の写しだけを読みます |', '| 漏れ | 直の所在を外し、Internet Archive の写しだけを読みます |'),
+      audit.replace('or otherwise send automated queries of any sort to SSRN.」', 'or otherwise send any automated queries to SSRN.」'),
+      audit.replace('公開した履歴は書き換えません。', '公開した履歴を書き換えました。'),
+      audit.replace('ファイルは、' + pages + ' の頁と', 'ファイルは、' + (pages + 1) + ' の頁と')].every((b) => b !== audit && auditProblems(b, pool, RAW).length > 0));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
