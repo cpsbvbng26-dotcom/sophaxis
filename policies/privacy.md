@@ -164,7 +164,11 @@ If a person gives their own IP address to ask about their requests, the operator
 Vercel handles the logs as its [Privacy Notice](https://vercel.com/legal/privacy-notice) sets out, and publishes the measures it takes in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa).
 Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
 
-<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25 -->
+The services outside Japan may not be required to protect personal data in a way that, overall, provides safeguards comparable to those of the law of the place where an author lives, such as New Zealand's Privacy Act 2020.
+Section 22 of New Zealand's Privacy Act 2020, in its information privacy principle 12, lets personal information be disclosed abroad on the person's authorisation after the person is told this expressly, and the submission form says it next to the consent.
+For a person in Switzerland, the disclosure to the services in the United States rests on that person's explicit consent, which Article 17 of Switzerland's Federal Act on Data Protection allows.
+
+<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
 
 ## Security
 
@@ -283,6 +287,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.md) lists either.
 Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
+From 2026-11-26, the list also covers places whose law asks for the operator's postal address or telephone number before personal data is collected, places whose law lets the personal data of a minor be processed only with a parent's consent that the service confirms, or not at all, and places whose data protection law could not be read at its source; the Submission Policy gives each, with its law.
 Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
