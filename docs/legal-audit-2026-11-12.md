@@ -452,12 +452,15 @@ ROAR の記録は、2026-11-12 にも取り寄せていました。そのとき�
 
 ### 取り寄せた文
 
-取り寄せの実行は RUNID で、結果は枝 `sources/BRANCH` にあります。
+取り寄せの実行は 43301977313 で、結果は枝 `sources/20261112-2036` にあります。
 ROAR の記録は、ROAR から直に取り寄せました。ROAR の `robots.txt` が閉じているのは `/cgi/` だけです。
+その前の実行 43300228531 は、90 秒で接続の時間切れになり、記録を読めませんでした。その結果（枝 `sources/20261112-2027`）は使っていません。
+取り寄せの記録の日付は 2026-11-12 で、協定世界時の日付です。日本時間では 2026-11-13 の 5 時 36 分ごろでした。
+文の SHA-256 は `448ca060c9d1318a85874297d7fac268cc9f7335886a757478ac2ea199dafec2` で、2026-11-12 の前の取り寄せと同じです。記録の文は、そのあいだ変わっていません。
 
 ### 下げられずに残る危険
 
-- ROAR の Sophaxis の記録は、運営者の ROAR のアカウントにあります。Claude はそのアカウントに触れられません。2026-11-13 に取り寄せた記録は、「Sophaxis is an overlay preprint server for philosophy and mathematics, run by an independent researcher.」「Each record points to a deposit with a DOI (Zenodo, Figshare or OSF) and is listed after moderation, not peer review.」「Each record has an unmodified PDF copy of the deposited file」と書いています。
+- ROAR の Sophaxis の記録は、運営者の ROAR のアカウントにあります。Claude はそのアカウントに触れられません。日本時間の 2026-11-13 に取り寄せた記録は、「Sophaxis is an overlay preprint server for philosophy and mathematics, run by an independent researcher.」「Each record points to a deposit with a DOI (Zenodo, Figshare or OSF) and is listed after moderation, not peer review.」「Each record has an unmodified PDF copy of the deposited file」と書いています。
 
 この節も、弁護士の確認は受けていません。
 
