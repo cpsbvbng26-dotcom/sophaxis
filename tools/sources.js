@@ -74,53 +74,59 @@ const SOURCES = {
 const PAGE = (url, o = {}) => ({ url, ...o });
 const PPC_LINKS = /\.pdf|guideline|gaikoku|offshore|kaigai|foreign|outside|外国|ガイドライン|Ｑ＆Ａ|Q&A/i;
 const PAGES = {
-  // The Commission's index pages, to find the guidance on provision to a third party in a foreign country, the guidance on
-  // records of provision, and the information it publishes on the systems of other countries.
+  // The Commission's index pages, from which the addresses of its guidance were found.
   'ppc-legal': PAGE('https://www.ppc.go.jp/personalinfo/legal/', { lang: 'ja', links: PPC_LINKS }),
-  'ppc-legal-guidelines': PAGE('https://www.ppc.go.jp/personalinfo/legal/guidelines/', { lang: 'ja', links: PPC_LINKS }),
   'ppc-kaiseihogohou': PAGE('https://www.ppc.go.jp/personalinfo/legal/kaiseihogohou/', { lang: 'ja', links: PPC_LINKS }),
-  'ppc-faq': PAGE('https://www.ppc.go.jp/personalinfo/faq/', { lang: 'ja', links: PPC_LINKS }),
-  // Apple: the mailbox (iCloud Mail).
-  'apple-privacy': PAGE('https://www.apple.com/legal/privacy/en-ww/', { links: /privacy|contact|governance/i }),
-  'apple-privacy-ja': PAGE('https://www.apple.com/jp/legal/privacy/ja/', { lang: 'ja', links: /privacy|contact/i }),
+  // The Commission's guidance on provision to a third party in a foreign country, and on the records of provision.
+  'ppc-guidelines-offshore': PAGE('https://www.ppc.go.jp/files/pdf/251212_guidelines02.pdf', { keep: 400000 }),
+  'ppc-guidelines-records': PAGE('https://www.ppc.go.jp/files/pdf/240401_guidelines03.pdf', { keep: 400000 }),
+  // The information the Commission publishes on the systems of other countries.
+  'ppc-laws': PAGE('https://www.ppc.go.jp/enforcement/infoprovision/laws/', { lang: 'ja', links: /offshore|report|america|usa|us_|kaigai|gaikoku|\.pdf|米国|アメリカ|調査/i }),
+  'ppc-offshore-survey': PAGE('https://www.ppc.go.jp/files/pdf/220210_pp_offshore_kouhyou_sywkqc.pdf', { keep: 400000 }),
+  'ppc-offshore-report': PAGE('https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report/', { lang: 'ja', links: /\.pdf|米国|アメリカ/i }),
+  // Apple: the mailbox (iCloud Mail). The iCloud terms name the company that provides iCloud to each place.
+  'apple-privacy': PAGE('https://www.apple.com/legal/privacy/en-ww/', { links: /privacy|contact|governance|cbpr|bbb/i }),
+  'apple-affiliated': PAGE('https://www.apple.com/legal/privacy/en-ww/affiliated-company/'),
   'icloud-terms': PAGE('https://www.apple.com/legal/internet-services/icloud/en/terms.html'),
   'icloud-terms-jp': PAGE('https://www.apple.com/jp/legal/internet-services/icloud/jp/terms.html', { lang: 'ja' }),
-  'apple-legal-icloud': PAGE('https://www.apple.com/legal/internet-services/icloud/', { links: /icloud/i }),
+  'apple-cbpr-seal-1': PAGE('https://privacyseals.bbbprograms.org/seal/Confirmation/1114171343'),
+  'apple-cbpr-seal-2': PAGE('https://privacyseals.bbbprograms.org/seal/Confirmation/195838664'),
+  'cbpr-directory': PAGE('https://www.globalcbpr.org/privacy-certifications/directory/'),
+  'apple-leadership': PAGE('https://www.apple.com/leadership/'),
   // Vercel: the site and its request logs.
   'vercel-privacy': PAGE('https://vercel.com/legal/privacy-notice', { links: /legal|privacy|dpa|contact/i }),
   'vercel-dpa': PAGE('https://vercel.com/legal/dpa'),
-  'vercel-terms-page': PAGE('https://vercel.com/legal/terms', { keep: 400000 }),
-  'vercel-about': PAGE('https://vercel.com/about'),
+  'vercel-logs-docs': PAGE('https://vercel.com/docs/logs'),
+  'vercel-runtime-logs-docs': PAGE('https://vercel.com/docs/logs/runtime'),
+  'vercel-limits-docs': PAGE('https://vercel.com/docs/limits'),
   // GitHub: the issues and the repository.
   'github-privacy': PAGE('https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement', { links: /privacy|contact|dpa|data-protection/i }),
-  'github-privacy-md': PAGE('https://raw.githubusercontent.com/github/site-policy/main/Policies/privacy-policies/github-general-privacy-statement.md', { markdown: true }),
-  'github-dpa': PAGE('https://github.com/customer-terms/github-data-protection-agreement'),
   'github-leadership': PAGE('https://github.com/about/leadership'),
   // ORCID.
   'orcid-privacy': PAGE('https://info.orcid.org/privacy-policy/', { links: /contact|team|staff|board|privacy/i }),
-  'orcid-contact': PAGE('https://info.orcid.org/contact-us/'),
   'orcid-team': PAGE('https://info.orcid.org/orcid-team/'),
-  // The Internet Archive.
+  // The Internet Archive: its pages need a script; these are tried and recorded as they answer.
   'ia-terms': PAGE('https://archive.org/about/terms'),
-  'ia-terms-php': PAGE('https://archive.org/about/terms.php'),
   'ia-contact': PAGE('https://archive.org/about/contact'),
-  'ia-contact-php': PAGE('https://archive.org/about/contact.php'),
-  'ia-privacy-help': PAGE('https://help.archive.org/help/privacy-policy/', { links: /privacy|terms|contact/i }),
-  'ia-bios': PAGE('https://archive.org/about/bios.php'),
+  'ia-help-contact': PAGE('https://help.archive.org/help/contact-us/'),
+  'ia-help': PAGE('https://help.archive.org/', { links: /contact|privacy|terms|address/i }),
   // DataCite, Crossref and JaLC: the DOI metadata.
   'datacite-privacy': PAGE('https://datacite.org/privacy-policy/', { links: /imprint|privacy|contact|team/i }),
   'datacite-imprint': PAGE('https://datacite.org/imprint/'),
-  'datacite-team': PAGE('https://datacite.org/team/'),
   'crossref-privacy': PAGE('https://www.crossref.org/operations-and-sustainability/privacy/', { links: /contact|privacy|people|governance/i }),
-  'crossref-contact': PAGE('https://www.crossref.org/contact/'),
   'crossref-people': PAGE('https://www.crossref.org/people/'),
-  'jalc-privacy': PAGE('https://japanlinkcenter.org/top/doc/privacy.html', { lang: 'ja' }),
-  'jalc-top': PAGE('https://japanlinkcenter.org/top/', { lang: 'ja', links: /privacy|about|contact|個人情報|概要|お問/i }),
+  'crossref-about': PAGE('https://www.crossref.org/community/about/', { links: /contact|address|governance/i }),
+  'crossref-terms': PAGE('https://www.crossref.org/membership/terms/'),
+  'jalc-privacy': PAGE('https://japanlinkcenter.org/top/privacy_policy.html', { lang: 'ja' }),
+  'jalc-about': PAGE('https://japanlinkcenter.org/top/about/index.html', { lang: 'ja' }),
+  'jalc-committee': PAGE('https://japanlinkcenter.org/top/about/about_committee.html', { lang: 'ja' }),
   // The language models given the public parts of a submission while it is reviewed.
   'anthropic-privacy': PAGE('https://www.anthropic.com/legal/privacy', { links: /privacy|legal|contact/i }),
+  'anthropic-company': PAGE('https://www.anthropic.com/company'),
   'openai-privacy': PAGE('https://openai.com/policies/privacy-policy/', { links: /privacy|contact/i }),
-  'openai-row-privacy': PAGE('https://openai.com/policies/row-privacy-policy/'),
+  'openai-privacy-row': PAGE('https://openai.com/policies/row-privacy-policy/'),
   'xai-privacy': PAGE('https://x.ai/legal/privacy-policy', { links: /privacy|legal|contact/i }),
+  'xai-company': PAGE('https://x.ai/company'),
 };
 
 const plain = (h) => h.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ')
