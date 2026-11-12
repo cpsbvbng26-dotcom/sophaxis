@@ -1,6 +1,13 @@
 [
   {
     "date": "2026-11-12",
+    "policies": ["copyright"],
+    "from": "2026-11-13",
+    "title": "PDFs are no longer copied by script from Figshare or Research Square",
+    "text": "From 2026-11-13, Sophaxis copies PDFs by script only from Zenodo and arXiv, whose own pages let a script fetch them. Until then, it also copied from Figshare and Research Square; their terms, read on 2026-11-12, forbid robots and scripts. The authors of a work at either can attach the deposited PDF to the submission issue instead, as for every other repository. This narrows what authors get. Going on would act against the terms of the two repositories, a legal risk, so the change takes effect the day after it is announced, as the Terms of Use allow. The copies already taken from Figshare stay."
+  },
+  {
+    "date": "2026-11-12",
     "policies": ["terms"],
     "from": "2026-11-26",
     "title": "In a dispute, the operator aims to answer within 7 days, and a pause holds the answer",
