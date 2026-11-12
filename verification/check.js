@@ -5349,13 +5349,13 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
    * the end of the copies from Figshare and Research Square on 2026-11-13 with the words of their terms; no page names the
    * four as repositories that let a script fetch; the change announced on the top page and in the feed, ahead of its day. */
   const SAY = {
-    'policies/copyright.md': ['It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.', 'Until 2026-11-12, Sophaxis also copied files from Figshare and Research Square by script. From 2026-11-13, it does not, because their terms forbid it.', 'From 2026-11-13, this includes Figshare and Research Square.'],
-    'policies/copyright.ja.md': ['スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。Zenodo と arXiv です。', '2026-11-12 までは、Figshare と Research Square からもスクリプトで写していました。2026-11-13 からは写しません。'],
-    'repositories.md': ['the repository\'s own pages let a script fetch it (Zenodo and arXiv)', 'from 2026-11-13, it does not, because their terms forbid robots and scripts'],
-    'repositories.ja.md': ['預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）', '2026-11-13 からは取りません。どちらの規約もロボットとスクリプトを禁じており'],
+    'policies/copyright.md': ['It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.', 'Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.', 'Since the change was published on 2026-11-13, this includes Figshare and Research Square.'],
+    'policies/copyright.ja.md': ['スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。Zenodo と arXiv です。', 'この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。'],
+    'repositories.md': ['the repository\'s own pages let a script fetch it (Zenodo and arXiv)', 'Until this change was published on 2026-11-13, Sophaxis also fetched PDFs from Figshare and Research Square; since then, it does not, because their terms forbid robots and scripts'],
+    'repositories.ja.md': ['預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）', 'この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており'],
   };
   const OLD = /Zenodo, Figshare, arXiv and Research Square|Zenodo、Figshare、arXiv、Research Square|offers it to scripts/;
-  const NOTICE = 'From 2026-11-13, ahead of the changes below because going on would act against the terms of the two repositories, Sophaxis no longer copies PDFs by script from Figshare or Research Square, whose terms forbid robots and scripts; the authors of a work there can attach the deposited PDF to the submission issue instead.';
+  const NOTICE = 'Since its publication on 2026-11-13, ahead of the changes below because going on would act against the terms of the two repositories, Sophaxis no longer copies PDFs by script from Figshare or Research Square, whose terms forbid robots and scripts; the authors of a work there can attach the deposited PDF to the submission issue instead.';
   const shown = () => {
     const out = {};
     const walk = (d, rel = '') => { for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -5379,8 +5379,9 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
       for (const q of qs) if (!quotePool.includes(flat(q))) bad.push(f + ': not in a kept page: ' + q.slice(0, 30));
     }
     if (!String(notice.text || '').includes(NOTICE)) bad.push('the notice on the top page');
-    const e = changes.find((c) => c.policies.includes('copyright') && c.from === '2026-11-13' && /Figshare and Research Square/.test(c.text));
-    if (!e || !(e.date < e.from)) bad.push('the entry in the feed');
+    /* Announced and in effect on publication, 2026-11-13 (Japan time), as the Terms allow for a legal risk; no earlier day. */
+    const e = changes.find((c) => c.policies.includes('copyright') && /Figshare and Research Square/.test(c.text));
+    if (!e || e.date !== '2026-11-13' || e.from || !e.text.startsWith('Effective on publication, 2026-11-13: ') || !e.text.includes('and not earlier')) bad.push('the entry in the feed');
     return bad;
   };
   /* Rule 5 of the record's wording: no sentence or table row on the site credits PhilArchive or SSRN with an editor, staff,
@@ -5464,10 +5465,10 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
     && pageProblems((() => { const p = { ...S.PAGES }; delete p['arxiv-bulk-data']; return p; })(), RAW).length > 0
     && pageProblems(S.PAGES, r1).length > 0 && pageProblems(S.PAGES, r2).length > 0 && pageProblems(S.PAGES, r3).length > 0
     && policyProblems(sh('process.md', 'every repository except Zenodo and arXiv', 'every repository except Zenodo, Figshare, arXiv and Research Square'), pool, site.termsNotice || {}, changes).length > 0
-    && policyProblems(sh('policies/copyright.md', 'From 2026-11-13, it does not, because their terms forbid it.', ''), pool, site.termsNotice || {}, changes).length > 0
+    && policyProblems(sh('policies/copyright.md', 'Since then, it does not, because their terms forbid it.', ''), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(sh('policies/copyright.ja.md', 'or manual process to monitor or copy any content', 'or manual process to copy any content'), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(SHOWN, pool, { text: '' }, changes).length > 0
-    && policyProblems(SHOWN, pool, site.termsNotice || {}, changes.map((c) => (c.from === '2026-11-13' ? { ...c, from: '2026-11-12' } : c))).length > 0
+    && policyProblems(SHOWN, pool, site.termsNotice || {}, changes.map((c) => (/Figshare and Research Square/.test(c.text) ? { ...c, date: '2026-11-12' } : c))).length > 0
     && venueProblems({ 'compare.md': '| PhilArchive | Yes | No | A check by its editors | Philosophy | None |\n' }).length > 0
     && venueProblems({ 'compare.ja.md': '| SSRN | 保つ | 与える | 担当者による確認 | 主に社会科学と人文学 | なし |\n' }).length > 0
     && venueProblems({ 'site/compare.html': '<tr><td>SSRN</td><td>Yes</td><td>A check by its staff</td></tr>' }).length > 0
@@ -5566,7 +5567,7 @@ console.log('\n120. What a sixth, read-only pass of 2026-11-12 found: no page gi
   const ap = auditProblems(audit);
   /* The policy change is in the feed, and the commitment moved with its old line kept. */
   const changes = J('data/policy-changes.json'), com = read(path.join(__dirname, 'commitments.txt')), sup = read(path.join(__dirname, 'superseded.txt'));
-  const feed = changes.some((c) => c.date === '2026-11-12' && c.policies.includes('privacy') && !c.from && c.text.includes('2026-11-22, or 2026-11-26 for 15 of them') && c.text.includes('no right is narrowed'));
+  const feed = changes.some((c) => c.date === '2026-11-13' && c.policies.includes('privacy') && !c.from && c.text.includes('2026-11-22, or 2026-11-26 for 15 of them') && c.text.includes('no right is narrowed'));
   const OLDC = 'or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work';
   const moved = !com.includes(OLDC) && com.includes('is declined from the date the Submission Policy gives for each place (2026-11-22, or 2026-11-26 for 15 of them), because such a work') && sup.split('\n').some((l) => l.startsWith('A request to add the record') && l.split('\t')[0].includes(OLDC));
   ok('no page, llms file, policy, form, notice, news item or feed entry gives one day for the whole list of places where Sophaxis is not offered (' + Object.keys(texts).length + ' texts; ' + (L.length - later.length) + ' places from ' + first + ', ' + later.length + ' from ' + (later[0] || {}).from + '), the README, the Privacy Policy and the notice say "' + EN_D + '", the change is in the feed, and the record of the sixth pass is complete',
@@ -5598,6 +5599,125 @@ console.log('\n120. What a sixth, read-only pass of 2026-11-12 found: no page gi
   const acaught = abreaks.filter(([, a]) => a !== audit && auditProblems(a).length > 0).map(([k]) => k);
   ok('break on purpose: one day in the README (both languages), the Privacy Policy (both), site.json, a generated page, llms-full.txt, a wrong number, a day no place has, the news, the Submission Policy, the form, a place moved in site.json, and the record\'s count, reason, numbers, gap and section all fail (' + (caught.length + acaught.length) + ' / ' + (breaks.length + abreaks.length) + ')',
     caught.length === breaks.length && acaught.length === abreaks.length, breaks.filter(([k]) => !caught.includes(k)).concat(abreaks.filter(([k]) => !acaught.includes(k))).map(([k]) => k).join(' / '));
+}
+
+/* ------------------------------------------------------------ 121 */
+console.log('\n121. Dates are Japan time, and never earlier than the day the change was published');
+{
+  /* Four changes reached main on 2026-11-13, Japan time (#221 to #224). Two entries of the feed of policy changes and the
+   * "Last updated" of the pages they changed gave 2026-11-12, the date by the clock of the work (UTC), and the end of the
+   * copies from Figshare and Research Square was given a day of effect, 2026-11-13, earlier than its publication at 03:06.
+   * The history is read with dates in Japan time: a page's "Last updated" is not earlier than the last commit that changed
+   * it, an entry of the feed is not dated earlier than the first commit that held it, and no day of effect in an entry is
+   * earlier than the entry. A shallow history cannot be compared, and fails. */
+  const { execFileSync } = require('child_process');
+  const Bd = require('../build.js');
+  const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'Asia/Tokyo' }), stdio: ['ignore', 'pipe', 'ignore'] });
+  const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  let shallow = true;
+  try { shallow = git(['rev-parse', '--is-shallow-repository']).trim() !== 'false'; } catch (e) { shallow = true; }
+  const lines = (args) => { try { return git(args).split('\n').filter(Boolean); } catch (e) { return []; } };
+  const firstDay = (f, s) => lines(['log', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', s, '--', f])[0] || today;
+  const UPD = /^(?:Last updated: (\d{4}-\d{2}-\d{2})\.|最終更新：(\d{4}-\d{2}-\d{2})。)$/m;
+  const rel = (d) => fs.readdirSync(path.join(ROOT, d)).filter((x) => x.endsWith('.md')).map((x) => (d === '.' ? x : d + '/' + x));
+  const pages = rel('.').concat(rel('policies')).filter((f) => f !== 'CHANGELOG.md' && UPD.test(read(path.join(ROOT, f)))).sort();
+  /* The day of the last change to a page's text: the newest commit whose version differs from the one before it, other than
+   * in the "Last updated" line itself (a commit that only corrects that date is not a change of the text). A page whose text
+   * differs from the last commit is taken as changed today (Japan time); so is an entry not yet in any commit. The versions
+   * are read in one call of git cat-file. */
+  const body = (s) => String(s || '').replace(/^(?:Last updated: \d{4}-\d{2}-\d{2}\.|最終更新：\d{4}-\d{2}-\d{2}。)$/gm, '');
+  const lastTextDays = (fs_) => {
+    const logs = Object.fromEntries(fs_.map((f) => [f, lines(['log', '--format=%H %cd', '--date=format-local:%Y-%m-%d', '--', f]).map((l) => l.split(' '))]));
+    const want = fs_.flatMap((f) => logs[f].map(([h]) => h + ':' + f));
+    let buf = Buffer.alloc(0);
+    try { buf = execFileSync('git', ['cat-file', '--batch'], { cwd: ROOT, input: want.join('\n') + '\n', maxBuffer: 1 << 30, stdio: ['pipe', 'pipe', 'ignore'] }); } catch (e) { buf = Buffer.alloc(0); }
+    const blobs = [];
+    for (let p = 0; p < buf.length;) {
+      const nl = buf.indexOf(10, p), head = buf.slice(p, nl).toString('utf8'), m = / blob (\d+)$/.exec(head);
+      if (!m) { blobs.push(null); p = nl + 1; continue; }
+      const size = Number(m[1]); blobs.push(buf.slice(nl + 1, nl + 1 + size).toString('utf8')); p = nl + 1 + size + 1;
+    }
+    const out = {};
+    let k = 0;
+    for (const f of fs_) {
+      const l = logs[f], v = l.map(() => blobs[k++]);
+      if (!l.length || body(read(path.join(ROOT, f))) !== body(v[0])) { out[f] = today; continue; }
+      const i = v.findIndex((x, j) => j + 1 >= v.length || body(x) !== body(v[j + 1]));
+      out[f] = (l[i] || [])[1] || today;
+    }
+    return out;
+  };
+  const WF = ['.github/workflows/check.yml', '.github/workflows/pdf.yml'];
+  const JST_EN = ['The dates on the pages, in the feed of policy changes, in the notices and in the news are dates in Japan time.', 'The day a text was fetched is the day in UTC that the record of the fetch keeps.'];
+  const JST_JA = ['頁と、規程の変更の配信と、告知と、お知らせの日付は、日本時間の日付です。', '文を取り寄せた日は、取り寄せの記録に残った協定世界時の日付です。'];
+  const CH = 'data/policy-changes.json', AUD = 'docs/legal-audit-2026-11-12.md', HEAD = '\n## 2026-11-12 の続き：六度目の見落とし\n';
+  const files = pages.concat(WF, [CH, AUD, 'site.json']);
+  const real = Object.fromEntries(files.map((f) => [f, read(path.join(ROOT, f))]));
+  const titleKey = (c) => '"title": ' + JSON.stringify(c.title);
+  const facts = { shallow, last: lastTextDays(pages), first: Object.fromEntries(JSON.parse(real[CH]).map((c) => [c.title, firstDay(CH, titleKey(c))])) };
+  const section = (txt, head) => { const i = txt.indexOf('\n## ' + head + '\n'); if (i < 0) return ''; const j = txt.indexOf('\n## ', i + 5); return txt.slice(i, j < 0 ? undefined : j); };
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const dateProblems = (x, h) => {
+    const bad = [];
+    if (h.shallow) bad.push('the history is shallow or git cannot be read, so the dates cannot be compared');
+    for (const f of pages) { const m = UPD.exec(x[f] || ''); const d = m && (m[1] || m[2]); if (!d || d < h.last[f]) bad.push(f + ': last updated ' + d + ', changed ' + h.last[f]); }
+    let changes = [];
+    try { changes = JSON.parse(x[CH]); } catch (e) { bad.push('the feed cannot be read'); }
+    for (const c of changes) {
+      const w = h.first[c.title] || today;
+      if (c.date < w) bad.push('the entry "' + c.title.slice(0, 40) + '" is dated ' + c.date + ', first published ' + w);
+      for (const m of String(c.text).matchAll(/\b[Ff]rom (\d{4}-\d{2}-\d{2})|\b[Ee]ffective on publication, (\d{4}-\d{2}-\d{2})/g)) if ((m[1] || m[2]) < c.date) bad.push('the entry "' + c.title.slice(0, 40) + '" gives a day of effect, ' + (m[1] || m[2]) + ', earlier than ' + c.date);
+      if (c.from && !(c.from > c.date)) bad.push('the entry "' + c.title.slice(0, 40) + '" takes effect on or before its day');
+    }
+    /* The notice on the top page does not give a change in effect on publication a day of effect from midnight. */
+    let site = {};
+    try { site = JSON.parse(x['site.json']); } catch (e) { bad.push('site.json cannot be read'); }
+    if (/From 2026-11-13,/.test(String((site.termsNotice || {}).text))) bad.push('the notice gives the day of publication as a day of effect from midnight');
+    const ce = section(x['policies/terms.md'], 'Changes and closure'), cj = section(x['policies/terms.ja.md'], '変更と終了');
+    if (!JST_EN.every((s) => ce.includes('\n' + s + '\n'))) bad.push('the Terms do not say in which time the dates are');
+    if (!JST_JA.every((s) => cj.includes('\n' + s + '\n'))) bad.push('the Japanese Terms do not say in which time the dates are');
+    for (const w of WF) if (!/uses: actions\/checkout@[0-9a-f]{40} # v[\d.]+\n {8}with:\n(?: {10}[^\n]+\n)*? {10}fetch-depth: 0\n/.test(x[w])) bad.push(w + ' does not fetch the whole history');
+    /* The record. */
+    const sec = (x[AUD].split(HEAD)[1] || '').split('\n## ')[0];
+    if (!sec) bad.push('the record has no section');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |') || rows.length < 10 || !rows.every((r) => r.length === 6 && JUDGE.includes(r[4]))) bad.push('the record\'s table');
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the record\'s count');
+    for (const r of rows.filter((y) => y[4] !== '問題なし')) if (!/^2026-11-13 に Claude が決めました。[^|]*ためです$/.test(r[5])) bad.push('a decision without its maker or reason: ' + r[0].slice(0, 30));
+    if (!sec.includes('### 下げられずに残る危険') || !sec.includes('この節も、弁護士の確認は受けていません。')) bad.push('the record\'s remaining risk or the sentence on lawyers');
+    return bad;
+  };
+  const bad = dateProblems(real, facts);
+  ok('the "Last updated" of the ' + pages.length + ' pages is not earlier than the last commit that changed the text of each, no entry of the feed of policy changes is dated earlier than the first commit that held it or gives a day of effect earlier than itself, the notice does not, the Terms say the dates are Japan time, the checks fetch the whole history, and the record is complete (dates in Japan time)',
+    bad.length === 0, bad.join(' / '));
+  const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
+  const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
+  const breaks = [
+    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-13.', 'Last updated: 2026-11-12.'), facts],
+    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
+    ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-13.', 'Last updated: 2026-11-12.'), facts],
+    ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
+    ['the page of policies dated back to the day of its English text', mut('policy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
+    ['the entry on Figshare dated back', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
+    ['the entry on the places dated back', feedWith((d) => d.map((c) => (c.title.startsWith('The day from which each place') ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
+    ['a day of effect before the entry', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { text: c.text.replace('Effective on publication, 2026-11-13', 'Effective on publication, 2026-11-12') }) : c))), facts],
+    ['a "from" on the day of the entry', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { from: '2026-11-13' }) : c))), facts],
+    ['a new entry dated before today', feedWith((d) => [{ date: '2026-11-01', policies: ['terms'], title: 'A trial entry', text: 'x' }].concat(d)), facts],
+    ['the notice from midnight', mut('site.json', '"text": "Since its publication on 2026-11-13, ahead of', '"text": "From 2026-11-13, ahead of'), facts],
+    ['the Terms without Japan time', mut('policies/terms.md', JST_EN[0] + '\n', ''), facts],
+    ['the Japanese Terms without the day of fetching', mut('policies/terms.ja.md', JST_JA[1] + '\n', ''), facts],
+    ['a shallow history', real, Object.assign({}, facts, { shallow: true })],
+    ['a page changed today without a new date', real, Object.assign({}, facts, { last: Object.assign({}, facts.last, { 'policies/licences.md': '2026-12-01' }) })],
+    ['the check without the whole history', mut('.github/workflows/check.yml', '          fetch-depth: 0\n', ''), facts],
+    ['the PDF workflow without the whole history', mut('.github/workflows/pdf.yml', '          fetch-depth: 0\n', ''), facts],
+    ['the record\'s count', mut(AUD, 'この表の判定は、誤り 5、根拠不足 1、漏れ 2、表現 2、問題なし 2 です。', 'この表の判定は、誤り 4、根拠不足 1、漏れ 2、表現 2、問題なし 2 です。'), facts],
+    ['a decision without its reason', mut(AUD, '作業の時計の日付ではないためです |', '作業の時計の日付ではありません |'), facts],
+    ['the record without the sentence on lawyers', mut(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'), facts],
+  ];
+  const caught = breaks.filter(([, x, h]) => dateProblems(x, h).length > 0).map(([k]) => k);
+  ok('break on purpose: a page or its translation dated back, an entry dated back, a day of effect before its entry, a "from" on its day, a new entry dated before today, the notice from midnight, the Terms in both languages, a shallow history, a page changed today, either workflow without the whole history, and the record\'s count, reason and lawyers all fail (' + caught.length + ' / ' + breaks.length + ')',
+    caught.length === breaks.length, breaks.filter(([k]) => !caught.includes(k)).map(([k]) => k).join(' / '));
 }
 
 console.log('\n' + '-'.repeat(60));
