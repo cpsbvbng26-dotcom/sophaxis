@@ -7,7 +7,7 @@ Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which foll
 The Privacy Policy says what personal data the site and its checks read, and what becomes public.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Who handles personal data
@@ -33,7 +33,11 @@ Personal data is used only for these purposes:
 ## The site
 
 The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.
-Its pages contain no code or tag that sends information about a reader to anyone else, so nothing falls under the rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12).
+Its pages contain no code or tag that sends information about a reader to anyone else.
+The rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12) bind only a telecommunications carrier and a person who runs a telecommunications business that the Act exempts from registration and notification, and among those only the services that the Ministry's Ordinance names; they do not cover information needed to use the service.
+Sophaxis charges for nothing and earns nothing from the site, so the operator considers that it runs no telecommunications business and that Article 27-12 does not apply to it.
+If it did apply, the only request a page makes is the search page's request to Sophaxis's own site for its list of records, which is needed to use that page.
+The Ministry's Ordinance was not fetched; this view rests on the Act and on the Ministry's Entry Manual.
 The search page runs one script, served by Sophaxis itself.
 It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
 No other page runs a script.

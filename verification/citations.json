@@ -27,7 +27,8 @@
       "policies/terms.ja.md",
       "policies/withdrawal.ja.md",
       "disclaimer.ja.md",
-      "contact.ja.md"
+      "contact.ja.md",
+      "docs/legal-audit-2026-11-12.md"
     ],
     "json": [
       "verification/duties.json",
@@ -102,6 +103,15 @@
         "消費者契約法"
       ],
       "egov": "412AC0000000061"
+    },
+    "Code of Civil Procedure": {
+      "en": [
+        "Code of Civil Procedure"
+      ],
+      "ja": [
+        "民事訴訟法"
+      ],
+      "egov": "408AC0000000109"
     },
     "Providers Act": {
       "en": [
@@ -345,7 +355,8 @@
         "連邦法第 152-FZ 号",
         "ロシアの連邦法第 152-FZ 号"
       ],
-      "source": "ru-152"
+      "source": "ru-152",
+      "flatSuperscript": "kremlin.ru prints part numbers such as 1¹ with a superscript, which the plain text reads as 11; a citation of part 1.1 is found as 11."
     },
     "Egypt Law 151/2020": {
       "en": [
@@ -592,10 +603,47 @@
         "法律第 164 号"
       ],
       "named": "Named only, as reported."
+    },
+    "MIC Entry Manual": {
+      "en": [
+        "the Ministry's Entry Manual"
+      ],
+      "ja": [
+        "電気通信事業参入マニュアル"
+      ],
+      "source": "mic-entry-manual"
+    },
+    "MIC Entry Procedures": {
+      "en": [
+        "the Ministry's page on entry procedures"
+      ],
+      "ja": [
+        "電気通信事業参入・変更手続の案内"
+      ],
+      "source": "mic-entry-procedures"
+    },
+    "PPC Guidelines": {
+      "en": [
+        "the Commission's General Guidelines"
+      ],
+      "ja": [
+        "個人情報保護法ガイドライン（通則編）"
+      ],
+      "source": "ppc-guidelines"
+    },
+    "PPC Q&A": {
+      "en": [
+        "the Commission's Q&A on the Guidelines"
+      ],
+      "ja": [
+        "ガイドラインに関するＱ＆Ａ"
+      ],
+      "source": "ppc-qa"
     }
   },
   "fetchAlso": {
     "Penal Code": [
+      "230-2",
       "233",
       "246"
     ],
@@ -603,7 +651,8 @@
       "3"
     ],
     "Copyright Act": [
-      "13"
+      "13",
+      "32"
     ],
     "Unfair Competition Prevention Act": [
       "2"
@@ -636,6 +685,98 @@
       "2",
       "3",
       "4"
+    ],
+    "Telecommunications Business Act": [
+      "2",
+      "3",
+      "4",
+      "9",
+      "16",
+      "164"
+    ],
+    "Providers Act": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36"
+    ],
+    "APPI": [
+      "2",
+      "19",
+      "57"
+    ],
+    "Consumer Contract Act": [
+      "2",
+      "8-2",
+      "8-3"
+    ],
+    "Code of Civil Procedure": [
+      "3-7",
+      "4",
+      "11"
+    ],
+    "Civil Code": [
+      "4"
+    ],
+    "APPI Rules": [
+      "16",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24"
+    ],
+    "APPI Order": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "MIC Entry Manual": [
+      "all"
+    ],
+    "MIC Entry Procedures": [
+      "all"
+    ],
+    "PPC Guidelines": [
+      "all"
+    ],
+    "PPC Q&A": [
+      "all"
     ]
   },
   "recitals": {
@@ -650,11 +791,10 @@
   "untraced": {
     "Russia 152-FZ": {
       "articles": [
-        "1",
         "18"
       ],
-      "why": "kremlin.ru answered 403 to every page of the Law on 2026-11-11 (sources-raw.json, ru-152).",
-      "why_ja": "kremlin.ru が、2026-11-11 の取り寄せで、法律のすべての頁に 403 を返しました（sources-raw.json の ru-152）。"
+      "why": "kremlin.ru answered every page of the Law on 2026-11-12, but the plain text reads the superscript in the heading of Article 10¹ as 101, so the cut by rising numbers stops before Article 18 and it was not separated (sources-raw.json, ru-152).",
+      "why_ja": "kremlin.ru は 2026-11-12 に法律のすべての頁を返しましたが、第 10¹ 条の見出しの上付きの数字が文字だけの文では 101 と読まれ、番号の昇順で切り分ける手順が第 18 条の前で止まりました。そのため第 18 条を切り出せていません（sources-raw.json の ru-152）。"
     },
     "India DPDP Rules": {
       "articles": [

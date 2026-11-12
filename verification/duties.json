@@ -1552,6 +1552,14 @@
     },
     {
       "law": "APPI",
+      "article": "第28条第1項（Apple の受信箱と Vercel の記録）",
+      "duty": "外国にある第三者には、取扱いを委託された者も入る：「この場合においては、同条の規定は、適用しない。」（規則第16条の基準に適合する体制を整備している者を除く）。",
+      "applies": true,
+      "status": "open",
+      "open": "Whether the mailbox at Apple and Vercel's request logs are a provision to a third party in a foreign country was not settled. If they are, the people who write by email and the readers have not consented, and whether Apple and Vercel meet Article 16 of the APPI Enforcement Rules was not checked against any source."
+    },
+    {
+      "law": "APPI",
       "article": "第28条第2項",
       "duty": "同意を得ようとするときは、あらかじめ外国の制度、第三者の措置その他参考となる情報を提供。",
       "applies": true,
@@ -1657,6 +1665,14 @@
       "duty": "体制整備者への提供後の措置。",
       "applies": false,
       "reason": "同意による提供で、第1項の体制整備の例外に拠っていない。"
+    },
+    {
+      "law": "APPI",
+      "article": "第29条第1項・規則第20条第1項第二号（受け手の住所）",
+      "duty": "同意による提供の記録に、受け手の「氏名又は名称及び住所」を記す（不特定かつ多数の者に対して提供したときは、その旨）。",
+      "applies": true,
+      "status": "open",
+      "open": "The submission issue and the record hold the consent, the person and the items, but not the addresses of GitHub, Vercel, ORCID, the Internet Archive, Anthropic, OpenAI and xAI; Article 30 of Japan's Act on the Protection of Personal Information, on receiving data, has the same gap if it applies. The addresses could not be fetched, and are not written from memory."
     },
     {
       "law": "APPI",

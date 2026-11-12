@@ -3741,7 +3741,8 @@ console.log('\n95. Every citation of a law in the legal pages is to an article i
     const keys = marksOf(read(path.join(ROOT, f))).flatMap((m) => m.split(';').map((k) => k.trim()));
     const quoted = keys.filter((k) => !(U[/^(.+) (\S+)$/.exec(k)[1]] || { articles: [] }).articles.includes(/ (\S+)$/.exec(k)[1]));
     const ja = [...html.matchAll(/<blockquote lang="ja"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
-    const en = [...html.matchAll(/<blockquote lang="en"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
+    // The other quotations, in the language of their source (English, or Russian for kremlin.ru).
+    const en = [...html.matchAll(/<blockquote lang="(?!ja")[a-z]{2}"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
     nBlocks += ja.length + en.length; nKeys += quoted.length;
     if (ja.length + en.length !== quoted.length || !ja.every((x) => jpTexts.has(x)) || !en.every((x) => quotes.has(x))) badPage.push(f);
     if (keys.length && !html.includes('fetched on ' + RAW.fetched) && !html.includes(RAW.fetched + ' に取り寄せた')) badPage.push(f + ' (date)');
@@ -3994,7 +3995,9 @@ console.log('\n98. No dependencies, workflows with the least they need, pinned a
   /* The address the operator made for harvesters (site.json oai.adminEmails, given in OAI-PMH Identify), the Internet Archive's and
    * Creative Commons' published addresses, quoted where their process or text is quoted, and the address of the commit trailers. */
   const site98 = JSON.parse(read(path.join(ROOT, 'site.json')));
-  const ALLOWED = [...site98.oai.adminEmails, 'info@archive.org', 'info@creativecommons.org', 'noreply@anthropic.com'];
+  /* The example address that the Personal Information Protection Commission's Guidelines print in their own text (example.com is
+   * reserved for examples), kept where tools/sources.js keeps the Guidelines. */
+  const ALLOWED = [...site98.oai.adminEmails, 'info@archive.org', 'info@creativecommons.org', 'noreply@anthropic.com', 'kojin_ichiro@example.com'];
   const PHONE = /(?:\+81[ -]?|\b0)[789]0[ -]?\d{4}[ -]?\d{4}\b/;
   const scan = (files, at) => {
     const hits = [];
@@ -4525,6 +4528,71 @@ console.log('\n111. Each page opens with a sentence that says what it is (item 4
   ok('every page and policy built from Markdown (' + pages.length + ' files) opens with a sentence that says what it is, not with a heading or a note on its quotations', bad.length === 0, bad.join(', '));
   ok('a page that opens with a heading or with the note on quotations is refused',
     !OPENS.test(firstLine('# T\n\nLast updated: 2026-11-12.\n\n## The aim\n')) && /^(The laws, licences and terms that this page cites)/.test(firstLine('# T\n\nThe laws, licences and terms that this page cites are quoted.\n')));
+}
+
+console.log('\n112. The legal audit of 2026-11-12: its table, its counts, its quotations of official guidance, and what it changed');
+{
+  const RAW = JSON.parse(read(path.join(ROOT, 'verification', 'sources-raw.json')));
+  const GUIDES = ['mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa'];
+  const pool = GUIDES.map((k) => ((RAW.sources[k] || {}).articles || {}).all || '').join('').replace(/\s+/g, '');
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  // The quotations in 「」 of a line, nested brackets kept inside.
+  const quotes = (line) => { const out = []; let depth = 0, cur = ''; for (const ch of line) { if (ch === '「') { if (depth++ > 0) cur += ch; } else if (ch === '」') { if (--depth > 0) cur += ch; else { out.push(cur); cur = ''; } } else if (depth > 0) cur += ch; } return out; };
+  const inPool = (q) => q.split('…').map((x) => x.replace(/\s+/g, '')).filter(Boolean).every((x) => pool.includes(x));
+  /* Pure: what is wrong with an audit text; [] when nothing is. */
+  const problems = (t) => {
+    const bad = [];
+    const sec = (h) => (t.split('\n## ' + h + '\n')[1] || '').split('\n## ')[0];
+    const table = sec('点検の表');
+    if (!table.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = table.split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| ---') && !l.startsWith('| 箇所 |'));
+    const cells = rows.map((l) => l.split(' | '));
+    cells.forEach((c, i) => { if (c.length !== 6 || !JUDGE.includes(c[4])) bad.push('row ' + (i + 1)); });
+    for (const j of JUDGE) {
+      const n = cells.filter((c) => c[4] === j).length;
+      if (!sec('判定の数').includes('- ' + j + '：' + n + '\n')) bad.push('the count of ' + j);
+    }
+    for (const law of ['電気通信事業法', '個人情報保護法', '消費者契約法']) if (!rows.some((l) => l.startsWith('| 運営者が個人事業主の場合と、そうでない場合（' + law + '） |'))) bad.push('both cases for ' + law);
+    const qs = sec('公式の手引きから引いた文').split('\n').filter((l) => l.startsWith('- '));
+    if (qs.length < 5) bad.push('too few quotations');
+    for (const l of qs) for (const q of quotes(l)) if (!inPool(q)) bad.push('not in the fetched guidance: ' + q.slice(0, 30));
+    if (!sec('点検した法令').includes('電気通信事業法、情報流通プラットフォーム対処法')) bad.push('the laws checked');
+    if (!sec('取り寄せられなかった文').includes('確かめていないものとして扱います。')) bad.push('the texts not fetched');
+    if (!sec('決めたこと').split('\n').filter((l) => l.startsWith('- ')).every((l) => l.includes('2026-11-12 に Claude が決めました。'))) bad.push('a decision without its maker');
+    if (!sec('この記録について').includes('この点検は Claude が行ったもので、弁護士の点検ではありません。弁護士はこの記録を確かめていません。')) bad.push('the statement that no lawyer reviewed it');
+    if (/弁護士が(確かめ|点検|確認)しました|reviewed by a lawyer\./.test(t)) bad.push('a claim of a lawyer');
+    return bad;
+  };
+  const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const found = problems(audit);
+  const nRows = (audit.split('\n## 点検の表\n')[1] || '').split('\n## ')[0].split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| ---') && !l.startsWith('| 箇所 |')).length;
+  ok('the audit of 2026-11-12 is a table of ' + nRows + ' rows with the six columns, each judged one of the five ways, counted correctly, with both cases of a sole proprietor for three laws, its laws, the texts not fetched, Claude\'s decisions, and the statement that no lawyer reviewed it',
+    nRows >= 40 && found.length === 0, found.join(' / '));
+  // Its quotations of the Entry Manual and the Commission's Guidelines, and those of the legal review, are in the fetched texts.
+  const rv = read(path.join(ROOT, 'docs', 'legal-review.md'));
+  const rvq = rv.split('\n').filter((l) => /Entry Manual|General Guidelines/.test(l)).flatMap(quotes);
+  ok('every quotation of the official guidance in the audit and the legal review (' + rvq.length + ' in the review) is in the guidance fetched on ' + RAW.fetched,
+    GUIDES.every((k) => RAW.sources[k] && RAW.sources[k].status === 200) && rvq.length >= 5 && rvq.every(inPool), rvq.filter((q) => !inPool(q)).join(' / '));
+  // Breaking on purpose: a wrong judgement, a wrong count, an altered quotation, a lost statement each fail.
+  const broken = [
+    audit.replace('| 誤り | 審査の文を', '| 軽微 | 審査の文を'),
+    audit.replace(/- 漏れ：(\d+)/, (m, n) => '- 漏れ：' + (Number(n) + 1)),
+    audit.replace('すなわち収益事業を行うことを意味する', 'すなわち営利事業を行うことを意味する'),
+    audit.replace('弁護士はこの記録を確かめていません。', ''),
+    audit.replace('| 運営者が個人事業主の場合と、そうでない場合（消費者契約法） |', '| 消費者契約法の適用 |'),
+  ];
+  ok('the check fails on a wrong judgement, a wrong count, an altered quotation, a lost statement on lawyers, and a missing case of a sole proprietor', broken.every((b) => b !== audit && problems(b).length > 0));
+  // What the audit changed stays: the conclusions on registration and on the sender, the open duties, and the corrected limits.
+  const tk = read(path.join(ROOT, 'policies', 'takedown.md')), tkj = read(path.join(ROOT, 'policies', 'takedown.ja.md'));
+  const pv = read(path.join(ROOT, 'policies', 'privacy.md')), pvj = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  ok('the review concludes that no registration or notification is needed, and that Sophaxis is the sender of its record pages and copies; the Takedown and Privacy Policies say so in both languages; the review no longer claims that no law was left out',
+    rv.includes('Conclusion: under the Telecommunications Business Act, Sophaxis needs neither registration under Article 9 nor notification under Article 16.')
+    && rv.includes('The operator writes every record page and places every PDF copy on Vercel, so for the record pages and the copies the operator is the sender.')
+    && tk.includes('Sophaxis does not rely on the limitation of the liability of providers in that Act, which does not apply to a provider that is the sender, and the operator is liable for the record pages and the copies as Japanese law provides, including Article 709 of the Civil Code.')
+    && tkj.includes('Sophaxis は、同法が定める提供者の責任の制限には拠りません。この制限は、発信者である提供者には掛からないためです。')
+    && pv.includes('so the operator considers that it runs no telecommunications business and that Article 27-12 does not apply to it.')
+    && pvj.includes('そのため運営者は、電気通信事業を営んでいないと考えており、第 27 条の 12 は Sophaxis に掛からないと考えています。')
+    && !rv.includes('no law above was left out') && rv.includes('It does not show that no law was left out'));
 }
 
 console.log('\n' + '-'.repeat(60));

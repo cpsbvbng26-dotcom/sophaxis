@@ -7,7 +7,7 @@ Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a transla
 The Takedown Policy says how to ask for a record to be removed, and what happens then.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## When a record is removed
@@ -51,6 +51,12 @@ The authors are told in their submission issue and can respond.
 A request about the requester's own personal data concerns that person, not the work, so the authors are not told of it.
 Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
+The operator writes every record page and places every PDF copy on the site; authors submit in GitHub issues, on GitHub's service, and nothing they write reaches the site until the operator merges it.
+The operator therefore considers that, for the record pages and the copies, Sophaxis is itself the sender, as Japan's Act on providers of specified telecommunications services defines the sender; since the amendment of 2024 the title of that Act is 特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律.
+Sophaxis does not rely on the limitation of the liability of providers in that Act, which does not apply to a provider that is the sender, and the operator is liable for the record pages and the copies as Japanese law provides, including Article 709 of the Civil Code.
+The 7 days given to the authors follow the form that the same Act gives for a provider who asks the sender before taking material down.
+
+<!-- text: Civil Code 709 -->
 
 If the request is upheld, the record is removed, as the next section sets out.
 If the request is not upheld, the operator says why in the issue.
@@ -124,6 +130,8 @@ A notice of claimed infringement under that law is handled under this policy, li
 A request to disclose who submitted material is handled as Japanese law provides.
 The operator first asks the person concerned for their opinion.
 The operator discloses nothing that the law does not require.
+Where the operator holds such information as a provider under Japan's Act on providers of specified telecommunications services, hearing the sender first is what that Act asks of a provider.
+Where the material sits on the service of another provider, such as GitHub, a request under that Act can also be made to that provider.
 
 ## The work in its repository
 

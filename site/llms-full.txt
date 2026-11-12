@@ -15,7 +15,7 @@ Japanese: [利用規約（日本語訳）](https://sophaxis.vercel.app/policies/
 These Terms of Use are the rules for everyone who reads Sophaxis or submits to it.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Who these terms apply to
@@ -230,7 +230,7 @@ Japanese: [投稿の規程（日本語訳）](https://sophaxis.vercel.app/polici
 The Submission Policy says who can submit what to Sophaxis, and what the submitter confirms.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Who can submit
@@ -593,7 +593,7 @@ Japanese: [モデレーションの規程（日本語訳）](https://sophaxis.ve
 The Moderation Policy says what moderation checks before a work is listed, and what it does not check.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Moderation is not peer review
@@ -752,7 +752,7 @@ Japanese: [著作権の規程（日本語訳）](https://sophaxis.vercel.app/pol
 The Copyright Policy says that authors keep their copyright, and what Sophaxis copies and why.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Authors keep their copyright
@@ -899,7 +899,7 @@ Japanese: [個人情報の取り扱いについて](https://sophaxis.vercel.app/
 The Privacy Policy says what personal data the site and its checks read, and what becomes public.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Who handles personal data
@@ -925,7 +925,11 @@ Personal data is used only for these purposes:
 ## The site
 
 The Sophaxis site sets no cookies, runs no analytics and loads nothing from other servers.
-Its pages contain no code or tag that sends information about a reader to anyone else, so nothing falls under the rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12).
+Its pages contain no code or tag that sends information about a reader to anyone else.
+The rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12) bind only a telecommunications carrier and a person who runs a telecommunications business that the Act exempts from registration and notification, and among those only the services that the Ministry's Ordinance names; they do not cover information needed to use the service.
+Sophaxis charges for nothing and earns nothing from the site, so the operator considers that it runs no telecommunications business and that Article 27-12 does not apply to it.
+If it did apply, the only request a page makes is the search page's request to Sophaxis's own site for its list of records, which is needed to use that page.
+The Ministry's Ordinance was not fetched; this view rests on the Act and on the Ministry's Entry Manual.
 The search page runs one script, served by Sophaxis itself.
 It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
 No other page runs a script.
@@ -1252,7 +1256,7 @@ Japanese: [削除の規程（日本語訳）](https://sophaxis.vercel.app/polici
 The Takedown Policy says how to ask for a record to be removed, and what happens then.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## When a record is removed
@@ -1296,6 +1300,12 @@ The authors are told in their submission issue and can respond.
 A request about the requester's own personal data concerns that person, not the work, so the authors are not told of it.
 Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
+The operator writes every record page and places every PDF copy on the site; authors submit in GitHub issues, on GitHub's service, and nothing they write reaches the site until the operator merges it.
+The operator therefore considers that, for the record pages and the copies, Sophaxis is itself the sender, as Japan's Act on providers of specified telecommunications services defines the sender; since the amendment of 2024 the title of that Act is 特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律.
+Sophaxis does not rely on the limitation of the liability of providers in that Act, which does not apply to a provider that is the sender, and the operator is liable for the record pages and the copies as Japanese law provides, including Article 709 of the Civil Code.
+The 7 days given to the authors follow the form that the same Act gives for a provider who asks the sender before taking material down.
+
+<!-- text: Civil Code 709 -->
 
 If the request is upheld, the record is removed, as the next section sets out.
 If the request is not upheld, the operator says why in the issue.
@@ -1369,6 +1379,8 @@ A notice of claimed infringement under that law is handled under this policy, li
 A request to disclose who submitted material is handled as Japanese law provides.
 The operator first asks the person concerned for their opinion.
 The operator discloses nothing that the law does not require.
+Where the operator holds such information as a provider under Japan's Act on providers of specified telecommunications services, hearing the sender first is what that Act asks of a provider.
+Where the material sits on the service of another provider, such as GitHub, a request under that Act can also be made to that provider.
 
 ## The work in its repository
 
@@ -2233,7 +2245,7 @@ Japanese: [運営者と連絡先（日本語訳）](https://sophaxis.vercel.app/
 This page says who operates Sophaxis and how to reach the operator.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Operator
@@ -2708,12 +2720,12 @@ Source: https://sophaxis.vercel.app/policies/privacy.ja.html
 
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 Sophaxis の個人情報の取り扱いを、日本の個人情報保護法の項目に沿って書いたものです。英語の [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) の訳で、項目を日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
-日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
 原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 取り扱う者
@@ -2734,7 +2746,11 @@ Sophaxis の運営者、根本卓哉です。住所は公開していません�
 「人物」の部分をまとめて問い合わせないので、公開のメールアドレスや国を受け取ることはありません。
 検査が使うのは氏名・ウェブサイト・業績だけで、ほかは保存せず、どこにも書き写しません。
 サイトは、閲覧者の個人情報を集めません。Cookie も、アクセス解析も使いません。
-頁には、閲覧者の情報を外へ送るコードもタグもありません。電気通信事業法の外部送信の規律（第 27 条の 12）に当たるものはありません。
+頁には、閲覧者の情報を外へ送るコードもタグもありません。
+電気通信事業法の外部送信の規律（第 27 条の 12）が掛かるのは、電気通信事業者と、登録も届出も要らないとされる電気通信事業を営む者だけです。そのうちでも、総務省令が定める役務に限られます。役務を使うのに要る情報は、この規律から除かれています。
+Sophaxis は何にも料金を取らず、サイトから何の収益も得ていません。そのため運営者は、電気通信事業を営んでいないと考えており、第 27 条の 12 は Sophaxis に掛からないと考えています。
+掛かるとしても、頁が出す要求は、検索の頁が Sophaxis 自身のサイトに記録の一覧を求めるものだけで、それはその頁を使うのに要るものです。
+総務省令は取り寄せていません。この考えは、法律の条文と、総務省の電気通信事業参入マニュアルに拠っています。
 検索の頁は、Sophaxis 自身が配るスクリプトを一つだけ動かします。Sophaxis から記録の一覧を読み、閲覧者のブラウザの中で検索し、どこにも何も送りません。ほかの頁はスクリプトを動かしません。
 記録の頁には、X・Bluesky・Facebook・LinkedIn・メールへの共有のリンクがあります。どれも各サービスの頁への普通のリンクで、閲覧者がたどるまで何も送られず、たどった先では各サービスの方針が掛かります。
 Sophaxis は、Vercel のアクセス解析を有効にしていません。
@@ -2984,7 +3000,7 @@ Source: https://sophaxis.vercel.app/policies/terms.ja.html
 この利用規約は、Sophaxis を読む人と、Sophaxis に投稿する人のすべてに掛かる決まりです。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
-日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
 原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## この規約が及ぶ人
@@ -3199,7 +3215,7 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 投稿の規程は、だれが何を Sophaxis に投稿できるかと、投稿する人が何を確かめるかを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
-日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
 原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 投稿できる人
@@ -3562,7 +3578,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 モデレーションの規程は、作品を載せる前にモデレーションが何を確かめ、何を確かめないかを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
-日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
 原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## モデレーションは査読ではない
@@ -3721,7 +3737,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.ja.html
 著作権の規程は、著作権が著者に残ることと、Sophaxis が何をなぜ写すかを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
-日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
 原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 著作権は著者に残る
@@ -3868,7 +3884,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 削除の規程は、記録の削除を求める手続きと、そのあとに起こることを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
-日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
 原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 記録を削除するとき
@@ -3912,6 +3928,12 @@ GitHub と Vercel は、それぞれの規約で判断します。運営者は�
 求めた人自身の個人データについての求めは、作品ではなくその人に関わるものなので、著者には知らせません。
 重大な害のためにただちに外す場合を除き、運営者は、求めに沿って素材を外す前に、著者に同意するかどうかを尋ねます。7 日以内に反対がなければ、外すことがあります。
 この通知と応答の手続きは、インターネット上のサービスの提供者の責任に関する日本の法令の考え方に沿ったものです。素材に関わる人は、判断の前に求めを知り、答えることができます。ただし、重大な害のために素材をただちに公開から外す必要がある場合は除きます。
+記録の頁はすべて運営者が書き、PDF の写しもすべて運営者がサイトに置きます。著者は GitHub の issue で、GitHub のサービスの上で投稿します。著者が書いたものは、運営者が取り込むまでサイトに載りません。
+そのため運営者は、記録の頁と写しについては、Sophaxis 自身が、情報流通プラットフォーム対処法の定める「発信者」に当たると考えています。この法律の題名は、2024 年の改正から「特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律」です。
+Sophaxis は、同法が定める提供者の責任の制限には拠りません。この制限は、発信者である提供者には掛からないためです。運営者は、記録の頁と写しについて、民法第 709 条を含む日本の法令の定めるとおり責任を負います。
+著者に与える 7 日は、提供者が発信者に尋ねてから素材を外すときについて同法が定める形に沿っています。
+
+<!-- text: Civil Code 709 -->
 
 求めが認められた場合、記録は次の節のとおり削除します。
 求めが認められなかった場合、運営者はその理由を issue で示します。
@@ -3985,6 +4007,8 @@ Sophaxis は、手数料の掛かる米国著作権局への代理人の届け�
 素材を投稿した人の開示を求められた場合は、日本の法令が定めるとおりに扱います。
 運営者は、まず関係する人に意見を聴きます。
 運営者は、法令が求めないものは開示しません。
+運営者が情報流通プラットフォーム対処法の提供者としてその情報を持つときは、先に発信者の意見を聴くことは、同法が提供者に求めるところです。
+素材が GitHub のようなほかの提供者のサービスの上にあるときは、同法による請求は、その提供者にもできます。
 
 ## 預け先にある作品
 
@@ -4929,7 +4953,7 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 この頁は、Sophaxis を運営する人と、運営者への連絡の仕方を書いています。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
-日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
+日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
 原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。
 
 ## 運営者
