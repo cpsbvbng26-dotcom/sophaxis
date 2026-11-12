@@ -251,7 +251,8 @@ From 2026-11-21, a person under 13 cannot submit.
 A submitter under 18 needs the consent of a parent or guardian.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
-From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 28 places in the table below, or who stays in one between the submission and the listing, and the submitter confirms this in the form.
+From 2026-11-22, Sophaxis does not list work by an author who lives in any of the 43 places in the table below, or who stays in one between the submission and the listing, and the submitter confirms this in the form.
+For the 15 places for which the table gives 2026-11-26, this applies from 2026-11-26.
 A stay counts even if it is short, such as for travel, work or study.
 Stays count because the laws of several of these places reach people who are there, not only people who live there; Article 3(2) of the GDPR, for example, speaks of data subjects who are in the Union.
 Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) says more.
@@ -259,43 +260,62 @@ This rule depends only on where an author lives or stays, not on nationality, ra
 An author of any nationality who lives elsewhere and does not stay there can submit, and an author who lives or stays there cannot, whatever their nationality.
 The reasons are laws that require a local representative, the storage of personal data in the country, or registration there (among them Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act; Article 53 of China's Personal Information Protection Law; section 37(5) of Thailand's Personal Data Protection Act), which Sophaxis, run unpaid by one person within free services, does not have; the operator has decided not to appoint a representative, as the Privacy Policy explains.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
+From 2026-11-26, the rule also covers two more kinds of duty that Sophaxis cannot meet.
+One is a duty to give people there, before their personal data is collected, a postal address or a telephone number of the operator, which Sophaxis does not publish.
+The other is a duty to process the personal data of a minor there only with a parent's consent that the service confirms, or not at all.
+From the same day, a place is also not offered when its data protection law, found by a survey of the laws of 195 countries made on 2026-11-12, could not be read at its source, through its official address and one other route; the table gives such a place as "No, not fetched".
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
 Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
 If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html), and the operator reviews the decision on a representative.
 
-| Place | What the law requires | Law | Read at its source |
-| --- | --- | --- | --- |
-| The European Union | A representative | GDPR Article 27; Digital Services Act Article 13 | Yes |
-| The European Economic Area | A representative | GDPR Article 27, as applied in the EEA | Yes |
-| The United Kingdom | A representative | UK GDPR Article 27 | Yes |
-| China | A representative | Personal Information Protection Law, Article 53 | Yes |
-| Thailand | A representative | Personal Data Protection Act, section 37(5) | Yes |
-| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes |
-| Türkiye | Registration through a representative there | Regulation on the Data Controllers' Registry | No, as reported |
-| Egypt | A representative and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 | No, as reported |
-| Peru | A representative | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) | No, as reported |
-| Albania | A representative | Law No. 124/2024 on Personal Data Protection | No, as reported |
-| Monaco | A representative | Law No. 1.565, Article 25 | No, as reported |
-| Guernsey | A representative | Data Protection (Bailiwick of Guernsey) Law, 2017 | No, as reported |
-| Botswana | A representative | Data Protection Act 2024, section 54 | No, as reported |
-| Ecuador | A representative | Regulation of the Organic Law on Personal Data Protection, Article 3 | No, as reported |
-| Iraq | Notice to the regulator before the service starts | Framework Regulations for Digital Platforms and Services (2025), Articles 4 and 5 | Yes |
-| Indonesia | Registration | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended | No, as reported |
-| Rwanda | Registration and storage of personal data there | Law No. 058/2021, Articles 2, 29 and 50 | Yes |
-| Zambia | Registration and storage of personal data there | Data Protection Act 2021, sections 19 and 70 | No, as reported |
-| Ethiopia | Storage of personal data there | Personal Data Protection Proclamation No. 1321/2024 | No, as reported |
-| The Democratic Republic of the Congo | Storage of personal data there and an authorisation | Ordonnance-loi No. 23/010 (Digital Code), Articles 184, 186, 188 and 201 (read in a copy that is not the official journal) | In part |
-| Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Articles 3 and 12(2) | Yes |
-| Tunisia | A declaration by a controller who resides there | Organic Law No. 2004-63 | No, as reported |
-| Uganda | Registration | Data Protection and Privacy Act 2019, section 29 | No, as reported |
-| Guinea | Storage of personal data there | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection | No, as reported |
-| Madagascar | Storage of personal data there | Law No. 2014-038 on Personal Data Protection | No, as reported |
-| Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported |
-| Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported |
-| Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported |
+| Place | What the law requires | Law | Read at its source | From |
+| --- | --- | --- | --- | --- |
+| The European Union | A representative | GDPR Article 27; Digital Services Act Article 13 | Yes | 2026-11-22 |
+| The European Economic Area | A representative | GDPR Article 27, as applied in the EEA | Yes | 2026-11-22 |
+| The United Kingdom | A representative | UK GDPR Article 27 | Yes | 2026-11-22 |
+| China | A representative | Personal Information Protection Law, Article 53 | Yes | 2026-11-22 |
+| Thailand | A representative | Personal Data Protection Act, section 37(5) | Yes | 2026-11-22 |
+| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes | 2026-11-22 |
+| Türkiye | Registration through a representative there | Regulation on the Data Controllers' Registry | No, as reported | 2026-11-22 |
+| Egypt | A representative and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 | No, as reported | 2026-11-22 |
+| Peru | A representative | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) | No, as reported | 2026-11-22 |
+| Albania | A representative | Law No. 124/2024 on Personal Data Protection | No, as reported | 2026-11-22 |
+| Monaco | A representative | Law No. 1.565, Article 25 | Yes | 2026-11-22 |
+| Guernsey | A representative | Data Protection (Bailiwick of Guernsey) Law, 2017 | No, as reported | 2026-11-22 |
+| Botswana | A representative | Data Protection Act 2024, section 54 | No, as reported | 2026-11-22 |
+| Ecuador | A representative | Regulation of the Organic Law on Personal Data Protection, Article 3 | No, as reported | 2026-11-22 |
+| Iraq | Notice to the regulator before the service starts | Framework Regulations for Digital Platforms and Services (2025), Articles 4 and 5 | Yes | 2026-11-22 |
+| Indonesia | Registration | Regulation of the Minister of Communication and Informatics No. 5 of 2020, as amended | No, as reported | 2026-11-22 |
+| Rwanda | Registration and storage of personal data there | Law No. 058/2021, Articles 2, 29 and 50 | Yes | 2026-11-22 |
+| Zambia | Registration and storage of personal data there | Data Protection Act 2021, sections 19 and 70 | No, as reported | 2026-11-22 |
+| Ethiopia | Storage of personal data there | Personal Data Protection Proclamation No. 1321/2024 | No, as reported | 2026-11-22 |
+| The Democratic Republic of the Congo | Storage of personal data there and an authorisation | Ordonnance-loi No. 23/010 (Digital Code), Articles 184, 186, 188 and 201 (read in a copy that is not the official journal) | In part | 2026-11-22 |
+| Kazakhstan | Storage of personal data there | Law No. 94-V on Personal Data, Articles 3 and 12(2) | Yes | 2026-11-22 |
+| Tunisia | A declaration by a controller who resides there | Organic Law No. 2004-63 | No, as reported | 2026-11-22 |
+| Uganda | Registration | Data Protection and Privacy Act 2019, section 29 | No, as reported | 2026-11-22 |
+| Guinea | Storage of personal data there | Law No. L/2016/037/AN on Cybersecurity and Personal Data Protection | No, as reported | 2026-11-22 |
+| Madagascar | Storage of personal data there | Law No. 2014-038 on Personal Data Protection | No, as reported | 2026-11-22 |
+| Bolivia | Storage of personal data there | Law No. 164, General Law on Telecommunications | No, as reported | 2026-11-22 |
+| Costa Rica | Registration | Law No. 8968, Article 21 | No, as reported | 2026-11-22 |
+| Quebec | An assessment and a written agreement before personal data leaves it | Act respecting the protection of personal information in the private sector, section 17 | No, as reported | 2026-11-22 |
+| Argentina | Registration of its databases, the operator's postal address before personal data is collected, and an adequate level of protection before personal data leaves it | Law No. 25.326, Articles 6, 12 and 21 | Yes | 2026-11-26 |
+| Colombia | The operator's telephone number before personal data is collected, and no processing of the personal data of minors | Law 1581 of 2012, Articles 7 and 12 | Yes | 2026-11-26 |
+| Ghana | Registration | Data Protection Act, 2012 (Act 843), sections 45, 46 and 53 | Yes | 2026-11-26 |
+| Korea | A parent's consent, confirmed, for a child under 14, and, for consent to a transfer abroad, each recipient's period of retention | Personal Information Protection Act, Articles 22-2 and 28-8 | Yes | 2026-11-26 |
+| Mexico | The operator's postal address in the privacy notice | Federal Law on the Protection of Personal Data Held by Private Parties, Articles 1 and 15 | Yes | 2026-11-26 |
+| The Philippines | A comparable level of protection by every recipient | Data Privacy Act of 2012, sections 6 and 21 | Yes | 2026-11-26 |
+| Saudi Arabia | Conditions before personal data leaves it | Personal Data Protection Law, Article 29 | Yes | 2026-11-26 |
+| Uruguay | Registration of its databases, and the operator's postal address before personal data is collected | Law No. 18.331, Articles 3, 13 and 29 | Yes | 2026-11-26 |
+| Zimbabwe | An adequate level of protection before personal data leaves it | Cyber and Data Protection Act [Chapter 12:07], sections 4 and 28 (read in a copy that is not the official journal) | In part | 2026-11-26 |
+| Kenya | Registration | Data Protection Act 2019 | No, as reported | 2026-11-26 |
+| Tanzania | Registration | Personal Data Protection Act, 2022 | No, as reported | 2026-11-26 |
+| South Africa | Not known: its data protection law could not be read | Protection of Personal Information Act 4 of 2013 | No, not fetched | 2026-11-26 |
+| Singapore | Not known: its data protection law could not be read | Personal Data Protection Act 2012 | No, not fetched | 2026-11-26 |
+| The United Arab Emirates | Not known: its data protection law could not be read | Federal Decree-Law No. 45 of 2021 | No, not fetched | 2026-11-26 |
+| Qatar | Not known: its data protection law could not be read | Law No. 13 of 2016 | No, not fetched | 2026-11-26 |
 
-<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17 -->
+<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17; Argentina Law 25.326 6; Argentina Law 25.326 12; Argentina Law 25.326 21; Colombia Law 1581 7; Colombia Law 1581 12; Ghana DPA 2012 45; Ghana DPA 2012 46; Ghana DPA 2012 53; Korea PIPA 22-2; Korea PIPA 28-8; Mexico LFPDPPP 1; Mexico LFPDPPP 15; Philippines DPA 2012 6; Philippines DPA 2012 21; Saudi PDPL 29; Uruguay Law 18.331 3; Uruguay Law 18.331 13; Uruguay Law 18.331 29; Zimbabwe DPA 4; Zimbabwe DPA 28 -->
 
 ## What can be submitted
 
@@ -1057,7 +1077,11 @@ If a person gives their own IP address to ask about their requests, the operator
 Vercel handles the logs as its [Privacy Notice](https://vercel.com/legal/privacy-notice) sets out, and publishes the measures it takes in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa).
 Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
 
-<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25 -->
+The services outside Japan may not be required to protect personal data in a way that, overall, provides safeguards comparable to those of the law of the place where an author lives, such as New Zealand's Privacy Act 2020.
+Section 22 of New Zealand's Privacy Act 2020, in its information privacy principle 12, lets personal information be disclosed abroad on the person's authorisation after the person is told this expressly, and the submission form says it next to the consent.
+For a person in Switzerland, the disclosure to the services in the United States rests on that person's explicit consent, which Article 17 of Switzerland's Federal Act on Data Protection allows.
+
+<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
 
 ## Security
 
@@ -1176,6 +1200,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) lists either.
 Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
+From 2026-11-26, the list also covers places whose law asks for the operator's postal address or telephone number before personal data is collected, places whose law lets the personal data of a minor be processed only with a parent's consent that the service confirms, or not at all, and places whose data protection law could not be read at its source; the Submission Policy gives each, with its law.
 Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
@@ -2892,7 +2917,11 @@ Vercel は、それぞれの要求を、読者のブラウザーから直に受�
 Vercel は、その[プライバシーの方針](https://vercel.com/legal/privacy-notice)のとおりに記録を扱い、講じている措置を[データ処理補遺](https://vercel.com/legal/dpa)の別表 2 に公表しています。
 毎週、自動の手順が Vercel と Apple のプライバシーの方針の最終更新日を読みます。日付が変われば issue が開き、運営者が方針を読み直して、そのサービスを使い続けてよいかを決めます。
 
-<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25 -->
+日本の外のサービスは、著者が住む場所の法令（たとえばニュージーランドの 2020 年プライバシー法）と全体として同等の保護で個人データを守るよう求められていないことがあります。
+ニュージーランドの 2020 年プライバシー法第 22 条の情報プライバシー原則 12 は、このことをはっきり告げたうえで本人が認めれば、国外への開示を許します。投稿の様式は、同意の欄の横でこれを告げます。
+スイスの人については、米国のサービスへの開示は、本人のはっきりした同意に拠ります。スイスの連邦データ保護法第 17 条がこれを認めています。
+
+<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
 
 ## 安全のための措置
 
@@ -3021,6 +3050,7 @@ Sophaxis は、無報酬で、無料の範囲で運営しています。
 2026-11-22 から、Sophaxis は、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)の表にあるほかの国と地域の人にもサービスを提供しません。
 そこの法令は、現地の代理人、国内での個人データの保存、現地での登録、データを国外へ出す前の条件のいずれかを求めているか、求めると報告されています。Sophaxis はどれも満たしていません。
 国や地域は、そうした務めが報告された時点で表に足し、法令を原文で読んでから外します。
+2026-11-26 からは、個人データを集める前に運営者の住所か電話番号を知らせるよう求める法令、未成年者の個人データをサービスが確かめた親の同意があるときに限って扱わせる法令（または扱わせない法令）のある国と地域と、データ保護法を原文で読めなかった国と地域も表に入ります。それぞれの法令は投稿の規程にあります。
 ロシアの連邦法第 152-FZ 号は、国外に住むロシア国民のデータにも、本人が処理に同意していれば及びます（第 1 条第 1.1 項）。Sophaxis は住んでいる場所と滞在している場所で決め、国籍は尋ねないので、この部分には対応していません。ロシアの当局から指摘があれば、運営者は判断を見直します。
 2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
 インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
@@ -3281,7 +3311,8 @@ Sophaxis は、モデレーターが作品を読む前に、ORCID を通して�
 ORCID iD を持たない著者は投稿できません。
 2026-11-21 から、13 歳未満の人は投稿できません。
 18 歳未満の投稿者には、親または保護者の同意が要ります。
-2026-11-22 から、著者のだれかが下の表の 28 の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。投稿者は様式でこのことを確かめます。
+2026-11-22 から、著者のだれかが下の表の 43 の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。投稿者は様式でこのことを確かめます。
+表で 2026-11-26 とした 15 の国と地域については、2026-11-26 からです。
 滞在には、旅行・出張・留学のような短いものも含みます。
 滞在も数えるのは、いくつかの国と地域の法令が、そこに住む人だけでなく、そこにいる人にも及ぶためです。たとえば一般データ保護規則の第 3 条第 2 項は、欧州連合にいるデータ主体と書いています。
 これらの国と地域では、Sophaxis はサービスを提供しません。その国や地域の法令が、そこにいる人へサービスを提供する者に務めを課しているか、課していると報告されていて、Sophaxis はその務めを一つも満たしていないためです。詳しくは[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html)にあります。
@@ -3289,6 +3320,10 @@ ORCID iD を持たない著者は投稿できません。
 どの国籍の著者も、これらの国と地域の外に住み、そこに滞在していなければ投稿できます。これらの国と地域に住んでいるか滞在している著者は、国籍を問わず投稿できません。
 務めの中身は、現地に代理人を置くこと、個人データを国内に保存すること、現地で登録すること、データを国外へ出す前に条件を満たすことのいずれかです（一般データ保護規則と英国の一般データ保護規則の第 27 条、欧州連合のデジタルサービス法の第 13 条、中国の個人情報保護法の第 53 条、タイの個人データ保護法の第 37 条第 5 号など）。Sophaxis は一人が無報酬で、無料のサービスの範囲で運営していて、どれも備えていません。運営者は、個人情報の取り扱いについての頁が示すとおり、代理人を置かないと決めています。
 決まりは、こうした務めを求める法令、または求めると報告されている法令のある国と地域には、Sophaxis を提供しないことです。
+2026-11-26 から、決まりは、Sophaxis が満たせない務めをもう二つ含みます。
+一つは、個人データを集める前に、運営者の住所か電話番号をそこにいる人へ知らせる務めです。Sophaxis はどちらも公開していません。
+もう一つは、そこにいる未成年者の個人データを、サービスが確かめた親の同意があるときに限って扱う務め、または扱わない務めです。
+同じ日から、2026-11-12 に行った 195 の国の法令の調べが見つけたデータ保護法を、公式の所在とほかの一つの経路から取り寄せても原文で読めなかった国と地域にも、Sophaxis を提供しません。表では、そうした国と地域を「取り寄せられない」としています。
 国や地域を表に足すのは、そうした務めが報告された時点です。法令の原文を読むのを待ちません。表から外すのは、その法令を原文で読み、Sophaxis に及ばないと確かめてからです。
 表を変えるときは、利用規約のとおり、効力が始まる前にトップの頁で告知します。
 Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか、どこに滞在しているかは調べません。
@@ -3296,38 +3331,53 @@ Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか�
 2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
 インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
 
-| 国と地域 | 法令が求めるもの | 法令 | 原文で読んだか |
-| --- | --- | --- | --- |
-| 欧州連合 | 代理人 | 一般データ保護規則 第 27 条、デジタルサービス法 第 13 条 | 読んだ |
-| 欧州経済領域 | 代理人 | 一般データ保護規則 第 27 条（欧州経済領域での適用） | 読んだ |
-| 英国 | 代理人 | 英国の一般データ保護規則 第 27 条 | 読んだ |
-| 中国 | 代理人 | 個人情報保護法 第 53 条 | 読んだ |
-| タイ | 代理人 | 個人データ保護法 第 37 条第 5 号 | 読んだ |
-| ロシア | 国内での個人データの保存 | 連邦法第 152-FZ 号 第 1 条第 1.1 項、第 18 条第 5 項 | 読んだ |
-| トルコ | 国内の代理人を通じた登録 | データ管理者登録簿に関する規則 | まだ（報告による） |
-| エジプト | 代理人と許可 | 2020 年法律第 151 号とその施行規則 第 3 条 | まだ（報告による） |
-| ペルー | 代理人 | 法律第 29733 号の施行規則（最高令第 016-2024-JUS 号） | まだ（報告による） |
-| アルバニア | 代理人 | 個人データ保護法（法律第 124/2024 号） | まだ（報告による） |
-| モナコ | 代理人 | 法律第 1.565 号 第 25 条 | まだ（報告による） |
-| ガーンジー | 代理人 | ガーンジー管轄区データ保護法（2017 年） | まだ（報告による） |
-| ボツワナ | 代理人 | 2024 年データ保護法 第 54 条 | まだ（報告による） |
-| エクアドル | 代理人 | 個人データ保護組織法の施行規則 第 3 条 | まだ（報告による） |
-| イラク | 開始前の当局への届出 | デジタルプラットフォームとサービスの枠組み規則（2025 年）第 4 条・第 5 条 | 読んだ |
-| インドネシア | 登録 | 通信情報大臣規則 2020 年第 5 号（改正後） | まだ（報告による） |
-| ルワンダ | 登録と国内での個人データの保存 | 法律第 058/2021 号 第 2 条・第 29 条・第 50 条 | 読んだ |
-| ザンビア | 登録と国内での個人データの保存 | 2021 年データ保護法 第 19 条・第 70 条 | まだ（報告による） |
-| エチオピア | 国内での個人データの保存 | 個人データ保護布告 第 1321/2024 号 | まだ（報告による） |
-| コンゴ民主共和国 | 国内での個人データの保存と許可 | デジタル法典（オルドナンス法第 23/010 号）第 184 条・第 186 条・第 188 条・第 201 条（官報ではない写しで読んだ） | 一部 |
-| カザフスタン | 国内での個人データの保存 | 個人データ法（法律第 94-V 号）第 3 条・第 12 条第 2 項 | 読んだ |
-| チュニジア | 国内に住む管理者による届出 | 2004 年組織法第 63 号 | まだ（報告による） |
-| ウガンダ | 登録 | 2019 年データ保護・プライバシー法 第 29 条 | まだ（報告による） |
-| ギニア | 国内での個人データの保存 | サイバーセキュリティと個人データ保護に関する法律（L/2016/037/AN） | まだ（報告による） |
-| マダガスカル | 国内での個人データの保存 | 個人データ保護法（法律第 2014-038 号） | まだ（報告による） |
-| ボリビア | 国内での個人データの保存 | 電気通信一般法（法律第 164 号） | まだ（報告による） |
-| コスタリカ | 登録 | 法律第 8968 号 第 21 条 | まだ（報告による） |
-| ケベック州 | データを外へ出す前の評価と書面の契約 | 民間部門の個人情報保護法 第 17 条 | まだ（報告による） |
+| 国と地域 | 法令が求めるもの | 法令 | 原文で読んだか | 適用の日 |
+| --- | --- | --- | --- | --- |
+| 欧州連合 | 代理人 | 一般データ保護規則 第 27 条、デジタルサービス法 第 13 条 | 読んだ | 2026-11-22 |
+| 欧州経済領域 | 代理人 | 一般データ保護規則 第 27 条（欧州経済領域での適用） | 読んだ | 2026-11-22 |
+| 英国 | 代理人 | 英国の一般データ保護規則 第 27 条 | 読んだ | 2026-11-22 |
+| 中国 | 代理人 | 個人情報保護法 第 53 条 | 読んだ | 2026-11-22 |
+| タイ | 代理人 | 個人データ保護法 第 37 条第 5 号 | 読んだ | 2026-11-22 |
+| ロシア | 国内での個人データの保存 | 連邦法第 152-FZ 号 第 1 条第 1.1 項、第 18 条第 5 項 | 読んだ | 2026-11-22 |
+| トルコ | 国内の代理人を通じた登録 | データ管理者登録簿に関する規則 | まだ（報告による） | 2026-11-22 |
+| エジプト | 代理人と許可 | 2020 年法律第 151 号とその施行規則 第 3 条 | まだ（報告による） | 2026-11-22 |
+| ペルー | 代理人 | 法律第 29733 号の施行規則（最高令第 016-2024-JUS 号） | まだ（報告による） | 2026-11-22 |
+| アルバニア | 代理人 | 個人データ保護法（法律第 124/2024 号） | まだ（報告による） | 2026-11-22 |
+| モナコ | 代理人 | 法律第 1.565 号 第 25 条 | 読んだ | 2026-11-22 |
+| ガーンジー | 代理人 | ガーンジー管轄区データ保護法（2017 年） | まだ（報告による） | 2026-11-22 |
+| ボツワナ | 代理人 | 2024 年データ保護法 第 54 条 | まだ（報告による） | 2026-11-22 |
+| エクアドル | 代理人 | 個人データ保護組織法の施行規則 第 3 条 | まだ（報告による） | 2026-11-22 |
+| イラク | 開始前の当局への届出 | デジタルプラットフォームとサービスの枠組み規則（2025 年）第 4 条・第 5 条 | 読んだ | 2026-11-22 |
+| インドネシア | 登録 | 通信情報大臣規則 2020 年第 5 号（改正後） | まだ（報告による） | 2026-11-22 |
+| ルワンダ | 登録と国内での個人データの保存 | 法律第 058/2021 号 第 2 条・第 29 条・第 50 条 | 読んだ | 2026-11-22 |
+| ザンビア | 登録と国内での個人データの保存 | 2021 年データ保護法 第 19 条・第 70 条 | まだ（報告による） | 2026-11-22 |
+| エチオピア | 国内での個人データの保存 | 個人データ保護布告 第 1321/2024 号 | まだ（報告による） | 2026-11-22 |
+| コンゴ民主共和国 | 国内での個人データの保存と許可 | デジタル法典（オルドナンス法第 23/010 号）第 184 条・第 186 条・第 188 条・第 201 条（官報ではない写しで読んだ） | 一部 | 2026-11-22 |
+| カザフスタン | 国内での個人データの保存 | 個人データ法（法律第 94-V 号）第 3 条・第 12 条第 2 項 | 読んだ | 2026-11-22 |
+| チュニジア | 国内に住む管理者による届出 | 2004 年組織法第 63 号 | まだ（報告による） | 2026-11-22 |
+| ウガンダ | 登録 | 2019 年データ保護・プライバシー法 第 29 条 | まだ（報告による） | 2026-11-22 |
+| ギニア | 国内での個人データの保存 | サイバーセキュリティと個人データ保護に関する法律（L/2016/037/AN） | まだ（報告による） | 2026-11-22 |
+| マダガスカル | 国内での個人データの保存 | 個人データ保護法（法律第 2014-038 号） | まだ（報告による） | 2026-11-22 |
+| ボリビア | 国内での個人データの保存 | 電気通信一般法（法律第 164 号） | まだ（報告による） | 2026-11-22 |
+| コスタリカ | 登録 | 法律第 8968 号 第 21 条 | まだ（報告による） | 2026-11-22 |
+| ケベック州 | データを外へ出す前の評価と書面の契約 | 民間部門の個人情報保護法 第 17 条 | まだ（報告による） | 2026-11-22 |
+| アルゼンチン | 登録、データを集める前に知らせる住所、データを国外へ出す前の十分な保護の水準 | 法律第 25.326 号 第 6 条・第 12 条・第 21 条 | 読んだ | 2026-11-26 |
+| コロンビア | データを集める前に知らせる電話番号、未成年者のデータを扱わないこと | 2012 年法律第 1581 号 第 7 条・第 12 条 | 読んだ | 2026-11-26 |
+| ガーナ | 登録 | 2012 年データ保護法（法律第 843 号）第 45 条・第 46 条・第 53 条 | 読んだ | 2026-11-26 |
+| 大韓民国 | 14 歳未満の子どもの親の同意の確認、国外への移転の同意の前に知らせる受け手ごとの保存期間 | 韓国の個人情報保護法 第 22 条の 2・第 28 条の 8 | 読んだ | 2026-11-26 |
+| メキシコ | プライバシー通知に書く住所 | 私人が保有する個人データの保護に関する連邦法 第 1 条・第 15 条 | 読んだ | 2026-11-26 |
+| フィリピン | すべての受け手のもとでの同等の保護の水準 | 2012 年データプライバシー法 第 6 条・第 21 条 | 読んだ | 2026-11-26 |
+| サウジアラビア | データを国外へ出す前の条件 | サウジアラビアの個人データ保護法 第 29 条 | 読んだ | 2026-11-26 |
+| ウルグアイ | 登録、データを集める前に知らせる住所 | 法律第 18.331 号 第 3 条・第 13 条・第 29 条 | 読んだ | 2026-11-26 |
+| ジンバブエ | データを国外へ出す前の十分な保護の水準 | サイバー・データ保護法（第 12 章 07）第 4 条・第 28 条（官報ではない写しで読んだ） | 一部 | 2026-11-26 |
+| ケニア | 登録 | 2019 年データ保護法 | まだ（報告による） | 2026-11-26 |
+| タンザニア | 登録 | 2022 年個人データ保護法 | まだ（報告による） | 2026-11-26 |
+| 南アフリカ | 分からない（データ保護法を読めなかった） | 個人情報保護法（2013 年法律第 4 号） | 取り寄せられない | 2026-11-26 |
+| シンガポール | 分からない（データ保護法を読めなかった） | 2012 年個人データ保護法 | 取り寄せられない | 2026-11-26 |
+| アラブ首長国連邦 | 分からない（データ保護法を読めなかった） | 2021 年連邦政令法第 45 号 | 取り寄せられない | 2026-11-26 |
+| カタール | 分からない（データ保護法を読めなかった） | 2016 年法律第 13 号 | 取り寄せられない | 2026-11-26 |
 
-<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17 -->
+<!-- text: India DPDP Rules 10; GDPR 3; GDPR 27; UK GDPR 27; DSA 13; PIPL 53; Thailand PDPA 37; Russia 152-FZ 1; Russia 152-FZ 18; Egypt Law 151/2020 3; Monaco Law 1.565 25; Botswana DPA 2024 54; Ecuador Regulation 3; Iraq Framework Regulations 4; Iraq Framework Regulations 5; Rwanda Law 058/2021 2; Rwanda Law 058/2021 29; Rwanda Law 058/2021 50; Zambia DPA 2021 19; Zambia DPA 2021 70; DRC Digital Code 184; DRC Digital Code 186; DRC Digital Code 188; DRC Digital Code 201; Kazakhstan Law 94-V 3; Kazakhstan Law 94-V 12; Uganda DPPA 2019 29; Costa Rica Law 8968 21; Quebec Private Sector Act 17; Argentina Law 25.326 6; Argentina Law 25.326 12; Argentina Law 25.326 21; Colombia Law 1581 7; Colombia Law 1581 12; Ghana DPA 2012 45; Ghana DPA 2012 46; Ghana DPA 2012 53; Korea PIPA 22-2; Korea PIPA 28-8; Mexico LFPDPPP 1; Mexico LFPDPPP 15; Philippines DPA 2012 6; Philippines DPA 2012 21; Saudi PDPL 29; Uruguay Law 18.331 3; Uruguay Law 18.331 13; Uruguay Law 18.331 29; Zimbabwe DPA 4; Zimbabwe DPA 28 -->
 
 ## 投稿できるもの
 
