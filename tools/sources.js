@@ -235,6 +235,7 @@ const PAGES = {
   'ssrn-classification-distribution': PAGE(IA('https://www.elsevier.support/ssrn/answer/classification-distribution')),
   'ssrn-nonscholarly': PAGE(IA('https://www.elsevier.support/ssrn/answer/nonscholarly'), { links: /guideline|integrity|scholarly/i }),
   'ssrn-review-process': PAGE(IA('https://www.elsevier.support/ssrn/answer/ssrn-review-process'), { links: /guideline|integrity|rejection/i }),
+  'ssrn-submission-guidelines': PAGE(IA('https://www.elsevier.support/ssrn/answer/get-started')),
   'ssrn-research-integrity': PAGE(IA('https://www.elsevier.support/ssrn/answer/research-integrity'), { links: /guideline|integrity|rejection/i }),
   'ssrn-after-submission': PAGE(IA('https://www.elsevier.support/ssrn/answer/what-happens-once-i-submit-my-paper-to-ssrn')),
   'ssrn-getting-started': PAGE(IA('https://www.elsevier.support/ssrn/answer/what-do-i-need-to-get-started-when-i-am-ready-to-submit-my-work-to-ssrn')),
