@@ -73,7 +73,7 @@ Follow "Continuity" in the Terms of Use, under "If the operator cannot work". Th
 
 - An account successor is named in the operator's GitHub settings (Account, Successor settings). Those settings cannot be reached from here, and no successor is recorded here as named. Without one, nobody else can manage the repository if the operator can never act again.
 - This page is public with the repository, so anyone who takes over can read the steps.
-- The Zenodo archive holds the records as they stood at the last release, 1.0.0 of 2026-11-07. A release cannot be made from here, and the release of 1.1.0 was stopped on 2026-11-12.
+- The Zenodo archive holds the records as they stood at the last release, 1.0.0 of 2026-11-07. A release cannot be made from here, and the operator stopped the release of 1.1.0 on 2026-11-12.
 
 ### When a pause begins
 

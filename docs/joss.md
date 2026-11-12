@@ -28,7 +28,7 @@ The state is one of: met, partly met, not yet, at submission (to be done on the 
 | A CONTRIBUTING file, and stated support | met | `CONTRIBUTING.md`. Check 40. |
 | Tagged releases or a changelog | met | `CHANGELOG.md`, and the versions archived at Zenodo under the DOIs in `CITATION.cff`. |
 | Testable by a reviewer on a local machine | met | Node.js alone: `node build.js` and `node verification/check.js` need no package. The browser check needs playwright and Chromium, as the README says. |
-| Packaged according to the standards of the language | not yet | There is no `package.json`. One without dependencies would keep the rule of no dependencies. Decided on 2026-11-12: none is added. Nothing installs Sophaxis as a package, and the build and the checks run with Node.js alone. |
+| Packaged according to the standards of the language | not yet | There is no `package.json`. One without dependencies would keep the rule of no dependencies. Decided by Claude on 2026-11-12: none is added. Nothing installs Sophaxis as a package, and the build and the checks run with Node.js alone. |
 | Web-based software: a core library exposed through the site, or rigorous domain modelling and testing | for JOSS | The build, the intake and the checks are plain modules that `verification/check.js` loads and tests. Whether that is enough is for JOSS to decide. |
 | A paper of 250 to 1000 words with the sections JOSS asks for | met | `paper/paper.md`. Check 41 counts the words and the sections. |
 | References with DOIs | at submission | `paper/paper.bib` holds no DOI until one is checked at its source. Check 41. |
