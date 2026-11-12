@@ -65,17 +65,20 @@ const SOURCES = {
   'uy-18331': { url: 'https://www.impo.com.uy/bases/leyes/18331-2008', lang: 'es', split: /Artículo (\d+) (?=[A-ZÁÉÍÓÚÑ][a-záéíóúñ])/g, whole: 'all', keep: 120000 },
   'co-1581': { url: 'http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html', lang: 'es', split: /ART(?:Í|I|�)CULO (\d+)o?\. /g, whole: 'all', keep: 120000 },
   'mx-lfpdppp': { url: 'https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf', lang: 'es', split: /Artículo (\d+)\. /g, whole: 'all', keep: 120000 },
-  'nz-privacy': { url: 'https://www.legislation.govt.nz/act/public/2020/0031/latest/whole.html', split: / (\d{1,3}) (?=[A-Z][a-z]+ )/g, whole: 'all', keep: 450000, alt: ['https://web.archive.org/web/2026id_/https://www.legislation.govt.nz/act/public/2020/31/en/latest/'] },
+  'nz-privacy': { url: 'https://www.legislation.govt.nz/act/public/2020/0031/latest/whole.html', split: / (\d{1,3}) (?=[A-Z][a-z]+ )/g, whole: 'all', keep: 450000, alt: ['https://web.archive.org/web/20260926101200id_/https://www.legislation.govt.nz/act/public/2020/31/en/latest/', 'https://web.archive.org/web/2026id_/https://www.legislation.govt.nz/act/public/2020/0031/latest/whole.html'] },
   'au-privacy': { url: 'https://www.legislation.gov.au/C2004A03712/latest/text', split: / (\d{1,3}[A-Z]{0,2}) (?=[A-Z][a-z]+ )/g, whole: 'all', keep: 250000 },
-  'cl-19628': { url: 'https://www.leychile.cl/Consulta/obtxml?opt=7&idNorma=141599', lang: 'es', split: /Art[íi]culo (\d+)°?\.?-? /g, whole: 'all', keep: 120000 },
+  'cl-19628': { url: 'https://www.leychile.cl/Consulta/obtxml?opt=7&idNorma=141599', lang: 'es', split: /Art[íi]culo (\d+)[°º]?\.?-? /g, whole: 'all', keep: 120000 },
   'ca-pipeda': { url: 'https://laws-lois.justice.gc.ca/eng/XML/P-8.6.xml', split: / (\d{1,2}(?:\.\d{1,2})?) (?=\(1\) )/g, whole: 'all', keep: 120000 },
   'mc-1565': { url: 'https://legimonaco.mc/tnc/loi/2024/12-03-1.565/', lang: 'fr', split: /Article (\d+) (?=Article \d+ )/g, whole: 'all', keep: 200000 },
   'ke-dpa': { url: 'http://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2019/TheDataProtectionAct__No24of2019.pdf', split: / (\d{1,2})\. (?=\(1\)|[A-Z][a-z])/g, whole: 'all', keep: 200000, alt: ['https://web.archive.org/web/2026id_/http://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2019/TheDataProtectionAct__No24of2019.pdf'] },
   'ph-dpa': { url: 'https://privacy.gov.ph/data-privacy-act/', split: /SEC\. (\d+)\. /g, whole: 'all', keep: 120000, alt: ['https://web.archive.org/web/2026id_/https://privacy.gov.ph/data-privacy-act/'] },
   'za-popia': { url: 'https://www.justice.gov.za/inforeg/docs/InfoRegSA-POPIA-act2013-004.pdf', split: / (\d{1,3})\. (?=\(1\) )/g, whole: 'all', keep: 250000, alt: ['https://inforegulator.org.za/wp-content/uploads/2020/07/3706726-11act4of2013protectionofpersonalinforcorrect.pdf'] },
-  'sg-pdpa': { url: 'https://sso.agc.gov.sg/Act/PDPA2012?WholeDoc=1', split: / (\d{1,3}[A-Z]?)\.?—?(?=\(1\) |[A-Z][a-z]+ )/g, whole: 'all', keep: 250000 },
-  'ae-pdpl': { url: 'https://uaelegislation.gov.ae/en/legislations/1972/download', split: /Article \((\d+)\)/g, whole: 'all', keep: 120000, alt: ['https://web.archive.org/web/2026id_/https://uaelegislation.gov.ae/en/legislations/1972/download'] },
-  'qa-pdpl': { url: 'https://www.almeezan.qa/LawView.aspx?opt&LawID=7121&language=en', split: /Article \((\d+)\)/g, whole: 'all', keep: 120000 },
+  'sg-pdpa': { url: 'https://sso.agc.gov.sg/Act/PDPA2012?WholeDoc=1', split: / (\d{1,3}[A-Z]?)\.?—?(?=\(1\) |[A-Z][a-z]+ )/g, whole: 'all', keep: 250000, alt: ['https://web.archive.org/web/2026id_/https://sso.agc.gov.sg/Act/PDPA2012?WholeDoc=1'] },
+  // The UAE Government's own platform (u.ae) links this copy of the Decree-Law from its page on data protection laws.
+  'ae-pdpl': { url: 'https://assets.u.ae/api/public/content/954629a06cc64fd887771ce3273d6154?v=21d88839', split: /Article \((\d+)\)/g, whole: 'all', keep: 120000, alt: ['https://web.archive.org/web/2026id_/https://uaelegislation.gov.ae/en/legislations/1972'] },
+  'qa-pdpl': { url: 'https://www.almeezan.qa/LawView.aspx?opt&LawID=7121&language=en', split: /Article \((\d+)\)/g, whole: 'all', keep: 120000, alt: ['https://web.archive.org/web/2026id_/https://www.almeezan.qa/LawPage.aspx?id=7121&language=en'] },
+  // ZimLII is a legal information institute, not the official journal; its copy is read only through the Internet Archive.
+  'zw-dpa': { url: 'https://zimlii.org/akn/zw/act/2021/5', split: / (\d{1,2})\. (?=[A-Z][a-z])/g, whole: 'all', keep: 200000, alt: ['https://web.archive.org/web/2026id_/https://zimlii.org/akn/zw/act/2021/5'] },
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
   'github-terms': { url: 'https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/Policies/github-terms/github-terms-of-service.md', markdown: true },
   'vercel-terms': { url: 'https://vercel.com/legal/terms', split: /(?:^| )(\d+)\. (?=[A-Z][A-Za-z ,&'’-]{2,60} )/g },
@@ -222,7 +225,9 @@ const PAGES = {
   'conatus-about': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about', { links: /about|submission|polic|copyright|licen/i, alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about' }),
   // The regulators' own pages, where the official text of a data protection law that the survey could not fetch may be linked.
   'gh-dpc': PAGE('https://dataprotection.org.gh/', { links: /\.pdf|act|843|law|legislation/i, follow: { re: /\.pdf|843/i, max: 3 }, keep: 150000 }),
-  'tz-pdpc': PAGE('https://www.pdpc.go.tz/', { links: /\.pdf|sheria|act|law|legislation/i, follow: { re: /\.pdf/i, max: 3 }, keep: 150000 }),
+  'au-privacy-downloads': PAGE('https://www.legislation.gov.au/C2004A03712/latest/downloads', { links: /\.pdf|\.docx|download|epub/i, follow: { re: /\.pdf/i, max: 1 }, keep: 400000 }),
+  'gh-dpc-documents': PAGE('https://dpc.gov.gh/documents/', { links: /\.pdf|act|843|law|legislation/i, follow: { re: /843|data.?protection.?act/i, max: 2 }, keep: 150000 }),
+  'tz-pdpc': PAGE('https://pdpc.go.tz/', { links: /\.pdf|sheria|act|law|legislation/i, follow: { re: /\.pdf/i, max: 3 }, keep: 150000 }),
   'zw-potraz': PAGE('https://www.potraz.gov.zw/', { links: /\.pdf|data|act|law|legislation/i, follow: { re: /data.?protection|cyber/i, max: 3 }, keep: 150000 }),
   'ae-portal': PAGE('https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws', { links: /\.pdf|legislation|decree|law/i, keep: 60000 }),
   'conatus-submissions': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions', { alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions' }),
@@ -275,7 +280,8 @@ function curl(url, s = {}) {
   const head = buf.slice(0, 4000).toString('latin1');
   const cs = ((/charset=["']?([\w-]+)/i.exec(ctype.join(' ')) || /<meta[^>]+charset=["']?([\w-]+)/i.exec(head) || [])[1] || 'utf-8').toLowerCase();
   let raw;
-  try { raw = /^(shift[_-]?jis|sjis|x-sjis|windows-31j|cp932|euc-jp)$/.test(cs) ? new TextDecoder(cs.replace(/^(sjis|x-sjis|windows-31j|cp932)$/, 'shift_jis')).decode(buf) : buf.toString('utf8'); } catch (e) { raw = buf.toString('utf8'); }
+  // Pages in ISO-8859-1 or windows-1252 (InfoLEG in Argentina, IMPO in Uruguay) are decoded as windows-1252, its superset.
+  try { raw = /^(shift[_-]?jis|sjis|x-sjis|windows-31j|cp932|euc-jp)$/.test(cs) ? new TextDecoder(cs.replace(/^(sjis|x-sjis|windows-31j|cp932)$/, 'shift_jis')).decode(buf) : /^(iso-8859-1|iso8859-1|latin1|windows-1252|cp1252)$/.test(cs) ? new TextDecoder('windows-1252').decode(buf) : buf.toString('utf8'); } catch (e) { raw = buf.toString('utf8'); }
   if (s.sup) raw = raw.replace(/<sup[^>]*>\s*(\d+)\s*<\/sup>/gi, '.$1');
   return { status: +status, final, text: s.markdown ? raw : plain(raw), raw };
 }
@@ -366,7 +372,8 @@ async function egov(law, articles) {
  * attempt is kept under `tried`. */
 async function foreign(key, s, articles) {
   let out = await foreignOnce(key, s, articles);
-  const got = (o) => Object.keys(o.articles || {}).length > 0;
+  // A text kept whole (`whole`) is not a wanted article: the alternative is still tried when no article could be cut.
+  const got = (o) => Object.keys(o.articles || {}).filter((a) => a !== s.whole).length > 0;
   if (got(out) || !s.alt) return out;
   const tried = [{ url: out.url, status: out.status, error: out.error }];
   for (const u of s.alt) {

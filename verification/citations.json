@@ -823,6 +823,19 @@
         "カタール"
       ],
       "source": "qa-pdpl"
+    },
+    "Zimbabwe DPA": {
+      "en": [
+        "Data Protection Act [Chapter 12:07]"
+      ],
+      "ja": [
+        "データ保護法（ジンバブエ、第 12 章 07）"
+      ],
+      "place": [
+        "Zimbabwe",
+        "ジンバブエ"
+      ],
+      "source": "zw-dpa"
     }
   },
   "fetchAlso": {
@@ -1084,6 +1097,18 @@
       "17",
       "18",
       "19"
+    ],
+    "Zimbabwe DPA": [
+      "all",
+      "3",
+      "28"
+    ],
+    "LGPD": [
+      "14",
+      "33"
+    ],
+    "India DPDP Act": [
+      "16"
     ]
   },
   "recitals": {
