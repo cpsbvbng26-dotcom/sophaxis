@@ -1,8 +1,10 @@
 # Terms of Use
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.md). It is a translation; where the two differ, the English text applies.
+
+These Terms of Use are the rules for everyone who reads Sophaxis or submits to it.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -123,6 +125,17 @@ Sophaxis is run by one person, and is planned so that it can stop without loss.
 - The operator may hand Sophaxis over to another person, to an institution or to a legal entity. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.
 - Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
 - The DOIs stay with the repositories that issued them, whatever happens to Sophaxis.
+
+### If the operator cannot work
+
+What happens while the operator cannot work on Sophaxis at all, step by step.
+
+1. Who is told: the top page and the submit page say that new submissions are paused, as above, and a news item says the same. Each open submission issue is told that its decision waits. Where the operator can foresee the pause, this is done before it begins.
+2. What is paused: no submission is accepted or declined, and the operator adds, changes or withdraws no record. A submission issue opened during the pause still gets the automatic check, and waits for a decision. The only change to a record made without the operator is the one in step 4.
+3. What stays online: every record page, the PDF copies, the listing, the search, the feeds, the records as JSON and the OAI-PMH interface. The weekly check of the DOIs keeps running by itself, and so do the weekly saves to the Internet Archive, where every author of the work consents to them.
+4. What still works without the operator: a removal request that reports exposure of personal data still takes the record's title, authors, abstract and PDF copy offline at once, as the Takedown Policy says. The decision on it waits for the operator.
+5. Who could take over: the records are public in the repository and archived at Zenodo with each release, so a successor, or a custodian who keeps the records readable, needs nothing that only the operator holds. A hand-over of Sophaxis itself is announced first, as below. Anyone may also copy the records and continue elsewhere under the licences below.
+6. When the operator returns, the notice goes, the waiting issues are decided in the order they came, and a news item says that submissions are open again.
 
 ## Law
 

@@ -1,8 +1,10 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.md). It is a translation; where the two differ, the English text applies.
+
+The Withdrawal Policy says how an author withdraws a listed work, and what stays.
 
 ## Who can withdraw
 

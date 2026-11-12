@@ -1,8 +1,10 @@
 # Takedown Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
+
+The Takedown Policy says how to ask for a record to be removed, and what happens then.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.

@@ -1,8 +1,10 @@
 # Licence Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [ライセンスの規程（日本語訳）](./licences.ja.md). It is a translation; where the two differ, the English text applies.
+
+The Licence Policy names the licences under which a work can be listed, and the licences of this site.
 
 ## Accepted licences
 
