@@ -101,7 +101,7 @@ The pages and the PDF copies of a work whose authors consent to it are saved to 
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
 An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
 Sophaxis copies nothing from the community, and the operator does not change the records in it.
-A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from the date the Submission Policy gives for each place (2026-11-22, or 2026-11-26 for 15 of them), because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
 Copies that others have already taken are outside Sophaxis's control.
 
@@ -284,7 +284,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 
 ## People in the other places
 
-From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.md) lists either.
+From the date the [Submission Policy](./submission.md) gives for each place (2026-11-22, or 2026-11-26 for 15 of them), Sophaxis does not offer its service to people in the other places that it lists either.
 Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
 From 2026-11-26, the list also covers places whose law asks for the operator's postal address or telephone number before personal data is collected, places whose law lets the personal data of a minor be processed only with a parent's consent that the service confirms, or not at all, and places whose data protection law could not be read at its source; the Submission Policy gives each, with its law.
