@@ -12845,6 +12845,10 @@
      "text": "authors"
     },
     {
+     "at": 22653,
+     "text": "You represent and warrant that you will not use any software, which sends repeated queries to SSRN, or otherwise send automated queries of any sort to SSRN."
+    },
+    {
      "at": 31048,
      "text": "Last updated"
     },
@@ -12974,8 +12978,8 @@
      "text": "removed"
     },
     {
-     "at": 6912,
-     "text": "https://"
+     "at": 6732,
+     "text": "Download or redistribution of substantive parts of PhilPapers' citations or associated data (e.g. links) which are not available through PhilArchive's OAI-PMH interface located at https://philarchive.org/oai.pl is not allowed unless specifically agreed in writing with the general editors."
     },
     {
      "at": 7984,
@@ -13238,6 +13242,10 @@
     {
      "at": 26013,
      "text": "trademark"
+    },
+    {
+     "at": 30321,
+     "text": "access, search, or otherwise use any portion of the Service through the use of any engine, software, tool, agent, device, or mechanism (including spiders, robots, crawlers, and data mining tools) other than the software or search agents provided by edX"
     },
     {
      "at": 32459,
@@ -13538,6 +13546,10 @@
     {
      "at": 3183,
      "text": "Acceptable Use"
+    },
+    {
+     "at": 3765,
+     "text": "You must not conduct any systematic or automated data collection activities (including without limitation scraping, data mining, data extraction and data harvesting) on or in relation to this website without DataCite’s express written consent."
     },
     {
      "at": 4104,
@@ -14566,6 +14578,10 @@
      "text": "(c)"
     },
     {
+     "at": 8762,
+     "text": "憲法その他の法令"
+    },
+    {
      "at": 8809,
      "text": "地方独立行政法人"
     },
@@ -14596,6 +14612,10 @@
     {
      "at": 14500,
      "text": "利用の目的"
+    },
+    {
+     "at": 14652,
+     "text": "著作者は、その著作物を複製する権利を専有する。"
     },
     {
      "at": 17626,
@@ -15275,6 +15295,10 @@
     {
      "at": 6004,
      "text": "title"
+    },
+    {
+     "at": 6473,
+     "text": "The general PhilPapers Foundation term and conditions apply regarding scraping"
     },
     {
      "at": 7205,
