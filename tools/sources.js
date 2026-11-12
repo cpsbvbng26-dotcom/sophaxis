@@ -52,7 +52,7 @@ const SOURCES = {
   'korea-pipa': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
   'korea-decree': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=66066', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
   // kremlin.ru writes Article 10¹ as 10<sup>1</sup>; `sup` reads it as 10.1, so that it is not taken for Article 101 and the articles after it are kept.
-  'ru-152': { pages: ['http://www.kremlin.ru/acts/bank/24154/page/1', 'http://www.kremlin.ru/acts/bank/24154/page/2', 'http://www.kremlin.ru/acts/bank/24154/page/3', 'http://www.kremlin.ru/acts/bank/24154/page/4'], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true, altPrefix: 'https://web.archive.org/web/2026id_/' },
+  'ru-152': { pages: ['http://www.kremlin.ru/acts/bank/24154/page/1', 'http://www.kremlin.ru/acts/bank/24154/page/2', 'http://www.kremlin.ru/acts/bank/24154/page/3', 'http://www.kremlin.ru/acts/bank/24154/page/4'], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true, supGuess: true, altPrefix: 'https://web.archive.org/web/2026id_/' },
   // adilet.zan.kz answers with a page that asks for a script; the Internet Archive's copy is tried after it (`alt`).
   kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g, alt: ['https://web.archive.org/web/2026id_/https://adilet.zan.kz/rus/docs/Z1300000094'] },
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
@@ -150,6 +150,12 @@ const PAGES = {
   'caa-cca-annotations': PAGE('https://www.caa.go.jp/policies/policy/consumer_system/consumer_contract_act/annotations/', { lang: 'ja', links: /\.pdf|annotations/i, follow: { re: /230915_(04|13|14|15|16|17)\.pdf/, max: 6 } }),
   // The old Copyright Act (Act No. 39 of 1899) is not in the e-Gov law API, which holds laws in force; the NDL's index is tried.
   'ndl-hourei': PAGE('https://hourei.ndl.go.jp/simple/', { lang: 'ja', links: /simple|detail|search/i, forms: true, scripts: true }),
+  // The NDL's index searched for the old Copyright Act by its number (a form posted with the page's own token).
+  'ndl-old-copyright': PAGE('https://hourei.ndl.go.jp/simple/', { lang: 'ja', post: { fw: '', fwc: '1', lns_01: '著作権法', epe_01: '明治', epy_01: '32', ln_01: '法律', ad_01: '39' }, links: /detail|lawId|law_id/i, follow: { re: /detail/i, max: 3 } }),
+  // The courts' search, asked by its own form fields; the results are drawn by a script, which is recorded if so.
+  'courts-quotation-search': PAGE('https://www.courts.go.jp/hanrei/search1/index.html?query1=' + encodeURIComponent('引用 明瞭に区別') + '#searched', { lang: 'ja', links: /detail|\.pdf/i, follow: { re: /detail|\.pdf/i, max: 6 }, scripts: true }),
+  // GitHub's site-policy repository, which holds the terms quoted: its licence, at the commit the weekly watch recorded.
+  'github-site-policy-license': PAGE('https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/LICENSE.md', { markdown: true }),
   // Vercel: what it calls commercial use, for the Hobby plan.
   'vercel-fair-use': PAGE('https://vercel.com/docs/limits/fair-use-guidelines'),
   'vercel-hobby': PAGE('https://vercel.com/docs/plans/hobby'),
@@ -206,6 +212,8 @@ const LAWS = {
   'ipa-rules': { title: '特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律施行規則', keep: 'all' },
   'appi-order': { title: '個人情報の保護に関する法律施行令', keep: 'all' },
   'copyright-act-suppl': { title: '著作権法', keep: null, suppl: 'all' },
+  // The old Copyright Act, repealed in 1971: looked up by its number, to record whether the e-Gov law list holds it.
+  'old-copyright-act': { title: '著作権法', num: '明治三十二年法律第三十九号', keep: 'all', suppl: 'all' },
   'swords-act': { title: '銃砲刀剣類所持等取締法', keep: /刃体|刃物|刀剣/ },
   'swords-order': { title: '銃砲刀剣類所持等取締法施行令', keep: 'all' },
   'swords-rules': { title: '銃砲刀剣類所持等取締法施行規則', keep: /刃体|刃物|刀剣|ナイフ|あいくち/ },
@@ -266,9 +274,14 @@ function linksOf(raw, base, re) {
 
 /* The articles of a plain text, by a heading pattern: { number: text from its heading to the next }.
  * Only headings that come in rising order count, so that a mention of an article in the text is not taken for its heading. */
-function cut(text, re, max = Infinity) {
+function cut(text, re, max = Infinity, supGuess = false) {
   const hits = [];
   for (const m of text.matchAll(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'))) hits.push({ n: m[1], at: m.index });
+  // A superscript that the source does not mark up: after Article 10, "101" is Article 10.1 (10¹), not Article 101.
+  if (supGuess) for (let i = 1; i < hits.length; i++) {
+    const prev = hits[i - 1];
+    if (!String(prev.n).includes('.') && prev.n.length >= 2 && hits[i].n.length === prev.n.length + 1 && hits[i].n.startsWith(prev.n) && /[1-3]$/.test(hits[i].n)) hits[i].n = prev.n + '.' + hits[i].n.slice(-1);
+  }
   const num = (n) => parseFloat(String(n).replace(/[^\d.-]/g, '').replace('-', '.')) || 0;
   const rising = [];
   for (const h of hits) if (num(h.n) <= max && (!rising.length || num(h.n) > num(rising[rising.length - 1].n))) rising.push(h);
@@ -380,7 +393,7 @@ async function foreignOnce(key, s, articles) {
     const hits = [...raw.matchAll(s.html)].map((m) => ({ n: m[1], at: m.index }));
     hits.forEach((h, i) => { all[h.n] = plain(raw.slice(h.at, i + 1 < hits.length ? hits[i + 1].at : h.at + 60000)); });
     if (!hits.length) all = cut(text, /\bArticle (\d+) (?=[A-Z])/g);
-  } else all = cut(s.after && text.includes(s.after) ? text.slice(text.indexOf(s.after)) : s.fromLast && text.includes(s.fromLast) ? text.slice(text.lastIndexOf(s.fromLast)) : text, s.split, s.max);
+  } else all = cut(s.after && text.includes(s.after) ? text.slice(text.indexOf(s.after)) : s.fromLast && text.includes(s.fromLast) ? text.slice(text.lastIndexOf(s.fromLast)) : text, s.split, s.max, s.supGuess);
   if (s.split && s.whole) Object.assign(all, cut(text, s.split));
   // The recitals that verification/duties.json quotes, from the preamble ("(23) In order to ensure ... (24) ...").
   const want = (REG.recitals || {})[key];
@@ -413,8 +426,9 @@ function lawList() {
   LIST.status = r.status || r.error;
   return LIST;
 }
-function resolveLaw(title) {
-  const hit = lawList().find((l) => l.name === title);
+function resolveLaw(title, num) {
+  const hit = lawList().find((l) => l.name === title && (!num || l.num === num));
+  if (num) return hit ? { ...hit, via: 'api/1/lawlists/1' } : null;
   if (hit) return { ...hit, via: 'api/1/lawlists/1' };
   const url = 'https://laws.e-gov.go.jp/api/2/laws?law_title=' + encodeURIComponent(title);
   const r = curl(url, { lang: 'ja', markdown: true });
@@ -430,11 +444,11 @@ function resolveLaw(title) {
 
 async function fetchLaw(key, L) {
   const out = { wanted: L.title, fetched: new Date().toISOString().slice(0, 10) };
-  const hit = resolveLaw(L.title);
+  const hit = resolveLaw(L.title, L.num);
   if (!hit) {
-    out.error = 'not found in the e-Gov law list (' + (LIST && LIST.status) + ')';
+    out.error = 'not found in the e-Gov law list (' + (LIST && LIST.status) + ')' + (L.num ? ' under the number ' + L.num : '');
     const stem = L.title.replace(/(施行令|施行規則)$/, '');
-    out.near = lawList().filter((l) => l.name.startsWith(stem)).map((l) => l.name + ' (' + l.id + ')').slice(0, 20);
+    out.near = lawList().filter((l) => l.name.startsWith(stem)).map((l) => l.name + ' (' + l.id + ', ' + l.num + ')').slice(0, 20);
     return out;
   }
   Object.assign(out, { id: hit.id, num: hit.num, resolved_by: hit.via });
@@ -466,10 +480,30 @@ async function fetchLaw(key, L) {
   return out;
 }
 
+/* A search form that is posted with the token its page gives (`post`: the fields): the page is read once for the token and
+ * the cookie, and the form is sent back to its own action. */
+function postForm(url, p) {
+  const jar = path.join(require('os').tmpdir(), 'sophaxis-jar');
+  const tmp = path.join(require('os').tmpdir(), 'sophaxis-form');
+  try {
+    execFileSync('curl', ['-sSL', '--compressed', '--max-time', '60', '-A', UA, '-c', jar, '-o', tmp, url]);
+    const page = fs.readFileSync(tmp, 'utf8');
+    const token = (/name="_csrf" value="([^"]+)"/.exec(page) || [])[1];
+    const form = /<form\b[^>]*action="([^"]+)"[^>]*method="post"|<form\b[^>]*method="post"[^>]*action="([^"]+)"/i.exec(page);
+    const action = new URL(form ? form[1] || form[2] : url, url).href;
+    const args = ['-sSL', '--compressed', '--max-time', '90', '-A', UA, '-b', jar, '-c', jar, '-o', tmp, '-w', '%{http_code} %{url_effective}', '--data-urlencode', '_csrf=' + (token || '')];
+    for (const [k, v] of Object.entries(p.post)) args.push('--data-urlencode', k + '=' + v);
+    args.push(action);
+    const [status, final] = execFileSync('curl', args, { encoding: 'utf8' }).trim().split(' ');
+    const raw = fs.readFileSync(tmp, 'utf8');
+    return { status: +status, final, text: plain(raw), raw };
+  } catch (e) { return { error: String(e.stderr || e.message).trim().slice(0, 300) }; }
+}
+
 /* One page, with its official alternative and the links it is told to follow; returns { key: record }. */
 async function fetchPage(key, p) {
   const one = (url) => {
-    const r = curl(url, p);
+    const r = p.post && url === p.url ? postForm(url, p) : curl(url, p);
     const o = { url, status: r.status || r.error, fetched: new Date().toISOString().slice(0, 10) };
     if (r.final && r.final !== url) o.final = r.final;
     if (r.pdf) o.pdf = true;
