@@ -61,6 +61,7 @@ const SOURCES = {
   'jacar-guide': { pages: ['https://www.jacar.go.jp/about/', 'https://www.jacar.go.jp/glossary/', 'https://www.jacar.go.jp/about/riyou.html', 'https://www.jacar.go.jp/riyou/', 'https://www.jacar.go.jp/policy/'], whole: 'all', links: true, lang: 'ja', keepGoing: true },
   'zenodo-terms': { url: 'https://about.zenodo.org/terms/', whole: 'all', links: true },
   'zenodo-policies': { url: 'https://about.zenodo.org/policies/', whole: 'all', links: true },
+  'arxiv-licence': { url: 'https://info.arxiv.org/help/license/index.html', whole: 'all', links: true },
   'vercel-fair-use': { url: 'https://vercel.com/docs/limits/fair-use-guidelines', whole: 'all' },
   // The legal codes open with a list of their sections; the sections themselves start at the last heading of section 1.
   'cc-by': { url: 'https://creativecommons.org/licenses/by/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },

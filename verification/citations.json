@@ -622,6 +622,21 @@
     },
     "Vercel fair use": {
       "source": "vercel-fair-use"
+    },
+    "Minor Offenses Act": {
+      "ja": [
+        "軽犯罪法"
+      ],
+      "egov": "323AC0000000039"
+    },
+    "Swords Act": {
+      "ja": [
+        "銃砲刀剣類所持等取締法"
+      ],
+      "egov": "333AC0000000006"
+    },
+    "arXiv licence": {
+      "source": "arxiv-licence"
     }
   },
   "fetchAlso": {
@@ -630,7 +645,8 @@
       "246",
       "230",
       "230-2",
-      "231"
+      "231",
+      "36"
     ],
     "Unauthorized Computer Access Act": [
       "3"
@@ -753,6 +769,16 @@
       "all"
     ],
     "Vercel fair use": [
+      "all"
+    ],
+    "Minor Offenses Act": [
+      "1"
+    ],
+    "Swords Act": [
+      "2",
+      "22"
+    ],
+    "arXiv licence": [
       "all"
     ]
   },
