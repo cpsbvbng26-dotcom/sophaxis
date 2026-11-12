@@ -8,6 +8,14 @@
   <updated>2026-11-13T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c15</id>
+    <title>The automatic steps run while GitHub Actions runs</title>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>The Takedown Policy and the Terms of Use now say that the automatic steps run as GitHub Actions, that GitHub's terms let it restrict the use of GitHub Actions, and that while Actions does not run the operator takes the steps by hand. A record page reported for exposed personal data is then taken offline by the operator, not at once. The pages promised &quot;at once&quot; without this condition, which Sophaxis could never promise: the step has always run as GitHub Actions. This is a correction of an untrue promise, effective on publication, 2026-11-13. Nothing that Sophaxis does while Actions runs changes, and no right that Sophaxis could give is narrowed. Policies: Takedown Policy, Terms of Use.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c14</id>
     <title>Dates on the pages are in Japan time</title>
     <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>

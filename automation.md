@@ -1,6 +1,6 @@
 # What runs by itself
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [自動で動く手順（日本語訳）](./automation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -9,7 +9,8 @@ This page lists every one of them: when it runs, what it reads, what it writes, 
 The code of each step is public, and each section links to it.
 
 - No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
-- One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
+- Every step on this page that runs as GitHub Actions depends on GitHub. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no such step runs by itself: the operator takes the steps by hand, as soon as the operator can, and none of them happens at once.
+- One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once, while GitHub Actions runs. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
 - No step uses a language model. The steps are ordinary code.
 - No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.
 - A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.
@@ -46,7 +47,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the record and the issues of the repository.
 - Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
-- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](./policies/takedown.md) says.
+- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once while GitHub Actions runs, as the [Takedown Policy](./policies/takedown.md) says; when Actions does not run, the operator does it by hand, not at once.
 - Leaves to the operator: the decision.
 - Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
 
@@ -67,11 +68,9 @@ The code of each step is public, and each section links to it.
 
 ## Once a month, on the 1st at 09:17 Japan time
 
-- Reads: the records and `data/news.json`.
-- Writes: an issue with a post in English and one in Japanese for the official account on X, each within the 280 characters that X counts, naming what was listed and announced in the month before. A month with nothing new gets no issue.
-- Leaves to the operator: posting it. X's API is paid, so nothing is posted to X automatically.
-- Also measures whether Sophaxis still fits its free services: the deployments on the busiest day of the last 30 days against the 100 a day of Vercel's free plan, the PDF copies against the limits in `site.json`, and the repository against the 1 GB that GitHub recommends. It writes the table to the run's summary, and opens an issue only when a measure reaches 80 percent. Vercel's bandwidth and function use are not measured; only the operator's Vercel account shows them.
-- Code: [tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) and [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
+- Measures whether Sophaxis still fits its free services: the deployments on the busiest day of the last 30 days against the 100 a day of Vercel's free plan, the PDF copies against the limits in `site.json`, and the repository against the 1 GB that GitHub recommends. It writes the table to the run's summary, and opens an issue only when a measure reaches 80 percent. Vercel's bandwidth and function use are not measured; only the operator's Vercel account shows them.
+- Until 2026-11-13, this run also wrote an issue with posts for the official account on X. It no longer does: GitHub's terms allow GitHub Actions on GitHub's runners only for the production, testing, deployment or publication of the software project, and the posts serve none of them. Nothing is posted to X automatically.
+- Code: [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js), run by [monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml).
 
 ## Once a year, on 2 January at 12:23 Japan time
 

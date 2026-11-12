@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -43,7 +43,8 @@ For personal data and other serious harm, the operator then takes the record pag
 ## What happens
 
 The operator aims to answer each request within 7 days.
-For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.
+For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted until it is put back.
+The automatic steps below run as GitHub Actions. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, the operator takes these steps by hand, as soon as the operator learns of the request, and the record page is then not taken offline at once.
 A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
 When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
 The automatic steps decide nothing; the operator decides every request.

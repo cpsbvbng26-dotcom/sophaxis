@@ -498,6 +498,12 @@
       "repo": "github/site-policy",
       "path": "Policies/github-privacy-statement.md",
       "commit": "87906da47c95eda1a39ccc01f31ea2602d263dbe"
+    },
+    {
+      "name": "GitHub Terms for Additional Products and Features",
+      "repo": "github/site-policy",
+      "path": "Policies/github-terms/github-terms-for-additional-products-and-features.md",
+      "commit": "166eb97e485b7de3cd5dbaf8c8d16e4310fda46c"
     }
   ],
   "recorded": "2026-11-11",

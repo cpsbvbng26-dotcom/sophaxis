@@ -464,6 +464,64 @@ ROAR の記録は、ROAR から直に取り寄せました。ROAR の `robots.tx
 
 この節も、弁護士の確認は受けていません。
 
+## 2026-11-12 の続き：八度目の見落とし
+
+ここまでの表は、書いたときのまま残しています。
+2026-11-13 に、読むだけの点検が、GitHub Actions の使い方を GitHub の規約に照らしていなかったことを挙げました。
+直した日は、日本時間で 2026-11-13 です。
+GitHub の利用規約の I 節は「Some Service features may be subject to additional terms specific to that feature or product as set forth in the GitHub Additional Product Terms.」と書きます。
+その追加の規約（GitHub Terms for Additional Products and Features）を、Sophaxis はこれまで取り寄せておらず、週ごとの見張りにも入れていませんでした。
+追加の規約の Actions の節は「Additionally, regardless of whether an Action is using self-hosted runners, Actions should not be used for:」と書き、次の二つを挙げます。
+一つは「Any activity that places a burden on our servers, where that burden is disproportionate to the benefits provided to users (for example, don't use Actions as a content delivery network or as part of a serverless application, but a low benefit Action could be ok if it’s also low burden); or」です。
+もう一つは「If using GitHub-hosted runners, any other activity unrelated to the production, testing, deployment, or publication of the software project associated with the repository where GitHub Actions are used.」です。
+同じ節は「Misuse of GitHub Actions may result in termination of jobs, restrictions in your ability to use GitHub Actions, disabling of repositories created to run Actions in a way that violates these Terms, or in some cases, suspension or termination of your GitHub account.」とも書きます。
+Sophaxis のワークフローは、どれも GitHub の実行環境（`ubuntu-latest` か `ubuntu-24.04`）で動きます。
+そこで、ワークフローを一つずつ、四つの目的（制作・検査・配備・公開）のどれに当たるか、負荷が利用者への益に見合うかで読み直しました。
+ワークフローの行は、箇所の欄を `.github/workflows/` のファイルの名で始めます。
+実行の時間は、GitHub の API で 2026-11-13 に読んだ直近の実行（多くて 300 件）の中央値です。
+読み直した結論は、次の表のとおりです。判定は、上の表と同じ五つです。
+
+| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |
+| --- | --- | --- | --- | --- | --- |
+| GitHub の追加製品の規約（`Policies/github-terms/github-terms-for-additional-products-and-features.md`） | GitHub の利用規約 I 節、GitHub の追加製品の規約 Actions の節 | 使っているサービスの規約を取り寄せ、変わったら分かるようにしておくこと | 利用規約は I 節で追加の規約を取り込みます。Sophaxis は利用規約と個人情報の方針だけを取り寄せ、見張っていました。追加の規約は、どちらにもありませんでした | 漏れ | `tools/sources.js` に `github-additional-terms` を足し、`verification/statutes.json` の見張りの一覧にも足しました。どちらも、見張りが記したコミット `166eb97e485b7de3cd5dbaf8c8d16e4310fda46c` の文を読みます。2026-11-13 に Claude が決めました。Actions の使い方を決めるのはこの文なので、利用規約と同じ扱いで読み続けるためです |
+| `.github/workflows/audit.yml`（毎年 10 月 30 日の 09:17、日本時間） | GitHub の追加製品の規約 Actions の節 | GitHub の実行環境で、リポジトリのソフトウェアのプロジェクトの制作・検査・配備・公開のどれかに当たること。負荷が益に見合うこと | 年に一度、`docs/operations.md` の年一回の点検の項目を issue に開きます。点検の対象は、Sophaxis の規程・記録・道具です。直近の実行の記録はありません。一回の実行は issue を一つ書くだけです | 問題なし | 変えていません。2026-11-13 に Claude が決めました。場の規程と道具を見直すことは、プロジェクトを作り続ける仕事（制作）に当たり、負荷は年に一度の issue 一つだからです |
+| `.github/workflows/check.yml`（push・PR、毎週月曜の 14:07） | 同じ | 同じ | 検査（`verification/check.js`）を回します。週に一度の実行は、日付に拠る検査と、鍵と連絡先の走査のためです。実行の中央値は 140 秒です | 問題なし | 変えていません。検査そのもので、四つの目的のうち検査に当たります |
+| `.github/workflows/indexnow.yml`（main の `site/sitemap.xml` が変わった push、手で起こすとき） | 同じ | 同じ | 変わった記録の頁と PDF の写しを IndexNow に知らせ、新しい頁と変わった頁を Internet Archive に保存させます。実行の中央値は 10 秒です | 問題なし | 変えていません。出した頁を見つけられるようにする仕事で、公開に当たります |
+| `.github/workflows/intake.yml`（ラベル submission・withdrawal・published の issue、確かめの語を含むコメント） | 同じ | 同じ。外から来る求めに答える仕組みは、規約が例に挙げる「serverless application」に当たらないこと | 投稿・撤回・出版版の issue を確かめ、確かめた結果と記録の下書きをコメントに書きます。記録は、運営者が PR で入れたときだけサイトに出ます。ラベルの無い issue では動きません。直近の実行の記録はありません | 問題なし | 変えていません。2026-11-13 に Claude が決めました。この仕事は、サイトの記録を作る最初の段（制作）であり、リポジトリの外の誰かに計算を貸す仕組みではないからです。GitHub が別に判断する危険は、この節の終わりの、下げられずに残る危険の箇条に書きました |
+| `.github/workflows/live.yml`（main への push、毎日の 11:41） | 同じ | 同じ | 配っているサイトが main の `site/` と同じかを、ファイルごとに比べます。違いが残れば issue を開きます。実行の中央値は 32 秒です | 問題なし | 変えていません。配備が済んだかを確かめる仕事で、配備に当たります |
+| `.github/workflows/monthly.yml`（毎月 1 日の 09:17） | 同じ | 同じ | 2026-11-13 まで、二つのことをしていました。一つは、前の月の X の公式アカウントのための投稿文を issue に書くことです。もう一つは、無料のサービスの上限に収まっているかを測ること（`tools/limits.js`）です。投稿文は宣伝の下書きで、プロジェクトの制作・検査・配備・公開のどれにも当たりません | 漏れ | 投稿文を書く段を外し、`tools/limits.js` だけを残しました。自動で動く手順の頁（両言語）と運営の手順も直しました。`tools/monthly.js` はワークフローから呼ばれなくなりました。2026-11-13 に Claude が決めました。上限を測ることは配っている場が配り続けられるかを見る仕事（配備）ですが、投稿文はそうではないからです |
+| `.github/workflows/pdf.yml`（手で起こすとき） | 同じ | 同じ | 載せた記録の PDF を預け先から写し、新しい枝に置きます。直近の実行の記録はありません | 問題なし | 変えていません。サイトが載せる写しを作る仕事で、制作と公開に当たります |
+| `.github/workflows/record.yml`（見張りが作った PR に、リポジトリの持ち主がラベル `record` を付けたとき） | 同じ | 同じ | 見張りの提案を main に取り込み、検査を回してから push します。直近の実行の記録はありません | 問題なし | 変えていません。適法性の審査が拠る文の記録を作る仕事で、制作に当たります |
+| `.github/workflows/removal.yml`（ラベル removal の issue、手で起こすとき、毎日の 09:17） | 同じ | 同じ。外から来る求めに答える仕組みが「serverless application」に当たらないこと | 削除の求めを受け取ったことを知らせ、個人データの露出の報告では記録の頁を下げ、運営者のラベルで判断を行います。毎日の実行は、7 日が近い求めの催促と後始末です。毎日の実行の中央値は 10 秒です | 問題なし | 変えていません。2026-11-13 に Claude が決めました。この仕事は配っている頁を変える（公開に当たる）もので、リポジトリの外に計算を貸す仕組みではなく、負荷は一日に十秒ほどだからです |
+| `.github/workflows/report.yml`（毎年 1 月 2 日の 12:23） | 同じ | 同じ | 前の年の判断を数え、issue に書きます。運営者がそれを `data/reports/` に入れると、判断の頁（`decisions.html`）になります。直近の実行の記録はありません | 問題なし | 変えていません。サイトの頁の中身を作る仕事で、制作と公開に当たります |
+| `.github/workflows/sources.yml`（手で起こすとき） | 同じ | 同じ | 法的な頁が引く文を取り寄せ、新しい枝に記します。実行の中央値は 164 秒です | 問題なし | 変えていません。サイトの引用の元を作る仕事で、制作に当たります |
+| `.github/workflows/statutes.yml`（毎週月曜の 13:37、PR） | 同じ | 同じ | 適法性の審査が拠る条文と GitHub の規約を取り寄せ、記した値と比べます。実行の中央値は 53 秒です。この節から、追加の規約も比べます | 問題なし | 変えていません。法的な頁を正しく保つ仕事で、制作と検査に当たります |
+| `.github/workflows/watch.yml`（毎週月曜の 13:37） | 同じ | 同じ | 載せた DOI が解決し、ライセンスが変わらないかを確かめ、新しい版を知らせ、頁を Internet Archive に保存させます。OpenAlex が載せた作品をどう持っているかも、参考に表にします。2026-11-09 の実行は 2342 秒でした。多くは、保存の依頼のあいだの待ち時間です | 問題なし | 変えていません。2026-11-13 に Claude が決めました。載せた記録の正しさと保存を保つ仕事で、公開に当たるからです。待ち時間は、保存の相手への負荷を下げるためのものです |
+| OpenAlex の API（`tools/watch.js`） | OpenAlex の文書（ライセンスと利用の上限） | 呼ぶ API の条件が、その使い方を許していること | ライセンスの文書は「That means it's in the public domain, and free to use in any way you like.」と書きます。上限の文書は「The OpenAlex API doesn't require authentication.」と書き、「100,000 singleton requests (like `/works/W123`)」を一日の上限の例に挙げ、「If you exceed your daily credits or make more than 100 requests per second, you'll get `429` errors instead of useful data.」と書きます。`tools/watch.js` は、載せた作品ごとに一件ずつ、200 ミリ秒あけて読みます。いま載せた記録は 8 件です | 問題なし | 変えていません。2026-11-13 に Claude が決めました。読み方は、文書が挙げる一日の上限と一秒の上限のどちらにも遠いからです。文は 2026-11-12 に取り寄せたものと同じ SHA-256 で、引いた句を残すために取り寄せ直しました |
+| 削除の規程（両言語）と利用規約（両言語）の、記録の頁をただちに下げる約束（英語の at once、日本語のただちに・すぐに） | GitHub の追加製品の規約 Actions の節 | 約束が、Sophaxis の力の及ぶ範囲を越えないこと | 個人データの露出の報告で記録の頁を下げる手順は GitHub Actions として動きます。追加の規約は、GitHub が Actions を制限しうると書きます。頁は、その条件を書かずに、ただちに下げると約束していました | 表現 | 頁に、GitHub Actions が動いている限りという条件と、動かないあいだは運営者が手で行い、ただちには下がらないことを書きました。最終更新を 2026-11-13 にし、`data/policy-changes.json` に載せ、約束の一覧の文を差し替えました。2026-11-13 に Claude が決めました。これは利用者の権利を狭める変更ではなく、偽りの約束を直す訂正として扱いました。手順は初めから GitHub Actions で動いており、Actions が止まれば、どの書き方でもただちには下がらなかったからです |
+| 自動で動く手順の頁（両言語）・免責事項（両言語）・`SECURITY.md`・README | 同じ | 同じ | 自動の手順が GitHub に頼ることは書いていましたが、GitHub が Actions を制限したときのことは書いていませんでした | 漏れ | 同じ条件を書き足しました。2026-11-13 に Claude が決めました。規程と同じ事実を、説明の頁でも同じに書くためです |
+| 検査（`verification/check.js`） | なし | 追加の規約の文と、ワークフローごとの判断を、機械で固めること | ありませんでした | 漏れ | 検査 123 を足しました。追加の規約が見張りと取り寄せの両方にあり、引いた文が残す部分にあり、`.github/workflows/` のどのファイルもこの節の表に行を持ち、頁が条件のない約束を書かないことを確かめます。2026-11-13 に Claude が決めました。新しいワークフローを、規約に照らさずに足せないようにするためです |
+
+この表の判定は、漏れ 4、表現 1、問題なし 13 です。
+
+### 取り寄せた文
+
+追加の規約は、`github/site-policy` のコミット `166eb97e485b7de3cd5dbaf8c8d16e4310fda46c` の文を、2026-11-13 に raw.githubusercontent.com から読みました。
+ファイルの SHA-256 は `c39b5a7fc1953ebd37428db18101726acefb55420f766bcd7d912e1b71ee2ffc` です。
+空白を一つにまとめた文の SHA-256 は `32ee90cb762f90bbabbe66452a3b2716caee1c7819f0741325891f77378dfeb1` で、`verification/sources-raw.json` が残すのはこちらです。
+同じコミットの利用規約の SHA-256 は `b99f61303568322df9cd36b94e7293c71cc16fb06f8035837d4c44af895874cf` で、cpsbvbng26-dotcom が 2026-11-12 に記した値と同じです。
+GitHub の site-policy のリポジトリは、2026-11-12 に取り寄せたライセンスの文で CC0 1.0 Universal を示しています。
+取り寄せの実行は 43308144509 で、結果は枝 `sources/20261112-2114` にあります。取り寄せの記録の日付は協定世界時の 2026-11-12 で、日本時間では 2026-11-13 の 6 時 14 分ごろでした。
+OpenAlex の二つの文書も、同じ実行で取り寄せ直しました。
+利用規約の I 節は、引いた文を残すために、実行 43308656854（枝 `sources/20261112-2117`）で利用規約だけを取り寄せ直しました。ほかの節の SHA-256 は変わっていません。
+
+### 下げられずに残る危険
+
+- 規約は「serverless application」も「disproportionate」も、数で定めていません。投稿と削除の求めに答える仕事を、GitHub が別に読む危険は残ります。そのときは、規程に書いたとおり、運営者が手で行います。
+- GitHub は、規約に反する使い方を見張りうると書いています。どのワークフローを見て何を判断したかを、Sophaxis の側から知る手立てはありません。
+
+この節も、弁護士の確認は受けていません。
+
 ## この記録について
 
 この点検は Claude が行ったもので、弁護士の点検ではありません。弁護士はこの記録を確かめていません。

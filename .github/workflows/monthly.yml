@@ -1,6 +1,8 @@
 name: monthly
-# On the 1st of each month at 09:17 Japan time, the summary of the month before for the official account on X is posted in an
-# issue (tools/monthly.js). The operator copies it; nothing is posted to X automatically.
+# On the 1st of each month at 09:17 Japan time: whether Sophaxis still fits the free services it is deployed on (tools/limits.js).
+# Until 2026-11-13 this run also posted, in an issue, the summary of the month before for the official account on X
+# (tools/monthly.js). That serves no production, testing, deployment or publication of Sophaxis, the only uses that GitHub's
+# terms for Actions allow on GitHub-hosted runners, so it was taken out (docs/legal-audit-2026-11-12.md, the eighth pass).
 on:
   schedule:
     - cron: '17 0 1 * *'
@@ -10,16 +12,13 @@ permissions:
   issues: write
 jobs:
   monthly:
-    name: The summary of the month before
+    name: The free limits
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - run: node tools/monthly.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Whether Sophaxis still fits its free services: an issue only at 80 percent of a limit.
       - run: node tools/limits.js
         env:

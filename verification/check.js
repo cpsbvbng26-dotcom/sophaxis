@@ -151,7 +151,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.',
     'If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.',
     'A request that cannot be made in public goes by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
-    'For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.',
+    'For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted until it is put back.',
     'The address keeps working, so that citations lead to the notice instead of to nothing.',
     'Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.',
     'The operator\'s address is not published; it is given on request, without delay.',
@@ -4987,7 +4987,9 @@ const SECOND_PASS_PAGES = ['philarchive-codeofconduct', 'philarchive-submit', 's
 const THIRD_PASS_PAGES = ['joss-paper-src'];
 /* The pages that the fifth pass fetched (check 119): the terms of the repositories from which PDFs were copied. */
 const FIFTH_PASS_PAGES = ['zenodo-developers', 'arxiv-api-tou', 'arxiv-bulk-data', 'arxiv-export-robots', 'figshare-terms', 'figshare-api-docs', 'researchsquare-terms', 'researchsquare-robots'];
-const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES);
+/* The page fetched by the eighth pass (check 123): the GitHub Terms for Additional Products and Features. */
+const EIGHTH_PASS_PAGES = ['github-additional-terms'];
+const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES);
 console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct requests where terms forbid them, texts by others kept only in parts, and the reply time an aim from 2026-11-26');
 {
   const S = require('../tools/sources.js');
@@ -5791,13 +5793,130 @@ console.log('\n122. What a seventh, read-only pass found: ROAR\'s description of
     ['the remaining risk without the fact', problems(RAW, AUD.replace('Claude はそのアカウントに触れられません。日本時間の', '日本時間の'), texts)],
     ['a quotation altered', problems(RAW, AUD.replace('記録は「' + DESC[1], '記録は「' + DESC[1].replace('Figshare or OSF', 'Figshare, OSF')), texts)],
     ['a decision without its reason', problems(RAW, AUD.replace('同じ見落としを機械で止めるためです', '同じ見落としを機械で止めます'), texts)],
-    ['the record without the sentence on lawyers', problems(RAW, AUD.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'), texts)],
+    ['the record without the sentence on lawyers', problems(RAW, AUD.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-12 の続き：八度目の見落とし', '\n\n## 2026-11-12 の続き：八度目の見落とし'), texts)],
   ];
   const missed = breaks.filter(([, b]) => b.length === 0).map(([k]) => k);
   ok('break on purpose: a part lost, another SHA-256, a whole text kept, a page calling the operator an independent researcher, a built page listing three repositories, the README quoting ROAR, the news saying what ROAR says, the count, the risk given to someone or without its fact, a quotation altered, a decision without its reason, the sentence on lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 
+
+console.log('\n123. What an eighth, read-only pass found: GitHub\'s terms for Actions were never read; every workflow is judged against them, and no page promises "at once" without the condition that Actions runs');
+{
+  /* GitHub's Terms of Service (section I) incorporate the GitHub Terms for Additional Products and Features, whose section on
+   * Actions forbids, on GitHub-hosted runners, any activity unrelated to the production, testing, deployment or publication of
+   * the software project, and a burden disproportionate to the benefit. The terms are watched (verification/statutes.json)
+   * and fetched (tools/sources.js) at one commit, kept in parts with the SHA-256 of the text. Every file in .github/workflows
+   * has a row in the eighth section of the audit, so that a new workflow cannot be added without being judged. The pages
+   * that promised to take a record page offline "at once" say that this holds while GitHub Actions runs, and that the
+   * operator does it by hand when Actions does not. The monthly run no longer writes the posts for X. */
+  const S = require('../tools/sources.js');
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const RAW = J('verification/sources-raw.json'), TX = J('verification/statutes-texts.json'), STAT = J('verification/statutes.json');
+  const AUD = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const HEAD8 = '\n## 2026-11-12 の続き：八度目の見落とし\n';
+  const NAME = 'GitHub Terms for Additional Products and Features', FILE = 'Policies/github-terms/github-terms-for-additional-products-and-features.md';
+  const SHA = '32ee90cb762f90bbabbe66452a3b2716caee1c7819f0741325891f77378dfeb1';
+  const QUOTE = ['Additionally, regardless of whether an Action is using self-hosted runners, Actions should not be used for:',
+    'Any activity that places a burden on our servers, where that burden is disproportionate to the benefits provided to users (for example, don\'t use Actions as a content delivery network or as part of a serverless application, but a low benefit Action could be ok if it’s also low burden); or',
+    'If using GitHub-hosted runners, any other activity unrelated to the production, testing, deployment, or publication of the software project associated with the repository where GitHub Actions are used.',
+    'Misuse of GitHub Actions may result in termination of jobs, restrictions in your ability to use GitHub Actions, disabling of repositories created to run Actions in a way that violates these Terms, or in some cases, suspension or termination of your GitHub account.'];
+  const OPENALEX = { 'openalex-license-src': ['That means it\'s in the public domain, and free to use in any way you like.'],
+    'openalex-limits-src': ['The OpenAlex API doesn\'t require authentication.', '100,000 singleton requests (like `/works/W123`)', 'If you exceed your daily credits or make more than 100 requests per second, you\'ll get `429` errors instead of useful data.'] };
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  const keptOf = (r) => flat(((r || {}).spans || []).map((x) => x.text).join(''));
+  const WF = fs.readdirSync(path.join(ROOT, '.github', 'workflows')).filter((f) => /\.ya?ml$/.test(f)).sort();
+  const wfText = Object.fromEntries(WF.map((f) => [f, read(path.join(ROOT, '.github', 'workflows', f))]));
+  const PAGES_ = ['policies/takedown.md', 'policies/takedown.ja.md', 'policies/terms.md', 'policies/terms.ja.md', 'automation.md', 'automation.ja.md', 'disclaimer.md', 'disclaimer.ja.md', 'SECURITY.md', 'README.md'];
+  const pages = Object.fromEntries(PAGES_.map((f) => [f, read(path.join(ROOT, f))]));
+  /* The sentences that say what happens when Actions does not run, in both languages. */
+  const SAY = {
+    'policies/takedown.md': ['while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted', 'While they do not run, the operator takes these steps by hand, as soon as the operator learns of the request, and the record page is then not taken offline at once.'],
+    'policies/takedown.ja.md': ['Sophaxis の GitHub Actions が動いている限り、判断の前に', '動かないあいだは、運営者が求めを知りしだい、これらの手順を手で行います。そのときは、記録の頁はただちには外れません。'],
+    'policies/terms.md': ['If GitHub restricts or stops Actions, this step also waits for the operator.'],
+    'policies/terms.ja.md': ['GitHub が Actions を制限するか止めたときは、この手順も運営者を待ちます。'],
+    'automation.md': ['While they do not run, no such step runs by itself: the operator takes the steps by hand, as soon as the operator can, and none of them happens at once.'],
+    'automation.ja.md': ['動かないあいだは、どの手順もひとりでには動きません。運営者ができしだい手で行い、どれもすぐには行われません。'],
+    'disclaimer.md': ['a record page reported for exposed personal data is then taken offline by the operator, not at once.'],
+    'disclaimer.ja.md': ['個人データの露出が報告された記録の頁も、運営者が手で外し、すぐには外れません。'],
+  };
+  /* A promise to take something offline at once: in the same sentence, the condition that Actions runs, or a negation.
+   * The words on what serious harm requires describe the need, not a step, and are let through. */
+  const PROMISE = /offline at once|at once, before anything|ただちに(?:公開から外|非公開|外し|外します)|すぐに下げ/;
+  const COND = /GitHub Actions|Actions が動|not taken offline at once|not at once|ただちには|すぐには/;
+  const NEED = /Except where serious harm requires it at once|requires the material to be taken offline at once|重大な害のためにただちに外す場合|ただちに公開から外す必要がある場合|働くのは露出した個人データをただちに公開から外す処理だけ|only the step that takes exposed personal data offline at once ever does/;
+  const sentences = (x) => String(x).split(/\n|(?<=[.。])\s+|(?<=。)/);
+  function problems(c) {
+    const bad = [];
+    const pol = (c.stat.policies || []).find((x) => x.name === NAME);
+    if (!pol || pol.repo !== 'github/site-policy' || pol.path !== FILE || !/^[0-9a-f]{40}$/.test(pol.commit || '')) bad.push('the terms are not watched');
+    const want = pol ? 'https://raw.githubusercontent.com/github/site-policy/' + pol.commit + '/' + FILE : '';
+    if (!c.pages['github-additional-terms'] || c.pages['github-additional-terms'].url !== want) bad.push('the terms are not fetched at the watched commit');
+    const r = (c.raw.pages || {})['github-additional-terms'] || {};
+    if (r.url !== want || r.status !== 200 || r.sha256 !== SHA || !Array.isArray(r.spans) || 'text' in r) bad.push('the terms are not kept in parts with their SHA-256');
+    for (const q of QUOTE) if (!keptOf(r).includes(flat(q))) bad.push('not kept: ' + q.slice(0, 30));
+    for (const [k, qs] of Object.entries(OPENALEX)) for (const q of qs) if (!keptOf((c.raw.pages || {})[k]).includes(flat(q))) bad.push('not kept in ' + k + ': ' + q.slice(0, 30));
+    const sec = (c.aud.split(HEAD8)[1] || '').split('\n## ')[0];
+    if (!sec) return bad.concat(['no section']);
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    rows.forEach((x, i) => { if (x.length !== 6 || !JUDGE.includes(x[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((x) => x[4] === j)).map((j) => j + ' ' + rows.filter((x) => x[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    for (const x of rows.filter((y) => y[4] !== '問題なし')) if (!x[5].includes('2026-11-13 に Claude が決めました。')) bad.push('a decision without its maker: ' + x[0].slice(0, 30));
+    /* Every workflow has a row of its own, and every row names a workflow that is there. */
+    const named = rows.map((x) => (/^`\.github\/workflows\/([^`]+)`/.exec(x[0]) || [])[1]).filter(Boolean);
+    for (const f of c.wf) if (!named.includes(f)) bad.push('no row for the workflow ' + f);
+    for (const f of named) if (!c.wf.includes(f)) bad.push('a row for a workflow that is not there: ' + f);
+    const qs = [...sec.matchAll(/「([^「」]+)」/g)].map((m) => m[1]);
+    if (qs.length < 8) bad.push('too few quotations');
+    for (const q of qs) if (!c.pool.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
+    if (!/取り寄せの実行は \d{8,} で、結果は枝 `sources\/\d{8}-\d{4}` にあります。/.test(sec)) bad.push('the run of the fetch');
+    if (!sec.includes('`c39b5a7fc1953ebd37428db18101726acefb55420f766bcd7d912e1b71ee2ffc`') || !sec.includes('`' + SHA + '`')) bad.push('the SHA-256 of the terms');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。')) bad.push('the sentence on lawyers');
+    /* The monthly run writes no posts for X. */
+    if (/node tools\/monthly\.js/.test(c.wfText['monthly.yml'] || '')) bad.push('the monthly run still writes the posts for X');
+    for (const [f, xs] of Object.entries(SAY)) for (const x of xs) if (!String(c.texts[f] || '').includes(x)) bad.push(f + ': ' + x.slice(0, 30));
+    for (const [f, x] of Object.entries(c.texts)) for (const s of sentences(x)) if (PROMISE.test(s) && !COND.test(s) && !NEED.test(s)) bad.push(f + ' promises at once: ' + s.trim().slice(0, 50));
+    return bad;
+  }
+  const pool = flat(Object.values(RAW.pages).map((o) => (o.spans || []).map((x) => x.text).join('')).join('')
+    + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map((a) => (Array.isArray(a) ? a.map((x) => x.text).join('') : String(a))).join('')).join('') + Object.values(TX).join(''));
+  const real = { stat: STAT, pages: S.PAGES, raw: RAW, aud: AUD, wf: WF, wfText, texts: pages, pool };
+  const now = problems(real);
+  const rows = ((AUD.split(HEAD8)[1] || '').split('\n## ')[0].match(/^\| `\.github\/workflows\//gm) || []).length;
+  ok('the GitHub Terms for Additional Products and Features are watched and kept in parts with their SHA-256, each of the ' + WF.length + ' workflows has its row in the eighth section of the audit (' + rows + ' rows), judged against the section on Actions, and no page of ' + PAGES_.length + ' promises "at once" without the condition that Actions runs',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const w = (o) => Object.assign({}, real, o);
+  const r1 = clone(RAW); r1.pages['github-additional-terms'].spans = r1.pages['github-additional-terms'].spans.filter((x) => !/GitHub-hosted runners/.test(x.text));
+  const r2 = clone(RAW); r2.pages['github-additional-terms'].sha256 = '0'.repeat(64);
+  const r3 = clone(RAW); r3.pages['github-additional-terms'].text = 'the whole text';
+  const s1 = clone(STAT); s1.policies = s1.policies.filter((x) => x.name !== NAME);
+  const tx = (f, a, b) => w({ texts: Object.assign({}, pages, { [f]: pages[f].replace(a, b) }) });
+  const breaks = [
+    ['the terms not watched', problems(w({ stat: s1 }))],
+    ['the terms not fetched', problems(w({ pages: Object.assign({}, S.PAGES, { 'github-additional-terms': undefined }) }))],
+    ['a quoted part lost', problems(w({ raw: r1 }))],
+    ['another SHA-256', problems(w({ raw: r2 }))],
+    ['the whole text kept', problems(w({ raw: r3 }))],
+    ['a new workflow without a row', problems(w({ wf: WF.concat(['newsletter.yml']) }))],
+    ['a row for a workflow taken away', problems(w({ wf: WF.filter((f) => f !== 'audit.yml') }))],
+    ['a row dropped', problems(w({ aud: AUD.replace(/\n\| `\.github\/workflows\/pdf\.yml`[^\n]*/, '') }))],
+    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 13 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 13 です。') }))],
+    ['a decision without its maker', problems(w({ aud: AUD.replace('ワークフローから呼ばれなくなりました。2026-11-13 に Claude が決めました。', 'ワークフローから呼ばれなくなりました。') }))],
+    ['a quotation altered', problems(w({ aud: AUD.replace('or publication of the software project associated', 'or promotion of the software project associated') }))],
+    ['the posts for X written again', problems(w({ wfText: Object.assign({}, wfText, { 'monthly.yml': wfText['monthly.yml'] + '\n      - run: node tools/monthly.js\n' }) }))],
+    ['the condition taken out of the Takedown Policy', problems(tx('policies/takedown.md', ', while GitHub Actions runs for Sophaxis, and OAI-PMH', ', and OAI-PMH'))],
+    ['the condition taken out of the Japanese Terms', problems(tx('policies/terms.ja.md', 'Sophaxis の GitHub Actions が動いている限り、記録の頁をただちに非公開にします。', '記録の頁をただちに非公開にします。'))],
+    ['a new promise of "at once" in SECURITY.md', problems(tx('SECURITY.md', 'There is no bounty.', 'Any exposed secret is taken offline at once, before anything is decided. There is no bounty.'))],
+    ['the Disclaimer without the hand steps', problems(tx('disclaimer.ja.md', '個人データの露出が報告された記録の頁も、運営者が手で外し、すぐには外れません。', ''))],
+  ];
+  const missed = breaks.filter(([, b]) => b.length === 0).map(([k]) => k);
+  ok('break on purpose: the terms not watched or not fetched, a quoted part lost, another SHA-256, a whole text kept, a new workflow without a row, a row for a workflow taken away, a row dropped, the count, a decision without its maker, a quotation altered, the posts for X written again, the condition taken out of a policy in either language, a new unconditioned "at once", the Disclaimer without the hand steps (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

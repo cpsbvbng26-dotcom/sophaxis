@@ -4261,6 +4261,16 @@
       "at": 21,
       "text": "Except to the extent applicable law provides otherwise, this Agreement between you and GitHub and any access to or use of the Website or the Service are governed by the federal laws of the United States of America and the laws of the State of California, without regard to conflict of law provisions. You and GitHub agree to submit to the exclusive jurisdiction and venue of the courts located in the City and County of San Francisco, California."
      }
+    ],
+    "I": [
+     {
+      "at": 6,
+      "text": "GitHub"
+     },
+     {
+      "at": 249,
+      "text": "Some Service features may be subject to additional terms specific to that feature or product as set forth in the GitHub Additional Product Terms."
+     }
     ]
    },
    "want": [
@@ -4270,12 +4280,14 @@
     "D.4",
     "D.5",
     "D.8",
+    "I",
     "J.3",
     "M.3",
     "O",
     "P",
     "S.1"
    ],
+   "fetched": "2026-11-12",
    "sha256": {
     "D.4": "9a7f1111e4e720bac2b60f62820c2c2f694b23077a5689e1c3ecc5d4976824de",
     "J.3": "14df9a5bd63cab60a4394112b357c43b75dba8f3f53a51aba1b6348cf889ea30",
@@ -4287,7 +4299,8 @@
     "D.8": "c1863f2d1c41c6f67cee899e803a770847b7e59b9e2a4dd53e988e66186aaa92",
     "O": "df70899866d079f5b564c316c2758e836ddd0b97b91dfb635ed7849523605f46",
     "P": "09a9cc1a389d3d700a9e9bf0baef2f04caedbd67c422ca7484cde6bd47290784",
-    "S.1": "652abd37ca4ca34c2eb47fbb5634bbea73407167ac0a854181709031c5ce9f25"
+    "S.1": "652abd37ca4ca34c2eb47fbb5634bbea73407167ac0a854181709031c5ce9f25",
+    "I": "91adf10aa7f6d6cca517e8f16f6f40a897b02ca246e25c388672513e3337eb5d"
    }
   },
   "india-act": {
@@ -13807,12 +13820,8 @@
      "text": "https://"
     },
     {
-     "at": 138,
-     "text": "the public"
-    },
-    {
-     "at": 161,
-     "text": "free to use in any way you like"
+     "at": 119,
+     "text": "That means it's in the public domain, and free to use in any way you like."
     },
     {
      "at": 599,
@@ -13832,6 +13841,14 @@
      "text": "title"
     },
     {
+     "at": 754,
+     "text": "100,000 singleton requests (like `/works/W123`)"
+    },
+    {
+     "at": 919,
+     "text": "If you exceed your daily credits or make more than 100 requests per second, you'll get `429` errors instead of useful data."
+    },
+    {
      "at": 1179,
      "text": "https://"
     },
@@ -13840,8 +13857,8 @@
      "text": "status"
     },
     {
-     "at": 2707,
-     "text": "OpenAlex"
+     "at": 2703,
+     "text": "The OpenAlex API doesn't require authentication."
     },
     {
      "at": 3090,
@@ -16862,6 +16879,83 @@
    "length": 929,
    "sha256": "fedbf4a0ad2a4a76e821e9a77b39a0b0ec3f7689e5743726c8142a6e23d5b394",
    "spans": []
+  },
+  "github-additional-terms": {
+   "url": "https://raw.githubusercontent.com/github/site-policy/166eb97e485b7de3cd5dbaf8c8d16e4310fda46c/Policies/github-terms/github-terms-for-additional-products-and-features.md",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 18402,
+   "sha256": "32ee90cb762f90bbabbe66452a3b2716caee1c7819f0741325891f77378dfeb1",
+   "spans": [
+    {
+     "at": 11,
+     "text": "GitHub"
+    },
+    {
+     "at": 1027,
+     "text": "Service"
+    },
+    {
+     "at": 1779,
+     "text": "Security"
+    },
+    {
+     "at": 1922,
+     "text": "Page"
+    },
+    {
+     "at": 2379,
+     "text": "asis"
+    },
+    {
+     "at": 2952,
+     "text": "Additionally, regardless of whether an Action is using self-hosted runners, Actions should not be used for:"
+    },
+    {
+     "at": 3474,
+     "text": "Any activity that places a burden on our servers, where that burden is disproportionate to the benefits provided to users (for example, don't use Actions as a content delivery network or as part of a serverless application, but a low benefit Action could be ok if it’s also low burden); or"
+    },
+    {
+     "at": 3766,
+     "text": "If using GitHub-hosted runners, any other activity unrelated to the production, testing, deployment, or publication of the software project associated with the repository where GitHub Actions are used."
+    },
+    {
+     "at": 4096,
+     "text": "Misuse of GitHub Actions may result in termination of jobs, restrictions in your ability to use GitHub Actions, disabling of repositories created to run Actions in a way that violates these Terms, or in some cases, suspension or termination of your GitHub account."
+    },
+    {
+     "at": 5286,
+     "text": "the right"
+    },
+    {
+     "at": 6872,
+     "text": "United States"
+    },
+    {
+     "at": 8122,
+     "text": "prefix"
+    },
+    {
+     "at": 10337,
+     "text": "authors"
+    },
+    {
+     "at": 11921,
+     "text": "Person"
+    },
+    {
+     "at": 12011,
+     "text": "github-privacy"
+    },
+    {
+     "at": 14951,
+     "text": "Limits"
+    },
+    {
+     "at": 17667,
+     "text": "Edit"
+    }
+   ]
   }
  },
  "laws": {

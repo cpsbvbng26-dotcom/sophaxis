@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-13",
+    "policies": ["takedown", "terms"],
+    "title": "The automatic steps run while GitHub Actions runs",
+    "text": "The Takedown Policy and the Terms of Use now say that the automatic steps run as GitHub Actions, that GitHub's terms let it restrict the use of GitHub Actions, and that while Actions does not run the operator takes the steps by hand. A record page reported for exposed personal data is then taken offline by the operator, not at once. The pages promised \"at once\" without this condition, which Sophaxis could never promise: the step has always run as GitHub Actions. This is a correction of an untrue promise, effective on publication, 2026-11-13. Nothing that Sophaxis does while Actions runs changes, and no right that Sophaxis could give is narrowed."
+  },
+  {
+    "date": "2026-11-13",
     "policies": ["terms"],
     "title": "Dates on the pages are in Japan time",
     "text": "The Terms of Use now say that the dates on Sophaxis's pages, in this feed, in the notices and in the news are dates in Japan time, and that the day a text was fetched is the day in UTC that the record of the fetch keeps. Two entries of this feed, published on 2026-11-13 in Japan time, were dated 2026-11-12, the date by the clock of the work; they are now dated 2026-11-13, and the change to the Copyright Policy took effect on publication, not earlier. The \"Last updated\" of the pages changed that day is now 2026-11-13. This narrows no right and adds no duty."

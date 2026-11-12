@@ -5,7 +5,9 @@
  *
  *   node tools/monthly.js --print [2026-11]     print the posts for a month (default: the month before, in Japan time)
  *
- * Run by .github/workflows/monthly.yml. A month with no new record and no news gets no issue. */
+ * Until 2026-11-13 it was run by .github/workflows/monthly.yml. It no longer is: GitHub's terms allow Actions on GitHub's
+ * runners only for the production, testing, deployment or publication of the project, and these posts serve none of them
+ * (docs/legal-audit-2026-11-12.md, the eighth pass). A month with no new record and no news gets no issue. */
 'use strict';
 const { request } = require('./ua.js');
 

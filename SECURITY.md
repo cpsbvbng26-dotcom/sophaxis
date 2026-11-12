@@ -10,7 +10,7 @@
 見つけたことと、それを再現する手順があれば、直すのが早くなります。
 
 秘密の鍵や個人の連絡先が載っているのを見つけたときも、同じ窓口で受けます。
-個人データが露出しているときは、[削除の規程](policies/takedown.ja.md)のとおり、判断の前に記録の頁をただちに外します。
+個人データが露出しているときは、[削除の規程](policies/takedown.ja.md)のとおり、GitHub Actions が動いている限り、判断の前に記録の頁をただちに外します。動かないときは、運営者が手で外します。
 
 答えは 7 日以内を目指します。
 報奨金はありません。
@@ -26,7 +26,7 @@ The address is the one on the operator's [ORCID record](https://orcid.org/0009-0
 What was found, and how to reproduce it, makes the fix quicker.
 
 An exposed secret key or personal contact detail is reported the same way.
-Exposed personal data is taken offline at once, before anything is decided, as the [Takedown Policy](policies/takedown.md) says.
+Exposed personal data is taken offline at once, before anything is decided, while GitHub Actions runs, as the [Takedown Policy](policies/takedown.md) says. When it does not run, the operator takes it offline by hand.
 
 The aim is to answer within 7 days.
 There is no bounty.
