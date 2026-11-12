@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-13",
+    "policies": ["privacy"],
+    "title": "What the Internet Archive has said about its security",
+    "text": "The Privacy Policy said that no statement of the measures the Internet Archive takes to protect personal data was found. The Internet Archive's own copy of its terms page, saved on 2024-01-01, holds a privacy policy dated 10 March 2001 that speaks of standard computer security. The Privacy Policy, in both languages, now quotes it, and still says that the Internet Archive's current terms can be read only with a script running. This is a correction of an untrue statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes, and no right is narrowed."
+  },
+  {
+    "date": "2026-11-13",
     "policies": ["privacy", "takedown"],
     "title": "The address in the OAI-PMH interface is the address for requests",
     "text": "The Privacy Policy said that the OAI-PMH interface gives an email address made for harvesters, and the Takedown Policy said that the address in the OAI-PMH interface is for harvesters, apart from the address for requests. That was untrue: the interface gives the same address as the operator's ORCID record, where requests go. Both policies, in both languages, and the contact page now say so. This is a correction of an untrue statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes, and no right is narrowed."
