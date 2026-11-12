@@ -788,10 +788,19 @@ The abstract is part of the work.
 It is shown under the work's own licence, with its authors and a link to the work.
 
 Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
-It copies the file only from a repository that lets a script fetch it: Zenodo, Figshare, arXiv and Research Square.
+It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.
+Zenodo's developer documentation lists, among what its REST API supports, "Files — download/upload of files."
+arXiv's page on bulk data access says "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access." Sophaxis fetches from that site.
+arXiv's terms of use for its APIs forbid storing and serving its e-prints "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted". Every listed work carries one of the three accepted licences, which permit it.
+Until 2026-11-12, Sophaxis also copied files from Figshare and Research Square by script. From 2026-11-13, it does not, because their terms forbid it.
+Figshare's terms list, among what a user shall not do, "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine". The only exception is for means "expressly authorized for you by Figshare in advance in writing".
+Research Square's terms say "You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites".
+The copies already taken from Figshare stay, under the work's own licence.
+These pages were read on 2026-11-12: Zenodo's and arXiv's directly, and Figshare's and Research Square's from the Internet Archive's copies.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
 For any other repository, the authors can attach the deposited PDF to their submission issue.
+From 2026-11-13, this includes Figshare and Research Square.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
 A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB.
@@ -1866,7 +1875,7 @@ Fix the cause, for example the link in your ORCID record, then edit the issue; t
 To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
 An edit that changes nothing does not start the check.
 
-If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, Figshare, arXiv and Research Square), the comment asks you to attach the deposited PDF to the issue.
+If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv, and from 2026-11-13 Figshare and Research Square among them), the comment asks you to attach the deposited PDF to the issue.
 This is optional, and the file must be at most 20 MB.
 To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 
@@ -2224,7 +2233,7 @@ Source: https://sophaxis.vercel.app/repositories.html
 
 # For repositories and DOI registration agencies
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [預け先と DOI 登録機関へ（日本語訳）](https://sophaxis.vercel.app/repositories.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2242,7 +2251,7 @@ Sophaxis does not harvest or mirror any repository.
 
 - The DOI metadata of a submitted work, from the public REST APIs of DataCite, Crossref and, for Jxiv, JaLC: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence.
 - The list of versions of a work, from the same metadata.
-- The PDF of a version, unmodified, only where the work's licence allows it and the repository offers it to scripts (Zenodo, Figshare, arXiv and Research Square), through their public APIs or download addresses. The copy is taken once per version, when the operator starts it by hand. The check of a submission, when its issue is opened or edited, also fetches the PDF of the latest version, only to read its shape for the moderator, and deletes it after the reading. Where the repository publishes a checksum, the copy must match it.
+- The PDF of a version, unmodified, only where the work's licence allows it and the repository's own pages let a script fetch it (Zenodo and arXiv), through Zenodo's REST API and arXiv's export.arxiv.org. Until 2026-11-12, Sophaxis also fetched PDFs from Figshare and Research Square; from 2026-11-13, it does not, because their terms forbid robots and scripts, as the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) quotes. The copy is taken once per version, when the operator starts it by hand. The check of a submission, when its issue is opened or edited, also fetches the PDF of the latest version, only to read its shape for the moderator, and deletes it after the reading. Where the repository publishes a checksum, the copy must match it.
 
 Every request that Sophaxis's own code makes names Sophaxis and its repository in its User-Agent: `Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)`. The advice step of the submission check runs [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), which names itself: `deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)`.
 Sophaxis reads no pages meant for people, and does not get around any limit or block.
@@ -2626,7 +2635,7 @@ None of these is a promise that any index picks the work up; each decides for it
 
 - ORCID: add the DOI of the work to your ORCID record, so that services that read ORCID connect the work to you. Each author page on Sophaxis also offers one BibTeX file of all that author's records, which ORCID can import.
 - Google Scholar: it finds works in repositories by itself, often within several weeks. In a Google Scholar profile you can add the work, or confirm it once found.
-- PhilPapers: for philosophy, many readers look in PhilPapers. You can add a record of the work to PhilPapers, and you can deposit it in PhilArchive, its open archive, which has its own moderation. Both are free.
+- PhilPapers: for philosophy, many readers look in PhilPapers. You can add a record of the work to PhilPapers, and you can deposit it in PhilArchive, its open archive. PhilArchive's content policy says "All books and papers submitted should be of professional quality." Its pages do not say who checks a work. Both are free.
 - researchmap: researchers in Japan can add the work to their researchmap record.
 - The badge and the card: show the badge from the record page, with its link, and share the address of the record page, which shows the card with the title and the authors.
 
@@ -2714,11 +2723,12 @@ It replaces none of the places below, and a work can be in several of them at on
 | --- | --- | --- | --- | --- | --- |
 | Sophaxis | No; the repository keeps it, and Sophaxis keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository | An automatic check through ORCID, then moderation in a public issue | Philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science | None |
 | arXiv | Yes | Yes | Moderation, and for some first submissions an endorsement | Physics, mathematics, computer science and other sciences | None |
-| PhilArchive | Yes | No | A check by its editors | Philosophy | None |
-| SSRN | Yes | Yes | A check by its staff | Mainly the social sciences and the humanities, with networks for philosophy and mathematics | None |
+| PhilArchive | Yes | No | Its content policy says "All books and papers submitted should be of professional quality." Its pages do not say who checks a work, or when | Philosophy | None |
+| SSRN | Yes | Yes | Its help pages say "SSRN must determine if a paper meets the criteria of scholarly content." They do not say who checks a work | Mainly the social sciences and the humanities, with networks for philosophy and mathematics | None |
 | Zenodo | Yes | Yes | No review of the content | Every field | None |
 
 These are short summaries as of 2026-11-10; the pages of each service are what count.
+The cells for PhilArchive and SSRN quote their own pages, as read on 2026-11-12 from the Internet Archive's copies.
 Sophaxis has no connection with any of them; they are named only to show the difference.
 
 ## Why a layer
@@ -3852,10 +3862,18 @@ Sophaxis は、著作権の譲渡も、独占的な許諾も求めません。
 要旨は、作品自身のライセンスのもとで、著者と作品へのリンクを添えて示します。
 
 Sophaxis は、検索エンジンが本文を索引できるように、載っているそれぞれの版の PDF の写しを、手を加えずに置きます。
-写すのは、スクリプトでファイルを取らせる預け先からだけです。Zenodo、Figshare、arXiv、Research Square です。
+スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。Zenodo と arXiv です。
+Zenodo の開発者向けの文書は、REST API でできることに「Files — download/upload of files.」を挙げます。
+arXiv の一括取得の頁は「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と書きます。Sophaxis は、その所から取ります。
+arXiv の API の利用規約は、e-print を保って配ることを禁じます。例外は「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合です。載せる作品は、どれも受け付ける三つのライセンスのどれかを持ち、そのライセンスがこれを認めています。
+2026-11-12 までは、Figshare と Research Square からもスクリプトで写していました。2026-11-13 からは写しません。どちらの規約も、これを禁じているためです。
+Figshare の規約は、利用者がしてはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げます。例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。
+Research Square の規約は「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。
+Figshare からすでに写したものは、作品のライセンスのもとで残します。
+これらの頁は 2026-11-12 に読みました。Zenodo と arXiv の頁は直に読み、Figshare と Research Square の頁は Internet Archive の写しから読みました。
 預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 預けたものに PDF が複数ある場合、Sophaxis はどれが論文かを推測せず、写しを作りません。
-ほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。
+Figshare と Research Square を含むほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。
 その場合、Sophaxis はそのファイルを手を加えずに置き、記録には著者が提供したと書きます。
 そのようなファイルが無ければ、記録は預け先へのリンクだけになります。
 写しを置くのは、ファイルが 20 MB 以下で、写し全体が 1 GB 以内に収まるあいだだけです。
@@ -4689,7 +4707,7 @@ ORCID の記録のリンクのような原因を直してから、issue を編�
 issue を編集するには、最初の投稿の右上のメニュー（⋯）を開き、「Edit」を選び、要るところを変えて保存します。
 何も変えない編集では、確認は走りません。
 
-預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo、Figshare、arXiv、Research Square 以外のすべての預け先がこれに当たります。
+預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo と arXiv 以外のすべての預け先がこれに当たります。2026-11-13 からは、Figshare と Research Square もこれに当たります。
 添付は任意で、ファイルは 20 MB までです。
 添付するには、ファイルを issue のいちばん下のコメントの欄に引き入れ、そのリンクが出るのを待ってから、コメントを投稿します。
 
@@ -5150,7 +5168,7 @@ Source: https://sophaxis.vercel.app/repositories.ja.html
 
 # 預け先と DOI 登録機関へ（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [For repositories and DOI registration agencies](https://sophaxis.vercel.app/repositories.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5168,7 +5186,7 @@ Sophaxis は、どの預け先からも収集やミラーをしません。
 
 - 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。
 - 作品の版の一覧。同じメタデータから読みます。
-- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先がスクリプトに渡している場合だけです（Zenodo、Figshare、arXiv、Research Square）。それぞれの公開の API かダウンロードのアドレスを通します。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
+- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）。Zenodo の REST API と、arXiv の export.arxiv.org を通します。2026-11-12 までは、Figshare と Research Square からも取っていました。2026-11-13 からは取りません。どちらの規約もロボットとスクリプトを禁じており、[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)がその文を引いています。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 
 Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書きます。`Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)` です。投稿の確認の助言の段階は [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) を走らせ、deposit-check は自分の名を書きます。`deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)` です。
 Sophaxis は、人が読むための頁を読みません。どんな上限も遮断も、すり抜けません。
@@ -5719,7 +5737,7 @@ Source: https://sophaxis.vercel.app/findable.ja.html
 
 - ORCID：作品の DOI を自分の ORCID の記録に足すと、ORCID を読むサービスが作品と著者を結び付けます。Sophaxis の著者の頁には、その著者の記録すべてを収めた BibTeX のファイルが一つあり、ORCID に取り込めます。
 - Google Scholar：リポジトリにある作品を自分で見つけます。多くは数週間のうちです。Google Scholar のプロフィールで、作品を足すことも、見つかったものを確かめることもできます。
-- PhilPapers：哲学では、多くの読者が PhilPapers で探します。作品の記録を PhilPapers に足すことができ、その開かれたアーカイブである PhilArchive に預けることもできます。PhilArchive には独自のモデレーションがあります。どちらも無料です。
+- PhilPapers：哲学では、多くの読者が PhilPapers で探します。作品の記録を PhilPapers に足すことができ、その開かれたアーカイブである PhilArchive に預けることもできます。PhilArchive の内容の方針は「All books and papers submitted should be of professional quality.」と書きます。誰が作品を確かめるかは、その頁に書かれていません。どちらも無料です。
 - researchmap：日本の研究者は、作品を自分の researchmap の記録に足せます。
 - バッジとカード：記録の頁のバッジを、そのリンクとともに示します。記録の頁のアドレスを共有すると、題と著者を載せたカードが出ます。
 
@@ -5807,11 +5825,12 @@ Sophaxis はリポジトリの上に重ねる層であって、リポジトリ�
 | --- | --- | --- | --- | --- | --- |
 | Sophaxis | 保たない。ファイルはリポジトリが保つ。Sophaxis は手を加えない PDF の写しを置き、リポジトリへリンクする | 与えない。リポジトリの DOI を使う | ORCID を通した自動の確認のあと、公開の issue でのモデレーション | 哲学・数学・論理学・数理哲学・科学哲学 | なし |
 | arXiv | 保つ | 与える | モデレーション。初めての投稿の一部には紹介 | 物理学・数学・計算機科学ほかの科学 | なし |
-| PhilArchive | 保つ | 与えない | 編集者による確認 | 哲学 | なし |
-| SSRN | 保つ | 与える | 担当者による確認 | 主に社会科学と人文学。哲学と数学のネットワークもある | なし |
+| PhilArchive | 保つ | 与えない | 内容の方針は「All books and papers submitted should be of professional quality.」と書く。誰がいつ確かめるかは、その頁に書かれていない | 哲学 | なし |
+| SSRN | 保つ | 与える | 案内の頁は「SSRN must determine if a paper meets the criteria of scholarly content.」と書く。誰が確かめるかは、その頁に書かれていない | 主に社会科学と人文学。哲学と数学のネットワークもある | なし |
 | Zenodo | 保つ | 与える | 中身の審査はない | すべての分野 | なし |
 
 これは 2026-11-10 の時点の短いまとめです。決めるのは、それぞれのサービスの頁です。
+PhilArchive と SSRN の欄は、二つの場の頁を引いています。2026-11-12 に、Internet Archive の写しから読みました。
 Sophaxis はどれともつながりを持ちません。名を挙げるのは、違いを示すためだけです。
 
 ## なぜ層なのか
