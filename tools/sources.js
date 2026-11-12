@@ -106,6 +106,15 @@ const SOURCES = {
  * 200,000 by default), with the links whose address or text matches `links`, so that a record can name the page a fact
  * came from. They are written under `pages` in verification/sources-raw.json. */
 const PAGE = (url, o = {}) => ({ url, ...o });
+/* The Internet Archive's copy of an address (the copy nearest the end of 2026 that it holds, without its banner). */
+const IA = (u) => 'https://web.archive.org/web/2026id_/' + u;
+/* Hosts whose terms forbid automated requests or collection: SSRN ("otherwise send automated queries of any sort to SSRN"),
+ * edX (11.6: no "spiders, robots, crawlers, and data mining tools"), DataCite's website ("any systematic or automated data
+ * collection activities ... on or in relation to this website") and PhilPapers, whose terms PhilArchive applies "regarding
+ * scraping". Nothing here is fetched from them directly; the check refuses an address on one of them that is not the
+ * Internet Archive's copy. api.datacite.org is DataCite's API, for machines, and is not among them. */
+const NO_DIRECT = /^https?:\/\/(?:[a-z0-9-]+\.)*(?:ssrn\.com|edx\.org|philpapers\.org|philarchive\.org|datacite\.org)(?:[\/:?#]|$)/i;
+const direct = (u) => NO_DIRECT.test(u) && !/^https?:\/\/api\.(?:test\.)?datacite\.org(?:[\/:?#]|$)/i.test(u);
 const PPC_LINKS = /\.pdf|guideline|gaikoku|offshore|kaigai|foreign|outside|外国|ガイドライン|Ｑ＆Ａ|Q&A/i;
 const PAGES = {
   // The Commission's index pages, from which the addresses of its guidance were found.
@@ -144,9 +153,10 @@ const PAGES = {
   'ia-contact': PAGE('https://archive.org/about/contact'),
   'ia-help-contact': PAGE('https://help.archive.org/help/contact-us/'),
   'ia-help': PAGE('https://help.archive.org/', { links: /contact|privacy|terms|address/i }),
-  // DataCite, Crossref and JaLC: the DOI metadata.
-  'datacite-privacy': PAGE('https://datacite.org/privacy-policy/', { links: /imprint|privacy|contact|team/i }),
-  'datacite-imprint': PAGE('https://datacite.org/imprint/'),
+  // DataCite, Crossref and JaLC: the DOI metadata. DataCite's website forbids automated collection on it (see NO_DIRECT below),
+  // so its pages are read only from the Internet Archive's copies.
+  'datacite-privacy': PAGE(IA('https://datacite.org/privacy-policy/'), { links: /imprint|privacy|contact|team/i }),
+  'datacite-imprint': PAGE(IA('https://datacite.org/imprint/')),
   'crossref-privacy': PAGE('https://www.crossref.org/operations-and-sustainability/privacy/', { links: /contact|privacy|people|governance/i }),
   'crossref-people': PAGE('https://www.crossref.org/people/'),
   'crossref-about': PAGE('https://www.crossref.org/community/about/', { links: /contact|address|governance/i }),
@@ -210,19 +220,21 @@ const PAGES = {
   'jalc-metadata': PAGE('https://japanlinkcenter.org/top/service/about_metadata.html', { lang: 'ja', links: /api|規約|terms|利用|\.pdf/i }),
   'jalc-faq': PAGE('https://japanlinkcenter.org/top/faq/index.html', { lang: 'ja' }),
   // For the other repositories: the terms of the services they use or name, kept here so that they can be copied.
-  'ssrn-terms': PAGE('https://www.ssrn.com/index.cfm/en/terms-of-use/', { alt: 'https://web.archive.org/web/2026id_/https://www.ssrn.com/index.cfm/en/terms-of-use/' }),
-  'philarchive-home': PAGE('https://philarchive.org/', { links: /terms|help|polic|licen|copyright/i, alt: 'https://web.archive.org/web/2026id_/https://philarchive.org/', keep: 20000 }),
-  'philarchive-about': PAGE('https://philarchive.org/help/about.html'),
-  'philarchive-faq': PAGE('https://philarchive.org/help/faq.html'),
-  'philpapers-terms': PAGE('https://philpapers.org/help/terms.html', { alt: 'https://web.archive.org/web/2026id_/https://philpapers.org/help/terms.html' }),
+  // SSRN, PhilPapers (and PhilArchive, under the same terms), edX and DataCite's website forbid automated requests or
+  // collection in their terms; from 2026-11-12 they are read only from the Internet Archive's copies (NO_DIRECT below).
+  'ssrn-terms': PAGE(IA('https://www.ssrn.com/index.cfm/en/terms-of-use/')),
+  'philarchive-home': PAGE(IA('https://philarchive.org/'), { links: /terms|help|polic|licen|copyright/i, keep: 20000 }),
+  'philarchive-about': PAGE(IA('https://philarchive.org/help/about.html')),
+  'philarchive-faq': PAGE(IA('https://philarchive.org/help/faq.html')),
+  'philpapers-terms': PAGE(IA('https://philpapers.org/help/terms.html')),
   'orcid-terms': PAGE('https://info.orcid.org/terms-of-use/', { links: /terms|api|public|licen/i }),
   'orcid-public-api-terms': PAGE('https://info.orcid.org/public-client-terms-of-service/'),
-  'edx-terms': PAGE('https://www.edx.org/edx-terms-service', { alt: 'https://web.archive.org/web/2026id_/https://www.edx.org/edx-terms-service' }),
+  'edx-terms': PAGE(IA('https://www.edx.org/edx-terms-service')),
   'joss-about': PAGE('https://joss.theoj.org/about'),
   'joss-policies-src': PAGE('https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/docs/policies.md', { markdown: true }),
   'joss-sidebar-src': PAGE('https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/app/views/papers/_sidebar_published.html.erb', { markdown: true }),
-  'datacite-terms': PAGE('https://datacite.org/terms-and-conditions/', { links: /terms|licen|cc0|api/i }),
-  'datacite-api-docs': PAGE('https://support.datacite.org/docs/api', { links: /terms|licen|cc0|usage/i }),
+  'datacite-terms': PAGE(IA('https://datacite.org/terms-and-conditions/'), { links: /terms|licen|cc0|api/i }),
+  'datacite-api-docs': PAGE(IA('https://support.datacite.org/docs/api'), { links: /terms|licen|cc0|usage/i }),
   'crossref-rest-api': PAGE('https://www.crossref.org/documentation/retrieve-metadata/rest-api/', { links: /retrieve-metadata|licen|etiquette|terms|polite|tips/i }),
   'crossref-metadata-license': PAGE('https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-metadata-license-information/'),
   'openalex-license-src': PAGE('https://raw.githubusercontent.com/ourresearch/openalex-docs/8cec9dba1ee17af56e5de4666f63650a02fb798b/license.md', { markdown: true }),
@@ -269,8 +281,10 @@ const plain = (h) => h.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<sty
 const egovPlain = (x) => x.replace(/<Rt>[^<]*<\/Rt>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 const sha = (x) => crypto.createHash('sha256').update(x, 'utf8').digest('hex');
 
-/* One address with curl: the status, the final address and the text (a PDF through pdftotext). */
+/* One address with curl: the status, the final address and the text (a PDF through pdftotext). An address on a host whose
+ * terms forbid automated requests (NO_DIRECT) is refused here, before any request. */
 function curl(url, s = {}) {
+  if (direct(url)) return { error: 'not fetched: the terms of ' + new URL(url).hostname + ' forbid automated requests; its Internet Archive copy is read instead' };
   const tmp = path.join(require('os').tmpdir(), 'sophaxis-source');
   // --compressed: the Internet Archive sends its copies gzipped. The content type is read for the character set.
   const args = ['-sSL', '--compressed', '--max-time', '90', '-A', UA, '-o', tmp, '-w', '%{http_code} %{url_effective} %{content_type}', '-H', 'Accept-Language: ' + (s.lang || 'en'), url];
@@ -404,7 +418,7 @@ async function foreignOnce(key, s, articles) {
       if (r.text) {
         const at = r.text.search(new RegExp(s.from.source.replace('(\\d+)', a.replace('.', '\\.'))));
         if (at >= 0) out.articles[a] = r.text.slice(at, at + 30000);
-        else out['head' + a] = r.text.slice(0, 1500);
+        else out['head' + a] = r.text.slice(0, HEAD);
       }
       await sleep(1500);
     }
@@ -454,7 +468,7 @@ async function foreignOnce(key, s, articles) {
   out.headings = Object.keys(all);
   out.articles = {};
   for (const a of articles) if (all[a] !== undefined) out.articles[a] = all[a];
-  if (!out.headings.length) out.head = text.slice(0, 3000);
+  if (!out.headings.length) out.head = text.slice(0, HEAD);
   return out;
 }
 
@@ -589,11 +603,223 @@ async function fetchPage(key, p) {
   return out;
 }
 
+/* ------------------------------------------------------------ What the repository keeps (2026-11-12)
+ * Laws are kept whole: the Japanese laws from the e-Gov law API (`sources` "egov:…" and `laws`), and the foreign laws in
+ * the text that their state, or an organ of it, publishes (WHOLE). Japan's Copyright Act, Article 13, leaves "憲法その他の法令"
+ * and their translations made by an organ of the state outside copyright. Every other text (terms of services, licences,
+ * guidance, the pages under `pages`, and translations not made by a state) is not the operator's to republish, and is kept
+ * only as its address, final address, day, length and SHA-256 of the text as fetched, with the parts that the repository
+ * quotes or relies on (`spans`: each part with its place `at` in that text). The whole texts of a run go to
+ * verification/sources-full.json, which is not committed: the workflow keeps it as an artifact of its run.
+ * Korea's laws are read in the English translation of the Korea Legislation Research Institute, which is not an organ of
+ * the state; the U.S. Code is read on Cornell's Legal Information Institute's page, which carries its own matter around
+ * the text. Both are kept as parts. */
+const FULL = path.join(ROOT, 'verification', 'sources-full.json');
+const HEAD = 300;
+const WHOLE = new Set(['gdpr', 'dsa', 'dsm', 'directive-2015-1535', 'uk-gdpr', 'osa', 'coppa', 'fadp', 'anpd', 'lgpd', 'pipl', 'thai-pdpa', 'saudi-pdpl',
+  'india-act', 'india-rules', 'ru-152', 'kz', 'ar-25326', 'uy-18331', 'co-1581', 'mx-lfpdppp', 'nz-privacy', 'au-privacy', 'cl-19628', 'ca-pipeda',
+  'mc-1565', 'gh-dpa', 'ph-dpa', 'zw-dpa', 'ke-dpa', 'za-popia', 'sg-pdpa', 'ae-pdpl', 'qa-pdpl']);
+const wholeSource = (key) => key.startsWith('egov:') || WHOLE.has(key);
+
+/* A needle is found as written, or else with white space dropped and curly quotation marks read as straight ones. */
+const QUOTES = { '’': "'", '‘': "'", '“': '"', '”': '"' };
+function canon(t) {
+  let s = '';
+  const at = [];
+  for (let i = 0; i < t.length; i++) { const c = t[i]; if (/\s/.test(c)) continue; s += QUOTES[c] || c; at.push(i); }
+  return { s, at };
+}
+/* The parts of a text that the needles find: the first place of each, joined where they overlap, in order. */
+function spansOf(text, needles) {
+  let C = null;
+  const ranges = [];
+  for (const n of needles) {
+    if (typeof n !== 'string') continue;
+    let i = n.trim().length >= 2 ? text.indexOf(n) : -1;
+    if (i >= 0) { ranges.push([i, i + n.length]); continue; }
+    const cn = canon(n).s;
+    if (cn.length < 3) continue;
+    C = C || canon(text);
+    i = C.s.indexOf(cn);
+    if (i >= 0) ranges.push([C.at[i], C.at[i + cn.length - 1] + 1]);
+  }
+  ranges.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
+  const merged = [];
+  for (const r of ranges) { const l = merged[merged.length - 1]; if (l && r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else merged.push(r.slice()); }
+  return merged.map(([s, e]) => ({ at: s, text: text.slice(s, e) }));
+}
+
+/* The words that the repository quotes: in 「」, “” or "" in its Markdown and in the strings of its JSON records, and the
+ * quotations of verification/sources.json, cut at an ellipsis; and the cells of the records of provision (names, addresses,
+ * representatives). */
+function harvest(root = ROOT) {
+  const out = new Set();
+  const add = (x) => { for (const p of String(x).split(/…|\.\.\./)) { const q = p.trim(); if (q.length >= 4) out.add(q); } };
+  const scan = (t) => {
+    for (const m of t.matchAll(/「([^「」\n]{2,3000})」/g)) add(m[1]);
+    for (const m of t.matchAll(/“([^“”\n]{2,3000})”/g)) add(m[1]);
+    for (const m of t.matchAll(/"([^"\n]{6,3000})"/g)) add(m[1]);
+  };
+  const skip = new Set(['site', 'node_modules', '.git', 'pdf', 'cards', 'fixtures']);
+  const walk = (d) => {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (skip.has(e.name)) continue;
+      const f = path.join(d, e.name);
+      if (e.isDirectory()) walk(f);
+      else if (/\.md$/.test(e.name)) scan(fs.readFileSync(f, 'utf8'));
+      else if (/\.json$/.test(e.name) && !/^(sources-raw|sources-full|statutes-texts)\.json$/.test(e.name) && d.endsWith('verification')) {
+        const strings = [];
+        JSON.stringify(JSON.parse(fs.readFileSync(f, 'utf8')), (k, v) => { if (typeof v === 'string') strings.push(v); return v; });
+        for (const s of strings) scan(s);
+        if (e.name === 'sources.json') for (const q of Object.values(JSON.parse(fs.readFileSync(f, 'utf8')).quotes || {})) add(q.quote);
+      }
+    }
+  };
+  walk(root);
+  const rec = path.join(root, 'docs', 'records-of-provision.md');
+  if (fs.existsSync(rec)) for (const l of fs.readFileSync(rec, 'utf8').split('\n')) if (l.startsWith('| ')) l.slice(2, -2).split(' | ').forEach(add);
+  return [...out];
+}
+
+/* The marks of the paragraphs, points and items that the pages cite in a source kept in parts, so that the check can find them. */
+function subMarks(key) {
+  const C = Cit.compile(REG), out = [];
+  for (const c of Cit.all(ROOT, REG, C).found) {
+    const L = REG.laws[c.law];
+    if (!L || L.source !== key) continue;
+    for (const s of c.sub) out.push('(' + s + ')', ' ' + s + '. ', '(' + s + ' ');
+  }
+  return out;
+}
+
+/* A page or a source as the repository keeps it, and its whole text for the artifact. */
+function reducePage(o, needles) {
+  const keep = {}, full = {};
+  for (const [k, v] of Object.entries(o)) {
+    if (k === 'text' || k === 'links' || k === 'forms' || k === 'scripts') full[k] = v;
+    else if (k === 'tried' && v && typeof v === 'object') keep.tried = { ...v, head: String(v.head || '').slice(0, 200) };
+    else keep[k] = v;
+  }
+  if (typeof o.text === 'string') { keep.sha256 = o.sha256 || sha(o.text); keep.spans = spansOf(o.text, needles); }
+  return { keep, full };
+}
+function reduceSource(key, r, needles) {
+  if (r.head) r.head = String(r.head).slice(0, HEAD);
+  for (const k of Object.keys(r)) if (/^head\d/.test(k)) r[k] = String(r[k]).slice(0, HEAD);
+  if (wholeSource(key)) return { keep: r, full: null };
+  const keep = { ...r, articles: {}, sha256: { ...(r.sha256 || {}) } }, full = { articles: {} };
+  for (const [a, t] of Object.entries(r.articles || {})) {
+    if (Array.isArray(t)) { keep.articles[a] = t; continue; }
+    full.articles[a] = t;
+    keep.sha256[a] = sha(t);
+    keep.articles[a] = spansOf(t, needles);
+  }
+  if (!Object.keys(keep.sha256).length) delete keep.sha256;
+  return { keep, full: Object.keys(full.articles).length ? full : null };
+}
+const prevSpans = (o) => (o && Array.isArray(o.spans) ? o.spans.map((s) => s.text) : [])
+  .concat(o && o.articles ? Object.values(o.articles).filter(Array.isArray).flatMap((x) => x.map((s) => s.text)) : []);
+
+/* Pure: what is wrong with what the repository keeps; [] when nothing is. With the whole texts of a run (`full`, from
+ * verification/sources-full.json or the artifact), each text must have the SHA-256 recorded for it, and each part must be
+ * the text at its place: a text fetched again that differs is caught, and so is a part that was not cut from it. */
+function keptProblems(raw, full = null) {
+  const bad = [];
+  const order = (spans, where) => {
+    if (!Array.isArray(spans)) { bad.push(where + ': kept whole'); return; }
+    let end = 0;
+    for (const s of spans) {
+      if (!s || !Number.isInteger(s.at) || s.at < end || typeof s.text !== 'string' || !s.text.length) { bad.push(where + ': a part out of place'); return; }
+      end = s.at + s.text.length;
+    }
+  };
+  const same = (text, spans, h, where) => {
+    if (typeof text !== 'string') return;
+    if (sha(text) !== h) bad.push(where + ': the text fetched has another SHA-256');
+    for (const s of spans || []) if (text.slice(s.at, s.at + s.text.length) !== s.text) bad.push(where + ': a part that is not in the text at its place');
+  };
+  for (const [k, o] of Object.entries(raw.pages || {})) {
+    for (const f of ['text', 'links', 'forms', 'scripts']) if (f in o) bad.push('page ' + k + ': ' + f + ' kept');
+    if (o.tried && String(o.tried.head || '').length > 200) bad.push('page ' + k + ': a long head');
+    if (!('spans' in o || 'sha256' in o)) continue;
+    if (!/^[0-9a-f]{64}$/.test(o.sha256 || '')) bad.push('page ' + k + ': no SHA-256');
+    order(o.spans, 'page ' + k);
+    if (full && full.pages && full.pages[k]) same(full.pages[k].text, o.spans, o.sha256, 'page ' + k);
+  }
+  for (const [k, r] of Object.entries(raw.sources || {})) {
+    if (String(r.head || '').length > HEAD || Object.keys(r).some((x) => /^head\d/.test(x) && String(r[x]).length > HEAD)) bad.push('source ' + k + ': a long head');
+    if (wholeSource(k)) continue;
+    for (const [a, t] of Object.entries(r.articles || {})) {
+      order(t, 'source ' + k + ' ' + a);
+      if (!/^[0-9a-f]{64}$/.test(((r.sha256 || {})[a]) || '')) bad.push('source ' + k + ' ' + a + ': no SHA-256');
+      const f = full && full.sources && full.sources[k] && full.sources[k].articles;
+      if (f && typeof f[a] === 'string') same(f[a], t, (r.sha256 || {})[a], 'source ' + k + ' ' + a);
+    }
+  }
+  return bad;
+}
+
+/* Keeps in parts every text of `out` that is still whole, finding the parts with the quotations of the repository, the
+ * parts kept before (`prev`), the marks the pages cite and any further needles (`extra`: { key: [needle] }); returns the
+ * whole texts, for the artifact. */
+function reduceAll(out, prev, extra = {}) {
+  const common = harvest();
+  const full = { fetched: new Date().toISOString().slice(0, 10), agent: UA, pages: {}, sources: {} };
+  for (const [k, o] of Object.entries(out.pages || {})) {
+    if (typeof o.text !== 'string') continue;
+    const n = common.concat(prevSpans(prev && prev.pages && prev.pages[k]), extra[k] || [], extra['*'] || []);
+    const { keep, full: f } = reducePage(o, n);
+    out.pages[k] = keep; full.pages[k] = f;
+  }
+  for (const [k, r] of Object.entries(out.sources || {})) {
+    const n = wholeSource(k) ? [] : common.concat(prevSpans(prev && prev.sources && prev.sources[k]), subMarks(k), extra[k] || [], extra['*'] || []);
+    const { keep, full: f } = reduceSource(k, r, n);
+    out.sources[k] = keep;
+    if (f) full.sources[k] = f;
+  }
+  return full;
+}
+
 async function main() {
+  /* `node tools/sources.js verify`: the file kept against the whole texts of the run (verification/sources-full.json). */
+  if (process.argv[2] === 'verify') {
+    const raw = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+    const full = fs.existsSync(FULL) ? JSON.parse(fs.readFileSync(FULL, 'utf8')) : null;
+    const bad = keptProblems(raw, full);
+    if (!full) bad.push('no whole texts at ' + path.relative(ROOT, FULL));
+    if (bad.length) { console.error(bad.join('\n')); process.exit(1); }
+    console.log('kept parts and SHA-256 agree with the whole texts of the run (' + Object.keys(full.pages || {}).length + ' pages, ' + Object.keys(full.sources || {}).length + ' sources)');
+    return;
+  }
+  /* SOURCES_FROM: the whole texts of an earlier run (its artifact); the parts are cut again from them, with the needles of
+   * SOURCES_NEEDLES if given, without fetching anything. The text of each must have the SHA-256 recorded for it. */
+  if (process.env.SOURCES_FROM) {
+    const raw = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+    const given = JSON.parse(fs.readFileSync(process.env.SOURCES_FROM, 'utf8'));
+    const extra = process.env.SOURCES_NEEDLES ? JSON.parse(fs.readFileSync(process.env.SOURCES_NEEDLES, 'utf8')) : {};
+    const prev = JSON.parse(JSON.stringify(raw));
+    for (const [k, f] of Object.entries(given.pages || {})) if (raw.pages[k]) {
+      // Pages fetched before 2026-11-12 carry no SHA-256 of their own; theirs is that of the text the repository held.
+      if (raw.pages[k].sha256 ? sha(f.text) !== raw.pages[k].sha256 : typeof raw.pages[k].text === 'string' && f.text !== raw.pages[k].text) throw new Error('page ' + k + ': the whole text is not the one recorded');
+      Object.assign(raw.pages[k], f);
+      delete raw.pages[k].spans;
+    }
+    for (const [k, f] of Object.entries(given.sources || {})) if (raw.sources[k]) {
+      for (const [a, t] of Object.entries(f.articles || {})) {
+        if (raw.sources[k].sha256 && raw.sources[k].sha256[a] && sha(t) !== raw.sources[k].sha256[a]) throw new Error('source ' + k + ' ' + a + ': the whole text is not the one recorded');
+        raw.sources[k].articles[a] = t;
+      }
+    }
+    reduceAll(raw, prev, extra);
+    fs.writeFileSync(OUT, JSON.stringify(raw, null, 1) + '\n');
+    return;
+  }
   // SOURCES_ONLY: a comma-separated list of keys (of SOURCES, PAGES or LAWS) fetched again, or "new" for every key not yet
   // in the file; the rest of the file is kept as it was, with its date. Without it, everything is fetched afresh.
   const only = (process.env.SOURCES_ONLY || '').split(',').map((x) => x.trim()).filter(Boolean);
   const prev = only.length && fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : null;
+  // The file as it was, whose kept parts are looked for again in the texts fetched now.
+  const before = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : null;
   const out = prev || { fetched: new Date().toISOString().slice(0, 10), agent: UA, sources: {} };
   out.pages = out.pages || {}; out.laws = out.laws || {};
   const take = (bag, key) => !prev || only.includes(key) || (only.includes('new') && !(key in bag));
@@ -642,9 +868,12 @@ async function main() {
   // A source shared by two laws (the GDPR and the UK GDPR are not; GitHub's terms are named two ways) is fetched once.
   for (const r of Object.values(out.sources)) { if (r.want) r.want = [...new Set(r.want)].sort(); delete r.fetched_now; }
   if (!Object.keys(out.laws).length) delete out.laws;
+  // Every text that is not a law is kept in parts; the whole texts of this run go to the artifact, not to the repository.
+  const full = reduceAll(out, before);
+  fs.writeFileSync(FULL, JSON.stringify(full) + '\n');
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 }
 
-module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, LAWS };
+module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, LAWS, NO_DIRECT, direct, IA, WHOLE, wholeSource, spansOf, harvest, keptProblems, reduceAll, FULL, HEAD };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });
