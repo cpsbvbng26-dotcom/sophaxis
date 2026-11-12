@@ -270,7 +270,7 @@ If it turns out that an author lives there, or stayed there between the submissi
 | The United Kingdom | A representative | UK GDPR Article 27 | Yes |
 | China | A representative | Personal Information Protection Law, Article 53 | Yes |
 | Thailand | A representative | Personal Data Protection Act, section 37(5) | Yes |
-| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) (read) and Article 18(5) (reported) | In part |
+| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes |
 | Türkiye | Registration through a representative there | Regulation on the Data Controllers' Registry | No, as reported |
 | Egypt | A representative and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 | No, as reported |
 | Peru | A representative | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) | No, as reported |
@@ -3291,7 +3291,7 @@ Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか�
 | 英国 | 代理人 | 英国の一般データ保護規則 第 27 条 | 読んだ |
 | 中国 | 代理人 | 個人情報保護法 第 53 条 | 読んだ |
 | タイ | 代理人 | 個人データ保護法 第 37 条第 5 号 | 読んだ |
-| ロシア | 国内での個人データの保存 | 連邦法第 152-FZ 号 第 1 条第 1.1 項（読んだ）、第 18 条第 5 項（報告による） | 一部 |
+| ロシア | 国内での個人データの保存 | 連邦法第 152-FZ 号 第 1 条第 1.1 項、第 18 条第 5 項 | 読んだ |
 | トルコ | 国内の代理人を通じた登録 | データ管理者登録簿に関する規則 | まだ（報告による） |
 | エジプト | 代理人と許可 | 2020 年法律第 151 号とその施行規則 第 3 条 | まだ（報告による） |
 | ペルー | 代理人 | 法律第 29733 号の施行規則（最高令第 016-2024-JUS 号） | まだ（報告による） |
