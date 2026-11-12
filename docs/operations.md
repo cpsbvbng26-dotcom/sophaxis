@@ -38,6 +38,8 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 ## Registries
 
 - The application to OpenDOAR is drafted in [opendoar.md](./opendoar.md), for the day it takes new submissions again. Read its first section before sending it.
+- PhilPapers answers automated requests with 403, so the state of the request to its Open Access Gateway, asked on 2026-11-03, is checked by hand. Sign in to PhilPapers in a browser. Read the reply to the request, which came by email, and look for Sophaxis in the list of archives of the Open Access Gateway. Record what was found, with the day, in the README beside the registry table. The reply named the operator's own works as the reason, so a new request makes sense once a work by another researcher is listed.
+- Points raised by outside assessments, and what was done about each, are in [outside-assessments.md](./outside-assessments.md).
 
 ## If Vercel cannot serve the site
 
@@ -65,7 +67,38 @@ Follow "Continuity" in the Terms of Use. These are the steps, and where each par
 
 ## If the operator cannot work
 
-- Follow "Continuity" in the Terms of Use: after 30 days, the top page says that new submissions are paused, and the listed records stay online.
+Follow "Continuity" in the Terms of Use, under "If the operator cannot work". These are the steps behind it. A slow decision is not a pause; a pause is for when the operator cannot work on Sophaxis at all.
+
+### Before it happens
+
+- [ ] Name an account successor for the operator's GitHub account (GitHub settings, Account, Successor settings), and record here whether one is named. Without one, nobody else can manage the repository if the operator can never act again.
+- [ ] Give a person the operator trusts this page and the link to the repository, so that someone knows what the steps are.
+- [ ] Make a release when the records have changed, so that the Zenodo archive holds them close to how they stand.
+
+### When a pause begins
+
+1. Set `"submissionsPaused": true` in `site.json`, run `node build.js` and `node verification/check.js`, and merge. The top page and the submit page then say that new submissions are paused.
+2. Add a news item to `data/news.json` that says the same, in the same pull request.
+3. Comment in each open submission, withdrawal and published-version issue that its decision waits until the pause ends.
+4. Where the pause can be foreseen, do these steps before it begins. Otherwise do them as soon as the operator can act, and at the latest when the pause has lasted 30 days.
+
+### What runs during a pause, and what waits
+
+- Runs by itself: the automatic check of a new submission issue, the weekly watch of the DOIs, the weekly saves to the Internet Archive where every author consented, the daily comparison of the live site with `main`, and the removal workflow.
+- A removal request that reports exposure of personal data still takes the record's title, authors, abstract and PDF copy offline at once (`tools/removal.js`). The daily reminder keeps reminding; the decision waits.
+- Waits for the operator: every decision on a submission, a withdrawal, a published version or a removal; the pull requests that the weekly watch opens; the monthly posts; the yearly counts and the yearly audit.
+- Stays online: the site on Vercel, as long as Vercel serves it. If it stops, the records stay readable in the repository and in the Zenodo archive.
+
+### How a successor or a custodian takes over
+
+- Keeping the records readable needs nothing that only the operator holds: the repository is public, and every release is archived at Zenodo. A custodian can serve a copy of `site/` elsewhere, as "If Vercel cannot serve the site" says, and keep the records unchanged.
+- Taking over Sophaxis itself needs the repository and the Vercel project to be transferred to the new operator. The operator, or the account successor named on GitHub, makes the transfer; nobody else can. The hand-over is announced on the site first, as the Terms of Use say, and the new operator is named on the contact page.
+- The new operator then reviews the open issues in the order they came, and changes the policies only in the ordinary way.
+
+### When the pause ends
+
+1. Set `"submissionsPaused": false`, rebuild, and add a news item that submissions are open again.
+2. Decide the waiting issues in the order they came. Answer removal requests first.
 
 ## Yearly audit
 
