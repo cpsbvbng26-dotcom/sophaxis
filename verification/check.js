@@ -5481,6 +5481,125 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
       audit.replace('読み終えた同じ日に、実行の記録を消しました。', '実行の記録は残しました。')].every((b) => b !== audit && auditProblems(b, pool).length > 0));
 }
 
+console.log('\n120. What a sixth, read-only pass of 2026-11-12 found: no page gives one day for the whole list of places where Sophaxis is not offered');
+{
+  /* 15 of the 43 places are not offered from 2026-11-26, the rest from 2026-11-22 (site.json "notOffered", "from").
+   * The README, the Privacy Policy and the notice on the top page gave 2026-11-22 for the whole list. Every page, the llms
+   * files, the README, the policies, the forms, site.json, the news and the feed of policy changes are read. A sentence that
+   * names the whole list and gives a day: the day is one of the per-place days; a per-place day it leaves out is given in
+   * the same paragraph with its places or their number; a number given with a later day is the number of places from it.
+   * CHANGELOG.md and docs/ are records of what was true when written, and stay outside. */
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const WORD = { one: 1, two: 2, three: 3, four: 4, five: 5, ten: 10, fifteen: 15, sixteen: 16, eighteen: 18, twenty: 20 };
+  const WHOLE = [/places? where Sophaxis is not offered/i, /places that (?:the )?(?:\[)?Submission Policy(?:\]\([^)]*\))? lists/i, /places that it lists/i, /any of the \d+ places/i, /any of these places/i,
+    /Sophaxis を提供しない(?: ?\d+ ?の)?国と地域/, /表にあるほかの国と地域/, /表の ?\d+ ?の国と地域/];
+  const SUBSET = /\b(\d+|[A-Za-z]+) more places\b/;
+  const COUNT = [/\bfor (\d+) of them\b/, /\bfor (\d+) of the places\b/, /\bFor the (\d+) places for which the table gives\b/, /\b(\d+|[A-Za-z]+) more places\b/, /そのうち ?(\d+) ?の国と地域/, /(\d+) の国と地域については/];
+  /* Pure: what is wrong; [] when nothing is. texts: { name: text }, L: site.json notOffered, first: the first day. */
+  const placeDayProblems = (texts, L, first) => {
+    const bad = [];
+    const fromOf = (p) => p.from || first;
+    const FROM = [...new Set(L.map(fromOf))].sort();
+    const n = (d) => L.filter((p) => fromOf(p) === d).length;
+    const num = (x) => (/^\d+$/.test(x) ? Number(x) : WORD[String(x).toLowerCase()]);
+    const days = (s) => [...s.matchAll(/\b(\d{4}-\d{2}-\d{2})\b/g)].map((m) => m[1]).filter((d) => d >= FROM[0]);
+    for (const [f, txt] of Object.entries(texts)) {
+      for (const para of String(txt).split(/\n\s*\n/)) {
+        const sents = para.split(/(?<=[.!?。])\s+|\n+|(?<=。)/).filter((s) => s.trim());
+        for (const [k, s] of sents.entries()) {
+          /* A sentence on the whole list with no day takes the day of a form's "Required from <day>." just before it. */
+          const lead = k > 0 && /^\s*(?:Required from \d{4}-\d{2}-\d{2}\.|\d{4}-\d{2}-\d{2} から必須です。)\s*$/.test(sents[k - 1].replace(/^\s*description:\s*/, ''));
+          const whole = WHOLE.some((r) => r.test(s)), ds = days(s).length || !whole || !lead ? days(s) : days(sents[k - 1]);
+          if (whole) for (const d of ds) if (!FROM.includes(d)) bad.push(f + ': a day that no place has, ' + d + ': ' + s.slice(0, 60));
+          for (const r of COUNT) {
+            const m = r.exec(s), later = days(s).filter((d) => d !== FROM[0]);
+            if (m && later.length && !later.some((d) => n(d) === num(m[1]))) bad.push(f + ': the number ' + m[1] + ' for ' + later.join(', ') + ': ' + s.slice(0, 60));
+          }
+          if (!ds.length || !whole || SUBSET.test(s)) continue;
+          for (const d of FROM.filter((x) => !ds.includes(x))) {
+            /* Its places named after the day, in one sentence ("; and, from <day>, Argentina, ..."). */
+            const named = sents.concat(lead ? [sents[k - 1] + ' ' + s] : []).some((z) => z.includes(d) && L.filter((p) => fromOf(p) === d).every((p) => z.indexOf(p.place, z.indexOf(d)) > 0 || (p.ja && z.indexOf(p.ja, z.indexOf(d)) > 0)));
+            const counted = sents.some((z) => z.includes(d) && COUNT.some((r) => { const m = r.exec(z); return m && num(m[1]) === n(d); }));
+            if (!(para.includes(d) && (named || counted))) bad.push(f + ': one day for the whole list, without ' + d + ': ' + s.slice(0, 60));
+          }
+        }
+      }
+    }
+    return bad;
+  };
+  const walk120 = (d, r = '') => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk120(path.join(d, e.name), r + e.name + '/') : [r + e.name]));
+  const strip = (x) => x.replace(/<\/(p|li|div|h\d|td|th|tr|blockquote|summary|dd|dt)>|<br\s*\/?>/g, '\n\n').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  const strings = (v) => (typeof v === 'string' ? [v] : Array.isArray(v) ? v.flatMap(strings) : v && typeof v === 'object' ? Object.values(v).flatMap(strings) : []);
+  const texts = {};
+  for (const f of walk120(path.join(ROOT, 'site')).filter((x) => /\.(html|txt|xml)$/.test(x))) { const x = read(path.join(ROOT, 'site', f)); texts['site/' + f] = f.endsWith('.txt') ? x : strip(x); }
+  for (const f of [...fs.readdirSync(ROOT).filter((x) => x.endsWith('.md') && x !== 'CHANGELOG.md'), ...fs.readdirSync(path.join(ROOT, 'policies')).map((x) => 'policies/' + x), ...fs.readdirSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE')).map((x) => '.github/ISSUE_TEMPLATE/' + x)]) texts[f] = read(path.join(ROOT, f));
+  for (const f of ['site.json', 'data/news.json', 'data/policy-changes.json']) texts[f] = strings(J(f)).join('\n\n');
+  const site = J('site.json'), L = site.notOffered, first = site.residenceFrom;
+  const later = L.filter((p) => p.from && p.from > first);
+  const pd = placeDayProblems(texts, L, first);
+  const EN_D = 'from the date the Submission Policy gives for each place (' + first + ', or ' + later[0].from + ' for ' + later.length + ' of them)';
+  const JA_D = '投稿の規程が国と地域ごとに示す日（' + first + '、そのうち ' + later.length + ' の国と地域は ' + later[0].from + '）から';
+  const said = [['README.md', 'is declined ' + EN_D + ', because'], ['README.md', JA_D + '、著者のだれかが Sophaxis を提供しない国と地域'], ['policies/privacy.md', 'is declined ' + EN_D + ', because'],
+    ['policies/privacy.md', 'From the date the [Submission Policy](./submission.md) gives for each place (' + first + ', or ' + later[0].from + ' for ' + later.length + ' of them), Sophaxis does not offer its service to people in the other places that it lists either.'],
+    ['policies/privacy.ja.md', JA_D + '、著者のだれかが Sophaxis を提供しない国と地域'], ['policies/privacy.ja.md', '[投稿の規程](./submission.ja.md)が国と地域ごとに示す日（' + first + '、そのうち ' + later.length + ' の国と地域は ' + later[0].from + '）から、Sophaxis は、その表にあるほかの国と地域の人にもサービスを提供しません。'],
+    ['site.json', 'F' + EN_D.slice(1) + ', Sophaxis does not list work by an author who lives in any of these places']].filter(([f, x]) => !String(texts[f]).includes(x)).map(([f, x]) => f + ': ' + x.slice(0, 40));
+  /* The record. */
+  const HEAD = '\n## 2026-11-12 の続き：五度目の見落とし\n';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const auditProblems = (a) => {
+    const bad = [];
+    const sec = (a.split(HEAD)[1] || '').split('\n## ')[0];
+    if (!sec) return ['no section'];
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length < 7) bad.push('too few rows');
+    rows.forEach((r, i) => { if (r.length !== 6 || !JUDGE.includes(r[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    for (const r of rows.filter((x) => x[4] !== '問題なし')) if (!/2026-11-12 に Claude が決めました。[^|]*ためです$/.test(r[5])) bad.push('a decision without its maker or reason: ' + r[0]);
+    if (!sec.includes('43 の国と地域のうち ' + (L.length - later.length) + ' が ' + first + ' から、' + later.length + ' が ' + later[0].from + ' からです。')) bad.push('the numbers of places');
+    if (!rows.some((r) => r[0].startsWith('検査') && r[4] === '漏れ')) bad.push('the check as a gap');
+    if (!sec.includes('### 下げられずに残る危険')) bad.push('the remaining risk');
+    return bad;
+  };
+  const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const ap = auditProblems(audit);
+  /* The policy change is in the feed, and the commitment moved with its old line kept. */
+  const changes = J('data/policy-changes.json'), com = read(path.join(__dirname, 'commitments.txt')), sup = read(path.join(__dirname, 'superseded.txt'));
+  const feed = changes.some((c) => c.date === '2026-11-12' && c.policies.includes('privacy') && !c.from && c.text.includes('2026-11-22, or 2026-11-26 for 15 of them') && c.text.includes('no right is narrowed'));
+  const OLDC = 'or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work';
+  const moved = !com.includes(OLDC) && com.includes('is declined from the date the Submission Policy gives for each place (2026-11-22, or 2026-11-26 for 15 of them), because such a work') && sup.split('\n').some((l) => l.startsWith('A request to add the record') && l.split('\t')[0].includes(OLDC));
+  ok('no page, llms file, policy, form, notice, news item or feed entry gives one day for the whole list of places where Sophaxis is not offered (' + Object.keys(texts).length + ' texts; ' + (L.length - later.length) + ' places from ' + first + ', ' + later.length + ' from ' + (later[0] || {}).from + '), the README, the Privacy Policy and the notice say "' + EN_D + '", the change is in the feed, and the record of the sixth pass is complete',
+    pd.length === 0 && said.length === 0 && ap.length === 0 && feed && moved, pd.concat(said, ap).join(' / ') + (feed ? '' : ' / the feed') + (moved ? '' : ' / the commitment'));
+  /* Break on purpose. */
+  const with1 = (f, a, b) => Object.assign({}, texts, { [f]: String(texts[f]).replace(a, b) });
+  const moveOne = L.map((p) => (p.place === 'Quebec' ? Object.assign({}, p, { from: later[0].from }) : p));
+  const breaks = [
+    ['the README in English with one day', with1('README.md', 'is declined ' + EN_D + ', because', 'is declined from 2026-11-22, because'), L],
+    ['the README in Japanese with one day', with1('README.md', JA_D + '、著者のだれかが Sophaxis を提供しない国と地域', '2026-11-22 から、著者のだれかが Sophaxis を提供しない国と地域'), L],
+    ['the Privacy Policy on the other places with one day', with1('policies/privacy.md', 'From the date the [Submission Policy](./submission.md) gives for each place (2026-11-22, or 2026-11-26 for 15 of them), Sophaxis does not offer its service to people in the other places that it lists either.', 'From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](./submission.md) lists either.'), L],
+    ['the Japanese Privacy Policy with one day', with1('policies/privacy.ja.md', '[投稿の規程](./submission.ja.md)が国と地域ごとに示す日（2026-11-22、そのうち 15 の国と地域は 2026-11-26）から、Sophaxis は、その表にある', '2026-11-22 から、Sophaxis は、[投稿の規程](./submission.ja.md)の表にある'), L],
+    ['the notice in site.json with one day', with1('site.json', 'F' + EN_D.slice(1) + ', Sophaxis does not list', 'From 2026-11-22 Sophaxis does not list'), L],
+    ['a generated page with one day', with1('site/policies/privacy.html', 'is declined ' + EN_D + ', because', 'is declined from 2026-11-22, because'), L],
+    ['llms-full.txt with one day', with1('site/llms-full.txt', 'is declined ' + EN_D + ', because', 'is declined from 2026-11-22, because'), L],
+    ['a wrong number with the later day', with1('README.md', 'or 2026-11-26 for 15 of them', 'or 2026-11-26 for 14 of them'), L],
+    ['a day that no place has', with1('policies/privacy.md', '(2026-11-22, or 2026-11-26 for 15 of them), Sophaxis does not offer', '(2026-11-22, or 2026-11-27 for 15 of them), Sophaxis does not offer'), L],
+    ['a wrong number in the news', with1('data/news.json', 'Fifteen more places where Sophaxis is not offered', 'Fourteen more places where Sophaxis is not offered'), L],
+    ['the Submission Policy without its second day', with1('policies/submission.md', 'For the 15 places for which the table gives 2026-11-26, this applies from 2026-11-26.', ''), L],
+    ['the form without the later places', with1('.github/ISSUE_TEMPLATE/submission.yml', '; and, from 2026-11-26, Argentina,', '; and Argentina,'), L],
+    ['one more place moved to the later day in site.json', texts, moveOne],
+  ];
+  const caught = breaks.filter(([, x, l]) => placeDayProblems(x, l, first).length > 0).map(([k]) => k);
+  const abreaks = [['the count', audit.replace('この表の判定は、漏れ 1、表現 4、問題なし 2 です。', 'この表の判定は、漏れ 1、表現 3、問題なし 2 です。')],
+    ['a decision without its reason', audit.replace('誰の権利も狭めないためです |', '誰の権利も狭めません |')],
+    ['the numbers of places', audit.replace('43 の国と地域のうち 28 が', '43 の国と地域のうち 27 が')],
+    ['the check as no gap', audit.replace('ほかの頁の文に書いた日は見ていませんでした | 漏れ |', 'ほかの頁の文に書いた日は見ていませんでした | 問題なし |')],
+    ['no section', audit.replace(HEAD, '\n## 2026-11-12 の続き\n')]];
+  const acaught = abreaks.filter(([, a]) => a !== audit && auditProblems(a).length > 0).map(([k]) => k);
+  ok('break on purpose: one day in the README (both languages), the Privacy Policy (both), site.json, a generated page, llms-full.txt, a wrong number, a day no place has, the news, the Submission Policy, the form, a place moved in site.json, and the record\'s count, reason, numbers, gap and section all fail (' + (caught.length + acaught.length) + ' / ' + (breaks.length + abreaks.length) + ')',
+    caught.length === breaks.length && acaught.length === abreaks.length, breaks.filter(([k]) => !caught.includes(k)).concat(abreaks.filter(([k]) => !acaught.includes(k))).map(([k]) => k).join(' / '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
