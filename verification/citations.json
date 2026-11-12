@@ -637,6 +637,9 @@
     },
     "arXiv licence": {
       "source": "arxiv-licence"
+    },
+    "JACAR doc": {
+      "source": "jacar-doc"
     }
   },
   "fetchAlso": {
@@ -779,6 +782,9 @@
       "22"
     ],
     "arXiv licence": [
+      "all"
+    ],
+    "JACAR doc": [
       "all"
     ]
   },
