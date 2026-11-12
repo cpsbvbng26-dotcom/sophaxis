@@ -16336,44 +16336,8 @@
   },
   "roar-record": {
    "url": "https://roar.eprints.org/27422/",
-   "status": 200,
-   "fetched": "2026-11-12",
-   "length": 1935,
-   "sha256": "448ca060c9d1318a85874297d7fac268cc9f7335886a757478ac2ea199dafec2",
-   "spans": [
-    {
-     "at": 160,
-     "text": "Country"
-    },
-    {
-     "at": 339,
-     "text": "Record"
-    },
-    {
-     "at": 619,
-     "text": "authors"
-    },
-    {
-     "at": 791,
-     "text": "Page"
-    },
-    {
-     "at": 896,
-     "text": "Records"
-    },
-    {
-     "at": 1213,
-     "text": "Birth Date: 3 November 2026 04:01:42 UTC"
-    },
-    {
-     "at": 1378,
-     "text": "Japan"
-    },
-    {
-     "at": 1490,
-     "text": "Date Deposited: 05 Nov 2026 16:42"
-    }
-   ]
+   "status": "curl: (28) Connection timed out after 90002 milliseconds",
+   "fetched": "2026-11-12"
   },
   "joss-paper-src": {
    "url": "https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/docs/paper.md",
