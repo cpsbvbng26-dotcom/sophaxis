@@ -12137,12 +12137,16 @@
    "url": "https://about.zenodo.org/terms/",
    "status": 200,
    "fetched": "2026-11-12",
-   "length": 3707,
-   "sha256": "3c2c8336bcc8ad89edb3681a8edd39c897ea20e00f81461eebbe3a06b5766412",
+   "length": 3703,
+   "sha256": "08d88fc24a03c0e946ebaf3ad4586477c37a7419123208c8d9bb860270e0d1ba",
    "spans": [
     {
      "at": 130,
      "text": "General"
+    },
+    {
+     "at": 338,
+     "text": "Use of Zenodo, both the uploading and downloading of data, denotes agreement with the following terms"
     },
     {
      "at": 1652,
@@ -12169,7 +12173,7 @@
      "text": "Unless specified otherwise, Zenodo metadata may be freely reused under the CC0 waiver"
     },
     {
-     "at": 3485,
+     "at": 3481,
      "text": "GitHub"
     }
    ]
@@ -12178,8 +12182,8 @@
    "url": "https://about.zenodo.org/policies/",
    "status": 200,
    "fetched": "2026-11-12",
-   "length": 5684,
-   "sha256": "c269ae26162732351a610d12c4aec296532e567daf510a3b8a664b0c642f1de2",
+   "length": 5680,
+   "sha256": "efe4777a659751f0e20723528dc5269ecb95a49e0f91fb80c9e5222071f7f56d",
    "spans": [
     {
      "at": 126,
@@ -12222,6 +12226,10 @@
      "text": "or a"
     },
     {
+     "at": 2092,
+     "text": "Access to metadata and data files is provided over standard protocols such as HTTP and OAI-PMH."
+    },
+    {
      "at": 3088,
      "text": "removed"
     },
@@ -12242,7 +12250,7 @@
      "text": "promise"
     },
     {
-     "at": 5462,
+     "at": 5458,
      "text": "GitHub"
     }
    ]
@@ -16411,6 +16419,437 @@
      "text": "prefix"
     }
    ]
+  },
+  "zenodo-developers": {
+   "url": "https://developers.zenodo.org/",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 68930,
+   "sha256": "704107fcc238ab842f87c7d8686ebbd0b6a358c9bcf08c6164b4e01f7dfb3256",
+   "spans": [
+    {
+     "at": 307,
+     "text": "Records"
+    },
+    {
+     "at": 343,
+     "text": "Files — download/upload of files."
+    },
+    {
+     "at": 1587,
+     "text": "Name"
+    },
+    {
+     "at": 1756,
+     "text": "status"
+    },
+    {
+     "at": 2490,
+     "text": "Note we’re already sending a User-Agent header identifying our client, which we recommend doing on every request"
+    },
+    {
+     "at": 10895,
+     "text": "prefix"
+    },
+    {
+     "at": 13031,
+     "text": "YYYY-MM-DD"
+    },
+    {
+     "at": 15869,
+     "text": "DataCite"
+    },
+    {
+     "at": 17051,
+     "text": "Required"
+    },
+    {
+     "at": 18329,
+     "text": "authors"
+    },
+    {
+     "at": 18534,
+     "text": "ORCID"
+    },
+    {
+     "at": 20052,
+     "text": "publisher"
+    },
+    {
+     "at": 22544,
+     "text": "Person"
+    },
+    {
+     "at": 22611,
+     "text": "Edit"
+    },
+    {
+     "at": 23565,
+     "text": "OpenAI"
+    },
+    {
+     "at": 26780,
+     "text": "Page"
+    },
+    {
+     "at": 28118,
+     "text": "Japan"
+    }
+   ]
+  },
+  "arxiv-api-tou": {
+   "url": "https://info.arxiv.org/help/api/tou.html",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 8814,
+   "sha256": "068a6bd8062a67c8ceef00616199893fa6ccc12dde307c0b2eebb1b5b2a40024",
+   "spans": [
+    {
+     "at": 143,
+     "text": "GitHub"
+    },
+    {
+     "at": 306,
+     "text": "Edit"
+    },
+    {
+     "at": 694,
+     "text": "Required"
+    },
+    {
+     "at": 1279,
+     "text": "ORCID"
+    },
+    {
+     "at": 1307,
+     "text": "Records"
+    },
+    {
+     "at": 1327,
+     "text": "Person"
+    },
+    {
+     "at": 1470,
+     "text": "Service"
+    },
+    {
+     "at": 1614,
+     "text": "publisher"
+    },
+    {
+     "at": 1637,
+     "text": "Name"
+    },
+    {
+     "at": 2044,
+     "text": "English"
+    },
+    {
+     "at": 2384,
+     "text": "the right"
+    },
+    {
+     "at": 3434,
+     "text": "authors"
+    },
+    {
+     "at": 6676,
+     "text": "n one"
+    },
+    {
+     "at": 7487,
+     "text": "Direct users to arXiv.org to retrieve e-print content (PDF, source files, etc)."
+    },
+    {
+     "at": 7731,
+     "text": "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted"
+    }
+   ]
+  },
+  "arxiv-bulk-data": {
+   "url": "https://info.arxiv.org/help/bulk_data.html",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 7531,
+   "sha256": "9a6a45848a7840cc8cf651063a2c3ca5640f64719b666b999b0a79eedd8292f3",
+   "spans": [
+    {
+     "at": 133,
+     "text": "GitHub"
+    },
+    {
+     "at": 296,
+     "text": "Edit"
+    },
+    {
+     "at": 684,
+     "text": "Required"
+    },
+    {
+     "at": 1269,
+     "text": "ORCID"
+    },
+    {
+     "at": 1297,
+     "text": "Records"
+    },
+    {
+     "at": 1317,
+     "text": "Person"
+    },
+    {
+     "at": 1460,
+     "text": "Service"
+    },
+    {
+     "at": 1604,
+     "text": "publisher"
+    },
+    {
+     "at": 1627,
+     "text": "Name"
+    },
+    {
+     "at": 2034,
+     "text": "English"
+    },
+    {
+     "at": 2374,
+     "text": "the right"
+    },
+    {
+     "at": 5483,
+     "text": "authors"
+    },
+    {
+     "at": 6131,
+     "text": "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access."
+    }
+   ]
+  },
+  "arxiv-export-robots": {
+   "url": "https://export.arxiv.org/robots.txt",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 25,
+   "sha256": "1ef535a33969769647f9eb3fffde67133ba8efe7566be25407fdc4de0ffba9fb",
+   "spans": [
+    {
+     "at": 0,
+     "text": "User-agent: * Disallow: /"
+    }
+   ]
+  },
+  "figshare-terms": {
+   "url": "https://web.archive.org/web/2026id_/https://figshare.com/terms",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "final": "https://web.archive.org/web/20261029182135id_/https://figshare.com/terms",
+   "length": 37609,
+   "sha256": "6108118ce533eba3724de66430693c78096705c3a614e977b40241ccd39880b6",
+   "spans": [
+    {
+     "at": 96,
+     "text": "n one"
+    },
+    {
+     "at": 236,
+     "text": "the right"
+    },
+    {
+     "at": 464,
+     "text": "Service"
+    },
+    {
+     "at": 4133,
+     "text": "Reference to the \"Service\" in these Terms includes associated documentation and APIs"
+    },
+    {
+     "at": 6716,
+     "text": "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine"
+    },
+    {
+     "at": 7073,
+     "text": "expressly authorized for you by Figshare in advance in writing"
+    },
+    {
+     "at": 9101,
+     "text": "Person"
+    },
+    {
+     "at": 11965,
+     "text": "asis"
+    },
+    {
+     "at": 11983,
+     "text": "Security"
+    },
+    {
+     "at": 18874,
+     "text": "removed"
+    },
+    {
+     "at": 27266,
+     "text": "withdrawn"
+    },
+    {
+     "at": 28352,
+     "text": "United States"
+    },
+    {
+     "at": 28538,
+     "text": "English"
+    },
+    {
+     "at": 31777,
+     "text": "status"
+    }
+   ]
+  },
+  "figshare-api-docs": {
+   "url": "https://web.archive.org/web/2026id_/https://docs.figshare.com/",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "final": "https://web.archive.org/web/20260711014224id_/https://docs.figshare.com/",
+   "length": 78918,
+   "sha256": "55e05d24a6aada73fbf732a6beb91f9682af8ffcd47193b10e70562d6a6a10bc",
+   "spans": [
+    {
+     "at": 1249,
+     "text": "Person"
+    },
+    {
+     "at": 2104,
+     "text": "status"
+    },
+    {
+     "at": 5325,
+     "text": "We recommend that clients use the API responsibly and do not make more than one request per second."
+    },
+    {
+     "at": 5436,
+     "text": "the right"
+    },
+    {
+     "at": 6595,
+     "text": "Page"
+    },
+    {
+     "at": 9765,
+     "text": "Name"
+    },
+    {
+     "at": 15888,
+     "text": "Record"
+    },
+    {
+     "at": 25258,
+     "text": "Records"
+    },
+    {
+     "at": 29095,
+     "text": "YYYY-MM-DD"
+    },
+    {
+     "at": 40112,
+     "text": "authors"
+    },
+    {
+     "at": 43245,
+     "text": "United States"
+    },
+    {
+     "at": 43861,
+     "text": "Japan"
+    },
+    {
+     "at": 47753,
+     "text": "Germany"
+    },
+    {
+     "at": 51307,
+     "text": "Required"
+    },
+    {
+     "at": 51487,
+     "text": "Limits"
+    }
+   ]
+  },
+  "researchsquare-terms": {
+   "url": "https://web.archive.org/web/2026id_/https://www.researchsquare.com/legal/terms-of-service",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "final": "https://web.archive.org/web/20261105194705id_/https://www.researchsquare.com/legal/terms-of-service",
+   "length": 65586,
+   "sha256": "a0dc91271505ca5ba7004d9f2b7080814d67215c58969423d7a299268857732a",
+   "spans": [
+    {
+     "at": 9,
+     "text": "Service"
+    },
+    {
+     "at": 157,
+     "text": "Edit"
+    },
+    {
+     "at": 343,
+     "text": "Person"
+    },
+    {
+     "at": 459,
+     "text": "Last updated"
+    },
+    {
+     "at": 3435,
+     "text": "the right"
+    },
+    {
+     "at": 3949,
+     "text": "Users"
+    },
+    {
+     "at": 8465,
+     "text": "publisher"
+    },
+    {
+     "at": 10617,
+     "text": "authors"
+    },
+    {
+     "at": 18339,
+     "text": "none"
+    },
+    {
+     "at": 30763,
+     "text": "You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites"
+    },
+    {
+     "at": 38282,
+     "text": "asis"
+    },
+    {
+     "at": 41974,
+     "text": "removed"
+    },
+    {
+     "at": 43525,
+     "text": "status"
+    },
+    {
+     "at": 45448,
+     "text": "United States"
+    }
+   ]
+  },
+  "researchsquare-robots": {
+   "url": "https://web.archive.org/web/2026id_/https://www.researchsquare.com/robots.txt",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "final": "https://web.archive.org/web/20260517221955id_/https://www.researchsquare.com/robots.txt",
+   "length": 929,
+   "sha256": "fedbf4a0ad2a4a76e821e9a77b39a0b0ec3f7689e5743726c8142a6e23d5b394",
+   "spans": []
   }
  },
  "laws": {
