@@ -226,7 +226,7 @@ function textOf(law, article, reg, statutes, texts, raw) {
     return null;
   }
   const r = L.source && raw.sources[L.source];
-  if (r && r.articles && r.articles[article]) return { text: r.articles[article], from: L.source };
+  if (r && r.articles && r.articles[article]) return { text: r.articles[article], from: L.source, flat: !!L.flatSuperscript };
   return null;
 }
 
@@ -242,7 +242,9 @@ function subOk(c, t) {
     const fw = (n) => String(n).replace(/\d/g, (d) => '０１２３４５６７８９'[d]);
     return c.sub.length === 0 || c.sub[0] === '1' || t.text.includes(' ' + fw(c.sub[0]) + ' ');
   }
-  return (c.implicit ? c.sub.slice(1) : c.sub).every((s) => t.text.includes('(' + s + ')') || new RegExp('(^|[ :;.])' + s.replace('.', '\\.') + '\\. ').test(t.text) || t.text.includes('(' + s + ' '));
+  // A source that prints a part such as 1¹ with a superscript (flatSuperscript in verification/citations.json) reads as "11. " in plain text.
+  const flat = (s) => t.flat && /^\d+\.\d+$/.test(s) && new RegExp('(^|[ :;.])' + s.replace('.', '') + '\\. ').test(t.text);
+  return (c.implicit ? c.sub.slice(1) : c.sub).every((s) => t.text.includes('(' + s + ')') || new RegExp('(^|[ :;.])' + s.replace('.', '\\.') + '\\. ').test(t.text) || t.text.includes('(' + s + ' ') || flat(s));
 }
 
 function trace(found, reg, statutes, texts, raw) {

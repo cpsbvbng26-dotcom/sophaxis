@@ -3741,7 +3741,8 @@ console.log('\n95. Every citation of a law in the legal pages is to an article i
     const keys = marksOf(read(path.join(ROOT, f))).flatMap((m) => m.split(';').map((k) => k.trim()));
     const quoted = keys.filter((k) => !(U[/^(.+) (\S+)$/.exec(k)[1]] || { articles: [] }).articles.includes(/ (\S+)$/.exec(k)[1]));
     const ja = [...html.matchAll(/<blockquote lang="ja"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
-    const en = [...html.matchAll(/<blockquote lang="en"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
+    // The other quotations, in the language of their source (English, or Russian for kremlin.ru).
+    const en = [...html.matchAll(/<blockquote lang="(?!ja")[a-z]{2}"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((m) => unhtml(m[1]));
     nBlocks += ja.length + en.length; nKeys += quoted.length;
     if (ja.length + en.length !== quoted.length || !ja.every((x) => jpTexts.has(x)) || !en.every((x) => quotes.has(x))) badPage.push(f);
     if (keys.length && !html.includes('fetched on ' + RAW.fetched) && !html.includes(RAW.fetched + ' に取り寄せた')) badPage.push(f + ' (date)');
@@ -3994,7 +3995,9 @@ console.log('\n98. No dependencies, workflows with the least they need, pinned a
   /* The address the operator made for harvesters (site.json oai.adminEmails, given in OAI-PMH Identify), the Internet Archive's and
    * Creative Commons' published addresses, quoted where their process or text is quoted, and the address of the commit trailers. */
   const site98 = JSON.parse(read(path.join(ROOT, 'site.json')));
-  const ALLOWED = [...site98.oai.adminEmails, 'info@archive.org', 'info@creativecommons.org', 'noreply@anthropic.com'];
+  /* The example address that the Personal Information Protection Commission's Guidelines print in their own text (example.com is
+   * reserved for examples), kept where tools/sources.js keeps the Guidelines. */
+  const ALLOWED = [...site98.oai.adminEmails, 'info@archive.org', 'info@creativecommons.org', 'noreply@anthropic.com', 'kojin_ichiro@example.com'];
   const PHONE = /(?:\+81[ -]?|\b0)[789]0[ -]?\d{4}[ -]?\d{4}\b/;
   const scan = (files, at) => {
     const hits = [];
