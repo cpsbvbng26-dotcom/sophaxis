@@ -1,6 +1,6 @@
 # Legal review
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 This file records how the policies of Sophaxis were checked against the law, and the risks that remain.
 It sets out the operator's understanding; it is neither legal advice nor a guarantee, and it has not been reviewed by a lawyer.
@@ -15,7 +15,7 @@ The policies were checked in six ways.
 3. **Consistency.** Every policy was compared with the others, with its Japanese translation, and with the code that carries it out. What was found is listed under Consistency below.
 4. **Fault tree.** The ways the facts relied on could fail were listed, and their likelihood and severity were each estimated from 1 to 3. The product ranks them. The numbers are the operator's estimates and serve only to rank.
 5. **Breaking on purpose.** Each fixed sentence and each number was altered in turn, and the check was seen to fail.
-6. **Clause by clause.** The articles of the GDPR, the Digital Services Act and Japan's Act on the Protection of Personal Information, its Order and its Rules that the policies rely on were read paragraph by paragraph and item by item, and each duty they place on Sophaxis was written down. `verification/duties.json` gives, for each, the sentence that meets it word for word, what is still missing, or why it does not apply, and `verification/check.js` confirms it. There are 151 duties: 123 met, 28 that do not apply, and 0 open.
+6. **Clause by clause.** The articles of the GDPR, the Digital Services Act and Japan's Act on the Protection of Personal Information, its Order and its Rules that the policies rely on were read paragraph by paragraph and item by item, and each duty they place on Sophaxis was written down. `verification/duties.json` gives, for each, the sentence that meets it word for word, what is still missing, or why it does not apply, and `verification/check.js` confirms it. There are 153 duties: 123 met, 28 that do not apply, and 2 open.
 
 ## Laws
 
@@ -37,7 +37,7 @@ The Act is applied as if the operator were a business operator under it. The pur
 
 ### Sending users' information outside (Telecommunications Business Act, Article 27-12)
 
-The pages contain no code or tag that sends information about a reader to anyone else, so the rule on sending users' information outside has nothing to apply to.
+The pages contain no code or tag that sends information about a reader to anyone else. Until 2026-11-12 this was the whole reason given, but Article 27-12 of the Telecommunications Business Act also covers a request to the operator's own site, since its sending function sends to 「当該利用者以外の者」, and it binds only a carrier or a person who operates a business exempted by Article 164(1)(iii) of the Telecommunications Business Act. The analysis under "Telecommunications business: registration and notification" below finds that Sophaxis operates no telecommunications business, so the rule does not reach it. If it did, the search page's request for the list of records is information needed to use the page, which item 1 of the proviso to Article 27-12 exempts as the Ministry's Ordinance sets out; the Ordinance was not fetched.
 
 ### Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)
 
@@ -49,7 +49,7 @@ The operator writes nothing about a person beyond the record. Material in a list
 
 ### Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)
 
-Notices are received and acted on, and a sender is disclosed only as the law requires, after they are asked for their opinion.
+Notices are received and acted on, and a sender is disclosed only as the law requires, after they are asked for their opinion. For the record pages and the PDF copies the operator is the sender, so the limitation of a provider's liability does not protect Sophaxis; see "Providers' liability: Sophaxis as the sender" below.
 
 ### The Digital Services Act of the European Union
 
@@ -58,7 +58,7 @@ The operator considers that Sophaxis has no substantial connection to the Union,
 ### Consumer contracts (Consumer Contract Act, Articles 8 and 10)
 
 The operator is liable, as Japanese law provides, for intent and negligence, and the Act is applied as if the operator were a business operator under it.
-Article 8(1) voids a clause that exempts a business from all of its liability, and Article 8(3) voids a clause that exempts it from part of its liability for negligence other than gross negligence without making clear that it applies only to such negligence. The Terms exempt the operator from no liability for negligence.
+Article 8(1) voids a clause that exempts a business from all of its liability, and Article 8(3) voids a clause that exempts it from part of its liability for negligence other than gross negligence without making clear that it applies only to such negligence. The Terms exempt the operator from no liability for negligence. Articles 8-2, 8-3 and 9 of the Consumer Contract Act, and the cases where the operator is or is not a sole proprietor, are under "Consumer contracts: whether the operator is a sole proprietor or not" below.
 
 ### Standard terms and their change (Civil Code, Articles 548-2 to 548-4)
 
@@ -79,6 +79,81 @@ No one under 13 may submit, and a person under 18 submits only with the consent 
 ### The terms of the services used (GitHub, Vercel, ORCID)
 
 The site is served only within free services, which keeps it within Vercel's non-commercial Hobby plan, and only the public ORCID record is read.
+
+## Laws not considered before 2026-11-12
+
+The audit of 2026-11-12 (`docs/legal-audit-2026-11-12.md`) found the laws below unconsidered, or considered only in part.
+Their texts were fetched on 2026-11-12 through `sources.yml`, together with the Entry Manual of the Ministry of Internal Affairs and Communications (電気通信事業参入マニュアル［追補版］, revised 2023-01-30) and the Personal Information Protection Commission's General Guidelines (revised in June 2026) and its Q&A on them.
+What follows is Claude's analysis of those texts, made on 2026-11-12. It is not a lawyer's, and no lawyer has reviewed it.
+Whether the operator is registered as a sole proprietor (個人事業主) is not recorded anywhere, so each law below where it could matter is read for both cases.
+
+### Telecommunications business: registration and notification
+
+Article 16(1) of the Telecommunications Business Act asks a person who intends to operate (営む) a telecommunications business to notify the Minister, and Article 9 of the Telecommunications Business Act asks some such persons to register.
+By Article 2(1)(iv) of the Telecommunications Business Act, a telecommunications business provides telecommunications services to meet the demands of others; by Article 2(1)(iii) of the Telecommunications Business Act, a telecommunications service is 「電気通信設備を用いて他人の通信を媒介し、その他電気通信設備を他人の通信の用に供すること」.
+Article 164(1)(iii) of the Telecommunications Business Act exempts a business that provides services other than intermediating the communications of others without installing circuit facilities, unless the Minister designates it for a large search or intermediation-equivalent service; under Article 164(3) of the Telecommunications Business Act, Articles 3, 4 and 27-12 still apply to a person who operates such a business.
+
+The elements, each against what the code and the site do:
+
+1. A telecommunications service. Sophaxis intermediates no one's communications. Authors submit, and anyone discusses, in GitHub issues, on GitHub's service. Every record page and PDF copy on the site is written or placed by the operator and reaches the site only when the operator merges it into `main`: `site/vercel.json` deploys `main` alone, and the one workflow that writes to `main` without the operator, `removal.yml`, only takes material down. Sophaxis is a curated catalogue of works held elsewhere, an aggregator, with no channel for users to reach one another. The Entry Manual counts a provider's own communication with its users as 「他人の通信」 too, so serving pages to readers can still be a service other than intermediation.
+2. To meet the demands of others. The Entry Manual gives 「個人や企業等の専ら自己の情報発信のためのホームページの開設」 as serving one's own demand, but counts a service delivered over the internet itself, such as online news, as a telecommunications business. Sophaxis offers readers a catalogue of others' works, so this element may be met.
+3. Operating a business. The Entry Manual says of 事業 that 「営利性がないからといってそれが「事業」性がないことの根…拠にはならない」 (the … marks where the PDF's margin heading 事業 falls inside the word 根拠), and reads 電気通信事業を営む as 「電気通信役務を利用者に反復継続して提供して、電気通信事業自体で利益を上げようとすること、すなわち収益事業を行うことを意味する」. Sophaxis charges no one, carries no advertising, takes no donations and earns nothing from the service.
+4. Not exempt. Sophaxis installs no circuit facilities, since Vercel and GitHub serve it; it intermediates nothing; and the Minister has designated it for nothing.
+
+Conclusion: under the Telecommunications Business Act, Sophaxis needs neither registration under Article 9 nor notification under Article 16. This holds even if elements 1 to 3 were met, because Article 164(1)(iii) of the Telecommunications Business Act would exempt it.
+The owner's view is that a non-profit preprint server is surely not a 事業. The Entry Manual does not go that far: it does not make profit a condition of 事業. It agrees on 営む, which it reads as running a revenue-earning business. On that reading Sophaxis operates no business of the kind in Article 164(1)(iii) of the Telecommunications Business Act either, so Articles 3, 4 and 27-12 of the Telecommunications Business Act, which Article 164(3) applies to such a business, do not reach it. That last step rests on the Ministry's reading, not on a court's, and the Privacy Policy states it as the operator's view.
+If the operator is a sole proprietor, and if not, the conclusion is the same. What decides is whether Sophaxis intermediates, installs circuit facilities and earns from the service, not the operator's tax status. The Entry Manual adds that a company that offers a service free as part of another business may still operate it, if in substance it earns from it; Sophaxis earns nothing, from the service or from anything it is part of.
+
+### Providers' liability: Sophaxis as the sender
+
+The Act on providers of specified telecommunications services was amended in 2024. Its title on e-Gov, fetched on 2026-11-12, is 特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律, commonly called 情報流通プラットフォーム対処法. This review keeps the English name it used before.
+By Article 2(1)(iv) of Japan's Act on providers of specified telecommunications services, a provider is anyone who provides a specified telecommunications service; neither a business nor profit is required. By Article 2(1)(v) of Japan's Act on providers of specified telecommunications services, a sender is one who records information on the recording medium of a provider's facilities.
+The operator writes every record page and places every PDF copy on Vercel, so for the record pages and the copies the operator is the sender.
+Article 3(1) of Japan's Act on providers of specified telecommunications services limits a provider's liability, but ends 「ただし、当該関係役務提供者が当該権利を侵害した情報の発信者である場合は、この限りでない。」
+Item 37 under Consistency relied on the knowledge test of Article 3(1)(ii) of Japan's Act on providers of specified telecommunications services for the material Sophaxis lists. For the record pages and the copies that limitation does not apply, and the operator's liability is the ordinary one under Article 709 of the Civil Code: a duty of care, which the moderation that item 37 describes serves. The Takedown Policy now says so, in both languages.
+Article 5 of Japan's Act on providers of specified telecommunications services lets a person whose rights were infringed ask a provider for the sender's information, and Article 6(1) of Japan's Act on providers of specified telecommunications services asks the provider to hear the sender first. Whether Sophaxis is a provider at all is uncertain, since GitHub and Vercel provide the facilities, and the authors' names are on the records already. The Takedown Policy keeps its commitment to hear the person first and to disclose nothing the law does not require.
+Articles 20 to 26 of Japan's Act on providers of specified telecommunications services set duties only for a provider that the Minister designates as a large provider by the number of its senders; Sophaxis is not designated.
+
+### Personal information: whether the operator is a business operator, and the records of provision
+
+Article 16(2) of Japan's Act on the Protection of Personal Information makes a business operator anyone who uses a personal information database for a business (事業), and Article 16(1) of Japan's Act on the Protection of Personal Information makes such a database a collection of personal information arranged so that particular information can be searched by computer.
+`papers.json`, the author pages and the search page let the records be searched by an author's name. Article 4 of its Order excludes only collections issued for sale to many people, which these are not.
+The Commission's General Guidelines read 事業 as 「一定の目的をもって反復継続して遂行される同種の行為であって、かつ社会通念上事業と認められるものをいい、営利・非営利の別は問わない」, and cover an individual too; its Q&A says the same of groups with non-profit activities. Sophaxis has listed works, again and again, since 2026-10-30.
+On this reading the operator is likely a business operator under the Act, whether or not the operator is a sole proprietor and whether or not Sophaxis seeks profit. Profit and registration do not decide it. The Privacy Policy already applies the Act as if the operator were one, so nothing in what Sophaxis does changes.
+Article 57 of Japan's Act on the Protection of Personal Information, which exempts the press and professional writers, is not relied on.
+Article 28(1) of Japan's Act on the Protection of Personal Information ends 「この場合においては、同条の規定は、適用しない。」: a recipient abroad is a third party even where it only handles data on the operator's behalf, unless it has a system that meets Article 16 of the APPI Enforcement Rules. The authors consent to the provision to GitHub, Vercel and ORCID in the form. People who write by email, whose messages the mailbox at Apple holds, and readers, whose requests Vercel logs, are not asked. Whether Apple and Vercel meet Article 16 of the APPI Enforcement Rules was not checked against any source, and whether a logged request is personal information for the operator was not settled. This duty is open.
+Article 29 of Japan's Act on the Protection of Personal Information asks for a record of each provision, and Article 20(1)(ii) of the APPI Enforcement Rules lists its items for a provision made with consent: the consent, the recipient's name and address (or, for many unspecified people, that fact), the person and the items. The submission issue and the record give all but the addresses of GitHub, Vercel, ORCID, the Internet Archive, Anthropic, OpenAI and xAI.
+Article 30(1) of Japan's Act on the Protection of Personal Information asks a business operator that receives personal data from a third party to confirm the third party's name and address and how it obtained the data, and Article 24 of the APPI Enforcement Rules lists what to record. Sophaxis reads authors' names from DataCite, Crossref, the Japan Link Center and ORCID. Whether reading a public record through an interface is receiving a provision under Article 30 of Japan's Act on the Protection of Personal Information was not settled from the texts fetched. The DOI, the day and the issue record where each name came from; the addresses do not.
+Claude decided on 2026-11-12 (2026-11-12 に Claude が決めました) that the addresses are not written from memory, because they could not be fetched. Both gaps stay open under "Duties still open".
+
+### Consumer contracts: whether the operator is a sole proprietor or not
+
+Article 2(2) of the Consumer Contract Act makes an individual a business operator 「事業として又は事業のために契約の当事者となる場合」.
+If Sophaxis is run as part of the operator's business, the operator is a business operator under the Act, and an author who submits as an individual, not for a business, is a consumer under Article 2(1) of the Consumer Contract Act. If it is not, the Act does not apply by its own terms. The Terms apply it in either case.
+Against the fetched text: Article 8(1) of the Consumer Contract Act voids a clause that exempts a business operator from all of its liability, and Article 8(3) of the Consumer Contract Act voids a clause that exempts it from part of its liability for negligence other than gross negligence unless the clause says that it applies only to such negligence. The Terms say "The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence." and exempt no negligence, slight negligence included.
+Article 8-2 of the Consumer Contract Act voids a clause that waives a consumer's right to cancel for the operator's breach, and the Terms waive none. Article 8-3 of the Consumer Contract Act voids a clause that lets a business operator cancel because the consumer became subject to guardianship, curatorship or assistance, and the Terms have no such clause. Article 9 of the Consumer Contract Act limits liquidated damages and penalties, and the Terms ask none. Article 10 of the Consumer Contract Act voids a clause that treats a consumer's silence as an offer or acceptance and harms the consumer one-sidedly, and the Terms say that silence and continued use are not agreement.
+The conclusion is the same in both cases.
+
+### Jurisdiction (Code of Civil Procedure, Articles 3-7 and 11)
+
+The Code of Civil Procedure, in Article 11, lets the parties agree on the court of first instance, only for suits based on a certain legal relationship and only in writing, and its Article 11(3) counts an electromagnetic record as writing. The agreement is a box in the submission form, kept in the issue, so it is in writing.
+The clause covers disputes about Sophaxis or the works listed, with a person who agreed in a form. Whether that is a certain legal relationship was not settled from the text, and a court may read the clause narrowly.
+The Code of Civil Procedure, in Article 3-7(5), gives effect to an agreement on international jurisdiction over future disputes under a consumer contract only where it names the courts of the consumer's country of domicile at the time of the contract, or where the consumer sues there or invokes it. The Terms keep the rights of consumers and of people outside Japan.
+Claude decided on 2026-11-12 (2026-11-12 に Claude が決めました) that the clause stays as it is. It is not exclusive, the courts the law provides stay open to everyone, and if a court reads it narrowly, the venues the law provides apply and no one loses a right.
+
+### Copyright: quotations, PDF copies and abstracts
+
+Article 32(1) of the Copyright Act allows quoting a work made public, where the quotation is compatible with fair practice and within the extent justified by its purpose.
+The policies quote statutes, which Article 13 of the Copyright Act leaves without copyright, and short passages of GitHub's and Vercel's terms, of EU law and of translations of foreign laws. Each sits in a box of its own below the sentence that relies on it, with its source named and linked, and the policy is the main text.
+The tests of a main and a subordinate part and of a clear distinction come from case law, which was not fetched.
+Every PDF copy and abstract is of a work under CC BY 4.0, and every record page, in English and in Japanese, names the creator, links the licence, says that the copy is unmodified and links the DOI, as Section 3 of CC BY 4.0 asks.
+
+### Minors, named persons, archives and the services used
+
+Article 4 of the Civil Code sets majority at 18, and Article 5 of the Civil Code lets a minor's act be cancelled without the consent of a legal representative; the Terms ask that consent and bar anyone under 13.
+The site names only authors, as they gave their names, and the operator. No living relative of anyone is named.
+Sophaxis holds no image from an archive, so archive terms such as JACAR's do not arise.
+Vercel's Hobby plan is for non-commercial use. Sophaxis earns nothing, whether or not the operator is a sole proprietor; Vercel's own definition of commercial use was not fetched in this audit.
 
 ## Laws of other countries
 
@@ -203,6 +278,12 @@ The comparison found the items below. Each was fixed in the same change as this 
 38. The laws behind the list were read where their sources could be reached ("Read at their sources after the screening"). Iraq's, Rwanda's and Kazakhstan's were read at their sources, and the Democratic Republic of the Congo's in a copy; none was found not to reach Sophaxis, so the 28 places stay. The Submission Policy, in both languages, now gives the articles read.
 39. The rule on authors looked only at where they live. The laws of several of the places reach people who are there: Article 3(2) of the GDPR speaks of data subjects who are in the Union, Rwanda's Law of data subjects located in Rwanda, and Thailand's Act of data subjects in Thailand. From 2026-11-22 a work is therefore not listed if an author lives in one of the places, or stays in one between the submission and the listing, even briefly; the rule on India follows. The policies, the README, the form and the notice on the top page say so in both languages.
 40. GitHub's and Vercel's own terms were read at their sources on 2026-11-09 (GitHub Terms of Service and General Privacy Statement, effective 2026-04-27; Vercel Terms of Service, updated 2026-10-19; Acceptable Use Policies; Vercel Privacy Notice, updated 2026-06-01). The policies said only that those terms apply. The Terms of Use now say what they provide: GitHub's age of 13, its rules on content, its licence to use public content to train AI features and the models of its affiliates (D.4), with no setting to turn this off for public content (J.3); Vercel's Hobby plan for non-commercial use only, its right to remove a deployment without notice, and its use of served content for model training unless the team turns it off (section 3); and that both provide their services as is under the law of California. The Privacy Policy states the two uses of the records before consent is asked; the Disclaimer points to them. On 2026-11-09 the operator decided to leave Vercel's setting as it is; the use is disclosed in the Privacy Policy before consent is asked, and no policy says that it is turned off.
+41. The audit of 2026-11-12 found that the review had never asked whether Sophaxis must register or notify under the Telecommunications Business Act. It need not, as "Telecommunications business: registration and notification" sets out. The Privacy Policy, in both languages, now gives the reason why Article 27-12 of the Telecommunications Business Act is not considered to apply, instead of only saying that no page sends information outside.
+42. Item 37 relied on the knowledge test that Japan's Act on providers of specified telecommunications services sets for a provider. For the record pages and the PDF copies the operator is the sender, and the limitation does not apply to a sender. The Takedown Policy, in both languages, now says so, and that the operator is liable as Japanese law provides; it gives up no right of anyone.
+43. Whether the operator is a business operator under Japan's Act on the Protection of Personal Information was not analysed; it now is, for both cases of a sole proprietor or not, and the Act is still applied as if the operator were one. The same audit found two duties of that Act open, listed under "Duties still open".
+44. "Limits" said that this review shows that no law was left out. It cannot show that, and the audit found laws left out; the sentence is corrected.
+45. The texts were fetched again on 2026-11-12, with the articles that the audit needed. kremlin.ru now answered, so Article 1(1.1) of Russia's Federal Law No. 152-FZ is quoted from it; Article 18 could not be cut from the text and stays untraced, with why.
+46. "Limits" said that registered trademarks were not searched, but the name Sophaxis was searched on 2026-11-11, as the page on the name, logo and badge records. The sentence now says so.
 
 ## Risks that remain
 
@@ -222,10 +303,13 @@ The comparison found the items below. Each was fixed in the same change as this 
 
 ## Duties still open
 
-No duty found clause by clause is open.
+The audit of 2026-11-12 found two duties open.
+
+- APPI 第28条第1項（Apple の受信箱と Vercel の記録）: Whether the mailbox at Apple and Vercel's request logs are a provision to a third party in a foreign country was not settled. If they are, the people who write by email and the readers have not consented, and whether Apple and Vercel meet Article 16 of the APPI Enforcement Rules was not checked against any source.
+- APPI 第29条第1項・規則第20条第1項第二号（受け手の住所）: The submission issue and the record hold the consent, the person and the items, but not the addresses of GitHub, Vercel, ORCID, the Internet Archive, Anthropic, OpenAI and xAI; Article 30 of Japan's Act on the Protection of Personal Information, on receiving data, has the same gap if it applies. The addresses could not be fetched, and are not written from memory.
 
 ## Limits
 
-Showing that a risk is zero is not possible by logic or by arithmetic. What this review shows is that no law above was left out, that every sentence relied on is in the policies, and that removing one makes the check fail.
+Showing that a risk is zero is not possible by logic or by arithmetic. What this review shows is that every sentence relied on is in the policies, and that removing one makes the check fail. It does not show that no law was left out: the audit of 2026-11-12 (`docs/legal-audit-2026-11-12.md`) found laws that the review had not considered, and others may remain.
 The laws of other countries were checked as far as "Laws of other countries" sets out, and no further. The articles of the GDPR and the Digital Services Act that the policies cite were read on 2026-11-08 in EUR-Lex, and those of the UK GDPR at legislation.gov.uk; the Japanese articles are watched each week. Of the terms relied on, DataCite's CC0 waiver for its metadata, ORCID's terms for its public APIs, Vercel's limit of the Hobby plan to non-commercial use, and the clauses of the three accepted licences were read at their sources on the same day. Apple's and Vercel's privacy statements, Schedule 2 of Vercel's Data Processing Addendum and the Personal Information Protection Commission's Q&A 7-53 and 7-54 were read at their sources on the same day. Crossref's statement on the reuse of its metadata was not found at its documented address, and the Internet Archive's terms need a script to show, so neither was read.
-Registered trademarks were not searched.
+On 2026-11-11 (Japan time) the operator searched J-PlatPat and the WIPO Global Brand Database for the name Sophaxis and found no trade mark of that name, as the page on the name, logo and badge records. The names of other services that the policies use were not searched.
