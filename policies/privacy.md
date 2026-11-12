@@ -36,8 +36,13 @@ The Sophaxis site sets no cookies, runs no analytics and loads nothing from othe
 Its pages contain no code or tag that sends information about a reader to anyone else.
 The rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12) bind only a telecommunications carrier and a person who runs a telecommunications business that the Act exempts from registration and notification, and among those only the services that the Ministry's Ordinance names; they do not cover information needed to use the service.
 Sophaxis charges for nothing and earns nothing from the site, so the operator considers that it runs no telecommunications business and that Article 27-12 does not apply to it.
-If it did apply, the only request a page makes is the search page's request to Sophaxis's own site for its list of records, which is needed to use that page.
-The Ministry's Ordinance was not fetched; this view rests on the Act and on the Ministry's Entry Manual.
+The Ministry's Ordinance, fetched on 2026-11-12, names among the services these rules reach one that sends information at the request of unspecified users for them to read; it does not settle whether a service that earns nothing is a business that is run.
+Sophaxis therefore meets these rules as if they applied, and gives here, for each request that its pages make a reader's browser send, the three things that the Ordinance asks to be made known.
+The only such request is the search page's request to Sophaxis's own site for its list of records (`papers.json`).
+What is sent: what any browser sends with a request, such as the IP address, the name of the browser and the address asked for.
+Who handles it: the operator of Sophaxis, named on the [Operator and contact](../contact.md) page, and Vercel Inc., which hosts the site.
+What for: to give the search page the list that it searches.
+The Ordinance leaves out of these rules the information truly needed to provide the service, and the operator considers that this request is of that kind.
 The search page runs one script, served by Sophaxis itself.
 It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
 No other page runs a script.
