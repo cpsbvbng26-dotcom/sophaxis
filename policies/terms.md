@@ -153,6 +153,7 @@ A dispute about Sophaxis or a listed work is settled by agreement wherever possi
 
 From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
 Until then, the court of first instance by agreement is, on the same terms, the district court or the summary court that has jurisdiction over the operator's place of residence.
+From 2026-11-26, this agreement on the court covers only suits based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction.
 For anyone else, the court that the law sets has jurisdiction.
 The operator's address is given on request, as the [Operator and contact](../contact.md) page says.
 This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.

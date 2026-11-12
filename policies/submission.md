@@ -47,7 +47,7 @@ If it turns out that an author lives there, or stayed there between the submissi
 | The United Kingdom | A representative | UK GDPR Article 27 | Yes |
 | China | A representative | Personal Information Protection Law, Article 53 | Yes |
 | Thailand | A representative | Personal Data Protection Act, section 37(5) | Yes |
-| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) (read) and Article 18(5) (reported) | In part |
+| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes |
 | Türkiye | Registration through a representative there | Regulation on the Data Controllers' Registry | No, as reported |
 | Egypt | A representative and a licence | Law No. 151 of 2020 and its Executive Regulation, Article 3 | No, as reported |
 | Peru | A representative | Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS) | No, as reported |

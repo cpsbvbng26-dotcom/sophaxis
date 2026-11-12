@@ -5,7 +5,8 @@ Last updated: 2026-11-12.
 This file is the record that Article 29 of Japan's Act on the Protection of Personal Information asks Sophaxis to keep when it provides personal data to a third party, together with the issues and the history of the public repository that it points to. It also names each service that gives Sophaxis personal data, for Article 30 of Japan's Act on the Protection of Personal Information.
 Claude decided on 2026-11-12 (2026-11-12 に Claude が決めました) to keep it in this form, because the issues and the history already hold the date, the people and the items of each provision, and what they lacked were the recipients' names and addresses and the period of keeping.
 
-Every name and address below is taken from the recipient's own page, fetched by `tools/sources.js` on 2026-11-12 and kept in `verification/sources-raw.json` under `pages`. The column "Page" gives the key. Nothing here is written from memory: where a page could not be fetched, or gives no address, the row says so.
+Every name and address below is taken from the recipient's own page, fetched by `tools/sources.js` on 2026-11-12 and kept in `verification/sources-raw.json` under `pages`. The column "Page" gives the key.
+OpenAI's own page refused the request, so its name and address are taken from the Internet Archive's copy of its privacy policy, saved on 2026-11-03 (`openai-privacy-archived`); xAI's privacy policy gives no address, so they are taken from its Terms of Service (`xai-terms`). Both were fetched on 2026-11-12 in the continuation of the audit. Nothing here is written from memory: where a page could not be fetched, or gives no address, the row says so.
 
 ## What the law asks
 
@@ -44,8 +45,8 @@ The Commission's guidelines on the duties to confirm and to record (第三者提
 | ORCID | ORCID Inc. | 10411 Motor City Drive, Suite 750, Bethesda MD 20817 | Not given on the page fetched | United States | orcid-privacy | Not required: public information |
 | Internet Archive | Not fetched | Not fetched: its terms and contact pages answered only "Javascript is required for this site." | Not fetched | United States | ia-terms | Not required: public information |
 | Anthropic | Anthropic PBC | 548 Market St, PMB 90375, San Francisco, CA 94104 | Not given on the page fetched | United States | anthropic-privacy | Not required: public information |
-| OpenAI | Not fetched | Not fetched: its privacy policy answered 403 | Not fetched | United States | openai-privacy | Not required: public information |
-| xAI | SpaceX Super Intelligence LLC | Not given on the page fetched: its privacy policy gives a web form for requests in the United States, not an address | Not given on the page fetched | United States | xai-privacy | Not required: public information |
+| OpenAI | OpenAI OpCo, LLC | 1455 Third Street, San Francisco, California 94158, United States | Not given on the page fetched | United States | openai-privacy-archived | Not required: public information |
+| xAI | SpaceX Super Intelligence LLC | 800 W Cesar Chavez St., Austin, TX 78701, USA | Not given on the page fetched | United States | xai-terms | Not required: public information |
 | Apple (the mailbox) | iTunes K.K. | Roppongi Hills, 6-10-1 Roppongi, Minato-ku, Tokyo 106-6140 | Not given on the page fetched | Japan | icloud-terms | Not required: entrustment |
 | Apple (may handle the mailbox for iTunes K.K.) | Apple Inc. | One Apple Park Way, Cupertino, California | Not given on the page fetched | United States | apple-affiliated | Not required: Sophaxis provides nothing to it; iTunes K.K. has it handle the mail |
 | OpenAlex | Not fetched | Not fetched: no page of it was fetched | Not fetched | United States | none | Not required: it is asked about a work by its DOI only, never about a person |
@@ -84,4 +85,4 @@ A row under "Records" is not removed within three years of its day, even when th
 ## What this file does not settle
 
 The APPI Enforcement Rules ask for a corporation's representative. No representative is given on the pages fetched, except DataCite's; the only provisions that need a record are those to many unspecified people, for which the Rules ask only that fact.
-The addresses of the Internet Archive, OpenAI, xAI, Crossref and the Japan Link Center could not be taken from their own pages. Each of these receives or gives only public information, so no record that the law asks is missing an address. They are not written from memory.
+The addresses of the Internet Archive, Crossref and the Japan Link Center could not be taken from their own pages. The Internet Archive's terms and contact pages ask for a script, and so do the Internet Archive's own copies of them from 2026; a copy of its terms from 2022 gives no address. Crossref's contact page answered 403, and the Internet Archive's copy of it is a support form, which carries an address only between the marks of a hidden note in its markup, so it is not used. The Japan Link Center's pages give none. Each of these receives or gives only public information, so no record that the law asks is missing an address. They are not written from memory.

@@ -8,6 +8,20 @@
   <updated>2026-11-12T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c8</id>
+    <title>The rules on sending users' information outside are met as if they applied</title>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <summary>The Privacy Policy now meets the rules of Japan's Telecommunications Business Act on sending users' information outside as if they applied to Sophaxis, and gives, for the one request that a page makes a reader's browser send (the search page's request for the list of records), what is sent, who handles it and for what purpose. The Ministry's Ordinance was fetched and read. None of this narrows a right or adds a duty. Policies: Privacy Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c7</id>
+    <title>The agreement on the court covers only suits based on the Terms</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <summary>From 2026-11-26, the agreement on the court of first instance, made in a form, covers only suits based on the Terms of Use, or on the submission, listing, correction, withdrawal or removal of the person's own works under them, so that it stays within what Japan's Code of Civil Procedure allows to be agreed. For any other dispute, the court that the law sets has jurisdiction. The agreement stays non-exclusive, and talks and mediation still come first. This may narrow the disputes that can be brought to the agreed court, so it is announced 14 days ahead. In effect from 2026-11-26. Policies: Terms of Use.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c6</id>
     <title>The mailbox and the request logs, the system of the United States, and the records of provision</title>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
