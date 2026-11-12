@@ -208,6 +208,10 @@ const PAGES = {
   // Zenodo and OSF. The OSF terms are kept in Markdown by the Center for Open Science on GitHub, read at a fixed commit.
   'zenodo-terms': PAGE('https://about.zenodo.org/terms/'),
   'zenodo-policies': PAGE('https://about.zenodo.org/policies/'),
+  /* Added on 2026-11-13 (the eighth pass): the GitHub Terms for Additional Products and Features, which the Terms of Service
+   * incorporate (section I). Their section on Actions limits what the workflows may be used for. At the commit that the weekly
+   * watch recorded (verification/statutes.json), so that both read the same text. */
+  'github-additional-terms': PAGE('https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms for Additional Products and Features').commit + '/Policies/github-terms/github-terms-for-additional-products-and-features.md', { markdown: true }),
   'osf-terms': PAGE('https://raw.githubusercontent.com/CenterForOpenScience/cos.io/1a760e083cd53dfdc270919e8d6322ea179fa118/TERMS_OF_USE.md', { markdown: true }),
   // The addresses that the records of provision still lack: the Internet Archive, OpenAI, xAI, Crossref, the Japan Link Center.
   'ia-terms-archived': PAGE('https://web.archive.org/web/2026id_/https://archive.org/about/terms.php'),
