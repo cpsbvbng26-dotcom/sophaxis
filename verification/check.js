@@ -5713,11 +5713,89 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
     ['the PDF workflow without the whole history', mut('.github/workflows/pdf.yml', '          fetch-depth: 0\n', ''), facts],
     ['the record\'s count', mut(AUD, 'この表の判定は、誤り 5、根拠不足 1、漏れ 2、表現 2、問題なし 2 です。', 'この表の判定は、誤り 4、根拠不足 1、漏れ 2、表現 2、問題なし 2 です。'), facts],
     ['a decision without its reason', mut(AUD, '作業の時計の日付ではないためです |', '作業の時計の日付ではありません |'), facts],
-    ['the record without the sentence on lawyers', mut(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'), facts],
+    ['the record without the sentence on lawyers', mut(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-12 の続き：七度目の見落とし', '\n\n## 2026-11-12 の続き：七度目の見落とし'), facts],
   ];
   const caught = breaks.filter(([, x, h]) => dateProblems(x, h).length > 0).map(([k]) => k);
   ok('break on purpose: a page or its translation dated back, an entry dated back, a day of effect before its entry, a "from" on its day, a new entry dated before today, the notice from midnight, the Terms in both languages, a shallow history, a page changed today, either workflow without the whole history, and the record\'s count, reason and lawyers all fail (' + caught.length + ' / ' + breaks.length + ')',
     caught.length === breaks.length, breaks.filter(([k]) => !caught.includes(k)).map(([k]) => k).join(' / '));
+}
+
+/* ------------------------------------------------------------ 122 */
+console.log('\n122. What a seventh, read-only pass found: ROAR\'s description of Sophaxis is out of date, no page quotes or relies on it, and the record says only that Claude cannot reach it');
+{
+  /* ROAR's record of Sophaxis (https://roar.eprints.org/27422/) describes it as "run by an independent researcher", lists
+   * "(Zenodo, Figshare or OSF)" and says that each record has an unmodified PDF copy. The record sits in the operator's ROAR
+   * account, which Claude cannot reach (rule 13): the audit records that fact as a remaining risk and gives it to no one.
+   * The fetched record keeps the three sentences as parts with the SHA-256 of the whole text, and no page of Sophaxis, in
+   * its sources or as built, quotes the description or repeats the operator's description or the list of three. */
+  const RAW = JSON.parse(read(path.join(ROOT, 'verification', 'sources-raw.json')));
+  const AUD = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const HEAD7 = '\n## 2026-11-12 の続き：七度目の見落とし\n';
+  const DESC = ['Sophaxis is an overlay preprint server for philosophy and mathematics, run by an independent researcher.',
+    'Each record points to a deposit with a DOI (Zenodo, Figshare or OSF) and is listed after moderation, not peer review.',
+    'Each record has an unmodified PDF copy of the deposited file'];
+  const SHA = '448ca060c9d1318a85874297d7fac268cc9f7335886a757478ac2ea199dafec2';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  /* What a page must not say: the operator as an independent researcher, the list of three, or the description itself. */
+  const SAYS = [/run by an independent researcher/i, /Sophaxis[^.\n<]{0,80}independent researcher/i, /\bZenodo, Figshare,? (?:or|and) OSF\b(?! Preprints)/, /ROAR[^.\n]{0,120}(?:describes|says|calls)[^.\n]{0,40}Sophaxis/i];
+  const SKIP = new Set(['docs/legal-audit-2026-11-12.md', 'verification/sources-raw.json', 'verification/check.js']);
+  const { execFileSync } = require('child_process');
+  let tracked = [];
+  try { tracked = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 }).split('\n').filter(Boolean); } catch (e) { tracked = []; }
+  const files = tracked.filter((f) => /\.(?:md|json|html|xml|txt|js|yml|cff)$/.test(f) && !SKIP.has(f) && !f.startsWith('data/pdf/'));
+  const texts = Object.fromEntries(files.map((f) => [f, (() => { try { return read(path.join(ROOT, f)); } catch (e) { return ''; } })()]));
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  function problems(raw, aud, tx) {
+    const bad = [];
+    const r = (raw.pages || {})['roar-record'] || {};
+    if (r.url !== 'https://roar.eprints.org/27422/' || r.status !== 200 || r.sha256 !== SHA || !Array.isArray(r.spans) || 'text' in r) bad.push('the ROAR record not kept in parts with its SHA-256');
+    const kept = flat((r.spans || []).map((x) => x.text).join(''));
+    for (const d of DESC) if (!kept.includes(flat(d))) bad.push('not kept: ' + d.slice(0, 30));
+    for (const [f, t] of Object.entries(tx)) for (const re of SAYS) if (re.test(t)) bad.push(f + ' says ' + re.source.slice(0, 30));
+    for (const [f, t] of Object.entries(tx)) for (const d of DESC) if (t.includes(d)) bad.push(f + ' quotes ROAR');
+    const sec = (aud.split(HEAD7)[1] || '').split('\n## ')[0];
+    if (!sec) { bad.push('no section'); return bad; }
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length < 6 || !rows.every((x) => x.length === 6 && JUDGE.includes(x[4]))) bad.push('the table');
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((x) => x[4] === j)).map((j) => j + ' ' + rows.filter((x) => x[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    const decided = sec.split('2026-11-13 に Claude が決めました。').slice(1);
+    if (decided.length < 3 || !decided.every((z) => /ためです/.test(z.split(/\n| \|/)[0]))) bad.push('a decision without its reason');
+    for (const q of [...sec.matchAll(/「([^「」]+)」/g)].map((m) => m[1]).filter((q) => /^[A-Z][a-z]/.test(q) && q.length > 30)) if (!kept.includes(flat(q))) bad.push('a quotation not in the kept record: ' + q.slice(0, 30));
+    const risk = (sec.split('\n### 下げられずに残る危険\n')[1] || '').split('\n### ')[0];
+    if (!risk.includes('ROAR の Sophaxis の記録は、運営者の ROAR のアカウントにあります。Claude はそのアカウントに触れられません。') || !DESC.every((d) => risk.includes('「' + d + '」'))) bad.push('the remaining risk');
+    /* Rule 13: the risk is given to no one. */
+    if (/てください|運営者が|利用者が|の手作業|needs the owner|予定です/.test(risk)) bad.push('a task given to someone');
+    if (!/取り寄せの実行は \d{8,} で、結果は枝 `sources\/\d{8}-\d{4}` にあります。/.test(sec)) bad.push('the run of the fetch');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。')) bad.push('the sentence on lawyers');
+    return bad;
+  }
+  const bad = problems(RAW, AUD, texts);
+  ok('ROAR\'s record of Sophaxis is kept in parts with its SHA-256 and holds the three out-of-date sentences; none of ' + files.length + ' tracked files quotes it or calls the operator an independent researcher or lists only Zenodo, Figshare and OSF; the record holds the fact that Claude cannot reach the account, given to no one',
+    bad.length === 0, bad.slice(0, 6).join(' / '));
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const r1 = clone(RAW); r1.pages['roar-record'].spans = r1.pages['roar-record'].spans.filter((x) => !/independent researcher/.test(x.text));
+  const r2 = clone(RAW); r2.pages['roar-record'].sha256 = '0'.repeat(64);
+  const r3 = clone(RAW); r3.pages['roar-record'].text = 'the whole text';
+  const tw = (f, add) => Object.assign({}, texts, { [f]: (texts[f] || '') + add });
+  const breaks = [
+    ['a description part lost', problems(r1, AUD, texts)],
+    ['another SHA-256', problems(r2, AUD, texts)],
+    ['the whole text kept', problems(r3, AUD, texts)],
+    ['the contact page calls the operator an independent researcher', problems(RAW, AUD, tw('contact.md', '\nSophaxis is run by an independent researcher.\n'))],
+    ['the built top page lists three repositories', problems(RAW, AUD, tw('site/index.html', '<p>Deposits in Zenodo, Figshare or OSF.</p>'))],
+    ['the README quotes ROAR', problems(RAW, AUD, tw('README.md', '\n' + DESC[2] + '.\n'))],
+    ['the news says what ROAR says of Sophaxis', problems(RAW, AUD, tw('data/news.json', ' ROAR describes Sophaxis as a server.'))],
+    ['the record\'s count', problems(RAW, AUD.replace('この表の判定は、漏れ 5、問題なし 2 です。', 'この表の判定は、漏れ 4、問題なし 2 です。'), texts)],
+    ['the remaining risk given to the operator', problems(RAW, AUD.replace('Claude はそのアカウントに触れられません。日本時間の', 'Claude はそのアカウントに触れられません。運営者が記録を直します。日本時間の'), texts)],
+    ['the remaining risk without the fact', problems(RAW, AUD.replace('Claude はそのアカウントに触れられません。日本時間の', '日本時間の'), texts)],
+    ['a quotation altered', problems(RAW, AUD.replace('記録は「' + DESC[1], '記録は「' + DESC[1].replace('Figshare or OSF', 'Figshare, OSF')), texts)],
+    ['a decision without its reason', problems(RAW, AUD.replace('同じ見落としを機械で止めるためです', '同じ見落としを機械で止めます'), texts)],
+    ['the record without the sentence on lawyers', problems(RAW, AUD.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'), texts)],
+  ];
+  const missed = breaks.filter(([, b]) => b.length === 0).map(([k]) => k);
+  ok('break on purpose: a part lost, another SHA-256, a whole text kept, a page calling the operator an independent researcher, a built page listing three repositories, the README quoting ROAR, the news saying what ROAR says, the count, the risk given to someone or without its fact, a quotation altered, a decision without its reason, the sentence on lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
 }
 
 console.log('\n' + '-'.repeat(60));

@@ -426,6 +426,44 @@ Figshare と Research Square から写すのをやめる項は、効力の日を
 
 この節も、弁護士の確認は受けていません。
 
+## 2026-11-12 の続き：七度目の見落とし
+
+ここまでの表は、書いたときのまま残しています。
+2026-11-13 に、読むだけの点検が、ROAR の Sophaxis の記録の説明が古いことを挙げました。
+ROAR の記録（<https://roar.eprints.org/27422/>）は、Sophaxis を「Sophaxis is an overlay preprint server for philosophy and mathematics, run by an independent researcher.」と書いています。
+預け先については「Each record points to a deposit with a DOI (Zenodo, Figshare or OSF) and is listed after moderation, not peer review.」と書いています。
+PDF の写しについては「Each record has an unmodified PDF copy of the deposited file」と書いています。
+Sophaxis の頁は、運営者を一人の人として書いています。README は、受ける預け先として、Zenodo・Figshare・OSF Preprints のほかに arXiv・SSRN・Jxiv などを挙げています。
+著作権の規程は、20 MB を超える版や、PDF が二つ以上ある預け先の写しを置かないと書いています。Figshare と Research Square からは、2026-11-13 の公開から写していません。
+ROAR の記録は、2026-11-12 にも取り寄せていました。そのときは、記録の説明の部分を残していませんでした。
+読み直した結論は、次の表のとおりです。判定は、上の表と同じ五つです。
+
+| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |
+| --- | --- | --- | --- | --- | --- |
+| ROAR の Sophaxis の記録の、運営者の説明 | なし（ROAR の記録） | Sophaxis の外にある説明が、Sophaxis の今の書き方と合うこと | 記録は「Sophaxis is an overlay preprint server for philosophy and mathematics, run by an independent researcher.」と書きます。Sophaxis の頁は、運営者を一人の人と書き、この語を使っていません | 漏れ | 記録は運営者の ROAR のアカウントにあり、Claude はそのアカウントに触れられません。その事実を「下げられずに残る危険」に書きました |
+| ROAR の Sophaxis の記録の、預け先の一覧 | なし（ROAR の記録） | 同じ | 記録は「Each record points to a deposit with a DOI (Zenodo, Figshare or OSF) and is listed after moderation, not peer review.」と書きます。README は、ほかに arXiv・SSRN・Jxiv などの預け先も挙げています | 漏れ | 同じ |
+| ROAR の Sophaxis の記録の、PDF の写しの説明 | なし（ROAR の記録） | 同じ | 記録は「Each record has an unmodified PDF copy of the deposited file」と書きます。著作権の規程は、写しを置かない場合を挙げています | 漏れ | 同じ |
+| README（両言語）・連絡の頁（両言語）・お知らせ・トップの頁・紹介の頁・沿革の頁の、ROAR を挙げる文 | なし | ROAR の記録の説明を引かず、それに拠らないこと | どの文も、2026-11-06（日本時間）から載っていることと、記録の所在だけを書いています。記録の説明は引いていません | 問題なし | 変えていません。2026-11-13 に Claude が決めました。検査 122 で、どの頁も ROAR の記録の説明を引かないことを固めました。説明は古く、Sophaxis が直せない文に拠らないためです |
+| Sophaxis の頁と生成した頁の、運営者と預け先の書き方 | なし | 「independent researcher」と書かず、三つの預け先だけを挙げる一覧を書かないこと | どの頁も、Sophaxis の運営者を「independent researcher」と書いていません。載せた作品の記録の一つに「Independent Researcher」がありますが、著者が預け先に書いた文です。三つの預け先だけを挙げる一覧もありません | 問題なし | 変えていません。検査 122 が固めます |
+| `tools/sources.js` の `roar-record` の残す部分 | なし | 記録が拠る ROAR の文が、取り寄せた文の部分として、SHA-256 とともに残ること | 2026-11-12 の取り寄せは、記録の説明の部分を残していませんでした | 漏れ | 2026-11-13 に Claude が決めました。`sources.yml` で `roar-record` だけを取り寄せ直し、記録が引く三つの文を部分として残しました。古い説明の文を、取り寄せた日とともに残すためです |
+| 検査（`verification/check.js`） | なし | ROAR の記録の説明を、頁が引いたり繰り返したりしないことを確かめる検査があること | ありませんでした | 漏れ | 2026-11-13 に Claude が決めました。検査 122 を足しました。同じ見落としを機械で止めるためです |
+
+この表の判定は、漏れ 5、問題なし 2 です。
+
+### 取り寄せた文
+
+取り寄せの実行は 43301977313 で、結果は枝 `sources/20261112-2036` にあります。
+ROAR の記録は、ROAR から直に取り寄せました。ROAR の `robots.txt` が閉じているのは `/cgi/` だけです。
+その前の実行 43300228531 は、90 秒で接続の時間切れになり、記録を読めませんでした。その結果（枝 `sources/20261112-2027`）は使っていません。
+取り寄せの記録の日付は 2026-11-12 で、協定世界時の日付です。日本時間では 2026-11-13 の 5 時 36 分ごろでした。
+文の SHA-256 は `448ca060c9d1318a85874297d7fac268cc9f7335886a757478ac2ea199dafec2` で、2026-11-12 の前の取り寄せと同じです。記録の文は、そのあいだ変わっていません。
+
+### 下げられずに残る危険
+
+- ROAR の Sophaxis の記録は、運営者の ROAR のアカウントにあります。Claude はそのアカウントに触れられません。日本時間の 2026-11-13 に取り寄せた記録は、「Sophaxis is an overlay preprint server for philosophy and mathematics, run by an independent researcher.」「Each record points to a deposit with a DOI (Zenodo, Figshare or OSF) and is listed after moderation, not peer review.」「Each record has an unmodified PDF copy of the deposited file」と書いています。
+
+この節も、弁護士の確認は受けていません。
+
 ## この記録について
 
 この点検は Claude が行ったもので、弁護士の点検ではありません。弁護士はこの記録を確かめていません。
