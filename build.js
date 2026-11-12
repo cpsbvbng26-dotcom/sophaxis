@@ -285,6 +285,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -296,6 +300,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -618,7 +624,7 @@ ${p.removal_reason === 'under-review' ? `<h1>Record under review</h1>
 <p>This address is kept so that citations lead here. The title, the authors, the abstract and the PDF copy are not shown while the request is reviewed. If it is not upheld, they are put back. See the <a href="../policies/takedown.html">Takedown Policy</a>.</p>` : `<h1>Record removed</h1>
 <div class="notice">This record (${esc(SITE.name)}:${esc(p.id)}) has been removed.</div>`}
 `;
-  return page({ title: SITE.name + ':' + p.id + ' | ' + SITE.name, description: 'A removed record.', rel: true, canonical: 'abs/' + p.id + '.html', body, head: '<meta name="robots" content="noindex">\n' });
+  return page({ title: SITE.name + ':' + p.id + ' | ' + SITE.name, description: 'A removed record.', rel: true, canonical: 'abs/' + p.id + '.html', body, head: '<meta name="robots" content="noindex">\n' + recordAlternates(p) });
 }
 
 /* RIS, for reference managers. Lines end in CR LF, as the format asks. */
@@ -748,7 +754,7 @@ function statusTable(p) {
   const listing = `Passed <a href="../policies/moderation.html">moderation</a>, which is not peer review. Listed: ${day(p.listed)}. Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a>.`
     + (p.status === 'withdrawn' ? ` Withdrawn: ${day(p.withdrawal_date)}; the record stays.` : '');
   const review = p.published ? publishedSaid(p.published) : 'None reported. This is a preprint.';
-  return `<div class="table"><table><tr><th scope="col">Status</th><th scope="col">For this record</th></tr>`
+  return `<div class="table" id="status"><table><tr><th scope="col">Status</th><th scope="col">For this record</th></tr>`
     + [deposit, listing, review].map((x, i) => `<tr><th scope="row">${STATUS_ROWS[i]}</th><td>${x}</td></tr>`).join('') + '</table></div>';
 }
 /* Notices that Crossref records against the preprint: said on the record page, with the notice, as the Moderation Policy says. */
@@ -785,6 +791,21 @@ const WORDS_PER_MINUTE = 200;
 function readingTime(x) {
   const minutes = Math.max(5, Math.round(x.words / WORDS_PER_MINUTE / 5) * 5);
   return `The PDF has ${x.pages} pages and about ${x.words.toLocaleString('en-US')} words: roughly ${minutes} minutes at ${WORDS_PER_MINUTE} words a minute. Mathematics and dense argument take longer.`;
+}
+/* The English and the Japanese record page name each other, as the other pages with a translation do. */
+const recordAlternates = (p) => `<link rel="alternate" hreflang="en" href="${esc(SITE.baseUrl)}abs/${esc(p.id)}.html">\n<link rel="alternate" hreflang="ja" href="${esc(SITE.baseUrl)}abs/${esc(p.id)}.ja.html">\n`;
+/* Conflicts of interest: the operator's own work says so in a notice above the title, not only in the small flag.
+ * Where the record keeps the day its issue was opened, the notice gives the days it waited in public. */
+const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+function ownWorkNotice(p, ja = false) {
+  if (p.operator_own !== true) return '';
+  const waited = DATE.test(p.submitted || '') && DATE.test(p.listed || '') ? daysBetween(p.submitted, p.listed) : null;
+  if (ja) {
+    return `<div class="notice own"><b>運営者自身の作品です。</b>この作品は、${esc(SITE.name)} の運営者のものです。モデレーションでは、ほかの作品より先に扱っていません（<a href="../policies/moderation.ja.html#利益相反">モデレーションの規程</a>の「利益相反」）。`
+      + (waited === null ? '' : `投稿の issue は、${esc(p.submitted)} から ${esc(p.listed)} まで ${waited} 日のあいだ公開で開いていました。`) + '</div>\n';
+  }
+  return `<div class="notice own"><b>The operator’s own work.</b> This work is by the operator of ${esc(SITE.name)}. It got no priority in moderation (<a href="../policies/moderation.html#conflicts-of-interest">Moderation Policy</a>, “Conflicts of interest”).`
+    + (waited === null ? '' : ` Its submission issue was open in public for ${waited} days, from ${esc(p.submitted)} to ${esc(p.listed)}, before it was listed.`) + '</div>\n';
 }
 function recordPage(p, all = [p]) {
   if (p.status === 'removed') return removedPage(p);
@@ -838,20 +859,34 @@ ${rel.byAuthors.length ? '<p class="meta">By the same authors</p>\n' + relList(r
     + crumb(1, `<a itemprop="item" href="../index.html"><span itemprop="name">Listing</span></a>`) + ' › '
     + crumb(2, `<a itemprop="item" href="../list/${esc(p.category)}.html"><span itemprop="name">${esc(SITE.categories[p.category])}</span></a>`) + ' › '
     + crumb(3, `<span itemprop="name" aria-current="page">${esc(p.id)}</span>`) + '</span></nav>';
+  /* How to cite, right after the ways to read the work. */
+  const cite = `<h2 id="cite">Cite</h2>
+${p.published ? `<p class="meta">Published version</p>
+<p class="cite">${esc(publishedCite(p))}</p>
+<p class="meta">This preprint, APA</p>` : '<p class="meta">APA</p>'}
+<p class="cite">${esc(apa(p))}</p>
+<p class="meta">Chicago (author-date)</p>
+<p class="cite">${esc(chicago(p))}</p>
+<p class="meta">BibTeX</p>
+<pre>${esc(bibtex(p))}</pre>
+<p class="meta">Download: <a href="../cite/${esc(p.id)}.bib">BibTeX</a> · <a href="../cite/${esc(p.id)}.ris">RIS</a> · <a href="../cite/${esc(p.id)}.json">CSL-JSON</a></p>`;
+  /* On a phone the page reads from the top: the title, the ways to read the work, the abstract, then what the record is.
+   * A line of links leads to the abstract, the status and the citation, which come later on a long page. */
+  const jump = `<p class="meta jump"><a href="#abstract">Abstract</a> · <a href="#status">Status</a> · <a href="#cite">Cite</a></p>`;
   const body = `
 ${crumbs}
-<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.subfield ? ' · ' + esc(SITE.subfields[p.category][p.subfield]) : ''}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.subfield ? ' · ' + esc(SITE.subfields[p.category][p.subfield]) : ''}${p.operator_own ? '<span class="flag own">operator’s own submission</span>' : ''}</p>
 ${collectionLinks(p)}
 ${withdrawn}
 ${publishedNotice(p)}
 ${crossrefNotices(p)}
-${statusTable(p)}
-<article itemscope itemtype="https://schema.org/ScholarlyArticle">
+${ownWorkNotice(p)}<article itemscope itemtype="https://schema.org/ScholarlyArticle">
 ${facts}
 <h1 itemprop="headline">${esc(p.title)}</h1>
 <p>${authors}</p>
 ${p.status === 'withdrawn' ? '' : access}
-${lastPdf && p.status !== 'withdrawn' ? `<p class="meta">${readingTime(lastPdf)}</p>\n` : ''}<h2>Abstract</h2>
+${lastPdf && p.status !== 'withdrawn' ? `<p class="meta">${readingTime(lastPdf)}</p>\n` : ''}${jump}
+<h2 id="abstract">Abstract</h2>
 <div class="abstract"><p itemprop="abstract">${esc(p.abstract)}</p></div>
 <p class="meta">Abstract by ${esc(authorsText(p))}, ${p.abstract_source === 'authors' ? 'given by the authors in the submission issue, because the DOI metadata has none' : 'from the DOI metadata'}, shown as plain text without other changes, under <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>.</p>
 ${p.lay_summary ? `<h2>In plain words</h2>
@@ -861,11 +896,13 @@ ${p.abstract_other ? `<h2>Abstract in a second language</h2>
 <div class="abstract" lang="${esc(p.abstract_other.lang)}"><p>${esc(p.abstract_other.text)}</p></div>
 <p class="meta">Given by the authors in the submission issue (language code ${esc(p.abstract_other.lang)}), shown as given. ${esc(SITE.name)} has not checked the translation.</p>` : ''}
 </article>
+${statusTable(p)}
 ${keywords}
 <div class="notice">${p.published ? `This page lists the preprint, the version before publication. ${esc(SITE.name)} did not review it, and the published version is the version of record.` : 'This is a preprint. It has not been peer-reviewed.'} Listing on ${esc(SITE.name)} means it passed moderation, not that it is correct. ${esc(SITE.name)} does not guarantee its quality. The authors bear full responsibility for its content.</div>
-<h2>Read</h2>
+<h2 id="read">Read</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a></p>
 ${copies}
+${cite}
 <h2>Versions</h2>
 <div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th></tr>${versions}</table></div>
 <h2>Use of language models and other generative models</h2>
@@ -873,16 +910,6 @@ ${p.llm_extent ? `<p class="meta">Extent, as the authors state it: ${esc(SITE.ll
 ` : ''}<p>${esc(p.llm_disclosure)}</p>
 ${statements(p)}${notes ? `<h2>Notes and corrections</h2><ul>${notes}</ul>` : ''}
 ${badgeSnippet(p)}
-<h2>Cite</h2>
-${p.published ? `<p class="meta">Published version</p>
-<p class="cite">${esc(publishedCite(p))}</p>
-<p class="meta">This preprint, APA</p>` : '<p class="meta">APA</p>'}
-<p class="cite">${esc(apa(p))}</p>
-<p class="meta">Chicago (author-date)</p>
-<p class="cite">${esc(chicago(p))}</p>
-<p class="meta">BibTeX</p>
-<pre>${esc(bibtex(p))}</pre>
-<p class="meta">Download: <a href="../cite/${esc(p.id)}.bib">BibTeX</a> · <a href="../cite/${esc(p.id)}.ris">RIS</a> · <a href="../cite/${esc(p.id)}.json">CSL-JSON</a></p>
 ${relatedHtml}<h2>Share</h2>
 <p class="share">${share}</p>
 ${recordDoi(p) ? `<p class="meta">Record DOI: <a href="https://doi.org/${esc(recordDoi(p))}">${esc(recordDoi(p))}</a></p>\n` : ''}<p class="meta">Submission: <a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a> · <a href="${esc(SITE.repo)}/issues/new?template=correction.yml&amp;id=${esc(p.id)}">Report an error in this record</a> · <a href="https://web.archive.org/web/${esc(url)}">Saved copies at the Internet Archive</a></p>
@@ -893,7 +920,163 @@ ${recordDoi(p) ? `<p class="meta">Record DOI: <a href="https://doi.org/${esc(rec
     rel: true,
     canonical: 'abs/' + p.id + '.html',
     body,
-    head: scholarTags(p),
+    head: scholarTags(p) + recordAlternates(p),
+    image: hasCard(p) ? SITE.baseUrl + 'card/' + p.id + '.png' : null,
+  });
+}
+
+/* ------------------------------------------------------------ record pages in Japanese */
+
+/* The record page in Japanese: the same record, with the words around it in Japanese (items 445 and 446 of the owner's list).
+ * What the authors gave stays in their words and their language: the title, the abstract, the summary in plain words, the
+ * keywords, the statements and the statement on generative models. Notes stay as the operator wrote them, in English.
+ * The citations are those of the English page. Search engines read the English page: this one has no Highwire tags and no
+ * ScholarlyArticle microdata, and names the English page as its twin. */
+const LANG_TAG = { eng: 'en', jpn: 'ja', deu: 'de', fra: 'fr', spa: 'es', ita: 'it', por: 'pt', rus: 'ru', zho: 'zh', kor: 'ko', nld: 'nl', lat: 'la', ell: 'el', pol: 'pl' };
+/* The language of a text the authors gave: the language of the work where the record names it; otherwise Japanese when the text
+ * has kana or kanji, and English when it has none, as the forms are in English and in Japanese. */
+const hasJa = (t) => /[぀-ヿ一-鿿]/.test(String(t || ''));
+const authorLang = (p, t) => (p.language && LANG_TAG[p.language]) || (hasJa(t) ? 'ja' : 'en');
+const langAttr = (code) => (code === 'ja' ? '' : ` lang="${esc(code)}"`);
+const STATUS_ROWS_JA = ['預け先', SITE.name + ' への掲載', '査読・出版'];
+const NOT_RECORDED_JA = '記録なし';
+const PUBLISHED_KINDS_JA = { 'journal article': '学術誌の論文', 'conference paper': '会議録の論文', 'book chapter': '本の章', book: '本' };
+const NOTICE_TYPES_JA = { retraction: '撤回', correction: '訂正', expression_of_concern: '懸念の表明', erratum: '正誤', withdrawal: '取り下げ', removal: '削除', addendum: '補遺', clarification: '説明' };
+const noticeTypeJa = (t) => NOTICE_TYPES_JA[t] || t.replace(/_/g, ' ');
+/* The four levels of use of generative models, with the Japanese words that the Submission Policy gives each in brackets. */
+const LLM_EXTENTS_JA = { none: '使っていない', editing: '言葉の手直し・翻訳・校正だけ', assistance: '構成・文献探索・確認の手助け。文は著者が書いた', drafting: '生成モデルが文・証明・コード・図の下書きを作り、著者が手を入れた' };
+const STATEMENT_HEADS_JA = { funding: '資金', competing_interests: '利益相反', ethics: '人を対象とする研究と研究倫理', data: 'データとコード' };
+function publishedSaidJa(q) {
+  const peer = q.peer_reviewed === true ? '著者は、査読を経たと述べています。'
+    : q.peer_reviewed === false ? '著者は、査読を経ていないと述べています。' : '査読を経たかどうかは、述べられていません。';
+  const how = q.evidence === 'publisher' ? '出版社のメタデータが、このプレプリントとつないでいます。'
+    : '著者が報告したものです。出版社のメタデータは、このプレプリントとつないでいません。';
+  return `この作品の後の版が、${esc(PUBLISHED_KINDS_JA[q.type] || q.type)}として <i lang="en">${esc(q.venue)}</i>（${esc(publishedYear(q))}）に載りました：<a href="https://doi.org/${esc(q.doi)}">${esc(q.doi)}</a>。${peer}${how}`;
+}
+function statusTableJa(p) {
+  const v = latest(p), first = p.versions[0];
+  const day = (d) => esc(d || NOT_RECORDED_JA);
+  const firstAt = repoName(first.doi) !== repoName(v.doi) ? '（' + esc(repoName(first.doi)) + '）' : '';
+  const deposit = `${esc(repoName(v.doi))}。最新の版：v${v.version}、<a href="https://doi.org/${esc(v.doi)}">${esc(v.doi)}</a>。最初の版（v${first.version}）：${day(first.date)}${firstAt}。`;
+  const listing = `<a href="../policies/moderation.ja.html">モデレーション</a>を通りました。モデレーションは査読ではありません。掲載：${day(p.listed)}。投稿：<a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a>。`
+    + (p.status === 'withdrawn' ? `撤回：${day(p.withdrawal_date)}。記録は残します。` : '');
+  const review = p.published ? publishedSaidJa(p.published) : '報告はありません。これはプレプリントです。';
+  return `<div class="table" id="status"><table><tr><th scope="col">状態</th><th scope="col">この記録</th></tr>`
+    + [deposit, listing, review].map((x, i) => `<tr><th scope="row">${STATUS_ROWS_JA[i]}</th><td>${x}</td></tr>`).join('') + '</table></div>';
+}
+function readingTimeJa(x) {
+  const minutes = Math.max(5, Math.round(x.words / WORDS_PER_MINUTE / 5) * 5);
+  return `PDF は ${x.pages} 頁、およそ ${x.words.toLocaleString('en-US')} 語です。1 分に ${WORDS_PER_MINUTE} 語で読むと、約 ${minutes} 分かかります。数学や密な議論には、もっと時間がかかります。`;
+}
+function removedJaPage(p) {
+  const body = `
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span></p>
+${p.removal_reason === 'under-review' ? `<h1>審査中の記録</h1>
+<div class="notice">削除の申し立てを審査しているあいだ、要旨と PDF の写しを下げています。下げた日：${esc(p.removal_date)}。</div>
+<p>引用がここへ届くように、このアドレスは残しています。審査のあいだは、題・著者・要旨・PDF の写しを示しません。申し立てが認められなければ、元に戻します。手続きは<a href="../policies/takedown.ja.html">削除の規程</a>にあります。</p>` : `<h1>削除した記録</h1>
+<div class="notice">この記録（${esc(SITE.name)}:${esc(p.id)}）は削除しました。</div>`}
+`;
+  return page({ title: SITE.name + ':' + p.id + '（日本語） | ' + SITE.name, description: '削除した記録。', rel: true, canonical: 'abs/' + p.id + '.ja.html', lang: 'ja', body, head: '<meta name="robots" content="noindex">\n' + recordAlternates(p) });
+}
+function recordJaPage(p, all = [p]) {
+  if (p.status === 'removed') return removedJaPage(p);
+  const v = latest(p);
+  const wl = (t) => langAttr(authorLang(p, t));
+  const names = authorsText(p);
+  const authors = p.authors.map((a) => (a.orcid ? `<a href="../author/${esc(a.orcid)}.html">${esc(a.name)}</a> <a class="id" href="https://orcid.org/${esc(a.orcid)}">ORCID ${esc(a.orcid)}</a>` : esc(a.name))).join('<br>');
+  const url = SITE.baseUrl + 'abs/' + p.id + '.ja.html';
+  const pdfs = p.pdfs || [];
+  const lastPdf = pdfs.slice(-1)[0];
+  const lic = `<a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a>`;
+  const access = `<p class="access"><b>読む：</b>${p.published ? `<a href="https://doi.org/${esc(p.published.doi)}">出版された版（<span lang="en">${esc(p.published.venue)}</span>）</a> · ` : ''}${lastPdf ? `<a href="../pdf/${esc(lastPdf.file)}" type="application/pdf">PDF（v${lastPdf.version}、${lastPdf.pages} 頁）</a> · ` : ''}<a href="https://doi.org/${esc(v.doi)}">${esc(repoName(v.doi))}（v${v.version}）</a> · <a href="../cite/${esc(p.id)}.bib">BibTeX</a></p>`;
+  const withdrawn = p.status === 'withdrawn'
+    ? `<div class="notice"><b>${esc(p.withdrawal_date)} に撤回されました。</b><span${wl(p.withdrawal_note)}>${esc(p.withdrawal_note)}</span> 引用が切れないように、記録は残します。手続きは<a href="../policies/withdrawal.ja.html">撤回の規程</a>にあります。</div>` : '';
+  const q = p.published;
+  const published = q ? `<div class="notice"><b>出版されました。</b>${publishedSaidJa(q)}${(q.updates || []).map((u) => `この版には、${esc(u.date)} の${esc(noticeTypeJa(u.type))}の通知があります：<a href="https://doi.org/${esc(u.doi)}">${esc(u.doi)}</a>。`).join('')}引用には、出版された版を使います。</div>` : '';
+  const notices = (p.notices || []).length ? `<div class="notice"><b>通知。</b>Crossref は、この作品について、${p.notices.map((n) => `${esc(n.date)} の${esc(noticeTypeJa(n.type))}（<a href="https://doi.org/${esc(n.doi)}">${esc(n.doi)}</a>）`).join('、')}を記録しています。引用の前に、通知を読むよう勧めます。</div>` : '';
+  const crumbs = `<nav class="crumbs" aria-label="現在の位置"><a href="../index.ja.html">一覧</a> › <a href="../list/${esc(p.category)}.html">${esc(SITE.categoriesJa[p.category])}</a> › <span aria-current="page">${esc(p.id)}</span></nav>`;
+  const coll = (p.collections || []).map(collectionOf).filter(Boolean);
+  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td></tr>`).join('');
+  const copies = pdfs.length ? `<p>${esc(SITE.name)} の PDF：${pdfs.map((x) => `<a href="../pdf/${esc(x.file)}">v${x.version}</a>`).join(' · ')}</p>
+<p class="meta">${pdfs.some((x) => x.provided_by === 'authors')
+    ? `著者が投稿の issue で示した PDF を、手を加えずに写したものです。${esc(repoName(v.doi))} が、スクリプトによるファイルの取得を許さないためです。`
+    : `著者が ${esc(repoName(v.doi))} に預けたファイルを、手を加えずに写したものです。`}検索エンジンが全文を索引できるように置いています。<span lang="en">${esc(names)}</span> が ${esc(SITE.licenses[p.license])} のもとで共有しています。引用には DOI を使います。</p>` : '';
+  const given = STATEMENT_KEYS.filter(([k]) => p[k]);
+  const statementsJa = given.length ? `<h2>著者の申告</h2>
+${given.map(([k]) => `<p class="meta">${STATEMENT_HEADS_JA[k]}</p>
+<p${wl(p[k])}>${esc(p[k])}</p>`).join('\n')}
+<p class="meta">投稿の issue で著者が述べたとおりです。${esc(SITE.name)} はこれらを確かめていません。</p>
+` : '';
+  const notes = (p.notes || []).map((n) => `<li><span class="meta">${esc(n.date)}</span> <span lang="en">${esc(n.text)}</span></li>`).join('');
+  const rel = related(p, all);
+  const relList = (xs) => '<ul>' + xs.map((x) => `<li><a href="./${esc(x.id)}.ja.html"${langAttr(authorLang(x, x.title))}>${esc(x.title)}</a> <span class="meta"><span lang="en">${esc(authorsText(x))}</span>、${esc(latest(x).date.slice(0, 4))}</span></li>`).join('') + '</ul>';
+  const relatedHtml = rel.byAuthors.length || rel.onTopic.length ? `<h2>関連する記録</h2>
+${rel.byAuthors.length ? '<p class="meta">同じ著者のもの</p>\n' + relList(rel.byAuthors) + '\n' : ''}${rel.onTopic.length ? '<p class="meta">キーワードが重なるもの</p>\n' + relList(rel.onTopic) + '\n' : ''}` : '';
+  const qe = encodeURIComponent;
+  const share = [
+    ['X', `https://x.com/intent/post?text=${qe(p.title)}&url=${qe(url)}`],
+    ['Bluesky', `https://bsky.app/intent/compose?text=${qe(p.title + ' ' + url)}`],
+    ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${qe(url)}`],
+    ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${qe(url)}`],
+    ['メール', `mailto:?subject=${qe(p.title)}&body=${qe(url)}`],
+  ].map(([n, h]) => `<a href="${esc(h)}">${n}</a>`).join(' · ');
+  const body = `
+${crumbs}
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categoriesJa[c])}</a>`).join(' · ')}${p.subfield ? ' · <span lang="en">' + esc(SITE.subfields[p.category][p.subfield]) + '</span>' : ''}${p.operator_own ? '<span class="flag own">運営者自身の投稿</span>' : ''}</p>
+${coll.length ? `<p class="meta">集め：${coll.map((c) => `<a href="../collection/${esc(c.slug)}.html">${esc(c.ja)}</a>`).join('、')}</p>` : ''}
+${withdrawn}
+${published}
+${notices}
+${ownWorkNotice(p, true)}<article>
+<h1${wl(p.title)}>${esc(p.title)}</h1>
+<p lang="en">${authors}</p>
+${p.status === 'withdrawn' ? '' : access}
+${lastPdf && p.status !== 'withdrawn' ? `<p class="meta">${readingTimeJa(lastPdf)}</p>\n` : ''}<p class="meta jump"><a href="#abstract">要旨</a> · <a href="#status">状態</a> · <a href="#cite">引用</a></p>
+<h2 id="abstract">要旨</h2>
+<div class="abstract"${wl(p.abstract)}><p>${esc(p.abstract)}</p></div>
+<p class="meta">要旨は <span lang="en">${esc(names)}</span> によるものです。${p.abstract_source === 'authors' ? 'DOI のメタデータに要旨がないため、著者が投稿の issue で示しました' : 'DOI のメタデータから取りました'}。書式のない文にしたほかは手を加えず、${lic} のもとで載せています。著者の言語のままで、訳は付けていません。</p>
+${p.lay_summary ? `<h2>やさしい言葉で</h2>
+<p${wl(p.lay_summary)}>${esc(p.lay_summary)}</p>
+<p class="meta">分野の外の読者のための要約です。著者が書き、投稿の issue で示しました。作品の一部ではありません。</p>` : ''}
+${p.abstract_other ? `<h2>二つ目の言語の要旨</h2>
+<div class="abstract" lang="${esc(p.abstract_other.lang)}"><p>${esc(p.abstract_other.text)}</p></div>
+<p class="meta">著者が投稿の issue で示したものです（言語の符号 ${esc(p.abstract_other.lang)}）。示されたとおりに載せています。${esc(SITE.name)} は訳を確かめていません。</p>` : ''}
+</article>
+${statusTableJa(p)}
+${(p.keywords || []).length ? `<p class="meta">キーワード：<span${wl(p.keywords.join(' '))}>${p.keywords.map(esc).join('; ')}</span></p>` : ''}
+<div class="notice">${p.published ? `この頁が載せているのは、出版の前の版であるプレプリントです。${esc(SITE.name)} は査読をしていません。記録の版は、出版された版です。` : 'これはプレプリントです。査読を経ていません。'}${esc(SITE.name)} に載っていることは、モデレーションを通ったことを意味し、内容が正しいことを意味しません。${esc(SITE.name)} は質を保証しません。内容の責任は、すべて著者にあります。</div>
+<h2 id="read">読む</h2>
+<p><a href="https://doi.org/${esc(v.doi)}">最新の版（v${v.version}）、${esc(repoName(v.doi))}</a> · ライセンス ${lic}</p>
+${copies}
+<h2 id="cite">引用</h2>
+<p class="meta">引用の書式は英語のままです。</p>
+${p.published ? `<p class="meta">出版された版</p>
+<p class="cite" lang="en">${esc(publishedCite(p))}</p>
+<p class="meta">このプレプリント（APA）</p>` : '<p class="meta">APA</p>'}
+<p class="cite" lang="en">${esc(apa(p))}</p>
+<p class="meta">Chicago（著者・年）</p>
+<p class="cite" lang="en">${esc(chicago(p))}</p>
+<p class="meta">BibTeX</p>
+<pre lang="en">${esc(bibtex(p))}</pre>
+<p class="meta">ダウンロード：<a href="../cite/${esc(p.id)}.bib">BibTeX</a> · <a href="../cite/${esc(p.id)}.ris">RIS</a> · <a href="../cite/${esc(p.id)}.json">CSL-JSON</a></p>
+<h2>版</h2>
+<div class="table"><table><tr><th scope="col">版</th><th scope="col">日付</th><th scope="col">DOI</th><th scope="col">預け先</th></tr>${versions}</table></div>
+<h2>言語モデルなどの生成モデルの使用</h2>
+${p.llm_extent ? `<p class="meta">程度（著者の申告）：<span lang="en">${esc(SITE.llmExtents[p.llm_extent])}</span>（${esc(LLM_EXTENTS_JA[p.llm_extent])}）</p>
+` : ''}<p${wl(p.llm_disclosure)}>${esc(p.llm_disclosure)}</p>
+${statementsJa}${notes ? `<h2>注記と訂正</h2><ul>${notes}</ul>` : ''}
+${relatedHtml}<h2>共有</h2>
+<p class="share">${share}</p>
+${recordDoi(p) ? `<p class="meta">記録の DOI：<a href="https://doi.org/${esc(recordDoi(p))}">${esc(recordDoi(p))}</a></p>\n` : ''}<p class="meta">投稿：<a href="${esc(SITE.repo)}/issues/${p.issue}">issue #${p.issue}</a> · <a href="${esc(SITE.repo)}/issues/new?template=correction.yml&amp;id=${esc(p.id)}">この記録の誤りを知らせる</a> · <a href="https://web.archive.org/web/${esc(SITE.baseUrl + 'abs/' + p.id + '.html')}">インターネット・アーカイブに保存された写し</a></p>
+`;
+  return page({
+    title: p.title + '（日本語の頁） | ' + SITE.name,
+    description: SITE.name + ' の記録 ' + p.id + ' の日本語の頁。題と要旨は著者の言語のままです。',
+    rel: true,
+    lang: 'ja',
+    canonical: 'abs/' + p.id + '.ja.html',
+    body,
+    head: recordAlternates(p),
     image: hasCard(p) ? SITE.baseUrl + 'card/' + p.id + '.png' : null,
   });
 }
@@ -902,12 +1085,14 @@ function sortListing(papers) {
   return papers.slice().sort((a, b) => (latest(b).date + b.id).localeCompare(latest(a).date + a.id));
 }
 
-function listing(papers, up, empty) {
+/* A listing in Japanese (ja) names the fields and the flags in Japanese and links the Japanese record pages. */
+function listing(papers, up, empty, ja = false) {
   if (!papers.length) return `<p class="meta">${empty}</p>`;
+  const flag = (en, jp, own) => `<span class="flag${own ? ' own' : ''}">${ja ? jp : en}</span>`;
   const items = sortListing(papers).map((p) => `<li>
-<p class="meta"><span class="id">${esc(p.id)}</span> · ${esc(SITE.categories[p.category])} · ${esc(p.versions[0].date)}${p.status === 'withdrawn' ? '<span class="flag">withdrawn</span>' : ''}${p.published ? '<span class="flag">published</span>' : ''}${p.operator_own ? '<span class="flag">operator’s own submission</span>' : ''}</p>
-<a href="${up}abs/${esc(p.id)}.html"><b>${esc(p.title)}</b></a>
-<p class="meta">${esc(authorsText(p))}</p>
+<p class="meta"><span class="id">${esc(p.id)}</span> · ${esc((ja ? SITE.categoriesJa : SITE.categories)[p.category])} · ${esc(p.versions[0].date)}${p.status === 'withdrawn' ? flag('withdrawn', '撤回') : ''}${p.published ? flag('published', '出版済み') : ''}${p.operator_own ? flag('operator’s own submission', '運営者自身の投稿', true) : ''}</p>
+<a href="${up}abs/${esc(p.id)}${ja ? '.ja' : ''}.html"${ja ? langAttr(authorLang(p, p.title)) : ''}><b>${esc(p.title)}</b></a>
+<p class="meta"${ja ? ' lang="en"' : ''}>${esc(authorsText(p))}</p>
 </li>`).join('\n');
   return `<ol class="list">${items}</ol>`;
 }
@@ -980,7 +1165,7 @@ function ownNotice(all, ja = false) {
   if (!own) return '';
   const every = own === shown.length;
   if (ja) {
-    return `<div class="notice">${every ? `これまでに載った作品は、すべて運営者のものです（示している記録 ${shown.length} 件のうち ${own} 件）。` : `示している記録 ${shown.length} 件のうち ${own} 件は、運営者の作品です。`}運営者は Sophaxis を一人で運営し、いまはただ一人のモデレーターでもあります。運営者の作品には、一覧と記録の頁で「operator’s own submission」の印を付けています。ほかの作品より先に扱うことはしません（<a href="./policies/moderation.ja.html">モデレーションの規程</a>の「利益相反」）。Sophaxis は運営者の作品を並べるための場ではありません。分野に合う研究者の作品を載せる場です。${every ? 'ほかの研究者からの最初の投稿を待っています。' : ''}<a href="./call.ja.html">研究者の方へ</a></div>\n`;
+    return `<div class="notice">${every ? `これまでに載った作品は、すべて運営者のものです（示している記録 ${shown.length} 件のうち ${own} 件）。` : `示している記録 ${shown.length} 件のうち ${own} 件は、運営者の作品です。`}運営者は Sophaxis を一人で運営し、いまはただ一人のモデレーターでもあります。運営者の作品には、一覧と記録の頁で印を付けています（日本語の頁では「運営者自身の投稿」、英語の頁では「operator’s own submission」）。ほかの作品より先に扱うことはしません（<a href="./policies/moderation.ja.html">モデレーションの規程</a>の「利益相反」）。Sophaxis は運営者の作品を並べるための場ではありません。分野に合う研究者の作品を載せる場です。${every ? 'ほかの研究者からの最初の投稿を待っています。' : ''}<a href="./call.ja.html">研究者の方へ</a></div>\n`;
   }
   return `<div class="notice">${every ? `Every work listed so far is by the operator (${own} of the ${shown.length} records shown).` : esc(ownShare(all))} The operator runs ${esc(SITE.name)} alone and is at present its only moderator. Each of these works is marked “operator’s own submission” in the listing and on its record page, and gets no priority (<a href="./policies/moderation.html">Moderation Policy</a>, “Conflicts of interest”). ${esc(SITE.name)} is not a shelf for the operator’s own work: it lists work by any researcher in its fields.${every ? ' The first submissions from other researchers are welcome.' : ''} <a href="./call.html">A call to researchers</a></div>\n`;
 }
@@ -1048,13 +1233,19 @@ function collectionsPage(papers) {
   return page({ title: 'Collections | ' + SITE.name, description: 'The preprints listed on ' + SITE.name + ', grouped by topic.', rel: false, canonical: 'collections.html', body });
 }
 
+/* How many records a field page shows, and the day the newest of them was listed, from the records. */
+function fieldFacts(mine) {
+  if (!mine.length) return '';
+  const newest = mine.map((p) => p.listed).filter(Boolean).sort().pop();
+  return `<p class="meta">Records in this field: ${mine.length}${mine.some((p) => p.status === 'withdrawn') ? ', withdrawn ones included' : ''}. Latest listed: ${newest ? `<time datetime="${esc(newest)}">${esc(newest)}</time>` : 'not recorded'}.</p>\n`;
+}
 function fieldPage(papers, slug) {
   const label = SITE.categories[slug];
   const mine = papers.filter((p) => cats(p).includes(slug));
   const body = `
 <h1>${esc(label)}</h1>
 ${fields(papers, slug, '../')}
-<p class="meta">New in this field: <a href="./${esc(slug)}.xml">Atom feed</a>.</p>
+${fieldFacts(mine)}<p class="meta">New in this field: <a href="./${esc(slug)}.xml">Atom feed</a>.</p>
 ${listing(mine, '../', 'No preprints are listed in this field yet.')}
 `;
   return page({
@@ -1411,8 +1602,8 @@ function rootJaPage(slug) {
     : markdown(rootJaSource(slug)), src: slug + '.ja.md' });
 }
 
-/* The top page in Japanese. The records, the lists and the statistics stay in English: the titles and abstracts are those of
- * the DOI metadata. */
+/* The top page in Japanese. The lists and the statistics stay in English; each record has a Japanese page, linked from the
+ * listing here. The titles and abstracts are those of the DOI metadata, in the authors' language. */
 function indexJaPage(papers, all = papers) {
   const last = lastUpdated(all);
   const L = SITE.notOffered || [];
@@ -1425,7 +1616,7 @@ function indexJaPage(papers, all = papers) {
 <div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(L.map((p) => p.ja).join('、'))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
 ${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${esc(SITE.termsNotice.from)} から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
 ` : ''}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
-<p class="meta">記録の頁・一覧・統計は英語です。作品の題と要旨は、DOI の登録情報のとおりに載せています。</p>
+<p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
 ${operatingCounts(all, loadReports(), true)}
 <h2>日本語の頁</h2>
 <ul>${jaLinks}</ul>
@@ -1433,7 +1624,7 @@ ${operatingCounts(all, loadReports(), true)}
 <ul class="fields" aria-label="分野">${Object.entries(SITE.categories).map(([slug]) => `<li><a href="./list/${slug}.html">${esc(SITE.categoriesJa[slug])}（${papers.filter((p) => cats(p).includes(slug)).length}）</a></li>`).join('')}</ul>
 <ul class="fields" aria-label="集め">${(SITE.collections || []).map((c) => `<li><a href="./collection/${esc(c.slug)}.html">${esc(c.ja)}（${papers.filter((p) => (p.collections || []).includes(c.slug)).length}）</a></li>`).join('')}</ul>
 <h2>載っている作品</h2>
-${ownNotice(all, true)}${listing(papers, './', 'まだ作品は載っていません。')}
+${ownNotice(all, true)}${listing(papers, './', 'まだ作品は載っていません。', true)}
 `;
   return page({ title: SITE.name + '：哲学と数学のプレプリント', description: SITE.name + ' は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。', rel: false, canonical: 'index.ja.html', lang: 'ja', head: rootAlternates('index'), body });
 }
@@ -1622,7 +1813,7 @@ function sitemap(papers) {
     .concat([['index.ja.html', newest]], JA_PAGES.filter(hasRootJa).map((slug) => [slug + '.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(rootJaSource(slug)) || [, newest])[1]]))
     .concat([['collections.html', newest]], (SITE.collections || []).map((c) => ['collection/' + c.slug + '.html', newest]))
     .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map(changed).sort().pop()]))
-    .concat(papers.map((p) => ['abs/' + p.id + '.html', changed(p)]))
+    .concat(papers.flatMap((p) => [['abs/' + p.id + '.html', changed(p)], ['abs/' + p.id + '.ja.html', changed(p)]]))
     .concat(papers.flatMap((p) => (p.pdfs || []).map((x) => ['pdf/' + x.file, p.versions.find((v) => v.version === x.version).date])));
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + urls.map(([u, d]) => '  <url><loc>' + SITE.baseUrl + u + '</loc><lastmod>' + d + '</lastmod></url>').join('\n') + '\n</urlset>\n';
@@ -1788,7 +1979,7 @@ function build(out, paperDir) {
   files['index.ja.html'] = indexJaPage(papers, all);
   JA_PAGES.filter(hasRootJa).forEach((slug) => { files[slug + '.ja.html'] = rootJaPage(slug); });
   (SITE.collections || []).forEach((c) => { files['collection/' + c.slug + '.html'] = collectionPage(papers, c); files['collection/' + c.slug + '.xml'] = feed(papers, c); });
-  all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p, all); });
+  all.forEach((p) => { files['abs/' + p.id + '.html'] = recordPage(p, all); files['abs/' + p.id + '.ja.html'] = recordJaPage(p, all); });
   /* Citation files for reference managers, one set per record that is shown. */
   papers.forEach((p) => {
     files['cite/' + p.id + '.bib'] = bibtex(p) + '\n';
@@ -1818,7 +2009,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

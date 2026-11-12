@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Sophaxis：哲学と数学のプレプリント</title>
 <meta name="description" content="Sophaxis は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。">
 <link rel="canonical" href="https://sophaxis.vercel.app/index.ja.html">
@@ -64,6 +64,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -75,6 +79,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -101,7 +107,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、28 の国と地域（欧州連合、欧州経済領域、英国、中国、タイ、ロシア、トルコ、エジプト、ペルー、アルバニア、モナコ、ガーンジー、ボツワナ、エクアドル、イラク、インドネシア、ルワンダ、ザンビア、エチオピア、コンゴ民主共和国、カザフスタン、チュニジア、ウガンダ、ギニア、マダガスカル、ボリビア、コスタリカ、ケベック州）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
 <div class="notice"><b>規程の変更を告知しています。</b>2026-11-21 から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
 <p class="meta">最終更新：<time datetime="2026-11-07">2026-11-07</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
-<p class="meta">記録の頁・一覧・統計は英語です。作品の題と要旨は、DOI の登録情報のとおりに載せています。</p>
+<p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
 <p class="meta">運営の数（記録から作っています）：2026 年（2026-11-09 までの数）の受付 8 件、受理 8 件、投稿から判断までの日数の中央値 0 日。いま載っている作品 5 件、削除した記録 3 件。詳しくは<a href="./decisions.html">年ごとの判断</a>と<a href="./stats.html">統計</a>（どちらも英語）にあります。</p>
 
 <h2>日本語の頁</h2>
@@ -110,31 +116,31 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul class="fields" aria-label="分野"><li><a href="./list/philosophy.html">哲学（4）</a></li><li><a href="./list/mathematics.html">数学（1）</a></li><li><a href="./list/philosophy-of-mathematics.html">数理哲学（0）</a></li><li><a href="./list/philosophy-of-science.html">科学哲学（1）</a></li><li><a href="./list/logic.html">論理学（0）</a></li></ul>
 <ul class="fields" aria-label="集め"><li><a href="./collection/game-theory.html">ゲーム理論（1）</a></li><li><a href="./collection/individual-autonomy.html">個と自律（3）</a></li><li><a href="./collection/research-method-ethics.html">研究の方法と倫理（1）</a></li><li><a href="./collection/existential-philosophy.html">実存哲学（0）</a></li></ul>
 <h2>載っている作品</h2>
-<div class="notice">これまでに載った作品は、すべて運営者のものです（示している記録 5 件のうち 5 件）。運営者は Sophaxis を一人で運営し、いまはただ一人のモデレーターでもあります。運営者の作品には、一覧と記録の頁で「operator’s own submission」の印を付けています。ほかの作品より先に扱うことはしません（<a href="./policies/moderation.ja.html">モデレーションの規程</a>の「利益相反」）。Sophaxis は運営者の作品を並べるための場ではありません。分野に合う研究者の作品を載せる場です。ほかの研究者からの最初の投稿を待っています。<a href="./call.ja.html">研究者の方へ</a></div>
+<div class="notice">これまでに載った作品は、すべて運営者のものです（示している記録 5 件のうち 5 件）。運営者は Sophaxis を一人で運営し、いまはただ一人のモデレーターでもあります。運営者の作品には、一覧と記録の頁で印を付けています（日本語の頁では「運営者自身の投稿」、英語の頁では「operator’s own submission」）。ほかの作品より先に扱うことはしません（<a href="./policies/moderation.ja.html">モデレーションの規程</a>の「利益相反」）。Sophaxis は運営者の作品を並べるための場ではありません。分野に合う研究者の作品を載せる場です。ほかの研究者からの最初の投稿を待っています。<a href="./call.ja.html">研究者の方へ</a></div>
 <ol class="list"><li>
-<p class="meta"><span class="id">2026.0001</span> · Mathematics · 2026-10-13<span class="flag">operator’s own submission</span></p>
-<a href="./abs/2026.0001.html"><b>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</b></a>
-<p class="meta">Takuya Nemoto</p>
+<p class="meta"><span class="id">2026.0001</span> · 数学 · 2026-10-13<span class="flag own">運営者自身の投稿</span></p>
+<a href="./abs/2026.0001.ja.html" lang="en"><b>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</b></a>
+<p class="meta" lang="en">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0002</span> · Philosophy of Science · 2026-09-30<span class="flag">operator’s own submission</span></p>
-<a href="./abs/2026.0002.html"><b>Machine-mediated Rediscovery: A Case Study in Novelty, Priority, and Self-correction</b></a>
-<p class="meta">Takuya Nemoto</p>
+<p class="meta"><span class="id">2026.0002</span> · 科学哲学 · 2026-09-30<span class="flag own">運営者自身の投稿</span></p>
+<a href="./abs/2026.0002.ja.html" lang="en"><b>Machine-mediated Rediscovery: A Case Study in Novelty, Priority, and Self-correction</b></a>
+<p class="meta" lang="en">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0005</span> · Philosophy · 2026-08-23<span class="flag">operator’s own submission</span></p>
-<a href="./abs/2026.0005.html"><b>Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy</b></a>
-<p class="meta">Takuya Nemoto</p>
+<p class="meta"><span class="id">2026.0005</span> · 哲学 · 2026-08-23<span class="flag own">運営者自身の投稿</span></p>
+<a href="./abs/2026.0005.ja.html" lang="en"><b>Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy</b></a>
+<p class="meta" lang="en">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0004</span> · Philosophy · 2026-08-22<span class="flag">operator’s own submission</span></p>
-<a href="./abs/2026.0004.html"><b>The Nobility and Exemplarity of the Celibate Individual: An Antinatalist and Ascetic Reconsideration of Autonomy and Quality of Life</b></a>
-<p class="meta">Takuya Nemoto</p>
+<p class="meta"><span class="id">2026.0004</span> · 哲学 · 2026-08-22<span class="flag own">運営者自身の投稿</span></p>
+<a href="./abs/2026.0004.ja.html" lang="en"><b>The Nobility and Exemplarity of the Celibate Individual: An Antinatalist and Ascetic Reconsideration of Autonomy and Quality of Life</b></a>
+<p class="meta" lang="en">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0003</span> · Philosophy · 2026-08-22<span class="flag">operator’s own submission</span></p>
-<a href="./abs/2026.0003.html"><b>Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence</b></a>
-<p class="meta">Takuya Nemoto</p>
+<p class="meta"><span class="id">2026.0003</span> · 哲学 · 2026-08-22<span class="flag own">運営者自身の投稿</span></p>
+<a href="./abs/2026.0003.ja.html" lang="en"><b>Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence</b></a>
+<p class="meta" lang="en">Takuya Nemoto</p>
 </li></ol>
 
 </main>

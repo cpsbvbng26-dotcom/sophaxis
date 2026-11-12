@@ -294,7 +294,8 @@ console.log('\n6. The logo and the share card');
   const missing = pages.filter((f) => {
     const h = read(path.join(ROOT, 'site', f));
     return !/<link rel="icon" href="(\.\.\/|\.\/|\/)favicon\.svg" type="image\/svg\+xml">/.test(h)
-      || !h.includes('<meta property="og:image" content="https://sophaxis.vercel.app/' + (/^abs\/(\d{4}\.\d{4})\.html$/.test(f.replace(/\\/g, '/')) && !h.includes('<meta name="robots" content="noindex">') ? 'card/' + f.replace(/\\/g, '/').slice(4, -5) + '.png' : 'og.png') + '">');
+      /* A record page, in English or in Japanese, has the card of its record. */
+      || !h.includes('<meta property="og:image" content="https://sophaxis.vercel.app/' + (/^abs\/(\d{4}\.\d{4})(\.ja)?\.html$/.test(f.replace(/\\/g, '/')) && !h.includes('<meta name="robots" content="noindex">') ? 'card/' + f.replace(/\\/g, '/').slice(4, 13) + '.png' : 'og.png') + '">');
   });
   ok('every page links the logo, and as its share image the card of its record or else the logo', pages.length > 0 && missing.length === 0, missing.join(', '));
 }
@@ -1193,7 +1194,12 @@ console.log('\n31. Disputes: agreement first, then the court named in the Terms'
   /* The court is named from a day at least 14 days after the change, as "Changes and closure" asks of a change that may narrow a right,
    * and the top-page notice says so. Until that day, the court of the operator's place of residence stays the agreed court. */
   const courtFrom = (/^From (\d{4}-\d{2}-\d{2}), if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, /m.exec(d) || [])[1] || '';
-  const changed = (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(terms) || [])[1] || '';
+  /* The day of the change is the day the sentence naming the court from that day first entered the Terms, read from the history.
+   * The "Last updated" date moves with any later change to the Terms, which does not move the court's day. */
+  let changed = '';
+  try {
+    changed = require('child_process').execFileSync('git', ['log', '--reverse', '--format=%cs', '-S', 'From ' + courtFrom + ', if a dispute is not settled in these ways', '--', 'policies/terms.md'], { cwd: ROOT, encoding: 'utf8' }).split('\n')[0] || '';
+  } catch (e) { changed = ''; }
   const tj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
   const dj = (/## 紛争\n([\s\S]*?)\n## /.exec(tj) || [, ''])[1];
   const notice = JSON.parse(read(path.join(ROOT, 'site.json'))).termsNotice || {};
@@ -1402,7 +1408,7 @@ console.log('\n37. Short addresses and the Access line, as arXiv has them');
       const a = (/<p class="access">([\s\S]*?)<\/p>/.exec(h) || [, ''])[1];
       return a.startsWith('<b>Access:</b> ') && a.includes('<a href="../cite/' + p.id + '.bib">BibTeX</a>')
         && (!last || a.startsWith('<b>Access:</b> <a href="../pdf/' + last.file + '" type="application/pdf">PDF (v' + last.version + ', ' + last.pages + ' pages)</a>'))
-        && h.indexOf('<p class="access">') < h.indexOf('<h2>Abstract</h2>');
+        && h.indexOf('<p class="access">') >= 0 && h.indexOf('<p class="access">') < h.indexOf('<h2 id="abstract">Abstract</h2>');
     }));
   ok('a withdrawn record page has no Access line', loadPapers(path.join(__dirname, 'fixtures', 'papers')).papers.filter((p) => p.status === 'withdrawn')
     .every((p) => !read(path.join(FIX, 'abs', p.id + '.html')).includes('<p class="access">'))
@@ -1444,8 +1450,14 @@ console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
   ok('CITATION.cff, the README in both languages and the contact page give the Zenodo DOI of version 1.0.0 and the DOI of every version',
     ['10.5281/zenodo.24033372', '10.5281/zenodo.24033371'].every((d) => cff.includes('value: "' + d + '"') && (rd.split('(https://doi.org/' + d + ')').length - 1) === 2
       && read(path.join(ROOT, 'contact.md')).includes('(https://doi.org/' + d + ')'))
-    && cff.includes('doi: "10.5281/zenodo.24033371"') && cff.includes('version: "1.1.0"') && cff.includes('date-released: "2026-11-10"') && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.0.0 was released on 2026-11-07')
-    && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.1.0 is dated 2026-11-10'));
+    && cff.includes('doi: "10.5281/zenodo.24033371"') && cff.includes('version: "1.1.0"') && cff.includes('date-released: "2026-11-12"') && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.0.0 was released on 2026-11-07')
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.1.0 is dated 2026-11-12'));
+  /* Item 418: the release in preparation has one version and one date, in CITATION.cff, in .zenodo.json and in the changelog. */
+  const cffVersion = (/^version: "([^"]+)"$/m.exec(cff) || [])[1], cffDate = (/^date-released: "([^"]+)"$/m.exec(cff) || [])[1];
+  ok('the release in preparation (' + cffVersion + ', ' + cffDate + ') has the same version and date in CITATION.cff, .zenodo.json and CHANGELOG.md, and the changelog leaves the release to the operator',
+    cffVersion && cffDate && z.version === cffVersion && z.publication_date === cffDate
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version ' + cffVersion + ' is dated ' + cffDate + ' and gathers every change merged since')
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('the operator makes its GitHub Release and its Zenodo version by hand'), z.version + ' ' + z.publication_date);
   ok('the code is tied to the OSF project, with the DOI from site.json, and that DOI is said to name the project',
     z.related_identifiers.some((r) => r.identifier === site.osf.doi && r.relation === 'isPartOf')
     && cff.includes('value: ' + site.osf.doi) && cff.includes('the project, not this code release'));
@@ -2233,6 +2245,11 @@ console.log('\n56. The Zenodo DOI of Sophaxis stands beside its OSF project DOI'
 }
 
 /* ------------------------------------------------------------ 57 */
+/* Numbers that English writes in words: a small number before a unit of time, and a month named beside a day or a year. */
+const NUM_WORDS = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, fourteen: 14, thirty: 30, sixty: 60, ninety: 90 };
+const NUM_WORD_UNIT = new RegExp('\\b(' + Object.keys(NUM_WORDS).join('|') + ')[ -](days?|weeks?|months?|years?|hours?|minutes?)\\b', 'gi');
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTH_DATE = new RegExp('\\b(\\d{1,2}) (' + MONTH_NAMES.join('|') + ')\\b|\\b(' + MONTH_NAMES.join('|') + ') (?:\\d{1,2}|\\d{4})\\b', 'g');
 console.log('\n57. The Japanese translations of the policies and the Disclaimer keep step with the English');
 {
   const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
@@ -2244,7 +2261,17 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
     const enDate = (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(en) || [])[1];
     const jaDate = (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(ja) || [])[1];
     const body = (t) => t.split('\n').filter((l) => !/^(Last updated:|最終更新：|Japanese: |これは英語の )/.test(l)).join('\n');
-    const nums = (t) => new Set((body(t).match(/\d+/g) || []));
+    /* Item 473: the Japanese writes counts, durations and dates in Arabic digits ("6 か月", "10 月 30 日"), where the English
+     * spells a small number before its unit ("six months") and names the month ("30 October"). Those are numbers too, and are
+     * compared as such, so that each language must give the same ones. "One" is left out: in English it is mostly not a count. */
+    const nums = (t, en = false) => {
+      const b = body(t), set = new Set(b.match(/\d+/g) || []);
+      if (en) {
+        for (const m of b.matchAll(NUM_WORD_UNIT)) set.add(String(NUM_WORDS[m[1].toLowerCase()]));
+        for (const m of b.matchAll(MONTH_DATE)) set.add(String(MONTH_NAMES.indexOf(m[2] || m[3]) + 1));
+      }
+      return set;
+    };
     const urls = (t) => new Set((t.match(/https:\/\/[^\s)>\]]+/g) || []));
     const codes = (t) => new Set((t.match(/`[^`]+`/g) || []));
     const heads = (t) => (t.match(/^## /gm) || []).length;
@@ -2256,8 +2283,8 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
       && enDate && enDate === jaDate && heads(en) === heads(ja),
       'dates ' + enDate + ' / ' + jaDate + ', sections ' + heads(en) + ' / ' + heads(ja));
     ok(name + ': the same numbers, addresses and code names as the English',
-      same(nums(en), nums(ja)) && same(urls(en), urls(ja)) && same(codes(en), codes(ja)),
-      'numbers missing ' + miss(nums(en), nums(ja)).join(',') + ' extra ' + miss(nums(ja), nums(en)).join(',')
+      same(nums(en, true), nums(ja)) && same(urls(en), urls(ja)) && same(codes(en), codes(ja)),
+      'numbers missing ' + miss(nums(en, true), nums(ja)).join(',') + ' extra ' + miss(nums(ja), nums(en, true)).join(',')
       + ' / urls ' + miss(urls(en), urls(ja)).concat(miss(urls(ja), urls(en))).join(',') + ' / code ' + miss(codes(en), codes(ja)).concat(miss(codes(ja), codes(en))).join(','));
     const enHtml = read(path.join(ROOT, 'site', dir, slug + '.html'));
     const jaHtml = read(path.join(ROOT, 'site', dir, slug + '.ja.html'));
@@ -2850,8 +2877,8 @@ console.log('\n76. The age of the DOI: six months since the first DOI of a new w
       'The first DOI is the DOI registered earliest among the DOI given and the DOIs that its metadata names as earlier versions of the work, or as the DOI of all its versions.',
       'Where the metadata gives no such day, as for Jxiv, the operator checks it by hand.',
       'This does not apply to a new version of a work that Sophaxis already lists, or to a submission opened before ' + site.doiAgeFrom + '.'].every((t) => sub.includes(t))
-    && [site.doiAgeFrom + ' から、新しい作品は、その最初の DOI が登録されてから六か月以上たっているときに限り載せます。',
-      '六か月は、投稿の issue を開いた日まで、日本時間で数えます。', '月の同じ日に満了し、短い月ではその月の末日に満了します。',
+    && [site.doiAgeFrom + ' から、新しい作品は、その最初の DOI が登録されてから ' + site.doiAgeMonths + ' か月以上たっているときに限り載せます。',
+      site.doiAgeMonths + ' か月は、投稿の issue を開いた日まで、日本時間で数えます。', '月の同じ日に満了し、短い月ではその月の末日に満了します。',
       'メタデータにその日がないとき（Jxiv など）は、運営者が手で確かめます。',
       'すでに Sophaxis に載っている作品の新しい版と、' + site.doiAgeFrom + ' より前に開かれた投稿には掛かりません。'].every((t) => subJa.includes(t)));
   ok('the form, the steps, the automation page and llms.txt say so',
@@ -2927,7 +2954,7 @@ console.log('\n77. Conflicts of interest: no priority for the operator, a public
     && mod.includes("The operator's own submissions get no priority: they are moderated in the order they come, and their records have no other place on the site than any other record.")
     && mod.includes('From ' + site.ownWaitFrom + ', a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.')
     && mod.includes('The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.')
-    && modJa.includes('運営者の投稿は優先しません。') && modJa.includes(site.ownWaitFrom + ' から、運営者の投稿は、投稿の issue を開いてから七日がたつまで載せません。')
+    && modJa.includes('運営者の投稿は優先しません。') && modJa.includes(site.ownWaitFrom + ' から、運営者の投稿は、投稿の issue を開いてから ' + site.ownWaitDays + ' 日がたつまで載せません。')
     && modJa.includes('それより早く載せようとすると、サイトの生成が止まります。'));
   const base = { id: '2026.0099', title: 'T', authors: [{ name: 'A B' }], abstract: 'An abstract.', category: 'philosophy', license: 'CC-BY-4.0',
     versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-11-01' }], llm_disclosure: 'No generative model was used at all in this work.', issue: 9, status: 'listed' };
@@ -3221,10 +3248,10 @@ console.log('\n84. The site in Japanese: the top page and every prose page');
     && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + site.notOffered.map((p) => p.ja).join('、') + '）に住んでいる著者') && ja.includes('国籍や人種ではなく'));
   const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
   const jaPolicies = ['privacy', 'terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'];
-  ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the records stay in English',
+  ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the lists stay in English and the records have Japanese pages',
     jaPages.every((s) => ja.includes('href="./' + s + '.ja.html"')) && jaPolicies.every((s) => ja.includes('href="./policies/' + s + '.ja.html"')) && ja.includes('href="./disclaimer.ja.html"')
     && Object.keys(site.categories).every((s) => ja.includes('href="./list/' + s + '.html">' + site.categoriesJa[s] + '（')) && site.collections.every((c) => ja.includes('href="./collection/' + c.slug + '.html">' + c.ja + '（'))
-    && ja.includes('記録の頁・一覧・統計は英語です。'));
+    && ja.includes('一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。'));
   ok('the Japanese index of the policies lists every policy in Japanese, and llms.txt links every Japanese page',
     jaPolicies.every((s) => read(path.join(ROOT, 'site', 'policy.ja.html')).includes('<a href="./policies/' + s + '.ja.html">'))
     && jaPages.every((s) => read(path.join(ROOT, 'site', 'llms.txt')).includes(site.baseUrl + s + '.ja.html)')) && read(path.join(ROOT, 'site', 'llms.txt')).includes(site.baseUrl + 'index.ja.html)'));
@@ -3448,9 +3475,9 @@ console.log('\n91. Positioning: how Sophaxis differs, the glossary, citing Sopha
   const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   ok('the glossary\'s numbers and days are those of site.json: ' + n + ' fields, ' + site.ownWaitDays + ' days, six months, and the days of vouching and the statements',
     g.includes('one of the ' + W[n] + ' areas') && g.includes('waits ' + W[site.ownWaitDays] + ' days in public') && site.doiAgeMonths === 6 && g.includes('From ' + site.doiAgeFrom + ', a new work is listed only if six months have passed since it was registered.')
-    && read(path.join(ROOT, 'glossary.ja.md')).includes(site.doiAgeFrom + ' から、新しい作品は、これが登録されてから六か月たっているときに限り載せます。')
+    && read(path.join(ROOT, 'glossary.ja.md')).includes(site.doiAgeFrom + ' から、新しい作品は、これが登録されてから ' + site.doiAgeMonths + ' か月たっているときに限り載せます。')
     && g.includes('- Vouching: from ' + site.vouchFrom + ',') && g.includes('from ' + site.statementsFrom + ', on funding') && g.includes('It is not peer review')
-    && read(path.join(ROOT, 'glossary.ja.md')).includes(['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][n] + 'つの領域') && read(path.join(ROOT, 'glossary.ja.md')).includes(['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][site.ownWaitDays] + '日のあいだ公開で待ちます'));
+    && read(path.join(ROOT, 'glossary.ja.md')).includes(['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][n] + 'つの領域') && read(path.join(ROOT, 'glossary.ja.md')).includes(site.ownWaitDays + ' 日のあいだ公開で待ちます'));
   const press = read(path.join(ROOT, 'press.md'));
   ok('the press page says to cite a listed work by its own DOI, and Sophaxis itself by the DOI of every version of its code, from site.json',
     press.includes('To cite a listed work, cite the DOI of that work, not Sophaxis.') && press.includes('https://doi.org/' + site.zenodo.doi + '`')
@@ -4124,7 +4151,7 @@ console.log('\n100. Closing, questions actually asked, the criteria for listing,
   const dayName = since.getUTCDate() + ' ' + since.toLocaleString('en-GB', { month: 'long', timeZone: 'UTC' });
   ok('the Moderation Policy, in both languages, says how the criteria for listing are reviewed (yearly, on ' + dayName + ') and changed, with the ' + days + ' days of the Terms, and the yearly audit asks it',
     mod.includes('\n## Changes to the criteria\n') && modJa.includes('\n## 基準の変更\n') && days && mod.includes('at least ' + days + ' days before it takes effect') && modJa.includes('少なくとも ' + days + ' 日前に')
-    && mod.includes('in the yearly audit on ' + dayName + ', the day Sophaxis began') && modJa.includes('十月 ' + since.getUTCDate() + ' 日の年ごとの点検') && since.getUTCMonth() === 9
+    && mod.includes('in the yearly audit on ' + dayName + ', the day Sophaxis began') && modJa.includes((since.getUTCMonth() + 1) + ' 月 ' + since.getUTCDate() + ' 日の年ごとの点検') && since.getUTCMonth() === 9
     && ops.includes('- [ ] The criteria for listing still serve their purpose. A change follows "Changes to the criteria" in the Moderation Policy.'));
   /* 369: the feed of policy changes. Each policy's last change has an entry of that day; an announced change has one with its date. */
   const changes = B.loadPolicyChanges();
@@ -4232,7 +4259,7 @@ console.log('\n102. Every record page keeps three things apart: where the work i
   const SITE102 = JSON.parse(read(path.join(ROOT, 'site.json')));
   /* The rows of the status table, as the page shows them, read back from the HTML. */
   const statusRows = (html) => {
-    const m = /<div class="table"><table><tr><th scope="col">Status<\/th><th scope="col">For this record<\/th><\/tr>([\s\S]*?)<\/table><\/div>/.exec(html);
+    const m = /<div class="table" id="status"><table><tr><th scope="col">Status<\/th><th scope="col">For this record<\/th><\/tr>([\s\S]*?)<\/table><\/div>/.exec(html);
     return m ? [...m[1].matchAll(/<tr><th scope="row">([^<]*)<\/th><td>([\s\S]*?)<\/td><\/tr>/g)].map((r) => [r[1], r[2]]) : null;
   };
   const link = (doi) => '<a href="https://doi.org/' + doi + '">' + doi + '</a>';
@@ -4242,7 +4269,10 @@ console.log('\n102. Every record page keeps three things apart: where the work i
     if (!rows) return ['no status table'];
     if (html.split('<th scope="col">Status</th>').length !== 2) e.push('more than one status table');
     if (JSON.stringify(rows.map((r) => r[0])) !== JSON.stringify(['Deposit', 'Listing on Sophaxis', 'Peer review or publication'])) return e.concat('rows are ' + rows.map((r) => r[0]).join(' / '));
-    if (!(html.indexOf('<th scope="col">Status</th>') < html.indexOf('<article') && html.indexOf('<th scope="col">Status</th>') > html.indexOf('<p class="meta"><span class="id">'))) e.push('not between the meta line and the article');
+    /* Item 450: on a phone the title, the ways to read and the abstract come first; the table follows the abstract, before Read. */
+    const at = html.indexOf('<th scope="col">Status</th>');
+    if (!(html.indexOf('<h2 id="abstract">Abstract</h2>') >= 0 && html.indexOf('</article>') >= 0 && at > html.indexOf('</article>') && html.indexOf('</article>') > html.indexOf('<h2 id="abstract">Abstract</h2>')
+      && at < html.indexOf('<h2 id="read">Read</h2>'))) e.push('not between the end of the article, after the abstract, and Read');
     const [dep, lst, rev] = rows.map((r) => r[1]);
     const v = p.versions[p.versions.length - 1], first = p.versions[0];
     const dois = (t) => [...t.matchAll(/href="https:\/\/doi\.org\/([^"]+)"/g)].map((m) => m[1]);
@@ -4273,6 +4303,225 @@ console.log('\n102. Every record page keeps three things apart: where the work i
     B102.statusTable(noDate).includes('Listed: not recorded.') && B102.statusTable(noDate).includes('Withdrawn: not recorded;'));
   const removed = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status === 'removed');
   ok('a removed record shows no status table', removed.every((p) => !read(path.join(ROOT, 'site', 'abs', p.id + '.html')).includes('<th scope="col">Status</th>')));
+}
+
+/* ------------------------------------------------------------ 103 */
+console.log('\n103. Every record has a page in Japanese: the status table in Japanese, the title and the abstract in the authors\' words (items 445 and 446)');
+{
+  const B103 = require('../build.js');
+  const S103 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const all = loadPapers(path.join(ROOT, 'data', 'papers')).papers;
+  const shown = all.filter((p) => p.status !== 'removed');
+  const e103 = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const rowsJa = (html) => {
+    const m = /<div class="table" id="status"><table><tr><th scope="col">状態<\/th><th scope="col">この記録<\/th><\/tr>([\s\S]*?)<\/table><\/div>/.exec(html);
+    return m ? [...m[1].matchAll(/<tr><th scope="row">([^<]*)<\/th><td>([\s\S]*?)<\/td><\/tr>/g)].map((r) => [r[1], r[2]]) : null;
+  };
+  /* What a Japanese record page must hold, from the record alone. */
+  const jaProblems = (p, ja, en) => {
+    const e = [], rows = rowsJa(ja);
+    const v = p.versions[p.versions.length - 1], first = p.versions[0];
+    const pair = '<link rel="alternate" hreflang="en" href="' + S103.baseUrl + 'abs/' + p.id + '.html">\n<link rel="alternate" hreflang="ja" href="' + S103.baseUrl + 'abs/' + p.id + '.ja.html">';
+    if (!/^<!doctype html>\n<html lang="ja">/.test(ja) || !ja.includes(pair) || !en.includes(pair)) e.push('not a Japanese page named by the English one');
+    if (!rows) return e.concat('no status table in Japanese');
+    if (JSON.stringify(rows.map((r) => r[0])) !== JSON.stringify(['預け先', S103.name + ' への掲載', '査読・出版'])) return e.concat('rows ' + rows.map((r) => r[0]).join(' / '));
+    const [dep, lst, rev] = rows.map((r) => r[1]);
+    const dois = (t) => [...t.matchAll(/href="https:\/\/doi\.org\/([^"]+)"/g)].map((m) => m[1]);
+    if (!dep.startsWith(B103.repoName(v.doi) + '。最新の版：v' + v.version + '、<a href="https://doi.org/' + v.doi + '">' + v.doi + '</a>。最初の版（v1）：' + (first.date || '記録なし')) || JSON.stringify(dois(dep)) !== JSON.stringify([v.doi])) e.push('deposit: ' + dep);
+    if (!lst.startsWith('<a href="../policies/moderation.ja.html">モデレーション</a>を通りました。モデレーションは査読ではありません。掲載：' + (p.listed || '記録なし') + '。投稿：<a href="' + S103.repo + '/issues/' + p.issue + '">issue #' + p.issue + '</a>。')) e.push('listing: ' + lst);
+    if ((p.status === 'withdrawn') !== lst.includes('撤回：' + (p.withdrawal_date || '記録なし') + '。記録は残します。')) e.push('listing, withdrawal: ' + lst);
+    if (p.published ? rev !== B103.publishedSaidJa(p.published) || JSON.stringify(dois(rev)) !== JSON.stringify([p.published.doi]) : rev !== '報告はありません。これはプレプリントです。') e.push('peer review: ' + rev);
+    if (!ja.includes('>' + e103(p.title) + '</h1>') || !ja.includes('<div class="abstract"') || !ja.includes('<p>' + e103(p.abstract) + '</p></div>')) e.push('the title or the abstract is not the authors\' own');
+    if (/<meta name="citation_|itemtype="https:\/\/schema\.org\/ScholarlyArticle"/.test(ja) || !en.includes('<meta name="citation_title"')) e.push('the tags for search engines are not on the English page alone');
+    return e;
+  };
+  const live = shown.map((p) => [p.id, fs.existsSync(path.join(ROOT, 'site', 'abs', p.id + '.ja.html'))
+    ? jaProblems(p, read(path.join(ROOT, 'site', 'abs', p.id + '.ja.html')), read(path.join(ROOT, 'site', 'abs', p.id + '.html'))) : ['missing']]).filter(([, e]) => e.length);
+  ok('every record shown has a page in Japanese, named by its English page and naming it, with the status table in Japanese, row by row, and the title and the abstract as the authors gave them (' + shown.length + ' pages)',
+    shown.length > 0 && live.length === 0, live.map(([id, e]) => id + ': ' + e.join('; ')).join(' / '));
+  const fx = ['2026.0001', '2026.0002'].map((id) => JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', id + '.json'))));
+  const fxBad = fx.map((p) => [p.id, jaProblems(p, read(path.join(FIX, 'abs', p.id + '.ja.html')), read(path.join(FIX, 'abs', p.id + '.html')))]).filter(([, e]) => e.length);
+  ok('so do the fixtures: a published version, and a withdrawal with its date', fx[0].published && fx[1].status === 'withdrawn' && fxBad.length === 0, fxBad.map(([id, e]) => id + ': ' + e.join('; ')).join(' / '));
+  const noDate = Object.assign(JSON.parse(JSON.stringify(fx[1])), { listed: undefined, withdrawal_date: undefined });
+  ok('in Japanese too, a date the record does not hold is said to be not recorded', B103.statusTableJa(noDate).includes('掲載：記録なし。') && B103.statusTableJa(noDate).includes('撤回：記録なし。'));
+  const removed = all.filter((p) => p.status === 'removed');
+  ok('a removed record keeps a Japanese notice that is not indexed and shows nothing of the work (' + removed.length + ')', removed.every((p) => {
+    const h = read(path.join(ROOT, 'site', 'abs', p.id + '.ja.html'));
+    return h.includes('<meta name="robots" content="noindex">') && !h.includes('<article') && !h.includes('id="status"');
+  }));
+  const sm = read(path.join(ROOT, 'site', 'sitemap.xml')), idxJa = read(path.join(ROOT, 'site', 'index.ja.html'));
+  ok('the sitemap lists each Japanese record page with the day of its English page, and the Japanese top page links each of them',
+    shown.every((p) => { const d = (new RegExp(S103.baseUrl.replace(/\./g, '\\.') + 'abs/' + p.id.replace('.', '\\.') + '\\.html</loc><lastmod>(\\d{4}-\\d{2}-\\d{2})<').exec(sm) || [])[1]; return d && sm.includes(S103.baseUrl + 'abs/' + p.id + '.ja.html</loc><lastmod>' + d + '<') && idxJa.includes('href="./abs/' + p.id + '.ja.html"'); }));
+  const subJa = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  ok('the Japanese words for the extent of use of generative models are those the Submission Policy gives each level, and every level has them',
+    Object.keys(S103.llmExtents).every((k) => B103.LLM_EXTENTS_JA[k] && subJa.includes(S103.llmExtents[k] + '.（' + B103.LLM_EXTENTS_JA[k] + '）')));
+}
+
+/* ------------------------------------------------------------ 104 */
+console.log('\n104. The operator\'s own work is marked plainly: a notice above the title and a strong flag in every listing (item 447)');
+{
+  const B104 = require('../build.js');
+  const shown = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status !== 'removed');
+  const own = shown.filter((p) => p.operator_own === true);
+  const bad = own.flatMap((p) => ['', '.ja'].map((l) => {
+    const h = read(path.join(ROOT, 'site', 'abs', p.id + l + '.html'));
+    const at = h.indexOf('<div class="notice own">');
+    const ok1 = at > h.indexOf('<p class="meta"><span class="id">') && at < h.indexOf('<article') && (h.match(/<div class="notice own">/g) || []).length === 1
+      && h.includes(l ? '<span class="flag own">運営者自身の投稿</span>' : '<span class="flag own">operator’s own submission</span>')
+      && h.includes(l ? 'href="../policies/moderation.ja.html#利益相反"' : 'href="../policies/moderation.html#conflicts-of-interest"');
+    return ok1 ? null : p.id + l;
+  })).filter(Boolean);
+  const others = shown.filter((p) => p.operator_own !== true).filter((p) => read(path.join(ROOT, 'site', 'abs', p.id + '.html')).includes('notice own'));
+  ok('each record page of the operator’s own work, in English and in Japanese, has one notice of it above the title, linking the rule on conflicts of interest, and the strong flag (' + own.length + ' records); no other record has the notice',
+    bad.length === 0 && others.length === 0, bad.concat(others.map((p) => p.id)).join(', '));
+  const waited = B104.ownWorkNotice({ operator_own: true, submitted: '2026-11-09', listed: '2026-11-16' });
+  ok('where the record keeps the day its issue was opened, the notice gives the days it waited in public, counted from the record, in both languages; a record not the operator’s has no notice',
+    waited.includes('was open in public for 7 days, from 2026-11-09 to 2026-11-16') && B104.ownWorkNotice({ operator_own: true, submitted: '2026-11-09', listed: '2026-11-16' }, true).includes('2026-11-09 から 2026-11-16 まで 7 日のあいだ')
+    && !B104.ownWorkNotice({ operator_own: true, listed: '2026-11-16' }).includes('days') && B104.ownWorkNotice({ listed: '2026-11-16' }) === '');
+  /* Every listing: the top pages, the field pages, the collections and the author pages. */
+  const listings = ['index.html', 'index.ja.html'].concat(fs.readdirSync(path.join(ROOT, 'site', 'list')).filter((f) => f.endsWith('.html')).map((f) => 'list/' + f),
+    fs.readdirSync(path.join(ROOT, 'site', 'collection')).filter((f) => f.endsWith('.html')).map((f) => 'collection/' + f), fs.readdirSync(path.join(ROOT, 'site', 'author')).filter((f) => f.endsWith('.html')).map((f) => 'author/' + f));
+  const wrong = listings.filter((f) => {
+    const list = (read(path.join(ROOT, 'site', f)).split('<ol class="list">')[1] || '').split('</ol>')[0];
+    const items = list.split('<li>').slice(1);
+    return items.some((it) => { const id = (/<span class="id">([^<]+)<\/span>/.exec(it) || [])[1]; const p = shown.find((x) => x.id === id); return !p || /class="flag own"/.test(it) !== (p.operator_own === true); });
+  });
+  ok('every listing (' + listings.length + ' pages) gives each of the operator’s works the strong flag, and no other work', wrong.length === 0, wrong.join(', '));
+  ok('the strong flag has a border in the main colour and bold text, beside the plain flags', /\.flag\.own \{ border: 2px solid var\(--accent\); color: var\(--fg\); font-weight: bold; \}/.test(read(path.join(ROOT, 'build.js'))));
+}
+
+/* ------------------------------------------------------------ 105 */
+console.log('\n105. Each field page gives its number of records and the day the newest was listed (item 448)');
+{
+  const B105 = require('../build.js');
+  const S105 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const shown = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status !== 'removed');
+  const bad = Object.keys(S105.categories).filter((slug) => {
+    const h = read(path.join(ROOT, 'site', 'list', slug + '.html'));
+    const mine = shown.filter((p) => [p.category].concat(p.categories || []).includes(slug));
+    if (!mine.length) return h.includes('Records in this field:') || !h.includes('No preprints are listed in this field yet.');
+    const newest = mine.map((p) => p.listed).sort().pop();
+    return !h.includes('<p class="meta">Records in this field: ' + mine.length + (mine.some((p) => p.status === 'withdrawn') ? ', withdrawn ones included' : '') + '. Latest listed: <time datetime="' + newest + '">' + newest + '</time>.</p>');
+  });
+  ok('each of the ' + Object.keys(S105.categories).length + ' field pages gives the count and the newest listing day of its own records, counted from them, and an empty field says so instead', bad.length === 0, bad.join(', '));
+  ok('the count names withdrawn records when there are some, and an empty list gives no line',
+    B105.fieldFacts([{ listed: '2026-11-01', status: 'listed' }, { listed: '2026-11-03', status: 'withdrawn' }]).includes('Records in this field: 2, withdrawn ones included. Latest listed: <time datetime="2026-11-03">') && B105.fieldFacts([]) === '');
+}
+
+/* ------------------------------------------------------------ 106 */
+console.log('\n106. On a phone, a record page reads in order: the title, the ways to read, the abstract, the status, then how to cite (item 450)');
+{
+  const shown = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status !== 'removed');
+  const ORDER = { '': ['<h1 itemprop="headline">', '<p class="access">', '<p class="meta jump"><a href="#abstract">Abstract</a> · <a href="#status">Status</a> · <a href="#cite">Cite</a></p>', '<h2 id="abstract">Abstract</h2>', 'id="status"', '<h2 id="read">Read</h2>', '<h2 id="cite">Cite</h2>', '<h2>Versions</h2>'],
+    '.ja': ['<h1', '<p class="access">', '<p class="meta jump"><a href="#abstract">要旨</a> · <a href="#status">状態</a> · <a href="#cite">引用</a></p>', '<h2 id="abstract">要旨</h2>', 'id="status"', '<h2 id="read">読む</h2>', '<h2 id="cite">引用</h2>', '<h2>版</h2>'] };
+  const inOrder = (h, marks) => marks.every((m, i) => h.split(m).length === 2 && (i === 0 || h.indexOf(marks[i - 1]) < h.indexOf(m)));
+  const bad = shown.filter((p) => p.status === 'listed').flatMap((p) => ['', '.ja'].filter((l) => !inOrder(read(path.join(ROOT, 'site', 'abs', p.id + l + '.html')), ORDER[l])).map((l) => p.id + l));
+  ok('every listed record page, in both languages, has the title, the Access line, the links to the abstract, the status and the citation, then the abstract, the status, Read, Cite and the versions, in this order, each once',
+    bad.length === 0, bad.join(', '));
+  const cut = read(path.join(ROOT, 'site', 'abs', shown[0].id + '.html')).replace('<h2 id="cite">Cite</h2>', '').replace('<h2>Versions</h2>', '<h2>Versions</h2><h2 id="cite">Cite</h2>');
+  ok('the order is read from the page: Cite moved after the versions is refused', !inOrder(cut, ORDER['']));
+}
+
+/* ------------------------------------------------------------ 107 */
+console.log('\n107. The search page on a phone, with the one script (item 453)');
+{
+  const css = read(path.join(ROOT, 'build.js'));
+  const s = read(path.join(ROOT, 'site', 'search.html'));
+  ok('below 40rem the words take the whole width, the field and the year share a line, and the controls and the button are at least 2.75rem high',
+    css.includes('@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }'));
+  ok('the search page still runs only search.js from this site, and no other page runs a script',
+    (s.match(/<script\b/g) || []).length === 1 && s.includes('<script src="./search.js" defer></script>')
+    && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && f !== 'search.html').every((f) => !/<script\b/.test(read(path.join(ROOT, 'site', f)))));
+}
+
+/* ------------------------------------------------------------ 108 */
+console.log('\n108. Numbers in the Japanese pages: counts, durations and dates in Arabic digits (item 473)');
+{
+  /* A month in kanji, and a duration in kanji. Set phrases such as 一つ, 一人, 一度 and 一日に一度 are not durations. */
+  const D = '〇一二三四五六七八九十百';
+  const KANJI_MONTH = new RegExp('[' + D + ']{1,3} ?月 ?[\\d' + D + ']');
+  const KANJI_DURATION = new RegExp('[' + D + ']+ ?(?:か月|ヶ月|カ月|年間|週間|日間|時間|分間|日前|日後|日以内)|[二三四五六七八九十百]+ ?日(?:が|の|を|まで|以|前|後|間)');
+  const offending = (text) => text.split('\n').filter((l) => !/^\s*>/.test(l)).filter((l) => KANJI_MONTH.test(l) || KANJI_DURATION.test(l));
+  const jaFiles = fs.readdirSync(ROOT).filter((f) => f.endsWith('.ja.md')).concat(fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => f.endsWith('.ja.md')).map((f) => 'policies/' + f));
+  const readmeJa = read(path.join(ROOT, 'README.md')).split('\n').filter((l) => /[\u3040-\u30ff]/.test(l)).join('\n');
+  const found = jaFiles.flatMap((f) => offending(read(path.join(ROOT, f))).map((l) => f + ': ' + l.slice(0, 40))).concat(offending(readmeJa).map((l) => 'README.md: ' + l.slice(0, 40)));
+  ok('no Japanese page (' + jaFiles.length + ' files) and no Japanese line of the README writes a month or a duration in kanji', found.length === 0, found.slice(0, 5).join(' / '));
+  ok('the rule finds 「十月 30 日」, 「六か月」 and 「七日のあいだ」, and passes 「10 月 30 日」, 「6 か月」, 「一日に一度」 and 「一つ」',
+    offending('十月 30 日').length === 1 && offending('六か月以上').length === 1 && offending('七日のあいだ公開で').length === 1 && offending('三年間').length === 1
+    && offending('10 月 30 日に、6 か月、7 日のあいだ、一日に一度、一つ、一人、二通り、十分に').length === 0);
+  const contrib = read(path.join(ROOT, 'CONTRIBUTING.md'));
+  ok('CONTRIBUTING.md states the rule and its exceptions', contrib.includes('## Numbers in the Japanese pages') && contrib.includes('The Japanese pages write counts, durations and dates in Arabic digits')
+    && contrib.includes('Set phrases keep their kanji') && contrib.includes('Quotations and the texts of laws are left as they are.'));
+  /* The comparison of the translations reads "six months" as 6 and "30 October" as 10 and 30, so the digits must match. */
+  ok('the comparison of the translations reads a number spelled before its unit, and a named month, as numbers',
+    [...'six months; 30 October; October 2026; seven-day; one day'.matchAll(NUM_WORD_UNIT)].map((m) => NUM_WORDS[m[1].toLowerCase()]).join() === '6,7'
+    && [...'on 30 October, in October 2026, May I'.matchAll(MONTH_DATE)].map((m) => MONTH_NAMES.indexOf(m[2] || m[3]) + 1).join() === '10,10');
+}
+
+/* ------------------------------------------------------------ 109 */
+console.log('\n109. If the operator cannot work: the steps, in the Terms of Use in both languages and in the operator\'s routine (item 457)');
+{
+  const te = read(path.join(ROOT, 'policies', 'terms.md')), tj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
+  const part = (t, h) => (new RegExp('\\n### ' + h + '\\n([\\s\\S]*?)\\n## ').exec(t) || [, ''])[1];
+  const en = part(te, 'If the operator cannot work'), ja = part(tj, '運営者が作業できないとき');
+  const steps = (t) => [...t.matchAll(/^(\d+)\. ([^：:]+)[：:]?/gm)].map((m) => m[2]);
+  ok('the Terms of Use, under Continuity, give the steps in order, in both languages: who is told, what is paused, what stays online, what works without the operator, who could take over, and the return',
+    te.indexOf('### If the operator cannot work') > te.indexOf('## Continuity') && tj.indexOf('### 運営者が作業できないとき') > tj.indexOf('## 続けるための備え')
+    && JSON.stringify(steps(en).slice(0, 5)) === JSON.stringify(['Who is told', 'What is paused', 'What stays online', 'What still works without the operator', 'Who could take over']) && /^6\. When the operator returns/m.test(en)
+    && JSON.stringify(steps(ja).slice(0, 5)) === JSON.stringify(['知らせる先', '止まるもの', '公開のまま残るもの', '運営者がいなくても働くもの', '引き継げる人']) && /^6\. 運営者が戻ったら/m.test(ja));
+  ok('what the Terms say works without the operator is what tools/removal.js does at once',
+    en.includes("still takes the record's title, authors, abstract and PDF copy offline at once, as the Takedown Policy says") && read(path.join(ROOT, 'tools', 'removal.js')).includes('the record page (title, authors, abstract, PDF copy) is taken offline at once'));
+  const ops = read(path.join(ROOT, 'docs', 'operations.md'));
+  const opsPart = (/\n## If the operator cannot work\n([\s\S]*?)\n## /.exec(ops) || [, ''])[1];
+  ok('the operator’s routine expands it: before, when a pause begins, what runs and what waits, how a successor or a custodian takes over, and when it ends, with the switch in site.json',
+    ['### Before it happens', '### When a pause begins', '### What runs during a pause, and what waits', '### How a successor or a custodian takes over', '### When the pause ends'].every((h, i, a) => opsPart.includes(h) && (i === 0 || opsPart.indexOf(a[i - 1]) < opsPart.indexOf(h)))
+    && opsPart.includes('`"submissionsPaused": true`') && opsPart.includes('`"submissionsPaused": false`') && opsPart.includes('Successor settings'));
+}
+
+/* ------------------------------------------------------------ 110 */
+console.log('\n110. Outside assessments and the proposal for the advisory board (items 463 and 454)');
+{
+  const oa = read(path.join(ROOT, 'docs', 'outside-assessments.md'));
+  const sec = (/\n## An assessment by ChatGPT, 2026-11-12\n([\s\S]*?)\n## /.exec(oa) || [, ''])[1];
+  const rows = sec.split('\n').filter((l) => /^\| /.test(l) && !/^\| (Point|---)/.test(l)).map((l) => l.split(' | '));
+  const POINTS = ['Everything depends on one person', 'No independent authors yet', 'Moderation is not quality control', 'Recognition is limited', 'Preservation', 'Integrations', 'Operational statistics'];
+  ok('the record of outside assessments names the assessment of 2026-11-12 as an outside evaluation by a language model, not an endorsement, and gives each of its ' + POINTS.length + ' points with what was done and its state',
+    oa.includes('An assessment listed here is an outside evaluation, not an endorsement.') && sec.includes('It is an outside evaluation made by a language model, not a review by a person, and not an endorsement.')
+    && rows.length === POINTS.length && POINTS.every((p, i) => rows[i][0].startsWith('| ' + p)) && rows.every((r) => r.length === 3 && r[1].trim() && r[2].replace(/\|\s*$/, '').trim())
+    && read(path.join(ROOT, 'README.md')).includes('(docs/outside-assessments.md)'));
+  let merged = new Set();
+  try { merged = new Set(require('child_process').execFileSync('git', ['log', '--first-parent', '--format=%s', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).split('\n').map((l) => (/^Merge pull request #(\d+)|\(#(\d+)\)$/.exec(l) || []).slice(1).find(Boolean)).filter(Boolean)); } catch (e) { merged = new Set(); }
+  const cited = [...oa.matchAll(/pull request #(\d+)/g)].map((m) => m[1]);
+  ok('it cites only pull requests that were merged (' + cited.join(', ') + ')', cited.length > 0 && cited.every((n) => merged.has(n)), cited.filter((n) => !merged.has(n)).join(', '));
+  const prop = read(path.join(ROOT, 'docs', 'advisory-proposal.md'));
+  const S110 = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const n = Object.keys(S110.categories).length;
+  const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  const fieldsLine = (/^- One seat each for (.+)\.$/m.exec(prop) || [, ''])[1];
+  ok('the proposal for the advisory board is marked as a draft for the operator to confirm, and its count is the number of fields in site.json (' + n + '), in both languages, each field named',
+    prop.includes('Draft, not decided: 案（利用者が確かめる）.') && prop.includes('One adviser for each field that Sophaxis lists, ' + W[n] + ' in all while `site.json` names ' + W[n] + ' fields.')
+    && prop.includes('`site.json` が ' + n + ' 分野を挙げているあいだは、合わせて ' + n + ' 人です。')
+    && Object.values(S110.categories).every((c) => fieldsLine.toLowerCase().includes(c.toLowerCase())) && fieldsLine.split(/, | and /).length === n);
+  const adv = read(path.join(ROOT, 'advisory.md'));
+  ok('its declaration asks what the call asks: positions, payments in the period the call names, listed works, and anything else',
+    ['Any position held now at a repository, publisher, journal, preprint server or index.', 'Any payment received in the last three years from one of them.', 'Any listed work of their own, or of a close collaborator, on Sophaxis.'].every((x) => adv.includes(x))
+    && ['1. Positions held now at a repository, publisher, journal, preprint server or index:', '2. Payments received, in the period the call names, from one of them:', '3. Works of my own, or of a close collaborator, listed on Sophaxis:', '4. Anything else that a reader might reasonably see as a conflict, or "none":'].every((x) => prop.includes(x)));
+  const ops = read(path.join(ROOT, 'docs', 'operations.md'));
+  ok('the operator’s routine says how to check PhilPapers by hand, since it refuses automated requests (item 462)',
+    ops.includes('PhilPapers answers automated requests with 403, so the state of the request to its Open Access Gateway, asked on 2026-11-03, is checked by hand.') && read(path.join(ROOT, 'README.md')).includes('On the same day the operator asked PhilPapers to add Sophaxis to its Open Access Gateway'));
+}
+
+/* ------------------------------------------------------------ 111 */
+console.log('\n111. Each page opens with a sentence that says what it is (item 472)');
+{
+  const firstLine = (t) => t.split('\n').find((l, i) => i > 0 && l.trim() && !/^(Last updated:|最終更新：|Japanese: |これは英語の )/.test(l)) || '';
+  const pages = fs.readdirSync(ROOT).filter((f) => f.endsWith('.md') && !['README.md', 'CHANGELOG.md', 'CLAUDE.md', 'CONTRIBUTING.md', 'SECURITY.md'].includes(f))
+    .concat(fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => f.endsWith('.md')).map((f) => 'policies/' + f));
+  const OPENS = /^(This page |These Terms of Use |The [A-Z][a-z]+ Policy |Sophaxis (is|runs) |この頁は、|この利用規約は、|[^、。]{1,12}の規程は、|Sophaxis (は、|には、|の個人情報))/;
+  const bad = pages.filter((f) => { const l = firstLine(read(path.join(ROOT, f))); return /^#/.test(l) || /^(The laws, licences and terms that this page cites|この頁が引く法令)/.test(l) || !OPENS.test(l); });
+  ok('every page and policy built from Markdown (' + pages.length + ' files) opens with a sentence that says what it is, not with a heading or a note on its quotations', bad.length === 0, bad.join(', '));
+  ok('a page that opens with a heading or with the note on quotations is refused',
+    !OPENS.test(firstLine('# T\n\nLast updated: 2026-11-12.\n\n## The aim\n')) && /^(The laws, licences and terms that this page cites)/.test(firstLine('# T\n\nThe laws, licences and terms that this page cites are quoted.\n')));
 }
 
 console.log('\n' + '-'.repeat(60));

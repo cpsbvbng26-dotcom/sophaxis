@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-12",
+    "policies": ["terms", "submission", "moderation", "copyright", "licences", "privacy", "withdrawal", "takedown"],
+    "title": "A first sentence for each policy, the steps while the operator cannot work, and numbers in the Japanese translations",
+    "text": "Each policy now opens with a sentence that says what it is. The Terms of Use set out, under Continuity, what happens while the operator cannot work at all: who is told, what is paused, what stays online, what still works without the operator, and who could take over. The Japanese translations write durations and dates in Arabic digits, as the English does. None of these narrows a right or adds a duty."
+  },
+  {
     "date": "2026-11-11",
     "policies": ["moderation", "terms", "privacy"],
     "title": "How the criteria for listing change, a feed for policy changes, and no counts of views",

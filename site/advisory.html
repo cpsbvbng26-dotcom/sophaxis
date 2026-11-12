@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Advisory board: a call | Sophaxis</title>
 <meta name="description" content="The call for an advisory board of Sophaxis: what an adviser does, who can join and how.">
 <link rel="canonical" href="https://sophaxis.vercel.app/advisory.html">
@@ -64,6 +64,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -75,6 +79,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -95,8 +101,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Advisory board: a call</h1>
-<p>Last updated: 2026-11-11.</p>
+<p>Last updated: 2026-11-12.</p>
 <p>Japanese: <a href="./advisory.ja.html">諮問委員の募集（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
+<p>This page is the call for an advisory board of Sophaxis: what an adviser does, who can join and how.</p>
 <nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#why">Why</a></li><li><a href="#what-an-adviser-does">What an adviser does</a></li><li><a href="#who-can-join">Who can join</a></li><li><a href="#how-to-join">How to join</a></li><li><a href="#conflicts-of-interest">Conflicts of interest</a></li></ul></nav>
 <h2 id="why">Why</h2>
 <p>Sophaxis has no editorial board and no advisory body; the <a href="./transparency.html">transparency self-assessment</a> marks this as not met. Since 2026-11-10 the operator has invited researchers to form an advisory board. Until someone agrees and is named on the <a href="./contact.html">Operator and contact</a> page, there is no board.</p>

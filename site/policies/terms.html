@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Terms of Use | Sophaxis</title>
 <meta name="description" content="Terms of Use of Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/terms.html">
@@ -65,6 +65,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -76,6 +80,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -96,8 +102,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Terms of Use</h1>
-<p>Last updated: 2026-11-11.</p>
+<p>Last updated: 2026-11-12.</p>
 <p>Japanese: <a href="./terms.ja.html">利用規約（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
+<p>These Terms of Use are the rules for everyone who reads Sophaxis or submits to it.</p>
 <p>The laws, licences and terms that this page cites are quoted at the end of each section that cites them. Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated. A citation whose source could not be fetched is named there as not quoted, with the reason.</p>
 <nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#who-these-terms-apply-to">Who these terms apply to</a></li><li><a href="#what-sophaxis-provides">What Sophaxis provides</a></li><li><a href="#the-authors-bear-full-responsibility">The authors bear full responsibility</a></li><li><a href="#what-readers-may-do">What readers may do</a></li><li><a href="#what-is-not-allowed">What is not allowed</a></li><li><a href="#acts-outside-these-rules-that-may-come-near-a-law">Acts outside these rules that may come near a law</a></li><li><a href="#no-warranty">No warranty</a></li><li><a href="#changes-and-closure">Changes and closure</a></li><li><a href="#continuity">Continuity</a></li><li><a href="#law">Law</a></li><li><a href="#disputes">Disputes</a></li><li><a href="#people-outside-japan">People outside Japan</a></li><li><a href="#github-and-vercel">GitHub and Vercel</a></li><li><a href="#general">General</a></li><li><a href="#contact">Contact</a></li></ul></nav>
 <h2 id="who-these-terms-apply-to">Who these terms apply to</h2>
@@ -148,6 +155,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2 id="continuity">Continuity</h2>
 <p>Sophaxis is run by one person, and is planned so that it can stop without loss.</p>
 <ul><li>A slow decision is not a pause: moderation can take several weeks or a few months. A pause is for when the operator cannot work on Sophaxis at all, for example because of illness. If that lasts for more than 30 days, the top page says that new submissions are paused. Listed records stay online.</li><li>Unless the operator cannot act, a closure is announced on the top page at least 30 days ahead, and new submissions stop first.</li><li>If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable. Each week, the pages and the PDF copies are also saved to the Internet Archive, where every author of the work consents to it.</li><li>The code and the records are archived at Zenodo with each release, under a DOI that resolves to the latest version: <a href="https://doi.org/10.5281/zenodo.24033371">10.5281/zenodo.24033371</a>.</li><li>The operator may hand Sophaxis over to another person, to an institution or to a legal entity. A hand-over is announced on the site first, and these terms stay in force until the new operator changes them in the ordinary way.</li><li>Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.</li><li>The DOIs stay with the repositories that issued them, whatever happens to Sophaxis.</li></ul>
+<h3 id="if-the-operator-cannot-work">If the operator cannot work</h3>
+<p>What happens while the operator cannot work on Sophaxis at all, step by step.</p>
+<ol><li>Who is told: the top page and the submit page say that new submissions are paused, as above, and a news item says the same. Each open submission issue is told that its decision waits. Where the operator can foresee the pause, this is done before it begins.</li><li>What is paused: no submission is accepted or declined, and the operator adds, changes or withdraws no record. A submission issue opened during the pause still gets the automatic check, and waits for a decision. The only change to a record made without the operator is the one in step 4.</li><li>What stays online: every record page, the PDF copies, the listing, the search, the feeds, the records as JSON and the OAI-PMH interface. The weekly check of the DOIs keeps running by itself, and so do the weekly saves to the Internet Archive, where every author of the work consents to them.</li><li>What still works without the operator: a removal request that reports exposure of personal data still takes the record's title, authors, abstract and PDF copy offline at once, as the Takedown Policy says. The decision on it waits for the operator.</li><li>Who could take over: the records are public in the repository and archived at Zenodo with each release, so a successor, or a custodian who keeps the records readable, needs nothing that only the operator holds. A hand-over of Sophaxis itself is announced first, as below. Anyone may also copy the records and continue elsewhere under the licences below.</li><li>When the operator returns, the notice goes, the waiting issues are decided in the order they came, and a news item says that submissions are open again.</li></ol>
 <h2 id="law">Law</h2>
 <p>These terms are governed by the laws of Japan. Nothing in them limits a right that the law does not allow to be limited. In particular, nothing in them excludes or limits liability for intent or gross negligence, or any liability that Japan's Consumer Contract Act or another law does not allow to be excluded or limited.</p>
 <h2 id="disputes">Disputes</h2>

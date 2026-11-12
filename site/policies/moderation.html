@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Moderation Policy | Sophaxis</title>
 <meta name="description" content="Moderation Policy of Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/moderation.html">
@@ -65,6 +65,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -76,6 +80,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -96,8 +102,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Moderation Policy</h1>
-<p>Last updated: 2026-11-11.</p>
+<p>Last updated: 2026-11-12.</p>
 <p>Japanese: <a href="./moderation.ja.html">モデレーションの規程（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
+<p>The Moderation Policy says what moderation checks before a work is listed, and what it does not check.</p>
 <p>The laws, licences and terms that this page cites are quoted at the end of each section that cites them. Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated. A citation whose source could not be fetched is named there as not quoted, with the reason.</p>
 <nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#moderation-is-not-peer-review">Moderation is not peer review</a></li><li><a href="#what-moderation-checks">What moderation checks</a></li><li><a href="#what-moderation-does-not-check">What moderation does not check</a></li><li><a href="#provisional-registration">Provisional registration</a></li><li><a href="#decisions">Decisions</a></li><li><a href="#moderators">Moderators</a></li><li><a href="#conflicts-of-interest">Conflicts of interest</a></li><li><a href="#research-integrity">Research integrity</a></li><li><a href="#after-listing">After listing</a></li><li><a href="#changes-to-the-criteria">Changes to the criteria</a></li></ul></nav>
 <h2 id="moderation-is-not-peer-review">Moderation is not peer review</h2>

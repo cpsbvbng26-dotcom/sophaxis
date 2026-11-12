@@ -1,8 +1,10 @@
 # History and name
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [沿革と名前（日本語訳）](./history.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page tells how Sophaxis began, where its name comes from, and what has happened since.
 
 ## The name
 

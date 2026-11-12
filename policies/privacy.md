@@ -1,8 +1,10 @@
 # Privacy Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
+
+The Privacy Policy says what personal data the site and its checks read, and what becomes public.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.

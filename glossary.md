@@ -1,8 +1,10 @@
 # Glossary
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [用語集（日本語訳）](./glossary.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page defines the words used on Sophaxis.
 
 ## Terms
 

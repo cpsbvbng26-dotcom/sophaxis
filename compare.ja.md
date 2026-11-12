@@ -1,8 +1,10 @@
 # ほかの場との違い（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [How Sophaxis differs from other places](./compare.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis が arXiv・PhilArchive・SSRN・Zenodo とどう違うかを説明します。
 
 ## 要するに
 

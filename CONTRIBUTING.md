@@ -36,6 +36,14 @@ A change to a policy also changes its "Last updated" date.
 A check is never loosened to make a change pass. If a check fails, fix the change, or explain in the pull request why the check is wrong.
 The site loads nothing from other servers, and every page forbids scripts except the search page. Keep it that way.
 
+## Numbers in the Japanese pages
+
+The Japanese pages write counts, durations and dates in Arabic digits, with a space between a digit and the Japanese text around it: 「6 か月」, 「7 日」, 「10 月 30 日」.
+Set phrases keep their kanji: 「一つ」, 「一人」, 「一度」, 「一日に一度」.
+The check fails on a month in kanji, and on a duration in kanji, in the Japanese pages and in the Japanese part of the README.
+Quotations and the texts of laws are left as they are.
+Where the English spells a number before its unit (「six months」) or names a month (「30 October」), the check of the translations reads that number too, so both languages must give the same ones.
+
 ## Changing a policy
 
 Every commitment in the policies is listed in `verification/commitments.txt`, word for word.

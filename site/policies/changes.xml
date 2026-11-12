@@ -5,8 +5,22 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-11T00:00:00Z</updated>
+  <updated>2026-11-12T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c4</id>
+    <title>A first sentence for each policy, the steps while the operator cannot work, and numbers in the Japanese translations</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/licences.html" title="Licence Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/withdrawal.html" title="Withdrawal Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <summary>Each policy now opens with a sentence that says what it is. The Terms of Use set out, under Continuity, what happens while the operator cannot work at all: who is told, what is paused, what stays online, what still works without the operator, and who could take over. The Japanese translations write durations and dates in Arabic digits, as the English does. None of these narrows a right or adds a duty. Policies: Terms of Use, Submission Policy, Moderation Policy, Copyright Policy, Licence Policy, Privacy Policy, Withdrawal Policy, Takedown Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c3</id>
     <title>How the criteria for listing change, a feed for policy changes, and no counts of views</title>

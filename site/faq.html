@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Frequently asked questions | Sophaxis</title>
 <meta name="description" content="Short answers about Sophaxis: moderation, fees, DOIs, repositories, licences, submission, versions, PDF copies, citation and withdrawal.">
 <link rel="canonical" href="https://sophaxis.vercel.app/faq.html">
@@ -64,6 +64,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -75,6 +79,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -95,8 +101,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Frequently asked questions</h1>
-<p>Last updated: 2026-11-11.</p>
+<p>Last updated: 2026-11-12.</p>
 <p>Japanese: <a href="./faq.ja.html">よくある質問（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
+<p>This page answers questions that people have asked about Sophaxis.</p>
 <p>Each answer is a short form of a policy. Where they differ, the policy applies.</p>
 <p>A question is added here only when someone has actually asked it, in an issue or by email. Its answer then begins with a line that says when and where it was asked, such as &quot;Asked on 2026-12-01, in issue #300.&quot; or &quot;Asked on 2026-12-01, by email.&quot;, without the name of the person who asked. The questions without such a line were already here on 2026-11-11, when this rule began; they were written from the policies.</p>
 <nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#what-is-sophaxis">What is Sophaxis?</a></li><li><a href="#is-it-peer-review">Is it peer review?</a></li><li><a href="#does-it-cost-anything">Does it cost anything?</a></li><li><a href="#does-sophaxis-give-my-work-a-doi">Does Sophaxis give my work a DOI?</a></li><li><a href="#which-repositories-are-accepted">Which repositories are accepted?</a></li><li><a href="#which-licences-are-accepted">Which licences are accepted?</a></li><li><a href="#who-can-submit">Who can submit?</a></li><li><a href="#why-github">Why GitHub?</a></li><li><a href="#is-sophaxis-connected-to-github-and-orcid">Is Sophaxis connected to GitHub and ORCID?</a></li><li><a href="#was-sophaxis-made-with-a-language-model">Was Sophaxis made with a language model?</a></li><li><a href="#can-i-use-language-models">Can I use language models?</a></li><li><a href="#how-long-does-moderation-take">How long does moderation take?</a></li><li><a href="#who-is-responsible-for-a-listed-work">Who is responsible for a listed work?</a></li><li><a href="#how-do-i-add-a-new-version">How do I add a new version?</a></li><li><a href="#my-work-has-been-published-in-a-journal-can-i-submit-it">My work has been published in a journal. Can I submit it?</a></li><li><a href="#my-listed-preprint-has-been-published-what-do-i-do">My listed preprint has been published. What do I do?</a></li><li><a href="#does-sophaxis-keep-a-copy-of-the-pdf">Does Sophaxis keep a copy of the PDF?</a></li><li><a href="#will-my-work-appear-in-google-scholar">Will my work appear in Google Scholar?</a></li><li><a href="#what-should-i-check-before-submitting">What should I check before submitting?</a></li><li><a href="#does-sophaxis-track-readers">Does Sophaxis track readers?</a></li><li><a href="#is-there-a-mailing-list">Is there a mailing list?</a></li><li><a href="#how-do-i-cite-a-work-listed-here">How do I cite a work listed here?</a></li><li><a href="#how-do-i-report-an-error-in-a-record">How do I report an error in a record?</a></li><li><a href="#can-i-withdraw-my-work">Can I withdraw my work?</a></li><li><a href="#how-do-i-ask-for-material-to-be-removed">How do I ask for material to be removed?</a></li><li><a href="#what-happens-to-the-records-if-sophaxis-closes">What happens to the records if Sophaxis closes?</a></li><li><a href="#who-runs-sophaxis-and-how-do-i-reach-the-operator">Who runs Sophaxis, and how do I reach the operator?</a></li></ul></nav>

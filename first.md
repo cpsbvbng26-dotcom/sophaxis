@@ -1,6 +1,6 @@
 # Your first preprint
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [はじめてのプレプリント（日本語訳）](./first.ja.md). It is a translation; where the two differ, the English text applies.
 
