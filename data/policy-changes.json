@@ -2,6 +2,19 @@
   {
     "date": "2026-11-12",
     "policies": ["privacy"],
+    "title": "The rules on sending users' information outside are met as if they applied",
+    "text": "The Privacy Policy now meets the rules of Japan's Telecommunications Business Act on sending users' information outside as if they applied to Sophaxis, and gives, for the one request that a page makes a reader's browser send (the search page's request for the list of records), what is sent, who handles it and for what purpose. The Ministry's Ordinance was fetched and read. None of this narrows a right or adds a duty."
+  },
+  {
+    "date": "2026-11-12",
+    "policies": ["terms"],
+    "from": "2026-11-26",
+    "title": "The agreement on the court covers only suits based on the Terms",
+    "text": "From 2026-11-26, the agreement on the court of first instance, made in a form, covers only suits based on the Terms of Use, or on the submission, listing, correction, withdrawal or removal of the person's own works under them, so that it stays within what Japan's Code of Civil Procedure allows to be agreed. For any other dispute, the court that the law sets has jurisdiction. The agreement stays non-exclusive, and talks and mediation still come first. This may narrow the disputes that can be brought to the agreed court, so it is announced 14 days ahead."
+  },
+  {
+    "date": "2026-11-12",
+    "policies": ["privacy"],
     "title": "The mailbox and the request logs, the system of the United States, and the records of provision",
     "text": "The Privacy Policy says that the operator's mailbox at iCloud Mail is provided to users in Japan by iTunes K.K., a company in Japan, which Sophaxis treats as entrusted with it, so that it is not a provision to a third party in a foreign country and no consent is asked of the people who write; that Apple Inc. may handle the emails in the United States; and that Vercel's request logs are not personal information for Sophaxis, with the reasons. It now gives the Personal Information Protection Commission's own information on the system of the United States, what Anthropic says of its measures, and why the measures of OpenAI and xAI cannot be given. It names docs/records-of-provision.md, which gives each recipient's name and address, as part of the record of provision to third parties, kept for at least three years. None of these narrows a right or adds a duty."
   },
