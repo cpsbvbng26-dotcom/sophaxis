@@ -128,7 +128,7 @@ A follow-up issue lists these steps, with the request to the Internet Archive.
 Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
 This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
 Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
-A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from the date the Submission Policy gives for each place (2026-11-22, or 2026-11-26 for 15 of them), because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
