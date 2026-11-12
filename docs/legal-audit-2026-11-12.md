@@ -321,7 +321,7 @@ JOSS が論文に求めるものを確かめるため、JOSS の論文の手引�
 ### 取り寄せた文
 
 JOSS の論文の手引きは、`openjournals/joss` のコミット 02100739082f2830cedbfd5c41b6f46c2fc9f3db の `docs/paper.md` を、GitHub から直に取り寄せました。同じコミットの `docs/policies.md` は、すでに取り寄せてあります。
-取り寄せの実行は RUN_ID で、結果は枝 `sources/BRANCH` にあります。全体は、その実行の成果物 `sources-full` にあります。
+取り寄せの実行は 43261089424 で、結果は枝 `sources/20261112-1640` にあります。全体は、その実行の成果物 `sources-full` にあります。
 
 ### 下げられずに残る危険
 
