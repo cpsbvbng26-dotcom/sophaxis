@@ -328,6 +328,42 @@ JOSS の論文の手引きは、`openjournals/joss` のコミット 02100739082f
 - 在籍する学生が所属に大学の名を書くことについて、大学がどんな決めを持つかは確かめていません。大学の決めの文は取り寄せていません。
 - 稿を JOSS に出せるのは、早くても 2027 年 5 月です。そのときの手引きが、所属について別のことを求めるかもしれません。
 
+## 2026-11-12 の続き：四度目の見落とし
+
+ここまでの表は、書いたときのまま残しています。
+同じ 2026-11-12 に、読むだけの四度目の点検が、さらに見落としを挙げました。
+Sophaxis に掛かるのは三つです。
+一つ目は、PDF の写しを取る四つの預け先がスクリプトに取らせると書きながら、どの預け先の規約も読んでいなかったことです。
+二つ目は、ほかの場との違いの頁が、PhilArchive と SSRN が載せる前に確かめると書いていたことです。
+三つ目は、預け先への頁が、すべての要求の User-Agent に Sophaxis の名を書くと約束しながら、七つの道具がほかの名を送っていたことです。
+四つの預け先の規約と案内は、このリポジトリの `sources.yml` で取り寄せました。
+読み直した結論は、次の表のとおりです。判定は、上の表と同じ五つです。
+
+| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |
+| --- | --- | --- | --- | --- | --- |
+| 著作権の規程（両言語）・預け先への頁（両言語）・手順の頁（両言語）・README・`tools/fetch_pdf.js` の、四つの預け先がスクリプトに取らせるという文 | 各預け先の利用規約と案内 | 預け先の文が、スクリプトで取ることを認めていること | 文は、Zenodo・Figshare・arXiv・Research Square がスクリプトにファイルを取らせると書いていました。四つのどの規約も案内も、取り寄せていませんでした。文は、読んでいない規約に拠っていました | 根拠不足 | 2026-11-12 に Claude が決めました。預け先ごとに、取り寄せた文で決めます。認める文があれば取得を残し、その文を規程に引きます。禁じる文があるか、文が無ければ、自動の取得を止め、著者が添付した PDF を取る道（`--from`）だけにします。下の四つの行のとおりです |
+| `tools/fetch_pdf.js` と `tools/intake.js` の取得（Zenodo） | Zenodo の利用規約、一般の方針、開発者向けの文書 | 同じ | 利用規約は「Use of Zenodo, both the uploading and downloading of data, denotes agreement with the following terms」と書き、「Users of content (“Users”) shall respect applicable license conditions.」と書きます。一般の方針は「Access to metadata and data files is provided over standard protocols such as HTTP and OAI-PMH.」と書きます。開発者向けの文書は、REST API でできることに「Files — download/upload of files.」を挙げ、「Note we’re already sending a User-Agent header identifying our client, which we recommend doing on every request」と書きます。道具は REST API から取り、User-Agent に Sophaxis の名を書きます | 問題なし | 取得を続けます。著作権の規程と預け先への頁に、開発者向けの文書の文を引きました |
+| 同（arXiv） | arXiv の一括取得の頁、API の利用規約、export.arxiv.org の robots.txt | スクリプトで取ることを認めていること、写しを置くことがライセンスで認められていること | 一括取得の頁は「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と書きます。API の利用規約は、してはならないことに e-print を置いて配ることを挙げ、例外を「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合とします。載せる作品は、CC BY 4.0・CC BY-SA 4.0・CC0 1.0 のどれかを持ちます。一方で、export.arxiv.org の robots.txt は「User-agent: * Disallow: /」です。API の利用規約は、すべきことに「Direct users to arXiv.org to retrieve e-print content (PDF, source files, etc).」を挙げます | 根拠不足 | 2026-11-12 に Claude が決めました。取得を続けます。一括取得の頁が、プログラムによる取得のための所として export.arxiv.org を挙げているためです。Sophaxis は、版ごとに一つの所在を一度取るだけで、所を巡回しません。robots.txt との食い違いは、下の残る危険に書きます。記録の頁は、これまでどおり arXiv の DOI へリンクします |
+| 同（Figshare） | Figshare の利用規約、API の文書 | 同じ | 規約は「Reference to the "Service" in these Terms includes associated documentation and APIs」と書きます。してはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げ、例外を「expressly authorized for you by Figshare in advance in writing」の手段に限ります。API の文書は「We recommend that clients use the API responsibly and do not make more than one request per second.」と書きます。この文は、特定の利用者に書面で認める文ではありません。道具は、Figshare の API から 2026.0001 の二つの版を写していました | 誤り | 2026-11-12 に Claude が決めました。2026-11-13 から、Figshare からスクリプトで写しません。著者が添付した PDF を取る道だけにします。著者の得るものを狭める変更なので、利用規約の変更の節に従い、トップの頁と規程の変更の配信で告知しました。続ければ規約に反するおそれがあり、規約の言う法的な危険に当たるため、14 日を待たず、告知の翌日からとしました。2026.0001 の二つの写しは、作品のライセンス CC BY 4.0 のもとで残します |
+| 同（Research Square） | Research Square の利用規約 | 同じ | 規約は「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。Research Square から写した写しはありません | 誤り | 2026-11-12 に Claude が決めました。Figshare と同じく、2026-11-13 から写しません。告知も同じです |
+| 全文を読むための実行（43272826218） | 著作権法 第 21 条、Figshare と Research Square の利用規約 | 他人の文の全体を公に置かないこと、規約が禁じる要求を出さないこと | 作業の場からは、Internet Archive にも、実行の成果物の置き場にも届きません。全文を読むため、`sources.yml` を写した枝 `claude/redteam4-probe-1112` で一度実行し、取り寄せた 13 の頁の全文を、実行の記録（ログ）に書き出しました。この実行は、規約を読む前に、Figshare の三つの頁（トップ、利用規約、API の文書）と robots.txt に直に要求しました。Research Square の robots.txt にも直に要求しました。Figshare の規約がスクリプトを禁じていることは、この実行で知りました | 漏れ | 2026-11-12 に Claude が決めました。読み終えた同じ日に、実行の記録を消しました。その枝からは、取り寄せの結果を押していません。そのあとの取り寄せは、Figshare と Research Square の頁を Internet Archive の写しからだけ読みます。`tools/sources.js` は、二つの所への直の要求を、送る前に断ります |
+| ほかの場との違いの頁（両言語）と、見つけてもらうための頁（両言語）の、PhilArchive と SSRN の文 | PhilArchive の Content Policy、SSRN の案内の頁 | 場が載せる前に確かめると書くには、場の文がそう述べていること | 比較の表は、PhilArchive の欄に編集者による確認、SSRN の欄に担当者による確認と書いていました。見つけてもらうための頁は、PhilArchive に独自のモデレーションがあると書いていました。取り寄せた頁は「All books and papers submitted should be of professional quality.」と「SSRN must determine if a paper meets the criteria of scholarly content.」と書きます。誰が確かめるかは、どの頁も書いていません。二度目の見落としの節の PhilArchive と SSRN の行は、研究者の頁と cpsbvbng26-dotcom の文だけを見ており、このリポジトリの比較の頁を見落としていました | 表現 | 2026-11-12 に Claude が決めました。欄を、取り寄せた文の引用と、誰が確かめるかは頁に書かれていないという文に替えました。両言語で替え、サイトを作り直しました |
+| 預け先への頁（両言語）の、User-Agent の約束 | Sophaxis 自身の約束 | 道具が出すすべての要求が、約束した User-Agent を書くこと | 頁は、Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書くと約束しています。`tools/` の七つのファイル（removal.js・live.js・record.js・monthly.js・limits.js・audit.js・report_issue.js）は、ほかの名を送っていました。検査は三つのファイルしか読んでいませんでした | 誤り | 2026-11-12 に Claude が決めました。User-Agent を `tools/ua.js` の一つの定数にし、`tools/` のすべての要求をそこから出します。検査は `tools/` のすべてのファイルを読み、ほかの所の fetch・curl・User-Agent で落ちます |
+
+この表の判定は、誤り 3、根拠不足 2、漏れ 1、表現 1、問題なし 1 です。
+
+### 取り寄せた文
+
+Zenodo の三つの頁と arXiv の三つの頁は直に、Figshare の二つの頁と Research Square の二つの頁は Internet Archive の写しから取り寄せました。
+取り寄せの実行は 43274367372 で、結果は枝 `sources/20261112-1755` にあります。全体は、その実行の成果物 `sources-full` にあります。
+
+### 下げられずに残る危険
+
+- export.arxiv.org の robots.txt は、すべてのロボットにすべてを閉じています。一括取得の頁は、同じ所をプログラムによる取得のための所と書きます。二つの文の食い違いは、arXiv の文からは解けません。
+- Figshare の API の文書が、規約の言う書面での許可に当たるかは、文からは定まりません。Sophaxis は厳しい方の読み方を採りました。
+- Internet Archive の写しは、その頁の今の文と違うことがあります。
+- 止める変更と告知は、同じ変更で公開されます。告知の翌日からとしましたが、コードは取り込まれたときから写しません。
+
 ## この記録について
 
 この点検は Claude が行ったもので、弁護士の点検ではありません。弁護士はこの記録を確かめていません。

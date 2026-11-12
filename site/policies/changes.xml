@@ -8,6 +8,13 @@
   <updated>2026-11-12T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c12</id>
+    <title>PDFs are no longer copied by script from Figshare or Research Square</title>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <summary>From 2026-11-13, Sophaxis copies PDFs by script only from Zenodo and arXiv, whose own pages let a script fetch them. Until then, it also copied from Figshare and Research Square; their terms, read on 2026-11-12, forbid robots and scripts. The authors of a work at either can attach the deposited PDF to the submission issue instead, as for every other repository. This narrows what authors get. Going on would act against the terms of the two repositories, a legal risk, so the change takes effect the day after it is announced, as the Terms of Use allow. The copies already taken from Figshare stay. In effect from 2026-11-13. Policies: Copyright Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c11</id>
     <title>In a dispute, the operator aims to answer within 7 days, and a pause holds the answer</title>
     <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>

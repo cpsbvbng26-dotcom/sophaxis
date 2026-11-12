@@ -2,6 +2,7 @@
 /* Run by .github/workflows/report.yml: counts the decisions of a year with tools/report.js and posts them in an issue,
  * for the operator to record in data/reports/ by pull request. YEAR defaults to the year before, in Japan time. */
 'use strict';
+const { request } = require('./ua.js');
 const { execFileSync } = require('child_process');
 const path = require('path');
 
@@ -10,8 +11,8 @@ const now = new Date(Date.now() + 9 * 3600 * 1000);
 const year = process.env.YEAR || String(now.getUTCFullYear() - 1);
 
 async function github(method, p, body) {
-  const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
-    method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', 'User-Agent': 'report' },
+  const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
+    method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
   });
   if (!r.ok) throw new Error(method + ' ' + p + ': HTTP ' + r.status);

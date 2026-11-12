@@ -9,6 +9,7 @@
  *   node tools/live.js
  */
 'use strict';
+const { request } = require('./ua.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -37,7 +38,7 @@ async function compare(list) {
   const out = [];
   for (const x of list) {
     try {
-      const r = await fetch(x.url, { headers: { 'User-Agent': 'live-site-check (+https://github.com/' + (process.env.GITHUB_REPOSITORY || '') + ')' }, redirect: 'manual', signal: AbortSignal.timeout(30000) });
+      const r = await request(x.url, { redirect: 'manual', signal: AbortSignal.timeout(30000) });
       const got = Buffer.from(await r.arrayBuffer());
       const want = fs.readFileSync(path.join(SITE, x.file));
       if (r.status !== 200) out.push({ file: x.file, why: 'HTTP ' + r.status });
@@ -48,8 +49,8 @@ async function compare(list) {
 }
 
 async function github(method, p, body) {
-  const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
-    method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', 'User-Agent': 'live-site-check' },
+  const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
+    method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
   });
   if (!r.ok) throw new Error(method + ' ' + p + ': HTTP ' + r.status);

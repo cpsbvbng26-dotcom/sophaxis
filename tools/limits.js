@@ -10,6 +10,7 @@
  * recommends. Not measured: Vercel's bandwidth and function use, which only the operator's Vercel account shows; the yearly
  * audit asks the operator to read them there. Run by .github/workflows/monthly.yml. */
 'use strict';
+const { request } = require('./ua.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -50,7 +51,7 @@ function pdfSizes() {
 async function main() {
   if (process.argv.includes('--print')) { process.stdout.write(table(rows(pdfSizes()))); return; }
   const repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
-  const api = (p, opts = {}) => fetch('https://api.github.com/repos/' + repo + p, Object.assign({ headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'sophaxis-limits', 'Content-Type': 'application/json' } }, opts));
+  const api = (p, opts = {}) => request('https://api.github.com/repos/' + repo + p, Object.assign({ headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' } }, opts));
   const since = Date.now() - 30 * 24 * 3600 * 1000;
   const dates = [];
   for (let page = 1; page <= 10; page++) {

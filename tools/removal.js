@@ -23,6 +23,7 @@
  * No personal data is written anywhere: the comments name only the Sophaxis id, the kind of request and dates.
  */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -468,7 +469,7 @@ async function followUps() {
     if (!done.issues) {
       let gone = 0;
       for (const n of st.issues) {
-        const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + '/issues/' + n, { headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'User-Agent': 'sophaxis' } });
+        const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + '/issues/' + n, { headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json' } });
         if (r.status === 410 || r.status === 404) gone++;
       }
       done.issues = gone === st.issues.length;
@@ -477,7 +478,7 @@ async function followUps() {
       let none = 0;
       for (const a of archived(st.id)) {
         try {
-          const r = await fetch(cdxUrl(a), { headers: { 'User-Agent': 'sophaxis (+' + SITE.baseUrl + ')' } });
+          const r = await request(cdxUrl(a));
           const rows = r.ok ? JSON.parse((await r.text()) || '[]') : null;
           if (Array.isArray(rows) && rows.length <= 1) none++;
         } catch (e) { /* asked again tomorrow */ }

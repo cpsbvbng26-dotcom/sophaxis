@@ -22,10 +22,19 @@ The abstract is part of the work.
 It is shown under the work's own licence, with its authors and a link to the work.
 
 Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
-It copies the file only from a repository that lets a script fetch it: Zenodo, Figshare, arXiv and Research Square.
+It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.
+Zenodo's developer documentation lists, among what its REST API supports, "Files — download/upload of files."
+arXiv's page on bulk data access says "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access." Sophaxis fetches from that site.
+arXiv's terms of use for its APIs forbid storing and serving its e-prints "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted". Every listed work carries one of the three accepted licences, which permit it.
+Until 2026-11-12, Sophaxis also copied files from Figshare and Research Square by script. From 2026-11-13, it does not, because their terms forbid it.
+Figshare's terms list, among what a user shall not do, "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine". The only exception is for means "expressly authorized for you by Figshare in advance in writing".
+Research Square's terms say "You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites".
+The copies already taken from Figshare stay, under the work's own licence.
+These pages were read on 2026-11-12: Zenodo's and arXiv's directly, and Figshare's and Research Square's from the Internet Archive's copies.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
 For any other repository, the authors can attach the deposited PDF to their submission issue.
+From 2026-11-13, this includes Figshare and Research Square.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
 A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB.

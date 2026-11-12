@@ -19,6 +19,7 @@
  * The checks decide nothing. A moderator accepts or declines in the issue.
  */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -29,8 +30,7 @@ const { shapeOfFile, shapeNote } = require('./pdf_shape.js');
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
 const MARK = '<!-- sophaxis-intake -->';
-/* One User-Agent for every request Sophaxis makes, as the page for repositories promises. */
-const UA = 'Sophaxis (' + SITE.repo + ')';
+/* One User-Agent for every request Sophaxis makes, as the page for repositories promises: tools/ua.js sets it. */
 
 /* ------------------------------------------------------------ the issue */
 
@@ -830,7 +830,7 @@ async function pdfShape(versions, title) {
 /* ------------------------------------------------------------ network */
 
 async function getJson(url, accept) {
-  const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: accept || 'application/json' } });
+  const r = await request(url, { headers: { Accept: accept || 'application/json' } });
   if (r.status === 404) return null;
   if (!r.ok) throw new Error(url.split('?')[0] + ': HTTP ' + r.status);
   return r.json();
@@ -897,9 +897,9 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
 }
 
 async function github(method, url, body) {
-  const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + url, {
+  const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + url, {
     method,
-    headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'User-Agent': UA },
+    headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json' },
     body: body ? JSON.stringify(body) : undefined,
   });
   if (!r.ok && r.status !== 404) throw new Error(method + ' ' + url + ': HTTP ' + r.status);

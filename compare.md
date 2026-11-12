@@ -18,11 +18,12 @@ It replaces none of the places below, and a work can be in several of them at on
 | --- | --- | --- | --- | --- | --- |
 | Sophaxis | No; the repository keeps it, and Sophaxis keeps an unmodified PDF copy and links the repository | No; it uses the DOI of the repository | An automatic check through ORCID, then moderation in a public issue | Philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science | None |
 | arXiv | Yes | Yes | Moderation, and for some first submissions an endorsement | Physics, mathematics, computer science and other sciences | None |
-| PhilArchive | Yes | No | A check by its editors | Philosophy | None |
-| SSRN | Yes | Yes | A check by its staff | Mainly the social sciences and the humanities, with networks for philosophy and mathematics | None |
+| PhilArchive | Yes | No | Its content policy says "All books and papers submitted should be of professional quality." Its pages do not say who checks a work, or when | Philosophy | None |
+| SSRN | Yes | Yes | Its help pages say "SSRN must determine if a paper meets the criteria of scholarly content." They do not say who checks a work | Mainly the social sciences and the humanities, with networks for philosophy and mathematics | None |
 | Zenodo | Yes | Yes | No review of the content | Every field | None |
 
 These are short summaries as of 2026-11-10; the pages of each service are what count.
+The cells for PhilArchive and SSRN quote their own pages, as read on 2026-11-12 from the Internet Archive's copies.
 Sophaxis has no connection with any of them; they are named only to show the difference.
 
 ## Why a layer

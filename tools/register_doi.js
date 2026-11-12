@@ -11,6 +11,7 @@
  * A request is a PUT of the whole metadata, so running it again updates the DOIs and creates none twice.
  */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -31,9 +32,9 @@ async function main() {
     const body = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
     const doi = body.data.attributes.doi;
     if (dry) { console.log('would send ' + doi + ' (' + body.data.attributes.event + ')'); continue; }
-    const r = await fetch(api + '/dois/' + encodeURIComponent(doi), {
+    const r = await request(api + '/dois/' + encodeURIComponent(doi), {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/vnd.api+json', Authorization: 'Basic ' + Buffer.from(id + ':' + pw).toString('base64'), 'User-Agent': 'Sophaxis (' + SITE.repo + ')' },
+      headers: { 'Content-Type': 'application/vnd.api+json', Authorization: 'Basic ' + Buffer.from(id + ':' + pw).toString('base64') },
       body: JSON.stringify(body),
     });
     console.log(doi + ': HTTP ' + r.status);

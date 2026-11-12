@@ -7,6 +7,7 @@
  *
  * Run by .github/workflows/monthly.yml. A month with no new record and no news gets no issue. */
 'use strict';
+const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -83,8 +84,8 @@ async function main() {
   const p = posts(month, records, news);
   if (!p) { console.log('nothing new in ' + month); return; }
   if (process.argv.includes('--print')) { process.stdout.write(body(p)); return; }
-  const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + '/issues', {
-    method: 'POST', headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', 'User-Agent': 'monthly' },
+  const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + '/issues', {
+    method: 'POST', headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
     body: JSON.stringify({ title: 'Summary of ' + month + ' for X', body: body(p) }),
   });
   if (!r.ok) throw new Error('POST /issues: HTTP ' + r.status);

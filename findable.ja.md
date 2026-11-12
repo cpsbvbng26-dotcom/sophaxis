@@ -18,7 +18,7 @@
 
 - ORCID：作品の DOI を自分の ORCID の記録に足すと、ORCID を読むサービスが作品と著者を結び付けます。Sophaxis の著者の頁には、その著者の記録すべてを収めた BibTeX のファイルが一つあり、ORCID に取り込めます。
 - Google Scholar：リポジトリにある作品を自分で見つけます。多くは数週間のうちです。Google Scholar のプロフィールで、作品を足すことも、見つかったものを確かめることもできます。
-- PhilPapers：哲学では、多くの読者が PhilPapers で探します。作品の記録を PhilPapers に足すことができ、その開かれたアーカイブである PhilArchive に預けることもできます。PhilArchive には独自のモデレーションがあります。どちらも無料です。
+- PhilPapers：哲学では、多くの読者が PhilPapers で探します。作品の記録を PhilPapers に足すことができ、その開かれたアーカイブである PhilArchive に預けることもできます。PhilArchive の内容の方針は「All books and papers submitted should be of professional quality.」と書きます。誰が作品を確かめるかは、その頁に書かれていません。どちらも無料です。
 - researchmap：日本の研究者は、作品を自分の researchmap の記録に足せます。
 - バッジとカード：記録の頁のバッジを、そのリンクとともに示します。記録の頁のアドレスを共有すると、題と著者を載せたカードが出ます。
 

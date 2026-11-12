@@ -17,6 +17,7 @@
  *   node tools/statutes.js
  */
 'use strict';
+const { request } = require('./ua.js');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -25,14 +26,13 @@ const ROOT = path.join(__dirname, '..');
 const FILE = path.join(ROOT, 'verification', 'statutes.json');
 const CONF = JSON.parse(fs.readFileSync(FILE, 'utf8'));
 const T = CONF.text;
-const UA = { 'User-Agent': CONF.agent };
 const MARK = '<!-- statutes-watch -->';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function get(url, headers = {}) {
   for (let i = 0; i < 3; i++) {
     try {
-      const r = await fetch(url, { headers: { ...UA, ...headers }, signal: AbortSignal.timeout(90000) });
+      const r = await request(url, { headers, signal: AbortSignal.timeout(90000) });
       if (r.ok) return await r.text();
       if (r.status < 500 && r.status !== 429) throw new Error('HTTP ' + r.status);
     } catch (e) { if (i === 2) throw e; }
@@ -233,8 +233,8 @@ async function propose(p) {
 }
 
 async function github(method, p, body) {
-  const r = await fetch('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
-    method, headers: { ...UA, Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+  const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
+    method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
   });
   if (!r.ok) throw new Error(method + ' ' + p + ': HTTP ' + r.status);

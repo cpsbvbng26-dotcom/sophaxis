@@ -6,6 +6,7 @@
  *   node tools/audit.js --print        prints the body only
  */
 'use strict';
+const { request } = require('./ua.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -30,7 +31,7 @@ async function main() {
   if (process.argv.includes('--print')) { process.stdout.write(body(year)); return; }
   const repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
   if (!repo || !token) throw new Error('GITHUB_REPOSITORY and GITHUB_TOKEN are needed');
-  const api = (p, opts = {}) => fetch('https://api.github.com/repos/' + repo + p, Object.assign({ headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'sophaxis-audit' } }, opts));
+  const api = (p, opts = {}) => request('https://api.github.com/repos/' + repo + p, Object.assign({ headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' } }, opts));
   const open = await (await api('/issues?state=all&per_page=100&creator=github-actions%5Bbot%5D')).json();
   if (Array.isArray(open) && open.some((x) => x.title === title(year))) { console.log('already opened: ' + title(year)); return; }
   const r = await api('/issues', { method: 'POST', body: JSON.stringify({ title: title(year), body: body(year) }) });
