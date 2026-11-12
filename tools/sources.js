@@ -83,7 +83,7 @@ const PAGES = {
   // The information the Commission publishes on the systems of other countries.
   'ppc-laws': PAGE('https://www.ppc.go.jp/enforcement/infoprovision/laws/', { lang: 'ja', links: /offshore|report|america|usa|us_|kaigai|gaikoku|\.pdf|米国|アメリカ|調査/i }),
   'ppc-offshore-survey': PAGE('https://www.ppc.go.jp/files/pdf/220210_pp_offshore_kouhyou_sywkqc.pdf', { keep: 400000 }),
-  'ppc-offshore-report': PAGE('https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report/', { lang: 'ja', links: /\.pdf|米国|アメリカ/i }),
+  'ppc-report-us': PAGE('https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/', { lang: 'ja', links: /\.pdf/i, keep: 400000 }),
   // Apple: the mailbox (iCloud Mail). The iCloud terms name the company that provides iCloud to each place.
   'apple-privacy': PAGE('https://www.apple.com/legal/privacy/en-ww/', { links: /privacy|contact|governance|cbpr|bbb/i }),
   'apple-affiliated': PAGE('https://www.apple.com/legal/privacy/en-ww/affiliated-company/'),
