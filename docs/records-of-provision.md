@@ -1,12 +1,14 @@
 # Records of provision to third parties
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 This file is the record that Article 29 of Japan's Act on the Protection of Personal Information asks Sophaxis to keep when it provides personal data to a third party, together with the issues and the history of the public repository that it points to. It also names each service that gives Sophaxis personal data, for Article 30 of Japan's Act on the Protection of Personal Information.
 Claude decided on 2026-11-12 (2026-11-12 に Claude が決めました) to keep it in this form, because the issues and the history already hold the date, the people and the items of each provision, and what they lacked were the recipients' names and addresses and the period of keeping.
 
 Every name and address below is taken from the recipient's own page, fetched by `tools/sources.js` on 2026-11-12 and kept in `verification/sources-raw.json` under `pages`. The column "Page" gives the key.
-OpenAI's own page refused the request, so its name and address are taken from the Internet Archive's copy of its privacy policy, saved on 2026-11-03 (`openai-privacy-archived`); xAI's privacy policy gives no address, so they are taken from its Terms of Service (`xai-terms`). Both were fetched on 2026-11-12 in the continuation of the audit. Nothing here is written from memory: where a page could not be fetched, or gives no address, the row says so.
+OpenAI's own page refused the request, so its name and address are taken from the Internet Archive's copy of its privacy policy, saved on 2026-11-03 (`openai-privacy-archived`); xAI's privacy policy gives no address, so they are taken from its Terms of Service (`xai-terms`). Both were fetched on 2026-11-12 in the continuation of the audit.
+The Internet Archive's own pages ask for a script, so its name and address are taken from its copy of its terms page, saved on 2024-01-01 (`ia-terms-archived-2024`), fetched on 2026-11-13. DataCite's name and address are taken from its terms (`datacite-terms`); the name of its representative is not kept, because DataCite's pages are read only from the Internet Archive's copies, and the Internet Archive's terms ask users "not to collect or store personal data about anyone". Claude decided this on 2026-11-13 (2026-11-13 に Claude が決めました), because DataCite gives Sophaxis personal data rather than receiving it, so its row needs no record, and the name was kept only as a courtesy.
+Nothing here is written from memory: where a page could not be fetched, or gives no address, the row says so.
 
 ## What the law asks
 
@@ -43,7 +45,7 @@ The Commission's guidelines on the duties to confirm and to record (第三者提
 | GitHub | GitHub, Inc. | 88 Colin P. Kelly Jr. St. San Francisco, CA 94107 | Not given on the page fetched | United States | github-privacy | Kept for listings, as above |
 | Vercel | Vercel Inc. | 440 N Barranca Avenue #4133 Covina, CA 91723 | Not given on the page fetched | United States | vercel-privacy | Kept for listings, as above |
 | ORCID | ORCID Inc. | 10411 Motor City Drive, Suite 750, Bethesda MD 20817 | Not given on the page fetched | United States | orcid-privacy | Not required: public information |
-| Internet Archive | Not fetched | Not fetched: its terms and contact pages answered only "Javascript is required for this site." | Not fetched | United States | ia-terms | Not required: public information |
+| Internet Archive | Internet Archive | 300 Funston Ave., San Francisco, CA 94118 | Not given on the page fetched | United States | ia-terms-archived-2024 | Not required: public information |
 | Anthropic | Anthropic PBC | 548 Market St, PMB 90375, San Francisco, CA 94104 | Not given on the page fetched | United States | anthropic-privacy | Not required: public information |
 | OpenAI | OpenAI OpCo, LLC | 1455 Third Street, San Francisco, California 94158, United States | Not given on the page fetched | United States | openai-privacy-archived | Not required: public information |
 | xAI | SpaceX Super Intelligence LLC | 800 W Cesar Chavez St., Austin, TX 78701, USA | Not given on the page fetched | United States | xai-terms | Not required: public information |
@@ -57,7 +59,7 @@ Sophaxis reads authors' names from these services when it checks a submission. W
 
 | Service | Name | Address | Representative | Country | Page | Record |
 | --- | --- | --- | --- | --- | --- | --- |
-| DataCite | DataCite – International Data Citation Initiative e.V. | Welfengarten 1 B, 30167 Hannover | Matthew Buys, Executive Director | Germany | datacite-imprint | Not required: public information |
+| DataCite | DataCite – International Data Citation Initiative e. V. | Welfengarten 1B, 30167 Hannover | Not kept: DataCite's pages are read only from the Internet Archive's copies, whose terms ask users not to store personal data | Germany | datacite-terms | Not required: public information |
 | Crossref | Crossref | Not given on the page fetched: its privacy page says only that Crossref is registered in the United States | Not given on the page fetched | United States | crossref-privacy | Not required: public information |
 | Japan Link Center | Japan Link Center (JaLC) | Not given on the page fetched: JaLC is run jointly by JST, NIMS, NII and NDL | Not given on the page fetched | Japan | jalc-about | Not required: public information |
 | ORCID | ORCID Inc. | 10411 Motor City Drive, Suite 750, Bethesda MD 20817 | Not given on the page fetched | United States | orcid-privacy | Not required: public information |
