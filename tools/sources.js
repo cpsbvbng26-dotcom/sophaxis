@@ -268,6 +268,18 @@ const PAGES = {
   'ke-odpc': PAGE('https://www.odpc.go.ke/', { links: /\.pdf|act|law|legislation|regist/i, follow: { re: /dpa|data-protection-act|\.pdf/i, max: 3 }, keep: 150000 }),
   'za-inforeg': PAGE('https://inforegulator.org.za/popia/', { links: /\.pdf|act|popia|regist/i, follow: { re: /\.pdf/i, max: 2 }, keep: 250000 }),
   'ae-portal': PAGE('https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws', { links: /\.pdf|legislation|decree|law/i, keep: 60000 }),
+  // Probe (2026-11-12, fourth pass): the terms of the repositories from which tools/fetch_pdf.js copies PDFs.
+  'zenodo-developers': PAGE('https://developers.zenodo.org/', { links: /terms|polic|rate|limit/i, keep: 60000 }),
+  'figshare-home': PAGE('https://figshare.com/', { links: /terms|polic|api|legal|agreement/i, keep: 20000 }),
+  'figshare-terms': PAGE('https://figshare.com/terms', { links: /terms|polic|api|legal|agreement/i }),
+  'figshare-api-docs': PAGE('https://docs.figshare.com/', { links: /terms|polic|rate|limit|agreement/i, keep: 60000 }),
+  'figshare-robots': PAGE('https://figshare.com/robots.txt'),
+  'arxiv-api-tou': PAGE('https://info.arxiv.org/help/api/tou.html'),
+  'arxiv-bulk-data': PAGE('https://info.arxiv.org/help/bulk_data.html'),
+  'arxiv-robots': PAGE('https://export.arxiv.org/robots.txt'),
+  'researchsquare-home': PAGE(IA('https://www.researchsquare.com/'), { links: /terms|legal|polic|conditions/i, keep: 20000 }),
+  'researchsquare-terms': PAGE(IA('https://www.researchsquare.com/legal/terms-of-service'), { links: /terms|legal|polic|conditions/i }),
+  'researchsquare-robots': PAGE('https://www.researchsquare.com/robots.txt'),
   'conatus-submissions': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions', { alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions' }),
 };
 

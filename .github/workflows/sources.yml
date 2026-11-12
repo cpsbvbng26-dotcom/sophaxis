@@ -28,6 +28,12 @@ jobs:
         env:
           SOURCES_ONLY: ${{ inputs.only }}
       - run: node tools/sources.js verify
+      - run: |
+          node -e '
+          const f = require("./verification/sources-full.json"); const r = require("./verification/sources-raw.json"); const ks = (process.env.SOURCES_ONLY || "").split(",").map((x) => x.trim());
+          for (const k of ks) { const p = (f.pages || {})[k]; const q = (r.pages || {})[k] || {}; console.log("=====PAGE " + k + " " + q.status + " " + (q.final || q.url) + " " + (p ? (p.text || "").length : "none") + (q.tried ? " TRIED " + JSON.stringify(q.tried) : "")); if (p && p.links) console.log("LINKS " + JSON.stringify(p.links)); if (p && p.text) for (let i = 0; i < p.text.length; i += 400) console.log("|" + p.text.slice(i, i + 400)); }'
+        env:
+          SOURCES_ONLY: ${{ inputs.only }}
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: sources-full
@@ -39,4 +45,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add verification/sources-raw.json
           git commit -m "Sources: the fetched texts" || exit 0
-          git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)"
+          echo "probe: not pushed"
