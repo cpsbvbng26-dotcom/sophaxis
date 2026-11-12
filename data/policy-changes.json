@@ -1,6 +1,13 @@
 [
   {
     "date": "2026-11-12",
+    "policies": ["submission", "privacy"],
+    "from": "2026-11-26",
+    "title": "Fifteen more places where Sophaxis is not offered, and what a person in New Zealand is told",
+    "text": "From 2026-11-26, Sophaxis is not offered in 15 more places: Argentina, Colombia, Ghana, Korea, Mexico, the Philippines, Saudi Arabia, Uruguay, Zimbabwe, Kenya, Tanzania, South Africa, Singapore, the United Arab Emirates and Qatar. A survey of the laws of 195 countries was made on 2026-11-12, and the data protection laws it found were read at their sources by number. The laws of these places ask for registration, for conditions before personal data leaves the place, for the operator's postal address or telephone number before personal data is collected, or for a parent's consent that the service confirms before the data of a minor is processed; or their data protection law could not be read at its source. The Submission Policy names the law of each. This narrows who can be listed, so it is announced 14 days ahead. From today, the Privacy Policy and the submission form also say that the services outside Japan may not be required to protect personal data with safeguards comparable to those of the law where an author lives, as New Zealand's Privacy Act 2020 asks a person there to be told, and that, for a person in Switzerland, the disclosure to the United States rests on explicit consent; this narrows no right."
+  },
+  {
+    "date": "2026-11-12",
     "policies": ["privacy"],
     "title": "The rules on sending users' information outside are met as if they applied",
     "text": "The Privacy Policy now meets the rules of Japan's Telecommunications Business Act on sending users' information outside as if they applied to Sophaxis, and gives, for the one request that a page makes a reader's browser send (the search page's request for the list of records), what is sent, who handles it and for what purpose. The Ministry's Ordinance was fetched and read. None of this narrows a right or adds a duty."
