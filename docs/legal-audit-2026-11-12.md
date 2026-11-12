@@ -355,7 +355,7 @@ Sophaxis に掛かるのは三つです。
 ### 取り寄せた文
 
 Zenodo の三つの頁と arXiv の三つの頁は直に、Figshare の二つの頁と Research Square の二つの頁は Internet Archive の写しから取り寄せました。
-取り寄せの実行は RUNID で、結果は枝 `sources/BRANCH` にあります。全体は、その実行の成果物 `sources-full` にあります。
+取り寄せの実行は 43274367372 で、結果は枝 `sources/20261112-1755` にあります。全体は、その実行の成果物 `sources-full` にあります。
 
 ### 下げられずに残る危険
 
