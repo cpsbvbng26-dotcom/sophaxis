@@ -792,13 +792,6 @@
     ]
   },
   "untraced": {
-    "Russia 152-FZ": {
-      "articles": [
-        "18"
-      ],
-      "why": "kremlin.ru answered every page of the Law on 2026-11-12, but the plain text reads the superscript in the heading of Article 10¹ as 101, so the cut by rising numbers stops before Article 18 and it was not separated (sources-raw.json, ru-152).",
-      "why_ja": "kremlin.ru は 2026-11-12 に法律のすべての頁を返しましたが、第 10¹ 条の見出しの上付きの数字が文字だけの文では 101 と読まれ、番号の昇順で切り分ける手順が第 18 条の前で止まりました。そのため第 18 条を切り出せていません（sources-raw.json の ru-152）。"
-    },
     "India DPDP Rules": {
       "articles": [
         "10"
