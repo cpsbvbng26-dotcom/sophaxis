@@ -103,6 +103,15 @@
       ],
       "egov": "412AC0000000061"
     },
+    "Code of Civil Procedure": {
+      "en": [
+        "Code of Civil Procedure"
+      ],
+      "ja": [
+        "民事訴訟法"
+      ],
+      "egov": "408AC0000000109"
+    },
     "Providers Act": {
       "en": [
         "Act on providers of specified telecommunications services",
@@ -596,6 +605,7 @@
   },
   "fetchAlso": {
     "Penal Code": [
+      "230-2",
       "233",
       "246"
     ],
@@ -603,7 +613,8 @@
       "3"
     ],
     "Copyright Act": [
-      "13"
+      "13",
+      "32"
     ],
     "Unfair Competition Prevention Act": [
       "2"
@@ -635,6 +646,70 @@
       "1",
       "2",
       "3",
+      "4"
+    ],
+    "Telecommunications Business Act": [
+      "2",
+      "3",
+      "4",
+      "9",
+      "16",
+      "164"
+    ],
+    "Providers Act": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36"
+    ],
+    "APPI": [
+      "2",
+      "19",
+      "57"
+    ],
+    "Consumer Contract Act": [
+      "2",
+      "8-2",
+      "8-3"
+    ],
+    "Code of Civil Procedure": [
+      "3-7",
+      "4",
+      "11"
+    ],
+    "Civil Code": [
       "4"
     ]
   },
