@@ -129,6 +129,8 @@ const PAGES = {
   'openai-privacy-row': PAGE('https://openai.com/policies/row-privacy-policy/'),
   'xai-privacy': PAGE('https://x.ai/legal/privacy-policy', { links: /privacy|legal|contact/i }),
   'xai-company': PAGE('https://x.ai/company'),
+  // The head and the foot of one page of the Russian law as kremlin.ru serves it, to find where the text of the law begins and ends.
+  'ru-152-page-5': PAGE('http://www.kremlin.ru/acts/bank/24154/page/5', { lang: 'ru', keep: 200000 }),
 
   /* Added on 2026-11-12, to close the gaps that the legal audit of that day left (docs/legal-audit-2026-11-12.md).
    * `follow` also fetches the links that match it (as many as `max`), each kept under the key with ">" and its place;
