@@ -375,7 +375,8 @@
       ],
       "ja": [
         "法律第 1.565 号"
-      ]
+      ],
+      "source": "mc-1565"
     },
     "Botswana DPA 2024": {
       "en": [
@@ -640,6 +641,188 @@
         "ガイドラインに関するＱ＆Ａ"
       ],
       "source": "ppc-qa"
+    },
+    "Argentina Law 25.326": {
+      "en": [
+        "Law No. 25.326"
+      ],
+      "ja": [
+        "法律第 25.326 号"
+      ],
+      "place": [
+        "Argentina",
+        "アルゼンチン"
+      ],
+      "source": "ar-25326"
+    },
+    "Uruguay Law 18.331": {
+      "en": [
+        "Law No. 18.331"
+      ],
+      "ja": [
+        "法律第 18.331 号"
+      ],
+      "place": [
+        "Uruguay",
+        "ウルグアイ"
+      ],
+      "source": "uy-18331"
+    },
+    "Colombia Law 1581": {
+      "en": [
+        "Law 1581 of 2012"
+      ],
+      "ja": [
+        "2012 年法律第 1581 号"
+      ],
+      "place": [
+        "Colombia",
+        "コロンビア"
+      ],
+      "source": "co-1581"
+    },
+    "Mexico LFPDPPP": {
+      "en": [
+        "Federal Law on the Protection of Personal Data Held by Private Parties"
+      ],
+      "ja": [
+        "私人が保有する個人データの保護に関する連邦法"
+      ],
+      "place": [
+        "Mexico",
+        "メキシコ"
+      ],
+      "source": "mx-lfpdppp"
+    },
+    "New Zealand Privacy Act 2020": {
+      "en": [
+        "Privacy Act 2020"
+      ],
+      "ja": [
+        "2020 年プライバシー法"
+      ],
+      "place": [
+        "New Zealand",
+        "ニュージーランド"
+      ],
+      "source": "nz-privacy"
+    },
+    "Australia Privacy Act 1988": {
+      "en": [
+        "Privacy Act 1988"
+      ],
+      "ja": [
+        "1988 年プライバシー法"
+      ],
+      "place": [
+        "Australia",
+        "オーストラリア"
+      ],
+      "source": "au-privacy"
+    },
+    "Chile Law 19.628": {
+      "en": [
+        "Law No. 19.628"
+      ],
+      "ja": [
+        "法律第 19.628 号"
+      ],
+      "place": [
+        "Chile",
+        "チリ"
+      ],
+      "source": "cl-19628"
+    },
+    "Canada PIPEDA": {
+      "en": [
+        "Personal Information Protection and Electronic Documents Act"
+      ],
+      "ja": [
+        "個人情報保護及び電子文書法"
+      ],
+      "place": [
+        "Canada",
+        "カナダ"
+      ],
+      "source": "ca-pipeda"
+    },
+    "Kenya DPA 2019": {
+      "en": [
+        "Data Protection Act 2019"
+      ],
+      "ja": [
+        "2019 年データ保護法"
+      ],
+      "place": [
+        "Kenya",
+        "ケニア"
+      ],
+      "source": "ke-dpa"
+    },
+    "Philippines DPA 2012": {
+      "en": [
+        "Data Privacy Act of 2012"
+      ],
+      "ja": [
+        "2012 年データプライバシー法"
+      ],
+      "place": [
+        "the Philippines",
+        "フィリピン"
+      ],
+      "source": "ph-dpa"
+    },
+    "South Africa POPIA": {
+      "en": [
+        "Protection of Personal Information Act"
+      ],
+      "ja": [
+        "個人情報保護法（南アフリカ）"
+      ],
+      "place": [
+        "South Africa",
+        "南アフリカ"
+      ],
+      "source": "za-popia"
+    },
+    "Singapore PDPA 2012": {
+      "en": [
+        "Personal Data Protection Act 2012"
+      ],
+      "ja": [
+        "2012 年個人データ保護法"
+      ],
+      "place": [
+        "Singapore",
+        "シンガポール"
+      ],
+      "source": "sg-pdpa"
+    },
+    "UAE PDPL": {
+      "en": [
+        "Federal Decree-Law No. 45 of 2021"
+      ],
+      "ja": [
+        "2021 年連邦政令法第 45 号"
+      ],
+      "place": [
+        "the United Arab Emirates",
+        "アラブ首長国連邦"
+      ],
+      "source": "ae-pdpl"
+    },
+    "Qatar PDPL": {
+      "en": [
+        "Law No. 13 of 2016"
+      ],
+      "ja": [
+        "2016 年法律第 13 号"
+      ],
+      "place": [
+        "Qatar",
+        "カタール"
+      ],
+      "source": "qa-pdpl"
     }
   },
   "fetchAlso": {
@@ -780,6 +963,127 @@
     ],
     "PPC Q&A": [
       "all"
+    ],
+    "Argentina Law 25.326": [
+      "all",
+      "1",
+      "2",
+      "4",
+      "5",
+      "6",
+      "12",
+      "21",
+      "44"
+    ],
+    "Uruguay Law 18.331": [
+      "all",
+      "1",
+      "2",
+      "3",
+      "4",
+      "13",
+      "17",
+      "23",
+      "28",
+      "29"
+    ],
+    "Colombia Law 1581": [
+      "all",
+      "2",
+      "7",
+      "12",
+      "25",
+      "26"
+    ],
+    "Mexico LFPDPPP": [
+      "all",
+      "1",
+      "2",
+      "3",
+      "14",
+      "15",
+      "35",
+      "36"
+    ],
+    "New Zealand Privacy Act 2020": [
+      "all",
+      "4",
+      "11",
+      "22"
+    ],
+    "Australia Privacy Act 1988": [
+      "all",
+      "5B",
+      "6C",
+      "6D"
+    ],
+    "Chile Law 19.628": [
+      "all",
+      "1",
+      "2",
+      "4"
+    ],
+    "Canada PIPEDA": [
+      "all",
+      "2",
+      "4"
+    ],
+    "Kenya DPA 2019": [
+      "all",
+      "4",
+      "18",
+      "25",
+      "48",
+      "49",
+      "50"
+    ],
+    "Philippines DPA 2012": [
+      "all",
+      "4",
+      "6",
+      "21"
+    ],
+    "South Africa POPIA": [
+      "all",
+      "3",
+      "35",
+      "72"
+    ],
+    "Singapore PDPA 2012": [
+      "all",
+      "4",
+      "26"
+    ],
+    "UAE PDPL": [
+      "all",
+      "2",
+      "22",
+      "23"
+    ],
+    "Qatar PDPL": [
+      "all",
+      "2",
+      "15"
+    ],
+    "Monaco Law 1.565": [
+      "all",
+      "3",
+      "25"
+    ],
+    "Saudi PDPL": [
+      "13",
+      "29"
+    ],
+    "Korea PIPA": [
+      "22-2",
+      "28-8",
+      "30"
+    ],
+    "Swiss FADP": [
+      "16",
+      "17",
+      "18",
+      "19"
     ]
   },
   "recitals": {
