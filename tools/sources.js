@@ -57,6 +57,25 @@ const SOURCES = {
   'ru-152': { pages: [1, 2, 3, 4, 5, 6, 7].map((n) => 'http://www.kremlin.ru/acts/bank/24154/page/' + n), body: [/Показать предыдущую страницу документа/, /Показать следующую страницу документа|Текст Поделиться Прямая ссылка/], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true, supGuess: true, altPrefix: 'https://web.archive.org/web/2026id_/' },
   // adilet.zan.kz answers with a page that asks for a script; the Internet Archive's copy is tried after it (`alt`).
   kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g, alt: ['https://web.archive.org/web/2026id_/https://adilet.zan.kz/rus/docs/Z1300000094'] },
+  /* Added on 2026-11-12, for the data protection laws that Nusquama's survey of the world's laws (verification/world/ there)
+   * found, so that the scope, representative, registration, transfer and minors articles are read at their sources by number.
+   * The survey kept only the articles its search words matched; these are fetched whole here. `whole` keeps the text as
+   * article "all" beside the cut articles; `alt` is one other official route, or the Internet Archive's copy. */
+  'ar-25326': { url: 'https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/texact.htm', lang: 'es', split: /ARTICULO (\d+)(?:°|º|\.)? ?(?:—|–|-) /g, whole: 'all', keep: 120000 },
+  'uy-18331': { url: 'https://www.impo.com.uy/bases/leyes/18331-2008', lang: 'es', split: /Artículo (\d+) (?=[A-ZÁÉÍÓÚÑ][a-záéíóúñ])/g, whole: 'all', keep: 120000 },
+  'co-1581': { url: 'http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html', lang: 'es', split: /ART(?:Í|I|�)CULO (\d+)o?\. /g, whole: 'all', keep: 120000 },
+  'mx-lfpdppp': { url: 'https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf', lang: 'es', split: /Artículo (\d+)\. /g, whole: 'all', keep: 120000 },
+  'nz-privacy': { url: 'https://www.legislation.govt.nz/act/public/2020/0031/latest/whole.html', split: / (\d{1,3}) (?=[A-Z][a-z]+ )/g, whole: 'all', keep: 450000, alt: ['https://web.archive.org/web/2026id_/https://www.legislation.govt.nz/act/public/2020/31/en/latest/'] },
+  'au-privacy': { url: 'https://www.legislation.gov.au/C2004A03712/latest/text', split: / (\d{1,3}[A-Z]{0,2}) (?=[A-Z][a-z]+ )/g, whole: 'all', keep: 250000 },
+  'cl-19628': { url: 'https://www.leychile.cl/Consulta/obtxml?opt=7&idNorma=141599', lang: 'es', split: /Art[íi]culo (\d+)°?\.?-? /g, whole: 'all', keep: 120000 },
+  'ca-pipeda': { url: 'https://laws-lois.justice.gc.ca/eng/XML/P-8.6.xml', split: / (\d{1,2}(?:\.\d{1,2})?) (?=\(1\) )/g, whole: 'all', keep: 120000 },
+  'mc-1565': { url: 'https://legimonaco.mc/tnc/loi/2024/12-03-1.565/', lang: 'fr', split: /Article (\d+) (?=Article \d+ )/g, whole: 'all', keep: 200000 },
+  'ke-dpa': { url: 'http://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2019/TheDataProtectionAct__No24of2019.pdf', split: / (\d{1,2})\. (?=\(1\)|[A-Z][a-z])/g, whole: 'all', keep: 200000, alt: ['https://web.archive.org/web/2026id_/http://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2019/TheDataProtectionAct__No24of2019.pdf'] },
+  'ph-dpa': { url: 'https://privacy.gov.ph/data-privacy-act/', split: /SEC\. (\d+)\. /g, whole: 'all', keep: 120000, alt: ['https://web.archive.org/web/2026id_/https://privacy.gov.ph/data-privacy-act/'] },
+  'za-popia': { url: 'https://www.justice.gov.za/inforeg/docs/InfoRegSA-POPIA-act2013-004.pdf', split: / (\d{1,3})\. (?=\(1\) )/g, whole: 'all', keep: 250000, alt: ['https://inforegulator.org.za/wp-content/uploads/2020/07/3706726-11act4of2013protectionofpersonalinforcorrect.pdf'] },
+  'sg-pdpa': { url: 'https://sso.agc.gov.sg/Act/PDPA2012?WholeDoc=1', split: / (\d{1,3}[A-Z]?)\.?—?(?=\(1\) |[A-Z][a-z]+ )/g, whole: 'all', keep: 250000 },
+  'ae-pdpl': { url: 'https://uaelegislation.gov.ae/en/legislations/1972/download', split: /Article \((\d+)\)/g, whole: 'all', keep: 120000, alt: ['https://web.archive.org/web/2026id_/https://uaelegislation.gov.ae/en/legislations/1972/download'] },
+  'qa-pdpl': { url: 'https://www.almeezan.qa/LawView.aspx?opt&LawID=7121&language=en', split: /Article \((\d+)\)/g, whole: 'all', keep: 120000 },
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
   'github-terms': { url: 'https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/Policies/github-terms/github-terms-of-service.md', markdown: true },
   'vercel-terms': { url: 'https://vercel.com/legal/terms', split: /(?:^| )(\d+)\. (?=[A-Z][A-Za-z ,&'’-]{2,60} )/g },
@@ -201,6 +220,11 @@ const PAGES = {
   'paperreview-home': PAGE('https://paperreview.ai/', { links: /terms|privacy|polic/i }),
   'paperreview-terms': PAGE('https://paperreview.ai/terms'),
   'conatus-about': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about', { links: /about|submission|polic|copyright|licen/i, alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about' }),
+  // The regulators' own pages, where the official text of a data protection law that the survey could not fetch may be linked.
+  'gh-dpc': PAGE('https://dataprotection.org.gh/', { links: /\.pdf|act|843|law|legislation/i, follow: { re: /\.pdf|843/i, max: 3 }, keep: 150000 }),
+  'tz-pdpc': PAGE('https://www.pdpc.go.tz/', { links: /\.pdf|sheria|act|law|legislation/i, follow: { re: /\.pdf/i, max: 3 }, keep: 150000 }),
+  'zw-potraz': PAGE('https://www.potraz.gov.zw/', { links: /\.pdf|data|act|law|legislation/i, follow: { re: /data.?protection|cyber/i, max: 3 }, keep: 150000 }),
+  'ae-portal': PAGE('https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws', { links: /\.pdf|legislation|decree|law/i, keep: 60000 }),
   'conatus-submissions': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions', { alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions' }),
 };
 
