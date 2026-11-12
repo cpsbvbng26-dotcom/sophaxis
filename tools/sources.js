@@ -227,6 +227,21 @@ const PAGES = {
   'philarchive-about': PAGE(IA('https://philarchive.org/help/about.html')),
   'philarchive-faq': PAGE(IA('https://philarchive.org/help/faq.html')),
   'philpapers-terms': PAGE(IA('https://philpapers.org/help/terms.html')),
+  /* Added on 2026-11-12 (the second pass): the pages where PhilArchive and SSRN state what they accept, so that the
+   * sentences elsewhere about how they treated the operator's works are read against the venues' own words. SSRN's help
+   * pages are on Elsevier's support site; they are read from the Internet Archive's copies, as SSRN's own pages are. */
+  'philarchive-codeofconduct': PAGE(IA('https://philarchive.org/help/codeofconduct.html')),
+  'philarchive-submit': PAGE(IA('https://philarchive.org/help/submit.html')),
+  'ssrn-classification-distribution': PAGE(IA('https://www.elsevier.support/ssrn/answer/classification-distribution')),
+  'ssrn-nonscholarly': PAGE(IA('https://www.elsevier.support/ssrn/answer/nonscholarly'), { links: /guideline|integrity|scholarly/i }),
+  'ssrn-review-process': PAGE(IA('https://www.elsevier.support/ssrn/answer/ssrn-review-process'), { links: /guideline|integrity|rejection/i }),
+  'ssrn-submission-guidelines': PAGE(IA('https://www.elsevier.support/ssrn/answer/get-started')),
+  'ssrn-research-integrity': PAGE(IA('https://www.elsevier.support/ssrn/answer/research-integrity'), { links: /guideline|integrity|rejection/i }),
+  /* ROAR's own pages on how an entry is added (its help is EPrints' user documentation), and the record of Sophaxis, so that
+   * the wording of the listing is read against them. ROAR's robots.txt shuts only /cgi/; these are read directly. */
+  'roar-information': PAGE('https://roar.eprints.org/information.html'),
+  'roar-help': PAGE('https://roar.eprints.org/help/'),
+  'roar-record': PAGE('https://roar.eprints.org/27422/'),
   'orcid-terms': PAGE('https://info.orcid.org/terms-of-use/', { links: /terms|api|public|licen/i }),
   'orcid-public-api-terms': PAGE('https://info.orcid.org/public-client-terms-of-service/'),
   'edx-terms': PAGE(IA('https://www.edx.org/edx-terms-service')),

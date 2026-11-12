@@ -1327,7 +1327,7 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /FAIRsharing|openarchives\.org\/Register/i.test(read(path.join(ROOT, 'site', f)))));
   }
   /* The Open Access Directory entry, which the operator added, is shown on both top pages with its page, its sections and the day
-   * it was last confirmed, said to be no review, and kept out of listedIn (which means a listing after editorial review). */
+   * it was last confirmed, said to be no review, and kept out of listedIn (which means a listing that the registry put up after the operator submitted a record). */
   {
     const de = JSON.parse(read(path.join(ROOT, 'site.json'))).directoryEntries || [];
     const oad = de.find((x) => x.name === 'Open Access Directory');
@@ -1364,18 +1364,27 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && !en.concat(ja).some((r) => r.includes('Open Access Directory'))
       && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
   }
-  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed after editorial review on 2026-11-06, with its record, in both languages, and on the top page, the contact page, the press page and the news of the site, and on the history page only as the title of its news item, and nowhere else on it',
-    read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes('It passed editorial review, and Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
-    && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
+  /* 2026-11-12 (second pass): ROAR's own pages (fetched as roar-help and roar-information) say that a deposit is put in an
+   * "editorial buffer" until "approved by an editor", and do not say what is checked; so the listing is stated with its day,
+   * and no review by ROAR is claimed anywhere (README, contact pages, news, the built site). */
+  const roarReview = /(passed|after) (its |the )?editorial review[^.]*ROAR|ROAR[^.\n]*(passed|after) (its |the )?editorial review|passed editorial review|after its editorial review|編集の審査を通/;
+  const roarFiles = ['README.md', 'contact.md', 'contact.ja.md', 'data/news.json', 'build.js'].map((f) => [f, read(path.join(ROOT, f))])
+    .concat(fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => /\.(html|xml|json)$/.test(f)).map((f) => ['site/' + f, read(path.join(ROOT, 'site', f))]));
+  const roarClaims = (files) => files.filter(([, t]) => roarReview.test(t)).map(([f]) => f);
+  ok('the ROAR record is recorded as submitted on 2026-11-03 and listed since 2026-11-06, with its record, in both languages, and on the top page, the contact page, the press page and the news of the site, and on the history page only as the title of its news item, and nowhere else on it; no page says that it passed an editorial review',
+    read(path.join(ROOT, 'README.md')).includes('the operator submitted a record of Sophaxis to ROAR') && read(path.join(ROOT, 'README.md')).includes('University of Southampton. Sophaxis has been listed there since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
+    && read(path.join(ROOT, 'README.md')).includes('Sophaxis の記録を出しました。2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。')
+    && roarClaims(roarFiles).length === 0 && roarClaims([['x', 'Sophaxis passed editorial review and is listed in ROAR.']]).length === 1 && roarClaims([['x', '編集の審査を通り、載っています']]).length === 1
     && !read(path.join(ROOT, 'README.md')).includes("whether it is listed is ROAR's decision.")
-    && read(path.join(ROOT, 'contact.md')).includes('- ROAR: Sophaxis passed the editorial review of the Registry of Open Access Repositories at the University of Southampton, and has been listed there since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).')
+    && read(path.join(ROOT, 'contact.md')).includes('- ROAR: Sophaxis has been listed in the Registry of Open Access Repositories at the University of Southampton since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).')
+    && read(path.join(ROOT, 'contact.ja.md')).includes('- ROAR：Sophaxis は、2026-11-06（日本時間）から、サウサンプトン大学の Registry of Open Access Repositories に載っています。[記録 27422](https://roar.eprints.org/27422/) です。')
     && read(path.join(ROOT, 'site', 'contact.html')).includes('<a href="https://roar.eprints.org/27422/">record 27422</a>')
     && read(path.join(ROOT, 'site', 'contact.ja.html')).includes('<a href="https://roar.eprints.org/27422/">記録 27422</a>')
     && JSON.stringify(JSON.parse(read(path.join(ROOT, 'site.json'))).listedIn) === JSON.stringify([{ name: 'ROAR', description: 'the Registry of Open Access Repositories at the University of Southampton', url: 'https://roar.eprints.org/27422/', since: '2026-11-06' }])
-    && read(path.join(ROOT, 'site', 'index.html')).includes('<p class="meta">Listed in <a href="https://roar.eprints.org/27422/">ROAR</a>, the Registry of Open Access Repositories at the University of Southampton, after its editorial review, since 2026-11-06 (Japan time).</p>')
+    && read(path.join(ROOT, 'site', 'index.html')).includes('<p class="meta">Listed in <a href="https://roar.eprints.org/27422/">ROAR</a>, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time).</p>')
     && read(path.join(ROOT, 'site', 'press.html')).includes('<tr><th scope="row">Listed in</th><td><a href="https://roar.eprints.org/27422/">ROAR</a> (since 2026-11-06)</td></tr>')
     && read(path.join(ROOT, 'site', 'press.ja.html')).includes('<tr><th scope="row">掲載先</th><td><a href="https://roar.eprints.org/27422/">ROAR</a>（2026-11-06 から）</td></tr>')
-    && read(path.join(ROOT, 'site', 'news.html')).includes('Sophaxis passed editorial review and is listed in ROAR, the Registry of Open Access Repositories at the University of Southampton. <a href="https://roar.eprints.org/27422/">More</a>')
+    && read(path.join(ROOT, 'site', 'news.html')).includes('Sophaxis is listed in ROAR, the Registry of Open Access Repositories at the University of Southampton. <a href="https://roar.eprints.org/27422/">More</a>')
     && fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html') && !['contact.html', 'contact.ja.html', 'index.html', 'press.html', 'press.ja.html', 'news.html', 'history.html', 'history.ja.html'].includes(f)).every((f) => !/\bROAR\b|roar\.eprints/.test(read(path.join(ROOT, 'site', f))))
     /* The history page names ROAR only as the title of its news item, with no link of its own. */
     && ['history.html', 'history.ja.html'].every((f) => (read(path.join(ROOT, 'site', f)).match(/\bROAR\b/g) || []).length === 1 && read(path.join(ROOT, 'site', f)).includes('<li>2026-11-06: Listed in ROAR</li>') && !read(path.join(ROOT, 'site', f)).includes('roar.eprints')));
@@ -1463,6 +1472,13 @@ console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
     cff.includes('title: "' + z.title + '"') && z.creators.length === 1 && z.creators[0].orcid === '0009-0000-1406-0547'
     && cff.includes('orcid: "https://orcid.org/0009-0000-1406-0547"') && z.license === 'mit' && cff.includes('license: MIT')
     && /^MIT License/.test(read(path.join(ROOT, 'LICENSE'))));
+  /* 2026-11-12 (second pass): the licence field of the release is MIT, so its notes say that it covers the code only, that
+   * each listed work with its PDF copy and abstract keeps its own licence, and that texts by others are not licensed here. */
+  const ZLIC = ['The licence field of this record covers the code only.', 'Each listed work, with its PDF copy and its abstract, keeps its own licence.',
+    'Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners\'.'];
+  ok('the notes of .zenodo.json say that its licence field (MIT) covers the code only, that each listed work with its PDF copy and abstract keeps its own licence, and that texts by others are not licensed under CC BY 4.0; the README says the same of the field and the works',
+    ZLIC.every((x) => String(z.notes || '').includes(x))
+    && read(path.join(ROOT, 'README.md')).includes('Each listed work, with its PDF copy and its abstract, keeps its own licence. The licence field of `.zenodo.json` (MIT) covers the code only.'));
   /* The DOIs that Zenodo gave on release (DataCite: 24033372 is v1.0.0 and IsVersionOf 24033371). */
   const rd = read(path.join(ROOT, 'README.md'));
   ok('CITATION.cff, the README in both languages and the contact page give the Zenodo DOI of version 1.0.0 and the DOI of every version',
@@ -4927,6 +4943,8 @@ console.log('\n115. The laws of 195 countries applied: fifteen more places from 
 }
 
 /* ------------------------------------------------------------ 116 */
+/* The pages that the third pass of 2026-11-12 added to tools/sources.js (check 117). */
+const SECOND_PASS_PAGES = ['philarchive-codeofconduct', 'philarchive-submit', 'ssrn-classification-distribution', 'ssrn-nonscholarly', 'ssrn-review-process', 'ssrn-submission-guidelines', 'ssrn-research-integrity', 'roar-information', 'roar-help', 'roar-record'];
 console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct requests where terms forbid them, texts by others kept only in parts, and the reply time an aim from 2026-11-26');
 {
   const S = require('../tools/sources.js');
@@ -4964,7 +4982,7 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
   const PARTS = ['cc-by', 'cc-by-sa', 'cc0', 'github-terms', 'vercel-terms', 'mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa', 'korea-pipa', 'korea-decree', 'usc17'];
   const nonLaw = Object.keys(RAW.sources).filter((k) => !S.wholeSource(k)).sort();
   const kp = S.keptProblems(RAW);
-  const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256).length;
+  const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256 && !SECOND_PASS_PAGES.includes(k)).length;
   ok('only laws are kept whole; every page (' + pages + ') and every other text (' + nonLaw.length + ': licences, terms, guidance and translations not made by a state) is kept as its address, day, SHA-256 and the parts quoted or relied on; the whole texts of a run go to its artifact for 90 days after the parts are verified against them, and are not in git',
     kp.length === 0 && JSON.stringify(nonLaw) === JSON.stringify(PARTS.slice().sort()) && Object.keys(RAW.sources).every((k) => S.wholeSource(k) || PARTS.includes(k)) && wp.length === 0, kp.concat(wp).slice(0, 6).join(', '));
   /* The licence statements say, in both languages, that texts by others are not under CC BY 4.0. */
@@ -5019,7 +5037,8 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
     const qs = rows.flatMap((r) => [...(r[3] || '').matchAll(/「([^「」]+)」/g)].map((m) => m[1]));
     if (qs.length < 10) bad.push('too few quotations');
     for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
-    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
+    /* The count is of the pages kept on that day; the pages fetched by the next pass (check 117) are not among them. */
+    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256 && !SECOND_PASS_PAGES.includes(k)).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
     if (!sec.includes('ファイルは、' + nPages + ' の頁と、ライセンス・規約・手引き・私人の英訳など ' + nParts + ' の文を、全文で置いていました')) bad.push('the counts of the texts');
     for (const x of ['公開した履歴は書き換えません。2026-11-12 に Claude が決めました。', '最後に全体を置いていたのは、main のコミット 8fcaef4 です。', 'その実行の成果物 `sources-full` として 90 日のあいだ残り', '点検の表の「規約や外国の法令の訳の引用」の行は、頁に置く短い一節だけを見て問題なしとしました。', '### 下げられずに残る危険']) if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
     return bad;
@@ -5059,6 +5078,78 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
       audit.replace('or otherwise send automated queries of any sort to SSRN.」', 'or otherwise send any automated queries to SSRN.」'),
       audit.replace('公開した履歴は書き換えません。', '公開した履歴を書き換えました。'),
       audit.replace('ファイルは、' + pages + ' の頁と', 'ファイルは、' + (pages + 1) + ' の頁と')].every((b) => b !== audit && auditProblems(b, pool, RAW).length > 0));
+}
+
+/* ------------------------------------------------------------ 117 */
+console.log('\n117. What a third, read-only pass of 2026-11-12 found: the licence notes of the release, no editorial review of ROAR claimed, and the pages where PhilArchive and SSRN say what they accept, fetched from the Internet Archive');
+{
+  const S = require('../tools/sources.js');
+  const kept = require('../tools/citations.js').kept;
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const RAW = J('verification/sources-raw.json'), TX = J('verification/statutes-texts.json');
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  const HEAD = '\n## 2026-11-12 の続き：二度目の見落とし\n';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  /* The pages, each from the Internet Archive's copy where the venue's terms forbid automated requests, kept in parts with
+   * its SHA-256, and each holding the words the record quotes from it. */
+  const WANT = {
+    'philarchive-codeofconduct': ['All books and papers submitted should be of professional quality.'],
+    'philarchive-faq': ['We accept works of all types (articles, books, dissertations) in all areas of academic philosophy, so long as they are of professional quality'],
+    'ssrn-nonscholarly': ['SSRN must determine if a paper meets the criteria of scholarly content.', 'Non-scholarly content does not meet our submission requirements.'],
+    'ssrn-submission-guidelines': ['SSRN accepts studies with rigorous methodology and original findings, meeting our posting standards.'],
+    'ssrn-classification-distribution': ['The paper must be part of the worldwide scholarly discourse in the field covered by the topic of the email alert and written within one year.'],
+    'ssrn-research-integrity': ['SSRN does not peer review preprints'],
+    'roar-help': ['It will then be put in the editorial buffer.'],
+  };
+  const pageProblems = (pages, raw) => {
+    const bad = [];
+    for (const k of SECOND_PASS_PAGES) {
+      const p = pages[k], r = raw.pages[k];
+      if (!p) { bad.push('not fetched: ' + k); continue; }
+      if (/^(philarchive|ssrn)-/.test(k) && !p.url.startsWith('https://web.archive.org/web/2026id_/')) bad.push('not from the Internet Archive: ' + k);
+      if (S.direct(p.url)) bad.push('direct: ' + k);
+      if (!r || r.url !== p.url || r.status !== 200 || !/^[0-9a-f]{64}$/.test(r.sha256 || '') || !Array.isArray(r.spans) || 'text' in r) bad.push('not kept in parts: ' + k);
+    }
+    for (const [k, ws] of Object.entries(WANT)) for (const w of ws) if (!flat(kept((raw.pages[k] || {}).spans)).includes(flat(w))) bad.push('not in ' + k + ': ' + w.slice(0, 30));
+    return bad;
+  };
+  const pool = flat(Object.values(RAW.pages).map((o) => kept(o.spans)).join('') + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map(kept).join('')).join('') + Object.values(TX).join(''));
+  const auditProblems = (t, poolFlat) => {
+    const bad = [];
+    const sec = (t.split(HEAD)[1] || '').split('\n## ')[0];
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length < 6) bad.push('too few rows');
+    rows.forEach((r, i) => { if (r.length !== 6 || !JUDGE.includes(r[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    for (const r of rows.filter((x) => x[4] !== '問題なし')) if (!r[5].includes('2026-11-12 に Claude が決めました。') && r[4] !== '表現') bad.push('a decision without its maker: ' + r[0]);
+    const qs = rows.flatMap((r) => [...(r[3] || '').matchAll(/「([^「」]+)」/g)].map((m) => m[1]));
+    if (qs.length < 12) bad.push('too few quotations');
+    for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
+    for (const x of ['読み終えた同じ日に、三つの実行の記録を消しました。', '取り寄せたどの頁にもありません', '### 下げられずに残る危険', 'ROAR 自身の文は、編集者の承認までしか述べておらず、何かを審査するとは述べていないためです。'])
+      if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
+    if (!/取り寄せの実行は \d{8,} で、結果は枝 `sources\/\d{8}-\d{4}` にあります。/.test(sec)) bad.push('the run of the fetch');
+    return bad;
+  };
+  const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const pp = pageProblems(S.PAGES, RAW), ap = auditProblems(audit, pool);
+  ok('the ' + SECOND_PASS_PAGES.length + ' pages that the third pass fetched are listed in tools/sources.js, PhilArchive\'s and SSRN\'s from the Internet Archive\'s copies, each kept in parts with its SHA-256 and holding the words the record quotes',
+    pp.length === 0, pp.join(', '));
+  ok('the audit records what the third pass found in a table of six columns, judged and counted, each decision by Claude, every quotation in the column of facts in a kept text, the run of the fetch, the logs deleted, and the risks that remain',
+    ap.length === 0, ap.join(' / '));
+  // Breaking on purpose.
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const r1 = clone(RAW); r1.pages['ssrn-nonscholarly'].spans = [];
+  const r2 = clone(RAW); r2.pages['philarchive-codeofconduct'].text = 'the whole text';
+  const p1 = { ...S.PAGES, 'ssrn-nonscholarly': { url: 'https://www.elsevier.support/ssrn/answer/nonscholarly' } };
+  const p2 = { ...S.PAGES }; delete p2['roar-help'];
+  ok('the check fails on a page fetched directly, a page dropped, a quoted part lost, a whole text kept, a wrong count, a quotation altered, a decision without its maker, and the deletion of the logs left out',
+    pageProblems(p1, RAW).length > 0 && pageProblems(p2, RAW).length > 0 && pageProblems(S.PAGES, r1).length > 0 && pageProblems(S.PAGES, r2).length > 0
+    && [audit.replace('この表の判定は、根拠不足 3、漏れ 1、表現 2 です。', 'この表の判定は、根拠不足 2、漏れ 1、表現 2 です。'),
+      audit.replace('「SSRN does not peer review preprints」', '「SSRN does not review preprints」'),
+      audit.replace('| 漏れ | 2026-11-12 に Claude が決めました。読み終えた', '| 漏れ | 読み終えた'),
+      audit.replace('読み終えた同じ日に、三つの実行の記録を消しました。', '三つの実行の記録は残しました。')].every((b) => b !== audit && auditProblems(b, pool).length > 0));
 }
 
 console.log('\n' + '-'.repeat(60));

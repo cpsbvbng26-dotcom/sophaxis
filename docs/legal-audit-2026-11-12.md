@@ -266,6 +266,40 @@ Sophaxis に掛かるのは三つです。
 - Internet Archive の写しは、その所の今の文と違うことがあります。違えば、記録した部分が見つからず、検査が落ちます。
 - SSRN・PhilPapers・edX・DataCite の規約が、Internet Archive の写しを読むことをどう扱うかは、規約の文からは定まりません。
 
+## 2026-11-12 の続き：二度目の見落とし
+
+ここまでの表は、書いたときのまま残しています。
+同じ 2026-11-12 に、読むだけの二度目の点検が、さらに見落としを挙げました。
+Sophaxis に掛かるのは二つです。
+一つ目は、Zenodo に渡す記録の情報が、ライセンスを MIT とだけ書いていたことです。載せた作品の PDF と要旨が、それぞれのライセンスのままであることを書いていませんでした。
+二つ目は、ROAR の審査を通ったと書いていたことです。
+あわせて、研究者の頁が書く PhilArchive と SSRN の扱いの文を確かめるため、二つの場が受け付けの基準を書いた頁を取り寄せました。取り寄せは、このリポジトリの `sources.yml` で、Internet Archive の写しから行いました。
+読み直した結論は、次の表のとおりです。判定は、上の表と同じ五つです。
+
+| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |
+| --- | --- | --- | --- | --- | --- |
+| `.zenodo.json` の `license` と `notes` | 著作権法 第 21 条 | 許諾できるのは、自らが権利を持つ文に限られること | 第 21 条は「著作者は、その著作物を複製する権利を専有する。」と定めます。記録の `license` は `mit` で、`notes` は、サイトの文が CC BY 4.0、コードが MIT だとだけ書いていました。リポジトリには、載せた作品の PDF の写し（`data/pdf/`）と要旨があります。どちらも、著者が選んだライセンスのものです | 表現 | `notes` に三つを書きました。`license` はコードにだけ掛かること、載せた作品は PDF の写しと要旨を含めてそれぞれのライセンスのままであること、引くか確かめのために置く他人の文は CC BY 4.0 で許諾していないことです。README の英語の節にも、`license` と作品のことを書きました。誰の権利も狭めません。もともと運営者が許諾できる文ではないためです |
+| README（両言語）・連絡の頁（両言語）・お知らせ・トップの頁の、ROAR の文 | ROAR の案内の頁と、EPrints の利用者の手引き | ROAR の審査を通ったと書くには、ROAR の文が、登録を審査すると述べていること | 手引きは、預けたものについて「It will then be put in the editorial buffer.」と書きます。預ける画面には「any items you are working on or have submitted but are not yet approved by an editor」が出る、とも書きます。手引きは論文を預ける人のためのもので、何を確かめるかは書いていません。ROAR の案内の頁は、登録について「To add a new repository you need to register for an account in ROAR.」と書くだけです。Sophaxis の記録には「Birth Date: 3 November 2026 04:01:42 UTC」と「Date Deposited: 05 Nov 2026 16:42」があります | 表現 | 2026-11-12 に Claude が決めました。審査を通ったという文を消し、2026-11-06（日本時間）から載っているとだけ書きました。ROAR 自身の文は、編集者の承認までしか述べておらず、何かを審査するとは述べていないためです。変更の記録（CHANGELOG）の #103 から #105 の行は、書いたときのまま残します。その行の `after editorial review` は、ROAR の文に拠っていませんでした。トップの頁の文を作る `build.js` からも、同じ句を外しました |
+| 研究者の頁と、cpsbvbng26-dotcom の README の、PhilArchive の扱いの文（取り寄せはこのリポジトリ） | PhilArchive の Content Policy、FAQ、投稿の案内 | 場が作品を学術哲学の領域にあり、専門職の水準にあるものとして扱ったと書くには、場の文が、載せる前に投稿をその基準に照らして見ると述べていること | Content Policy は「All books and papers submitted should be of professional quality.」と書きます。FAQ は「We accept works of all types (articles, books, dissertations) in all areas of academic philosophy, so long as they are of professional quality」と書きます。投稿の案内の頁は、投稿の三つの道を書くだけで、基準を書いていません。三つの頁のどれも、載せる前に誰がどう確かめるかを書いていません | 根拠不足 | 2026-11-12 に Claude が決めました。取り寄せた文は、投稿に求める基準を書いています。場が一篇ずつ確かめたとは書いていません。その文は、場が判断したと読める形をやめ、載ったことと基準の文だけを書く形に直すのが相当です。文は researcher-profile と cpsbvbng26-dotcom にあり、直しはその二つのリポジトリの PR で行います。このリポジトリには、取り寄せた部分と SHA-256 を残しました |
+| 同じ二つの所の、SSRN の扱いの文（取り寄せはこのリポジトリ） | SSRN の Support Center の頁（分類と配信、学術的でない投稿、投稿の手引き、研究公正、審査の期間） | 編集スタッフが作品を分野の学術的言説の一部として扱ったと書くには、SSRN の文が、載せる前にその基準で判断すると述べていること | 学術的でない投稿の頁は「SSRN must determine if a paper meets the criteria of scholarly content.」と「Non-scholarly content does not meet our submission requirements.」と書きます。投稿の手引きは「SSRN accepts studies with rigorous methodology and original findings, meeting our posting standards.」と書きます。学術的言説の文は分類と配信の頁にあり、「The paper must be part of the worldwide scholarly discourse in the field covered by the topic of the email alert and written within one year.」と、メールの配信の条件として書かれています。同じ頁は、配信について「It depends on the paper’s relevance to the subscribers’ selected fields and the editors’ curation decisions.」と書きます。研究公正の頁は「SSRN does not peer review preprints」と書きます。二つの所が引く `part of the world-wide scholarly discourse covered by one or more of SSRN's subject area networks` の句は、取り寄せたどの頁にもありません | 根拠不足 | 2026-11-12 に Claude が決めました。SSRN の文が支えるのは、SSRN が学術的な内容かどうかを判断したうえで載せた、というところまでです。分野の学術的言説の一部という基準は、配信の条件です。各篇が配信されたかは、確かめていません。判断した者を編集スタッフと呼ぶ文も、取り寄せた頁にはありません。直しは researcher-profile と cpsbvbng26-dotcom の PR で行います |
+| 取り寄せた SSRN の案内の頁の、権利の表示 | 著作権法 第 21 条・第 32 条 | 他人の文を、引用の範囲を越えて置かないこと | 案内の頁の末尾は、どれも「All rights are reserved, including those for text and data mining, AI training, and similar technologies.」と書きます。頁は、SSRN の頁と同じく、Internet Archive の写しから取り寄せました | 根拠不足 | 2026-11-12 に Claude が決めました。リポジトリには、所在・日付・SHA-256 と、引くか拠る部分だけを置きます。全文は、取り寄せの実行の成果物として 90 日のあいだ残ります。写しを機械で一度読むことが、この表示の言う留保に触れるかは、表示の文からは定まりません。下の残る危険に書きます |
+| 全文を読むための三つの実行（43249407694、43249842966、43250117000） | 著作権法 第 21 条 | 他人の文の全体を、公に置かないこと | 作業の場からは、Internet Archive にも、実行の成果物の置き場にも届きません。全文を読むため、`sources.yml` を写した枝 `claude/redteam2-probe-1112` で三度実行し、取り寄せた 13 の頁の全文を、実行の記録（ログ）に書き出しました。その枝からは、取り寄せの結果を押していません | 漏れ | 2026-11-12 に Claude が決めました。読み終えた同じ日に、三つの実行の記録を消しました。記録は公開のリポジトリで誰でも読めるため、全文を置かないという決めに触れるからです。枝は消せないため残ります。三つの実行の成果物 `sources-full` は、ほかの実行と同じく 90 日のあいだ残ります |
+
+この表の判定は、根拠不足 3、漏れ 1、表現 2 です。
+
+### 取り寄せた文
+
+PhilArchive の 3 の頁と SSRN の 5 の頁は Internet Archive の写しから、ROAR の 3 の頁は ROAR から直に取り寄せました。
+ROAR の `robots.txt` が閉じているのは `/cgi/` だけです。
+取り寄せの実行は 43250860786 で、結果は枝 `sources/20261112-1544` にあります。全体は、その実行の成果物 `sources-full` にあります。
+
+### 下げられずに残る危険
+
+- Internet Archive の写しは、その頁の今の文と違うことがあります。SSRN の案内の頁は、写しのなかの日付で 2026 年 2 月から 8 月に更新されたものです。PhilArchive の投稿の案内の頁は、2021 年の写ししかありませんでした。
+- SSRN の案内の頁が留保する権利に、写しを機械で一度読むことが当たるかは、定まりません。
+- ROAR が登録のときに何を確かめるかは、ROAR の文からは分かりません。
+- 研究者の頁と cpsbvbng26-dotcom の文は、その二つのリポジトリの PR が入るまで、取り寄せた文より強いことを書いたままです。
+
 ## この記録について
 
 この点検は Claude が行ったもので、弁護士の点検ではありません。弁護士はこの記録を確かめていません。
