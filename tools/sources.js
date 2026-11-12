@@ -52,7 +52,9 @@ const SOURCES = {
   'korea-pipa': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
   'korea-decree': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=66066', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
   // kremlin.ru writes Article 10¹ as 10<sup>1</sup>; `sup` reads it as 10.1, so that it is not taken for Article 101 and the articles after it are kept.
-  'ru-152': { pages: ['http://www.kremlin.ru/acts/bank/24154/page/1', 'http://www.kremlin.ru/acts/bank/24154/page/2', 'http://www.kremlin.ru/acts/bank/24154/page/3', 'http://www.kremlin.ru/acts/bank/24154/page/4'], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true, supGuess: true, altPrefix: 'https://web.archive.org/web/2026id_/' },
+  // Each page carries the site's menus around a part of the law; `body` keeps only the part, so that an article that runs
+  // onto the next page is joined without them. Article 18 runs from page 4 onto page 5.
+  'ru-152': { pages: [1, 2, 3, 4, 5, 6, 7].map((n) => 'http://www.kremlin.ru/acts/bank/24154/page/' + n), body: [/Показать предыдущую страницу документа/, /Показать следующую страницу документа|Текст Поделиться Прямая ссылка/], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true, supGuess: true, altPrefix: 'https://web.archive.org/web/2026id_/' },
   // adilet.zan.kz answers with a page that asks for a script; the Internet Archive's copy is tried after it (`alt`).
   kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g, alt: ['https://web.archive.org/web/2026id_/https://adilet.zan.kz/rus/docs/Z1300000094'] },
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
@@ -129,8 +131,6 @@ const PAGES = {
   'openai-privacy-row': PAGE('https://openai.com/policies/row-privacy-policy/'),
   'xai-privacy': PAGE('https://x.ai/legal/privacy-policy', { links: /privacy|legal|contact/i }),
   'xai-company': PAGE('https://x.ai/company'),
-  // The head and the foot of one page of the Russian law as kremlin.ru serves it, to find where the text of the law begins and ends.
-  'ru-152-page-5': PAGE('http://www.kremlin.ru/acts/bank/24154/page/5', { lang: 'ru', keep: 200000 }),
 
   /* Added on 2026-11-12, to close the gaps that the legal audit of that day left (docs/legal-audit-2026-11-12.md).
    * `follow` also fetches the links that match it (as many as `max`), each kept under the key with ">" and its place;
@@ -381,6 +381,11 @@ async function foreignOnce(key, s, articles) {
     statuses.push(r.status || r.error);
     out.status = s.pages ? statuses : statuses[0];
     if (r.error) { out.error = r.error; break; }
+    if (s.pages && r.status !== 200) continue;
+    if (s.body && r.text) {
+      const a = s.body[0].exec(r.text), b = s.body[1].exec(r.text);
+      r.text = r.text.slice(a ? a.index + a[0].length : 0, b ? b.index : r.text.length).trim();
+    }
     if (r.final && r.final !== u) out.final = r.final;
     if (r.pdf) out.pdf = true;
     text += (text ? ' ' : '') + r.text; raw += r.raw;
