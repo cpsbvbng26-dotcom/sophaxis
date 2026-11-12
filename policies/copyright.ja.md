@@ -22,10 +22,18 @@ Sophaxis は、著作権の譲渡も、独占的な許諾も求めません。
 要旨は、作品自身のライセンスのもとで、著者と作品へのリンクを添えて示します。
 
 Sophaxis は、検索エンジンが本文を索引できるように、載っているそれぞれの版の PDF の写しを、手を加えずに置きます。
-写すのは、スクリプトでファイルを取らせる預け先からだけです。Zenodo、Figshare、arXiv、Research Square です。
+スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。Zenodo と arXiv です。
+Zenodo の開発者向けの文書は、REST API でできることに「Files — download/upload of files.」を挙げます。
+arXiv の一括取得の頁は「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と書きます。Sophaxis は、その所から取ります。
+arXiv の API の利用規約は、e-print を保って配ることを禁じます。例外は「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合です。載せる作品は、どれも受け付ける三つのライセンスのどれかを持ち、そのライセンスがこれを認めています。
+2026-11-12 までは、Figshare と Research Square からもスクリプトで写していました。2026-11-13 からは写しません。どちらの規約も、これを禁じているためです。
+Figshare の規約は、利用者がしてはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げます。例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。
+Research Square の規約は「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。
+Figshare からすでに写したものは、作品のライセンスのもとで残します。
+これらの頁は 2026-11-12 に読みました。Zenodo と arXiv の頁は直に読み、Figshare と Research Square の頁は Internet Archive の写しから読みました。
 預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 預けたものに PDF が複数ある場合、Sophaxis はどれが論文かを推測せず、写しを作りません。
-ほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。
+Figshare と Research Square を含むほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。
 その場合、Sophaxis はそのファイルを手を加えずに置き、記録には著者が提供したと書きます。
 そのようなファイルが無ければ、記録は預け先へのリンクだけになります。
 写しを置くのは、ファイルが 20 MB 以下で、写し全体が 1 GB 以内に収まるあいだだけです。

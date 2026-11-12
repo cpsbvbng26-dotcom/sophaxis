@@ -55,7 +55,7 @@ The title, the authors, the abstract, the licence and the versions are taken fro
 An automatic check (`tools/intake.js`, run by `.github/workflows/intake.yml`) confirms that the GitHub account belongs to an author of the work,
 and posts the result and a draft record in the issue. Only verified submissions are listed.
 For a verified submission the comment also gives advice on the DOI metadata from [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), checked out at a pinned commit: its errors and warnings, such as a missing abstract or licence. The advice does not decide the listing.
-Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, Figshare, arXiv and Research Square), the comment asks the authors to attach the deposited PDF to the issue.
+Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv; from 2026-11-13, Figshare and Research Square among them, because their terms forbid scripts), the comment asks the authors to attach the deposited PDF to the issue.
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies of works whose every author consents.
@@ -93,7 +93,7 @@ When a verified submission passes moderation, add the draft record from the issu
 run `node build.js` and `node verification/check.js`, and open a pull request that closes the issue.
 When a record changes later (a new version, a note, a published version), set `updated` to that day. OAI-PMH harvesters read the later of the two as the day the record changed.
 After it is merged, run the `pdf` workflow with the record id. It copies the PDFs onto a branch `claude/pdf-<id>`; open a pull request from it.
-Where the repository does not let a script fetch the file (every repository except Zenodo, Figshare, arXiv and Research Square), ask the authors to attach the PDF to their submission issue,
+Where the repository does not let a script fetch the file (every repository except Zenodo and arXiv), ask the authors to attach the PDF to their submission issue,
 and run the workflow with `from` set to that attachment and `version` to the version it is.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
 The id in a draft is provisional. If `data/papers/<id>.json` already exists when the record is added, give the record the next free id instead.
