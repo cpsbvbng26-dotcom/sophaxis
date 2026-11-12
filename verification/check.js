@@ -4757,7 +4757,7 @@ console.log('\n113. The duties the audit left open: the mailbox, the request log
   // Breaking on purpose.
   const brokenRec = [rec.replace('88 Colin P. Kelly Jr. St.', '1 Main St.'), rec.replace(/^\| OpenAI \|.*\n/m, ''), rec.replace('単に閲覧する行為', '単に閲覧したとき'),
     rec.replace('| Day | Person | Items | Consent | Recipient |\n| --- | --- | --- | --- | --- |\n', '| Day | Person | Items | Consent | Recipient |\n| --- | --- | --- | --- | --- |\n| 2026-11-12 | 0000-0002-1825-0097 |  | issue #1 | many unspecified people |\n'),
-    rec.replace('| United States | ia-terms | Not required: public information |', '| United States | ia-terms | Required |'), rec.replace('| Matthew Buys, Executive Director |', '| Jane Doe |')];
+    rec.replace('| 300 Funston Ave., San Francisco, CA 94118 | Not given on the page fetched | United States | ia-terms-archived-2024 | Not required: public information |', '| Not fetched | Not given on the page fetched | United States | ia-terms-archived-2024 | Required |'), rec.replace(/^(\| DataCite \| [^|]+ \| [^|]+ \| )Not kept: [^|]+ \|/m, '$1Jane Doe |')];
   const brokenPol = [[en, ja.replace('106-6140東京都港区六本木6丁目10番1号 六本木ヒルズに所在するiTunes株式会社', 'iTunes株式会社')], [en, ja.replace('「包括的な法令は存在しない。」', '「包括的な法令が存在する。」')],
     [en.replace(/^- OpenAI: .*\n/m, ''), ja], [en.replace('no consent is asked of the people who write', 'consent is asked of the people who write'), ja], [en + '\nThe United States has no general federal law on personal data.\n', ja]];
   ok('the checks fail on a wrong address, a missing recipient, an altered quotation, an empty item of a record, a missing address where a record is required, a wrong representative, a lost address of iTunes K.K., an altered word of the Commission, a lost recipient\'s measures, a consent asked, and the old words on the United States',
@@ -4989,7 +4989,11 @@ const THIRD_PASS_PAGES = ['joss-paper-src'];
 const FIFTH_PASS_PAGES = ['zenodo-developers', 'arxiv-api-tou', 'arxiv-bulk-data', 'arxiv-export-robots', 'figshare-terms', 'figshare-api-docs', 'researchsquare-terms', 'researchsquare-robots'];
 /* The page fetched by the eighth pass (check 123): the GitHub Terms for Additional Products and Features. */
 const EIGHTH_PASS_PAGES = ['github-additional-terms'];
-const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES);
+/* The pages fetched by the eleventh pass (check 125): the Internet Archive's terms from its copy of 2024-01-01, and its two robots.txt files. */
+const ELEVENTH_PASS_PAGES = ['ia-terms-archived-2024', 'ia-robots', 'wayback-robots'];
+const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES, ELEVENTH_PASS_PAGES);
+/* Pages kept on 2026-11-12 and no longer read: DataCite's imprint, dropped by the eleventh pass (check 125). The counts of that day still hold them. */
+const DROPPED_PAGES = ['datacite-imprint'];
 console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct requests where terms forbid them, texts by others kept only in parts, and the reply time an aim from 2026-11-26');
 {
   const S = require('../tools/sources.js');
@@ -5001,7 +5005,8 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
   const addresses = (src, pages) => Object.entries(src).flatMap(([k, s]) => [].concat(s.url || [], s.each || [], s.pages || [], s.alt || [], s.altPrefix ? (s.pages || []).map((u) => s.altPrefix + u) : []).map((u) => [k, u]))
     .concat(Object.entries(pages).flatMap(([k, p]) => [].concat(p.url || [], p.alt || []).map((u) => [k, u])));
   const directProblems = (src, pages) => addresses(src, pages).filter(([, u]) => S.direct(u)).map(([k, u]) => k + ': ' + u);
-  const NAMED = ['ssrn-terms', 'philpapers-terms', 'philarchive-home', 'philarchive-about', 'philarchive-faq', 'edx-terms', 'datacite-privacy', 'datacite-imprint', 'datacite-terms', 'datacite-api-docs'];
+  /* DataCite's imprint left this list on 2026-11-13: it is no longer read at all (check 125). */
+  const NAMED = ['ssrn-terms', 'philpapers-terms', 'philarchive-home', 'philarchive-about', 'philarchive-faq', 'edx-terms', 'datacite-privacy', 'datacite-terms', 'datacite-api-docs'];
   const namedProblems = (pages, raw) => NAMED.filter((k) => !pages[k] || !pages[k].url.startsWith('https://web.archive.org/web/2026id_/') || pages[k].alt
     || !raw.pages[k] || raw.pages[k].url !== pages[k].url || (raw.pages[k].tried && S.direct(raw.pages[k].tried.url)));
   const dp = directProblems(S.SOURCES, S.PAGES), np = namedProblems(S.PAGES, RAW);
@@ -5027,7 +5032,7 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
   const PARTS = ['cc-by', 'cc-by-sa', 'cc0', 'github-terms', 'vercel-terms', 'mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa', 'korea-pipa', 'korea-decree', 'usc17'];
   const nonLaw = Object.keys(RAW.sources).filter((k) => !S.wholeSource(k)).sort();
   const kp = S.keptProblems(RAW);
-  const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256 && !LATER_PAGES.includes(k)).length;
+  const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256 && !LATER_PAGES.includes(k)).length + DROPPED_PAGES.filter((k) => !RAW.pages[k]).length;
   ok('only laws are kept whole; every page (' + pages + ') and every other text (' + nonLaw.length + ': licences, terms, guidance and translations not made by a state) is kept as its address, day, SHA-256 and the parts quoted or relied on; the whole texts of a run go to its artifact for 90 days after the parts are verified against them, and are not in git',
     kp.length === 0 && JSON.stringify(nonLaw) === JSON.stringify(PARTS.slice().sort()) && Object.keys(RAW.sources).every((k) => S.wholeSource(k) || PARTS.includes(k)) && wp.length === 0, kp.concat(wp).slice(0, 6).join(', '));
   /* The licence statements say, in both languages, that texts by others are not under CC BY 4.0. */
@@ -5083,7 +5088,7 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
     if (qs.length < 10) bad.push('too few quotations');
     for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
     /* The count is of the pages kept on that day; the pages fetched by the later passes (checks 117 and 118) are not among them. */
-    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256 && !LATER_PAGES.includes(k)).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
+    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256 && !LATER_PAGES.includes(k)).length + DROPPED_PAGES.filter((k) => !raw.pages[k]).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
     if (!sec.includes('ファイルは、' + nPages + ' の頁と、ライセンス・規約・手引き・私人の英訳など ' + nParts + ' の文を、全文で置いていました')) bad.push('the counts of the texts');
     for (const x of ['公開した履歴は書き換えません。2026-11-12 に Claude が決めました。', '最後に全体を置いていたのは、main のコミット 8fcaef4 です。', 'その実行の成果物 `sources-full` として 90 日のあいだ残り', '点検の表の「規約や外国の法令の訳の引用」の行は、頁に置く短い一節だけを見て問題なしとしました。', '### 下げられずに残る危険']) if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
     return bad;
@@ -6010,6 +6015,110 @@ console.log('\n124. What a ninth, read-only pass found: the OAI-PMH interface gi
   const leak = breaks.some(([, b]) => mail.some((e) => problems(b).join(' ').includes(e)));
   ok('break on purpose: the separate address back on the contact page (both languages), "not on this site", the Privacy Policy, the Japanese Takedown Policy, a built page, llms-full.txt and the README as before, the address written into another file, the places taken out of or dropped from the record, the count, a decision without its reason, the kind of change, the feed and the old commitment all fail, and no failure prints the address (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0 && !leak, missed.join(' / ') + (leak ? ' / the address printed' : ''));
+}
+/* ------------------------------------------------------------ 125 */
+console.log('\n125. What an eleventh, read-only pass found: the Internet Archive\'s terms were never read; they are read from its copy of 2024-01-01, no person\'s name read from its copies is kept, and DataCite\'s imprint is not read');
+{
+  /* The Internet Archive's terms page asks for a script, and so do its copies of 2025 and 2026. tools/sources.js reads its copy of
+   * 2024-01-01, pinned to that timestamp; the terms there do not forbid reading copies by machine, ask for scholarship and research
+   * purposes, and ask users "not to collect or store personal data about anyone". So no page read from the Internet Archive's
+   * copies gives the records of provision a person's name, DataCite's imprint (read only for one) is not read at all, the
+   * Internet Archive's row of the records has its name and address from that copy, and the Privacy Policy quotes what the copy
+   * says of its security. The eleventh section of the audit records it. */
+  const S = require('../tools/sources.js');
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const URL125 = 'https://web.archive.org/web/20240101002842id_/https://archive.org/about/terms.php';
+  const SHA125 = 'fd3203a8e7630a74a2c5d38558a35cd3d2f1d5e685f002c2aedcb961738b00bd';
+  const HEAD11 = '\n## 2026-11-12 の続き：十一度目の見落とし\n';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const NEED = ['not to collect or store personal data about anyone', 'Access to the Archive’s Collections is provided at no cost to you and is granted for scholarship and research purposes only.',
+    'You agree not to interfere with the work of other users or Archive personnel, servers, or resources.', 'Internet Archive, 300 Funston Ave., San Francisco, CA 94118',
+    'While the Archive endeavors to enforce its Terms of Use and maintain standard computer security'];
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  const keptText = (p) => (p && Array.isArray(p.spans) ? p.spans.map((x) => x.text).join(' ') : '');
+  const IA_COPY = /^https:\/\/web\.archive\.org\/web\//;
+  function problems(c) {
+    const bad = [];
+    /* The copy read, pinned, and what is kept of it. */
+    const pg = c.pages['ia-terms-archived-2024'];
+    if (!pg || pg.url !== URL125) bad.push('the copy of 2024-01-01 is not read at its timestamp');
+    const r = c.raw.pages['ia-terms-archived-2024'] || {};
+    if (r.url !== URL125 || r.status !== 200 || r.sha256 !== SHA125) bad.push('the copy is not kept as fetched');
+    for (const q of NEED) if (!keptText(r).includes(q)) bad.push('not kept from the copy: ' + q.slice(0, 30));
+    if (!['ia-robots', 'wayback-robots'].every((k) => c.pages[k] && c.raw.pages[k])) bad.push('the robots.txt files');
+    /* DataCite's imprint: not read, directly or through a copy, and not kept. */
+    const addrs = Object.entries(c.pages).flatMap(([k, p]) => [].concat(p.url || [], p.alt || []).map((u) => [k, u]))
+      .concat(Object.entries(c.sources).flatMap(([k, s]) => [].concat(s.url || [], s.each || [], s.pages || [], s.alt || []).map((u) => [k, u])));
+    for (const [k, u] of addrs) if (/datacite\.org\/imprint/i.test(u)) bad.push('DataCite\'s imprint is read: ' + k);
+    if (c.raw.pages['datacite-imprint']) bad.push('DataCite\'s imprint is kept');
+    /* The records of provision: no representative's name from a page read through the Internet Archive's copies. */
+    const rows = c.rec.split('\n').filter((l) => /^\| (?!---|Recipient \||Service \||Day \||Provision \|)/.test(l)).map((l) => l.slice(2, -2).split(' | ')).filter((x) => x.length === 7);
+    for (const [who, , , rep, , page] of rows) {
+      const p = c.raw.pages[page] || {};
+      if (IA_COPY.test(p.final || p.url || '') && !/^Not /.test(rep)) bad.push('a name from an Internet Archive copy: ' + who);
+    }
+    const dc = rows.find((x) => x[0] === 'DataCite') || [];
+    if (!/^Not kept: /.test(dc[3] || '') || dc[5] !== 'datacite-terms') bad.push('the row of DataCite');
+    const ia = rows.find((x) => x[0] === 'Internet Archive') || [];
+    if (ia[1] !== 'Internet Archive' || ia[2] !== '300 Funston Ave., San Francisco, CA 94118' || ia[5] !== 'ia-terms-archived-2024') bad.push('the row of the Internet Archive');
+    /* The Privacy Policy, in both languages, and the feed. */
+    if (!c.en.includes('its current terms can be read only with a script running. The Internet Archive\'s own copy of that page, saved on 2024-01-01, holds a privacy policy dated 10 March 2001, which says that "the Archive endeavors to enforce its Terms of Use and maintain standard computer security"') || /no other statement of those measures was found/.test(c.en)) bad.push('the Privacy Policy');
+    if (!c.ja.includes('いまの規約は、スクリプトを動かさないと読めないためです。Internet Archive 自身が 2024-01-01 に保存したその頁の写しには、2001 年 3 月 10 日付けのプライバシーの方針があり、「the Archive endeavors to enforce its Terms of Use and maintain standard computer security」と書いています。') || /ほかにその措置を述べたものも見つからなかった/.test(c.ja)) bad.push('the Japanese Privacy Policy');
+    if (!c.changes.some((e) => e.date === '2026-11-13' && e.policies.join() === 'privacy' && /correction of an untrue statement, effective on publication, 2026-11-13/.test(e.text) && /no right is narrowed/.test(e.text) && /2024-01-01/.test(e.text))) bad.push('the feed');
+    /* The record. */
+    const at = c.aud.indexOf(HEAD11), end = c.aud.indexOf('\n## この記録について\n');
+    if (at < 0 || end < at) return bad.concat(['no eleventh section before the end of the record']);
+    const sec = c.aud.slice(at, end);
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n')) bad.push('the columns');
+    const trs = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    trs.forEach((x, i) => { if (x.length !== 6 || !JUDGE.includes(x[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => trs.some((x) => x[4] === j)).map((j) => j + ' ' + trs.filter((x) => x[4] === j).length).join('、') + ' です。';
+    if (trs.length < 7 || !sec.includes(tally)) bad.push('the count');
+    for (const x of trs.filter((y) => y[4] !== '問題なし')) if (!/2026-11-13 に Claude が決めました。[^|]*ためです$/.test(x[5])) bad.push('a decision without its maker or reason: ' + x[0].slice(0, 30));
+    const pool = flat(['ia-terms-archived-2024', 'ia-robots'].map((k) => keptText(c.raw.pages[k])).join(' '));
+    const qs = trs.flatMap((x) => [...(x[3] || '').matchAll(/「([^「」]+)」/g)].map((m) => m[1]));
+    if (qs.length < 6) bad.push('too few quotations');
+    for (const q of qs) if (!pool.includes(flat(q))) bad.push('not in the kept copy: ' + q.slice(0, 30));
+    if (!/取り寄せの実行は \d{8,} で、結果は枝 `sources\/\d{8}-\d{4}` にあります。/.test(sec)) bad.push('the run');
+    if (!sec.includes('読み終えた同じ日に、その実行の記録を消しました。')) bad.push('the probe');
+    if (!sec.includes('### 下げられずに残る危険') || !sec.includes('いまの Internet Archive の利用規約は読めていません。')) bad.push('the risks');
+    if (!sec.includes('この変更は、事実と違う文の訂正です。誰の権利も狭めず、利用者の務めも足しません。')) bad.push('which kind of change');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。')) bad.push('the sentence on lawyers');
+    const nf = (c.aud.split('\n## 取り寄せられなかった文\n')[1] || '').split('\n## ')[0];
+    if (/^- Internet Archive の住所。/m.test(nf) || !/^- Internet Archive のいまの利用規約。/m.test(nf)) bad.push('the list of texts not fetched');
+    return bad;
+  }
+  const real = { pages: S.PAGES, sources: S.SOURCES, raw: J('verification/sources-raw.json'), rec: read(path.join(ROOT, 'docs', 'records-of-provision.md')),
+    en: read(path.join(ROOT, 'policies', 'privacy.md')), ja: read(path.join(ROOT, 'policies', 'privacy.ja.md')), changes: J('data/policy-changes.json'), aud: read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md')) };
+  const now = problems(real);
+  ok('the Internet Archive\'s terms are read from its copy of 2024-01-01 at its timestamp, with the passages relied on kept; DataCite\'s imprint is not read; no representative\'s name in the records of provision comes from an Internet Archive copy; the rows of DataCite and the Internet Archive, the Privacy Policy (both languages), the feed and the eleventh section of the audit say so',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const cl = (o) => JSON.parse(JSON.stringify(o));
+  const w = (k, v) => Object.assign({}, real, { [k]: v });
+  const rawWith = (fn) => { const t = cl(real.raw); fn(t); return w('raw', t); };
+  const breaks = [
+    ['the copy read without its timestamp', w('pages', Object.assign({}, real.pages, { 'ia-terms-archived-2024': { url: 'https://web.archive.org/web/2024id_/https://archive.org/about/terms.php' } }))],
+    ['another text kept for the copy', rawWith((t) => { t.pages['ia-terms-archived-2024'].sha256 = '0'.repeat(64); })],
+    ['the clause on personal data not kept', rawWith((t) => { t.pages['ia-terms-archived-2024'].spans = t.pages['ia-terms-archived-2024'].spans.filter((x) => !/personal data about anyone/.test(x.text)); })],
+    ['DataCite\'s imprint read again through a copy', w('pages', Object.assign({}, real.pages, { 'datacite-imprint': { url: 'https://web.archive.org/web/2026id_/https://datacite.org/imprint/' } }))],
+    ['DataCite\'s imprint kept again', rawWith((t) => { t.pages['datacite-imprint'] = { url: 'x', spans: [] }; })],
+    ['a name back in the row of DataCite', w('rec', real.rec.replace(/^(\| DataCite \| [^|]+ \| [^|]+ \| )Not kept: [^|]+ \|/m, '$1Jane Doe |'))],
+    ['a name from another Internet Archive copy', w('rec', real.rec.replace(/^(\| OpenAI \| [^|]+ \| [^|]+ \| )Not given on the page fetched \|/m, '$1Jane Doe |'))],
+    ['the Internet Archive not fetched again', w('rec', real.rec.replace('| Internet Archive | Internet Archive | 300 Funston Ave., San Francisco, CA 94118 |', '| Internet Archive | Not fetched | Not fetched |'))],
+    ['the old English sentence back', w('en', real.en.replace(/its current terms can be read only with a script running\. The Internet Archive's own copy[^\n]*/, 'its terms can be read only with a script running, and no other statement of those measures was found.'))],
+    ['the Japanese without the quotation', w('ja', real.ja.replace('「the Archive endeavors to enforce its Terms of Use and maintain standard computer security」と書いています。', ''))],
+    ['the feed without the correction', w('changes', real.changes.filter((e) => !/2024-01-01/.test(e.text)))],
+    ['the count', w('aud', real.aud.replace('この表の判定は、根拠不足 2、漏れ 3、表現 1、問題なし 1 です。', 'この表の判定は、根拠不足 2、漏れ 2、表現 1、問題なし 1 です。'))],
+    ['a decision without its reason', w('aud', real.aud.replace('例外を置かずに禁じているためです |', '例外を置かずに禁じています |'))],
+    ['a quotation altered', w('aud', real.aud.replace('「not to collect or store personal data about anyone」', '「not to collect personal data about anyone」'))],
+    ['the run not named', w('aud', real.aud.replace('取り寄せの実行は 43332663139 で、', '取り寄せの実行は、'))],
+    ['the probe logs not said deleted', w('aud', real.aud.replace('読み終えた同じ日に、その実行の記録を消しました。', ''))],
+    ['the address back in the list of texts not fetched', w('aud', real.aud.replace('- Internet Archive のいまの利用規約。', '- Internet Archive の住所。'))],
+    ['the sentence on lawyers taken out', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'))],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: the copy without its timestamp, another text, the clause on personal data not kept, DataCite\'s imprint read or kept again, a name back in a row read from a copy (DataCite, OpenAI), the Internet Archive not fetched, the old Privacy Policy (both languages), the feed, the count, a decision without its reason, a quotation altered, the run, the probe, the list of texts not fetched and the sentence on lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
