@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-12",
+    "policies": ["privacy"],
+    "title": "The mailbox and the request logs, the system of the United States, and the records of provision",
+    "text": "The Privacy Policy says that the operator's mailbox at iCloud Mail is provided to users in Japan by iTunes K.K., a company in Japan, which Sophaxis treats as entrusted with it, so that it is not a provision to a third party in a foreign country and no consent is asked of the people who write; that Apple Inc. may handle the emails in the United States; and that Vercel's request logs are not personal information for Sophaxis, with the reasons. It now gives the Personal Information Protection Commission's own information on the system of the United States, what Anthropic says of its measures, and why the measures of OpenAI and xAI cannot be given. It names docs/records-of-provision.md, which gives each recipient's name and address, as part of the record of provision to third parties, kept for at least three years. None of these narrows a right or adds a duty."
+  },
+  {
+    "date": "2026-11-12",
     "policies": ["privacy", "takedown", "terms", "submission", "moderation", "copyright"],
     "title": "Why the rules on sending users' information do not apply, Sophaxis as the sender of its records, and the texts fetched again",
     "text": "The Privacy Policy says why the operator considers that the rules of Japan's Telecommunications Business Act on sending users' information outside do not apply: Sophaxis charges for nothing and earns nothing, so it runs no telecommunications business. The Takedown Policy says that, for the record pages and the PDF copies, Sophaxis is itself the sender under Japan's Act on providers of specified telecommunications services, so it does not rely on that Act's limitation of liability, and the operator is liable as Japanese law provides. The texts that the policies quote were fetched again on 2026-11-12, and the Privacy and Submission Policies now quote Article 1 of Russia's Federal Law No. 152-FZ. None of these narrows a right or adds a duty."

@@ -38,6 +38,8 @@ Sophaxis を紹介する人のために、[紹介する人のために](./press.
 苦情、法的な事柄、個人データについてのことは、公開の issue ではなく、メールで送ります。
 宛先は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスです。
 [個人情報の取り扱いについて](./policies/privacy.ja.md)が定めるとおり、メールに含まれる個人データは、そのメールに答えるためだけに使います。
+メールは、運営者の iCloud メールの受信箱に届きます。日本の利用者に iCloud を提供するのは日本の会社 iTunes 株式会社で、米国の Apple Inc. がその会社に代わって取り扱うことがあります。
+メールを書く人に、同意は求めません。その理由と米国の制度は、個人情報の取り扱いについての「外国にある事業者の利用」の節にあります。
 
 - サイトについての質問・提案・問題：[issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new)。
 - プレプリントや新しい版の投稿：[投稿の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml)、または同じ様式の[日本語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml)。

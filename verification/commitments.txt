@@ -117,7 +117,8 @@ A notice by email also says that the sender believes in good faith that what it 
 Where that Member State cannot be identified with reasonable certainty, the operator tells Europol.
 The operator reports promptly after learning of it, and gives the full report within 30 days, or within 60 days when the leak may come from an act done for an improper purpose.
 異議を受けたら、運営者は、本人の利益・権利・自由に優る、やむを得ない正当な理由を示せるときと、法的な請求に要るときを除いて、その利用をやめます。
-Apple, for the mailbox, and Vercel, for its request logs, handle personal data for Sophaxis, and neither is bound by contract not to handle it.
+As the Personal Information Protection Commission's Q&A 7-53 reads Japan's Act on the Protection of Personal Information, keeping them there is therefore a provision of personal data, and Sophaxis treats iTunes K.K. as entrusted with that handling (Article 27(5)(i)) and supervises it under Article 25 of the Act.
+If a person gives their own IP address to ask about their requests, the operator treats the matching entries as that person's personal information while answering, and copies none of them.
 Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
 When a request came by email and is upheld, the grounds, without personal data, are posted in the authors' submission issue before it is emptied, so that GitHub sends them to the authors who follow it; the removal cannot be run without them.
 Sophaxis keeps no analytics and no identifiers of readers, and will not start keeping them to produce this figure.

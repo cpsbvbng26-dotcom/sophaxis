@@ -34,6 +34,8 @@ Introducing Sophaxis: [the page for anyone introducing it](./press.md), and [the
 
 Complaints, legal matters and anything about personal data go by email, not to a public issue: use the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 Personal data in an email is used only to answer it, as the [Privacy Policy](./policies/privacy.md) sets out.
+An email reaches the operator's mailbox at iCloud Mail, which iTunes K.K., a company in Japan, provides to users in Japan, and which Apple Inc. may handle in the United States on its behalf.
+No consent is asked of anyone who writes. The Privacy Policy, under "Services outside Japan", says why, and what the system of the United States is.
 
 - Questions, suggestions and problems with the site: [an issue](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new).
 - Submitting a preprint or a new version: [the submission form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=submission-ja.yml).
