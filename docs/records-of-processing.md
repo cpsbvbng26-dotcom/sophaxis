@@ -1,6 +1,6 @@
 # Record of processing
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 This record follows Article 30 of the General Data Protection Regulation and the items that Japan's Act on the Protection of Personal Information asks to be made known. The [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) is the public statement; this file lists the same processing in one place.
 
@@ -20,19 +20,19 @@ Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the op
 | Preserve the pages and the PDF copies, for works whose authors consent to it in a separate box | Authors | As above | The site | The Internet Archive (United States) | As the Internet Archive keeps them; saves stop when any author withdraws the consent |
 | Tell search engines what changed | None (addresses only) | None | The sitemap | IndexNow | Not kept |
 | Check the listed DOIs and licences each week | Authors | DOIs and the metadata read with them | DataCite, Crossref, JaLC | GitHub (the run's log and summary) | As GitHub keeps the logs |
-| Answer requests about records and personal data | Requesters | What the request contains | The issue or the email | Apple (iCloud Mail, United States), for email | As long as needed to answer and to show the answer |
+| Answer requests about records and personal data | Requesters | What the request contains | The issue or the email | Apple (iCloud Mail, United States), for email: provided to users in Japan by iTunes K.K. (Japan), entrusted with it, and handled for it by Apple Inc. (United States) | As long as needed to answer and to show the answer |
 | Act on removal requests by automatic steps: acknowledge, tell the authors, take exposed personal data offline at once, carry out the operator's decision | Requesters; authors | The Sophaxis id, the kind of request, GitHub usernames | The issues; the records | GitHub (issue comments, commits) | As long as the issues and the git history exist |
-| Serve the site and find faults | Readers | IP address and request details | The request | Vercel (United States) | As Vercel keeps its logs |
-| Answer questions, complaints, disputes and security reports | Those who write | What the message contains | The email or the issue | Apple (iCloud Mail, United States), for email | As long as needed to answer and to show the answer |
+| Serve the site and find faults | Readers | IP address and request details, which Sophaxis holds nothing to link to a person, so that they are not personal information for Sophaxis under Japan's Act on the Protection of Personal Information | The request, which Vercel receives directly from the reader's browser | Vercel (United States) | As Vercel keeps its logs: runtime logs for 1 hour on the Hobby plan, as its documentation says |
+| Answer questions, complaints, disputes and security reports | Those who write | What the message contains | The email or the issue | Apple (iCloud Mail, United States), for email: provided to users in Japan by iTunes K.K. (Japan), entrusted with it, and handled for it by Apple Inc. (United States) | As long as needed to answer and to show the answer |
 | Gather the Zenodo records of listed works in the Zenodo community https://zenodo.org/communities/sophaxis | Authors | Nothing is copied; as curator, the operator can view and edit the metadata and files of each record submitted to the community, including names and ORCID iDs | Zenodo (an author's submission to the community) | Zenodo (CERN, Switzerland) | As long as the record stays in the community |
 
 ## Lawful basis
 
-Legitimate interest in checking authorship, in keeping a public scholarly record, in serving the site safely and in answering the people who write (GDPR Article 6(1)(f)). Records are kept for freedom of expression and information (Article 17(3)(a)). The transfer to the Internet Archive rests on explicit consent (Article 49(1)(a)), asked in a box of its own that may be left empty. Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of Japan's Act on the Protection of Personal Information): in the submission form, required from 2026-11-21, and until then in the submission issue before a work by an author other than the operator is listed.
+Legitimate interest in checking authorship, in keeping a public scholarly record, in serving the site safely and in answering the people who write (GDPR Article 6(1)(f)). Records are kept for freedom of expression and information (Article 17(3)(a)). The transfer to the Internet Archive rests on explicit consent (Article 49(1)(a)), asked in a box of its own that may be left empty. Under Japanese law, each author's consent is asked for the provision to third parties and to third parties in a foreign country (Articles 27 and 28 of Japan's Act on the Protection of Personal Information): in the submission form, required from 2026-11-21, and until then in the submission issue before a work by an author other than the operator is listed. The mailbox is entrusted to iTunes K.K., a company in Japan (Article 27(5)(i) of Japan's Act on the Protection of Personal Information), so no consent is asked of the people who write. The records of provision to third parties, with each recipient's name and address, are in `docs/records-of-provision.md`.
 
 ## Transfers outside Japan and the European Union
 
-GitHub, Vercel, ORCID, Crossref, Anthropic, OpenAI, xAI, Apple (for email) and the Internet Archive are in the United States; DataCite is in Germany. OpenAlex, also in the United States, is asked about a listed work by its DOI only, never about a person. Zenodo is run by CERN, in Switzerland. What each says about its own measures is linked from the Privacy Policy.
+GitHub, Vercel, ORCID, Crossref, Anthropic, OpenAI, xAI, Apple Inc. (which handles the mailbox for iTunes K.K., in Japan) and the Internet Archive are in the United States; DataCite is in Germany. OpenAlex, also in the United States, is asked about a listed work by its DOI only, never about a person. Zenodo is run by CERN, in Switzerland. What each says about its own measures is linked from the Privacy Policy.
 
 ## Security
 

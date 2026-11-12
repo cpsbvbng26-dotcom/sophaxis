@@ -113,7 +113,7 @@ Withdrawing the consent to GitHub, Vercel and ORCID removes the record, because 
 
 The countries:
 
-- The United States has no general federal law on personal data; some states have their own laws. There is no single authority for personal data across the country, and the rights a person has over their data depend on the state and the sector.
+- The United States. Japan's Personal Information Protection Commission publishes [information on its system](https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/), from a survey made in October 2021, which Sophaxis relies on. It says that the United States has no comprehensive federal law on personal information, only laws for particular sectors, such as the Electronic Communications Privacy Act, the Gramm-Leach-Bliley Act for financial institutions and HIPAA for health information. The European Union has made no adequacy decision for it. It has taken part in the APEC Cross-Border Privacy Rules (CBPR) System since 2012-07-25; the Commission explains that a participating economy has laws that follow the APEC Privacy Framework and an authority that enforces them, so that, for the private sector, protection broadly equal to Japan's can be expected. For a law that requires personal data to be kept in the country, and for a law that obliges businesses to cooperate with the government's gathering of information, the Commission's page enters none. Some states have laws of their own: the Commission's page describes California's Consumer Privacy Act as a comprehensive law, and reports on laws of Illinois and New York. By the addresses on their own pages, GitHub, Vercel and Anthropic are in California and ORCID is in Maryland.
 - Germany is in the European Union, where the General Data Protection Regulation applies.
 - Japan's Personal Information Protection Commission publishes information on the systems of other countries.
 
@@ -124,6 +124,9 @@ What each service does to protect personal data is set out in its own statement:
 - ORCID: [ORCID Privacy Policy](https://info.orcid.org/privacy-policy/). ORCID says its practices are assessed each year against the EU-U.S. Data Privacy Framework.
 - Crossref: [Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/).
 - The Internet Archive: [Terms of Use](https://archive.org/about/terms). It receives only the public pages and PDF copies, which hold no personal data beyond what the records already publish. Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found.
+- Anthropic: its Privacy Policy says that it implements appropriate technical and organizational security measures designed to protect personal data from loss, misuse, and unauthorized access, disclosure, alteration, or destruction.
+- OpenAI: Sophaxis cannot give information on the measures OpenAI takes to protect personal data: its privacy policy answered an automatic request on 2026-11-12 with a page that asks for JavaScript and cookies, and no other statement of those measures was fetched.
+- xAI: [Privacy Policy](https://x.ai/legal/privacy-policy), which is now that of SpaceX Super Intelligence LLC. Sophaxis cannot give information on the measures it takes to protect personal data: the policy fetched on 2026-11-12 says how the data is used and disclosed, but describes no security measures.
 
 For GitHub, Vercel and ORCID, a transfer from the European Union rests on the European Commission's adequacy decision for the EU-U.S. Data Privacy Framework, as far as each is certified under it.
 
@@ -135,18 +138,28 @@ Two uses of the records by GitHub and Vercel themselves come with their terms, w
 If these uses make you worry about your personal data, do not submit, and do not agree to be listed as an author, because Sophaxis cannot list a work without GitHub and Vercel. An author of a listed work can withdraw the consent at any time, and the record is then removed, as set out above.
 
 Requests sent by email reach the operator's mailbox at Apple (iCloud Mail, United States), and are kept there only as long as needed to answer them and to show the answer.
-What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).
+For users in Japan, where the operator lives, the [iCloud Terms of Service](https://www.apple.com/legal/internet-services/icloud/en/terms.html) name the Apple company that provides iCloud as iTunes K.K., located at Roppongi Hills, 6-10-1 Roppongi, Minato-ku, Tokyo 106-6140.
+The iCloud Terms let Apple access, use, preserve and disclose the content of an account, for example to comply with the law, to enforce the terms, or to deal with security, fraud or technical issues, so iCloud handles the personal data in the emails.
+As the Personal Information Protection Commission's Q&A 7-53 reads Japan's Act on the Protection of Personal Information, keeping them there is therefore a provision of personal data, and Sophaxis treats iTunes K.K. as entrusted with that handling (Article 27(5)(i)) and supervises it under Article 25 of the Act.
+iTunes K.K. is a company in Japan, and the Commission's guidelines on provision to a third party in a foreign country decide who is a third party by its legal personality, so the mailbox is not a provision to a third party in a foreign country under Article 28 of Japan's Act on the Protection of Personal Information, and no consent is asked of the people who write.
+Apple says that personal data may be processed by Apple Inc. and other Apple companies on behalf of the Apple company that controls it, and Apple Inc. is in the United States.
+As the Commission's Q&A 10-24 asks where an entrusted company has the data handled abroad, Sophaxis takes the system of the United States, set out above, into account in the measures it takes, and says so under "Security".
+What Apple says about its own measures is in the [Apple Privacy Policy](https://www.apple.com/legal/privacy/): its privacy practices comply with the Global Cross-Border Privacy Rules (CBPR) System and the Global Privacy Recognition for Processors (PRP) System, and BBB National Programs, its accountability agent, lists Apple Inc. as a current participant in both.
 A person in the European Union who writes reaches the operator in Japan, for which the European Commission has made an adequacy decision, and the mailbox at Apple in the United States; Apple says that its international transfers of personal data collected in the European Economic Area, the United Kingdom and Switzerland are governed by Standard Contractual Clauses.
 
 Vercel keeps request logs for Sophaxis, including the IP address.
 The operator can see them, and uses them only to find and fix faults.
-
-Apple, for the mailbox, and Vercel, for its request logs, handle personal data for Sophaxis, and neither is bound by contract not to handle it.
-As the Personal Information Protection Commission's Q&A 7-53 reads Japan's Act, Sophaxis therefore treats both as entrusted with that handling, and supervises them under Article 25 of the Act.
-Each publishes the measures it takes: Vercel in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa), Apple in its Privacy Policy.
+Vercel's documentation says that, on the Hobby plan on which Sophaxis is served, runtime logs are kept for 1 hour.
+A request log holds details of the request, such as an IP address, the browser's user agent, the address asked for and the time, and no name.
+Sophaxis holds nothing that links an IP address to a person: it has no accounts, sets no cookies and runs no analytics, and finding who used an IP address would need an inquiry to that person's network provider.
+Under Japan's Act on the Protection of Personal Information, information is personal information when it identifies a person, alone or because it can easily be matched with other information; the Commission's General Guidelines read matching that needs an inquiry to another business as generally not easy.
+The request logs are therefore not personal information for Sophaxis, and Article 28 of Japan's Act on the Protection of Personal Information, which concerns personal data, does not apply to them.
+Vercel also receives each request directly from the reader's browser, and Sophaxis gives Vercel nothing from the logs.
+If a person gives their own IP address to ask about their requests, the operator treats the matching entries as that person's personal information while answering, and copies none of them.
+Vercel handles the logs as its [Privacy Notice](https://vercel.com/legal/privacy-notice) sets out, and publishes the measures it takes in Schedule 2 of its [Data Processing Addendum](https://vercel.com/legal/dpa).
 Each week, an automatic step reads the date of the last update of Vercel's and Apple's privacy statements; a new date opens an issue, and the operator reads the statement again and decides whether the service can still be used.
 
-<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 25 -->
+<!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25 -->
 
 ## Security
 
@@ -164,7 +177,7 @@ The measures, under the headings that Japan's Personal Information Protection Co
 - People: no one else handles personal data for Sophaxis. Before a moderator is invited, the operator writes here what personal data a moderator may handle and how the operator supervises it.
 - Physical: Sophaxis has no servers or papers of its own. The records live in the GitHub repository and the site on Vercel.
 - Technical: the automatic steps hold no key but the token GitHub gives each run, with the least permissions they need. Earlier versions of the site on Vercel are not open to the public. The operator's GitHub account, the only one that can change the repository, uses two-factor authentication. The operator signs in to Vercel, which serves the site, through that GitHub account.
-- The countries where data is kept: as set out under "Services outside Japan" above.
+- The countries where data is kept: as set out under "Services outside Japan" above. The emails in the operator's mailbox may be handled by Apple Inc. in the United States on behalf of iTunes K.K.; the operator keeps them only as long as needed, and takes the system of the United States into account, as set out there.
 
 ## Automated processing
 
@@ -181,7 +194,8 @@ A person whose personal data appears in a record can ask for its removal under t
 A person can ask for access to, correction of, suspension of the use of, or deletion of their personal data held by Sophaxis, through a removal issue that names only the Sophaxis id and the kind of request, or by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 A person can also ask to be told the purposes for which their data is used, to have its use restricted while its accuracy or an objection is checked, and to have its provision to third parties stopped.
 While a restriction lasts, the operator takes the part concerned offline.
-The submission issue, with its consent, and the history of the record in the public repository are the record of provision to third parties (Article 29 of Japan's Act on the Protection of Personal Information); a person can ask to see what concerns them.
+The submission issue, with its consent, the history of the record in the public repository and the file `docs/records-of-provision.md`, which names each recipient with its address, are the record of provision to third parties (Article 29 of Japan's Act on the Protection of Personal Information); a person can ask to see what concerns them.
+The records are kept for at least three years, as the APPI Enforcement Rules require.
 A person whose data is not in a record, such as a GitHub username in an issue or an IP address in Vercel's logs, writes by email.
 Before answering a request about personal data, the operator confirms who is asking, through the ORCID record or by email.
 A request can also be made through an agent, such as a parent or guardian or a person the requester appoints; the operator then confirms the agent's authority as well as the person's identity.

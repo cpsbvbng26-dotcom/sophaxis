@@ -15,7 +15,8 @@
       "README.md",
       "docs/legal-review.md",
       "docs/impact-assessment.md",
-      "docs/records-of-processing.md"
+      "docs/records-of-processing.md",
+      "docs/records-of-provision.md"
     ],
     "ja": [
       "policies/copyright.ja.md",
@@ -752,6 +753,8 @@
     ],
     "APPI Rules": [
       "16",
+      "17",
+      "18",
       "19",
       "20",
       "21",

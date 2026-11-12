@@ -8,6 +8,13 @@
   <updated>2026-11-12T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c6</id>
+    <title>The mailbox and the request logs, the system of the United States, and the records of provision</title>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <summary>The Privacy Policy says that the operator's mailbox at iCloud Mail is provided to users in Japan by iTunes K.K., a company in Japan, which Sophaxis treats as entrusted with it, so that it is not a provision to a third party in a foreign country and no consent is asked of the people who write; that Apple Inc. may handle the emails in the United States; and that Vercel's request logs are not personal information for Sophaxis, with the reasons. It now gives the Personal Information Protection Commission's own information on the system of the United States, what Anthropic says of its measures, and why the measures of OpenAI and xAI cannot be given. It names docs/records-of-provision.md, which gives each recipient's name and address, as part of the record of provision to third parties, kept for at least three years. None of these narrows a right or adds a duty. Policies: Privacy Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c5</id>
     <title>Why the rules on sending users' information do not apply, Sophaxis as the sender of its records, and the texts fetched again</title>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>

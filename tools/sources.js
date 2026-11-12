@@ -60,11 +60,73 @@ const SOURCES = {
   'mic-entry-manual': { url: 'https://www.soumu.go.jp/main_content/000477428.pdf', whole: 'all' },
   'mic-entry-procedures': { url: 'https://www.soumu.go.jp/menu_seisaku/ictseisaku/denkitsushin_suishin/tetsuzuki/index.html', whole: 'all', lang: 'ja' },
   'ppc-guidelines': { url: 'https://www.ppc.go.jp/files/pdf/260614_guidelines01.pdf', whole: 'all' },
-  'ppc-qa': { url: 'https://www.ppc.go.jp/personalinfo/faq/APPI_QA/', whole: 'all', lang: 'ja' },
+  'ppc-qa': { url: 'https://www.ppc.go.jp/personalinfo/faq/APPI_QA/', whole: 'all', lang: 'ja', keep: 400000 },
   // The legal codes open with a list of their sections; the sections themselves start at the last heading of section 1.
   'cc-by': { url: 'https://creativecommons.org/licenses/by/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
   'cc-by-sa': { url: 'https://creativecommons.org/licenses/by-sa/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
   cc0: { url: 'https://creativecommons.org/publicdomain/zero/1.0/legalcode.en', split: /(?:^| )(\d+)\. (?=[A-Z])/g, fromLast: '1. Copyright and Related Rights' },
+};
+
+/* Pages that are not cited by article: the Commission's guidance and the pages of the services that receive or give
+ * personal data (their names, postal addresses and handling). Each is kept as plain text (as far as `keep` characters,
+ * 200,000 by default), with the links whose address or text matches `links`, so that a record can name the page a fact
+ * came from. They are written under `pages` in verification/sources-raw.json. */
+const PAGE = (url, o = {}) => ({ url, ...o });
+const PPC_LINKS = /\.pdf|guideline|gaikoku|offshore|kaigai|foreign|outside|外国|ガイドライン|Ｑ＆Ａ|Q&A/i;
+const PAGES = {
+  // The Commission's index pages, from which the addresses of its guidance were found.
+  'ppc-legal': PAGE('https://www.ppc.go.jp/personalinfo/legal/', { lang: 'ja', links: PPC_LINKS }),
+  'ppc-kaiseihogohou': PAGE('https://www.ppc.go.jp/personalinfo/legal/kaiseihogohou/', { lang: 'ja', links: PPC_LINKS }),
+  // The Commission's guidance on provision to a third party in a foreign country, and on the records of provision.
+  'ppc-guidelines-offshore': PAGE('https://www.ppc.go.jp/files/pdf/251212_guidelines02.pdf', { keep: 400000 }),
+  'ppc-guidelines-records': PAGE('https://www.ppc.go.jp/files/pdf/240401_guidelines03.pdf', { keep: 400000 }),
+  // The information the Commission publishes on the systems of other countries.
+  'ppc-laws': PAGE('https://www.ppc.go.jp/enforcement/infoprovision/laws/', { lang: 'ja', links: /offshore|report|america|usa|us_|kaigai|gaikoku|\.pdf|米国|アメリカ|調査/i }),
+  'ppc-offshore-survey': PAGE('https://www.ppc.go.jp/files/pdf/220210_pp_offshore_kouhyou_sywkqc.pdf', { keep: 400000 }),
+  'ppc-report-us': PAGE('https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/', { lang: 'ja', links: /\.pdf/i, keep: 400000 }),
+  // Apple: the mailbox (iCloud Mail). The iCloud terms name the company that provides iCloud to each place.
+  'apple-privacy': PAGE('https://www.apple.com/legal/privacy/en-ww/', { links: /privacy|contact|governance|cbpr|bbb/i }),
+  'apple-affiliated': PAGE('https://www.apple.com/legal/privacy/en-ww/affiliated-company/'),
+  'icloud-terms': PAGE('https://www.apple.com/legal/internet-services/icloud/en/terms.html'),
+  'icloud-terms-jp': PAGE('https://www.apple.com/jp/legal/internet-services/icloud/jp/terms.html', { lang: 'ja' }),
+  'apple-cbpr-seal-1': PAGE('https://privacyseals.bbbprograms.org/seal/Confirmation/1114171343'),
+  'apple-cbpr-seal-2': PAGE('https://privacyseals.bbbprograms.org/seal/Confirmation/195838664'),
+  'cbpr-directory': PAGE('https://www.globalcbpr.org/privacy-certifications/directory/'),
+  'apple-leadership': PAGE('https://www.apple.com/leadership/'),
+  // Vercel: the site and its request logs.
+  'vercel-privacy': PAGE('https://vercel.com/legal/privacy-notice', { links: /legal|privacy|dpa|contact/i }),
+  'vercel-dpa': PAGE('https://vercel.com/legal/dpa'),
+  'vercel-logs-docs': PAGE('https://vercel.com/docs/logs'),
+  'vercel-runtime-logs-docs': PAGE('https://vercel.com/docs/logs/runtime'),
+  'vercel-limits-docs': PAGE('https://vercel.com/docs/limits'),
+  // GitHub: the issues and the repository.
+  'github-privacy': PAGE('https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement', { links: /privacy|contact|dpa|data-protection/i }),
+  'github-leadership': PAGE('https://github.com/about/leadership'),
+  // ORCID.
+  'orcid-privacy': PAGE('https://info.orcid.org/privacy-policy/', { links: /contact|team|staff|board|privacy/i }),
+  'orcid-team': PAGE('https://info.orcid.org/orcid-team/'),
+  // The Internet Archive: its pages need a script; these are tried and recorded as they answer.
+  'ia-terms': PAGE('https://archive.org/about/terms'),
+  'ia-contact': PAGE('https://archive.org/about/contact'),
+  'ia-help-contact': PAGE('https://help.archive.org/help/contact-us/'),
+  'ia-help': PAGE('https://help.archive.org/', { links: /contact|privacy|terms|address/i }),
+  // DataCite, Crossref and JaLC: the DOI metadata.
+  'datacite-privacy': PAGE('https://datacite.org/privacy-policy/', { links: /imprint|privacy|contact|team/i }),
+  'datacite-imprint': PAGE('https://datacite.org/imprint/'),
+  'crossref-privacy': PAGE('https://www.crossref.org/operations-and-sustainability/privacy/', { links: /contact|privacy|people|governance/i }),
+  'crossref-people': PAGE('https://www.crossref.org/people/'),
+  'crossref-about': PAGE('https://www.crossref.org/community/about/', { links: /contact|address|governance/i }),
+  'crossref-terms': PAGE('https://www.crossref.org/membership/terms/'),
+  'jalc-privacy': PAGE('https://japanlinkcenter.org/top/privacy_policy.html', { lang: 'ja' }),
+  'jalc-about': PAGE('https://japanlinkcenter.org/top/about/index.html', { lang: 'ja' }),
+  'jalc-committee': PAGE('https://japanlinkcenter.org/top/about/about_committee.html', { lang: 'ja' }),
+  // The language models given the public parts of a submission while it is reviewed.
+  'anthropic-privacy': PAGE('https://www.anthropic.com/legal/privacy', { links: /privacy|legal|contact/i }),
+  'anthropic-company': PAGE('https://www.anthropic.com/company'),
+  'openai-privacy': PAGE('https://openai.com/policies/privacy-policy/', { links: /privacy|contact/i }),
+  'openai-privacy-row': PAGE('https://openai.com/policies/row-privacy-policy/'),
+  'xai-privacy': PAGE('https://x.ai/legal/privacy-policy', { links: /privacy|legal|contact/i }),
+  'xai-company': PAGE('https://x.ai/company'),
 };
 
 const plain = (h) => h.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ')
@@ -94,6 +156,24 @@ function curl(url, s = {}) {
   }
   const raw = buf.toString('utf8');
   return { status: +status, final, text: s.markdown ? raw : plain(raw), raw };
+}
+
+/* Email addresses on the pages are not kept: the repository holds no email address but the few it allows. */
+const noMail = (x) => x.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g, '[email address]');
+
+/* The links of a page whose address or text matches `re`, as [text, absolute address], each once (300 at most). */
+function linksOf(raw, base, re) {
+  const seen = new Set(), out = [];
+  for (const m of raw.matchAll(/<a\b[^>]*?href=["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    let href;
+    try { href = new URL(m[1].replace(/&amp;/g, '&'), base).href; } catch (e) { continue; }
+    const text = plain(m[2]).slice(0, 200);
+    if (!re.test(href) && !re.test(text)) continue;
+    if (seen.has(href)) continue;
+    seen.add(href); out.push([text, href]);
+    if (out.length >= 300) break;
+  }
+  return out;
 }
 
 /* The articles of a plain text, by a heading pattern: { number: text from its heading to the next }.
@@ -189,7 +269,7 @@ async function foreign(key, s, articles) {
   if (!text) return out;
   let all = {};
   if (s.markdown) all = cutMarkdown(text);
-  else if (s.whole) all = s.needle && !text.includes(s.needle) ? {} : { [s.whole]: text.slice(0, 120000) };
+  else if (s.whole) all = s.needle && !text.includes(s.needle) ? {} : { [s.whole]: text.slice(0, s.keep || 120000) };
   else if (s.html) {
     const hits = [...raw.matchAll(s.html)].map((m) => ({ n: m[1], at: m.index }));
     hits.forEach((h, i) => { all[h.n] = plain(raw.slice(h.at, i + 1 < hits.length ? hits[i + 1].at : h.at + 60000)); });
@@ -228,11 +308,23 @@ async function main() {
     out.sources[L.egov ? 'egov:' + L.egov : L.source] = r;
     console.log(law, r.status || r.error, (r.headings || []).length, Object.keys(r.articles || {}).length + '/' + set.size);
   }
+  out.pages = {};
+  for (const [key, p] of Object.entries(PAGES)) {
+    const r = curl(p.url, p);
+    const o = { url: p.url, status: r.status || r.error };
+    if (r.final && r.final !== p.url) o.final = r.final;
+    if (r.pdf) o.pdf = true;
+    if (r.text) { o.length = r.text.length; o.text = noMail(r.text.replace(/\s+/g, ' ')).slice(0, p.keep || 200000); }
+    if (p.links && r.raw) o.links = linksOf(r.raw, r.final || p.url, p.links).map(([t, h]) => [noMail(t), noMail(h)]);
+    out.pages[key] = o;
+    console.log('page', key, o.status, o.length || 0, (o.links || []).length);
+    await sleep(1500);
+  }
   // A source shared by two laws (the GDPR and the UK GDPR are not; GitHub's terms are named two ways) is fetched once.
   for (const r of Object.values(out.sources)) r.want = [...new Set(r.want)].sort();
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 }
 
-module.exports = { cut, cutMarkdown, plain, egovPlain, SOURCES };
+module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

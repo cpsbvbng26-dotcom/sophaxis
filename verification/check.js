@@ -4609,6 +4609,97 @@ console.log('\n112. The legal audit of 2026-11-12: its table, its counts, its qu
     && !rv.includes('no law above was left out') && rv.includes('It does not show that no law was left out'));
 }
 
+console.log('\n113. The duties the audit left open: the mailbox, the request logs, the information of Rules Article 17, and the records of provision');
+{
+  const RAW = JSON.parse(read(path.join(ROOT, 'verification', 'sources-raw.json')));
+  const P = RAW.pages || {};
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  const sp = (x) => String(x || '').replace(/\s+/g, ' ');
+  const pageText = (k) => (P[k] && P[k].status === 200 && P[k].text) || '';
+  const quotes = (line) => { const out = []; let depth = 0, cur = ''; for (const ch of line) { if (ch === '「') { if (depth++ > 0) cur += ch; } else if (ch === '」') { if (--depth > 0) cur += ch; else { out.push(cur); cur = ''; } } else if (depth > 0) cur += ch; } return out; };
+  // Every service that the Privacy Policy names under "Services outside Japan", and every service read from, has a row.
+  const SERVICES = ['GitHub', 'Vercel', 'ORCID', 'Internet Archive', 'Anthropic', 'OpenAI', 'xAI', 'Apple (the mailbox)', 'OpenAlex', 'DataCite', 'Crossref', 'Japan Link Center'];
+  /* Pure: what is wrong with docs/records-of-provision.md; [] when nothing is. */
+  const recProblems = (t) => {
+    const bad = [];
+    const sec = (h) => (t.split('\n## ' + h + '\n')[1] || '').split('\n## ')[0];
+    const rows = (h) => sec(h).split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| ---')).slice(1).map((l) => l.slice(2, -2).split(' | '));
+    const recips = rows('Recipients').concat(rows('Services that give Sophaxis personal data'));
+    for (const name of SERVICES) if (!recips.some((c) => c[0] === name)) bad.push('no row for ' + name);
+    for (const c of recips) {
+      if (c.length !== 7) { bad.push('the cells of ' + c[0]); continue; }
+      const [who, nm, addr, rep, , page, record] = c;
+      const text = sp(page === 'none' ? '' : pageText(page));
+      if (page !== 'none' && !P[page]) bad.push('no fetched page ' + page);
+      for (const [what, v] of [['name', nm], ['address', addr], ['representative', rep]]) if (!/^Not /.test(v) && !text.includes(v)) bad.push('the ' + what + ' of ' + who + ' is not on its page');
+      if ((/^Not /.test(nm) || /^Not /.test(addr)) && !/^Not required/.test(record)) bad.push(who + ' lacks a name or an address where a record is required');
+      if (/^Not fetched/.test(addr) && page !== 'none' && P[page] && P[page].status === 200 && (P[page].text || '').length > 300) bad.push(who + ' is said not fetched, but was');
+    }
+    const g = flat(pageText('ppc-guidelines-records'));
+    const qs = sec('What the law asks').split('\n').filter((l) => l.startsWith('- ')).flatMap(quotes);
+    if (qs.length < 5) bad.push('too few quotations of the guidelines');
+    for (const q of qs) if (!g.includes(flat(q))) bad.push('not in the fetched guidelines: ' + q.slice(0, 20));
+    for (const c of rows('Records')) if (c.length !== 5 || c.some((x) => !x.trim())) bad.push('a record with an empty item');
+    for (const x of ['## How a new record is added', 'the pull request that publishes it also adds a row under "Records"', '## How long records are kept', 'longer than the three years that Article 21 of the APPI Enforcement Rules asks', 'Nothing here is written from memory']) if (!t.includes(x)) bad.push('missing: ' + x.slice(0, 40));
+    return bad;
+  };
+  const rec = read(path.join(ROOT, 'docs', 'records-of-provision.md'));
+  const found = recProblems(rec);
+  ok('docs/records-of-provision.md has a row for each of the ' + SERVICES.length + ' services, each name, address and representative is on the recipient\'s own page fetched on ' + RAW.fetched + ', a row without one needs no record, its quotations of the guidelines are in the fetched text, and it says how records are added and kept',
+    found.length === 0, found.join(' / '));
+  /* Pure: what is wrong with the two Privacy Policies. */
+  const us = flat(pageText('ppc-report-us'));
+  const polProblems = (en, ja) => {
+    const bad = [];
+    const need = [[en, 'iTunes K.K., located at Roppongi Hills, 6-10-1 Roppongi, Minato-ku, Tokyo 106-6140', 'icloud-terms'], [ja, '106-6140東京都港区六本木6丁目10番1号 六本木ヒルズに所在するiTunes株式会社', 'icloud-terms-jp'],
+      [en, 'appropriate technical and organizational security measures designed to protect personal data from loss, misuse, and unauthorized access, disclosure, alteration, or destruction', 'anthropic-privacy']];
+    for (const [t, x, k] of need) if (!t.includes(x) || !sp(pageText(k)).includes(x)) bad.push('not on the page and in the policy: ' + x.slice(0, 30));
+    for (const x of ['no consent is asked of the people who write', 'The request logs are therefore not personal information for Sophaxis', 'https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/', 'It has taken part in the APEC Cross-Border Privacy Rules (CBPR) System since 2012-07-25', 'the United States has no comprehensive federal law on personal information',
+      '- GitHub:', '- Vercel:', '- ORCID:', '- The Internet Archive:', '- Anthropic:', '- OpenAI:', '- xAI:', 'GitHub (United States)', 'Vercel (United States)', 'ORCID (United States)', 'the Internet Archive (United States)', 'Anthropic, OpenAI and xAI (all United States)']) if (!en.includes(x)) bad.push('English: ' + x.slice(0, 40));
+    for (const x of ['メールを書く人に同意は求めません。', 'そのため閲覧の要求の記録は、Sophaxis にとって個人情報ではありません。', 'https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/', 'APEC の CBPR システムには、2012 年 7 月 25 日から参加しています。',
+      '- GitHub：', '- Vercel：', '- ORCID：', '- Internet Archive：', '- Anthropic：', '- OpenAI：', '- xAI：', 'GitHub（米国）', 'Vercel（米国）', 'ORCID（米国）', 'Internet Archive（米国）', 'Anthropic・OpenAI・xAI（いずれも米国）']) if (!ja.includes(x)) bad.push('Japanese: ' + x.slice(0, 30));
+    const usPart = ja.split('米国の制度については、')[1] || '';
+    const jq = quotes(usPart.split('\n\n')[0]);
+    if (jq.length < 2) bad.push('the Commission\'s words on the United States are not quoted');
+    for (const q of jq) if (!us.includes(flat(q))) bad.push('not in the Commission\'s information: ' + q.slice(0, 20));
+    if (!us.includes(flat('2012 年 7 月 25 日参加'))) bad.push('the day of joining the CBPR System is not the Commission\'s');
+    if (/The United States has no general federal law|handle personal data for Sophaxis, and neither is bound by contract/.test(en)) bad.push('an old sentence');
+    if (!/^- OpenAI: Sophaxis cannot give information/m.test(en) || (P['openai-privacy'] || {}).status === 200) bad.push('OpenAI\'s measures');
+    return bad;
+  };
+  const en = read(path.join(ROOT, 'policies', 'privacy.md')), ja = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  const pf = polProblems(en, ja);
+  ok('the Privacy Policy, in both languages, names iTunes K.K. as its own terms give it, asks no consent of those who write, says why the request logs are not personal information, gives the Commission\'s information on the United States in its words, and gives or explains the measures of every recipient abroad (Rules Article 17)',
+    pf.length === 0, pf.join(' / '));
+  // The quotations in the review and in the follow-up of the audit are in the fetched texts.
+  const pool = flat(Object.values(P).map((x) => x.text || '').join('') + ['ppc-qa', 'ppc-guidelines'].map((k) => ((RAW.sources[k] || {}).articles || {}).all || '').join('')
+    + Object.values(RAW.sources['egov:415AC0000000057'].articles).join(''));
+  const rv = read(path.join(ROOT, 'docs', 'legal-review.md'));
+  const rvSec = (rv.split('### Personal information: whether the operator is a business operator, and the records of provision\n')[1] || '').split('\n### ')[0];
+  const au = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const auSec = (au.split('\n## その後の対応\n')[1] || '').split('\n## ')[0];
+  const qq = rvSec.split('\n').flatMap(quotes).concat(auSec.split('\n').filter((l) => l.startsWith('| ')).flatMap(quotes));
+  const missing = qq.filter((q) => !pool.includes(flat(q)));
+  ok('every quotation in the review\'s section on the records of provision and in the audit\'s follow-up (' + qq.length + ') is in a text fetched on ' + RAW.fetched, qq.length >= 8 && missing.length === 0, missing.map((q) => q.slice(0, 20)).join(' / '));
+  // The duties: none of the Act is open, the two rows are settled, and the audit says what followed.
+  const D = JSON.parse(read(path.join(ROOT, 'verification', 'duties.json'))).duties;
+  const row = (a) => D.find((u) => u.law === 'APPI' && u.article === a) || {};
+  ok('no duty of the Act on the Protection of Personal Information is open; Article 28(1) does not reach the mailbox or the logs, with the reason, Article 29 is met by the records file, and the audit keeps its findings and lists what followed',
+    !D.some((u) => u.law === 'APPI' && u.status === 'open') && row('第28条第1項（Apple の受信箱と Vercel の記録）').applies === false && /iTunes 株式会社/.test(row('第28条第1項（Apple の受信箱と Vercel の記録）').reason || '')
+    && row('第29条第1項・規則第20条第1項第二号（受け手の住所）').status === 'met' && (row('第29条第1項・規則第20条第1項第二号（受け手の住所）').by || []).some((b) => b.file === 'docs/records-of-provision.md')
+    && row('第29条第2項・規則第21条').status === 'met' && row('第30条第1項・第3項（DataCite・Crossref・JaLC・ORCID から読むとき）').applies === false
+    && auSec.includes('点検の表と判定の数は、点検したときのまま残しています。') && (auSec.match(/^\| 個人情報保護法第 (28|29|30) 条/gm) || []).length === 4 && rv.includes('## Duties still open\n\nNone.')
+    && read(path.join(ROOT, 'contact.md')).includes('iTunes K.K., a company in Japan') && read(path.join(ROOT, 'contact.ja.md')).includes('日本の会社 iTunes 株式会社'));
+  // Breaking on purpose.
+  const brokenRec = [rec.replace('88 Colin P. Kelly Jr. St.', '1 Main St.'), rec.replace(/^\| OpenAI \|.*\n/m, ''), rec.replace('単に閲覧する行為', '単に閲覧したとき'),
+    rec.replace('| Day | Person | Items | Consent | Recipient |\n| --- | --- | --- | --- | --- |\n', '| Day | Person | Items | Consent | Recipient |\n| --- | --- | --- | --- | --- |\n| 2026-11-12 | 0000-0002-1825-0097 |  | issue #1 | many unspecified people |\n'),
+    rec.replace('| United States | ia-terms | Not required: public information |', '| United States | ia-terms | Required |'), rec.replace('| Matthew Buys, Executive Director |', '| Jane Doe |')];
+  const brokenPol = [[en, ja.replace('106-6140東京都港区六本木6丁目10番1号 六本木ヒルズに所在するiTunes株式会社', 'iTunes株式会社')], [en, ja.replace('「包括的な法令は存在しない。」', '「包括的な法令が存在する。」')],
+    [en.replace(/^- OpenAI: .*\n/m, ''), ja], [en.replace('no consent is asked of the people who write', 'consent is asked of the people who write'), ja], [en + '\nThe United States has no general federal law on personal data.\n', ja]];
+  ok('the checks fail on a wrong address, a missing recipient, an altered quotation, an empty item of a record, a missing address where a record is required, a wrong representative, a lost address of iTunes K.K., an altered word of the Commission, a lost recipient\'s measures, a consent asked, and the old words on the United States',
+    brokenRec.every((b) => b !== rec && recProblems(b).length > 0) && brokenPol.every(([a, b]) => (a !== en || b !== ja) && polProblems(a, b).length > 0));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
