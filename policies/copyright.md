@@ -7,7 +7,7 @@ Japanese: [著作権の規程（日本語訳）](./copyright.ja.md). It is a tra
 The Copyright Policy says that authors keep their copyright, and what Sophaxis copies and why.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
-Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
+Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
 
 ## Authors keep their copyright
