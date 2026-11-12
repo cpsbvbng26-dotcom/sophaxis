@@ -10839,8 +10839,10 @@
    ]
   },
   "datacite-privacy": {
-   "url": "https://datacite.org/privacy-policy/",
+   "url": "https://web.archive.org/web/2026id_/https://datacite.org/privacy-policy/",
    "status": 200,
+   "fetched": "2026-11-12",
+   "final": "https://web.archive.org/web/20261111132342id_/https://datacite.org/privacy-policy/",
    "length": 19891,
    "sha256": "a68c4d4cac07d26afb674bb923f4291205516cda868d7e71f5d761881ea8c1ef",
    "spans": [
@@ -10947,8 +10949,10 @@
    ]
   },
   "datacite-imprint": {
-   "url": "https://datacite.org/imprint/",
+   "url": "https://web.archive.org/web/2026id_/https://datacite.org/imprint/",
    "status": 200,
+   "fetched": "2026-11-12",
+   "final": "https://web.archive.org/web/20261026094729id_/https://datacite.org/imprint/",
    "length": 4198,
    "sha256": "d4218ec5f38ef2b57c64ab63f38cc1892507d4a73e6f917f90f9ad6560786a2d",
    "spans": [
@@ -12770,15 +12774,9 @@
    "url": "https://web.archive.org/web/2026id_/https://www.ssrn.com/index.cfm/en/terms-of-use/",
    "status": 200,
    "fetched": "2026-11-12",
-   "final": "https://web.archive.org/web/20261105040340id_/https://www.ssrn.com/index.cfm/en/terms-of-use/",
+   "final": "https://web.archive.org/web/20261106114535id_/https://www.ssrn.com/index.cfm/en/terms-of-use/",
    "length": 31811,
    "sha256": "37188393a1bd447b3ada2299006af2764e0217bd3eb1b8d6ed2842adcf3b3b81",
-   "tried": {
-    "url": "https://www.ssrn.com/index.cfm/en/terms-of-use/",
-    "status": 403,
-    "length": 368,
-    "head": "Content Blocked Content Blocked ! We have detected that you may be using an automated script or search engine our site does not support. Please retry using an alternate way of accessing our site. Cont"
-   },
    "spans": [
     {
      "at": 272,
@@ -12859,11 +12857,12 @@
    ]
   },
   "philarchive-home": {
-   "url": "https://philarchive.org/",
+   "url": "https://web.archive.org/web/2026id_/https://philarchive.org/",
    "status": 200,
    "fetched": "2026-11-12",
-   "length": 435459,
-   "sha256": "37e8f65ebb7878e24425073f5478ab3f8d0b21780648ad31dd7015e29a693c11",
+   "final": "https://web.archive.org/web/20261002001047id_/https://philarchive.org/",
+   "length": 277049,
+   "sha256": "05f327dc505a54f4d763dbf7c3aadcf9c4b5c0e7bed659b70950683063e22a6b",
    "spans": [
     {
      "at": 873,
@@ -12874,48 +12873,40 @@
      "text": "Other"
     },
     {
-     "at": 2748,
-     "text": "2026-11-12"
+     "at": 5090,
+     "text": "English"
     },
     {
-     "at": 3212,
-     "text": "or a"
+     "at": 7336,
+     "text": "asis"
     },
     {
-     "at": 4404,
-     "text": "center"
-    },
-    {
-     "at": 8872,
-     "text": "(1)"
-    },
-    {
-     "at": 12256,
-     "text": "as is"
-    },
-    {
-     "at": 12907,
+     "at": 8223,
      "text": "answer"
     },
     {
-     "at": 14963,
-     "text": "the right"
+     "at": 9698,
+     "text": "or a"
     },
     {
-     "at": 15178,
-     "text": "status"
+     "at": 10794,
+     "text": "authors"
     },
     {
-     "at": 16938,
-     "text": "Japan"
+     "at": 11245,
+     "text": "n one"
     },
     {
-     "at": 18670,
-     "text": "Profile"
+     "at": 13102,
+     "text": "center"
     },
     {
-     "at": 19017,
-     "text": "United States"
+     "at": 18460,
+     "text": "insufficient"
+    },
+    {
+     "at": 19851,
+     "text": "Person"
     }
    ]
   },
@@ -12926,12 +12917,6 @@
    "final": "https://web.archive.org/web/20261105064820id_/https://philpapers.org/help/terms.html",
    "length": 11132,
    "sha256": "97be7037c9c713bcb724b7b8b66c54b3cb73ee23a47bed8b9150f3c7aa0645db",
-   "tried": {
-    "url": "https://philpapers.org/help/terms.html",
-    "status": 403,
-    "length": 58,
-    "head": "Just a moment... Enable JavaScript and cookies to continue"
-   },
    "spans": [
     {
      "at": 926,
@@ -13145,150 +13130,151 @@
    ]
   },
   "edx-terms": {
-   "url": "https://www.edx.org/edx-terms-service",
+   "url": "https://web.archive.org/web/2026id_/https://www.edx.org/edx-terms-service",
    "status": 200,
    "fetched": "2026-11-12",
-   "length": 72170,
-   "sha256": "2aaa9de04e72d3012164be6f6dc42cf1849caec7d9adf57759fc9cdf0645c5ef",
+   "final": "https://web.archive.org/web/20261025052716id_/https://www.edx.org/edx-terms-service",
+   "length": 72236,
+   "sha256": "23be362b4e31ff00ad2e0f39330c3adba102b8daab052941a59e0780e7371db2",
    "spans": [
     {
      "at": 41,
      "text": "Business"
     },
     {
-     "at": 130,
+     "at": 147,
      "text": "or a"
     },
     {
-     "at": 521,
+     "at": 555,
      "text": "Terms of Service"
     },
     {
-     "at": 1865,
+     "at": 1899,
      "text": "resolved"
     },
     {
-     "at": 3876,
+     "at": 3910,
      "text": "Other"
     },
     {
-     "at": 4476,
+     "at": 4510,
      "text": "removed"
     },
     {
-     "at": 4506,
+     "at": 4540,
      "text": "(c)"
     },
     {
-     "at": 5550,
+     "at": 5584,
      "text": "promise"
     },
     {
-     "at": 8519,
+     "at": 8553,
      "text": "General"
     },
     {
-     "at": 9008,
+     "at": 9042,
      "text": "title"
     },
     {
-     "at": 9252,
+     "at": 9286,
      "text": "the right"
     },
     {
-     "at": 9683,
+     "at": 9717,
      "text": "business"
     },
     {
-     "at": 10667,
+     "at": 10701,
      "text": "verify"
     },
     {
-     "at": 12993,
+     "at": 13027,
      "text": "asis"
     },
     {
-     "at": 16897,
+     "at": 16931,
      "text": "Licenses"
     },
     {
-     "at": 20353,
+     "at": 20387,
      "text": "none"
     },
     {
-     "at": 21174,
+     "at": 21208,
      "text": "Software"
     },
     {
-     "at": 22003,
+     "at": 22037,
      "text": "record"
     },
     {
-     "at": 22122,
+     "at": 22156,
      "text": "authors"
     },
     {
-     "at": 22773,
+     "at": 22807,
      "text": "the public"
     },
     {
-     "at": 23620,
+     "at": 23654,
      "text": "Record"
     },
     {
-     "at": 24017,
+     "at": 24051,
      "text": "publisher"
     },
     {
-     "at": 26013,
+     "at": 26047,
      "text": "trademark"
     },
     {
-     "at": 30321,
+     "at": 30355,
      "text": "access, search, or otherwise use any portion of the Service through the use of any engine, software, tool, agent, device, or mechanism (including spiders, robots, crawlers, and data mining tools) other than the software or search agents provided by edX"
     },
     {
-     "at": 32459,
+     "at": 32493,
      "text": "Copyright"
     },
     {
-     "at": 36401,
+     "at": 36435,
      "text": "United States"
     },
     {
-     "at": 38305,
+     "at": 38339,
      "text": "representation"
     },
     {
-     "at": 41258,
+     "at": 41292,
      "text": "Liability"
     },
     {
-     "at": 55436,
+     "at": 55470,
      "text": "Provision"
     },
     {
-     "at": 59499,
+     "at": 59533,
      "text": "Consent"
     },
     {
-     "at": 61573,
+     "at": 61607,
      "text": "Apple Inc."
     },
     {
-     "at": 68935,
+     "at": 68969,
      "text": "I agree"
     },
     {
-     "at": 69404,
+     "at": 69438,
      "text": "answer"
     },
     {
-     "at": 71960,
+     "at": 72026,
      "text": "Security"
     },
     {
-     "at": 72152,
+     "at": 72218,
      "text": "All rights reserved"
     }
    ]
@@ -13525,9 +13511,10 @@
    ]
   },
   "datacite-terms": {
-   "url": "https://datacite.org/terms-and-conditions/",
+   "url": "https://web.archive.org/web/2026id_/https://datacite.org/terms-and-conditions/",
    "status": 200,
    "fetched": "2026-11-12",
+   "final": "https://web.archive.org/web/20261026094729id_/https://datacite.org/terms-and-conditions/",
    "length": 12537,
    "sha256": "25ecf43469fd21aa1937136d6e89b8dc5675c68c9e7e35bdeab3c6aa1256d05c",
    "spans": [
@@ -13602,11 +13589,12 @@
    ]
   },
   "datacite-api-docs": {
-   "url": "https://support.datacite.org/docs/api",
+   "url": "https://web.archive.org/web/2026id_/https://support.datacite.org/docs/api",
    "status": 200,
    "fetched": "2026-11-12",
-   "length": 14501,
-   "sha256": "db69b8349ac29246a0c3ccfd52db4145fddc4f3aafbfacc3ea5dae95fa8d5429",
+   "final": "https://web.archive.org/web/20261024160700id_/https://support.datacite.org/docs/api",
+   "length": 14494,
+   "sha256": "cfccbfb443532aff05293e7a2d73217f17d0cb31507f42d394ee2814b6a626e0",
    "spans": [
     {
      "at": 0,
@@ -15213,11 +15201,12 @@
    ]
   },
   "philarchive-about": {
-   "url": "https://philarchive.org/help/about.html",
+   "url": "https://web.archive.org/web/2026id_/https://philarchive.org/help/about.html",
    "status": 200,
    "fetched": "2026-11-12",
-   "length": 6198,
-   "sha256": "9559f98232c54f452b9f2c700aee50bd729dbe0ae64bfc395264982eb4a85c7a",
+   "final": "https://web.archive.org/web/20261002001540id_/https://philarchive.org/help/about.html",
+   "length": 6199,
+   "sha256": "8aeecae40c5ed3d581b55a49d4f17f2eefe20ecac0fa3149424b37aa87211338",
    "spans": [
     {
      "at": 849,
@@ -15254,11 +15243,12 @@
    ]
   },
   "philarchive-faq": {
-   "url": "https://philarchive.org/help/faq.html",
+   "url": "https://web.archive.org/web/2026id_/https://philarchive.org/help/faq.html",
    "status": 200,
    "fetched": "2026-11-12",
-   "length": 13676,
-   "sha256": "6efb3ff01a64c2cc57fd2f6ea4db65e53d73b52fdec7d0b6f2901af7f9ba2a03",
+   "final": "https://web.archive.org/web/20261002001259id_/https://philarchive.org/help/faq.html",
+   "length": 13351,
+   "sha256": "781829dc861a6dc22d6fe7d5953585480765012e344bccb99d64d90dc8334363",
    "spans": [
     {
      "at": 847,
@@ -15313,15 +15303,15 @@
      "text": "resolve d"
     },
     {
-     "at": 10932,
+     "at": 10606,
      "text": "categorize"
     },
     {
-     "at": 12225,
+     "at": 11899,
      "text": "answer"
     },
     {
-     "at": 13585,
+     "at": 13259,
      "text": "All rights reserved"
     }
    ]
