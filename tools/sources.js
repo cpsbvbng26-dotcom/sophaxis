@@ -57,7 +57,7 @@ const SOURCES = {
   'ru-152': { pages: [1, 2, 3, 4, 5, 6, 7].map((n) => 'http://www.kremlin.ru/acts/bank/24154/page/' + n), body: [/Показать предыдущую страницу документа/, /Показать следующую страницу документа|Текст Поделиться Прямая ссылка/], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true, supGuess: true, altPrefix: 'https://web.archive.org/web/2026id_/' },
   // adilet.zan.kz answers with a page that asks for a script; the Internet Archive's copy is tried after it (`alt`).
   kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g, alt: ['https://web.archive.org/web/2026id_/https://adilet.zan.kz/rus/docs/Z1300000094'] },
-  /* Added on 2026-11-12, for the data protection laws that Nusquama's survey of the world's laws (verification/world/ there)
+  /* Added on 2026-11-12, for the data protection laws that another project's public survey of the world's laws
    * found, so that the scope, representative, registration, transfer and minors articles are read at their sources by number.
    * The survey kept only the articles its search words matched; these are fetched whole here. `whole` keeps the text as
    * article "all" beside the cut articles; `alt` is one other official route, or the Internet Archive's copy. */
