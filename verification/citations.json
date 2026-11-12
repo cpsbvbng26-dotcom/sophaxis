@@ -826,16 +826,30 @@
     },
     "Zimbabwe DPA": {
       "en": [
-        "Data Protection Act [Chapter 12:07]"
+        "Cyber and Data Protection Act"
       ],
       "ja": [
-        "データ保護法（ジンバブエ、第 12 章 07）"
+        "サイバー・データ保護法"
       ],
       "place": [
         "Zimbabwe",
         "ジンバブエ"
       ],
       "source": "zw-dpa"
+    },
+    "Ghana DPA 2012": {
+      "en": [
+        "Data Protection Act, 2012 (Act 843)",
+        "Act 843"
+      ],
+      "ja": [
+        "2012 年データ保護法（法律第 843 号）"
+      ],
+      "place": [
+        "Ghana",
+        "ガーナ"
+      ],
+      "source": "gh-dpa"
     }
   },
   "fetchAlso": {
@@ -978,30 +992,18 @@
       "all"
     ],
     "Argentina Law 25.326": [
-      "all",
-      "1",
-      "2",
-      "4",
-      "5",
       "6",
       "12",
       "21",
       "44"
     ],
     "Uruguay Law 18.331": [
-      "all",
-      "1",
-      "2",
       "3",
-      "4",
       "13",
-      "17",
       "23",
-      "28",
       "29"
     ],
     "Colombia Law 1581": [
-      "all",
       "2",
       "7",
       "12",
@@ -1009,57 +1011,37 @@
       "26"
     ],
     "Mexico LFPDPPP": [
-      "all",
       "1",
-      "2",
-      "3",
-      "14",
       "15",
-      "35",
       "36"
     ],
     "New Zealand Privacy Act 2020": [
-      "all",
       "4",
-      "11",
       "22"
     ],
     "Australia Privacy Act 1988": [
-      "all",
       "5B",
-      "6C",
       "6D"
     ],
     "Chile Law 19.628": [
-      "all",
       "1",
-      "2",
       "4"
     ],
     "Canada PIPEDA": [
-      "all",
       "2",
       "4"
     ],
     "Kenya DPA 2019": [
-      "all",
       "4",
-      "18",
-      "25",
-      "48",
-      "49",
-      "50"
+      "18"
     ],
     "Philippines DPA 2012": [
-      "all",
       "4",
       "6",
       "21"
     ],
     "South Africa POPIA": [
-      "all",
       "3",
-      "35",
       "72"
     ],
     "Singapore PDPA 2012": [
@@ -1074,33 +1056,27 @@
       "23"
     ],
     "Qatar PDPL": [
-      "all",
       "2",
       "15"
     ],
     "Monaco Law 1.565": [
-      "all",
       "3",
       "25"
     ],
     "Saudi PDPL": [
-      "13",
       "29"
     ],
     "Korea PIPA": [
       "22-2",
-      "28-8",
-      "30"
+      "28-8"
     ],
     "Swiss FADP": [
       "16",
       "17",
-      "18",
       "19"
     ],
     "Zimbabwe DPA": [
-      "all",
-      "3",
+      "4",
       "28"
     ],
     "LGPD": [
@@ -1109,6 +1085,11 @@
     ],
     "India DPDP Act": [
       "16"
+    ],
+    "Ghana DPA 2012": [
+      "45",
+      "46",
+      "53"
     ]
   },
   "recitals": {
