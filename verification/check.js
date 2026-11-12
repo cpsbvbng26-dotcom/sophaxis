@@ -4945,6 +4945,9 @@ console.log('\n115. The laws of 195 countries applied: fifteen more places from 
 /* ------------------------------------------------------------ 116 */
 /* The pages that the third pass of 2026-11-12 added to tools/sources.js (check 117). */
 const SECOND_PASS_PAGES = ['philarchive-codeofconduct', 'philarchive-submit', 'ssrn-classification-distribution', 'ssrn-nonscholarly', 'ssrn-review-process', 'ssrn-submission-guidelines', 'ssrn-research-integrity', 'roar-information', 'roar-help', 'roar-record'];
+/* The page that the fourth pass fetched (check 118). Like the pages of the third pass, it is not among the pages counted on the day of the second. */
+const THIRD_PASS_PAGES = ['joss-paper-src'];
+const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES);
 console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct requests where terms forbid them, texts by others kept only in parts, and the reply time an aim from 2026-11-26');
 {
   const S = require('../tools/sources.js');
@@ -4982,7 +4985,7 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
   const PARTS = ['cc-by', 'cc-by-sa', 'cc0', 'github-terms', 'vercel-terms', 'mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa', 'korea-pipa', 'korea-decree', 'usc17'];
   const nonLaw = Object.keys(RAW.sources).filter((k) => !S.wholeSource(k)).sort();
   const kp = S.keptProblems(RAW);
-  const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256 && !SECOND_PASS_PAGES.includes(k)).length;
+  const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256 && !LATER_PAGES.includes(k)).length;
   ok('only laws are kept whole; every page (' + pages + ') and every other text (' + nonLaw.length + ': licences, terms, guidance and translations not made by a state) is kept as its address, day, SHA-256 and the parts quoted or relied on; the whole texts of a run go to its artifact for 90 days after the parts are verified against them, and are not in git',
     kp.length === 0 && JSON.stringify(nonLaw) === JSON.stringify(PARTS.slice().sort()) && Object.keys(RAW.sources).every((k) => S.wholeSource(k) || PARTS.includes(k)) && wp.length === 0, kp.concat(wp).slice(0, 6).join(', '));
   /* The licence statements say, in both languages, that texts by others are not under CC BY 4.0. */
@@ -5037,8 +5040,8 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
     const qs = rows.flatMap((r) => [...(r[3] || '').matchAll(/「([^「」]+)」/g)].map((m) => m[1]));
     if (qs.length < 10) bad.push('too few quotations');
     for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
-    /* The count is of the pages kept on that day; the pages fetched by the next pass (check 117) are not among them. */
-    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256 && !SECOND_PASS_PAGES.includes(k)).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
+    /* The count is of the pages kept on that day; the pages fetched by the later passes (checks 117 and 118) are not among them. */
+    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256 && !LATER_PAGES.includes(k)).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
     if (!sec.includes('ファイルは、' + nPages + ' の頁と、ライセンス・規約・手引き・私人の英訳など ' + nParts + ' の文を、全文で置いていました')) bad.push('the counts of the texts');
     for (const x of ['公開した履歴は書き換えません。2026-11-12 に Claude が決めました。', '最後に全体を置いていたのは、main のコミット 8fcaef4 です。', 'その実行の成果物 `sources-full` として 90 日のあいだ残り', '点検の表の「規約や外国の法令の訳の引用」の行は、頁に置く短い一節だけを見て問題なしとしました。', '### 下げられずに残る危険']) if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
     return bad;
@@ -5150,6 +5153,109 @@ console.log('\n117. What a third, read-only pass of 2026-11-12 found: the licenc
       audit.replace('「SSRN does not peer review preprints」', '「SSRN does not review preprints」'),
       audit.replace('| 漏れ | 2026-11-12 に Claude が決めました。読み終えた', '| 漏れ | 読み終えた'),
       audit.replace('読み終えた同じ日に、三つの実行の記録を消しました。', '三つの実行の記録は残しました。')].every((b) => b !== audit && auditProblems(b, pool).length > 0));
+}
+
+/* ------------------------------------------------------------ 118 */
+console.log('\n118. What a fourth, read-only pass of 2026-11-12 found: CITATION.cff says that its MIT licence covers the code only, and the JOSS draft says that Sophaxis is not a project of the university it names as the affiliation');
+{
+  const S = require('../tools/sources.js');
+  const kept = require('../tools/citations.js').kept;
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const RAW = J('verification/sources-raw.json'), TX = J('verification/statutes-texts.json');
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  const sp = (x) => String(x || '').replace(/\s+/g, ' ');
+  /* CITATION.cff: the message says what .zenodo.json's notes say of the licence field, the works and the texts by others. */
+  const CFF_LIC = ['The text of the site is CC BY 4.0; the code is MIT.', 'The licence field of this record covers the code only.',
+    'Each listed work, with its PDF copy and its abstract, keeps its own licence.',
+    'Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners\'.'];
+  const cffProblems = (cff, notes) => {
+    const bad = [];
+    const msg = sp((/^message: >-\n((?:  .*\n)+)/m.exec(cff) || ['', ''])[1]);
+    if (!/^license: MIT$/m.test(cff)) bad.push('the licence field');
+    for (const x of CFF_LIC) { if (!msg.includes(x)) bad.push('not in the message: ' + x.slice(0, 30)); if (!String(notes || '').includes(x)) bad.push('not in .zenodo.json: ' + x.slice(0, 30)); }
+    return bad;
+  };
+  /* The JOSS draft: one affiliation, the university where the author is enrolled, with no title; the body says in one sentence
+   * that Sophaxis is not a project of the university and that the university does not endorse it. */
+  const AFFIL = 'affiliations:\n  - name: ZEN University, Japan\n    index: 1\n';
+  const NOT_UNIV = 'Sophaxis is not a project of ZEN University, and the university does not endorse it.';
+  const paperProblems = (t) => {
+    const bad = [];
+    const head = /^---\n([\s\S]*?)\n---\n/.exec(t);
+    if (!head) return ['no front matter'];
+    const body = t.slice(head[0].length).replace(/<!--[\s\S]*?-->/g, '');
+    if (!t.includes(AFFIL)) bad.push('the affiliation');
+    if ((head[1].match(/^  - name:/gm) || []).length !== 2) bad.push('more than the one author and the one affiliation');
+    const ack = (body.split('\n# Acknowledgements\n')[1] || '').split('\n# ')[0];
+    if (!sp(ack).includes(NOT_UNIV)) bad.push('the sentence on the university, under Acknowledgements');
+    return bad;
+  };
+  /* JOSS's guide to the paper, fetched from GitHub at a fixed commit, kept in parts with its SHA-256, holding the words quoted. */
+  const JOSS_WANT = 'A list of the authors of the software and their affiliations, using the correct format';
+  const pageProblems = (pages, raw) => {
+    const bad = [];
+    for (const k of THIRD_PASS_PAGES) {
+      const p = pages[k], r = raw.pages[k];
+      if (!p) { bad.push('not listed: ' + k); continue; }
+      if (!/^https:\/\/raw\.githubusercontent\.com\/openjournals\/joss\/[0-9a-f]{40}\/docs\/paper\.md$/.test(p.url)) bad.push('not at a fixed commit: ' + k);
+      if (!r || r.url !== p.url || r.status !== 200 || !/^[0-9a-f]{64}$/.test(r.sha256 || '') || !Array.isArray(r.spans) || 'text' in r) bad.push('not kept in parts: ' + k);
+    }
+    if (!flat(kept(((raw.pages['joss-paper-src'] || {}).spans))).includes(flat(JOSS_WANT))) bad.push('the quoted words are not kept');
+    return bad;
+  };
+  const pool = flat(Object.values(RAW.pages).map((o) => kept(o.spans)).join('') + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map(kept).join('')).join('') + Object.values(TX).join(''));
+  const HEAD = '\n## 2026-11-12 の続き：三度目の見落とし\n';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const auditProblems = (t, poolFlat) => {
+    const bad = [];
+    const sec = (t.split(HEAD)[1] || '').split('\n## ')[0];
+    if (!sec) return ['no section'];
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length < 2) bad.push('too few rows');
+    rows.forEach((r, i) => { if (r.length !== 6 || !JUDGE.includes(r[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    for (const r of rows.filter((x) => x[4] !== '問題なし')) if (!r[5].includes('2026-11-12 に Claude が決めました。')) bad.push('a decision without its maker: ' + r[0]);
+    const qs = rows.flatMap((r) => [...(r[3] || '').matchAll(/「([^「」]+)」/g)].map((m) => m[1]));
+    if (qs.length < 3) bad.push('too few quotations');
+    for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
+    for (const x of ['`CITATION.cff` を見ておらず、その行はこの点を見落としていました', '所属を消すと、手引きが求める所属の一覧を欠くためです。', '肩書きは書きません。', '### 下げられずに残る危険'])
+      if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
+    if (!/取り寄せの実行は \d{8,} で、結果は枝 `sources\/\d{8}-\d{4}` にあります。/.test(sec)) bad.push('the run of the fetch');
+    return bad;
+  };
+  const cff = read(path.join(ROOT, 'CITATION.cff')), notes = J('.zenodo.json').notes;
+  const paper = read(path.join(ROOT, 'paper', 'paper.md'));
+  const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const cp = cffProblems(cff, notes), pp = paperProblems(paper), gp = pageProblems(S.PAGES, RAW), ap = auditProblems(audit, pool);
+  ok('the message of CITATION.cff says, as the notes of .zenodo.json do, that the text is CC BY 4.0 and the code MIT, that its licence field covers the code only, that each listed work keeps its own licence, and that texts by others are not licensed under CC BY 4.0',
+    cp.length === 0, cp.join(', '));
+  ok('the JOSS draft names one affiliation, ZEN University, Japan, and no title, and says under Acknowledgements that Sophaxis is not a project of the university and is not endorsed by it',
+    pp.length === 0, pp.join(', '));
+  ok('JOSS\'s guide to the paper is listed in tools/sources.js at a fixed commit, kept in parts with its SHA-256, and holds the words the record quotes on affiliations',
+    gp.length === 0, gp.join(', '));
+  ok('the audit records what the fourth pass found in a table of six columns, judged and counted, each decision by Claude, every quotation in the column of facts in a kept text, the earlier row that missed CITATION.cff, the run of the fetch, and the risks that remain',
+    ap.length === 0, ap.join(' / '));
+  // Breaking on purpose.
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const r1 = clone(RAW); if (r1.pages['joss-paper-src']) r1.pages['joss-paper-src'].spans = [];
+  const r2 = clone(RAW); if (r2.pages['joss-paper-src']) r2.pages['joss-paper-src'].text = 'the whole text';
+  ok('the check fails on a lost licence sentence in CITATION.cff or .zenodo.json, another licence field, a missing or second affiliation, a title, the sentence on the university lost or turned, a page at a moving branch, a quoted part lost, a whole text kept, a wrong count, an altered quotation, a decision without its maker and the earlier row left uncorrected',
+    cffProblems(cff.replace('  The licence field of this record covers the code only.\n', ''), notes).length > 0
+    && cffProblems(cff, String(notes).replace('The licence field of this record covers the code only.', '')).length > 0
+    && cffProblems(cff.replace('license: MIT', 'license: CC-BY-4.0'), notes).length > 0
+    && paperProblems(paper.replace(AFFIL, '')).length > 0
+    && paperProblems(paper.replace(AFFIL, AFFIL + '  - name: Independent Researcher\n    index: 2\n')).length > 0
+    && paperProblems(paper.replace('Sophaxis is not a project of ZEN University', 'Sophaxis is a project of ZEN University')).length > 0
+    && paperProblems(paper.replace('and the university does not endorse it.', 'and the university endorses it.')).length > 0
+    && paperProblems(paper.replace('\n' + NOT_UNIV + '\n', '\n').replace('# Summary\n', '# Summary\n\n' + NOT_UNIV + '\n')).length > 0
+    && pageProblems({ ...S.PAGES, 'joss-paper-src': { url: 'https://raw.githubusercontent.com/openjournals/joss/main/docs/paper.md' } }, RAW).length > 0
+    && pageProblems(S.PAGES, r1).length > 0 && pageProblems(S.PAGES, r2).length > 0
+    && [audit.replace('この表の判定は、表現 2 です。', 'この表の判定は、表現 1 です。'),
+      audit.replace('「A list of the authors of the software and their affiliations, using the correct format」', '「A list of the authors and their affiliations」'),
+      audit.replace('| 表現 | 2026-11-12 に Claude が決めました。所属はそのまま残し', '| 表現 | 所属はそのまま残し'),
+      audit.replace('`CITATION.cff` を見ておらず、その行はこの点を見落としていました', '`CITATION.cff` も見ていました')].every((b) => b !== audit && auditProblems(b, pool).length > 0));
 }
 
 console.log('\n' + '-'.repeat(60));
