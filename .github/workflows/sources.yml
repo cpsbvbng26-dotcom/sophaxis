@@ -31,7 +31,7 @@ jobs:
       - run: |
           node -e '
           const f = require("./verification/sources-full.json"); const ks = (process.env.SOURCES_ONLY || "").split(",").map((x) => x.trim());
-          for (const k of ks) { const p = (f.pages || {})[k]; console.log("=====PAGE " + k + " " + (p ? (p.text || "").length : "none")); if (p && p.text) for (let i = 0; i < p.text.length; i += 400) console.log("|" + p.text.slice(i, i + 400)); }'
+          for (const k of ks) { const p = (f.pages || {})[k]; console.log("=====PAGE " + k + " " + (p ? (p.text || "").length : "none")); if (p && p.links) console.log("LINKS " + JSON.stringify(p.links)); if (p && p.text) for (let i = 0; i < p.text.length; i += 400) console.log("|" + p.text.slice(i, i + 400)); }'
         env:
           SOURCES_ONLY: ${{ inputs.only }}
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
