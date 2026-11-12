@@ -8,6 +8,13 @@
   <updated>2026-11-12T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c13</id>
+    <title>The day from which each place is not offered, in the Privacy Policy</title>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <summary>The Privacy Policy said, of the Zenodo community and of the people in the other places that the Submission Policy lists, that the rule applies from 2026-11-22. The Submission Policy gives 2026-11-26 for 15 of the 43 places, as announced. The Privacy Policy now says that the rule applies from the date the Submission Policy gives for each place: 2026-11-22, or 2026-11-26 for 15 of them. Nothing that Sophaxis does changes, and no right is narrowed. Policies: Privacy Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c12</id>
     <title>PDFs are no longer copied by script from Figshare or Research Square</title>
     <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>

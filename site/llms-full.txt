@@ -1024,7 +1024,7 @@ The pages and the PDF copies of a work whose authors consent to it are saved to 
 Works deposited at Zenodo can also be gathered in the Sophaxis community at Zenodo, https://zenodo.org/communities/sophaxis.
 An author submits the record there, and Zenodo, run by CERN in Switzerland, holds it.
 Sophaxis copies nothing from the community, and the operator does not change the records in it.
-A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from 2026-11-22, because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
+A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from the date the Submission Policy gives for each place (2026-11-22, or 2026-11-26 for 15 of them), because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 When a record changes, its address is sent to search engines through IndexNow; only the address is sent.
 Copies that others have already taken are outside Sophaxis's control.
 
@@ -1207,7 +1207,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 
 ## People in the other places
 
-From 2026-11-22, Sophaxis does not offer its service to people in the other places that the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) lists either.
+From the date the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) gives for each place (2026-11-22, or 2026-11-26 for 15 of them), Sophaxis does not offer its service to people in the other places that it lists either.
 Their laws require, or are reported to require, a representative there, the storage of personal data there, registration there, or conditions before personal data leaves the place, and Sophaxis meets none of these.
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
 From 2026-11-26, the list also covers places whose law asks for the operator's postal address or telephone number before personal data is collected, places whose law lets the personal data of a minor be processed only with a parent's consent that the service confirms, or not at all, and places whose data protection law could not be read at its source; the Submission Policy gives each, with its law.
@@ -2851,7 +2851,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 Zenodo に置かれた作品は、Zenodo にある Sophaxis のコミュニティ（https://zenodo.org/communities/sophaxis）にも集めることがあります。
 コミュニティに記録を出すのは著者です。記録を持つのは Zenodo で、運営はスイスの CERN です。
 Sophaxis はコミュニティから何も写しません。運営者がそこの記録を書き換えることもありません。
-2026-11-22 から、著者のだれかが Sophaxis を提供しない国と地域（投稿の規程の表にあります）に住んでいるか、投稿から掲載までのあいだにそこに滞在した作品については、記録を足す依頼を断ります。その作品は Sophaxis に載らないためです。依頼そのものは、CERN の規約のもとで Zenodo に残ります。
+投稿の規程が国と地域ごとに示す日（2026-11-22、そのうち 15 の国と地域は 2026-11-26）から、著者のだれかが Sophaxis を提供しない国と地域（投稿の規程の表にあります）に住んでいるか、投稿から掲載までのあいだにそこに滞在した作品については、記録を足す依頼を断ります。その作品は Sophaxis に載らないためです。依頼そのものは、CERN の規約のもとで Zenodo に残ります。
 投稿の様式で、すべての著者が掲載と、下の「外国にある事業者の利用」に挙げる提供に同意していることを確かめます。Internet Archive への保存は別の同意で、空けておくこともできます。
 法令に基づく場合を除き、これ以外に個人情報を第三者へ渡すことはありません。
 ほかの者がすでに写したものは、Sophaxis の手の外にあります。
@@ -3059,7 +3059,7 @@ Sophaxis は、無報酬で、無料の範囲で運営しています。
 
 ## ほかの国と地域の人へ
 
-2026-11-22 から、Sophaxis は、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)の表にあるほかの国と地域の人にもサービスを提供しません。
+[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が国と地域ごとに示す日（2026-11-22、そのうち 15 の国と地域は 2026-11-26）から、Sophaxis は、その表にあるほかの国と地域の人にもサービスを提供しません。
 そこの法令は、現地の代理人、国内での個人データの保存、現地での登録、データを国外へ出す前の条件のいずれかを求めているか、求めると報告されています。Sophaxis はどれも満たしていません。
 国や地域は、そうした務めが報告された時点で表に足し、法令を原文で読んでから外します。
 2026-11-26 からは、個人データを集める前に運営者の住所か電話番号を知らせるよう求める法令、未成年者の個人データをサービスが確かめた親の同意があるときに限って扱わせる法令（または扱わせない法令）のある国と地域と、データ保護法を原文で読めなかった国と地域も表に入ります。それぞれの法令は投稿の規程にあります。
