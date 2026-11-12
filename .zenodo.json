@@ -2,6 +2,8 @@
   "title": "Sophaxis: an overlay preprint server for philosophy and mathematics",
   "description": "<p>Sophaxis is an overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. It holds no manuscripts of its own: authors submit a preprint they have deposited in a repository (Zenodo, Figshare, arXiv, SSRN and others) by its DOI and their ORCID iD, and after moderation it is listed with a stable record page.</p><p>This record is the code and the records of the site: a static site generator with no dependencies, the submission intake (metadata from DataCite, Crossref and JaLC, an ORCID check that the submitter is an author), the weekly watch of listed works, the policies, and the checks that run on every change. Acceptance is moderation, not peer review.</p><p>Site: https://sophaxis.vercel.app/</p>",
   "upload_type": "software",
+  "version": "1.1.0",
+  "publication_date": "2026-11-12",
   "license": "mit",
   "access_right": "open",
   "language": "eng",
