@@ -47,7 +47,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the record and the issues of the repository.
 - Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
-- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once, as the [Takedown Policy](./policies/takedown.md) says. If GitHub Actions does not run, the operator does it by hand, not at once.
+- When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once while GitHub Actions runs, as the [Takedown Policy](./policies/takedown.md) says; when Actions does not run, the operator does it by hand, not at once.
 - Leaves to the operator: the decision.
 - Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
 

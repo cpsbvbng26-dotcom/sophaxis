@@ -138,7 +138,7 @@ When the weekly check reports a new retraction or correction notice on a publish
 ### What runs by itself
 
 Every automatic step is listed, with when it runs, what it reads and writes and what it leaves to the operator, on the page [What runs by itself](https://sophaxis.vercel.app/automation.html) (`automation.md`).
-In short: the checks of each submission, withdrawal and reported published version; the acknowledgement of removal requests, the authors' notice, and taking exposed personal data offline at once; the operator's decision carried out on the label `upheld` or `not-upheld`; a daily reminder of requests near 7 days; the checks on every push; IndexNow and the Internet Archive on every change; and the weekly watch.
+In short: the checks of each submission, withdrawal and reported published version; the acknowledgement of removal requests, the authors' notice, and taking exposed personal data offline at once while GitHub Actions runs; the operator's decision carried out on the label `upheld` or `not-upheld`; a daily reminder of requests near 7 days; the checks on every push; IndexNow and the Internet Archive on every change; and the weekly watch.
 No automatic step decides on a request, uses a language model or holds a key other than the run's own GitHub token.
 Every one of them runs as GitHub Actions. GitHub's terms let it restrict the use of GitHub Actions; while Actions does not run, the operator takes the steps by hand, and none of them happens at once.
 
@@ -146,7 +146,7 @@ Every one of them runs as GitHub Actions. GitHub's terms let it restrict the use
 
 Follow the [Takedown Policy](policies/takedown.md). A removal issue runs `tools/removal.js` (`.github/workflows/removal.yml`).
 It acknowledges the request with the day the answer is due, tells the authors in their submission issue, and, where the issue reports exposure of personal data,
-takes the record page (title, authors, abstract and PDF copy) offline at once by making the record a notice under review.
+takes the record page (title, authors, abstract and PDF copy) offline at once by making the record a notice under review, while GitHub Actions runs.
 To decide, label the issue `upheld` or `not-upheld`; only the repository owner's label acts.
 Upheld, the record becomes a notice that says only that it was removed, every automatic comment about it is deleted, and the issues that name it are emptied, closed and locked, and only the owner's account can delete them; not upheld, what was taken offline is put back from the git history.
 Every change is built and checked before it is pushed to `main`. A request sent by email is handled by running the workflow by hand with the id.

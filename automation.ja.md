@@ -48,7 +48,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：記録と、リポジトリの issue。
 - 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
-- issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.md)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。GitHub Actions が動かないときは、運営者が手で下げ、すぐには下がりません。
+- issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.md)のとおり、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。GitHub Actions が動かないときは、運営者が手で下げ、すぐには下がりません。
 - 運営者に残すこと：判断。
 - コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
 
