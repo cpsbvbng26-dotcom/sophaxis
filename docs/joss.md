@@ -1,10 +1,10 @@
 # Readiness for the Journal of Open Source Software (JOSS)
 
-Not submitted. This is the operator's checklist for a submission of the Sophaxis code to JOSS, kept beside the draft paper in [paper/paper.md](../paper/paper.md).
-It adds no rule. The submission itself, and every answer to JOSS, are the operator's.
+Not submitted. This is the checklist for a submission of the Sophaxis code to JOSS, kept beside the draft paper in [paper/paper.md](../paper/paper.md).
+It adds no rule. The submission itself, and every answer to JOSS, are made from the operator's account, which cannot be reached from here.
 
 The criteria are those of JOSS's submission guide, read on 2026-11-11 from its source on GitHub: `docs/submitting.md` in `openjournals/joss`, at commit `675126ebed33f1b00a385f0241b0818f4b0599e6`.
-JOSS may change them. Read the guide again before submitting, and change this page where it differs.
+JOSS may change them. Before a submission, the guide is read again and this page is changed where it differs.
 
 ## When
 
@@ -28,17 +28,16 @@ The state is one of: met, partly met, not yet, at submission (to be done on the 
 | A CONTRIBUTING file, and stated support | met | `CONTRIBUTING.md`. Check 40. |
 | Tagged releases or a changelog | met | `CHANGELOG.md`, and the versions archived at Zenodo under the DOIs in `CITATION.cff`. |
 | Testable by a reviewer on a local machine | met | Node.js alone: `node build.js` and `node verification/check.js` need no package. The browser check needs playwright and Chromium, as the README says. |
-| Packaged according to the standards of the language | not yet | There is no `package.json`. One without dependencies would keep the rule of no dependencies; the operator decides. |
+| Packaged according to the standards of the language | not yet | There is no `package.json`. One without dependencies would keep the rule of no dependencies. Decided by Claude on 2026-11-12: none is added. Nothing installs Sophaxis as a package, and the build and the checks run with Node.js alone. |
 | Web-based software: a core library exposed through the site, or rigorous domain modelling and testing | for JOSS | The build, the intake and the checks are plain modules that `verification/check.js` loads and tests. Whether that is enough is for JOSS to decide. |
 | A paper of 250 to 1000 words with the sections JOSS asks for | met | `paper/paper.md`. Check 41 counts the words and the sections. |
 | References with DOIs | at submission | `paper/paper.bib` holds no DOI until one is checked at its source. Check 41. |
 | A disclosure of generative models, in the section JOSS names `AI usage disclosure`: the tools and their versions, where they were used, and that the author reviewed every output and made the core design decisions | at submission | The section is in the paper, and Claude is not an author. The versions are added on the day. |
 | The author, the ORCID iD and the affiliation | at submission | One author, with the ORCID iD. The affiliation line is "ZEN University, Japan", decided by the operator on 2026-11-11; the paper gives no title. |
-| A release and an archive DOI of the reviewed version | at submission | After the review, the operator makes the release and the Zenodo version by hand, and records the DOI that Zenodo gives. |
+| A release and an archive DOI of the reviewed version | at submission | After the review, the release and the Zenodo version are made from the operator's accounts. Only the DOI that Zenodo gives is recorded. |
 
-## What the operator does on the day
+## On the day
 
-1. Read the guide again, and update this page.
-2. Confirm every row above is met, or say in the submission why it is not.
-3. Submit Sophaxis and errata-check, each through JOSS's own form, as the operator.
-4. Record in the README that the submission was made, with the day, and replace "Nothing has been submitted yet."
+Before the submission, this page is brought up to date with the guide, and every row above is met or the submission says why it is not.
+Sophaxis and errata-check are submitted each through JOSS's own form, from the operator's account.
+The README then gives the day of the submission in place of "Nothing has been submitted yet."

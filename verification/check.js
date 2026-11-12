@@ -1454,10 +1454,10 @@ console.log('\n39. Metadata for a release DOI (Zenodo and CITATION.cff)');
     && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version 1.1.0 is dated 2026-11-12'));
   /* Item 418: the release in preparation has one version and one date, in CITATION.cff, in .zenodo.json and in the changelog. */
   const cffVersion = (/^version: "([^"]+)"$/m.exec(cff) || [])[1], cffDate = (/^date-released: "([^"]+)"$/m.exec(cff) || [])[1];
-  ok('the release in preparation (' + cffVersion + ', ' + cffDate + ') has the same version and date in CITATION.cff, .zenodo.json and CHANGELOG.md, and the changelog leaves the release to the operator',
+  ok('the release in preparation (' + cffVersion + ', ' + cffDate + ') has the same version and date in CITATION.cff, .zenodo.json and CHANGELOG.md, and the changelog says that its release was stopped and that no release of it exists',
     cffVersion && cffDate && z.version === cffVersion && z.publication_date === cffDate
     && read(path.join(ROOT, 'CHANGELOG.md')).includes('Version ' + cffVersion + ' is dated ' + cffDate + ' and gathers every change merged since')
-    && read(path.join(ROOT, 'CHANGELOG.md')).includes('the operator makes its GitHub Release and its Zenodo version by hand'), z.version + ' ' + z.publication_date);
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('The operator stopped its release on ' + cffDate + ': no GitHub Release and no Zenodo version of ' + cffVersion + ' exist'), z.version + ' ' + z.publication_date);
   ok('the code is tied to the OSF project, with the DOI from site.json, and that DOI is said to name the project',
     z.related_identifiers.some((r) => r.identifier === site.osf.doi && r.relation === 'isPartOf')
     && cff.includes('value: ' + site.osf.doi) && cff.includes('the project, not this code release'));
@@ -4498,8 +4498,10 @@ console.log('\n110. Outside assessments and the proposal for the advisory board 
   const n = Object.keys(S110.categories).length;
   const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   const fieldsLine = (/^- One seat each for (.+)\.$/m.exec(prop) || [, ''])[1];
-  ok('the proposal for the advisory board is marked as a draft for the operator to confirm, and its count is the number of fields in site.json (' + n + '), in both languages, each field named',
-    prop.includes('Draft, not decided: 案（利用者が確かめる）.') && prop.includes('One adviser for each field that Sophaxis lists, ' + W[n] + ' in all while `site.json` names ' + W[n] + ' fields.')
+  ok('the proposal for the advisory board says that Claude adopted it as the plan on 2026-11-12, with the call unchanged and no adviser yet, in both languages, and its count is the number of fields in site.json (' + n + '), each field named',
+    prop.includes('Adopted as the plan by Claude on 2026-11-12. The [call for an advisory board](../advisory.md) stays as it is, and there is no adviser yet.')
+    && prop.includes('この案は、2026-11-12 に Claude が計画として採りました。サイトの募集の頁はそのままで、委員はまだいません。')
+    && prop.includes('\n## What was decided\n\nDecided by Claude on 2026-11-12:\n') && !/Decided on 2026-11-12|Adopted as the plan on/.test(prop) && !/案（|Draft, not decided/.test(prop) && prop.includes('One adviser for each field that Sophaxis lists, ' + W[n] + ' in all while `site.json` names ' + W[n] + ' fields.')
     && prop.includes('`site.json` が ' + n + ' 分野を挙げているあいだは、合わせて ' + n + ' 人です。')
     && Object.values(S110.categories).every((c) => fieldsLine.toLowerCase().includes(c.toLowerCase())) && fieldsLine.split(/, | and /).length === n);
   const adv = read(path.join(ROOT, 'advisory.md'));
@@ -4507,8 +4509,9 @@ console.log('\n110. Outside assessments and the proposal for the advisory board 
     ['Any position held now at a repository, publisher, journal, preprint server or index.', 'Any payment received in the last three years from one of them.', 'Any listed work of their own, or of a close collaborator, on Sophaxis.'].every((x) => adv.includes(x))
     && ['1. Positions held now at a repository, publisher, journal, preprint server or index:', '2. Payments received, in the period the call names, from one of them:', '3. Works of my own, or of a close collaborator, listed on Sophaxis:', '4. Anything else that a reader might reasonably see as a conflict, or "none":'].every((x) => prop.includes(x)));
   const ops = read(path.join(ROOT, 'docs', 'operations.md'));
-  ok('the operator’s routine says how to check PhilPapers by hand, since it refuses automated requests (item 462)',
-    ops.includes('PhilPapers answers automated requests with 403, so the state of the request to its Open Access Gateway, asked on 2026-11-03, is checked by hand.') && read(path.join(ROOT, 'README.md')).includes('On the same day the operator asked PhilPapers to add Sophaxis to its Open Access Gateway'));
+  ok('the operator’s routine says that the state of the PhilPapers request cannot be read from here, since PhilPapers refuses automated requests, and that no new request has been made (item 462)',
+    ops.includes('PhilPapers answers automated requests with 403, so the state of the request to its Open Access Gateway, asked on 2026-11-03, cannot be read from here.')
+    && ops.includes('No new request has been made, and none is made before a work by another researcher is listed.') && !ops.includes('is checked by hand') && read(path.join(ROOT, 'README.md')).includes('On the same day the operator asked PhilPapers to add Sophaxis to its Open Access Gateway'));
 }
 
 /* ------------------------------------------------------------ 111 */

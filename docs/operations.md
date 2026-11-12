@@ -33,12 +33,12 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 
 - Add the entries to `CHANGELOG.md` and change the version and the date in `CITATION.cff`.
 - In `.zenodo.json`, take out the `isDerivedFrom` DOIs of works removed since the last release. A removal does not change the file, so that nothing delays it.
-- The operator creates the GitHub Release and the Zenodo version by hand. Record the DOI that Zenodo gives, and no other.
+- The GitHub Release and the Zenodo version are made from the operator's accounts. A session that writes this repository cannot make them: a pushed tag is refused with 403. Only the DOI that Zenodo gives is recorded, and no other.
 
 ## Registries
 
-- The application to OpenDOAR is drafted in [opendoar.md](./opendoar.md), for the day it takes new submissions again. Read its first section before sending it.
-- PhilPapers answers automated requests with 403, so the state of the request to its Open Access Gateway, asked on 2026-11-03, is checked by hand. Sign in to PhilPapers in a browser. Read the reply to the request, which came by email, and look for Sophaxis in the list of archives of the Open Access Gateway. Record what was found, with the day, in the README beside the registry table. The reply named the operator's own works as the reason, so a new request makes sense once a work by another researcher is listed.
+- The application to OpenDOAR is drafted in [opendoar.md](./opendoar.md), for the day it takes new submissions again. Its first section says what holds before it is sent. It has not been sent.
+- PhilPapers answers automated requests with 403, so the state of the request to its Open Access Gateway, asked on 2026-11-03, cannot be read from here. Its reply came by email, and the README records it beside the registry table. The reply named the operator's own works as the reason. No new request has been made, and none is made before a work by another researcher is listed.
 - Points raised by outside assessments, and what was done about each, are in [outside-assessments.md](./outside-assessments.md).
 
 ## If Vercel cannot serve the site
@@ -58,7 +58,7 @@ Follow "Continuity" in the Terms of Use. These are the steps, and where each par
 
 1. Announce the closure on the top page, in the news and in the README at least 30 days ahead, unless the operator cannot act. Set `"submissionsPaused": true` in `site.json` the same day, so that new submissions stop first.
 2. Decide every open submission, withdrawal and published-version issue, or close it with the reason. Nothing is listed after the closure is announced.
-3. Make the last release: add the entries to `CHANGELOG.md`, change the version and the date in `CITATION.cff`, and let the operator create the GitHub Release and the Zenodo version by hand. The archive at Zenodo, under the DOI of every version in `site.json`, then holds `data/papers/` (the records), `data/pdf/` (the PDF copies, each under the licence of its work) and `site/` (every record page, as built).
+3. Make the last release: add the entries to `CHANGELOG.md` and change the version and the date in `CITATION.cff`. The GitHub Release and the Zenodo version are made from the operator's accounts. The archive at Zenodo, under the DOI of every version in `site.json`, then holds `data/papers/` (the records), `data/pdf/` (the PDF copies, each under the licence of its work) and `site/` (every record page, as built).
 4. Keep the site served from `site/` for as long as Vercel's free service allows. If it cannot be served there, follow "If Vercel cannot serve the site" above, or leave the repository as the place to read the records.
 5. Keep the repository public, with every record. Do not archive it on GitHub: an archived repository takes no issues, and removal requests come in issues. Turn off every scheduled workflow except `removal.yml`.
 6. Removal requests and requests about personal data are still answered after the closure, in issues or by email, as the Takedown Policy says. A record removed after the last release is also asked to be removed from that Zenodo version, whose files the operator cannot change.
@@ -71,9 +71,9 @@ Follow "Continuity" in the Terms of Use, under "If the operator cannot work". Th
 
 ### Before it happens
 
-- [ ] Name an account successor for the operator's GitHub account (GitHub settings, Account, Successor settings), and record here whether one is named. Without one, nobody else can manage the repository if the operator can never act again.
-- [ ] Give a person the operator trusts this page and the link to the repository, so that someone knows what the steps are.
-- [ ] Make a release when the records have changed, so that the Zenodo archive holds them close to how they stand.
+- An account successor is named in the operator's GitHub settings (Account, Successor settings). Those settings cannot be reached from here, and no successor is recorded here as named. Without one, nobody else can manage the repository if the operator can never act again.
+- This page is public with the repository, so anyone who takes over can read the steps.
+- The Zenodo archive holds the records as they stood at the last release, 1.0.0 of 2026-11-07. A release cannot be made from here, and the operator stopped the release of 1.1.0 on 2026-11-12.
 
 ### When a pause begins
 

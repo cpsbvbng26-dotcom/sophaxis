@@ -15,11 +15,11 @@
     "missing": "the article or item was not found",
     "title": "law title",
     "texts": "The changed and unrecorded texts:",
-    "summaryOdd": "{n} of {all} need a look.",
+    "summaryOdd": "{n} of {all} differ from the recorded values.",
     "summarySame": "All {all} match the recorded values.",
     "issueTitle": "Weekly check: a statute or a term that the legal review relies on may have changed",
     "issueHead": "The weekly check on {when} found these different from the recorded values.",
-    "issueFoot": "Read the changed text, check docs/legal-review.md and the policies, then record the new value in verification/statutes.json.",
+    "issueFoot": "The values in verification/statutes.json are not recorded again yet. They are recorded after the changed text is read and docs/legal-review.md and the policies are checked.",
     "closed": "The check on {when} found everything as recorded. Closing.",
     "prTitle": "Record the changed texts the legal review relies on",
     "seedTitle": "Record the texts the legal review relies on",
@@ -27,8 +27,8 @@
     "noOld": "No earlier text is recorded, so the whole text is shown.",
     "seedOnly": "No value changed.",
     "seeded": "{n} texts that match their recorded values are stored for the first time, so that a later change can be shown as a difference.",
-    "prFoot": "Read each change, then check docs/legal-review.md and the policies. To record it, add the label `record`: a workflow merges this into main, runs the checks on the result first, and merges only if they pass. The merge button would leave the merge without the disclosure line that the checks across the repositories count, so it is not used. If a policy must change too, change it first in a pull request of its own.",
-    "openPr": "This repository does not let workflows open pull requests, so the proposal is here. The branch `statutes/record` holds it: open the pull request with this link, then add the label `record` to it. {link}"
+    "prFoot": "Only the repository owner can add the label `record`, which records this: a workflow merges this into main, runs the checks on the result first, and merges only if they pass. The merge button would leave the merge without the disclosure line that the checks across the repositories count, so it is not used. If a policy must change too, it changes first in a pull request of its own.",
+    "openPr": "This repository does not let workflows open pull requests, so the proposal is here. The branch `statutes/record` holds it, and the link below opens the pull request. Only the repository owner can add the label `record` that records it. {link}"
   },
   "statutes": [
     {
