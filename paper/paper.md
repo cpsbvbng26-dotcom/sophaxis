@@ -95,5 +95,6 @@ The repository history records the use in each commit.
 # Acknowledgements
 
 Sophaxis depends on the open metadata of DataCite, Crossref, JaLC and ORCID, and on the repositories that hold the works it lists.
+Sophaxis is not a project of ZEN University, and the university does not endorse it.
 
 # References
