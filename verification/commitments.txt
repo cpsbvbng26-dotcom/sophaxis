@@ -134,6 +134,11 @@ From 2026-11-22, Sophaxis does not offer its service to people in China either.
 From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
+From 2026-11-26, the rule also covers two more kinds of duty that Sophaxis cannot meet.
+One is a duty to give people there, before their personal data is collected, a postal address or a telephone number of the operator, which Sophaxis does not publish.
+The other is a duty to process the personal data of a minor there only with a parent's consent that the service confirms, or not at all.
+From the same day, a place is also not offered when its data protection law, found by a survey of the laws of 195 countries made on 2026-11-12, could not be read at its source, through its official address and one other route; the table gives such a place as "No, not fetched".
+The services outside Japan may not be required to protect personal data in a way that, overall, provides safeguards comparable to those of the law of the place where an author lives, such as New Zealand's Privacy Act 2020.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
 A provisionally registered work is not on the site.
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
