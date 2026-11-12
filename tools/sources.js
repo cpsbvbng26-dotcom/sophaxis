@@ -286,6 +286,14 @@ const PAGES = {
   'figshare-api-docs': PAGE(IA('https://docs.figshare.com/'), { keep: 60000 }),
   'researchsquare-terms': PAGE(IA('https://www.researchsquare.com/legal/terms-of-service')),
   'researchsquare-robots': PAGE(IA('https://www.researchsquare.com/robots.txt')),
+  // Probe (2026-11-13, eleventh pass): the Internet Archive's terms of use, and its robots.txt files. Not to be merged.
+  'probe-ia-terms-now': PAGE('https://archive.org/about/terms', { scripts: true, links: /./, keep: 60000 }),
+  'probe-ia-terms-2025': PAGE('https://web.archive.org/web/2025id_/https://archive.org/about/terms.php', { links: /terms|polic|robot|api|wayback/i }),
+  'probe-ia-terms-2024': PAGE('https://web.archive.org/web/2024id_/https://archive.org/about/terms.php', { links: /terms|polic|robot|api|wayback/i }),
+  'probe-ia-terms-2023': PAGE('https://web.archive.org/web/2023id_/https://archive.org/about/terms.php', { links: /terms|polic|robot|api|wayback/i }),
+  'probe-wayback-robots': PAGE('https://web.archive.org/robots.txt', { markdown: true }),
+  'probe-archive-robots': PAGE('https://archive.org/robots.txt', { markdown: true }),
+  'probe-ia-help': PAGE('https://help.archive.org/', { links: /terms|polic|robot|api|wayback|use/i }),
   'conatus-submissions': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions', { alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions' }),
 };
 
