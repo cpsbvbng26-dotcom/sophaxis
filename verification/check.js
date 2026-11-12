@@ -399,8 +399,10 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const ssrn = I.comment(r, { record: Object.assign({}, d.record, { versions: [{ version: 1, doi: '10.2139/ssrn.7537983', date: '2026-10-01' }] }), problems: [] });
   ok('where the repository does not let Sophaxis fetch the PDF, the comment asks the authors to attach it, within the limit',
     ssrn.includes('attach the deposited PDF to this issue') && ssrn.includes('at most 20 MB')
-    && ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1'].every((x) => I.pdfNote(x).includes('attach the deposited PDF'))
-    && I.pdfNote('10.6084/m9.figshare.34419198.v2') === '' && !c.includes('attach the deposited PDF'));
+    && ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.6084/m9.figshare.34419198.v2', '10.21203/rs.3.rs-39251/v1'].every((x) => I.pdfNote(x).includes('attach the deposited PDF'))
+    && I.pdfNote('10.5281/zenodo.1234567') === '' && I.pdfNote('10.48550/arXiv.2508.15126') === ''
+    && c.includes('attach the deposited PDF')
+    && !I.comment(r, { record: Object.assign({}, d.record, { versions: [{ version: 1, doi: '10.5281/zenodo.1234567', date: '2026-10-01' }] }), problems: [] }).includes('attach the deposited PDF'));
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
@@ -458,10 +460,11 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   ok('a missing copy stops the build', build(fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-')), path.join(tampered, 'papers')).problems.some((x) => x.includes('is missing')));
 
   const F = require('../tools/fetch_pdf.js');
-  ok('Figshare: the version DOI leads to that version in its API', F.sourceFor('10.6084/m9.figshare.34419198.v2', 2).api === 'https://api.figshare.com/v2/articles/34419198/versions/2');
+  /* 2026-11-12 (the fifth pass): Figshare's and Research Square's terms forbid scripts; no copy is attempted from them (check 119). */
+  ok('Figshare: no copy is attempted, since its terms forbid scripts', F.sourceFor('10.6084/m9.figshare.34419198.v2', 2) === null);
   ok('Zenodo: the DOI leads to its record in the API', F.sourceFor('10.5281/zenodo.1234567', 1).api === 'https://zenodo.org/api/records/1234567');
   ok('arXiv: one DOI, the version number picks the file', F.sourceFor('10.48550/arXiv.2508.15126', 2).url === 'https://export.arxiv.org/pdf/2508.15126v2');
-  ok('Research Square: the version DOI leads to its PDF', F.sourceFor('10.21203/rs.3.rs-39251/v1', 1).url === 'https://www.researchsquare.com/article/rs-39251/v1.pdf');
+  ok('Research Square: no copy is attempted, since its terms forbid robots', F.sourceFor('10.21203/rs.3.rs-39251/v1', 1) === null);
   ok('no copy is attempted from OSF Preprints, Preprints.org or SSRN, or from a Figshare DOI without a version', ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.2139/ssrn.7537983', '10.6084/m9.figshare.34419198'].every((d) => F.sourceFor(d, 1) === null));
   ok('an author-provided PDF is taken only from an attachment of a GitHub issue', F.attachmentOk('https://github.com/user-attachments/files/12345678/paper.pdf')
     && !F.attachmentOk('https://example.org/paper.pdf') && !F.attachmentOk('https://github.com.evil.example/user-attachments/files/1/p.pdf') && !F.attachmentOk('http://github.com/user-attachments/files/1/p.pdf'));
@@ -980,9 +983,44 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('runs no analytics'));
   ok('the page for repositories lists every repository of site.json with its DOI prefix', Object.entries(site.repositories).every(([p, n]) => rep.includes('<li>' + n.replace(/&/g, '&amp;') + ': DOIs beginning <code>' + p + '</code></li>')));
   const ua = 'Sophaxis (' + site.repo + ')';
-  ok('every request Sophaxis makes names itself with the User-Agent the page for repositories gives',
-    rep.includes('<code>' + ua + '</code>') && read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes("const UA = '" + ua + "';")
-    && read(path.join(ROOT, 'tools', 'intake.js')).includes("const UA = 'Sophaxis (' + SITE.repo + ')';") && read(path.join(ROOT, 'tools', 'watch.js')).includes("'User-Agent': 'Sophaxis (' + SITE.repo + ')'"));
+  /* 2026-11-12 (the fifth pass): the check read three tools only, and six others sent their own User-Agents. Every file under
+   * tools/ is now read: tools/ua.js holds the only fetch(), the only curl and the only User-Agent, and every other file sends
+   * through it. Comments are dropped before the reading; a string that names a User-Agent, curl or wget fails, as does a
+   * module that makes requests of its own (http, https, http2, net, tls, dgram, undici). */
+  const uaFiles = () => Object.fromEntries(fs.readdirSync(path.join(ROOT, 'tools')).filter((f) => f.endsWith('.js')).sort().map((f) => [f, read(path.join(ROOT, 'tools', f))]));
+  const uaProblems = (files, agent) => {
+    const bad = [];
+    const code = (t) => t.replace(/\/\*[\s\S]*?\*\//g, ' ').split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n');
+    const u = code(files['ua.js'] || '');
+    if (!u.includes("const UA = 'Sophaxis (' + SITE.repo + ')';") || agent !== ua) bad.push('ua.js: the User-Agent');
+    if ((u.match(/(^|[^.\w])fetch\s*\(/g) || []).length !== 1 || !u.includes("headers['User-Agent'] = UA;\n  return fetch(url, { ...opts, headers });")) bad.push('ua.js: request()');
+    if ((u.match(/'curl'/g) || []).length !== 1 || !u.includes("return execFileSync('curl', ['-A', UA].concat(args), opts);")) bad.push('ua.js: curl()');
+    for (const [f, t] of Object.entries(files)) {
+      if (f === 'ua.js') continue;
+      const c = code(t);
+      if (/(^|[^.\w])fetch\s*\(/.test(c)) bad.push(f + ': fetch()');
+      if (/user-agent/i.test(c)) bad.push(f + ': a User-Agent of its own');
+      if (/['"`](curl|wget)['"`]/.test(c)) bad.push(f + ': curl or wget');
+      if (/require\(\s*['"`](node:)?(https?|http2|net|tls|dgram|undici)['"`]\s*\)|\bXMLHttpRequest\b|\bWebSocket\b/.test(c)) bad.push(f + ': a module that sends requests');
+      if (/(^|[^.\w])request\s*\(|\bua\.request\s*\(|curlUA\s*\(/.test(c) && !/require\('\.\/ua\.js'\)/.test(c)) bad.push(f + ': request() not from ua.js');
+    }
+    return bad;
+  };
+  const uaAgent = JSON.parse(read(path.join(ROOT, 'verification', 'statutes.json'))).agent;
+  const up = uaProblems(uaFiles(), uaAgent);
+  ok('every request Sophaxis makes names itself with the User-Agent the page for repositories gives: each of the ' + Object.keys(uaFiles()).length + ' files under tools/ sends only through tools/ua.js, which sets it',
+    rep.includes('<code>' + ua + '</code>') && up.length === 0, up.join(', '));
+  const uaF = uaFiles();
+  ok('the check fails on a fetch(), a User-Agent, a curl or an https request in any file under tools/, on a new file that does any of these, and on another User-Agent in tools/ua.js',
+    uaProblems({ ...uaF, 'live.js': uaF['live.js'].replace("await request(x.url, { redirect: 'manual'", "await fetch(x.url, { redirect: 'manual'") }, uaAgent).length > 0
+    && uaProblems({ ...uaF, 'record.js': uaF['record.js'].replace("Accept: 'application/vnd.github+json', 'Content-Type'", "Accept: 'application/vnd.github+json', 'User-Agent': 'record', 'Content-Type'") }, uaAgent).length > 0
+    && uaProblems({ ...uaF, 'sources.js': uaF['sources.js'].replace("try { out = curlUA(args, { encoding: 'utf8' }); }", "try { out = execFileSync('curl', args, { encoding: 'utf8' }); }") }, uaAgent).length > 0
+    && uaProblems({ ...uaF, 'new.js': "'use strict';\nconst https = require('https');\nhttps.get('https://example.org/');\n" }, uaAgent).length > 0
+    && uaProblems({ ...uaF, 'new.js': "'use strict';\nmodule.exports = () => fetch('https://example.org/');\n" }, uaAgent).length > 0
+    && uaProblems({ ...uaF, 'ua.js': uaF['ua.js'].replace("const UA = 'Sophaxis (' + SITE.repo + ')';", "const UA = 'Mozilla/5.0';") }, uaAgent).length > 0
+    && uaProblems({ ...uaF, 'ua.js': uaF['ua.js'].replace("headers['User-Agent'] = UA;\n", '') }, uaAgent).length > 0
+    && uaProblems(uaF, 'Mozilla/5.0').length > 0
+    && uaProblems({ ...uaF, 'watch.js': uaF['watch.js'].replace("const { request } = require('./ua.js');\n", '') }, uaAgent).length > 0);
   ok('the GitHub connection is stated in the FAQ and on the contact page', read(path.join(ROOT, 'faq.md')).includes('## Is Sophaxis connected to GitHub and ORCID?')
     && read(path.join(ROOT, 'contact.md')).includes('the automatic checks run as GitHub Actions there.'));
   ok('every page links the disclaimer and the page for repositories from its footer, and the sitemap lists both',
@@ -1770,7 +1808,7 @@ console.log('\n45. Telling search engines what changed (IndexNow)');
   ok('200 and 202 are taken as received, anything else as refused', /^received/.test(I.meaning(200)) && /^received/.test(I.meaning(202)) && /^refused/.test(I.meaning(403)) && /^refused/.test(I.meaning(422)));
   const src = read(path.join(ROOT, 'tools', 'indexnow.js'));
   ok('nothing is sent until the live sitemap is the one in the commit, and the key file is served', /live = \(await text\(SITE\.baseUrl \+ 'sitemap\.xml'\)\) === now/.test(src)
-    && src.indexOf("!== SITE.indexNowKey") < src.indexOf('await fetch(ENDPOINT'));
+    && src.indexOf("!== SITE.indexNowKey") < src.indexOf('await ua.request(ENDPOINT') && src.indexOf('await ua.request(ENDPOINT') > 0);
   const wf = read(path.join(ROOT, '.github', 'workflows', 'indexnow.yml'));
   ok('the workflow runs when a push to main changes the sitemap, or by hand, reads only, and passes its inputs through the environment',
     /on:\n  push:\n    branches: \[main\]\n    paths: \[site\/sitemap\.xml\]\n  workflow_dispatch:/.test(wf) && /permissions:\n  contents: read\n(?!  \w)/.test(wf)
@@ -4947,7 +4985,9 @@ console.log('\n115. The laws of 195 countries applied: fifteen more places from 
 const SECOND_PASS_PAGES = ['philarchive-codeofconduct', 'philarchive-submit', 'ssrn-classification-distribution', 'ssrn-nonscholarly', 'ssrn-review-process', 'ssrn-submission-guidelines', 'ssrn-research-integrity', 'roar-information', 'roar-help', 'roar-record'];
 /* The page that the fourth pass fetched (check 118). Like the pages of the third pass, it is not among the pages counted on the day of the second. */
 const THIRD_PASS_PAGES = ['joss-paper-src'];
-const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES);
+/* The pages that the fifth pass fetched (check 119): the terms of the repositories from which PDFs were copied. */
+const FIFTH_PASS_PAGES = ['zenodo-developers', 'arxiv-api-tou', 'arxiv-bulk-data', 'arxiv-export-robots', 'figshare-terms', 'figshare-api-docs', 'researchsquare-terms', 'researchsquare-robots'];
+const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES);
 console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct requests where terms forbid them, texts by others kept only in parts, and the reply time an aim from 2026-11-26');
 {
   const S = require('../tools/sources.js');
@@ -5256,6 +5296,189 @@ console.log('\n118. What a fourth, read-only pass of 2026-11-12 found: CITATION.
       audit.replace('「A list of the authors of the software and their affiliations, using the correct format」', '「A list of the authors and their affiliations」'),
       audit.replace('| 表現 | 2026-11-12 に Claude が決めました。所属はそのまま残し', '| 表現 | 所属はそのまま残し'),
       audit.replace('`CITATION.cff` を見ておらず、その行はこの点を見落としていました', '`CITATION.cff` も見ていました')].every((b) => b !== audit && auditProblems(b, pool).length > 0));
+}
+
+/* ------------------------------------------------------------ 119 */
+console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copied by script only where the repository\'s own terms allow it, PhilArchive and SSRN not credited with a check their pages do not describe, and one User-Agent');
+{
+  const S = require('../tools/sources.js');
+  const F = require('../tools/fetch_pdf.js');
+  const kept = require('../tools/citations.js').kept;
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const RAW = J('verification/sources-raw.json'), TX = J('verification/statutes-texts.json');
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  /* The repositories: Zenodo and arXiv are copied from, Figshare and Research Square are not, and neither host is asked
+   * directly by tools/sources.js. */
+  const DOIS = { zenodo: '10.5281/zenodo.1234567', arxiv: '10.48550/arXiv.2508.15126', figshare: '10.6084/m9.figshare.34419198.v2', rs: '10.21203/rs.3.rs-39251/v1' };
+  const routeProblems = (sourceFor, src, direct) => {
+    const bad = [];
+    if (!sourceFor(DOIS.zenodo, 1) || !sourceFor(DOIS.arxiv, 1) || !/^https:\/\/export\.arxiv\.org\//.test(sourceFor(DOIS.arxiv, 1).url)) bad.push('Zenodo or arXiv');
+    if (sourceFor(DOIS.figshare, 2) !== null || sourceFor(DOIS.rs, 1) !== null) bad.push('a copy from Figshare or Research Square');
+    const code = src.replace(/\/\*[\s\S]*?\*\//g, ' ').split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n');
+    if (/figshare\.com|researchsquare\.com|kind === 'figshare'/.test(code)) bad.push('an address of Figshare or Research Square in fetch_pdf.js');
+    if (!['https://figshare.com/terms', 'https://api.figshare.com/v2/articles/1', 'https://ndownloader.figshare.com/files/1', 'https://docs.figshare.com/', 'https://www.researchsquare.com/article/rs-1/v1.pdf'].every(direct)) bad.push('NO_DIRECT');
+    return bad;
+  };
+  /* The pages read: Zenodo's and arXiv's directly, Figshare's and Research Square's from the Internet Archive's copies;
+   * each kept in parts with its SHA-256, holding the words that the pages and the record quote. */
+  const WANT = {
+    'zenodo-terms': ['Use of Zenodo, both the uploading and downloading of data, denotes agreement with the following terms', 'Users of content (“Users”) shall respect applicable license conditions.'],
+    'zenodo-policies': ['Access to metadata and data files is provided over standard protocols such as HTTP and OAI-PMH.'],
+    'zenodo-developers': ['Files — download/upload of files.', 'Note we’re already sending a User-Agent header identifying our client, which we recommend doing on every request'],
+    'arxiv-bulk-data': ['We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.'],
+    'arxiv-api-tou': ['unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted', 'Direct users to arXiv.org to retrieve e-print content (PDF, source files, etc).'],
+    'arxiv-export-robots': ['User-agent: * Disallow: /'],
+    'figshare-terms': ['Reference to the "Service" in these Terms includes associated documentation and APIs', 'use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine', 'expressly authorized for you by Figshare in advance in writing'],
+    'figshare-api-docs': ['We recommend that clients use the API responsibly and do not make more than one request per second.'],
+    'researchsquare-terms': ['You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites'],
+  };
+  const pageProblems = (pages, raw) => {
+    const bad = [];
+    for (const k of FIFTH_PASS_PAGES) {
+      const p = pages[k], r = raw.pages[k];
+      if (!p) { bad.push('not listed: ' + k); continue; }
+      const ia = p.url.startsWith('https://web.archive.org/web/2026id_/');
+      if (/^(figshare|researchsquare)-/.test(k) ? !ia : ia) bad.push('read from the wrong place: ' + k);
+      if (S.direct(p.url) || p.alt) bad.push('direct: ' + k);
+      if (!r || r.url !== p.url || r.status !== 200 || !/^[0-9a-f]{64}$/.test(r.sha256 || '') || !Array.isArray(r.spans) || 'text' in r || (r.tried && S.direct(r.tried.url))) bad.push('not kept in parts: ' + k);
+    }
+    for (const [k, ws] of Object.entries(WANT)) for (const w of ws) if (!flat(kept((raw.pages[k] || {}).spans)).includes(flat(w))) bad.push('not in ' + k + ': ' + w.slice(0, 30));
+    return bad;
+  };
+  /* The policy and the page for repositories, in both languages: the two repositories named with the words of their pages,
+   * the end of the copies from Figshare and Research Square on 2026-11-13 with the words of their terms; no page names the
+   * four as repositories that let a script fetch; the change announced on the top page and in the feed, ahead of its day. */
+  const SAY = {
+    'policies/copyright.md': ['It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.', 'Until 2026-11-12, Sophaxis also copied files from Figshare and Research Square by script. From 2026-11-13, it does not, because their terms forbid it.', 'From 2026-11-13, this includes Figshare and Research Square.'],
+    'policies/copyright.ja.md': ['スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。Zenodo と arXiv です。', '2026-11-12 までは、Figshare と Research Square からもスクリプトで写していました。2026-11-13 からは写しません。'],
+    'repositories.md': ['the repository\'s own pages let a script fetch it (Zenodo and arXiv)', 'from 2026-11-13, it does not, because their terms forbid robots and scripts'],
+    'repositories.ja.md': ['預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）', '2026-11-13 からは取りません。どちらの規約もロボットとスクリプトを禁じており'],
+  };
+  const OLD = /Zenodo, Figshare, arXiv and Research Square|Zenodo、Figshare、arXiv、Research Square|offers it to scripts/;
+  const NOTICE = 'From 2026-11-13, ahead of the changes below because going on would act against the terms of the two repositories, Sophaxis no longer copies PDFs by script from Figshare or Research Square, whose terms forbid robots and scripts; the authors of a work there can attach the deposited PDF to the submission issue instead.';
+  const shown = () => {
+    const out = {};
+    const walk = (d, rel = '') => { for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['.git', 'node_modules', 'docs', 'pdf', 'cards', 'fixtures', 'papers', 'verification', 'tools', 'templates', 'paper'].includes(e.name)) continue;
+      const f = path.join(d, e.name), r = rel + e.name;
+      if (e.isDirectory()) walk(f, r + '/'); else if (/\.(md|html|txt|json)$/.test(e.name) && !/^(CHANGELOG\.md|package(-lock)?\.json)$/.test(e.name) && !/(^|\/)abs\//.test(r)) out[r] = read(f);
+    } };
+    walk(ROOT);
+    return out;
+  };
+  const SHOWN = shown();
+  const policyProblems = (files, quotePool, notice, changes) => {
+    const bad = [];
+    for (const [f, xs] of Object.entries(SAY)) for (const x of xs) if (!String(files[f] || '').includes(x)) bad.push(f + ': ' + x.slice(0, 30));
+    for (const [f, t] of Object.entries(files)) if (OLD.test(t)) bad.push('the four named as letting a script fetch: ' + f);
+    /* Every quotation in the two paragraphs of the policy is a part kept from the pages read. */
+    for (const f of ['policies/copyright.md', 'policies/copyright.ja.md']) {
+      const par = (String(files[f] || '').split('\n\n').find((x) => x.includes('Zenodo') && x.includes('Research Square')) || '');
+      const qs = [...par.matchAll(/"([^"\n]{6,})"|「([^「」\n]{6,})」/g)].map((m) => m[1] || m[2]);
+      if (qs.length < 6) bad.push(f + ': too few quotations');
+      for (const q of qs) if (!quotePool.includes(flat(q))) bad.push(f + ': not in a kept page: ' + q.slice(0, 30));
+    }
+    if (!String(notice.text || '').includes(NOTICE)) bad.push('the notice on the top page');
+    const e = changes.find((c) => c.policies.includes('copyright') && c.from === '2026-11-13' && /Figshare and Research Square/.test(c.text));
+    if (!e || !(e.date < e.from)) bad.push('the entry in the feed');
+    return bad;
+  };
+  /* Rule 5 of the record's wording: no sentence or table row on the site credits PhilArchive or SSRN with an editor, staff,
+   * moderation, a review or a check within 50 characters after the name, outside the words quoted from them, unless it says
+   * that their pages do not say who checks. Pages, data and the generated site and llms*.txt are read; the history is not. */
+  const units = (t, html) => {
+    if (html) t = t.replace(/<tr\b[^>]*>/g, '\n| ').replace(/<\/(p|li|h\d|div|td|th)>/g, '$& ').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    return t.split('\n').flatMap((l) => (l.trim().startsWith('|') ? [l] : l.split(/(?<=[.。!?])\s+|(?<=。)/)));
+  };
+  const WORD = /\b(?:editors?|editorial|staff|moderat\w*|screen(?:s|ed|ing)?|vett\w*|checks?|checked|review(?:s|ed|ing)?)\b|編集者|担当者|モデレーション|審査|確認/i;
+  const SAYS_NOT = /do(?:es)? not say|書かれていない|書かれていません|書いていません/;
+  const venueProblems = (files) => {
+    const bad = [];
+    for (const [f, t] of Object.entries(files)) for (const u of units(t, /\.html$/.test(f))) {
+      const q = u.replace(/"[^"\n]*"|“[^”\n]*”|「[^」\n]*」/g, '""');
+      for (const m of q.matchAll(/PhilArchive|SSRN/g)) {
+        const rest = q.slice(m.index + m[0].length), cut = rest.search(/Sophaxis/);
+        if (WORD.test((cut < 0 ? rest : rest.slice(0, cut)).slice(0, 50)) && !SAYS_NOT.test(q)) { bad.push(f + ': ' + u.trim().slice(0, 60)); break; }
+      }
+    }
+    return bad;
+  };
+  const VENUE = {
+    'compare.md': ['Its content policy says "All books and papers submitted should be of professional quality." Its pages do not say who checks a work, or when', 'Its help pages say "SSRN must determine if a paper meets the criteria of scholarly content." They do not say who checks a work'],
+    'compare.ja.md': ['内容の方針は「All books and papers submitted should be of professional quality.」と書く。誰がいつ確かめるかは、その頁に書かれていない', '案内の頁は「SSRN must determine if a paper meets the criteria of scholarly content.」と書く。誰が確かめるかは、その頁に書かれていない'],
+    'findable.md': ['PhilArchive\'s content policy says "All books and papers submitted should be of professional quality." Its pages do not say who checks a work.'],
+    'findable.ja.md': ['PhilArchive の内容の方針は「All books and papers submitted should be of professional quality.」と書きます。誰が作品を確かめるかは、その頁に書かれていません。'],
+  };
+  const pool = flat(Object.values(RAW.pages).map((o) => kept(o.spans)).join('') + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map(kept).join('')).join('') + Object.values(TX).join(''));
+  const venueSay = (files) => Object.entries(VENUE).flatMap(([f, xs]) => xs.filter((x) => !String(files[f] || '').includes(x)).map((x) => f + ': ' + x.slice(0, 30)))
+    .concat(['All books and papers submitted should be of professional quality.', 'SSRN must determine if a paper meets the criteria of scholarly content.'].filter((x) => !pool.includes(flat(x))).map((x) => 'not kept: ' + x));
+  /* The record. */
+  const HEAD = '\n## 2026-11-12 の続き：四度目の見落とし\n';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const auditProblems = (t, poolFlat) => {
+    const bad = [];
+    const sec = (t.split(HEAD)[1] || '').split('\n## ')[0];
+    if (!sec) return ['no section'];
+    if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length < 8) bad.push('too few rows');
+    rows.forEach((r, i) => { if (r.length !== 6 || !JUDGE.includes(r[4])) bad.push('row ' + (i + 1)); });
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    for (const r of rows.filter((x) => x[4] !== '問題なし')) if (!r[5].includes('2026-11-12 に Claude が決めました。')) bad.push('a decision without its maker: ' + r[0]);
+    const qs = rows.flatMap((r) => [...(r[3] || '').matchAll(/「([^「」]+)」/g)].map((m) => m[1]));
+    if (qs.length < 15) bad.push('too few quotations');
+    for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
+    for (const x of ['読み終えた同じ日に、実行の記録を消しました。', 'このリポジトリの比較の頁を見落としていました', '検査は三つのファイルしか読んでいませんでした', '14 日を待たず、告知の翌日からとしました。', '### 下げられずに残る危険', 'export.arxiv.org の robots.txt は、すべてのロボットにすべてを閉じています。'])
+      if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
+    if (!/取り寄せの実行は \d{8,} で、結果は枝 `sources\/\d{8}-\d{4}` にあります。/.test(sec)) bad.push('the run of the fetch');
+    return bad;
+  };
+  const src = read(path.join(ROOT, 'tools', 'fetch_pdf.js'));
+  const site = J('site.json'), changes = J('data/policy-changes.json');
+  const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const rp = routeProblems(F.sourceFor, src, S.direct), gp = pageProblems(S.PAGES, RAW), pp = policyProblems(SHOWN, pool, site.termsNotice || {}, changes);
+  const vp = venueProblems(SHOWN).concat(venueSay(SHOWN)), ap = auditProblems(audit, pool);
+  ok('PDFs are copied by script only from Zenodo and arXiv; none is attempted from Figshare or Research Square, whose terms forbid it, and tools/sources.js asks neither host directly',
+    rp.length === 0, rp.join(', '));
+  ok('the ' + FIFTH_PASS_PAGES.length + ' pages read for this are listed in tools/sources.js, Figshare\'s and Research Square\'s from the Internet Archive\'s copies, each kept in parts with its SHA-256 and holding the words quoted',
+    gp.length === 0, gp.join(', '));
+  ok('the Copyright Policy and the page for repositories, in both languages, name Zenodo and arXiv with their own words, end the copies from Figshare and Research Square on 2026-11-13 with the words of their terms, no page of the ' + Object.keys(SHOWN).length + ' read names the four as letting a script fetch, and the change is on the top page and in the feed ahead of its day',
+    pp.length === 0, pp.join(' / '));
+  ok('no sentence or table row in the pages, the data or the built site credits PhilArchive or SSRN with an editor, staff, moderation, a review or a check; the comparison and the guide quote their pages, in both languages',
+    vp.length === 0, vp.join(' / '));
+  ok('the audit records what the fifth pass found in a table of six columns, judged and counted, each decision by Claude, every quotation in the column of facts in a kept text, the run of the fetch, the logs deleted, and the risks that remain',
+    ap.length === 0, ap.join(' / '));
+  // Breaking on purpose.
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const r1 = clone(RAW); r1.pages['figshare-terms'].spans = [];
+  const r2 = clone(RAW); r2.pages['researchsquare-terms'].text = 'the whole text';
+  const r3 = clone(RAW); r3.pages['figshare-terms'].tried = { url: 'https://figshare.com/terms', status: 200 };
+  const oldSource = (doi, n) => (/figshare/.test(doi) ? { kind: 'figshare', api: 'https://api.figshare.com/v2/articles/1/versions/1' } : F.sourceFor(doi, n));
+  const sh = (f, a, b) => ({ ...SHOWN, [f]: SHOWN[f].replace(a, b) });
+  ok('the check fails on a copy from Figshare, an address of Research Square in the tool, a host taken out of NO_DIRECT, a page read directly or dropped, a quoted part lost, a whole text kept, the four named again, a lost quotation or one altered, a lost notice, the old cells of the comparison in either language or in the built site, a staff check claimed in a new page, a wrong count, an altered quotation in the record, a decision without its maker, and the deletion of the logs left out',
+    routeProblems(oldSource, src, S.direct).length > 0
+    && routeProblems(F.sourceFor, src + "\nconst RS = 'https://www.researchsquare.com/article/';\n", S.direct).length > 0
+    && routeProblems(F.sourceFor, src, (u) => !/figshare/.test(u) && S.direct(u)).length > 0
+    && pageProblems({ ...S.PAGES, 'figshare-terms': { url: 'https://figshare.com/terms' } }, RAW).length > 0
+    && pageProblems((() => { const p = { ...S.PAGES }; delete p['arxiv-bulk-data']; return p; })(), RAW).length > 0
+    && pageProblems(S.PAGES, r1).length > 0 && pageProblems(S.PAGES, r2).length > 0 && pageProblems(S.PAGES, r3).length > 0
+    && policyProblems(sh('process.md', 'every repository except Zenodo and arXiv', 'every repository except Zenodo, Figshare, arXiv and Research Square'), pool, site.termsNotice || {}, changes).length > 0
+    && policyProblems(sh('policies/copyright.md', 'From 2026-11-13, it does not, because their terms forbid it.', ''), pool, site.termsNotice || {}, changes).length > 0
+    && policyProblems(sh('policies/copyright.ja.md', 'or manual process to monitor or copy any content', 'or manual process to copy any content'), pool, site.termsNotice || {}, changes).length > 0
+    && policyProblems(SHOWN, pool, { text: '' }, changes).length > 0
+    && policyProblems(SHOWN, pool, site.termsNotice || {}, changes.map((c) => (c.from === '2026-11-13' ? { ...c, from: '2026-11-12' } : c))).length > 0
+    && venueProblems({ 'compare.md': '| PhilArchive | Yes | No | A check by its editors | Philosophy | None |\n' }).length > 0
+    && venueProblems({ 'compare.ja.md': '| SSRN | 保つ | 与える | 担当者による確認 | 主に社会科学と人文学 | なし |\n' }).length > 0
+    && venueProblems({ 'site/compare.html': '<tr><td>SSRN</td><td>Yes</td><td>A check by its staff</td></tr>' }).length > 0
+    && venueProblems({ 'faq.md': 'SSRN\'s staff review each paper before it appears.\n' }).length > 0
+    && venueProblems({ 'findable.ja.md': 'PhilArchive には独自のモデレーションがあります。\n' }).length > 0
+    && venueProblems({ 'README.md': 'Authors deposit in arXiv, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints or KC Works; Sophaxis moderates the submission.\n' }).length === 0
+    && venueSay(sh('compare.md', 'Its pages do not say who checks a work, or when', 'A check by its editors')).length > 0
+    && [audit.replace('この表の判定は、誤り 3、根拠不足 2、漏れ 1、表現 1、問題なし 1 です。', 'この表の判定は、誤り 2、根拠不足 2、漏れ 1、表現 1、問題なし 1 です。'),
+      audit.replace('「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。Research Square から', '「You also agree that you will not use any robot to copy any content from the Web Sites」と書きます。Research Square から'),
+      audit.replace('| 誤り | 2026-11-12 に Claude が決めました。Figshare と同じく', '| 誤り | Figshare と同じく'),
+      audit.replace('読み終えた同じ日に、実行の記録を消しました。', '実行の記録は残しました。')].every((b) => b !== audit && auditProblems(b, pool).length > 0));
 }
 
 console.log('\n' + '-'.repeat(60));
