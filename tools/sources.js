@@ -237,8 +237,6 @@ const PAGES = {
   'ssrn-review-process': PAGE(IA('https://www.elsevier.support/ssrn/answer/ssrn-review-process'), { links: /guideline|integrity|rejection/i }),
   'ssrn-submission-guidelines': PAGE(IA('https://www.elsevier.support/ssrn/answer/get-started')),
   'ssrn-research-integrity': PAGE(IA('https://www.elsevier.support/ssrn/answer/research-integrity'), { links: /guideline|integrity|rejection/i }),
-  'ssrn-after-submission': PAGE(IA('https://www.elsevier.support/ssrn/answer/what-happens-once-i-submit-my-paper-to-ssrn')),
-  'ssrn-getting-started': PAGE(IA('https://www.elsevier.support/ssrn/answer/what-do-i-need-to-get-started-when-i-am-ready-to-submit-my-work-to-ssrn')),
   /* ROAR's own pages on how an entry is added (its help is EPrints' user documentation), and the record of Sophaxis, so that
    * the wording of the listing is read against them. ROAR's robots.txt shuts only /cgi/; these are read directly. */
   'roar-information': PAGE('https://roar.eprints.org/information.html'),
