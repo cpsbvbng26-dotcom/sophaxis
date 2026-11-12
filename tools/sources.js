@@ -48,11 +48,13 @@ const SOURCES = {
   'saudi-pdpl': { url: 'https://sdaia.gov.sa/en/SDAIA/about/Documents/Personal%20Data%20English%20V2-23April2023-%20Reviewed-.pdf', split: /\bArticle \(?(\d+|One|Two|Three)\)? /g },
   'india-act': { url: 'https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf', split: / (\d+)\. (?=\(1\) |[A-Z])/g, max: 44, after: 'BE it enacted' },
   // The eGazette's server does not send its intermediate certificate, so the Ministry's own copy is read.
-  'india-rules': { url: 'https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf', split: / (\d+)\. (?=[A-Z])/g, max: 23 },
+  'india-rules': { url: 'https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf', split: / (\d+)\. (?=[A-Z])/g, max: 23, alt: ['https://web.archive.org/web/2026id_/https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf'] },
   'korea-pipa': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=62389', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
   'korea-decree': { url: 'https://elaw.klri.re.kr/eng_service/lawViewContent.do?hseq=66066', split: /\bArticle (\d+(?:-\d+)?) \((?=[A-Z][a-z])/g },
-  'ru-152': { pages: ['http://www.kremlin.ru/acts/bank/24154/page/1', 'http://www.kremlin.ru/acts/bank/24154/page/2', 'http://www.kremlin.ru/acts/bank/24154/page/3', 'http://www.kremlin.ru/acts/bank/24154/page/4'], split: /Статья (\d+(?:\.\d+)?)\. /g },
-  kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g },
+  // kremlin.ru writes Article 10¹ as 10<sup>1</sup>; `sup` reads it as 10.1, so that it is not taken for Article 101 and the articles after it are kept.
+  'ru-152': { pages: ['http://www.kremlin.ru/acts/bank/24154/page/1', 'http://www.kremlin.ru/acts/bank/24154/page/2', 'http://www.kremlin.ru/acts/bank/24154/page/3', 'http://www.kremlin.ru/acts/bank/24154/page/4'], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true },
+  // adilet.zan.kz answers with a page that asks for a script; the Internet Archive's copy is tried after it (`alt`).
+  kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g, alt: ['https://web.archive.org/web/2026id_/https://adilet.zan.kz/rus/docs/Z1300000094'] },
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
   'github-terms': { url: 'https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/Policies/github-terms/github-terms-of-service.md', markdown: true },
   'vercel-terms': { url: 'https://vercel.com/legal/terms', split: /(?:^| )(\d+)\. (?=[A-Z][A-Za-z ,&'’-]{2,60} )/g },
@@ -127,6 +129,75 @@ const PAGES = {
   'openai-privacy-row': PAGE('https://openai.com/policies/row-privacy-policy/'),
   'xai-privacy': PAGE('https://x.ai/legal/privacy-policy', { links: /privacy|legal|contact/i }),
   'xai-company': PAGE('https://x.ai/company'),
+
+  /* Added on 2026-11-12, to close the gaps that the legal audit of that day left (docs/legal-audit-2026-11-12.md).
+   * `follow` also fetches the links that match it (as many as `max`), each kept under the key with ">" and its place;
+   * `alt` is one official alternative tried when the page is refused or asks for a script. */
+  // The Ministry's guidance on the rules for external transmission (Article 27-12 of the Telecommunications Business Act).
+  'mic-d-syohi': PAGE('https://www.soumu.go.jp/main_sosiki/joho_tsusin/d_syohi/index.html', { lang: 'ja', links: /外部送信|プラットフォーム|プロバイダ|権利侵害|gaibu|ihoyugai|platform|provider/i }),
+  'mic-external-transmission': PAGE('https://www.soumu.go.jp/main_sosiki/joho_tsusin/d_syohi/gaibusoushin_kiritsu.html', { lang: 'ja', links: /\.pdf|faq|ＦＡＱ|Ｑ＆Ａ|Q&A|解説|gaibu/i, follow: { re: /\.pdf|faq|ＦＡＱ|Ｑ＆Ａ|Q&A|解説/i, max: 8 }, keep: 400000 }),
+  // The Ministry's pages on the Act on Information Distribution Platforms: the designation of large-scale providers.
+  'mic-ihoyugai': PAGE('https://www.soumu.go.jp/main_sosiki/joho_tsusin/d_syohi/ihoyugai.html', { lang: 'ja', links: /指定|大規模|プラットフォーム|対処法|\.pdf/i, follow: { re: /指定|大規模|基準/i, max: 6 } }),
+  // Court decisions on quotation (Article 32 of the Copyright Act), as the courts' own search gives them.
+  'courts-search': PAGE('https://www.courts.go.jp/app/hanrei_jp/search1', { lang: 'ja', links: /hanrei|search|list/i }),
+  'courts-quotation': PAGE('https://www.courts.go.jp/app/hanrei_jp/list1?page=1&sort=1&filter%5Btext1%5D=' + encodeURIComponent('引用 明瞭に区別 主従の関係'), { lang: 'ja', links: /detail|\.pdf/i, follow: { re: /detail|\.pdf/i, max: 10 }, keep: 400000 }),
+  // The Agency for Cultural Affairs on copyright, and the Consumer Affairs Agency's commentary on the Consumer Contract Act.
+  'bunka-copyright': PAGE('https://www.bunka.go.jp/seisaku/chosakuken/', { lang: 'ja', links: /テキスト|textbook|引用|seidokaisetsu|\.pdf/i }),
+  'caa-cca-annotations': PAGE('https://www.caa.go.jp/policies/policy/consumer_system/consumer_contract_act/annotations/', { lang: 'ja', links: /\.pdf|annotations/i }),
+  // The old Copyright Act (Act No. 39 of 1899) is not in the e-Gov law API, which holds laws in force; the NDL's index is tried.
+  'ndl-hourei': PAGE('https://hourei.ndl.go.jp/simple/', { lang: 'ja', links: /simple|detail|search/i }),
+  // Vercel: what it calls commercial use, for the Hobby plan.
+  'vercel-fair-use': PAGE('https://vercel.com/docs/limits/fair-use-guidelines'),
+  'vercel-hobby': PAGE('https://vercel.com/docs/plans/hobby'),
+  'vercel-plans': PAGE('https://vercel.com/docs/plans'),
+  // Zenodo and OSF. The OSF terms are kept in Markdown by the Center for Open Science on GitHub, read at a fixed commit.
+  'zenodo-terms': PAGE('https://about.zenodo.org/terms/'),
+  'zenodo-policies': PAGE('https://about.zenodo.org/policies/'),
+  'osf-terms': PAGE('https://raw.githubusercontent.com/CenterForOpenScience/cos.io/1a760e083cd53dfdc270919e8d6322ea179fa118/TERMS_OF_USE.md', { markdown: true }),
+  // The addresses that the records of provision still lack: the Internet Archive, OpenAI, xAI, Crossref, the Japan Link Center.
+  'ia-terms-archived': PAGE('https://web.archive.org/web/2026id_/https://archive.org/about/terms.php'),
+  'ia-contact-archived': PAGE('https://web.archive.org/web/2026id_/https://archive.org/about/contact.php'),
+  'openai-privacy-archived': PAGE('https://web.archive.org/web/2026id_/https://openai.com/policies/row-privacy-policy/'),
+  'openai-privacy-us-archived': PAGE('https://web.archive.org/web/2026id_/https://openai.com/policies/privacy-policy/'),
+  'xai-legal': PAGE('https://x.ai/legal', { links: /legal|privacy|terms/i }),
+  'xai-terms': PAGE('https://x.ai/legal/terms-of-service'),
+  'crossref-contact': PAGE('https://www.crossref.org/contact/'),
+  'jalc-top': PAGE('https://japanlinkcenter.org/top/', { lang: 'ja', links: /contact|toiawase|問い合わせ|about|api|規約|terms|policy|利用/i }),
+  // For the other repositories: the terms of the services they use or name, kept here so that they can be copied.
+  'ssrn-terms': PAGE('https://www.ssrn.com/index.cfm/en/terms-of-use/', { alt: 'https://web.archive.org/web/2026id_/https://www.ssrn.com/index.cfm/en/terms-of-use/' }),
+  'philarchive-home': PAGE('https://philarchive.org/', { links: /terms|help|polic|licen|copyright/i, alt: 'https://web.archive.org/web/2026id_/https://philarchive.org/' }),
+  'philpapers-terms': PAGE('https://philpapers.org/help/terms.html', { alt: 'https://web.archive.org/web/2026id_/https://philpapers.org/help/terms.html' }),
+  'orcid-terms': PAGE('https://info.orcid.org/terms-of-use/', { links: /terms|api|public|licen/i }),
+  'edx-terms': PAGE('https://www.edx.org/edx-terms-service', { alt: 'https://web.archive.org/web/2026id_/https://www.edx.org/edx-terms-service' }),
+  'joss-about': PAGE('https://joss.theoj.org/about'),
+  'joss-policies-src': PAGE('https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/docs/policies.md', { markdown: true }),
+  'joss-sidebar-src': PAGE('https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/app/views/papers/_sidebar_published.html.erb', { markdown: true }),
+  'datacite-terms': PAGE('https://datacite.org/terms-and-conditions/', { links: /terms|licen|cc0|api/i }),
+  'datacite-api-docs': PAGE('https://support.datacite.org/docs/api', { links: /terms|licen|cc0|usage/i }),
+  'crossref-rest-api': PAGE('https://www.crossref.org/documentation/retrieve-metadata/rest-api/', { links: /licen|etiquette|terms|polite|tips/i }),
+  'crossref-metadata-license': PAGE('https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-metadata-license-information/'),
+  'openalex-license-src': PAGE('https://raw.githubusercontent.com/ourresearch/openalex-docs/8cec9dba1ee17af56e5de4666f63650a02fb798b/license.md', { markdown: true }),
+  'openalex-limits-src': PAGE('https://raw.githubusercontent.com/ourresearch/openalex-docs/8cec9dba1ee17af56e5de4666f63650a02fb798b/how-to-use-the-api/rate-limits-and-authentication.md', { markdown: true }),
+  'openalex-home': PAGE('https://openalex.org/', { links: /terms|licen|privacy|about/i }),
+  'paperreview-home': PAGE('https://paperreview.ai/', { links: /terms|privacy|polic/i }),
+  'paperreview-terms': PAGE('https://paperreview.ai/terms'),
+  'conatus-about': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about', { links: /about|submission|polic|copyright|licen/i }),
+  'conatus-submissions': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions'),
+};
+
+/* Japanese laws, cabinet orders and ministerial ordinances read beyond the cited articles: found by their title in the e-Gov
+ * law list, fetched whole, and kept with the articles whose text matches `keep` (or all of them), each with its SHA-256,
+ * and with the supplementary provisions when `suppl` asks ("original": the first only; "all"). The articles are reduced as
+ * the cited ones are (egovPlain), so that the same article has the same SHA-256 in both places. Written under `laws`. */
+const LAWS = {
+  'telecom-rules': { title: '電気通信事業法施行規則', keep: /二十七条の十二|百六十四条/ },
+  'ipa-order': { title: '特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律施行令', keep: 'all' },
+  'ipa-rules': { title: '特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律施行規則', keep: 'all' },
+  'appi-order': { title: '個人情報の保護に関する法律施行令', keep: 'all' },
+  'copyright-act-suppl': { title: '著作権法', keep: null, suppl: 'all' },
+  'swords-act': { title: '銃砲刀剣類所持等取締法', keep: /刃体|刃物|刀剣/ },
+  'swords-order': { title: '銃砲刀剣類所持等取締法施行令', keep: 'all' },
+  'swords-rules': { title: '銃砲刀剣類所持等取締法施行規則', keep: /刃体|刃物|刀剣|ナイフ|あいくち/ },
 };
 
 const plain = (h) => h.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ')
@@ -154,7 +225,8 @@ function curl(url, s = {}) {
     try { text = execFileSync('pdftotext', ['-layout', tmp, '-'], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 }).replace(/\s+/g, ' ').trim(); } catch (e) { return { status: +status, error: 'pdftotext: ' + e.message }; }
     return { status: +status, final, pdf: true, text, raw: '' };
   }
-  const raw = buf.toString('utf8');
+  let raw = buf.toString('utf8');
+  if (s.sup) raw = raw.replace(/<sup>\s*(\d+)\s*<\/sup>/gi, '.$1');
   return { status: +status, final, text: s.markdown ? raw : plain(raw), raw };
 }
 
@@ -235,7 +307,23 @@ async function egov(law, articles) {
   return out;
 }
 
+/* A foreign source; when it gives none of the wanted articles, each official alternative (`alt`) is tried in turn, and every
+ * attempt is kept under `tried`. */
 async function foreign(key, s, articles) {
+  let out = await foreignOnce(key, s, articles);
+  const got = (o) => Object.keys(o.articles || {}).length > 0;
+  if (got(out) || !s.alt) return out;
+  const tried = [{ url: out.url, status: out.status, error: out.error }];
+  for (const u of s.alt) {
+    const o = await foreignOnce(key, { ...s, url: u, pages: undefined, alt: undefined }, articles);
+    tried.push({ url: u, status: o.status, error: o.error });
+    if (got(o)) { out = o; break; }
+  }
+  out.tried = tried;
+  return out;
+}
+
+async function foreignOnce(key, s, articles) {
   const out = { url: s.url || s.each || s.pages };
   if (s.each) {
     out.articles = {}; out.status = {};
@@ -293,38 +381,151 @@ async function foreign(key, s, articles) {
   return out;
 }
 
+/* The e-Gov law list (laws, cabinet orders, ministerial ordinances), read once: [{ id, name, num }]. When the list of API v1
+ * does not answer, the title is searched with API v2. */
+let LIST = null;
+function lawList() {
+  if (LIST) return LIST;
+  LIST = [];
+  const r = curl('https://laws.e-gov.go.jp/api/1/lawlists/1', { lang: 'ja' });
+  for (const m of (r.raw || '').matchAll(/<LawNameListInfo>([\s\S]*?)<\/LawNameListInfo>/g)) {
+    const g = (t) => (new RegExp('<' + t + '>([^<]*)</' + t + '>').exec(m[1]) || [])[1] || '';
+    LIST.push({ id: g('LawId'), name: g('LawName'), num: g('LawNo') });
+  }
+  LIST.status = r.status || r.error;
+  return LIST;
+}
+function resolveLaw(title) {
+  const hit = lawList().find((l) => l.name === title);
+  if (hit) return { ...hit, via: 'api/1/lawlists/1' };
+  const url = 'https://laws.e-gov.go.jp/api/2/laws?law_title=' + encodeURIComponent(title);
+  const r = curl(url, { lang: 'ja', markdown: true });
+  try {
+    const j = JSON.parse(r.raw);
+    for (const l of j.laws || []) {
+      const name = ((l.revision_info || l.current_revision_info || {}).law_title) || '';
+      if (name === title) return { id: l.law_info.law_id, name, num: l.law_info.law_num, via: url };
+    }
+  } catch (e) { /* recorded below as not found */ }
+  return null;
+}
+
+async function fetchLaw(key, L) {
+  const out = { wanted: L.title, fetched: new Date().toISOString().slice(0, 10) };
+  const hit = resolveLaw(L.title);
+  if (!hit) { out.error = 'not found in the e-Gov law list (' + (LIST && LIST.status) + ')'; return out; }
+  Object.assign(out, { id: hit.id, num: hit.num, resolved_by: hit.via });
+  out.url = 'https://laws.e-gov.go.jp/api/1/lawdata/' + hit.id;
+  const r = curl(out.url, { lang: 'ja' });
+  out.status = r.status || r.error;
+  if (r.error || r.status !== 200) return out;
+  const xml = r.raw;
+  out.title = (/<LawTitle[^>]*>([^<]*)<\/LawTitle>/.exec(xml) || [])[1] || '';
+  out.law_num = (/<LawNum>([^<]*)<\/LawNum>/.exec(xml) || [])[1] || '';
+  const main = (/<MainProvision[\s\S]*?<\/MainProvision>/.exec(xml) || [''])[0];
+  const arts = [...main.matchAll(/<Article[^>]*\sNum="([^"]+)"[^>]*>[\s\S]*?<\/Article>/g)];
+  out.headings = arts.map((m) => m[1].replace(/_/g, '-'));
+  out.articles = {}; out.sha256 = {};
+  if (L.keep) for (const m of arts) {
+    const t = egovPlain(m[0]);
+    if (L.keep === 'all' || L.keep.test(t)) { const a = m[1].replace(/_/g, '-'); out.articles[a] = t; out.sha256[a] = sha(t); }
+  }
+  // A cabinet order or ordinance without articles keeps its main provision whole.
+  if (L.keep && !arts.length && main) { const t = egovPlain(main); out.articles.main = t; out.sha256.main = sha(t); }
+  if (L.suppl) {
+    out.suppl = [];
+    for (const m of xml.matchAll(/<SupplProvision(?:\s+AmendLawNum="([^"]*)")?[^>]*>[\s\S]*?<\/SupplProvision>/g)) {
+      if (L.suppl === 'original' && m[1]) continue;
+      const t = egovPlain(m[0]);
+      out.suppl.push({ amend: m[1] || '', text: t, sha256: sha(t) });
+    }
+  }
+  return out;
+}
+
+/* One page, with its official alternative and the links it is told to follow; returns { key: record }. */
+async function fetchPage(key, p) {
+  const one = (url) => {
+    const r = curl(url, p);
+    const o = { url, status: r.status || r.error, fetched: new Date().toISOString().slice(0, 10) };
+    if (r.final && r.final !== url) o.final = r.final;
+    if (r.pdf) o.pdf = true;
+    if (r.text) { o.length = r.text.length; o.text = noMail(r.text.replace(/\s+/g, ' ')).slice(0, p.keep || 200000); o.sha256 = sha(o.text); }
+    if (p.links && r.raw) o.links = linksOf(r.raw, r.final || url, p.links).map(([t, h]) => [noMail(t), noMail(h)]);
+    return o;
+  };
+  // A refusal, or a page that only asks for a script.
+  const failed = (o) => o.status !== 200 || !o.text || o.length < 400 || /Javascript is required|enable JavaScript|Just a moment|Access Denied/i.test(o.text.slice(0, 600));
+  const out = {};
+  let o = one(p.url);
+  if (p.alt && failed(o)) {
+    const tried = { url: o.url, status: o.status, length: o.length || 0, head: (o.text || '').slice(0, 200) };
+    await sleep(1500);
+    o = one(p.alt);
+    o.tried = tried;
+  }
+  out[key] = o;
+  if (p.follow && o.links) {
+    let n = 0;
+    for (const [t, h] of o.links) {
+      if (n >= p.follow.max) break;
+      if (!p.follow.re.test(h) && !p.follow.re.test(t)) continue;
+      await sleep(1500);
+      const f = one(h);
+      delete f.links;
+      f.from = key; f.link_text = t;
+      out[key + '>' + (++n)] = f;
+    }
+  }
+  return out;
+}
+
 async function main() {
+  // SOURCES_ONLY: a comma-separated list of keys (of SOURCES, PAGES or LAWS) fetched again, or "new" for every key not yet
+  // in the file; the rest of the file is kept as it was, with its date. Without it, everything is fetched afresh.
+  const only = (process.env.SOURCES_ONLY || '').split(',').map((x) => x.trim()).filter(Boolean);
+  const prev = only.length && fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : null;
+  const out = prev || { fetched: new Date().toISOString().slice(0, 10), agent: UA, sources: {} };
+  out.pages = out.pages || {}; out.laws = out.laws || {};
+  const take = (bag, key) => !prev || only.includes(key) || (only.includes('new') && !(key in bag));
   const want = wanted();
-  const out = { fetched: new Date().toISOString().slice(0, 10), agent: UA, sources: {} };
   for (const [law, set] of Object.entries(want).sort()) {
     const L = REG.laws[law];
     if (!L) continue;
+    const key = L.egov ? 'egov:' + L.egov : L.source;
+    if (prev && !only.includes(key)) continue;
     let r;
     if (L.egov) { r = await egov(law, set); await sleep(1500); } else if (L.source && SOURCES[L.source]) {
-      if (out.sources[L.source]) { for (const a of set) out.sources[L.source].want.push(a); continue; }
+      if (out.sources[L.source] && out.sources[L.source].fetched_now) { for (const a of set) out.sources[L.source].want.push(a); continue; }
       r = await foreign(L.source, SOURCES[L.source], [...set]);
     } else continue;
     r.want = [...set];
-    out.sources[L.egov ? 'egov:' + L.egov : L.source] = r;
+    if (prev) r.fetched = new Date().toISOString().slice(0, 10);
+    r.fetched_now = true;
+    out.sources[key] = r;
     console.log(law, r.status || r.error, (r.headings || []).length, Object.keys(r.articles || {}).length + '/' + set.size);
   }
-  out.pages = {};
   for (const [key, p] of Object.entries(PAGES)) {
-    const r = curl(p.url, p);
-    const o = { url: p.url, status: r.status || r.error };
-    if (r.final && r.final !== p.url) o.final = r.final;
-    if (r.pdf) o.pdf = true;
-    if (r.text) { o.length = r.text.length; o.text = noMail(r.text.replace(/\s+/g, ' ')).slice(0, p.keep || 200000); }
-    if (p.links && r.raw) o.links = linksOf(r.raw, r.final || p.url, p.links).map(([t, h]) => [noMail(t), noMail(h)]);
-    out.pages[key] = o;
-    console.log('page', key, o.status, o.length || 0, (o.links || []).length);
+    if (!take(out.pages, key)) continue;
+    const got = await fetchPage(key, p);
+    for (const k of Object.keys(out.pages)) if (k.startsWith(key + '>')) delete out.pages[k];
+    Object.assign(out.pages, got);
+    for (const [k, o] of Object.entries(got)) console.log('page', k, o.status, o.length || 0, (o.links || []).length, o.tried ? 'alt' : '');
+    await sleep(1500);
+  }
+  for (const [key, L] of Object.entries(LAWS)) {
+    if (!take(out.laws, key)) continue;
+    const r = await fetchLaw(key, L);
+    out.laws[key] = r;
+    console.log('law', key, r.status || r.error, r.title || '', (r.headings || []).length, Object.keys(r.articles || {}).length, (r.suppl || []).length);
     await sleep(1500);
   }
   // A source shared by two laws (the GDPR and the UK GDPR are not; GitHub's terms are named two ways) is fetched once.
-  for (const r of Object.values(out.sources)) r.want = [...new Set(r.want)].sort();
+  for (const r of Object.values(out.sources)) { if (r.want) r.want = [...new Set(r.want)].sort(); delete r.fetched_now; }
+  if (!Object.keys(out.laws).length) delete out.laws;
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 }
 
-module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES };
+module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, LAWS };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });
