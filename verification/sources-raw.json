@@ -4261,6 +4261,16 @@
       "at": 21,
       "text": "Except to the extent applicable law provides otherwise, this Agreement between you and GitHub and any access to or use of the Website or the Service are governed by the federal laws of the United States of America and the laws of the State of California, without regard to conflict of law provisions. You and GitHub agree to submit to the exclusive jurisdiction and venue of the courts located in the City and County of San Francisco, California."
      }
+    ],
+    "I": [
+     {
+      "at": 6,
+      "text": "GitHub"
+     },
+     {
+      "at": 249,
+      "text": "Some Service features may be subject to additional terms specific to that feature or product as set forth in the GitHub Additional Product Terms."
+     }
     ]
    },
    "want": [
@@ -4270,12 +4280,14 @@
     "D.4",
     "D.5",
     "D.8",
+    "I",
     "J.3",
     "M.3",
     "O",
     "P",
     "S.1"
    ],
+   "fetched": "2026-11-12",
    "sha256": {
     "D.4": "9a7f1111e4e720bac2b60f62820c2c2f694b23077a5689e1c3ecc5d4976824de",
     "J.3": "14df9a5bd63cab60a4394112b357c43b75dba8f3f53a51aba1b6348cf889ea30",
@@ -4287,7 +4299,8 @@
     "D.8": "c1863f2d1c41c6f67cee899e803a770847b7e59b9e2a4dd53e988e66186aaa92",
     "O": "df70899866d079f5b564c316c2758e836ddd0b97b91dfb635ed7849523605f46",
     "P": "09a9cc1a389d3d700a9e9bf0baef2f04caedbd67c422ca7484cde6bd47290784",
-    "S.1": "652abd37ca4ca34c2eb47fbb5634bbea73407167ac0a854181709031c5ce9f25"
+    "S.1": "652abd37ca4ca34c2eb47fbb5634bbea73407167ac0a854181709031c5ce9f25",
+    "I": "91adf10aa7f6d6cca517e8f16f6f40a897b02ca246e25c388672513e3337eb5d"
    }
   },
   "india-act": {
