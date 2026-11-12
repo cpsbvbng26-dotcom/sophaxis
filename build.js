@@ -1149,10 +1149,11 @@ function issnOk(s) {
   return m[3] === (c === 10 ? 'X' : String(c));
 }
 
-/* Registries that list Sophaxis itself, after their own review (site.json listedIn). Only a listing that can be
+/* Registries that list Sophaxis itself, where the operator submitted a record and the registry put it up (site.json listedIn).
+ * No review is claimed: ROAR's own pages describe an editor's approval of a deposit, not what is checked. Only a listing that can be
  * opened goes here; an application under review stays in the README. */
 function listedIn() {
-  return (SITE.listedIn || []).map((x) => `<p class="meta">Listed in <a href="${esc(x.url)}">${esc(x.name)}</a>, ${esc(x.description)}, after its editorial review, since ${esc(x.since)} (Japan time).</p>\n`).join('');
+  return (SITE.listedIn || []).map((x) => `<p class="meta">Listed in <a href="${esc(x.url)}">${esc(x.name)}</a>, ${esc(x.description)}, since ${esc(x.since)} (Japan time).</p>\n`).join('');
 }
 /* Directories where the operator added the entry (site.json directoryEntries). Shown with the page, the sections and the day
  * the entry was last confirmed, and said plainly to be no review of Sophaxis; they are not part of listedIn. */
