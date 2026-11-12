@@ -33,7 +33,8 @@ The copies already taken from Figshare stay, under the work's own licence.
 These pages were read on 2026-11-12: Zenodo's and arXiv's directly, and Figshare's and Research Square's from the Internet Archive's copies.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
-For any other repository, including Figshare and Research Square, the authors can attach the deposited PDF to their submission issue.
+For any other repository, the authors can attach the deposited PDF to their submission issue.
+From 2026-11-13, this includes Figshare and Research Square.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
 A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB.
