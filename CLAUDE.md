@@ -45,3 +45,10 @@ node verification/check.js
 12. 論文の雛形（`templates/paper.md`・`paper.tex`）は CC0 1.0 で、`build.js` がそのまま `site/templates/` へ写す。沿革の頁（`history.md`）の年表は `data/news.json` から作る。日付を手で書き足さない。
     投稿の様式の二つ目の要旨（言語の符号と本文）は、記録に `abstract_other: { lang, text }` として入れ、そのまま見せる。訳を確かめない。
     運営者の手順は `docs/operations.md`。その「Yearly audit」の節が、毎年 10 月 30 日（始まった日）に `audit.yml` が開く issue の本文になる。
+13. **Claude は利用者に命令しない。** Claude には、利用者に作業を割り当てる権限が無い。
+    返答・報告・PR・文書のどこにも、利用者がやることの一覧を書かない。「〜してください」
+    「利用者の手作業」「利用者が確かめる」「needs the owner」の形で、利用者の仕事を作らない。
+    後から足さない。決めることは Claude が決め、決めたことと理由を記録に書く。結果の責任は Claude が負う。
+    利用者のアカウントでしか触れないもの（Zenodo・OSF・SSRN・ORCID・Wikidata・GitHub の設定など）で
+    Claude に触れられないことは、触れられないという事実だけを書き、誰にも振らない。
+    利用者が自分から手順を求めたときだけ、手順を書く。2026-11-12 に利用者が決めた。
