@@ -41,7 +41,7 @@
     { "place": "the United Kingdom", "ja": "英国", "requires": "a representative", "law": "UK GDPR Article 27", "lawJa": "英国の一般データ保護規則 第 27 条", "read": true },
     { "place": "China", "ja": "中国", "requires": "a representative", "law": "Personal Information Protection Law, Article 53", "lawJa": "個人情報保護法 第 53 条", "read": true },
     { "place": "Thailand", "ja": "タイ", "requires": "a representative", "law": "Personal Data Protection Act, section 37(5)", "lawJa": "個人データ保護法 第 37 条第 5 号", "read": true },
-    { "place": "Russia", "ja": "ロシア", "requires": "storage of personal data there", "law": "Federal Law No. 152-FZ, Article 1(1.1) (read) and Article 18(5) (reported)", "lawJa": "連邦法第 152-FZ 号 第 1 条第 1.1 項（読んだ）、第 18 条第 5 項（報告による）", "read": "in part" },
+    { "place": "Russia", "ja": "ロシア", "requires": "storage of personal data there", "law": "Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5)", "lawJa": "連邦法第 152-FZ 号 第 1 条第 1.1 項、第 18 条第 5 項", "read": true },
     { "place": "Türkiye", "ja": "トルコ", "requires": "registration through a representative there", "law": "Regulation on the Data Controllers' Registry", "lawJa": "データ管理者登録簿に関する規則", "read": false },
     { "place": "Egypt", "ja": "エジプト", "requires": "a representative and a licence", "law": "Law No. 151 of 2020 and its Executive Regulation, Article 3", "lawJa": "2020 年法律第 151 号とその施行規則 第 3 条", "read": false },
     { "place": "Peru", "ja": "ペルー", "requires": "a representative", "law": "Regulation of Law No. 29733 (Supreme Decree No. 016-2024-JUS)", "lawJa": "法律第 29733 号の施行規則（最高令第 016-2024-JUS 号）", "read": false },
