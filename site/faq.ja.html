@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>よくある質問（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の「よくある質問（日本語訳）」の頁。英語の頁の訳です。">
 <link rel="canonical" href="https://sophaxis.vercel.app/faq.ja.html">
@@ -64,6 +64,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -75,6 +79,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -95,8 +101,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>よくある質問（日本語訳）</h1>
-<p>最終更新：2026-11-11。</p>
+<p>最終更新：2026-11-12。</p>
 <p>これは英語の <a href="./faq.html">Frequently asked questions</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。</p>
+<p>この頁は、Sophaxis について問われたことに答えます。</p>
 <p>それぞれの答えは、規程を短くしたものです。食い違うところは、規程が適用されます。</p>
 <p>ここに問いを足すのは、だれかが issue かメールで実際に問うたときだけです。そのときは、答えの最初の行に、いつどこで問われたかを、「2026-12-01 に issue #300 で問われました。」や「2026-12-01 にメールで問われました。」の形で書きます。問うた人の名前は書きません。その行の無い問いは、この決まりを始めた 2026-11-11 にはすでにあったもので、規程から書いたものです。</p>
 <nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#sophaxis-とは何ですか">Sophaxis とは何ですか？</a></li><li><a href="#査読ですか">査読ですか？</a></li><li><a href="#費用はかかりますか">費用はかかりますか？</a></li><li><a href="#sophaxis-は作品に-doi-を与えますか">Sophaxis は作品に DOI を与えますか？</a></li><li><a href="#どの預け先を受け付けますか">どの預け先を受け付けますか？</a></li><li><a href="#どのライセンスを受け付けますか">どのライセンスを受け付けますか？</a></li><li><a href="#誰が投稿できますか">誰が投稿できますか？</a></li><li><a href="#なぜ-github-なのですか">なぜ GitHub なのですか？</a></li><li><a href="#sophaxis-は-github-や-orcid-とつながっていますか">Sophaxis は GitHub や ORCID とつながっていますか？</a></li><li><a href="#sophaxis-は言語モデルで作られましたか">Sophaxis は言語モデルで作られましたか？</a></li><li><a href="#言語モデルを使ってもよいですか">言語モデルを使ってもよいですか？</a></li><li><a href="#モデレーションにはどれくらいかかりますか">モデレーションにはどれくらいかかりますか？</a></li><li><a href="#載っている作品に責任を負うのは誰ですか">載っている作品に責任を負うのは誰ですか？</a></li><li><a href="#新しい版はどう加えますか">新しい版はどう加えますか？</a></li><li><a href="#作品が学術誌で出版されました投稿できますか">作品が学術誌で出版されました。投稿できますか？</a></li><li><a href="#載っているプレプリントが出版されましたどうすればよいですか">載っているプレプリントが出版されました。どうすればよいですか？</a></li><li><a href="#sophaxis-は-pdf-の写しを置きますか">Sophaxis は PDF の写しを置きますか？</a></li><li><a href="#作品は-google-scholar-に出ますか">作品は Google Scholar に出ますか？</a></li><li><a href="#投稿の前に何を確かめればよいですか">投稿の前に何を確かめればよいですか？</a></li><li><a href="#sophaxis-は読者を追跡しますか">Sophaxis は読者を追跡しますか？</a></li><li><a href="#メールでの配信はありますか">メールでの配信はありますか？</a></li><li><a href="#ここに載っている作品はどう引用しますか">ここに載っている作品はどう引用しますか？</a></li><li><a href="#記録の誤りはどう報告しますか">記録の誤りはどう報告しますか？</a></li><li><a href="#作品を撤回できますか">作品を撤回できますか？</a></li><li><a href="#素材の削除はどう求めますか">素材の削除はどう求めますか？</a></li><li><a href="#sophaxis-が閉じたら記録はどうなりますか">Sophaxis が閉じたら、記録はどうなりますか？</a></li><li><a href="#誰が-sophaxis-を運営していて運営者にはどう連絡しますか">誰が Sophaxis を運営していて、運営者にはどう連絡しますか？</a></li></ul></nav>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Takuya Nemoto | Sophaxis</title>
 <meta name="description" content="Preprints by Takuya Nemoto listed on Sophaxis.">
 <link rel="canonical" href="https://sophaxis.vercel.app/author/0009-0000-1406-0547.html">
@@ -62,6 +62,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -73,6 +77,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -97,27 +103,27 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p class="meta">Preprints listed on Sophaxis with this ORCID iD among the authors.</p>
 <p><a href="./0009-0000-1406-0547.bib">BibTeX of all these records</a>, one file to import into an ORCID record or a reference manager.</p>
 <ol class="list"><li>
-<p class="meta"><span class="id">2026.0001</span> · Mathematics · 2026-10-13<span class="flag">operator’s own submission</span></p>
+<p class="meta"><span class="id">2026.0001</span> · Mathematics · 2026-10-13<span class="flag own">operator’s own submission</span></p>
 <a href="../abs/2026.0001.html"><b>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</b></a>
 <p class="meta">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0002</span> · Philosophy of Science · 2026-09-30<span class="flag">operator’s own submission</span></p>
+<p class="meta"><span class="id">2026.0002</span> · Philosophy of Science · 2026-09-30<span class="flag own">operator’s own submission</span></p>
 <a href="../abs/2026.0002.html"><b>Machine-mediated Rediscovery: A Case Study in Novelty, Priority, and Self-correction</b></a>
 <p class="meta">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0005</span> · Philosophy · 2026-08-23<span class="flag">operator’s own submission</span></p>
+<p class="meta"><span class="id">2026.0005</span> · Philosophy · 2026-08-23<span class="flag own">operator’s own submission</span></p>
 <a href="../abs/2026.0005.html"><b>Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy</b></a>
 <p class="meta">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0004</span> · Philosophy · 2026-08-22<span class="flag">operator’s own submission</span></p>
+<p class="meta"><span class="id">2026.0004</span> · Philosophy · 2026-08-22<span class="flag own">operator’s own submission</span></p>
 <a href="../abs/2026.0004.html"><b>The Nobility and Exemplarity of the Celibate Individual: An Antinatalist and Ascetic Reconsideration of Autonomy and Quality of Life</b></a>
 <p class="meta">Takuya Nemoto</p>
 </li>
 <li>
-<p class="meta"><span class="id">2026.0003</span> · Philosophy · 2026-08-22<span class="flag">operator’s own submission</span></p>
+<p class="meta"><span class="id">2026.0003</span> · Philosophy · 2026-08-22<span class="flag own">operator’s own submission</span></p>
 <a href="../abs/2026.0003.html"><b>Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence</b></a>
 <p class="meta">Takuya Nemoto</p>
 </li></ol>

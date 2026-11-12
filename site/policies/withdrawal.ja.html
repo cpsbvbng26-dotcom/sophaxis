@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>撤回の規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の撤回の規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/withdrawal.ja.html">
@@ -65,6 +65,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -76,6 +80,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -96,8 +102,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>撤回の規程（日本語訳）</h1>
-<p>最終更新：2026-11-11。</p>
+<p>最終更新：2026-11-12。</p>
 <p>これは英語の <a href="./withdrawal.html">Withdrawal Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
+<p>撤回の規程は、著者が載った作品を撤回する手続きと、撤回のあとに残るものを定めます。</p>
 <nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#撤回できる人">撤回できる人</a></li><li><a href="#求め方">求め方</a></li><li><a href="#求めを受けた後">求めを受けた後</a></li><li><a href="#著者の求めによる削除">著者の求めによる削除</a></li><li><a href="#著者の名前">著者の名前</a></li><li><a href="#預け先にある作品">預け先にある作品</a></li><li><a href="#出版に伴う撤回">出版に伴う撤回</a></li><li><a href="#撤回と削除">撤回と削除</a></li></ul></nav>
 <h2 id="撤回できる人">撤回できる人</h2>
 <p>載っている作品の著者なら、誰でも一人で撤回できます。作品は、すべての著者が同意しているあいだだけ載せるので、一人の著者がその同意を取り下げると掲載は終わります。</p>

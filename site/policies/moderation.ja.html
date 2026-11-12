@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>モデレーションの規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis のモデレーションの規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/moderation.ja.html">
@@ -65,6 +65,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -76,6 +80,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -96,8 +102,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>モデレーションの規程（日本語訳）</h1>
-<p>最終更新：2026-11-11。</p>
+<p>最終更新：2026-11-12。</p>
 <p>これは英語の <a href="./moderation.html">Moderation Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
+<p>モデレーションの規程は、作品を載せる前にモデレーションが何を確かめ、何を確かめないかを定めます。</p>
 <p>この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。</p>
 <nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#モデレーションは査読ではない">モデレーションは査読ではない</a></li><li><a href="#モデレーションが確かめること">モデレーションが確かめること</a></li><li><a href="#モデレーションが確かめないこと">モデレーションが確かめないこと</a></li><li><a href="#仮登録">仮登録</a></li><li><a href="#判断">判断</a></li><li><a href="#モデレーター">モデレーター</a></li><li><a href="#利益相反">利益相反</a></li><li><a href="#研究の公正">研究の公正</a></li><li><a href="#掲載の後">掲載の後</a></li><li><a href="#基準の変更">基準の変更</a></li></ul></nav>
 <h2 id="モデレーションは査読ではない">モデレーションは査読ではない</h2>
@@ -119,7 +126,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <ul><li>ORCID iD を持ち、Sophaxis の分野のどれかで、出版されたか載っている作品がある。</li><li>公開の issue で、この規程に沿って無報酬でモデレーションを行うことに同意する。</li><li>諮問委員と同じように利益相反を申告し、連絡先の頁がその申告を示す。</li><li>自分の作品が、下の「研究の公正」によって断られたり外されたりしたことがない。</li></ul>
 <p>モデレーターは、自分の作品や、近い共同研究者の作品について判断しません。ほかのモデレーターか運営者が判断します。二人のモデレーターの意見が分かれたときは、運営者が決め、issue にそう書きます。モデレーターはいつでも降りられ、運営者はモデレーターの役を終えることができます。どちらも、日付とともに連絡先の頁に記します。2026-11-10 から、運営者は、諮問委員会を作るため研究者も募っています。諮問委員会は規程について助言し、どの投稿についても判断しません。募集は<a href="../advisory.ja.html">諮問委員の募集</a>にあります。</p>
 <h2 id="利益相反">利益相反</h2>
-<p>運営者の投稿も同じ決まりでモデレーションを受け、記録の頁にその旨の印を付けます。自動の確認は、例外なくそれにも掛かります。運営者が唯一のモデレーターであるあいだは、運営者が自分の投稿についても判断します。記録の頁の印がそれを示します。ほかのモデレーターが加われば、どのモデレーターも、自分の投稿や近い共同研究者の投稿については判断しません。運営者の投稿は優先しません。届いた順にモデレーションを行い、その記録をサイトのほかの記録と違う場所に置くこともしません。2026-11-09 から、運営者の投稿は、投稿の issue を開いてから七日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。記録は issue を開いた日を持ち、それより早く載せようとすると、サイトの生成が止まります。<a href="../stats.html">統計</a>の頁と <code>llms.txt</code> が、表示している記録のうち何件が運営者の投稿かを示します。</p>
+<p>運営者の投稿も同じ決まりでモデレーションを受け、記録の頁にその旨の印を付けます。自動の確認は、例外なくそれにも掛かります。運営者が唯一のモデレーターであるあいだは、運営者が自分の投稿についても判断します。記録の頁の印がそれを示します。ほかのモデレーターが加われば、どのモデレーターも、自分の投稿や近い共同研究者の投稿については判断しません。運営者の投稿は優先しません。届いた順にモデレーションを行い、その記録をサイトのほかの記録と違う場所に置くこともしません。2026-11-09 から、運営者の投稿は、投稿の issue を開いてから 7 日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。記録は issue を開いた日を持ち、それより早く載せようとすると、サイトの生成が止まります。<a href="../stats.html">統計</a>の頁と <code>llms.txt</code> が、表示している記録のうち何件が運営者の投稿かを示します。</p>
 <h2 id="研究の公正">研究の公正</h2>
 <p>剽窃とは、他人の言葉・考え・証明・結果を、出どころを言わずに自分のものとして示すことです。著者自身の前の作品を、引かずに新しいものとして示すことも同じに扱います。一つの作品を、別の DOI で二度 Sophaxis に投稿することも同じです。はっきり引用を示したうえで、他人の作品を引き、言い換え、その上に積み上げることは剽窃ではありません。Sophaxis は、剽窃を見つけるソフトウェアを使いません。モデレーターが投稿に剽窃を見つけたときは、「剽窃」を挙げて投稿を断ります。</p>
 <p>研究の不正には、剽窃、捏造（データ・結果・出典を作り上げること）、改ざん（作品がそれらを偽って示すように変えること）、様式の中の真実でない申告が含まれます。掲載された記録への懸念は、だれでも、その頁からつながる訂正の issue で公開して述べることができます。公開すべきでない懸念や、人を名指す懸念は、運営者の <a href="https://orcid.org/0009-0000-1406-0547">ORCID の記録</a>にあるメールアドレスへメールで送ります。運営者は、出版倫理委員会（COPE）が学術誌に勧める手順に、一人でできる限り従って懸念を扱います。Sophaxis は COPE の会員ではありません。</p>
@@ -131,7 +138,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <p>毎週、自動の確認が、載っているすべての DOI がまだ解決し、記録にあるライセンスをまだ持っていることを確かめます。同じ確認が、表示している記録の DOI ごとに、Crossref が記録している通知を読みます。撤回・取り下げ・削除・懸念表明・訂正で、Retraction Watch からのものも含みます。運営者は、新しい通知を記録に加えます。記録の頁がそれをリンク付きで示し、運営者は掲載を見直します。問題は公開の issue で報告し、運営者が調べます。</p>
 <h2 id="基準の変更">基準の変更</h2>
 <p>掲載の基準は、<a href="./submission.ja.html">投稿の規程</a>とこの規程にある基準です。だれが投稿できるか、何を投稿できるか、モデレーションが何を確かめるか、受け付けないものの例です。基準は、ほかの規程と同じく、<a href="./terms.ja.html">利用規約</a>の「変更と終了」が認める形でだけ変わります。</p>
-<ul><li>基準は、少なくとも年に一度、Sophaxis が始まった日である十月 30 日の年ごとの点検で見直します。Sophaxis が頼る法令・預け先・サービスが変わったときにも見直します。</li><li>載せられるものを狭める変更と、著者に義務を加える変更は、効力を持つ少なくとも 14 日前に、変わる中身とその開始日を添えて、トップの頁で告知します。</li><li>載せられるものを広げるだけの変更と、言い回しを明らかにする変更は、規程が示す日に効力を持ちます。その日は、公表した日より前にはなりません。</li><li>どの変更も、公表または告知した日に、<a href="./changes.xml">規程の変更の配信</a>に載せます。著者がすることを変えるときは、<a href="../news.html">お知らせ</a>にも載せます。</li><li>変更の理由は、公開のリポジトリの、その変更のプルリクエストに書きます。</li></ul>
+<ul><li>基準は、少なくとも年に一度、Sophaxis が始まった日である 10 月 30 日の年ごとの点検で見直します。Sophaxis が頼る法令・預け先・サービスが変わったときにも見直します。</li><li>載せられるものを狭める変更と、著者に義務を加える変更は、効力を持つ少なくとも 14 日前に、変わる中身とその開始日を添えて、トップの頁で告知します。</li><li>載せられるものを広げるだけの変更と、言い回しを明らかにする変更は、規程が示す日に効力を持ちます。その日は、公表した日より前にはなりません。</li><li>どの変更も、公表または告知した日に、<a href="./changes.xml">規程の変更の配信</a>に載せます。著者がすることを変えるときは、<a href="../news.html">お知らせ</a>にも載せます。</li><li>変更の理由は、公開のリポジトリの、その変更のプルリクエストに書きます。</li></ul>
 <p class="meta"><a href="../policy.html">All policies</a></p>
 </main>
 <footer><div class="wrap" lang="en">

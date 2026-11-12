@@ -8,9 +8,11 @@ Source: https://sophaxis.vercel.app/policies/terms.html
 
 # Terms of Use
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [利用規約（日本語訳）](https://sophaxis.vercel.app/policies/terms.ja.html). It is a translation; where the two differ, the English text applies.
+
+These Terms of Use are the rules for everyone who reads Sophaxis or submits to it.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -132,6 +134,17 @@ Sophaxis is run by one person, and is planned so that it can stop without loss.
 - Anyone may copy the repository and continue the work elsewhere under its licences: CC BY 4.0 for the text and MIT for the code. Each listed work keeps its own licence.
 - The DOIs stay with the repositories that issued them, whatever happens to Sophaxis.
 
+### If the operator cannot work
+
+What happens while the operator cannot work on Sophaxis at all, step by step.
+
+1. Who is told: the top page and the submit page say that new submissions are paused, as above, and a news item says the same. Each open submission issue is told that its decision waits. Where the operator can foresee the pause, this is done before it begins.
+2. What is paused: no submission is accepted or declined, and the operator adds, changes or withdraws no record. A submission issue opened during the pause still gets the automatic check, and waits for a decision. The only change to a record made without the operator is the one in step 4.
+3. What stays online: every record page, the PDF copies, the listing, the search, the feeds, the records as JSON and the OAI-PMH interface. The weekly check of the DOIs keeps running by itself, and so do the weekly saves to the Internet Archive, where every author of the work consents to them.
+4. What still works without the operator: a removal request that reports exposure of personal data still takes the record's title, authors, abstract and PDF copy offline at once, as the Takedown Policy says. The decision on it waits for the operator.
+5. Who could take over: the records are public in the repository and archived at Zenodo with each release, so a successor, or a custodian who keeps the records readable, needs nothing that only the operator holds. A hand-over of Sophaxis itself is announced first, as below. Anyone may also copy the records and continue elsewhere under the licences below.
+6. When the operator returns, the notice goes, the waiting issues are decided in the order they came, and a news item says that submissions are open again.
+
 ## Law
 
 These terms are governed by the laws of Japan.
@@ -210,9 +223,11 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 
 # Submission Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [投稿の規程（日本語訳）](https://sophaxis.vercel.app/policies/submission.ja.html). It is a translation; where the two differ, the English text applies.
+
+The Submission Policy says who can submit what to Sophaxis, and what the submitter confirms.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -571,9 +586,11 @@ Source: https://sophaxis.vercel.app/policies/moderation.html
 
 # Moderation Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [モデレーションの規程（日本語訳）](https://sophaxis.vercel.app/policies/moderation.ja.html). It is a translation; where the two differ, the English text applies.
+
+The Moderation Policy says what moderation checks before a work is listed, and what it does not check.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -728,9 +745,11 @@ Source: https://sophaxis.vercel.app/policies/copyright.html
 
 # Copyright Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [著作権の規程（日本語訳）](https://sophaxis.vercel.app/policies/copyright.ja.html). It is a translation; where the two differ, the English text applies.
+
+The Copyright Policy says that authors keep their copyright, and what Sophaxis copies and why.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -826,9 +845,11 @@ Source: https://sophaxis.vercel.app/policies/licences.html
 
 # Licence Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [ライセンスの規程（日本語訳）](https://sophaxis.vercel.app/policies/licences.ja.html). It is a translation; where the two differ, the English text applies.
+
+The Licence Policy names the licences under which a work can be listed, and the licences of this site.
 
 ## Accepted licences
 
@@ -871,9 +892,11 @@ Source: https://sophaxis.vercel.app/policies/privacy.html
 
 # Privacy Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
+
+The Privacy Policy says what personal data the site and its checks read, and what becomes public.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -1148,9 +1171,11 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.html
 
 # Withdrawal Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [撤回の規程（日本語訳）](https://sophaxis.vercel.app/policies/withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
+
+The Withdrawal Policy says how an author withdraws a listed work, and what stays.
 
 ## Who can withdraw
 
@@ -1220,9 +1245,11 @@ Source: https://sophaxis.vercel.app/policies/takedown.html
 
 # Takedown Policy
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html). It is a translation; where the two differ, the English text applies.
+
+The Takedown Policy says how to ask for a record to be removed, and what happens then.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -1547,9 +1574,11 @@ Source: https://sophaxis.vercel.app/faq.html
 
 # Frequently asked questions
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [よくある質問（日本語訳）](https://sophaxis.vercel.app/faq.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page answers questions that people have asked about Sophaxis.
 
 Each answer is a short form of a policy. Where they differ, the policy applies.
 
@@ -1716,7 +1745,7 @@ Source: https://sophaxis.vercel.app/process.html
 
 # From submission to listing
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [投稿から掲載まで（日本語訳）](https://sophaxis.vercel.app/process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1824,7 +1853,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [自動で動く手順（日本語訳）](https://sophaxis.vercel.app/automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1964,9 +1993,11 @@ Source: https://sophaxis.vercel.app/transparency.html
 
 # Transparency: a self-assessment
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [透明性の自己評価（日本語訳）](https://sophaxis.vercel.app/transparency.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page is the operator's own assessment of Sophaxis against the Principles of Transparency and Best Practice in Scholarly Publishing.
 
 COPE, DOAJ, OASPA and WAME publish the [Principles of Transparency and Best Practice in Scholarly Publishing](https://doaj.org/apply/transparency/).
 This page holds Sophaxis against version 5.0 of October 2026, read at DOAJ on 2026-11-09, heading by heading.
@@ -2195,9 +2226,11 @@ Source: https://sophaxis.vercel.app/contact.html
 
 # Operator and contact
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [運営者と連絡先（日本語訳）](https://sophaxis.vercel.app/contact.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page says who operates Sophaxis and how to reach the operator.
 
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-11, and are not translated.
@@ -2288,9 +2321,11 @@ Source: https://sophaxis.vercel.app/advisory.html
 
 # Advisory board: a call
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [諮問委員の募集（日本語訳）](https://sophaxis.vercel.app/advisory.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page is the call for an advisory board of Sophaxis: what an adviser does, who can join and how.
 
 ## Why
 
@@ -2342,9 +2377,11 @@ Source: https://sophaxis.vercel.app/brand.html
 
 # Name, logo and badge
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](https://sophaxis.vercel.app/brand.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page sets out the name, the logo, the colours and the badge of Sophaxis.
 
 ## Name
 
@@ -2391,9 +2428,11 @@ Source: https://sophaxis.vercel.app/press.html
 
 # For anyone introducing Sophaxis
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [紹介する人のために（日本語訳）](https://sophaxis.vercel.app/press.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page is for anyone introducing Sophaxis: a sentence, a paragraph, the facts, and what it is not.
 
 ## In a few words
 
@@ -2448,9 +2487,11 @@ Source: https://sophaxis.vercel.app/call.html
 
 # A call to researchers
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [研究者の方へ（日本語訳）](https://sophaxis.vercel.app/call.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page is a call to researchers in philosophy and mathematics to submit their preprints to Sophaxis.
 
 ## Who it is for
 
@@ -2506,9 +2547,11 @@ Source: https://sophaxis.vercel.app/findable.html
 
 # Making a listed work easy to find
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [載った作品を見つけてもらうために（日本語訳）](https://sophaxis.vercel.app/findable.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page is for the authors of a listed work, and says how they can help readers find it.
 
 ## What Sophaxis does by itself
 
@@ -2534,9 +2577,11 @@ Source: https://sophaxis.vercel.app/accessibility.html
 
 # Accessibility
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [アクセシビリティ（日本語訳）](https://sophaxis.vercel.app/accessibility.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page is the accessibility statement of Sophaxis: what it aims for, what is checked, what is known not to work, and how to report a barrier.
 
 ## The aim
 
@@ -2570,7 +2615,7 @@ Before any change is published, two sets of checks run on every page of the site
 - The PDF copies are the authors' files, kept unmodified; Sophaxis cannot add structure to them, and some may not work with a screen reader.
 - Titles and abstracts come from the DOI metadata as plain text, so mathematical notation may read poorly.
 - The search page needs JavaScript, the only script on the site; without it, the lists by field and by month, and the feeds, give the same records.
-- The records, the lists and the statistics are in English; the policies and the prose pages are also in Japanese.
+- The lists and the statistics are in English. The policies, the prose pages and the record pages are also in Japanese; on a record page in Japanese, the title, the abstract and the other texts of the authors stay in their language.
 
 ## Reporting a barrier
 
@@ -2590,9 +2635,11 @@ Source: https://sophaxis.vercel.app/compare.html
 
 # How Sophaxis differs from other places
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [ほかの場との違い（日本語訳）](https://sophaxis.vercel.app/compare.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page explains how Sophaxis differs from arXiv, PhilArchive, SSRN and Zenodo.
 
 ## In short
 
@@ -2625,9 +2672,11 @@ Source: https://sophaxis.vercel.app/glossary.html
 
 # Glossary
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [用語集（日本語訳）](https://sophaxis.vercel.app/glossary.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page defines the words used on Sophaxis.
 
 ## Terms
 
@@ -2928,9 +2977,11 @@ Source: https://sophaxis.vercel.app/policies/terms.ja.html
 
 # 利用規約（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。
+
+この利用規約は、Sophaxis を読む人と、Sophaxis に投稿する人のすべてに掛かる決まりです。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
 日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
@@ -3052,6 +3103,17 @@ Sophaxis は一人で運営しており、失うものなく止められるよ�
 - 誰でも、リポジトリを写し、そのライセンスのもとで、ほかの場所で作業を続けられます。文は CC BY 4.0、コードは MIT です。載っている作品は、それぞれ自身のライセンスを保ちます。
 - DOI は、Sophaxis に何があっても、それを発行した預け先に残ります。
 
+### 運営者が作業できないとき
+
+運営者が Sophaxis の作業をまったくできないあいだに起こることを、順に記します。
+
+1. 知らせる先：上のとおり、トップの頁と投稿の頁で新しい投稿の受け付けを休止していることを示し、お知らせでも同じことを伝えます。開いている投稿の issue には、それぞれ判断を待つことを伝えます。運営者が休止を前もって見込めるときは、休止の前にこれらを済ませます。
+2. 止まるもの：投稿を受理することも断ることもせず、運営者は記録を足すことも、変えることも、撤回することもしません。休止のあいだに開かれた投稿の issue にも自動の確認は付き、判断を待ちます。運営者なしに記録が変わるのは、4 番の場合だけです。
+3. 公開のまま残るもの：すべての記録の頁、PDF の写し、一覧、検索、フィード、JSON の記録、OAI-PMH の入口です。DOI の週ごとの確認はひとりでに続きます。Internet Archive への週ごとの保存も、作品の著者全員が同意したものについて続きます。
+4. 運営者がいなくても働くもの：個人情報の露出を報告する削除の申し立ては、削除の規程のとおり、記録の題・著者・要旨・PDF の写しをすぐに下げます。申し立ての判断は、運営者を待ちます。
+5. 引き継げる人：記録はリポジトリで公開しており、版を出すたびに Zenodo に保存しています。そのため、後を継ぐ人や、記録を読める状態に保つ預かり手は、運営者だけが持つものを要しません。Sophaxis そのものの引き継ぎは、下のとおり先に告知します。誰でも、下のライセンスのもとで記録を写し、ほかの場所で続けることもできます。
+6. 運営者が戻ったら、休止の知らせを外し、待っていた issue を届いた順に判断し、投稿の受け付けを再び始めたことをお知らせで伝えます。
+
 ## 準拠法
 
 この規約は、日本法に準拠します。
@@ -3130,9 +3192,11 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+投稿の規程は、だれが何を Sophaxis に投稿できるかと、投稿する人が何を確かめるかを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
 日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
@@ -3210,15 +3274,15 @@ Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作�
 [ライセンスの規程](https://sophaxis.vercel.app/policies/licences.ja.html)が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。
 学術論文の通常の形で、題・要旨・参考文献を備えている必要があります。
 
-2026-11-23 から、新しい作品は、その最初の DOI が登録されてから六か月以上たっているときに限り載せます。
-六か月は、投稿の issue を開いた日まで、日本時間で数えます。
+2026-11-23 から、新しい作品は、その最初の DOI が登録されてから 6 か月以上たっているときに限り載せます。
+6 か月は、投稿の issue を開いた日まで、日本時間で数えます。
 月の同じ日に満了し、短い月ではその月の末日に満了します。
 最初の DOI とは、投稿された DOI と、そのメタデータが作品の前の版またはすべての版の DOI として挙げる DOI のうち、最も早く登録されたものです。
 Zenodo ではすべての版の DOI、Figshare では最初の版の DOI がこれに当たります。
 登録の日は、DataCite または Crossref が記録している日です。
 メタデータにその日がないとき（Jxiv など）は、運営者が手で確かめます。
-issue の自動の確認が、これらの日を読み、六か月を数えます。
-早すぎる投稿は載せません。六か月がたったあとに、新しい issue を開き直せます。
+issue の自動の確認が、これらの日を読み、6 か月を数えます。
+早すぎる投稿は載せません。6 か月がたったあとに、新しい issue を開き直せます。
 すでに Sophaxis に載っている作品の新しい版と、2026-11-23 より前に開かれた投稿には掛かりません。
 
 2026-11-23 から、Crossref が撤回・一部撤回・取り下げ・削除を記録している作品は載せません。
@@ -3491,9 +3555,11 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 # モデレーションの規程（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+モデレーションの規程は、作品を載せる前にモデレーションが何を確かめ、何を確かめないかを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
 日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
@@ -3590,7 +3656,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 運営者が唯一のモデレーターであるあいだは、運営者が自分の投稿についても判断します。記録の頁の印がそれを示します。
 ほかのモデレーターが加われば、どのモデレーターも、自分の投稿や近い共同研究者の投稿については判断しません。
 運営者の投稿は優先しません。届いた順にモデレーションを行い、その記録をサイトのほかの記録と違う場所に置くこともしません。
-2026-11-09 から、運営者の投稿は、投稿の issue を開いてから七日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。
+2026-11-09 から、運営者の投稿は、投稿の issue を開いてから 7 日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。
 記録は issue を開いた日を持ち、それより早く載せようとすると、サイトの生成が止まります。
 [統計](https://sophaxis.vercel.app/stats.html)の頁と `llms.txt` が、表示している記録のうち何件が運営者の投稿かを示します。
 
@@ -3636,7 +3702,7 @@ Sophaxis は、剽窃を見つけるソフトウェアを使いません。
 掲載の基準は、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)とこの規程にある基準です。だれが投稿できるか、何を投稿できるか、モデレーションが何を確かめるか、受け付けないものの例です。
 基準は、ほかの規程と同じく、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「変更と終了」が認める形でだけ変わります。
 
-- 基準は、少なくとも年に一度、Sophaxis が始まった日である十月 30 日の年ごとの点検で見直します。Sophaxis が頼る法令・預け先・サービスが変わったときにも見直します。
+- 基準は、少なくとも年に一度、Sophaxis が始まった日である 10 月 30 日の年ごとの点検で見直します。Sophaxis が頼る法令・預け先・サービスが変わったときにも見直します。
 - 載せられるものを狭める変更と、著者に義務を加える変更は、効力を持つ少なくとも 14 日前に、変わる中身とその開始日を添えて、トップの頁で告知します。
 - 載せられるものを広げるだけの変更と、言い回しを明らかにする変更は、規程が示す日に効力を持ちます。その日は、公表した日より前にはなりません。
 - どの変更も、公表または告知した日に、[規程の変更の配信](https://sophaxis.vercel.app/policies/changes.xml)に載せます。著者がすることを変えるときは、[お知らせ](https://sophaxis.vercel.app/news.html)にも載せます。
@@ -3648,9 +3714,11 @@ Source: https://sophaxis.vercel.app/policies/copyright.ja.html
 
 # 著作権の規程（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+著作権の規程は、著作権が著者に残ることと、Sophaxis が何をなぜ写すかを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
 日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
@@ -3746,9 +3814,11 @@ Source: https://sophaxis.vercel.app/policies/licences.ja.html
 
 # ライセンスの規程（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Licence Policy](https://sophaxis.vercel.app/policies/licences.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+ライセンスの規程は、作品を載せられるライセンスと、このサイトのライセンスを定めます。
 
 ## 受け付けるライセンス
 
@@ -3791,9 +3861,11 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 
 # 削除の規程（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+削除の規程は、記録の削除を求める手続きと、そのあとに起こることを定めます。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
 日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
@@ -3892,11 +3964,11 @@ Sophaxis はここでも最も厳しい場合を想定し、その規模のサ�
 - 当局・欧州委員会・Sophaxis を使う人のための連絡窓口（第 11 条・第 12 条）は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスで、英語か日本語で受け付けます。Sophaxis は欧州連合に法定代理人を置いておらず（第 13 条）、運営者は、[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html)が示す理由により、置かないと決めています。当局はそのアドレスで運営者に直接連絡します。上の考えが誤っていれば、欧州連合に法定代理人がいないので、Sophaxis は第 13 条を満たしていません。
 - 違法なコンテンツの通知（第 16 条）は、削除の issue かメールで行います。メールでの通知には、送る人の名とメールアドレスを書きます。削除の issue は公開されるので、これらを書きません。代わりに、issue を開いた GitHub のアカウントがその役を果たします。メールでの通知には、書いたことが正確で完全だと誠実に信じていることも書きます。削除の issue には受領の知らせが自動で付きます。メールでの通知には、運営者が遅滞なくメールで受領を知らせます。判断は issue かメールで知らせます。
 - 判断の理由（第 17 条）は、運営者が、すべての判断について削除の issue かメールで示します。著者には、求めが届いた時点でその issue を知らせています。理由には、自動の処理が働いたかどうかを書きます。働くのは露出した個人データをただちに公開から外す処理だけで、それは求めが挙げた問題の種類に応じて働きます。素材を違法と判断したときは、理由に、拠った法令と、素材がそれに反するわけを書きます。措置の及ぶ範囲と期間も書きます。削除は、サイトがどこで読まれても及び、恒久のものです。メールでの求めを認めたときは、個人データを含めずに書いた理由を、空にする前の著者の投稿の issue に書きます。GitHub がそれを、その issue を見ている著者に送ります。理由が無いと、削除の手順は動きません。著者は、運営者にメールで理由を求めることもできます。
-- 判断への異議（第 20 条）は、通知を送った人と著者が、六か月以内に、削除の issue での返答かメールで申し立てることができます。費用はかかりません。運営者が見直して答え、見直しを自動の処理に任せることはありません。
+- 判断への異議（第 20 条）は、通知を送った人と著者が、6 か月以内に、削除の issue での返答かメールで申し立てることができます。費用はかかりません。運営者が見直して答え、見直しを自動の処理に任せることはありません。
 - 裁判所に訴えることも、第 21 条で認証された裁判外の紛争解決機関を使うこともできます。
 - 重大な犯罪の疑い（第 18 条）：人の生命や安全を脅かす犯罪の疑いを生じさせる情報を知ったときは、運営者は、関係する加盟国の法執行機関か司法機関に、持っている関係の情報をすべて添えて速やかに知らせます。その加盟国を十分な確かさで特定できないときは、欧州刑事警察機構（Europol）に知らせます。
 - 載せてよいものを制限する決まりは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)とこれらの規程に、平易な英語で書いてあります（第 14 条）。
-- 月ごとの平均の利用者数（第 24 条第 3 項）：Sophaxis は、アクセス解析も読者を見分ける識別子も持たず、この数を出すために持ち始めることもしません。デジタルサービス調整官か欧州委員会から求められたときは、直近六か月の月ごとに、Sophaxis に投稿・通知・連絡をした欧州連合の人の数を issue とメールから数えて示し、読者は数えていないことを添えます。
+- 月ごとの平均の利用者数（第 24 条第 3 項）：Sophaxis は、アクセス解析も読者を見分ける識別子も持たず、この数を出すために持ち始めることもしません。デジタルサービス調整官か欧州委員会から求められたときは、直近 6 か月の月ごとに、Sophaxis に投稿・通知・連絡をした欧州連合の人の数を issue とメールから数えて示し、読者は数えていないことを添えます。
 - [統計](https://sophaxis.vercel.app/stats.html)は削除した記録を数え、公開の削除の求めのすべてへリンクしています。
 
 <!-- text: DSA 11; DSA 12; DSA 13; DSA 16; DSA 17; DSA 20; DSA 21; DSA 18; DSA 14; DSA 24 -->
@@ -3925,9 +3997,11 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.ja.html
 
 # 撤回の規程（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
+
+撤回の規程は、著者が載った作品を撤回する手続きと、撤回のあとに残るものを定めます。
 
 ## 撤回できる人
 
@@ -4115,7 +4189,7 @@ Source: https://sophaxis.vercel.app/first.ja.html
 
 # はじめてのプレプリント（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Your first preprint](https://sophaxis.vercel.app/first.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4158,7 +4232,7 @@ Sophaxis が載せるのは、次のリポジトリのどれかに DOI 付きで
 - 作品を自分の ORCID の記録に足します（[載った作品を見つけてもらうために](https://sophaxis.vercel.app/findable.ja.html)）。
 - Sophaxis に載せるには、[確かめること](https://sophaxis.vercel.app/checklist.ja.html)を読み、[投稿から掲載まで](https://sophaxis.vercel.app/process.ja.html)の手順に沿います。
 - [研究者の方へ](https://sophaxis.vercel.app/call.ja.html)に、載った作品が得るものと、運営者のほかの人による初めての投稿で起きることを書いています。
-- [投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が定めるとおり、2026-11-23 からは、最初の DOI から六か月たった作品だけを載せます。はじめての投稿には、紹介する研究者が要ります。
+- [投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が定めるとおり、2026-11-23 からは、最初の DOI から 6 か月たった作品だけを載せます。はじめての投稿には、紹介する研究者が要ります。
 
 ---
 
@@ -4261,9 +4335,11 @@ Source: https://sophaxis.vercel.app/checklist.ja.html
 
 # 投稿の前に：確かめること（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Before you submit: a checklist](https://sophaxis.vercel.app/checklist.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis へ投稿する前に確かめることの一覧です。
 
 この一覧は、新しい決まりを足しません。[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)と[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)が求めていることを集め、一度で欠けのない投稿になるようにしたものです。一覧と規程が食い違うときは、規程が適用されます。
 プレプリントを公開したことのない人は、先に[はじめてのプレプリント](https://sophaxis.vercel.app/first.ja.html)を読みます。
@@ -4321,9 +4397,11 @@ Source: https://sophaxis.vercel.app/history.ja.html
 
 # 沿革と名前（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [History and name](https://sophaxis.vercel.app/history.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis の始まりと名前の由来、その後のできごとを記します。
 
 ## 名前
 
@@ -4347,9 +4425,11 @@ Source: https://sophaxis.vercel.app/leaflet.ja.html
 
 # 一枚でわかる Sophaxis（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Sophaxis on one page](https://sophaxis.vercel.app/leaflet.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis を一枚にまとめたものです。何であるか、何でないか、どう投稿するかを書いています。
 
 この頁は、紙一枚に収まるように作っています。印刷して渡すときに使えます。
 
@@ -4421,7 +4501,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 # 投稿から掲載まで（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [From submission to listing](https://sophaxis.vercel.app/process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4432,7 +4512,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 要るものは四つです。投稿に要るほかのことは、[確かめること](https://sophaxis.vercel.app/checklist.ja.html)の頁にまとめてあります。
 
-1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから六か月以上たっている必要があります。
+1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けたプレプリント。[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が定めるとおり、2026-11-23 から、作品の最初の DOI が登録されてから 6 か月以上たっている必要があります。
 2. 預けたものに付けた CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。DOI のメタデータに出ている必要があります。
 3. [ORCID](https://orcid.org) iD。登録は無料です。
 4. [GitHub](https://github.com) のアカウント。登録は無料です。
@@ -4529,9 +4609,11 @@ Source: https://sophaxis.vercel.app/faq.ja.html
 
 # よくある質問（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Frequently asked questions](https://sophaxis.vercel.app/faq.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis について問われたことに答えます。
 
 それぞれの答えは、規程を短くしたものです。食い違うところは、規程が適用されます。
 
@@ -4699,7 +4781,7 @@ Source: https://sophaxis.vercel.app/automation.ja.html
 
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [What runs by itself](https://sophaxis.vercel.app/automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4721,7 +4803,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 書くもの：それぞれの確認の結果と記録の下書きを載せたコメント。`verified` か `unverified` のラベル。
 - 様式の必須のボックスすべてに印があるかを確かめます。ボックスは、リポジトリにある二つの投稿の様式から読みます。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html#投稿者が確認すること)にも同じボックスを並べてあります。
 - 2026-11-21 から、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
-- 2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから六か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。
+- 2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから 6 か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。
 - 2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
 - 2026-11-23 から、載っている作品の著者にまだなっていない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
@@ -4762,7 +4844,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 ## 一日に一度、日本時間の 09:17
 
 - 読むもの：開いている削除の求めと、確かめられた撤回。
-- 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる二日前から書きます。
+- 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる 2 日前から書きます。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
 ## 月に一度、1 日の日本時間 09:17
@@ -4770,17 +4852,17 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 読むもの：記録と `data/news.json`。
 - 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
 - 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
-- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の一日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
+- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の 1 日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
 - コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) と [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
 
-## 年に一度、一月 2 日の日本時間 12:23
+## 年に一度、1 月 2 日の日本時間 12:23
 
 - 読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。
 - 書くもの：前の年の数を載せた issue。開かれた投稿、受理した投稿、断った投稿、まだ決めていない投稿の数です。断るときに挙げた理由、投稿から判断までの日数、求め、撤回した記録と削除した記録も数えます。
 - 運営者に残すこと：数を `data/reports/` に記録すること。[年ごとの判断](https://sophaxis.vercel.app/decisions.html)の頁は、そこから組み立てます。
 - コード：[tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) と [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js)。[report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml) が動かします。
 
-## 年に一度、十月 30 日の日本時間 09:17
+## 年に一度、10 月 30 日の日本時間 09:17
 
 - 読むもの：運営者の手順を書いた [docs/operations.md](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md) の「Yearly audit」の節。
 - 書くもの：Sophaxis が始まった日に、その一覧に印を付けるための issue。同じ題の issue があれば開きません。
@@ -4799,7 +4881,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - Vercel は、リポジトリの `site/` にあるファイルを配信します。そのファイルは、`build.js` が記録から組み立てます。OAI-PMH の口は、同じ記録を読む Vercel 上の小さな関数です。
 - 新しい頁が公開されると、IndexNow を受け付ける検索エンジンに、新しい記録の頁と PDF の写し、変わったもの、消えたものを知らせます。新しいものと変わったものは、著者が同意していれば Internet Archive に保存します。消えた頁は保存しません。
 - Vercel が保つ以前の版のサイトは、公開していません。
-- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。十分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
+- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。10 分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
 - コード：[tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js)。[live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml) が動かします。
 - `robots.txt` は、サイトのほかの部分と一緒に組み立てます。削除した記録と、著者が保存に同意していない記録を集めないよう、Internet Archive のクローラーに求めます。
 - コード：[tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js)。[indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) が動かし、削除の手順の push のあとにも動きます。
@@ -4840,9 +4922,11 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Operator and contact](https://sophaxis.vercel.app/contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis を運営する人と、運営者への連絡の仕方を書いています。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
 日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。
@@ -5078,9 +5162,11 @@ Source: https://sophaxis.vercel.app/transparency.ja.html
 
 # 透明性の自己評価（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Transparency: a self-assessment](https://sophaxis.vercel.app/transparency.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、学術出版における透明性と最善の実務の原則に照らした、Sophaxis の運営者自身による評価です。
 
 COPE、DOAJ、OASPA、WAME は、[Principles of Transparency and Best Practice in Scholarly Publishing](https://doaj.org/apply/transparency/)（学術出版における透明性と最善の実務の原則）を公表しています。
 この頁は、2026-11-09 に DOAJ で読んだ 2026 年 10 月の版 5.0 に照らして、Sophaxis を見出しごとに確かめます。
@@ -5177,7 +5263,7 @@ Sophaxis はファイルを手を加えずに置き、著作権の表示を足�
 
 - 目的と範囲：トップの頁と[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)に書いてあります。満たす。
 - 著者であることと AI の使用：投稿できるのは著者だけで、著者全員の同意が要ります。言語モデルとその他の生成モデルの使用は、その程度とともに申告しなければなりません。モデルは著者になれません。満たす。
-- 利益相反：運営者自身の投稿には印を付け、優先せず、載せる前に七日のあいだ公開で待ちます（[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)）。2026-11-24 から、著者は様式で利益相反を申告し、記録の頁がその申告を示します（[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)）。満たす。
+- 利益相反：運営者自身の投稿には印を付け、優先せず、載せる前に 7 日のあいだ公開で待ちます（[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)）。2026-11-24 から、著者は様式で利益相反を申告し、記録の頁がその申告を示します（[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)）。満たす。
 - データの共有と再現性：投稿の規程は、データとコードの所在を書くよう著者に勧め、様式は任意の欄としてそれを尋ねます。求めはせず、確かめもしません。満たす。
 - 資金と支援：2026-11-24 から、著者はすべての資金提供者を助成番号とともに挙げるか、資金がなかったことを述べ、記録の頁がその申告を示します。満たす。
 - 公開後の評価：誰でも、公開の issue で記録の誤りを報告できます。満たす。
@@ -5261,9 +5347,11 @@ Source: https://sophaxis.vercel.app/advisory.ja.html
 
 # 諮問委員の募集（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Advisory board: a call](https://sophaxis.vercel.app/advisory.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis の諮問委員の募集です。委員がすること、加われる人、加わり方を書いています。
 
 ## なぜ
 
@@ -5303,7 +5391,7 @@ Sophaxis には、編集委員会も諮問機関もありません。[透明性�
 委員は、名を挙げる前に次のことを申告し、連絡先の頁はその申告を名と並べて示します。
 
 - いま、リポジトリ・出版者・学術誌・プレプリントサーバー・索引で就いている役職。
-- この三年間に、それらのどれかから受け取った支払い。
+- この 3 年間に、それらのどれかから受け取った支払い。
 - Sophaxis に載っている、自分か近い共同研究者の作品。
 - ほかに、読者が利益相反と見てもおかしくないこと。無ければ、無いこと。
 
@@ -5315,9 +5403,11 @@ Source: https://sophaxis.vercel.app/brand.ja.html
 
 # 名前・ロゴ・バッジ（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Name, logo and badge](https://sophaxis.vercel.app/brand.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis の名前・ロゴ・色・バッジを定めます。
 
 ## 名前
 
@@ -5364,9 +5454,11 @@ Source: https://sophaxis.vercel.app/press.ja.html
 
 # 紹介する人のために（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [For anyone introducing Sophaxis](https://sophaxis.vercel.app/press.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis を紹介する人のためのものです。一文、一段落、事実、そして Sophaxis でないものを書いています。
 
 ## 一言で
 
@@ -5421,9 +5513,11 @@ Source: https://sophaxis.vercel.app/call.ja.html
 
 # 研究者の方へ（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [A call to researchers](https://sophaxis.vercel.app/call.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、哲学と数学の研究者に、プレプリントを Sophaxis へ投稿するよう呼びかけるものです。
 
 ## 誰のためか
 
@@ -5453,7 +5547,7 @@ Sophaxis は作品が正しいか、重要かを判断しません。載るこ�
 - DOI のメタデータにある CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれか。
 - 投稿に使う GitHub のアカウントへのリンクを載せた ORCID の記録。
 - 言語モデルとその他の生成モデルの使用についての申告。
-- 2026-11-23 から、作品の最初の DOI の登録から六か月がたっていること。初めての投稿では、作品を紹介する研究者一人も要ります。
+- 2026-11-23 から、作品の最初の DOI の登録から 6 か月がたっていること。初めての投稿では、作品を紹介する研究者一人も要ります。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告。
 - 投稿の規程が挙げる、Sophaxis を提供しない国と地域に、住んでいる著者も滞在している著者もいないこと。
 
@@ -5479,9 +5573,11 @@ Source: https://sophaxis.vercel.app/findable.ja.html
 
 # 載った作品を見つけてもらうために（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Making a listed work easy to find](https://sophaxis.vercel.app/findable.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、載った作品の著者のためのものです。読者が作品を見つけやすくする方法を書いています。
 
 ## Sophaxis がひとりでにすること
 
@@ -5507,9 +5603,11 @@ Source: https://sophaxis.vercel.app/accessibility.ja.html
 
 # アクセシビリティ（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Accessibility](https://sophaxis.vercel.app/accessibility.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis のアクセシビリティの宣言です。目指すもの、確かめていること、分かっている不具合、障壁の知らせ方を書いています。
 
 ## 目指すもの
 
@@ -5543,7 +5641,7 @@ Sophaxis は、ウェブコンテンツ・アクセシビリティ・ガイド�
 - PDF の写しは、著者のファイルを手を加えずに置いたものです。Sophaxis は構造を足せず、スクリーンリーダーで使えないものもありえます。
 - 題と要旨は DOI のメタデータからの平文なので、数式は読みにくいことがあります。
 - 検索の頁は、サイトで唯一のスクリプトを使うので、JavaScript を要します。それがなくても、分野ごと・月ごとの一覧と配信で、同じ記録にたどれます。
-- 記録・一覧・統計は英語です。規程と散文の頁は日本語でもあります。
+- 一覧と統計は英語です。規程と散文の頁と記録の頁は、日本語でもあります。日本語の記録の頁でも、題と要旨など著者の書いた文は、著者の言語のままです。
 
 ## 障壁を知らせる
 
@@ -5563,9 +5661,11 @@ Source: https://sophaxis.vercel.app/compare.ja.html
 
 # ほかの場との違い（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [How Sophaxis differs from other places](https://sophaxis.vercel.app/compare.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis が arXiv・PhilArchive・SSRN・Zenodo とどう違うかを説明します。
 
 ## 要するに
 
@@ -5598,9 +5698,11 @@ Source: https://sophaxis.vercel.app/glossary.ja.html
 
 # 用語集（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Glossary](https://sophaxis.vercel.app/glossary.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis で使う語を定義します。
 
 ## 用語
 
@@ -5608,7 +5710,7 @@ Source: https://sophaxis.vercel.app/glossary.ja.html
 - プレプリント：著者が公開した作品の版。学術誌での出版の前の版、または出版とは別の版です。
 - リポジトリ：著者が作品を預け、作品に DOI を与える場。Zenodo、arXiv、SSRN などです。Sophaxis が受けるものは、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が挙げています。
 - DOI：リポジトリが作品に登録する、変わらない識別子。Sophaxis は DOI を与えません。
-- 最初の DOI：投稿された DOI と、そのメタデータが挙げる前の DOI のうち、最も早いもの。2026-11-23 から、新しい作品は、これが登録されてから六か月たっているときに限り載せます。
+- 最初の DOI：投稿された DOI と、そのメタデータが挙げる前の DOI のうち、最も早いもの。2026-11-23 から、新しい作品は、これが登録されてから 6 か月たっているときに限り載せます。
 - モデレーション：投稿を載せてよいかを、モデレーターが決める確認。査読ではなく、作品が正しいか、重要かは判断しません。
 - 自動の確認：DOI のメタデータと ORCID の記録を読み、分かったことを投稿の issue に書くコード。何も決めません。
 - 仮登録（かりとうろく）：自動の確認を通り、`verified` のラベルが付いて、モデレーターを待っている投稿。サイトには出ません。
@@ -5623,6 +5725,6 @@ Source: https://sophaxis.vercel.app/glossary.ja.html
 - 訂正の注記（ていせいのちゅうき）：記録に誤りが見つかったときに足す、日付付きの注記。
 - 撤回（てっかい）：著者が、載っている作品をもう載せないよう求めること。引用が切れないよう、記録は注記とともに残ります。[撤回の規程](https://sophaxis.vercel.app/policies/withdrawal.ja.html)を見てください。
 - 削除（さくじょ）：法的な理由か著者の求めにより、記録を番号・状態・日付だけにすること。[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)を見てください。
-- 運営者自身（うんえいしゃじしん）の投稿：運営者の作品。印を付け、優先せず、載せる前に七日のあいだ公開で待ちます。
+- 運営者自身（うんえいしゃじしん）の投稿：運営者の作品。印を付け、優先せず、載せる前に 7 日のあいだ公開で待ちます。
 - バッジ：載った作品の著者が示せる、記録へのリンク付きの画像。
 

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture（日本語の頁） | Sophaxis</title>
+<meta name="description" content="Sophaxis の記録 2026.0001 の日本語の頁。題と要旨は著者の言語のままです。">
+<link rel="canonical" href="https://sophaxis.vercel.app/abs/2026.0001.ja.html">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="../feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture（日本語の頁） | Sophaxis">
+<meta property="og:description" content="Sophaxis の記録 2026.0001 の日本語の頁。題と要旨は著者の言語のままです。">
+<meta property="og:url" content="https://sophaxis.vercel.app/abs/2026.0001.ja.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/card/2026.0001.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/abs/2026.0001.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/abs/2026.0001.ja.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@SophaxisX">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .25rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+details.source { margin: .6rem 0 1.4rem; }
+details.source summary { cursor: pointer; color: var(--muted); }
+details.source blockquote { margin: .6rem 0; padding: .25rem 1rem; border-left: 3px solid var(--rule); }
+details.source .from { font-size: .9rem; color: var(--muted); }
+.table { overflow-x: auto; }
+td a, p code, li code { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main" lang="en">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html" lang="en">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav lang="en"><a href="../index.html">Listing</a><a href="../search.html">Search</a><a href="../submit.html">Submit</a><a href="../policy.html">Policies</a><a href="../faq.html">FAQ</a></nav>
+<p class="lang"><a href="./2026.0001.html" hreflang="en" lang="en">English</a></p>
+</div></header>
+<main class="wrap" id="main">
+
+<nav class="crumbs" aria-label="現在の位置"><a href="../index.ja.html">一覧</a> › <a href="../list/mathematics.html">数学</a> › <span aria-current="page">2026.0001</span></nav>
+<p class="meta"><span class="id">Sophaxis:2026.0001</span> · <a href="../list/mathematics.html">数学</a><span class="flag own">運営者自身の投稿</span></p>
+<p class="meta">集め：<a href="../collection/game-theory.html">ゲーム理論</a></p>
+
+
+
+<div class="notice own"><b>運営者自身の作品です。</b>この作品は、Sophaxis の運営者のものです。モデレーションでは、ほかの作品より先に扱っていません（<a href="../policies/moderation.ja.html#利益相反">モデレーションの規程</a>の「利益相反」）。</div>
+<article>
+<h1 lang="en">Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture</h1>
+<p lang="en"><a href="../author/0009-0000-1406-0547.html">Takuya Nemoto</a> <a class="id" href="https://orcid.org/0009-0000-1406-0547">ORCID 0009-0000-1406-0547</a></p>
+<p class="access"><b>読む：</b><a href="../pdf/2026.0001v2.pdf" type="application/pdf">PDF（v2、10 頁）</a> · <a href="https://doi.org/10.6084/m9.figshare.34419198.v2">Figshare（v2）</a> · <a href="../cite/2026.0001.bib">BibTeX</a></p>
+<p class="meta">PDF は 10 頁、およそ 4,818 語です。1 分に 200 語で読むと、約 25 分かかります。数学や密な議論には、もっと時間がかかります。</p>
+<p class="meta jump"><a href="#abstract">要旨</a> · <a href="#status">状態</a> · <a href="#cite">引用</a></p>
+<h2 id="abstract">要旨</h2>
+<div class="abstract" lang="en"><p>In a discounted repeated game, the continuation values along a cyclic path of play are the fixed point of the linear operator x ↦ DQx + (I − D)p, with D = δI and Q a cyclic shift. This preprint uses that identity to study the symmetric n-player game in which a player whose k co-players cooperate earns k + 1 by cooperating and k + 2 by defecting. Main results: 1. The three-player rotation scheme, in which exactly one player defects in each period, is a subgame-perfect equilibrium path if and only if δ ≥ 1/φ ≈ 0.618, where φ is the golden ratio. For n players the threshold lies in (1/(n−2) − 2/(n−2)^n, 1/(n−2)). 2. The payoff vector (2, 4, 2) is never an equilibrium payoff. This corrects an example in the author's earlier preprint (https://doi.org/10.5281/zenodo.22058777). 3. With public randomization, (2+t, 4−t, 2+t) is an equilibrium payoff if and only if δ ≥ max(1/2, 1−t). 4. Without randomization, the set of sustainable t passes through three regimes: two points for 1/2 ≤ δ &lt; 1/φ, a countably infinite set at δ = 1/φ, and the full segment for δ ≥ 2/3. Inside the window 1/φ &lt; δ &lt; 2/3 it has positive Hausdorff dimension, with an explicit lower bound. 5. Golden-window conjecture: inside the window the set has Lebesgue measure zero, and its dimension increases continuously from 0 to 1. Numerical evidence is reported. 6. In the linear dilemma with benefit b and cost c, the rotation is sustainable exactly when cooperation is efficient, the three-player threshold is (√(1 + 4c/b) − 1)/2, and the rotation always needs more patience than cooperation by everyone. The literature has not been searched systematically, and some of the results may be known. All proofs are given in full. This is a preprint and has not been peer-reviewed. Every number in the paper is produced by games/games.py and checked by verification/check_games.py in https://github.com/cpsbvbng26-dotcom/trinity-operator (MIT licence). Generative AI disclosure: the author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.Version 2: author line changed to &quot;Independent Researcher&quot; (with a note); wording of the language-model declaration revised. Mathematical content unchanged.</p></div>
+<p class="meta">要旨は <span lang="en">Takuya Nemoto</span> によるものです。DOI のメタデータから取りました。書式のない文にしたほかは手を加えず、<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> のもとで載せています。著者の言語のままで、訳は付けていません。</p>
+
+
+</article>
+<div class="table" id="status"><table><tr><th scope="col">状態</th><th scope="col">この記録</th></tr><tr><th scope="row">預け先</th><td>Figshare。最新の版：v2、<a href="https://doi.org/10.6084/m9.figshare.34419198.v2">10.6084/m9.figshare.34419198.v2</a>。最初の版（v1）：2026-10-13。</td></tr><tr><th scope="row">Sophaxis への掲載</th><td><a href="../policies/moderation.ja.html">モデレーション</a>を通りました。モデレーションは査読ではありません。掲載：2026-10-31。投稿：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/8">issue #8</a>。</td></tr><tr><th scope="row">査読・出版</th><td>報告はありません。これはプレプリントです。</td></tr></table></div>
+
+<div class="notice">これはプレプリントです。査読を経ていません。Sophaxis に載っていることは、モデレーションを通ったことを意味し、内容が正しいことを意味しません。Sophaxis は質を保証しません。内容の責任は、すべて著者にあります。</div>
+<h2 id="read">読む</h2>
+<p><a href="https://doi.org/10.6084/m9.figshare.34419198.v2">最新の版（v2）、Figshare</a> · ライセンス <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+<p>Sophaxis の PDF：<a href="../pdf/2026.0001v1.pdf">v1</a> · <a href="../pdf/2026.0001v2.pdf">v2</a></p>
+<p class="meta">著者が Figshare に預けたファイルを、手を加えずに写したものです。検索エンジンが全文を索引できるように置いています。<span lang="en">Takuya Nemoto</span> が CC BY 4.0 のもとで共有しています。引用には DOI を使います。</p>
+<h2 id="cite">引用</h2>
+<p class="meta">引用の書式は英語のままです。</p>
+<p class="meta">APA</p>
+<p class="cite" lang="en">Nemoto, T. (2026). Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture [Preprint]. Figshare. https://doi.org/10.6084/m9.figshare.34419198.v2</p>
+<p class="meta">Chicago（著者・年）</p>
+<p class="cite" lang="en">Nemoto, Takuya. 2026. “Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture.” Preprint, Figshare. https://doi.org/10.6084/m9.figshare.34419198.v2.</p>
+<p class="meta">BibTeX</p>
+<pre lang="en">@misc{nemoto2026sophaxis20260001,
+  author       = {Takuya Nemoto},
+  title        = {Repeated Games through a Cyclic Operator: A Golden-Ratio Threshold, Fractal Payoff Sets, and the Golden-Window Conjecture},
+  year         = {2026},
+  howpublished = {Figshare},
+  doi          = {10.6084/m9.figshare.34419198.v2},
+  note         = {Preprint, not peer-reviewed. Listed on Sophaxis as 2026.0001}
+}</pre>
+<p class="meta">ダウンロード：<a href="../cite/2026.0001.bib">BibTeX</a> · <a href="../cite/2026.0001.ris">RIS</a> · <a href="../cite/2026.0001.json">CSL-JSON</a></p>
+<h2>版</h2>
+<div class="table"><table><tr><th scope="col">版</th><th scope="col">日付</th><th scope="col">DOI</th><th scope="col">預け先</th></tr><tr><td>v1</td><td>2026-10-13</td><td><a href="https://doi.org/10.6084/m9.figshare.34419198.v1">10.6084/m9.figshare.34419198.v1</a></td><td>Figshare</td></tr><tr><td>v2</td><td>2026-10-15</td><td><a href="https://doi.org/10.6084/m9.figshare.34419198.v2">10.6084/m9.figshare.34419198.v2</a></td><td>Figshare</td></tr></table></div>
+<h2>言語モデルなどの生成モデルの使用</h2>
+<p class="meta">程度（著者の申告）：<span lang="en">Drafting: a generative model drafted text, proofs, code or figures that the authors revised</span>（生成モデルが文・証明・コード・図の下書きを作り、著者が手を入れた）</p>
+<p lang="en">The author used Claude Code (Anthropic) to draft the text, to work out the propositions and their proofs, to formulate the conjecture, and to write the code. The author reviewed and edited the content and takes full responsibility for it. Claude is not an author.</p>
+
+<h2>関連する記録</h2>
+<p class="meta">同じ著者のもの</p>
+<ul><li><a href="./2026.0002.ja.html" lang="en">Machine-mediated Rediscovery: A Case Study in Novelty, Priority, and Self-correction</a> <span class="meta"><span lang="en">Takuya Nemoto</span>、2026</span></li><li><a href="./2026.0005.ja.html" lang="en">Fragmentarian Spiritual Individualism: A Philosophy of Fragments for Solitary Spiritual Autonomy</a> <span class="meta"><span lang="en">Takuya Nemoto</span>、2026</span></li><li><a href="./2026.0004.ja.html" lang="en">The Nobility and Exemplarity of the Celibate Individual: An Antinatalist and Ascetic Reconsideration of Autonomy and Quality of Life</a> <span class="meta"><span lang="en">Takuya Nemoto</span>、2026</span></li><li><a href="./2026.0003.ja.html" lang="en">Manifesto of Imperial Selfhood: The Age of Personal Imperialism and Its Spiritual Existence</a> <span class="meta"><span lang="en">Takuya Nemoto</span>、2026</span></li></ul>
+<h2>共有</h2>
+<p class="share"><a href="https://x.com/intent/post?text=Repeated%20Games%20through%20a%20Cyclic%20Operator%3A%20A%20Golden-Ratio%20Threshold%2C%20Fractal%20Payoff%20Sets%2C%20and%20the%20Golden-Window%20Conjecture&amp;url=https%3A%2F%2Fsophaxis.vercel.app%2Fabs%2F2026.0001.ja.html">X</a> · <a href="https://bsky.app/intent/compose?text=Repeated%20Games%20through%20a%20Cyclic%20Operator%3A%20A%20Golden-Ratio%20Threshold%2C%20Fractal%20Payoff%20Sets%2C%20and%20the%20Golden-Window%20Conjecture%20https%3A%2F%2Fsophaxis.vercel.app%2Fabs%2F2026.0001.ja.html">Bluesky</a> · <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsophaxis.vercel.app%2Fabs%2F2026.0001.ja.html">Facebook</a> · <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsophaxis.vercel.app%2Fabs%2F2026.0001.ja.html">LinkedIn</a> · <a href="mailto:?subject=Repeated%20Games%20through%20a%20Cyclic%20Operator%3A%20A%20Golden-Ratio%20Threshold%2C%20Fractal%20Payoff%20Sets%2C%20and%20the%20Golden-Window%20Conjecture&amp;body=https%3A%2F%2Fsophaxis.vercel.app%2Fabs%2F2026.0001.ja.html">メール</a></p>
+<p class="meta">投稿：<a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/8">issue #8</a> · <a href="https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=correction.yml&amp;id=2026.0001">この記録の誤りを知らせる</a> · <a href="https://web.archive.org/web/https://sophaxis.vercel.app/abs/2026.0001.html">インターネット・アーカイブに保存された写し</a></p>
+
+</main>
+<footer><div class="wrap" lang="en">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="../policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="../policies/terms.html">Terms of Use</a> · <a href="../policies/privacy.html">Privacy</a> · <a href="../policies/takedown.html">Takedown</a> · <a href="../disclaimer.html">Disclaimer</a> · <a href="../repositories.html">For repositories</a> · <a href="../automation.html">What runs by itself</a> · <a href="../stats.html">Statistics</a> · <a href="../transparency.html">Transparency</a> · <a href="../news.html">News</a> · <a href="../press.html">Press</a> · <a href="../history.html">History</a> · <a href="../accessibility.html">Accessibility</a> · <a href="../easy.html">In plain words</a> · <a href="../contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

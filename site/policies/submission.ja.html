@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>投稿の規程（日本語訳） | Sophaxis</title>
 <meta name="description" content="Sophaxis の投稿の規程の日本語訳。">
 <link rel="canonical" href="https://sophaxis.vercel.app/policies/submission.ja.html">
@@ -65,6 +65,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -76,6 +80,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -96,8 +102,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>投稿の規程（日本語訳）</h1>
-<p>最終更新：2026-11-11。</p>
+<p>最終更新：2026-11-12。</p>
 <p>これは英語の <a href="./submission.html">Submission Policy</a> の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、<a href="./terms.ja.html">利用規約</a>の「日本国外の方へ」の節に定めています。</p>
+<p>投稿の規程は、だれが何を Sophaxis に投稿できるかと、投稿する人が何を確かめるかを定めます。</p>
 <p>この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-11 に取り寄せた文を、語のまま引いています。訳は付けていません。原文を取り寄せられなかった条は、引いていないことと、その理由を記しています。</p>
 <nav class="toc" aria-label="この頁の節"><p>この頁の節</p><ul><li><a href="#投稿できる人">投稿できる人</a></li><li><a href="#投稿できるもの">投稿できるもの</a></li><li><a href="#著者が複数いる作品">著者が複数いる作品</a></li><li><a href="#初めての投稿の紹介">初めての投稿の紹介</a></li><li><a href="#投稿者が確認すること">投稿者が確認すること</a></li><li><a href="#投稿の手順">投稿の手順</a></li><li><a href="#言語モデルとその他の生成モデル">言語モデルとその他の生成モデル</a></li><li><a href="#研究資金利益相反研究倫理データ">研究資金、利益相反、研究倫理、データ</a></li><li><a href="#版と更新">版と更新</a></li><li><a href="#作品が出版されたとき">作品が出版されたとき</a></li><li><a href="#受け付けないものの例">受け付けないものの例</a></li><li><a href="#撤回">撤回</a></li></ul></nav>
 <h2 id="投稿できる人">投稿できる人</h2>
@@ -116,7 +123,7 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 <h2 id="投稿できるもの">投稿できるもの</h2>
 <p>Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作品を受け付けます。主に別の分野に属する作品は、数学を使っていても対象外です。</p>
 <p>作品は、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けてある必要があります。<a href="./licences.ja.html">ライセンスの規程</a>が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。学術論文の通常の形で、題・要旨・参考文献を備えている必要があります。</p>
-<p>2026-11-23 から、新しい作品は、その最初の DOI が登録されてから六か月以上たっているときに限り載せます。六か月は、投稿の issue を開いた日まで、日本時間で数えます。月の同じ日に満了し、短い月ではその月の末日に満了します。最初の DOI とは、投稿された DOI と、そのメタデータが作品の前の版またはすべての版の DOI として挙げる DOI のうち、最も早く登録されたものです。Zenodo ではすべての版の DOI、Figshare では最初の版の DOI がこれに当たります。登録の日は、DataCite または Crossref が記録している日です。メタデータにその日がないとき（Jxiv など）は、運営者が手で確かめます。issue の自動の確認が、これらの日を読み、六か月を数えます。早すぎる投稿は載せません。六か月がたったあとに、新しい issue を開き直せます。すでに Sophaxis に載っている作品の新しい版と、2026-11-23 より前に開かれた投稿には掛かりません。</p>
+<p>2026-11-23 から、新しい作品は、その最初の DOI が登録されてから 6 か月以上たっているときに限り載せます。6 か月は、投稿の issue を開いた日まで、日本時間で数えます。月の同じ日に満了し、短い月ではその月の末日に満了します。最初の DOI とは、投稿された DOI と、そのメタデータが作品の前の版またはすべての版の DOI として挙げる DOI のうち、最も早く登録されたものです。Zenodo ではすべての版の DOI、Figshare では最初の版の DOI がこれに当たります。登録の日は、DataCite または Crossref が記録している日です。メタデータにその日がないとき（Jxiv など）は、運営者が手で確かめます。issue の自動の確認が、これらの日を読み、6 か月を数えます。早すぎる投稿は載せません。6 か月がたったあとに、新しい issue を開き直せます。すでに Sophaxis に載っている作品の新しい版と、2026-11-23 より前に開かれた投稿には掛かりません。</p>
 <p>2026-11-23 から、Crossref が撤回・一部撤回・取り下げ・削除を記録している作品は載せません。懸念表明（expression of concern）を記録している作品は運営者に回し、運営者が<a href="./moderation.ja.html">モデレーションの規程</a>に従って判断します。Crossref は Retraction Watch のデータベースの記録も含んでいます。issue の自動の確認が、投稿された DOI についてこれらの通知を読みます。リポジトリが自分の頁にだけ示し、Crossref に届けていない通知は、この確認では見えません。</p>
 <p>すでに学術誌が出版した作品は、著者がそのようなライセンスで共有してよい版に限り投稿できます。その条件は出版者によって異なります。投稿者は、下の「作品が出版されたとき」に定めるとおり、出版された版の DOI を様式に書きます。</p>
 <h2 id="著者が複数いる作品">著者が複数いる作品</h2>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-cHnx5k1nDGTnLSGNffcS4uT9dkn5mmnYdYOLhm1Dv6c='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Glossary | Sophaxis</title>
 <meta name="description" content="The words used on Sophaxis, defined: overlay, moderation, record, version, withdrawal, removal and others.">
 <link rel="canonical" href="https://sophaxis.vercel.app/glossary.html">
@@ -64,6 +64,10 @@ details.source .from { font-size: .9rem; color: var(--muted); }
 td a, p code, li code { overflow-wrap: anywhere; }
 td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
 .fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
 .fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -75,6 +79,8 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
 .search input[type=search] { width: min(24rem, 80vw); }
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
 /* The sections of a prose or policy page, linked near its top. */
 .toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
@@ -95,8 +101,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 </div></header>
 <main class="wrap" id="main">
 <h1>Glossary</h1>
-<p>Last updated: 2026-11-11.</p>
+<p>Last updated: 2026-11-12.</p>
 <p>Japanese: <a href="./glossary.ja.html">用語集（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
+<p>This page defines the words used on Sophaxis.</p>
 <h2 id="terms">Terms</h2>
 <ul><li>Overlay: a service that lists works kept elsewhere. Sophaxis keeps no work of its own; each work stays in its repository.</li><li>Preprint: a version of a work made public by its authors, before or apart from publication in a journal.</li><li>Repository: the place where the authors deposit the work and which gives it a DOI, such as Zenodo, arXiv or SSRN. The <a href="./policies/submission.html">Submission Policy</a> names those that Sophaxis accepts.</li><li>DOI: the persistent identifier that the repository registers for the work. Sophaxis gives no DOI.</li><li>First DOI: the earliest DOI of a work among the DOI given and the earlier ones that its metadata names. From 2026-11-23, a new work is listed only if six months have passed since it was registered.</li><li>Moderation: the check by which a moderator decides whether a submission may be listed. It is not peer review, and it does not judge whether the work is correct or important.</li><li>Automatic check: the code that reads the DOI metadata and the ORCID record and posts what it found in the submission issue. It decides nothing.</li><li>Provisional registration: a submission that passed the automatic check and waits for a moderator, labelled <code>verified</code>. It is not on the site.</li><li>Vouching: from 2026-11-23, a researcher with a journal article, a book chapter or a book says that a first submission is in scope and in the form of a scholarly paper. It is not a review.</li><li>Record: what Sophaxis keeps about a listed work: its title, authors, abstract, licence, versions and statements.</li><li>Sophaxis id: the number of a record, such as <code>2026.0001</code>. It is never given to another work.</li><li>Version: each deposit of the work in its repository, with its own DOI and date, listed in the record.</li><li>PDF copy: an unmodified copy of a deposited PDF, kept on Sophaxis where the repository allows it, so that search engines can read the full text.</li><li>Field and collection: a field is one of the five areas that a work is listed under; a collection gathers records on a topic, chosen by the moderator, and says nothing of quality.</li><li>Statement: what the authors state in the form, on generative models and, from 2026-11-24, on funding, competing interests and research ethics. Sophaxis shows it and does not check it.</li><li>Notice: a retraction, withdrawal, removal, expression of concern or correction that Crossref records against a DOI. A record shows the notices for its DOIs. Here a retraction and a withdrawal are the journal's, not the Withdrawal below.</li><li>Correction note: a dated note added to a record when an error in it is found.</li><li>Withdrawal: an author asks that a listed work no longer be listed. The record stays, with a notice, so that citations do not break. See the <a href="./policies/withdrawal.html">Withdrawal Policy</a>.</li><li>Removal: a record is taken down to its id, its state and its day, for a legal reason or at an author's request. See the <a href="./policies/takedown.html">Takedown Policy</a>.</li><li>Operator's own submission: a work by the operator. It is marked, gets no priority, and waits seven days in public before listing.</li><li>Badge: an image that the authors of a listed work can show, with a link to its record.</li></ul>
 </main>
