@@ -16,8 +16,7 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 
 ## Every month
 
-- On the 1st, an issue gives the posts for the official account on X. Post them by hand; nothing is posted automatically.
-- The same run measures the free limits, and opens an issue only at 80 percent of one. Read Vercel's bandwidth and function use in the Vercel account, which the run cannot see.
+- On the 1st, a run measures the free limits, and opens an issue only at 80 percent of one. Read Vercel's bandwidth and function use in the Vercel account, which the run cannot see.
 
 ## Every year
 

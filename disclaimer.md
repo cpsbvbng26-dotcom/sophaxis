@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-13.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -93,6 +93,7 @@ Sophaxis depends on outside services:
 
 - If Vercel stops, the site is not served; the records stay in the repository on GitHub and in the Internet Archive.
 - If GitHub stops, no one can submit, and the automatic checks do not run; the site keeps showing what it last built.
+- GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no step on the page [What runs by itself](./automation.md) runs by itself. The operator takes those steps by hand, as soon as the operator can; a record page reported for exposed personal data is then taken offline by the operator, not at once.
 - If DataCite, Crossref or JaLC cannot be reached, a submission cannot be checked until they can.
 - If a repository removes a deposit, its DOI stops resolving, and the record is withdrawn under the [Withdrawal Policy](./policies/withdrawal.md).
 

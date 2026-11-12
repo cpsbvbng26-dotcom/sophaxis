@@ -140,6 +140,7 @@ When the weekly check reports a new retraction or correction notice on a publish
 Every automatic step is listed, with when it runs, what it reads and writes and what it leaves to the operator, on the page [What runs by itself](https://sophaxis.vercel.app/automation.html) (`automation.md`).
 In short: the checks of each submission, withdrawal and reported published version; the acknowledgement of removal requests, the authors' notice, and taking exposed personal data offline at once; the operator's decision carried out on the label `upheld` or `not-upheld`; a daily reminder of requests near 7 days; the checks on every push; IndexNow and the Internet Archive on every change; and the weekly watch.
 No automatic step decides on a request, uses a language model or holds a key other than the run's own GitHub token.
+Every one of them runs as GitHub Actions. GitHub's terms let it restrict the use of GitHub Actions; while Actions does not run, the operator takes the steps by hand, and none of them happens at once.
 
 ### Removing a record
 

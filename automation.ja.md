@@ -1,6 +1,6 @@
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [What runs by itself](./automation.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -10,7 +10,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 どの手順のコードも公開しており、各節からリンクしています。
 
 - 投稿・撤回・訂正・削除の求めについて判断する自動の手順はありません。判断はすべて運営者が下します。
-- 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
+- この頁の手順のうち GitHub Actions として動くものは、GitHub に頼っています。GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、どの手順もひとりでには動きません。運営者ができしだい手で行い、どれもすぐには行われません。
+- 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
 - 言語モデルを使う手順はありません。どの手順も通常のコードです。
 - どのアカウントにもサインインする手順はありません。鍵は、GitHub が実行ごとに渡すトークンだけで、その権限は手順に要る最小限です。IndexNow の鍵は、仕組みのうえで公開のものです。
 - 記録を変える手順は、先にサイトを組み立て、すべての検査を走らせます。検査が一つでも落ちれば、何も変えません。
@@ -47,7 +48,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：記録と、リポジトリの issue。
 - 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
-- issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.md)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。
+- issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.md)のとおり、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。GitHub Actions が動かないときは、運営者が手で下げ、すぐには下がりません。
 - 運営者に残すこと：判断。
 - コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
 
@@ -68,11 +69,9 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 ## 月に一度、1 日の日本時間 09:17
 
-- 読むもの：記録と `data/news.json`。
-- 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
-- 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
-- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の 1 日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
-- コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) と [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
+- Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の 1 日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
+- 2026-11-13 までは、X の公式アカウントのための投稿文を載せた issue も書いていました。いまは書きません。GitHub の規約は、GitHub の実行環境での GitHub Actions を、ソフトウェアのプロジェクトの制作・検査・配備・公開のためにだけ認めており、投稿文はそのどれにも当たらないからです。X へは何も自動で投稿しません。
+- コード：[tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
 
 ## 年に一度、1 月 2 日の日本時間 12:23
 

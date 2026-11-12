@@ -670,7 +670,7 @@
       "by": [
         {
           "file": "policies/takedown.md",
-          "text": "the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back."
+          "text": "the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted until it is put back."
         }
       ]
     },

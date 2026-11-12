@@ -151,7 +151,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.',
     'If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.',
     'A request that cannot be made in public goes by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
-    'For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, and OAI-PMH reports the record as deleted until it is put back.',
+    'For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted until it is put back.',
     'The address keeps working, so that citations lead to the notice instead of to nothing.',
     'Vercel processes each request, including the IP address, in order to serve the page, under its own privacy policy.',
     'The operator\'s address is not published; it is given on request, without delay.',
