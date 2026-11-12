@@ -161,6 +161,7 @@ A dispute about Sophaxis or a listed work is settled by agreement wherever possi
 
 From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
 Until then, the court of first instance by agreement is, on the same terms, the district court or the summary court that has jurisdiction over the operator's place of residence.
+From 2026-11-26, this agreement on the court covers only suits based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction.
 For anyone else, the court that the law sets has jurisdiction.
 The operator's address is given on request, as the [Operator and contact](https://sophaxis.vercel.app/contact.html) page says.
 This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
@@ -928,8 +929,13 @@ The Sophaxis site sets no cookies, runs no analytics and loads nothing from othe
 Its pages contain no code or tag that sends information about a reader to anyone else.
 The rules of Japan's Telecommunications Business Act on sending users' information outside (Article 27-12) bind only a telecommunications carrier and a person who runs a telecommunications business that the Act exempts from registration and notification, and among those only the services that the Ministry's Ordinance names; they do not cover information needed to use the service.
 Sophaxis charges for nothing and earns nothing from the site, so the operator considers that it runs no telecommunications business and that Article 27-12 does not apply to it.
-If it did apply, the only request a page makes is the search page's request to Sophaxis's own site for its list of records, which is needed to use that page.
-The Ministry's Ordinance was not fetched; this view rests on the Act and on the Ministry's Entry Manual.
+The Ministry's Ordinance, fetched on 2026-11-12, names among the services these rules reach one that sends information at the request of unspecified users for them to read; it does not settle whether a service that earns nothing is a business that is run.
+Sophaxis therefore meets these rules as if they applied, and gives here, for each request that its pages make a reader's browser send, the three things that the Ordinance asks to be made known.
+The only such request is the search page's request to Sophaxis's own site for its list of records (`papers.json`).
+What is sent: what any browser sends with a request, such as the IP address, the name of the browser and the address asked for.
+Who handles it: the operator of Sophaxis, named on the [Operator and contact](https://sophaxis.vercel.app/contact.html) page, and Vercel Inc., which hosts the site.
+What for: to give the search page the list that it searches.
+The Ordinance leaves out of these rules the information truly needed to provide the service, and the operator considers that this request is of that kind.
 The search page runs one script, served by Sophaxis itself.
 It reads the list of records from Sophaxis and searches it in your browser, and it sends nothing anywhere.
 No other page runs a script.
@@ -2765,8 +2771,13 @@ Sophaxis の運営者、根本卓哉です。住所は公開していません�
 頁には、閲覧者の情報を外へ送るコードもタグもありません。
 電気通信事業法の外部送信の規律（第 27 条の 12）が掛かるのは、電気通信事業者と、登録も届出も要らないとされる電気通信事業を営む者だけです。そのうちでも、総務省令が定める役務に限られます。役務を使うのに要る情報は、この規律から除かれています。
 Sophaxis は何にも料金を取らず、サイトから何の収益も得ていません。そのため運営者は、電気通信事業を営んでいないと考えており、第 27 条の 12 は Sophaxis に掛からないと考えています。
-掛かるとしても、頁が出す要求は、検索の頁が Sophaxis 自身のサイトに記録の一覧を求めるものだけで、それはその頁を使うのに要るものです。
-総務省令は取り寄せていません。この考えは、法律の条文と、総務省の電気通信事業参入マニュアルに拠っています。
+総務省令（電気通信事業法施行規則）は、2026-11-12 に取り寄せて読みました。この規律が掛かる役務の一つに、不特定の利用者の求めに応じて情報を送り、閲覧に供する役務を挙げています。何も稼がない役務が事業を営むことになるかは、この省令では決まりません。
+そこで Sophaxis は、この規律が掛かるものとして務めを果たします。頁が閲覧者のブラウザーに送らせる要求ごとに、省令が示すよう求める三つの事項を、ここに書きます。
+そうした要求は、検索の頁が Sophaxis 自身のサイトに記録の一覧（`papers.json`）を求めるものだけです。
+送られる情報は、ブラウザーが要求とともに送るもの（IP アドレス、ブラウザーの名、求めた頁のアドレスなど）です。
+取り扱うのは、[運営者と連絡先](https://sophaxis.vercel.app/contact.ja.html)の頁に名のある Sophaxis の運営者と、サイトを配る Vercel Inc. です。
+利用目的は、検索の頁が検索する一覧を渡すことです。
+省令は、役務の提供に真に必要な情報をこの規律から除いています。運営者は、この要求がそれに当たると考えています。
 検索の頁は、Sophaxis 自身が配るスクリプトを一つだけ動かします。Sophaxis から記録の一覧を読み、閲覧者のブラウザの中で検索し、どこにも何も送りません。ほかの頁はスクリプトを動かしません。
 記録の頁には、X・Bluesky・Facebook・LinkedIn・メールへの共有のリンクがあります。どれも各サービスの頁への普通のリンクで、閲覧者がたどるまで何も送られず、たどった先では各サービスの方針が掛かります。
 Sophaxis は、Vercel のアクセス解析を有効にしていません。
@@ -3182,6 +3193,7 @@ Sophaxis や載っている作品についての紛争は、できるかぎり�
 
 2026-11-25 から、これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、宇都宮地方裁判所または宇都宮簡易裁判所を、第一審の合意管轄裁判所とします。この合意は専属的なものではありません。
 それまでは、同じ条件で、運営者の住所地を管轄する地方裁判所または簡易裁判所を、第一審の合意管轄裁判所とします。
+2026-11-26 から、この裁判所の合意の対象は、この規約に基づく訴えと、この規約のもとでのその人自身の作品の投稿・掲載・訂正・撤回・削除に基づく訴えに限ります。それ以外の紛争は、法令の定める裁判所が管轄します。
 それ以外の人との間では、法令の定める裁判所が管轄します。
 運営者の住所は、[運営者と連絡先](https://sophaxis.vercel.app/contact.ja.html)の頁にあるとおり、求めがあれば知らせます。
 これは、消費者や日本国外の人が、法令によって別の裁判所で訴えを起こし、または応じる権利を奪うものではありません。
