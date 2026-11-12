@@ -1427,7 +1427,7 @@
       "by": [
         {
           "file": "policies/privacy.md",
-          "text": "supervises them under Article 25 of the Act."
+          "text": "and supervises it under Article 25 of the Act."
         },
         {
           "file": "policies/privacy.md",
@@ -1532,10 +1532,27 @@
     },
     {
       "law": "APPI",
-      "article": "第27条第2項〜第6項",
-      "duty": "オプトアウト、委託・承継・共同利用。",
+      "article": "第27条第2項〜第4項・第5項第二号・第三号・第6項",
+      "duty": "オプトアウト、承継・共同利用。",
       "applies": false,
       "reason": "オプトアウトも共同利用も使わず、同意による。"
+    },
+    {
+      "law": "APPI",
+      "article": "第27条第5項第一号（受信箱の委託）",
+      "duty": "「個人情報取扱事業者が利用目的の達成に必要な範囲内において個人データの取扱いの全部又は一部を委託することに伴って当該個人データが提供される場合」、受け手は第三者に当たらない。委託先は第25条で監督する。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis treats iTunes K.K. as entrusted with that handling (Article 27(5)(i)) and supervises it under Article 25 of the Act."
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "Sophaxis は、iTunes 株式会社をその取り扱いの委託先として扱い（個人情報保護法第 27 条第 5 項第一号）、同法第 25 条により監督します。"
+        }
+      ]
     },
     {
       "law": "APPI",
@@ -1554,9 +1571,18 @@
       "law": "APPI",
       "article": "第28条第1項（Apple の受信箱と Vercel の記録）",
       "duty": "外国にある第三者には、取扱いを委託された者も入る：「この場合においては、同条の規定は、適用しない。」（規則第16条の基準に適合する体制を整備している者を除く）。",
-      "applies": true,
-      "status": "open",
-      "open": "Whether the mailbox at Apple and Vercel's request logs are a provision to a third party in a foreign country was not settled. If they are, the people who write by email and the readers have not consented, and whether Apple and Vercel meet Article 16 of the APPI Enforcement Rules was not checked against any source."
+      "applies": false,
+      "reason": "受信箱：日本に住む利用者に iCloud を提供するのは、iCloud 利用規約によれば日本の会社 iTunes 株式会社で、ガイドライン（外国にある第三者への提供編）は第三者を法人格で判断するので、外国にある第三者への提供ではない。委託（個人情報保護法第27条第5項第一号）として個人情報保護法第25条で監督し、米国の Apple Inc. が取り扱うことは Q&A 10-24 に沿って安全管理措置と公表事項に入れた。Vercel の記録：Sophaxis は IP アドレスを人に結びつけるものを持たず、照合には他の事業者への照会が要るので、通則編の読み方で Sophaxis にとって個人情報ではなく、個人情報保護法第28条が定める個人データではない。Vercel は要求を読者から直に受け、Sophaxis は記録から何も渡さない。2026-11-12 に取り寄せた文（verification/sources-raw.json の pages）による。",
+      "by": [
+        {
+          "file": "policies/privacy.md",
+          "text": "so the mailbox is not a provision to a third party in a foreign country under Article 28 of Japan's Act on the Protection of Personal Information, and no consent is asked of the people who write."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "The request logs are therefore not personal information for Sophaxis, and Article 28 of Japan's Act on the Protection of Personal Information, which concerns personal data, does not apply to them."
+        }
+      ]
     },
     {
       "law": "APPI",
@@ -1622,7 +1648,11 @@
       "by": [
         {
           "file": "policies/privacy.md",
-          "text": "The United States has no general federal law on personal data; some states have their own laws. There is no single authority for personal data across the country"
+          "text": "Japan's Personal Information Protection Commission publishes [information on its system](https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/), from a survey made in October 2021, which Sophaxis relies on."
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "委員会は、連邦について「包括的な法令は存在しない。」とし"
         }
       ]
     },
@@ -1636,6 +1666,10 @@
         {
           "file": "policies/privacy.md",
           "text": "What each service does to protect personal data is set out in its own statement"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "- Anthropic: its Privacy Policy says that it implements appropriate technical and organizational security measures"
         }
       ]
     },
@@ -1656,6 +1690,14 @@
         {
           "file": "policies/privacy.md",
           "text": "Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "- OpenAI: Sophaxis cannot give information on the measures OpenAI takes to protect personal data"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "Sophaxis cannot give information on the measures it takes to protect personal data: the policy fetched on 2026-11-12 says how the data is used and disclosed, but describes no security measures."
         }
       ]
     },
@@ -1671,8 +1713,53 @@
       "article": "第29条第1項・規則第20条第1項第二号（受け手の住所）",
       "duty": "同意による提供の記録に、受け手の「氏名又は名称及び住所」を記す（不特定かつ多数の者に対して提供したときは、その旨）。",
       "applies": true,
-      "status": "open",
-      "open": "The submission issue and the record hold the consent, the person and the items, but not the addresses of GitHub, Vercel, ORCID, the Internet Archive, Anthropic, OpenAI and xAI; Article 30 of Japan's Act on the Protection of Personal Information, on receiving data, has the same gap if it applies. The addresses could not be fetched, and are not written from memory."
+      "status": "met",
+      "by": [
+        {
+          "file": "docs/records-of-provision.md",
+          "text": "| GitHub | GitHub, Inc. | 88 Colin P. Kelly Jr. St. San Francisco, CA 94107 |"
+        },
+        {
+          "file": "docs/records-of-provision.md",
+          "text": "| Vercel | Vercel Inc. | 440 N Barranca Avenue #4133 Covina, CA 91723 |"
+        },
+        {
+          "file": "docs/records-of-provision.md",
+          "text": "When Sophaxis first publishes personal data that was not public before, the pull request that publishes it also adds a row under \"Records\", in the same change."
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "the file `docs/records-of-provision.md`, which names each recipient with its address, are the record of provision to third parties"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第29条第2項・規則第21条",
+      "duty": "記録を「三年」（一括して作成した記録は、最後の提供から三年）保存。",
+      "applies": true,
+      "status": "met",
+      "by": [
+        {
+          "file": "docs/records-of-provision.md",
+          "text": "The rows of this file, the record files and their history, and the issues are kept without a time limit"
+        },
+        {
+          "file": "policies/privacy.md",
+          "text": "The records are kept for at least three years, as the APPI Enforcement Rules require."
+        },
+        {
+          "file": "policies/privacy.ja.md",
+          "text": "記録は、個人情報保護法施行規則の定めるとおり、少なくとも 3 年保ちます。"
+        }
+      ]
+    },
+    {
+      "law": "APPI",
+      "article": "第30条第1項・第3項（DataCite・Crossref・JaLC・ORCID から読むとき）",
+      "duty": "第三者から個人データの提供を受けるときは、提供者の氏名又は名称及び住所、取得の経緯を確認して記録。",
+      "applies": false,
+      "reason": "読むのは公開の記録で、誰でも読める形で読む。確認・記録義務編は、公開情報の授受と単なる閲覧を確認・記録義務の外に置く（docs/records-of-provision.md に、取り寄せた文を引いた）。それでも各社の名称と、自らの頁にある住所を docs/records-of-provision.md に挙げた。"
     },
     {
       "law": "APPI",
