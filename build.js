@@ -1147,6 +1147,13 @@ function issnOk(s) {
 function listedIn() {
   return (SITE.listedIn || []).map((x) => `<p class="meta">Listed in <a href="${esc(x.url)}">${esc(x.name)}</a>, ${esc(x.description)}, after its editorial review, since ${esc(x.since)} (Japan time).</p>\n`).join('');
 }
+/* Directories where the operator added the entry (site.json directoryEntries). Shown with the page, the sections and the day
+ * the entry was last confirmed, and said plainly to be no review of Sophaxis; they are not part of listedIn. */
+function directoryEntries(ja = false) {
+  return (SITE.directoryEntries || []).map((x) => ja
+    ? `<p class="meta">${esc(x.name)} の <a href="${esc(x.url)}">${esc(x.page)}</a> の頁に、${x.sections.map(esc).join(' と ')} の欄で掲載されています（${esc(x.asOf)} 現在）。項目は運営者が書き足したもので、${esc(SITE.name)} の審査ではありません。</p>\n`
+    : `<p class="meta">Listed on the <a href="${esc(x.url)}">${esc(x.page)}</a> page of the ${esc(x.name)}, under ${x.sections.map(esc).join(' and ')}, as of ${esc(x.asOf)} (Japan time). The operator added the entry; it is not a review of ${esc(SITE.name)}.</p>\n`).join('');
+}
 
 /* The identifiers of Sophaxis itself, side by side: the OSF project and the archive of the code and records at Zenodo.
  * Neither names a listed work. */
@@ -1192,7 +1199,7 @@ function indexPage(papers, all = papers) {
 ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
-${operatingCounts(all)}${listedIn()}${ownIdentifiers()}<h2>Listing</h2>
+${operatingCounts(all)}${listedIn()}${directoryEntries()}${ownIdentifiers()}<h2>Listing</h2>
 ${ownNotice(all)}
 ${fields(papers, '', './')}
 <p class="meta">By topic: <a href="./collections.html">Collections</a>. By month: <a href="./months.html">New by month</a>. Researchers: <a href="./call.html">a call to submit</a>.</p>
@@ -1617,7 +1624,7 @@ function indexJaPage(papers, all = papers) {
 ${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${esc(SITE.termsNotice.from)} から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
 ` : ''}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
-${operatingCounts(all, loadReports(), true)}
+${operatingCounts(all, loadReports(), true)}${directoryEntries(true)}
 <h2>日本語の頁</h2>
 <ul>${jaLinks}</ul>
 <h2>分野と集め</h2>
@@ -1902,6 +1909,9 @@ function build(out, paperDir) {
   if (SITE.zenodo && (!/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.doi || '') || !/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.version || '') || !/^https:\/\/zenodo\.org\/communities\//.test(SITE.zenodo.community || ''))) problems.push('site.json: zenodo needs a concept DOI, a version DOI and the community URL');
   (SITE.listedIn || []).forEach((x, i) => {
     if (!x || !x.name || !x.description || !/^https:\/\//.test(x.url || '') || !DATE.test(x.since || '')) problems.push('site.json: listedIn[' + i + '] needs a name, a description, an https url and a since date (YYYY-MM-DD)');
+  });
+  (SITE.directoryEntries || []).forEach((x, i) => {
+    if (!x || !x.name || !x.page || !/^https:\/\//.test(x.url || '') || !Array.isArray(x.sections) || !x.sections.length || !DATE.test(x.since || '') || !DATE.test(x.asOf || '') || x.asOf < x.since) problems.push('site.json: directoryEntries[' + i + '] needs a name, a page, an https url, sections, a since date and an asOf date not before it (YYYY-MM-DD)');
   });
   if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
   for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));

@@ -1322,6 +1322,20 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && !/FAIRsharing|fairsharing\.org/i.test(rd) && !/registered (with|in) the Open Archives/i.test(rd)
       && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /FAIRsharing|openarchives\.org\/Register/i.test(read(path.join(ROOT, 'site', f)))));
   }
+  /* The Open Access Directory entry, which the operator added, is shown on both top pages with its page, its sections and the day
+   * it was last confirmed, said to be no review, and kept out of listedIn (which means a listing after editorial review). */
+  {
+    const de = JSON.parse(read(path.join(ROOT, 'site.json'))).directoryEntries || [];
+    const oad = de.find((x) => x.name === 'Open Access Directory');
+    const en = read(path.join(ROOT, 'site', 'index.html')), jaTop = read(path.join(ROOT, 'site', 'index.ja.html'));
+    const url = 'https://oad.simmons.edu/oadwiki/Disciplinary_repositories';
+    ok('the Open Access Directory entry is shown on the English and Japanese top pages with its page link, Philosophy and Mathematics, the day it was last confirmed, and that it is no review, and it is not counted among the reviewed listings',
+      oad !== undefined && oad.url === url && JSON.stringify(oad.sections) === JSON.stringify(['Philosophy', 'Mathematics']) && oad.since === '2026-11-09' && /^\d{4}-\d{2}-\d{2}$/.test(oad.asOf) && oad.asOf >= oad.since
+      && en.includes('<p class="meta">Listed on the <a href="' + url + '">Disciplinary repositories</a> page of the Open Access Directory, under Philosophy and Mathematics, as of ' + oad.asOf + ' (Japan time). The operator added the entry; it is not a review of Sophaxis.</p>')
+      && jaTop.includes('<p class="meta">Open Access Directory の <a href="' + url + '">Disciplinary repositories</a> の頁に、Philosophy と Mathematics の欄で掲載されています（' + oad.asOf + ' 現在）。項目は運営者が書き足したもので、Sophaxis の審査ではありません。</p>')
+      && !(JSON.parse(read(path.join(ROOT, 'site.json'))).listedIn || []).some((x) => /Open Access Directory/.test(x.name + x.description)),
+      oad ? oad.asOf : 'no entry');
+  }
   ok('the DOAPR application is recorded as an application, not as a listing', read(path.join(ROOT, 'README.md')).includes('applied for Sophaxis to be listed in DOAPR') && read(path.join(ROOT, 'README.md')).includes("Whether it is listed is DOAPR's decision.")
     && !fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html')).some((f) => /listed in DOAPR|DOAPR-listed/i.test(read(path.join(ROOT, 'site', f)))));
   {

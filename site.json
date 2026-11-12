@@ -8,6 +8,9 @@
   "listedIn": [
     { "name": "ROAR", "description": "the Registry of Open Access Repositories at the University of Southampton", "url": "https://roar.eprints.org/27422/", "since": "2026-11-06" }
   ],
+  "directoryEntries": [
+    { "name": "Open Access Directory", "page": "Disciplinary repositories", "url": "https://oad.simmons.edu/oadwiki/Disciplinary_repositories", "sections": ["Philosophy", "Mathematics"], "since": "2026-11-09", "asOf": "2026-11-09" }
+  ],
   "oai": { "adminEmails": ["wenwop21@icloud.com"] },
   "indexNowKey": "78f10d269b31138e5573375129074532",
   "repo": "https://github.com/cpsbvbng26-dotcom/sophaxis",
