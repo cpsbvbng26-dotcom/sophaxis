@@ -2,8 +2,14 @@ name: sources
 # The primary texts that the legal pages cite are fetched (tools/sources.js) and written to verification/sources-raw.json,
 # on a new branch sources/<date>, never on main. Run by hand. The operator reads what was fetched before any quotation
 # in verification/sources.json is taken from it, and brings it in by a pull request of its own.
+# With `only`, just the keys named (or "new": the keys not yet in the file) are fetched, and the rest of the file is kept.
 on:
   workflow_dispatch:
+    inputs:
+      only:
+        description: 'Keys to fetch again, comma-separated, or "new"; empty fetches everything'
+        required: false
+        default: ''
 permissions:
   contents: write
 jobs:
@@ -17,6 +23,8 @@ jobs:
           node-version: 22
       - run: sudo apt-get install -y -q poppler-utils > /dev/null
       - run: node tools/sources.js
+        env:
+          SOURCES_ONLY: ${{ inputs.only }}
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
