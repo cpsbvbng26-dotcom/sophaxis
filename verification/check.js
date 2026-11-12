@@ -1214,7 +1214,11 @@ console.log('\n31. Disputes: agreement first, then the court named in the Terms'
     && dj.includes('それまでは、同じ条件で、運営者の住所地を管轄する地方裁判所または簡易裁判所を、第一審の合意管轄裁判所とします。')
     && String(notice.text || '').includes('From ' + courtFrom + ', the court of first instance agreed in a form, for a dispute not settled by talks or mediation, is the Utsunomiya District Court or the Utsunomiya Summary Court'),
     courtFrom + ' / ' + changed);
-  ok('the reply time in a dispute is the 7 days the contact page promises', d.includes('The operator answers within 7 days') && read(path.join(ROOT, 'contact.md')).includes('The operator aims to answer within 7 days.')
+  /* 2026-11-12: the reply time was a promise without regard to a pause; from 2026-11-26 (14 days' notice) it is the aim that
+   * the contact page gives, and a pause under "Continuity" holds the answer. Until then the promise stands, in both languages. */
+  ok('the reply time in a dispute is the 7 days the contact page aims at: a promise until 2026-11-25, an aim from 2026-11-26 that waits during a pause under "Continuity", in both languages', d.includes('Until 2026-11-25, the operator answers within 7 days and does not leave a dispute without reply. From 2026-11-26, the operator aims to answer within 7 days and does not leave a dispute without reply; during a pause described under "Continuity" above, the answer waits until the pause ends.')
+    && dj.includes('2026-11-25 までは、運営者は 7 日以内に答え、紛争を返事のないまま放置しません。2026-11-26 からは、運営者は 7 日以内に答えることを目指し、紛争を返事のないまま放置しません。上の「続けるための備え」の休止のあいだは、答えは休止が終わるまで待ちます。')
+    && read(path.join(ROOT, 'contact.md')).includes('The operator aims to answer within 7 days.')
     && read(path.join(ROOT, 'disclaimer.md')).includes('Disputes are settled by agreement first'));
 }
 
@@ -4550,7 +4554,9 @@ console.log('\n112. The legal audit of 2026-11-12: its table, its counts, its qu
 {
   const RAW = JSON.parse(read(path.join(ROOT, 'verification', 'sources-raw.json')));
   const GUIDES = ['mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa'];
-  const pool = GUIDES.map((k) => ((RAW.sources[k] || {}).articles || {}).all || '').join('').replace(/\s+/g, '');
+  // The guidance is kept in the parts that are quoted (tools/sources.js), read as those parts.
+  const kept = require('../tools/citations.js').kept;
+  const pool = GUIDES.map((k) => kept(((RAW.sources[k] || {}).articles || {}).all)).join('').replace(/\s+/g, '');
   const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
   // The quotations in 「」 of a line, nested brackets kept inside.
   const quotes = (line) => { const out = []; let depth = 0, cur = ''; for (const ch of line) { if (ch === '「') { if (depth++ > 0) cur += ch; } else if (ch === '」') { if (--depth > 0) cur += ch; else { out.push(cur); cur = ''; } } else if (depth > 0) cur += ch; } return out; };
@@ -4617,7 +4623,9 @@ console.log('\n113. The duties the audit left open: the mailbox, the request log
   const P = RAW.pages || {};
   const flat = (x) => String(x || '').replace(/\s+/g, '');
   const sp = (x) => String(x || '').replace(/\s+/g, ' ');
-  const pageText = (k) => (P[k] && P[k].status === 200 && P[k].text) || '';
+  // A page is kept in the parts that the repository quotes or relies on (tools/sources.js), read as those parts.
+  const kept = require('../tools/citations.js').kept;
+  const pageText = (k) => (P[k] && P[k].status === 200 && kept(P[k].spans)) || '';
   const quotes = (line) => { const out = []; let depth = 0, cur = ''; for (const ch of line) { if (ch === '「') { if (depth++ > 0) cur += ch; } else if (ch === '」') { if (--depth > 0) cur += ch; else { out.push(cur); cur = ''; } } else if (depth > 0) cur += ch; } return out; };
   // Every service that the Privacy Policy names under "Services outside Japan", and every service read from, has a row.
   const SERVICES = ['GitHub', 'Vercel', 'ORCID', 'Internet Archive', 'Anthropic', 'OpenAI', 'xAI', 'Apple (the mailbox)', 'OpenAlex', 'DataCite', 'Crossref', 'Japan Link Center'];
@@ -4635,7 +4643,7 @@ console.log('\n113. The duties the audit left open: the mailbox, the request log
       if (page !== 'none' && !P[page]) bad.push('no fetched page ' + page);
       for (const [what, v] of [['name', nm], ['address', addr], ['representative', rep]]) if (!/^Not /.test(v) && !text.includes(v)) bad.push('the ' + what + ' of ' + who + ' is not on its page');
       if ((/^Not /.test(nm) || /^Not /.test(addr)) && !/^Not required/.test(record)) bad.push(who + ' lacks a name or an address where a record is required');
-      if (/^Not fetched/.test(addr) && page !== 'none' && P[page] && P[page].status === 200 && (P[page].text || '').length > 300) bad.push(who + ' is said not fetched, but was');
+      if (/^Not fetched/.test(addr) && page !== 'none' && P[page] && P[page].status === 200 && (P[page].length || 0) > 300) bad.push(who + ' is said not fetched, but was');
     }
     const g = flat(pageText('ppc-guidelines-records'));
     const qs = sec('What the law asks').split('\n').filter((l) => l.startsWith('- ')).flatMap(quotes);
@@ -4674,7 +4682,7 @@ console.log('\n113. The duties the audit left open: the mailbox, the request log
   ok('the Privacy Policy, in both languages, names iTunes K.K. as its own terms give it, asks no consent of those who write, says why the request logs are not personal information, gives the Commission\'s information on the United States in its words, and gives or explains the measures of every recipient abroad (Rules Article 17)',
     pf.length === 0, pf.join(' / '));
   // The quotations in the review and in the follow-up of the audit are in the fetched texts.
-  const pool = flat(Object.values(P).map((x) => x.text || '').join('') + ['ppc-qa', 'ppc-guidelines'].map((k) => ((RAW.sources[k] || {}).articles || {}).all || '').join('')
+  const pool = flat(Object.values(P).map((x) => kept(x.spans)).join('') + ['ppc-qa', 'ppc-guidelines'].map((k) => kept(((RAW.sources[k] || {}).articles || {}).all)).join('')
     + Object.values(RAW.sources['egov:415AC0000000057'].articles).join(''));
   const rv = read(path.join(ROOT, 'docs', 'legal-review.md'));
   const rvSec = (rv.split('### Personal information: whether the operator is a business operator, and the records of provision\n')[1] || '').split('\n### ')[0];
@@ -4708,14 +4716,13 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
   const S = require('../tools/sources.js');
   const sha = (x) => crypto.createHash('sha256').update(x, 'utf8').digest('hex');
   const flat = (x) => String(x || '').replace(/\s+/g, '');
-  /* Pure: what is wrong with the hashes of the texts fetched one by one (every page with a day of fetching, every whole law). */
-  const hashProblems = (raw) => {
-    const bad = [];
-    for (const [k, o] of Object.entries(raw.pages || {})) {
-      if (!o.fetched) continue;
-      if (o.text && o.sha256 !== sha(o.text)) bad.push('page ' + k);
-      if (!S.PAGES[k.split('>')[0]]) bad.push('page not in tools/sources.js: ' + k);
-    }
+  /* Pure: what is wrong with the hashes of the texts fetched one by one. From 2026-11-12, every page and every text that is
+   * not a law is kept only in parts, with the SHA-256 of its whole text (tools/sources.js keptProblems); given the whole texts
+   * of a run (`full`), a text fetched again that has another SHA-256, or a part that is not in it at its place, is caught.
+   * Every whole law carries the SHA-256 of each article, and every key is named in tools/sources.js. */
+  const hashProblems = (raw, full = null) => {
+    const bad = S.keptProblems(raw, full);
+    for (const k of Object.keys(raw.pages || {})) if (!S.PAGES[k.split('>')[0]]) bad.push('page not in tools/sources.js: ' + k);
     for (const [k, L] of Object.entries(raw.laws || {})) {
       if (!S.LAWS[k]) bad.push('law not in tools/sources.js: ' + k);
       if (L.status === 200 && L.title !== L.wanted) bad.push('law ' + k + ' is not the one wanted');
@@ -4725,10 +4732,12 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
     }
     return bad;
   };
-  const hp = hashProblems(RAW);
-  const pagesHashed = Object.values(RAW.pages || {}).filter((o) => o.fetched && o.text).length;
+  // The whole texts of a run, where they are at hand (verification/sources-full.json, the artifact of the run); never committed.
+  const FULL = fs.existsSync(S.FULL) ? JSON.parse(read(S.FULL)) : null;
+  const hp = hashProblems(RAW, FULL);
+  const pagesHashed = Object.values(RAW.pages || {}).filter((o) => /^[0-9a-f]{64}$/.test(o.sha256 || '') && Array.isArray(o.spans)).length;
   const lawsHashed = Object.values(RAW.laws || {}).reduce((n, L) => n + Object.keys(L.articles || {}).length + (L.suppl || []).length, 0);
-  ok('every page fetched on its own day (' + pagesHashed + ') and every article and supplementary provision of the whole laws (' + lawsHashed + ') carries the SHA-256 of its text, and each is named in tools/sources.js',
+  ok('every page fetched (' + pagesHashed + ') is kept in parts with the SHA-256 of its whole text, every article and supplementary provision of the whole laws (' + lawsHashed + ') carries the SHA-256 of its text, and each is named in tools/sources.js' + (FULL ? '; the parts and hashes agree with the whole texts at hand' : ''),
     hp.length === 0 && pagesHashed >= 60 && lawsHashed >= 200, hp.join(' / '));
   // The texts the continuation relies on, and those fetched for the other repositories, are in the file as fetched.
   const NEED = ['mic-et-guidelines>1', 'mic-et-faq', 'mic-ihoyugai>3', 'caa-cca-annotations>1', 'caa-cca-annotations>2', 'bunka-seidokaisetsu>1', 'vercel-fair-use', 'zenodo-terms', 'osf-terms', 'github-site-policy-license', 'openai-privacy-archived', 'xai-terms',
@@ -4737,9 +4746,10 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
   const missingNeed = NEED.filter((k) => !RAW.pages[k] || RAW.pages[k].status !== 200 || !RAW.pages[k].sha256).concat(LAWS_NEED.filter((k) => !RAW.laws || !RAW.laws[k] || RAW.laws[k].status !== 200));
   ok('the ' + NEED.length + ' pages and ' + LAWS_NEED.length + ' whole laws that the continuation and the other repositories rely on were fetched with status 200 and hashed', missingNeed.length === 0, missingNeed.join(', '));
   // The pool of every fetched text, without white space.
-  const pool = flat(Object.values(RAW.pages || {}).map((o) => o.text || '').join('')
+  const kept = require('../tools/citations.js').kept;
+  const pool = flat(Object.values(RAW.pages || {}).map((o) => kept(o.spans)).join('')
     + Object.values(RAW.laws || {}).map((L) => Object.values(L.articles || {}).join('') + (L.suppl || []).map((x) => x.text).join('')).join('')
-    + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map(String).join('')).join(''));
+    + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map(kept).join('')).join(''));
   const quotes = (line) => { const out = []; let depth = 0, cur = ''; for (const ch of line) { if (ch === '「') { if (depth++ > 0) cur += ch; } else if (ch === '」') { if (--depth > 0) cur += ch; else { out.push(cur); cur = ''; } } else if (depth > 0) cur += ch; } return out; };
   const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
   const FETCHED_NOW = ['電気通信事業法施行規則', 'Vercel の言う商用', 'Zenodo と OSF', 'OpenAI', 'xAI', '第 18 条', '施行規則第 16 条'];
@@ -4807,12 +4817,19 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
     && /^\| OpenAI \| OpenAI OpCo, LLC \| 1455 Third Street, San Francisco, California 94158, United States \|.*\| openai-privacy-archived \|/m.test(rec) && /^\| xAI \| SpaceX Super Intelligence LLC \| 800 W Cesar Chavez St\., Austin, TX 78701, USA \|.*\| xai-terms \|/m.test(rec)
     && /баз данных, находящихся за пределами территории Российской Федерации, не допускаются/.test(((RAW.sources['ru-152'] || {}).articles || {})['18'] || '') && read(path.join(ROOT, 'policies', 'submission.md')).includes('| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes |'));
   // Breaking on purpose.
-  const p0 = Object.keys(RAW.pages).find((k) => RAW.pages[k].fetched && RAW.pages[k].text);
-  const l0 = Object.keys(RAW.laws)[0], a0 = Object.keys(RAW.laws[l0].articles || {})[0] || Object.keys((RAW.laws.telecom || RAW.laws['telecom-rules']).articles)[0];
-  const rawBad1 = { ...RAW, pages: { ...RAW.pages, [p0]: { ...RAW.pages[p0], text: RAW.pages[p0].text + ' ' } } };
+  /* A page of a made-up run: its whole text, and the part kept of it. The real whole texts are not committed, so the checks
+   * are broken on this one: a text fetched again with another SHA-256, a part not at its place, a whole text committed. */
+  const T0 = 'The whole text of a page as it was fetched, with a part that the repository quotes.';
+  const part0 = 'a part that the repository quotes';
+  const page0 = { url: S.PAGES['ssrn-terms'].url, status: 200, fetched: '2026-11-12', length: T0.length, sha256: sha(T0), spans: [{ at: T0.indexOf(part0), text: part0 }] };
+  const raw0 = { pages: { 'ssrn-terms': page0 }, sources: {}, laws: {} }, full0 = { pages: { 'ssrn-terms': { text: T0 } } };
+  const rawBad1 = [[raw0, { pages: { 'ssrn-terms': { text: T0.replace('as it was fetched', 'as it is fetched again') } } }],
+    [{ ...raw0, pages: { 'ssrn-terms': { ...page0, spans: [{ at: page0.spans[0].at, text: 'a part that the repository does not quote' }] } } }, full0],
+    [{ ...raw0, pages: { 'ssrn-terms': { ...page0, text: T0 } } }, null],
+    [{ ...raw0, sources: { 'cc-by': { status: 200, articles: { 3: 'Section 3 – License Conditions, kept whole.' } } } }, null]];
   const lawBad = JSON.parse(JSON.stringify(RAW.laws)); const lk = Object.keys(lawBad).find((k) => Object.keys(lawBad[k].articles || {}).length); const ak = Object.keys(lawBad[lk].articles)[0]; lawBad[lk].articles[ak] += '。';
   const rawBad2 = { ...RAW, laws: lawBad };
-  const rawBad3 = { ...RAW, pages: { ...RAW.pages, 'not-a-source': { fetched: '2026-11-12', text: 'x', sha256: sha('x') } } };
+  const rawBad3 = { ...RAW, pages: { ...RAW.pages, 'not-a-source': { fetched: '2026-11-12', sha256: sha('x'), spans: [] } } };
   const brokenAudit = [audit.replace('営利の要素は必要でなく', '営利の要素は要らず'), audit.replace('この表の判定は、誤り 1、', 'この表の判定は、誤り 2、'), audit.replace('| 誤り | 審査を直しました。運営者は', '| 軽微 | 審査を直しました。運営者は'),
     audit.replace('- ジャパンリンクセンターの住所。', '- Vercel の言う商用の定義。取り寄せていません。\n- ジャパンリンクセンターの住所。'), audit.replace('| 根拠不足 | 2026-11-12 に Claude が決めました。この規律が', '| 根拠不足 | この規律が'),
     audit.replace('- カザフスタンの個人データ法。adilet.zan.kz も、Internet Archive の写しも、スクリプトを求める頁だけを返しました。', '- カザフスタンの個人データ法')];
@@ -4820,7 +4837,7 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
     [pv, pvj.replace('取り扱うのは、', '扱うのは、'), tm, tmj, site.termsNotice, changes, changed], [pv, pvj, tm.replace(COURT, ''), tmj, site.termsNotice, changes, changed],
     [pv, pvj, tm, tmj, { text: '' }, changes, changed], [pv, pvj, tm, tmj, site.termsNotice, changes, '2026-11-20'], [pv + "\nThe Ministry's Ordinance was not fetched.", pvj, tm, tmj, site.termsNotice, changes, changed]];
   ok('the checks fail on a changed text whose hash is not changed, an altered article of a whole law, a page that tools/sources.js does not name, an altered quotation, a wrong count, a wrong judgement, a fetched text listed as not fetched, a safer choice without its maker, an item without its reason, a lost safer wording, a lost notice, and a change announced less than 14 days ahead',
-    hashProblems(rawBad1).length > 0 && hashProblems(rawBad2).length > 0 && hashProblems(rawBad3).length > 0 && hashProblems(RAW).length === 0
+    hashProblems(raw0, full0).length === 0 && rawBad1.every(([r, f]) => hashProblems(r, f).length > 0) && hashProblems(rawBad2).length > 0 && hashProblems(rawBad3).length > 0 && hashProblems(RAW).length === 0
     && brokenAudit.every((b) => b !== audit && contProblems(b, pool).length > 0) && brokenSafer.every((a) => saferProblems(...a).length > 0));
 }
 
