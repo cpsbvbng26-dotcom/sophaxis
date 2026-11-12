@@ -354,7 +354,8 @@
         "連邦法第 152-FZ 号",
         "ロシアの連邦法第 152-FZ 号"
       ],
-      "source": "ru-152"
+      "source": "ru-152",
+      "flatSuperscript": "kremlin.ru prints part numbers such as 1¹ with a superscript, which the plain text reads as 11; a citation of part 1.1 is found as 11."
     },
     "Egypt Law 151/2020": {
       "en": [
@@ -789,11 +790,10 @@
   "untraced": {
     "Russia 152-FZ": {
       "articles": [
-        "1",
         "18"
       ],
-      "why": "kremlin.ru answered 403 to every page of the Law on 2026-11-11 (sources-raw.json, ru-152).",
-      "why_ja": "kremlin.ru が、2026-11-11 の取り寄せで、法律のすべての頁に 403 を返しました（sources-raw.json の ru-152）。"
+      "why": "kremlin.ru answered every page of the Law on 2026-11-12, but the plain text reads the superscript in the heading of Article 10¹ as 101, so the cut by rising numbers stops before Article 18 and it was not separated (sources-raw.json, ru-152).",
+      "why_ja": "kremlin.ru は 2026-11-12 に法律のすべての頁を返しましたが、第 10¹ 条の見出しの上付きの数字が文字だけの文では 101 と読まれ、番号の昇順で切り分ける手順が第 18 条の前で止まりました。そのため第 18 条を切り出せていません（sources-raw.json の ru-152）。"
     },
     "India DPDP Rules": {
       "articles": [
