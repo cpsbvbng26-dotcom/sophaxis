@@ -158,6 +158,9 @@ function curl(url, s = {}) {
   return { status: +status, final, text: s.markdown ? raw : plain(raw), raw };
 }
 
+/* Email addresses on the pages are not kept: the repository holds no email address but the few it allows. */
+const noMail = (x) => x.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g, '[email address]');
+
 /* The links of a page whose address or text matches `re`, as [text, absolute address], each once (300 at most). */
 function linksOf(raw, base, re) {
   const seen = new Set(), out = [];
@@ -311,8 +314,8 @@ async function main() {
     const o = { url: p.url, status: r.status || r.error };
     if (r.final && r.final !== p.url) o.final = r.final;
     if (r.pdf) o.pdf = true;
-    if (r.text) { o.length = r.text.length; o.text = r.text.replace(/\s+/g, ' ').slice(0, p.keep || 200000); }
-    if (p.links && r.raw) o.links = linksOf(r.raw, r.final || p.url, p.links);
+    if (r.text) { o.length = r.text.length; o.text = noMail(r.text.replace(/\s+/g, ' ')).slice(0, p.keep || 200000); }
+    if (p.links && r.raw) o.links = linksOf(r.raw, r.final || p.url, p.links).map(([t, h]) => [noMail(t), noMail(h)]);
     out.pages[key] = o;
     console.log('page', key, o.status, o.length || 0, (o.links || []).length);
     await sleep(1500);
