@@ -1,8 +1,10 @@
 # Advisory board: a call
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [諮問委員の募集（日本語訳）](./advisory.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page is the call for an advisory board of Sophaxis: what an adviser does, who can join and how.
 
 ## Why
 

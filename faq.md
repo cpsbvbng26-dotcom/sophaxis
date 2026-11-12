@@ -1,8 +1,10 @@
 # Frequently asked questions
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [よくある質問（日本語訳）](./faq.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page answers questions that people have asked about Sophaxis.
 
 Each answer is a short form of a policy. Where they differ, the policy applies.
 

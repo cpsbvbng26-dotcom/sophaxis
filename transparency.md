@@ -1,8 +1,10 @@
 # Transparency: a self-assessment
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [透明性の自己評価（日本語訳）](./transparency.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page is the operator's own assessment of Sophaxis against the Principles of Transparency and Best Practice in Scholarly Publishing.
 
 COPE, DOAJ, OASPA and WAME publish the [Principles of Transparency and Best Practice in Scholarly Publishing](https://doaj.org/apply/transparency/).
 This page holds Sophaxis against version 5.0 of October 2026, read at DOAJ on 2026-11-09, heading by heading.

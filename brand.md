@@ -1,8 +1,10 @@
 # Name, logo and badge
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page sets out the name, the logo, the colours and the badge of Sophaxis.
 
 ## Name
 

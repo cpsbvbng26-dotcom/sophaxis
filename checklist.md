@@ -1,8 +1,10 @@
 # Before you submit: a checklist
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [投稿の前に：確かめること（日本語訳）](./checklist.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page is the checklist for a submission to Sophaxis.
 
 This list adds no rule. It gathers what the [Submission Policy](./policies/submission.md) and the [Moderation Policy](./policies/moderation.md) already ask, so that a submission is complete the first time. Where this list and the policies differ, the policies apply.
 For anyone who has never made a preprint public, [Your first preprint](./first.md) comes first.

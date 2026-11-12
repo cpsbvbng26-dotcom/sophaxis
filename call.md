@@ -1,8 +1,10 @@
 # A call to researchers
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [研究者の方へ（日本語訳）](./call.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page is a call to researchers in philosophy and mathematics to submit their preprints to Sophaxis.
 
 ## Who it is for
 

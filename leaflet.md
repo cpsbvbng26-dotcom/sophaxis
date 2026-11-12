@@ -1,8 +1,10 @@
 # Sophaxis on one page
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [一枚でわかる Sophaxis（日本語訳）](./leaflet.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page is Sophaxis on one page: what it is, what it is not, and how to submit.
 
 This page is meant to fit on one sheet of paper, for printing or for handing on.
 

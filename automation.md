@@ -1,6 +1,6 @@
 # What runs by itself
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [自動で動く手順（日本語訳）](./automation.ja.md). It is a translation; where the two differ, the English text applies.
 

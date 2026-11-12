@@ -44,6 +44,7 @@ Sophaxis has also applied to the registries below. None of them has listed it ye
 PhilPapers, asked on 2026-11-03, did not add Sophaxis to its Open Access Gateway; its answer is recorded under "Operator and contact" below.
 
 Each application is described under [Operator and contact](#operator-and-contact).
+Points raised by outside assessments, such as one by a language model on 2026-11-12, and what was done about each, are in [docs/outside-assessments.md](docs/outside-assessments.md). An assessment is an outside evaluation, not an endorsement.
 
 ## Submitting
 
@@ -276,7 +277,7 @@ Zenodo に Sophaxis のコミュニティを置いています。2026-11-07 に�
 | DOAPR（COAR） | オープンアクセスのプレプリントリポジトリの一覧 | 2026-11-01 | 審査中 |
 | OpenDOAR（Jisc） | オープンアクセスのリポジトリの一覧 | 2026-11-08 | 問い合わせ済み。基準を満たす見込みだが、新しい登録は 2027 年 1 月の案内まで止まっている |
 | ASAPbio | プレプリントサーバーとその方針の一覧 | 2026-11-10 | 依頼済み（メール） |
-| CORE | OAI-PMH で集めるオープンアクセスの論文の索引 | 2026-11-10 | 依頼済み。CORE が審査し、そのあと収集する。最長で三週間かかるとのこと |
+| CORE | OAI-PMH で集めるオープンアクセスの論文の索引 | 2026-11-10 | 依頼済み。CORE が審査し、そのあと収集する。最長で 3 週間かかるとのこと |
 
 2026-11-03 に依頼した PhilPapers は、Sophaxis を Open Access Gateway に加えませんでした。その答えは下に記してあります。
 
@@ -290,8 +291,8 @@ OSF にプロジェクトの頁があります（<https://osf.io/mq7za/>、DOI [
 同じ日に、サウサンプトン大学の Registry of Open Access Repositories（ROAR）に、Sophaxis の記録を出しました。編集の審査を通り、2026-11-06（日本時間）から載っています（<https://roar.eprints.org/27422/>）。
 2026-11-08（日本時間）に、Jisc が運営する OpenDOAR（Directory of Open Access Repositories）に、Sophaxis が掲載の基準を満たすかを問い合わせました。Jisc からは、PDF を自分のサーバーに置くプレプリントサーバーなら基準を満たす見込みが高いこと、OpenDOAR を見直すあいだ新しい登録を止めていて、2027 年 1 月に案内を出すことの返事がありました。その案内のあとに申請します。載せるかどうかは OpenDOAR が決めます。申請の文は [docs/opendoar.md](docs/opendoar.md) に下書きしてあります。
 2026-11-10（日本時間）に、ASAPbio に、プレプリントサーバーの一覧へ Sophaxis を加えるようメールで依頼しました。加えるかどうかは ASAPbio が決めます。
-同じ日に、英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、OAI-PMH の入口から Sophaxis を収集するよう依頼しました。CORE からは、まず依頼を審査し、認めたあとに収集して連絡先に知らせること、それに最長で三週間かかることの返事がありました。収集して索引に載せるかどうかと、その時期は、CORE が決めます。
-Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から六か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。運営者の正誤表を検査するソフトウェア [errata-check](https://github.com/cpsbvbng26-dotcom/errata-check) も、これと一緒に、2027 年 5 月以降に JOSS へ投稿します。JOSS が求めることと、まだ足りないことは [docs/joss.md](docs/joss.md)（英語）にあります。
+同じ日に、英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、OAI-PMH の入口から Sophaxis を収集するよう依頼しました。CORE からは、まず依頼を審査し、認めたあとに収集して連絡先に知らせること、それに最長で 3 週間かかることの返事がありました。収集して索引に載せるかどうかと、その時期は、CORE が決めます。
+Sophaxis のコードを、Journal of Open Source Software（JOSS）に投稿することを計画しています。JOSS は、公開から 6 か月を超えたリポジトリを求めます。ここの最初のコミットは 2026-10-30 なので、最短で 2027-05-01 です。まだ投稿していません。プレプリントサーバーが JOSS の範囲に入るかどうかは、JOSS が決めます。運営者の正誤表を検査するソフトウェア [errata-check](https://github.com/cpsbvbng26-dotcom/errata-check) も、これと一緒に、2027 年 5 月以降に JOSS へ投稿します。JOSS が求めることと、まだ足りないことは [docs/joss.md](docs/joss.md)（英語）にあります。
 収録が 1,000 件に達したら、運営者は、準備を経て、Sophaxis に独自のドメインを取ることと、国際的な非政府組織（NGO）として運営することを検討する可能性があります。これは可能性であり、計画でも約束でもありません。まだ何も決まっておらず、そのための団体もありません。Sophaxis は、そのための資金・寄付・会員を求めず、受け取りません。こうした変更は法令の範囲でだけ行い、効力が始まる前にトップの頁で告知します。それまでは、日本に住む一人の運営者が <https://sophaxis.vercel.app/> で運営します。
 
 ### 言語モデルの利用

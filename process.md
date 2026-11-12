@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.md). It is a translation; where the two differ, the English text applies.
 

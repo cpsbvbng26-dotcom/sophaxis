@@ -1,6 +1,6 @@
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [What runs by itself](./automation.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -22,7 +22,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 書くもの：それぞれの確認の結果と記録の下書きを載せたコメント。`verified` か `unverified` のラベル。
 - 様式の必須のボックスすべてに印があるかを確かめます。ボックスは、リポジトリにある二つの投稿の様式から読みます。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。[投稿の規程](./policies/submission.ja.md#投稿者が確認すること)にも同じボックスを並べてあります。
 - 2026-11-21 から、[投稿の規程](./policies/submission.ja.md)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
-- 2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから六か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。
+- 2026-11-23 から、投稿の規程が定めるとおり、作品の最初の DOI が登録されてから 6 か月がたっているかも確かめます。数えるのは、issue が開かれた日までです。
 - 2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
 - 2026-11-23 から、載っている作品の著者にまだなっていない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
@@ -63,7 +63,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 ## 一日に一度、日本時間の 09:17
 
 - 読むもの：開いている削除の求めと、確かめられた撤回。
-- 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる二日前から書きます。
+- 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる 2 日前から書きます。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
 ## 月に一度、1 日の日本時間 09:17
@@ -71,17 +71,17 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 読むもの：記録と `data/news.json`。
 - 書くもの：X の公式アカウントのための、英語と日本語の投稿文を一つずつ載せた issue。どちらも X が数える 280 字に収め、前の月に載ったものとお知らせを挙げます。新しいものがない月は、issue を書きません。
 - 運営者に残すこと：投稿すること。X の API は有料なので、X へは何も自動で投稿しません。
-- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の一日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
+- あわせて、Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の 1 日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
 - コード：[tools/monthly.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/monthly.js) と [tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
 
-## 年に一度、一月 2 日の日本時間 12:23
+## 年に一度、1 月 2 日の日本時間 12:23
 
 - 読むもの：submission・withdrawal・removal のラベルが付いた公開の issue。断った投稿へのリポジトリの持ち主のコメント。記録。
 - 書くもの：前の年の数を載せた issue。開かれた投稿、受理した投稿、断った投稿、まだ決めていない投稿の数です。断るときに挙げた理由、投稿から判断までの日数、求め、撤回した記録と削除した記録も数えます。
 - 運営者に残すこと：数を `data/reports/` に記録すること。[年ごとの判断](https://sophaxis.vercel.app/decisions.html)の頁は、そこから組み立てます。
 - コード：[tools/report.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report.js) と [tools/report_issue.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/report_issue.js)。[report.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/report.yml) が動かします。
 
-## 年に一度、十月 30 日の日本時間 09:17
+## 年に一度、10 月 30 日の日本時間 09:17
 
 - 読むもの：運営者の手順を書いた [docs/operations.md](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md) の「Yearly audit」の節。
 - 書くもの：Sophaxis が始まった日に、その一覧に印を付けるための issue。同じ題の issue があれば開きません。
@@ -100,7 +100,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - Vercel は、リポジトリの `site/` にあるファイルを配信します。そのファイルは、`build.js` が記録から組み立てます。OAI-PMH の口は、同じ記録を読む Vercel 上の小さな関数です。
 - 新しい頁が公開されると、IndexNow を受け付ける検索エンジンに、新しい記録の頁と PDF の写し、変わったもの、消えたものを知らせます。新しいものと変わったものは、著者が同意していれば Internet Archive に保存します。消えた頁は保存しません。
 - Vercel が保つ以前の版のサイトは、公開していません。
-- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。十分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
+- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。10 分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
 - コード：[tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js)。[live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml) が動かします。
 - `robots.txt` は、サイトのほかの部分と一緒に組み立てます。削除した記録と、著者が保存に同意していない記録を集めないよう、Internet Archive のクローラーに求めます。
 - コード：[tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js)。[indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) が動かし、削除の手順の push のあとにも動きます。

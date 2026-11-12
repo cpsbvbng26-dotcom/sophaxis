@@ -1,8 +1,10 @@
 # Accessibility
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [アクセシビリティ（日本語訳）](./accessibility.ja.md). It is a translation; where the two differ, the English text applies.
+
+This page is the accessibility statement of Sophaxis: what it aims for, what is checked, what is known not to work, and how to report a barrier.
 
 ## The aim
 
@@ -36,7 +38,7 @@ Before any change is published, two sets of checks run on every page of the site
 - The PDF copies are the authors' files, kept unmodified; Sophaxis cannot add structure to them, and some may not work with a screen reader.
 - Titles and abstracts come from the DOI metadata as plain text, so mathematical notation may read poorly.
 - The search page needs JavaScript, the only script on the site; without it, the lists by field and by month, and the feeds, give the same records.
-- The records, the lists and the statistics are in English; the policies and the prose pages are also in Japanese.
+- The lists and the statistics are in English. The policies, the prose pages and the record pages are also in Japanese; on a record page in Japanese, the title, the abstract and the other texts of the authors stay in their language.
 
 ## Reporting a barrier
 
