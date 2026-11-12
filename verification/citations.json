@@ -601,6 +601,42 @@
         "法律第 164 号"
       ],
       "named": "Named only, as reported."
+    },
+    "MIC Entry Manual": {
+      "en": [
+        "the Ministry's Entry Manual"
+      ],
+      "ja": [
+        "電気通信事業参入マニュアル"
+      ],
+      "source": "mic-entry-manual"
+    },
+    "MIC Entry Procedures": {
+      "en": [
+        "the Ministry's page on entry procedures"
+      ],
+      "ja": [
+        "電気通信事業参入・変更手続の案内"
+      ],
+      "source": "mic-entry-procedures"
+    },
+    "PPC Guidelines": {
+      "en": [
+        "the Commission's General Guidelines"
+      ],
+      "ja": [
+        "個人情報保護法ガイドライン（通則編）"
+      ],
+      "source": "ppc-guidelines"
+    },
+    "PPC Q&A": {
+      "en": [
+        "the Commission's Q&A on the Guidelines"
+      ],
+      "ja": [
+        "ガイドラインに関するＱ＆Ａ"
+      ],
+      "source": "ppc-qa"
     }
   },
   "fetchAlso": {
@@ -727,6 +763,18 @@
       "3",
       "4",
       "5"
+    ],
+    "MIC Entry Manual": [
+      "all"
+    ],
+    "MIC Entry Procedures": [
+      "all"
+    ],
+    "PPC Guidelines": [
+      "all"
+    ],
+    "PPC Q&A": [
+      "all"
     ]
   },
   "recitals": {

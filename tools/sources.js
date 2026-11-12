@@ -56,6 +56,11 @@ const SOURCES = {
   // At the commit that the weekly watch recorded (verification/statutes.json), so that both read the same text.
   'github-terms': { url: 'https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/Policies/github-terms/github-terms-of-service.md', markdown: true },
   'vercel-terms': { url: 'https://vercel.com/legal/terms', split: /(?:^| )(\d+)\. (?=[A-Z][A-Za-z ,&'’-]{2,60} )/g },
+  // Official guidance that reads the Japanese statutes: kept whole (as far as 120,000 characters), quoted from, not cited by article.
+  'mic-entry-manual': { url: 'https://www.soumu.go.jp/main_content/000477428.pdf', whole: 'all' },
+  'mic-entry-procedures': { url: 'https://www.soumu.go.jp/menu_seisaku/ictseisaku/denkitsushin_suishin/tetsuzuki/index.html', whole: 'all', lang: 'ja' },
+  'ppc-guidelines': { url: 'https://www.ppc.go.jp/files/pdf/260614_guidelines01.pdf', whole: 'all' },
+  'ppc-qa': { url: 'https://www.ppc.go.jp/personalinfo/faq/APPI_QA/', whole: 'all', lang: 'ja' },
   // The legal codes open with a list of their sections; the sections themselves start at the last heading of section 1.
   'cc-by': { url: 'https://creativecommons.org/licenses/by/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
   'cc-by-sa': { url: 'https://creativecommons.org/licenses/by-sa/4.0/legalcode.en', split: /Section (\d+) – /g, fromLast: 'Section 1 – ' },
