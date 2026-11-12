@@ -248,6 +248,9 @@ const PAGES = {
   'joss-about': PAGE('https://joss.theoj.org/about'),
   'joss-policies-src': PAGE('https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/docs/policies.md', { markdown: true }),
   'joss-sidebar-src': PAGE('https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/app/views/papers/_sidebar_published.html.erb', { markdown: true }),
+  /* Added on 2026-11-12 (the fourth pass): JOSS's guide to the paper, at the same commit, for what it asks of the authors'
+   * affiliations, so that the affiliation in the drafts of Sophaxis, errata-check and deposit-check is read against it. */
+  'joss-paper-src': PAGE('https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/docs/paper.md', { markdown: true }),
   'datacite-terms': PAGE(IA('https://datacite.org/terms-and-conditions/'), { links: /terms|licen|cc0|api/i }),
   'datacite-api-docs': PAGE(IA('https://support.datacite.org/docs/api'), { links: /terms|licen|cc0|usage/i }),
   'crossref-rest-api': PAGE('https://www.crossref.org/documentation/retrieve-metadata/rest-api/', { links: /retrieve-metadata|licen|etiquette|terms|polite|tips/i }),
