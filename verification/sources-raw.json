@@ -16366,6 +16366,51 @@
      "text": "Date Deposited: 05 Nov 2026 16:42"
     }
    ]
+  },
+  "joss-paper-src": {
+   "url": "https://raw.githubusercontent.com/openjournals/joss/02100739082f2830cedbfd5c41b6f46c2fc9f3db/docs/paper.md",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 20445,
+   "sha256": "642c808db305a892c6f03abe26f0ad168f8561d6563a0057775db96d6fbcc6bb",
+   "spans": [
+    {
+     "at": 611,
+     "text": "authors"
+    },
+    {
+     "at": 1729,
+     "text": "insufficient"
+    },
+    {
+     "at": 2614,
+     "text": "A list of the authors of the software and their affiliations, using the correct format"
+    },
+    {
+     "at": 3817,
+     "text": "GitHub"
+    },
+    {
+     "at": 4435,
+     "text": "Name"
+    },
+    {
+     "at": 4749,
+     "text": "suffix"
+    },
+    {
+     "at": 7018,
+     "text": "Germany"
+    },
+    {
+     "at": 9663,
+     "text": "asis"
+    },
+    {
+     "at": 13468,
+     "text": "prefix"
+    }
+   ]
   }
  },
  "laws": {
