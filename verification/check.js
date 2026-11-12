@@ -4700,6 +4700,128 @@ console.log('\n113. The duties the audit left open: the mailbox, the request log
     brokenRec.every((b) => b !== rec && recProblems(b).length > 0) && brokenPol.every(([a, b]) => (a !== en || b !== ja) && polProblems(a, b).length > 0));
 }
 
+console.log('\n114. The continuation of the audit: the texts fetched to close its gaps, each hashed, its quotations, what is still not fetched, and the safer wording');
+{
+  const RAW = JSON.parse(read(path.join(ROOT, 'verification', 'sources-raw.json')));
+  const S = require('../tools/sources.js');
+  const sha = (x) => crypto.createHash('sha256').update(x, 'utf8').digest('hex');
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  /* Pure: what is wrong with the hashes of the texts fetched one by one (every page with a day of fetching, every whole law). */
+  const hashProblems = (raw) => {
+    const bad = [];
+    for (const [k, o] of Object.entries(raw.pages || {})) {
+      if (!o.fetched) continue;
+      if (o.text && o.sha256 !== sha(o.text)) bad.push('page ' + k);
+      if (!S.PAGES[k.split('>')[0]]) bad.push('page not in tools/sources.js: ' + k);
+    }
+    for (const [k, L] of Object.entries(raw.laws || {})) {
+      if (!S.LAWS[k]) bad.push('law not in tools/sources.js: ' + k);
+      if (L.status === 200 && L.title !== L.wanted) bad.push('law ' + k + ' is not the one wanted');
+      if (L.status !== 200 && !L.error && L.status === undefined) bad.push('law ' + k + ' without a status or an error');
+      for (const [a, t] of Object.entries(L.articles || {})) if ((L.sha256 || {})[a] !== sha(t)) bad.push('law ' + k + ' ' + a);
+      for (const [i, x] of (L.suppl || []).entries()) if (x.sha256 !== sha(x.text)) bad.push('law ' + k + ' supplementary ' + i);
+    }
+    return bad;
+  };
+  const hp = hashProblems(RAW);
+  const pagesHashed = Object.values(RAW.pages || {}).filter((o) => o.fetched && o.text).length;
+  const lawsHashed = Object.values(RAW.laws || {}).reduce((n, L) => n + Object.keys(L.articles || {}).length + (L.suppl || []).length, 0);
+  ok('every page fetched on its own day (' + pagesHashed + ') and every article and supplementary provision of the whole laws (' + lawsHashed + ') carries the SHA-256 of its text, and each is named in tools/sources.js',
+    hp.length === 0 && pagesHashed >= 60 && lawsHashed >= 200, hp.join(' / '));
+  // The texts the continuation relies on, and those fetched for the other repositories, are in the file as fetched.
+  const NEED = ['mic-et-guidelines>1', 'mic-et-faq', 'mic-ihoyugai>3', 'caa-cca-annotations>1', 'caa-cca-annotations>2', 'bunka-seidokaisetsu>1', 'vercel-fair-use', 'zenodo-terms', 'osf-terms', 'github-site-policy-license', 'openai-privacy-archived', 'xai-terms',
+    'ssrn-terms', 'philpapers-terms', 'philarchive-about', 'orcid-terms', 'orcid-public-api-terms', 'edx-terms', 'joss-about', 'joss-sidebar-src', 'datacite-terms', 'datacite-api-docs', 'crossref-rest-api', 'openalex-license-src', 'conatus-about', 'conatus-submissions'];
+  const LAWS_NEED = ['telecom-rules', 'ipa-rules', 'appi-order', 'copyright-act-suppl', 'swords-act', 'swords-order', 'swords-rules'];
+  const missingNeed = NEED.filter((k) => !RAW.pages[k] || RAW.pages[k].status !== 200 || !RAW.pages[k].sha256).concat(LAWS_NEED.filter((k) => !RAW.laws || !RAW.laws[k] || RAW.laws[k].status !== 200));
+  ok('the ' + NEED.length + ' pages and ' + LAWS_NEED.length + ' whole laws that the continuation and the other repositories rely on were fetched with status 200 and hashed', missingNeed.length === 0, missingNeed.join(', '));
+  // The pool of every fetched text, without white space.
+  const pool = flat(Object.values(RAW.pages || {}).map((o) => o.text || '').join('')
+    + Object.values(RAW.laws || {}).map((L) => Object.values(L.articles || {}).join('') + (L.suppl || []).map((x) => x.text).join('')).join('')
+    + Object.values(RAW.sources).map((r) => Object.values(r.articles || {}).map(String).join('')).join(''));
+  const quotes = (line) => { const out = []; let depth = 0, cur = ''; for (const ch of line) { if (ch === '「') { if (depth++ > 0) cur += ch; } else if (ch === '」') { if (--depth > 0) cur += ch; else { out.push(cur); cur = ''; } } else if (depth > 0) cur += ch; } return out; };
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const FETCHED_NOW = ['電気通信事業法施行規則', 'Vercel の言う商用', 'Zenodo と OSF', 'OpenAI', 'xAI', '第 18 条', '施行規則第 16 条'];
+  /* Pure: what is wrong with the audit's continuation and its list of texts not fetched; [] when nothing is. */
+  const contProblems = (t, poolFlat) => {
+    const bad = [];
+    const sec = (h) => (t.split('\n## ' + h + '\n')[1] || '').split('\n## ')[0];
+    const c = sec('2026-11-12 の続き：取り寄せた周辺の文');
+    if (!c.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |')) bad.push('the columns');
+    const rows = c.split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| ---') && !l.startsWith('| 箇所 |')).map((l) => l.split(' | '));
+    if (rows.length < 10) bad.push('too few rows');
+    rows.forEach((r, i) => { if (r.length !== 6 || !JUDGE.includes(r[4])) bad.push('row ' + (i + 1)); });
+    const count = JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、');
+    if (!c.includes('この表の判定は、' + count + ' です。')) bad.push('the count');
+    const qs = c.split('\n').filter((l) => l.startsWith('| ')).flatMap(quotes);
+    if (qs.length < 15) bad.push('too few quotations');
+    for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a fetched text: ' + q.slice(0, 30));
+    for (const r of rows.filter((x) => x[4] === '根拠不足')) if (!r[5].includes('2026-11-12 に Claude が決めました。')) bad.push('a safer choice without its maker: ' + r[0]);
+    if (!c.includes('点検の表は、点検したときのまま残しています。')) bad.push('the original rows are not kept');
+    const nf = sec('取り寄せられなかった文');
+    const items = nf.split('\n').filter((l) => l.startsWith('- '));
+    if (items.length < 5 || !nf.includes('確かめていないものとして扱います。')) bad.push('the list of texts not fetched');
+    for (const l of items) if (!/。.+。$/.test(l)) bad.push('an item without its reason: ' + l.slice(2, 20));
+    for (const x of FETCHED_NOW) if (items.some((l) => l.startsWith('- ' + x) || l.includes(x + 'の'))) bad.push('listed as not fetched, but fetched: ' + x);
+    return bad;
+  };
+  const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const cp = contProblems(audit, pool);
+  const nCont = ((audit.split('\n## 2026-11-12 の続き：取り寄せた周辺の文\n')[1] || '').split('\n## ')[0].match(/^\| (?!---|箇所 \|)/gm) || []).length;
+  ok('the continuation of the audit is a table of ' + nCont + ' rows with the six columns, each judged one of the five ways and counted, every quotation in it is word for word in a fetched text, every safer choice names its maker, and the list of texts not fetched holds only what is still not fetched, each with its reason',
+    cp.length === 0, cp.join(' / '));
+  // The safer wording: the rules on sending users' information met as if they applied; the agreed court narrowed from a day 14 days after its change.
+  const pv = read(path.join(ROOT, 'policies', 'privacy.md')), pvj = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  const PV = ['Sophaxis therefore meets these rules as if they applied, and gives here, for each request that its pages make a reader\'s browser send, the three things that the Ordinance asks to be made known.', 'What is sent: ', 'Who handles it: ', 'What for: '];
+  const PVJ = ['そこで Sophaxis は、この規律が掛かるものとして務めを果たします。', '送られる情報は、', '取り扱うのは、', '利用目的は、'];
+  const tm = read(path.join(ROOT, 'policies', 'terms.md')), tmj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
+  const COURT = "From 2026-11-26, this agreement on the court covers only suits based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction.";
+  const COURT_JA = '2026-11-26 から、この裁判所の合意の対象は、この規約に基づく訴えと、この規約のもとでのその人自身の作品の投稿・掲載・訂正・撤回・削除に基づく訴えに限ります。それ以外の紛争は、法令の定める裁判所が管轄します。';
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const changes = JSON.parse(read(path.join(ROOT, 'data', 'policy-changes.json')));
+  /* Pure: what is wrong with the safer wording; [] when nothing is. */
+  const saferProblems = (en, ja, t, tj, notice, ch, changed) => {
+    const bad = [];
+    for (const x of PV) if (!en.includes(x)) bad.push('Privacy Policy: ' + x.slice(0, 30));
+    for (const x of PVJ) if (!ja.includes(x)) bad.push('個人情報の取り扱い: ' + x.slice(0, 15));
+    if (/The Ministry's Ordinance was not fetched|総務省令は取り寄せていません/.test(en + ja)) bad.push('the old sentence on the Ordinance');
+    if (!t.includes(COURT) || !tj.includes(COURT_JA)) bad.push('the narrowed agreement on the court');
+    if (!String(notice.text || '').includes('From 2026-11-26, that agreement on the court covers only suits based on the Terms of Use')) bad.push('the notice on the top page');
+    const e = ch.find((c) => c.from === '2026-11-26' && c.policies.includes('terms'));
+    if (!e || !/^\d{4}-\d{2}-\d{2}$/.test(changed) || (Date.parse(e.from) - Date.parse(changed)) / 86400000 < 14 || (Date.parse(e.from) - Date.parse(e.date)) / 86400000 < 14) bad.push('the change is not announced 14 days ahead');
+    return bad;
+  };
+  let changed = '';
+  try { changed = require('child_process').execFileSync('git', ['log', '--reverse', '--format=%cs', '-S', 'From 2026-11-26, this agreement on the court covers only', '--', 'policies/terms.md'], { cwd: ROOT, encoding: 'utf8' }).split('\n')[0] || ''; } catch (e) { changed = ''; }
+  // A working tree whose change is not committed yet counts from today.
+  if (!changed && tm.includes(COURT)) changed = new Date().toISOString().slice(0, 10);
+  const sp = saferProblems(pv, pvj, tm, tmj, site.termsNotice || {}, changes, changed);
+  ok('the Privacy Policy meets the rules on sending users\' information as if they applied, giving what is sent, who handles it and for what, in both languages; the agreed court covers only suits based on the Terms from 2026-11-26, announced on the top page and in the feed at least 14 days ahead',
+    sp.length === 0, sp.join(' / ') + ' ' + changed);
+  // The review: the Consumer Contract Act read again, and the definition of commercial use; the records: OpenAI and xAI.
+  const rv = read(path.join(ROOT, 'docs', 'legal-review.md')), rec = read(path.join(ROOT, 'docs', 'records-of-provision.md'));
+  ok('the review corrects its reading of the Consumer Contract Act from the Agency\'s commentary, quotes Vercel\'s definition of commercial use, and the records give OpenAI\'s and xAI\'s addresses from their pages; Russia\'s Article 18(5) is read and quoted',
+    rv.includes('That was wrong. The Consumer Affairs Agency\'s commentary on Article 2, fetched on 2026-11-12') && !rv.includes('If it is not, the Act does not apply by its own terms.')
+    && rv.includes('"Commercial usage is defined as any Deployment that is used for the purpose of financial gain of anyone involved in any part of the production of the project"') && !rv.includes("Vercel's own definition of commercial use was not fetched")
+    && /^\| OpenAI \| OpenAI OpCo, LLC \| 1455 Third Street, San Francisco, California 94158, United States \|.*\| openai-privacy-archived \|/m.test(rec) && /^\| xAI \| SpaceX Super Intelligence LLC \| 800 W Cesar Chavez St\., Austin, TX 78701, USA \|.*\| xai-terms \|/m.test(rec)
+    && /баз данных, находящихся за пределами территории Российской Федерации, не допускаются/.test(((RAW.sources['ru-152'] || {}).articles || {})['18'] || '') && read(path.join(ROOT, 'policies', 'submission.md')).includes('| Russia | Storage of personal data there | Federal Law No. 152-FZ, Article 1(1.1) and Article 18(5) | Yes |'));
+  // Breaking on purpose.
+  const p0 = Object.keys(RAW.pages).find((k) => RAW.pages[k].fetched && RAW.pages[k].text);
+  const l0 = Object.keys(RAW.laws)[0], a0 = Object.keys(RAW.laws[l0].articles || {})[0] || Object.keys((RAW.laws.telecom || RAW.laws['telecom-rules']).articles)[0];
+  const rawBad1 = { ...RAW, pages: { ...RAW.pages, [p0]: { ...RAW.pages[p0], text: RAW.pages[p0].text + ' ' } } };
+  const lawBad = JSON.parse(JSON.stringify(RAW.laws)); const lk = Object.keys(lawBad).find((k) => Object.keys(lawBad[k].articles || {}).length); const ak = Object.keys(lawBad[lk].articles)[0]; lawBad[lk].articles[ak] += '。';
+  const rawBad2 = { ...RAW, laws: lawBad };
+  const rawBad3 = { ...RAW, pages: { ...RAW.pages, 'not-a-source': { fetched: '2026-11-12', text: 'x', sha256: sha('x') } } };
+  const brokenAudit = [audit.replace('営利の要素は必要でなく', '営利の要素は要らず'), audit.replace('この表の判定は、誤り 1、', 'この表の判定は、誤り 2、'), audit.replace('| 誤り | 審査を直しました。運営者は', '| 軽微 | 審査を直しました。運営者は'),
+    audit.replace('- ジャパンリンクセンターの住所。', '- Vercel の言う商用の定義。取り寄せていません。\n- ジャパンリンクセンターの住所。'), audit.replace('| 根拠不足 | 2026-11-12 に Claude が決めました。この規律が', '| 根拠不足 | この規律が'),
+    audit.replace('- カザフスタンの個人データ法。adilet.zan.kz も、Internet Archive の写しも、スクリプトを求める頁だけを返しました。', '- カザフスタンの個人データ法')];
+  const brokenSafer = [[pv.replace('Sophaxis therefore meets these rules as if they applied', 'Sophaxis does not meet these rules'), pvj, tm, tmj, site.termsNotice, changes, changed],
+    [pv, pvj.replace('取り扱うのは、', '扱うのは、'), tm, tmj, site.termsNotice, changes, changed], [pv, pvj, tm.replace(COURT, ''), tmj, site.termsNotice, changes, changed],
+    [pv, pvj, tm, tmj, { text: '' }, changes, changed], [pv, pvj, tm, tmj, site.termsNotice, changes, '2026-11-20'], [pv + "\nThe Ministry's Ordinance was not fetched.", pvj, tm, tmj, site.termsNotice, changes, changed]];
+  ok('the checks fail on a changed text whose hash is not changed, an altered article of a whole law, a page that tools/sources.js does not name, an altered quotation, a wrong count, a wrong judgement, a fetched text listed as not fetched, a safer choice without its maker, an item without its reason, a lost safer wording, a lost notice, and a change announced less than 14 days ahead',
+    hashProblems(rawBad1).length > 0 && hashProblems(rawBad2).length > 0 && hashProblems(rawBad3).length > 0 && hashProblems(RAW).length === 0
+    && brokenAudit.every((b) => b !== audit && contProblems(b, pool).length > 0) && brokenSafer.every((a) => saferProblems(...a).length > 0));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
