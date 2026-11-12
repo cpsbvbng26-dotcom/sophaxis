@@ -8,7 +8,7 @@ Source: https://sophaxis.vercel.app/policies/terms.html
 
 # Terms of Use
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [利用規約（日本語訳）](https://sophaxis.vercel.app/policies/terms.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -109,6 +109,8 @@ Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its 
 
 These terms and the other policies may change.
 The date on each page shows its last change, and earlier versions stay in the public repository.
+The dates on the pages, in the feed of policy changes, in the notices and in the news are dates in Japan time.
+The day a text was fetched is the day in UTC that the record of the fetch keeps.
 No change will introduce fees.
 
 A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.
@@ -766,7 +768,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.html
 
 # Copyright Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [著作権の規程（日本語訳）](https://sophaxis.vercel.app/policies/copyright.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -792,7 +794,7 @@ It copies the file by script only from a repository whose own pages let a script
 Zenodo's developer documentation lists, among what its REST API supports, "Files — download/upload of files."
 arXiv's page on bulk data access says "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access." Sophaxis fetches from that site.
 arXiv's terms of use for its APIs forbid storing and serving its e-prints "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted". Every listed work carries one of the three accepted licences, which permit it.
-Until 2026-11-12, Sophaxis also copied files from Figshare and Research Square by script. From 2026-11-13, it does not, because their terms forbid it.
+Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.
 Figshare's terms list, among what a user shall not do, "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine". The only exception is for means "expressly authorized for you by Figshare in advance in writing".
 Research Square's terms say "You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites".
 The copies already taken from Figshare stay, under the work's own licence.
@@ -800,7 +802,7 @@ These pages were read on 2026-11-12: Zenodo's and arXiv's directly, and Figshare
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
 For any other repository, the authors can attach the deposited PDF to their submission issue.
-From 2026-11-13, this includes Figshare and Research Square.
+Since the change was published on 2026-11-13, this includes Figshare and Research Square.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
 A copy is kept only if the file is at most 20 MB, and only while all the copies together stay within 1 GB.
@@ -923,7 +925,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.html
 
 # Privacy Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -1448,7 +1450,7 @@ Source: https://sophaxis.vercel.app/policy.html
 
 # Policies
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [規程（日本語訳）](https://sophaxis.vercel.app/policy.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1812,7 +1814,7 @@ Source: https://sophaxis.vercel.app/process.html
 
 # From submission to listing
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [投稿から掲載まで（日本語訳）](https://sophaxis.vercel.app/process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1875,7 +1877,7 @@ Fix the cause, for example the link in your ORCID record, then edit the issue; t
 To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
 An edit that changes nothing does not start the check.
 
-If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv, and from 2026-11-13 Figshare and Research Square among them), the comment asks you to attach the deposited PDF to the issue.
+If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv, and, since this was published on 2026-11-13, Figshare and Research Square among them), the comment asks you to attach the deposited PDF to the issue.
 This is optional, and the file must be at most 20 MB.
 To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 
@@ -2233,7 +2235,7 @@ Source: https://sophaxis.vercel.app/repositories.html
 
 # For repositories and DOI registration agencies
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [預け先と DOI 登録機関へ（日本語訳）](https://sophaxis.vercel.app/repositories.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2251,7 +2253,7 @@ Sophaxis does not harvest or mirror any repository.
 
 - The DOI metadata of a submitted work, from the public REST APIs of DataCite, Crossref and, for Jxiv, JaLC: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence.
 - The list of versions of a work, from the same metadata.
-- The PDF of a version, unmodified, only where the work's licence allows it and the repository's own pages let a script fetch it (Zenodo and arXiv), through Zenodo's REST API and arXiv's export.arxiv.org. Until 2026-11-12, Sophaxis also fetched PDFs from Figshare and Research Square; from 2026-11-13, it does not, because their terms forbid robots and scripts, as the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) quotes. The copy is taken once per version, when the operator starts it by hand. The check of a submission, when its issue is opened or edited, also fetches the PDF of the latest version, only to read its shape for the moderator, and deletes it after the reading. Where the repository publishes a checksum, the copy must match it.
+- The PDF of a version, unmodified, only where the work's licence allows it and the repository's own pages let a script fetch it (Zenodo and arXiv), through Zenodo's REST API and arXiv's export.arxiv.org. Until this change was published on 2026-11-13, Sophaxis also fetched PDFs from Figshare and Research Square; since then, it does not, because their terms forbid robots and scripts, as the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) quotes. The copy is taken once per version, when the operator starts it by hand. The check of a submission, when its issue is opened or edited, also fetches the PDF of the latest version, only to read its shape for the moderator, and deletes it after the reading. Where the repository publishes a checksum, the copy must match it.
 
 Every request that Sophaxis's own code makes names Sophaxis and its repository in its User-Agent: `Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)`. The advice step of the submission check runs [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), which names itself: `deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)`.
 Sophaxis reads no pages meant for people, and does not get around any limit or block.
@@ -2294,7 +2296,7 @@ Source: https://sophaxis.vercel.app/contact.html
 
 # Operator and contact
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [運営者と連絡先（日本語訳）](https://sophaxis.vercel.app/contact.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2617,7 +2619,7 @@ Source: https://sophaxis.vercel.app/findable.html
 
 # Making a listed work easy to find
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [載った作品を見つけてもらうために（日本語訳）](https://sophaxis.vercel.app/findable.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2705,7 +2707,7 @@ Source: https://sophaxis.vercel.app/compare.html
 
 # How Sophaxis differs from other places
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [ほかの場との違い（日本語訳）](https://sophaxis.vercel.app/compare.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2779,7 +2781,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.ja.html
 
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 Sophaxis の個人情報の取り扱いを、日本の個人情報保護法の項目に沿って書いたものです。英語の [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) の訳で、項目を日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
@@ -3082,7 +3084,7 @@ Source: https://sophaxis.vercel.app/policies/terms.ja.html
 
 # 利用規約（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。
 
@@ -3183,6 +3185,8 @@ Sophaxis は、運営者を日本の消費者契約法の事業者であるも�
 
 この規約とほかの規程は、変わることがあります。
 各頁の日付が最後の変更を示し、過去の版は公開のリポジトリに残ります。
+頁と、規程の変更の配信と、告知と、お知らせの日付は、日本時間の日付です。
+文を取り寄せた日は、取り寄せの記録に残った協定世界時の日付です。
 どの変更によっても、料金は生じません。
 
 著者や読者の権利を奪い、または狭める変更と、義務を加える変更は、効力を持つ前に、変わる中身とその開始日を添えて、トップの頁で告知します。
@@ -3840,7 +3844,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.ja.html
 
 # 著作権の規程（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3866,7 +3870,7 @@ Sophaxis は、検索エンジンが本文を索引できるように、載っ�
 Zenodo の開発者向けの文書は、REST API でできることに「Files — download/upload of files.」を挙げます。
 arXiv の一括取得の頁は「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と書きます。Sophaxis は、その所から取ります。
 arXiv の API の利用規約は、e-print を保って配ることを禁じます。例外は「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合です。載せる作品は、どれも受け付ける三つのライセンスのどれかを持ち、そのライセンスがこれを認めています。
-2026-11-12 までは、Figshare と Research Square からもスクリプトで写していました。2026-11-13 からは写しません。どちらの規約も、これを禁じているためです。
+この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。どちらの規約も、これを禁じているためです。
 Figshare の規約は、利用者がしてはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げます。例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。
 Research Square の規約は「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。
 Figshare からすでに写したものは、作品のライセンスのもとで残します。
@@ -4606,7 +4610,7 @@ Source: https://sophaxis.vercel.app/easy.ja.html
 
 # やさしいことばで（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [In plain words](https://sophaxis.vercel.app/easy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4644,7 +4648,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 # 投稿から掲載まで（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [From submission to listing](https://sophaxis.vercel.app/process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4707,7 +4711,7 @@ ORCID の記録のリンクのような原因を直してから、issue を編�
 issue を編集するには、最初の投稿の右上のメニュー（⋯）を開き、「Edit」を選び、要るところを変えて保存します。
 何も変えない編集では、確認は走りません。
 
-預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo と arXiv 以外のすべての預け先がこれに当たります。2026-11-13 からは、Figshare と Research Square もこれに当たります。
+預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo と arXiv 以外のすべての預け先がこれに当たります。これを公開した 2026-11-13 からは、Figshare と Research Square もこれに当たります。
 添付は任意で、ファイルは 20 MB までです。
 添付するには、ファイルを issue のいちばん下のコメントの欄に引き入れ、そのリンクが出るのを待ってから、コメントを投稿します。
 
@@ -5066,7 +5070,7 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Operator and contact](https://sophaxis.vercel.app/contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5168,7 +5172,7 @@ Source: https://sophaxis.vercel.app/repositories.ja.html
 
 # 預け先と DOI 登録機関へ（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [For repositories and DOI registration agencies](https://sophaxis.vercel.app/repositories.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5186,7 +5190,7 @@ Sophaxis は、どの預け先からも収集やミラーをしません。
 
 - 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。
 - 作品の版の一覧。同じメタデータから読みます。
-- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）。Zenodo の REST API と、arXiv の export.arxiv.org を通します。2026-11-12 までは、Figshare と Research Square からも取っていました。2026-11-13 からは取りません。どちらの規約もロボットとスクリプトを禁じており、[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)がその文を引いています。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
+- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）。Zenodo の REST API と、arXiv の export.arxiv.org を通します。この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており、[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)がその文を引いています。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 
 Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書きます。`Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)` です。投稿の確認の助言の段階は [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) を走らせ、deposit-check は自分の名を書きます。`deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)` です。
 Sophaxis は、人が読むための頁を読みません。どんな上限も遮断も、すり抜けません。
@@ -5231,7 +5235,7 @@ Source: https://sophaxis.vercel.app/policy.ja.html
 
 # 規程（日本語訳）
 
-最終更新：2026-11-11。
+最終更新：2026-11-12。
 
 これは英語の [Policies](https://sophaxis.vercel.app/policy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5719,7 +5723,7 @@ Source: https://sophaxis.vercel.app/findable.ja.html
 
 # 載った作品を見つけてもらうために（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Making a listed work easy to find](https://sophaxis.vercel.app/findable.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5807,7 +5811,7 @@ Source: https://sophaxis.vercel.app/compare.ja.html
 
 # ほかの場との違い（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [How Sophaxis differs from other places](https://sophaxis.vercel.app/compare.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 

@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -101,6 +101,8 @@ Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its 
 
 These terms and the other policies may change.
 The date on each page shows its last change, and earlier versions stay in the public repository.
+The dates on the pages, in the feed of policy changes, in the notices and in the news are dates in Japan time.
+The day a text was fetched is the day in UTC that the record of the fetch keeps.
 No change will introduce fees.
 
 A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, with what changes and from which date.

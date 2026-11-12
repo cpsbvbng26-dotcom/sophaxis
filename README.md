@@ -55,7 +55,7 @@ The title, the authors, the abstract, the licence and the versions are taken fro
 An automatic check (`tools/intake.js`, run by `.github/workflows/intake.yml`) confirms that the GitHub account belongs to an author of the work,
 and posts the result and a draft record in the issue. Only verified submissions are listed.
 For a verified submission the comment also gives advice on the DOI metadata from [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), checked out at a pinned commit: its errors and warnings, such as a missing abstract or licence. The advice does not decide the listing.
-Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv; from 2026-11-13, Figshare and Research Square among them, because their terms forbid scripts), the comment asks the authors to attach the deposited PDF to the issue.
+Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv; since this was published on 2026-11-13, Figshare and Research Square among them, because their terms forbid scripts), the comment asks the authors to attach the deposited PDF to the issue.
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies of works whose every author consents.

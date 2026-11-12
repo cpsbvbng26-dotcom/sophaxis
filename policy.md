@@ -1,6 +1,6 @@
 # Policies
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-12.
 
 Japanese: [規程（日本語訳）](./policy.ja.md). It is a translation; where the two differ, the English text applies.
 

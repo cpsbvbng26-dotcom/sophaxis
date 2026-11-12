@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -63,7 +63,7 @@ Fix the cause, for example the link in your ORCID record, then edit the issue; t
 To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
 An edit that changes nothing does not start the check.
 
-If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv, and from 2026-11-13 Figshare and Research Square among them), the comment asks you to attach the deposited PDF to the issue.
+If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv, and, since this was published on 2026-11-13, Figshare and Research Square among them), the comment asks you to attach the deposited PDF to the issue.
 This is optional, and the file must be at most 20 MB.
 To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 

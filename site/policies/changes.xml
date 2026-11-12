@@ -5,21 +5,28 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-12T00:00:00Z</updated>
+  <updated>2026-11-13T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c14</id>
+    <title>Dates on the pages are in Japan time</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>The Terms of Use now say that the dates on Sophaxis's pages, in this feed, in the notices and in the news are dates in Japan time, and that the day a text was fetched is the day in UTC that the record of the fetch keeps. Two entries of this feed, published on 2026-11-13 in Japan time, were dated 2026-11-12, the date by the clock of the work; they are now dated 2026-11-13, and the change to the Copyright Policy took effect on publication, not earlier. The &quot;Last updated&quot; of the pages changed that day is now 2026-11-13. This narrows no right and adds no duty. Policies: Terms of Use.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c13</id>
     <title>The day from which each place is not offered, in the Privacy Policy</title>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
-    <updated>2026-11-12T00:00:00Z</updated>
+    <updated>2026-11-13T00:00:00Z</updated>
     <summary>The Privacy Policy said, of the Zenodo community and of the people in the other places that the Submission Policy lists, that the rule applies from 2026-11-22. The Submission Policy gives 2026-11-26 for 15 of the 43 places, as announced. The Privacy Policy now says that the rule applies from the date the Submission Policy gives for each place: 2026-11-22, or 2026-11-26 for 15 of them. Nothing that Sophaxis does changes, and no right is narrowed. Policies: Privacy Policy.</summary>
   </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c12</id>
     <title>PDFs are no longer copied by script from Figshare or Research Square</title>
     <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <summary>From 2026-11-13, Sophaxis copies PDFs by script only from Zenodo and arXiv, whose own pages let a script fetch them. Until then, it also copied from Figshare and Research Square; their terms, read on 2026-11-12, forbid robots and scripts. The authors of a work at either can attach the deposited PDF to the submission issue instead, as for every other repository. This narrows what authors get. Going on would act against the terms of the two repositories, a legal risk, so the change takes effect the day after it is announced, as the Terms of Use allow. The copies already taken from Figshare stay. In effect from 2026-11-13. Policies: Copyright Policy.</summary>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>Effective on publication, 2026-11-13: Sophaxis copies PDFs by script only from Zenodo and arXiv, whose own pages let a script fetch them. Until then, it also copied from Figshare and Research Square, whose terms forbid robots and scripts. The authors of a work at either can attach the deposited PDF to the submission issue instead, as for every other repository. This narrows what authors get. Going on would act against the terms of the two repositories, a legal risk, so the change takes effect on publication, as the Terms of Use allow when a legal risk requires a change sooner, and not earlier. The copies already taken from Figshare stay. Policies: Copyright Policy.</summary>
   </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c11</id>
