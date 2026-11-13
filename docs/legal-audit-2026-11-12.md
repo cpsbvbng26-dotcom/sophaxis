@@ -575,13 +575,13 @@ GitHub に、この規約の写しを置いたリポジトリは探していま�
 
 同じ日に、ヌスクァマの取り寄せの実行で、Vercel の Fair Use Guidelines の頁が、記録した引用を含まない文を返しました。
 そこで、Sophaxis が読む Vercel の頁と利用規約を、`sources.yml` で取り寄せ直しました。
-取り寄せの実行は RUNSX で、結果は枝 `BRSX` にあります。
+取り寄せ直した実行は 43338777855 で、結果は枝 `sources/20261113-0040` にあります。
 Fair Use Guidelines の頁には、「Commercial usage」の節がありません。
 2026-11-12 の頁は、その節で「Commercial usage is defined as any Deployment that is used for the purpose of financial gain of anyone involved in any part of the production of the project」と書き、「Asking for Donations does not fall under commercial usage.」とも書いていました。
 2026-11-13 の頁の節の一覧は「Examples of fair use Never fair use Usage guidelines Typical monthly usage guidelines Other guidelines Additional resources General Limits Learn More」で、最終更新の日は「Last updated September 14, 2026」のままです。
-頁の全文の SHA-256 は、`f241dce3d1f34e326a127ae327a10d6605c0e64fb4ae91c4ed30cc8533cac58f` から `SHAFUG` に変わりました。
+頁の全文の SHA-256 は、`f241dce3d1f34e326a127ae327a10d6605c0e64fb4ae91c4ed30cc8533cac58f` から `72c94595a48be0ba40257c55fcee8fc60ca983022327cdd00ced5dcfda034565` に変わりました。
 Internet Archive の 2026-10-31 の写しには、その節が残っています。その写しを時刻で固めて取り寄せ、前の節が引いた文を、その写しで確かめます。
-利用規約の第 4 条は「You shall only use the Services under a Hobby plan for your personal or non-commercial use.」のままで、条の文の SHA-256 も変わっていません。
+Vercel の利用規約の第 4 条は「You shall only use the Services under a Hobby plan for your personal or non-commercial use.」のままで、条の文の SHA-256 も変わっていません。
 利用規約にも、2026-11-13 に取り寄せた Vercel のどの頁にも、商用の定義はありません。
 違いを見るため、`sources.yml` を写した枝 `claude/vercel-probe-1113` で三度実行しました（43336950448・43337068086・43337905145）。
 初めの二度は、頁の全文と違いを実行の記録（ログ）に書き出し、読み終えた同じ日にその実行の記録を消しました。三度目は、Internet Archive の写しの日付と SHA-256 だけを書き出しました。
