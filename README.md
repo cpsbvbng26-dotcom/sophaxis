@@ -19,6 +19,27 @@ Authors deposit their preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, Met
 Site: https://sophaxis.vercel.app/. Sophaxis has no domain of its own; when one might be considered is said under [Operator and contact](#operator-and-contact).
 Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.md), [Submission](policies/submission.md), [Moderation](policies/moderation.md), [Copyright](policies/copyright.md), [Licences](policies/licences.md), [Privacy](policies/privacy.md) and [Takedown](policies/takedown.md).
 
+## Statement of Purpose
+
+Sophaxis has a Statement of Purpose. Its first two articles, on its purpose and on what the statement is, are given here in full.
+
+### Purpose
+
+Sophaxis is a place that lists preprints in philosophy and mathematics, and in the fields around them (logic, the philosophy of mathematics and the philosophy of science).
+If the works it lists are likened to a bookshelf, Sophaxis is a bookshelf from which anyone can take a work without paying.
+The operator runs this bookshelf free of charge.
+By doing so, the operator aims to widen the opportunities to reach scholarly work, and to have a better influence on society.
+
+### What this statement is
+
+1. This statement sets out the thinking behind how Sophaxis is run.
+2. This statement is not a term of the [Terms of Use](./policies/terms.md) or of the other [policies](./policy.md). By itself, it creates no rights or obligations, for the operator, or for authors, readers or any other users.
+3. Where this statement and the Terms of Use or another policy differ, the Terms of Use or that policy applies.
+4. A "better influence" is what the operator aims at. The operator neither promises nor guarantees that it will come about.
+5. This statement is not legal advice.
+
+The full statement is on the site, [Statement of Purpose](https://sophaxis.vercel.app/mission.html), and in this repository, [mission.md](mission.md). The Japanese translation is [mission.ja.md](mission.ja.md).
+
 ## Sophaxis itself: DOI, listings and registrations under review
 
 The [OSF project page](https://osf.io/mq7za/) describes Sophaxis and gives it a DOI: [10.17605/OSF.IO/MQ7ZA](https://doi.org/10.17605/OSF.IO/MQ7ZA).
@@ -257,6 +278,27 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 - 投稿は DOI と ORCID iD を入れる形です。題・著者・要旨・ライセンス・版は、DOI の登録情報から取ります。
 - 確かめが通った投稿には、預け先の登録情報についての助言も返します（[deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) による、要旨やライセンスの欠けなど）。助言は掲載の可否を決めません。
 - 投稿できるのは著者本人だけです。ORCID の記録に投稿者の GitHub アカウントへのリンクがあり、その ORCID iD がその稿の著者のものであることを、自動の検査で確かめます。
+
+### 運営理念・声明
+
+Sophaxis には運営理念・声明があります。運営する目的と、この声明の性格を述べた初めの二つの条を、そのまま載せます。
+
+#### 目的
+
+Sophaxis は、哲学と数学、そしてその周辺の分野（論理学、数理哲学、科学哲学）のプレプリントを並べる場です。
+並べた作品の集まりを本棚にたとえれば、Sophaxis は、誰もが料金を払わずに手に取れる本棚です。
+運営者は、この本棚を無償で運営します。
+それによって、学術の成果に触れる機会を広げ、社会により良い影響を与えることを目的としています。
+
+#### この声明の性格
+
+1. この声明は、運営の考え方を述べたものです。
+2. この声明は、[利用規約](./policies/terms.ja.md)と[各規程](./policy.ja.md)の条項ではありません。それ自体で、運営者にも、著者・読者その他の利用者にも、権利や義務を生じさせません。
+3. この声明と、利用規約・各規程とが食い違うときは、利用規約・各規程が適用されます。
+4. 「より良い影響」は、運営者が目指すものです。その影響が生じることを、約束も保証もしません。
+5. この声明は、法的な助言ではありません。
+
+声明の全文は、サイトの[運営理念・声明](https://sophaxis.vercel.app/mission.ja.html)と、このリポジトリの [mission.ja.md](mission.ja.md) にあります。英語の文は [mission.md](mission.md) です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
 ### Sophaxis 自体の DOI、掲載先と、審査中の登録
 

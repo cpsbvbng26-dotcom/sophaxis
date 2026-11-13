@@ -1112,9 +1112,13 @@ function pausedNotice(paused = SITE.submissionsPaused) {
 }
 
 /* Changes and closure in the Terms of Use: a change against users is announced on the top page before it takes effect.
- * site.json "termsNotice": { "text": "...", "from": "YYYY-MM-DD" } or null. */
+ * site.json "termsNotice": { "text": "...", "from": "YYYY-MM-DD", "since": "YYYY-MM-DD" } or null. "since" is the day from which
+ * a change in the text has already been in effect (the text says "Since ... YYYY-MM-DD"); the heading then names both days, so
+ * that it does not say that every change in the notice starts on "from". */
+const noticeHeading = (n) => (n.since ? `Changes to the policies, some in effect since ${esc(n.since)} and the rest from ${esc(n.from)} on.` : `Change to the policies from ${esc(n.from)}.`);
+const noticeDaysJa = (n) => (n.since ? `${esc(n.since)} から効力を持っている変更と、${esc(n.from)} から順に効力を持つ変更です。` : `${esc(n.from)} から順に効力を持つ変更です。`);
 function termsNotice(n = SITE.termsNotice) {
-  return n && n.text && n.from ? `<div class="notice"><b>Change to the policies from ${esc(n.from)}.</b> ${esc(n.text)} See the <a href="./policy.html">policies</a>.</div>\n` : '';
+  return n && n.text && n.from ? `<div class="notice"><b>${noticeHeading(n)}</b> ${esc(n.text)} See the <a href="./policy.html">policies</a>.</div>\n` : '';
 }
 
 /* Who Sophaxis is not offered to, and why, on the top page and the submit page: by where an author lives, never by
@@ -1211,6 +1215,7 @@ function indexPage(papers, all = papers) {
 <h1>${esc(SITE.tagline)}</h1>
 ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
 <div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
+<p class="meta">Why ${esc(SITE.name)} is run: the <a href="./mission.html">Statement of Purpose</a>. It creates no rights or obligations; the <a href="./policy.html">policies</a> apply.</p>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
 ${operatingCounts(all)}${listedIn()}${directoryEntries()}${ownIdentifiers()}<h2>Listing</h2>
 ${ownNotice(all)}
@@ -1433,7 +1438,8 @@ const PROSE = { checklist: 'Before submitting to ' + SITE.name + ': what the pol
   findable: 'How the authors of a work listed on ' + SITE.name + ' can help readers find it: ORCID, Google Scholar, PhilPapers and researchmap.',
   accessibility: 'The accessibility of ' + SITE.name + ': the aim, what is checked on every change, what is known, and how to report a barrier.',
   compare: 'How ' + SITE.name + ' differs from arXiv, PhilArchive, SSRN and Zenodo: a layer on top of the repositories, not one of them.',
-  glossary: 'The words used on ' + SITE.name + ', defined: overlay, moderation, record, version, withdrawal, removal and others.' };
+  glossary: 'The words used on ' + SITE.name + ', defined: overlay, moderation, record, version, withdrawal, removal and others.',
+  mission: 'Why ' + SITE.name + ' is run: its Statement of Purpose. It creates no rights or obligations; the Terms of Use and the other policies apply.' };
 const proseSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.md'), 'utf8');
 const proseDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(proseSource(slug)) || [])[1];
 let pressRecords = [];
@@ -1606,7 +1612,7 @@ function contactPage() {
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
 /* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
-const JA_PAGES = ['first', 'libraries', 'rules', 'checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
+const JA_PAGES = ['first', 'libraries', 'rules', 'checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission'];
 const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
 const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
 const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -1633,8 +1639,9 @@ function indexJaPage(papers, all = papers) {
 <h1>${esc(SITE.name)}：哲学と数学のプレプリント</h1>
 <p>${esc(SITE.name)} は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、${esc(SITE.name)} がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>
 <div class="notice">掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。${esc(SITE.name)} は、著者からも読者からも料金を取りません。</div>
+<p class="meta">${esc(SITE.name)} を運営する目的は、<a href="./mission.ja.html">運営理念・声明</a>に述べています。声明は権利や義務を生じさせず、<a href="./policy.ja.html">規程</a>が適用されます。</p>
 <div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
-${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${esc(SITE.termsNotice.from)} から順に効力を持つ変更です。内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
+${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${noticeDaysJa(SITE.termsNotice)}内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
 ` : ''}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
 ${operatingCounts(all, loadReports(), true)}${directoryEntries(true)}
@@ -1866,7 +1873,7 @@ function robots(all) {
  * question about Sophaxis from its own words. llms.txt gives the facts from site.json and links every policy and page;
  * llms-full.txt holds the policies and pages word for word, from the same Markdown the pages are built from, so the two
  * cannot drift apart. Nothing here is written by hand, and nothing says more than the policies do. */
-const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['faq.md', 'faq.html', 'Frequently asked questions'],
+const LLM_PAGES = [['policy.md', 'policy.html', 'Policies (index)'], ['disclaimer.md', 'disclaimer.html', 'Disclaimer'], ['mission.md', 'mission.html', 'Statement of Purpose'], ['faq.md', 'faq.html', 'Frequently asked questions'],
   ['process.md', 'process.html', 'From submission to listing'], ['automation.md', 'automation.html', 'What runs by itself'], ['transparency.md', 'transparency.html', 'Transparency: a self-assessment'], ['repositories.md', 'repositories.html', 'For repositories and DOI registration agencies'],
   ['contact.md', 'contact.html', 'Operator and contact'], ['advisory.md', 'advisory.html', 'Advisory board: a call'], ['brand.md', 'brand.html', 'Name, logo and badge'], ['press.md', 'press.html', 'For anyone introducing Sophaxis'], ['call.md', 'call.html', 'A call to researchers'], ['findable.md', 'findable.html', 'Making a listed work easy to find'], ['accessibility.md', 'accessibility.html', 'Accessibility'], ['compare.md', 'compare.html', 'How Sophaxis differs from other places'], ['glossary.md', 'glossary.html', 'Glossary']];
 /* In llms-full.txt, the relative Markdown links of a source lead to the site by their full address, as the "Source:" line does. */
@@ -1887,7 +1894,7 @@ function llmsTxt(all) {
   const B = SITE.baseUrl, L = SITE.notOffered || [];
   const shown = all.filter((p) => p.status !== 'removed');
   const repos = [...new Set(Object.values(SITE.repositories))];
-  const notice = SITE.termsNotice && SITE.termsNotice.text ? '- Change announced on the top page, from ' + SITE.termsNotice.from + ' (where the text names a later day, that day): ' + SITE.termsNotice.text + '\n' : '';
+  const notice = SITE.termsNotice && SITE.termsNotice.text ? (SITE.termsNotice.since ? '- Changes announced on the top page, in effect since ' + SITE.termsNotice.since + ' where the text says so, and otherwise from ' + SITE.termsNotice.from : '- Change announced on the top page, from ' + SITE.termsNotice.from) + ' (where the text names a later day, that day): ' + SITE.termsNotice.text + '\n' : '';
   return '# ' + SITE.name + '\n\n> ' + SITE.name + ' is an overlay preprint server for ' + Object.values(SITE.categories).map((c) => c.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' and $1')
     + '. It lists preprints that authors have already deposited in an open repository with a DOI, and gives each a stable record page. Acceptance is moderation, not peer review. Sophaxis charges nothing, to authors or to readers.\n\n'
     + 'The policies below are the rules. Where this file and a policy differ, the policy applies. The full text of every policy is in [llms-full.txt](' + B + 'llms-full.txt).\n\n'
@@ -1966,6 +1973,7 @@ function build(out, paperDir) {
     'accessibility.html': prosePage('accessibility'),
     'compare.html': prosePage('compare'),
     'glossary.html': prosePage('glossary'),
+    'mission.html': prosePage('mission'),
     'checklist.html': prosePage('checklist'),
     'history.html': prosePage('history'),
     'leaflet.html': prosePage('leaflet'),
@@ -2033,7 +2041,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

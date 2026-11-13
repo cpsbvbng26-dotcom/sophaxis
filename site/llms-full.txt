@@ -226,7 +226,7 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 
 # Submission Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [投稿の規程（日本語訳）](https://sophaxis.vercel.app/policies/submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -266,6 +266,8 @@ From 2026-11-26, the rule also covers two more kinds of duty that Sophaxis canno
 One is a duty to give people there, before their personal data is collected, a postal address or a telephone number of the operator, which Sophaxis does not publish.
 The other is a duty to process the personal data of a minor there only with a parent's consent that the service confirms, or not at all.
 From the same day, a place is also not offered when its data protection law, found by a survey of the laws of 195 countries made on 2026-11-12, could not be read at its source, through its official address and one other route; the table gives such a place as "No, not fetched".
+From 2026-11-29, a place is also not offered where the operator judges that offering Sophaxis would not conform to the law of that place.
+When the operator so judges, the place and the reason are added to the table.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
 Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
@@ -1458,7 +1460,7 @@ Source: https://sophaxis.vercel.app/policy.html
 
 # Policies
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [規程（日本語訳）](https://sophaxis.vercel.app/policy.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1518,6 +1520,7 @@ Abstracts in both keep the licence of their work.
 
 These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
+The [Statement of Purpose](https://sophaxis.vercel.app/mission.html) says why Sophaxis is run. It is not a policy, and it creates no rights or obligations; where it and a policy differ, the policy applies.
 Each policy is put in a few sentences on [The policies in brief](https://sophaxis.vercel.app/rules.html); the policies themselves govern.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
 The changes to the policies alone are also given, newest first, in an Atom feed of their own, apart from the news: [policies/changes.xml](https://sophaxis.vercel.app/policies/changes.xml).
@@ -1645,6 +1648,106 @@ The responsibility for an act done by someone else against the Terms of Use, or 
 Except where the law makes the operator responsible, the operator is not responsible for such acts. The Terms of Use list such acts that may come near a law, under "Acts outside these rules that may come near a law".
 These terms are governed by the laws of Japan, and nothing on this page limits a right that the law does not allow to be limited.
 Disputes are settled by agreement first, as the section Disputes in the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) sets out.
+
+---
+
+Source: https://sophaxis.vercel.app/mission.html
+
+# Statement of Purpose
+
+Last updated: 2026-11-13.
+
+Japanese: [運営理念・声明（日本語訳）](https://sophaxis.vercel.app/mission.ja.html). It is a translation; where the two differ, the English text applies.
+
+This page is the Statement of Purpose of Sophaxis: why it is run, and what this statement is and is not.
+
+## Article 1 (Purpose)
+
+Sophaxis is a place that lists preprints in philosophy and mathematics, and in the fields around them (logic, the philosophy of mathematics and the philosophy of science).
+If the works it lists are likened to a bookshelf, Sophaxis is a bookshelf from which anyone can take a work without paying.
+The operator runs this bookshelf free of charge.
+By doing so, the operator aims to widen the opportunities to reach scholarly work, and to have a better influence on society.
+
+## Article 2 (What this statement is)
+
+1. This statement sets out the thinking behind how Sophaxis is run.
+2. This statement is not a term of the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) or of the other [policies](https://sophaxis.vercel.app/policy.html). By itself, it creates no rights or obligations, for the operator, or for authors, readers or any other users.
+3. Where this statement and the Terms of Use or another policy differ, the Terms of Use or that policy applies.
+4. A "better influence" is what the operator aims at. The operator neither promises nor guarantees that it will come about.
+5. This statement is not legal advice.
+
+## Article 3 (Free of charge)
+
+1. Sophaxis charges nothing, to authors or to readers. There are no submission fees, no listing fees, no fees to read and no paid tiers. It will not start charging ([Policies](https://sophaxis.vercel.app/policy.html), "No fees").
+2. It takes no donations, sponsorship or advertising.
+3. Sophaxis has no revenue. It is served within the free services of GitHub and Vercel. The operator pays personally for Claude Code, the tool with which the site and its code are written ([Transparency](https://sophaxis.vercel.app/transparency.html), [Disclaimer](https://sophaxis.vercel.app/disclaimer.html)).
+4. Being free of charge does not mean that the quality of the works, the continuation of Sophaxis or access to its pages is guaranteed. What is not guaranteed is set out under "No warranty" in the Terms of Use.
+
+## Article 4 (Acceptance is moderation, not peer review)
+
+1. A listing shows only that the submission passed the checks of the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html).
+2. It does not show that the work is correct, original or important.
+3. Sophaxis is not a journal. It does not assign DOIs. A DOI belongs to the repository where the authors deposited the work.
+
+## Article 5 (Editorial independence)
+
+1. The moderator decides on each submission under the published policies, and on nothing else.
+2. No repository, funder, institution, author or service can direct a decision.
+3. No listing is given in return for money, a favour or a citation.
+
+## Article 6 (Transparency)
+
+1. The reasons for every decision are made public in the issue of the submission.
+2. The commitments of the policies are kept as a list in `verification/commitments.txt`, in the public repository. A commitment is never dropped silently.
+3. A change to the policies follows "Changes and closure" in the Terms of Use. A change that takes away or narrows a right of authors or readers, or adds a duty, is announced on the top page before it takes effect, as that section sets out.
+
+## Article 7 (Respect for rights)
+
+1. The copyright in a work stays with its authors. Sophaxis asks for no transfer of copyright and no exclusive licence. A work keeps the licence its authors gave it at the repository ([Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html)).
+2. A PDF copy is kept only as far as the licence of the work allows. Sophaxis copies by script only from repositories whose own pages allow files to be taken by script. For a work in another repository, Sophaxis may keep the PDF that the authors attached to the submission issue.
+3. A claim that a right is infringed is handled under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html).
+
+## Article 8 (Personal data)
+
+1. Personal data is handled under the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html).
+2. Submission issues are public.
+
+## Article 9 (Generative models)
+
+1. Work made with language models or other generative models is accepted when the use is disclosed. A generative model is never made an author.
+2. The operator uses Claude Code (Anthropic) as the tool with which Sophaxis is written. Claude is not an author of Sophaxis. In moderation, language models assist the review. They decide nothing ([Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html), [Transparency](https://sophaxis.vercel.app/transparency.html)).
+
+## Article 10 (Law, and the places where Sophaxis is not offered)
+
+1. Sophaxis is run from Japan. The Terms of Use are governed by the laws of Japan. The operator runs Sophaxis so that the operator's own acts do not meet the elements of the laws that the policies name ("Acts outside these rules that may come near a law" in the Terms of Use).
+2. Sophaxis is not offered in the places listed in the table of the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html). As of 2026-11-13, the table lists 43 places. For each place, the Submission Policy gives the day from which this applies.
+3. From 2026-11-29, Sophaxis is also not offered in a place where the operator judges that offering Sophaxis would not conform to the law of that place. When the operator so judges, the place and the reason are added to the table of the Submission Policy. The Submission Policy sets out this rule.
+4. The number of places where Sophaxis is not offered may grow, as laws change or as the operator judges. Each change to the table is announced on the top page before it takes effect, as the Terms of Use set out.
+5. The purpose of this statement does not change these rules.
+
+## Article 11 (Who runs Sophaxis)
+
+1. Sophaxis is run by one individual in Japan. It is not run by a company, a university, a publisher or any other legal entity or organisation ([Operator and contact](https://sophaxis.vercel.app/contact.html)).
+2. Sophaxis is not a project of any university or other institution. It has no affiliation with any society, institution or sponsor ([Transparency](https://sophaxis.vercel.app/transparency.html)). No institution sponsors or endorses it.
+3. That Sophaxis appears in an index or a directory does not mean that it is affiliated with the body that runs the index or the directory, and it is not an endorsement by that body.
+
+## Article 12 (Continuity and closure)
+
+1. Sophaxis is run by one person, and is planned so that it can stop without loss. Its continuation is not guaranteed. The site may be unavailable, change or close ([Disclaimer](https://sophaxis.vercel.app/disclaimer.html)).
+2. If Sophaxis closes, what happens is set out under "Changes and closure" and "Continuity" in the Terms of Use.
+
+## Article 13 (Disputes)
+
+1. At present, the operator has not engaged a lawyer or any other professional. This statement, the Terms of Use and the other policies have not been reviewed by a lawyer.
+2. If a dispute arises, the operator will respond after consulting a lawyer or another professional where needed.
+3. The response follows the laws of Japan, including their rules on jurisdiction and governing law in international cases, and what the Terms of Use set out under "Law", "Disputes" and "People outside Japan".
+4. This article is not a warning to anyone.
+
+## Article 14 (Changes to this statement)
+
+1. The operator may change this statement.
+2. A change is shown by the date of the last update on this page and in the record of changes (`CHANGELOG.md`).
+3. A change to this statement changes no commitment in the Terms of Use or the other policies.
 
 ---
 
@@ -3312,7 +3415,7 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3350,6 +3453,8 @@ ORCID iD を持たない著者は投稿できません。
 一つは、個人データを集める前に、運営者の住所か電話番号をそこにいる人へ知らせる務めです。Sophaxis はどちらも公開していません。
 もう一つは、そこにいる未成年者の個人データを、サービスが確かめた親の同意があるときに限って扱う務め、または扱わない務めです。
 同じ日から、2026-11-12 に行った 195 の国の法令の調べが見つけたデータ保護法を、公式の所在とほかの一つの経路から取り寄せても原文で読めなかった国と地域にも、Sophaxis を提供しません。表では、そうした国と地域を「取り寄せられない」としています。
+2026-11-29 から、Sophaxis の提供がその国や地域の法令に適合しないと運営者が判断した国と地域にも、Sophaxis を提供しません。
+判断したときは、その国や地域と理由を、表に書き足します。
 国や地域を表に足すのは、そうした務めが報告された時点です。法令の原文を読むのを待ちません。表から外すのは、その法令を原文で読み、Sophaxis に及ばないと確かめてからです。
 表を変えるときは、利用規約のとおり、効力が始まる前にトップの頁で告知します。
 Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか、どこに滞在しているかは調べません。
@@ -5251,7 +5356,7 @@ Source: https://sophaxis.vercel.app/policy.ja.html
 
 # 規程（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Policies](https://sophaxis.vercel.app/policy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5310,6 +5415,7 @@ ORCID iD を持たない著者には、そのような頁はありません。�
 
 これらの頁は、Sophaxis がどう動き、何を約束するかを述べるものです。
 法的な助言ではありません。
+[運営理念・声明](https://sophaxis.vercel.app/mission.ja.html)は、Sophaxis を運営する目的を述べています。規程ではなく、権利や義務を生じさせません。声明と規程が食い違うときは、規程が適用されます。
 それぞれの規程を数文にまとめた[規程の要点](https://sophaxis.vercel.app/rules.ja.html)もあります。決まりは規程そのものです。
 どの頁も最後に変えた日を示し、それより前の版はすべて公開のリポジトリに残ります。
 規程の変更だけを、新しいものから順に、お知らせとは別の Atom の配信でも出しています（[policies/changes.xml](https://sophaxis.vercel.app/policies/changes.xml)）。
@@ -5894,4 +6000,104 @@ Source: https://sophaxis.vercel.app/glossary.ja.html
 - 削除（さくじょ）：法的な理由か著者の求めにより、記録を番号・状態・日付だけにすること。[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)を見てください。
 - 運営者自身（うんえいしゃじしん）の投稿：運営者の作品。印を付け、優先せず、載せる前に 7 日のあいだ公開で待ちます。
 - バッジ：載った作品の著者が示せる、記録へのリンク付きの画像。
+
+---
+
+Source: https://sophaxis.vercel.app/mission.ja.html
+
+# 運営理念・声明（日本語訳）
+
+最終更新：2026-11-13。
+
+これは英語の [Statement of Purpose](https://sophaxis.vercel.app/mission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis の運営理念・声明です。運営する目的と、この声明の性格を述べます。
+
+## 第 1 条（目的）
+
+Sophaxis は、哲学と数学、そしてその周辺の分野（論理学、数理哲学、科学哲学）のプレプリントを並べる場です。
+並べた作品の集まりを本棚にたとえれば、Sophaxis は、誰もが料金を払わずに手に取れる本棚です。
+運営者は、この本棚を無償で運営します。
+それによって、学術の成果に触れる機会を広げ、社会により良い影響を与えることを目的としています。
+
+## 第 2 条（この声明の性格）
+
+1. この声明は、運営の考え方を述べたものです。
+2. この声明は、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)と[各規程](https://sophaxis.vercel.app/policy.ja.html)の条項ではありません。それ自体で、運営者にも、著者・読者その他の利用者にも、権利や義務を生じさせません。
+3. この声明と、利用規約・各規程とが食い違うときは、利用規約・各規程が適用されます。
+4. 「より良い影響」は、運営者が目指すものです。その影響が生じることを、約束も保証もしません。
+5. この声明は、法的な助言ではありません。
+
+## 第 3 条（無償）
+
+1. Sophaxis は、著者からも読者からも、料金を取りません。投稿の料金、掲載の料金、閲覧の料金、有料の段階はありません。料金を取り始めることはありません（[規程](https://sophaxis.vercel.app/policy.ja.html)「料金はありません」）。
+2. 寄付・協賛・広告を受けません。
+3. Sophaxis には収入がありません。GitHub と Vercel の無料のサービスの範囲で配信しています。サイトとそのコードを書く道具である Claude Code の料金は、運営者が個人で払っています（[透明性](https://sophaxis.vercel.app/transparency.ja.html)、[免責事項](https://sophaxis.vercel.app/disclaimer.ja.html)）。
+4. 無償であることは、作品の質、場の継続、頁を読めることを保証する意味を持ちません。保証しないことは、利用規約「保証しないこと」に定めるとおりです。
+
+## 第 4 条（受理はモデレーションであって、査読ではありません）
+
+1. 掲載が示すのは、投稿が[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)の確認を通ったことだけです。
+2. 作品が正しいこと、独創的であること、重要であることは示しません。
+3. Sophaxis は学術誌ではありません。DOI を与えません。DOI は、著者が作品を預けた預け先のものです。
+
+## 第 5 条（編集の独立）
+
+1. モデレーターは、公開した規程だけに従って、それぞれの投稿を判断します。
+2. 預け先・資金提供者・機関・著者・サービスのどれも、判断を指図できません。
+3. お金・便宜・引用と引き換えに載せることはありません。
+
+## 第 6 条（透明性）
+
+1. どの判断の理由も、その投稿の issue で公開します。
+2. 規程の約束は、公開のリポジトリの `verification/commitments.txt` に一覧で保っています。約束を黙って取り下げることはしません。
+3. 規程を変えるときは、利用規約「変更と終了」の定めに沿います。著者や読者の権利を奪い、または狭める変更と、義務を加える変更は、その節が定めるとおり、効力を持つ前にトップの頁で告知します。
+
+## 第 7 条（権利の尊重）
+
+1. 作品の著作権は、著者に残ります。Sophaxis は、著作権の譲渡も、独占的な許諾も求めません。作品は、著者が預け先で付けたライセンスのままです（[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)）。
+2. PDF の写しは、作品のライセンスが認める範囲でだけ置きます。スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。ほかの預け先の作品については、著者が投稿の issue に添付した PDF を置くことがあります。
+3. 権利の侵害の申し立ては、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って扱います。
+
+## 第 8 条（個人データ）
+
+1. 個人データは、[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html)の定めに沿って扱います。
+2. 投稿の issue は公開されます。
+
+## 第 9 条（生成モデル）
+
+1. 言語モデルその他の生成モデルを使った作品も、その使用の申告があれば受けます。生成モデルを著者にはしません。
+2. 運営者は、Sophaxis を書く道具として Claude Code（Anthropic）を使っています。Claude は Sophaxis の著者ではありません。モデレーションでは、言語モデルが審査を助けます。言語モデルは何も決めません（[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)、[透明性](https://sophaxis.vercel.app/transparency.ja.html)）。
+
+## 第 10 条（法令と、提供しない国と地域）
+
+1. Sophaxis は日本から運営しています。利用規約は日本法に準拠します。運営者は、自らの行いが規程の挙げる法令の要件に当たらないように、Sophaxis を運営しています（利用規約「規約の外で、法令の要件に近づく行い」）。
+2. [投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)の表が挙げる国と地域では、Sophaxis を提供しません。2026-11-13 時点で、表は 43 の国と地域を挙げています。それぞれについて、投稿の規程が、この決まりの効力の日を定めています。
+3. 2026-11-29 から、Sophaxis の提供がその国や地域の法令に適合しないと運営者が判断した国と地域でも、Sophaxis を提供しません。判断したときは、その国や地域と理由を、投稿の規程の表に書き足します。この決まりは、投稿の規程に定めています。
+4. 提供しない国と地域の数は、法令の変化や運営者の判断によって増えることがあります。表を変えるときは、利用規約のとおり、効力が始まる前にトップの頁で告知します。
+5. この声明の目的は、これらの定めを変えません。
+
+## 第 11 条（運営主体）
+
+1. Sophaxis は、日本にいる一人の個人が運営しています。会社・大学・出版者その他の法人や団体が運営しているものではありません（[運営者と連絡先](https://sophaxis.vercel.app/contact.ja.html)）。
+2. Sophaxis は、大学その他の機関の事業ではありません。どの学会・機関・後援者とも、組織のうえのつながりを持っていません（[透明性](https://sophaxis.vercel.app/transparency.ja.html)）。どの機関からも、後援も推薦も受けていません。
+3. 索引や名簿に Sophaxis が載っていても、その索引や名簿を営む団体と、組織のうえでつながっていることにはなりません。その団体による推薦でもありません。
+
+## 第 12 条（継続と終了）
+
+1. Sophaxis は一人で運営しており、失うものなく止められるように組んでいます。続くことは保証しません。サイトは、利用できなくなったり、変わったり、閉じたりすることがあります（[免責事項](https://sophaxis.vercel.app/disclaimer.ja.html)）。
+2. Sophaxis を閉じる場合の扱いは、利用規約「変更と終了」と「続けるための備え」に定めるとおりです。
+
+## 第 13 条（紛争への対応）
+
+1. 運営者は、現在、弁護士その他の専門家に依頼していません。この声明と、利用規約・各規程は、弁護士の確認を受けていません。
+2. 紛争が生じたときは、運営者は、必要に応じて弁護士その他の専門家に相談したうえで対応します。
+3. 対応は、日本の法令（国際的な事件の裁判管轄と準拠法についての定めを含みます）と、利用規約の「準拠法」「紛争」「日本国外の方へ」の定めに沿います。
+4. この条は、誰かに対する警告ではありません。
+
+## 第 14 条（この声明の変更）
+
+1. 運営者は、この声明を変えることがあります。
+2. 変えたときは、この頁の最終更新の日付と、変更の記録（`CHANGELOG.md`）に示します。
+3. この声明を変えても、利用規約と各規程の約束は変わりません。
 
