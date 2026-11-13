@@ -7451,7 +7451,7 @@
   "vercel-terms": {
    "url": "https://vercel.com/legal/terms",
    "status": 200,
-   "length": 54969,
+   "length": 55036,
    "headings": [
     "1",
     "2",
@@ -7498,6 +7498,10 @@
      {
       "at": 1081,
       "text": "In addition, if you are on a Hobby plan or trial Pro plan, you agree that we may use Your Content to train our artificial intelligence (“AI”) and machine learning models, and we may share Your Content with third parties for the purpose of developing and improving their products, including training and improving their AI and machine learning models (collectively, “ Model Training ”)."
+     },
+     {
+      "at": 2230,
+      "text": "Agreement"
      },
      {
       "at": 2456,
@@ -7570,6 +7574,10 @@
     ],
     "23": [
      {
+      "at": 76,
+      "text": "Agreement"
+     },
+     {
       "at": 303,
       "text": "Vercel"
      },
@@ -7615,6 +7623,7 @@
     "4",
     "8"
    ],
+   "fetched": "2026-11-13",
    "sha256": {
     "3": "ff532fa356dd0dc8d5dd7e0b8a0408e0138505fbc6f97bfec13da73f9abe965b",
     "4": "2d0d059d02faeb2c18a58ce9fe727095d0e386a26f8283b571f498e3ebff661f",
@@ -9813,135 +9822,140 @@
   "vercel-privacy": {
    "url": "https://vercel.com/legal/privacy-notice",
    "status": 200,
-   "length": 53340,
-   "sha256": "cc45fd18e344973effaf5de892acf34250ee6ad3b0045f2fe2bbca0dc60c0a7c",
+   "fetched": "2026-11-13",
+   "length": 53407,
+   "sha256": "a4dfd63e13084b24abc24b1fd25d8f343e6ae45ef484508e1c5d816a58bd2f37",
    "spans": [
     {
-     "at": 176,
-     "text": "Security"
-    },
-    {
-     "at": 260,
+     "at": 193,
      "text": "Vercel"
     },
     {
-     "at": 1286,
+     "at": 258,
+     "text": "Security"
+    },
+    {
+     "at": 1328,
      "text": "Service"
     },
     {
-     "at": 1399,
+     "at": 1441,
      "text": "United States"
     },
     {
-     "at": 1836,
+     "at": 1824,
+     "text": "Agreement"
+    },
+    {
+     "at": 1878,
      "text": "or a"
     },
     {
-     "at": 1889,
+     "at": 1931,
      "text": "Users"
     },
     {
-     "at": 2995,
+     "at": 3037,
      "text": "the right"
     },
     {
-     "at": 3168,
+     "at": 3210,
      "text": "https://"
     },
     {
-     "at": 3784,
+     "at": 3826,
      "text": "business"
     },
     {
-     "at": 6320,
+     "at": 6362,
      "text": "title"
     },
     {
-     "at": 7369,
+     "at": 7411,
      "text": "record"
     },
     {
-     "at": 12505,
+     "at": 12547,
      "text": "identifiers"
     },
     {
-     "at": 16891,
+     "at": 16933,
      "text": "Other"
     },
     {
-     "at": 16916,
+     "at": 16958,
      "text": "Consent"
     },
     {
-     "at": 17875,
+     "at": 17917,
      "text": "asis"
     },
     {
-     "at": 18817,
+     "at": 18859,
      "text": "Person"
     },
     {
-     "at": 21992,
+     "at": 22034,
      "text": "the public"
     },
     {
-     "at": 27240,
+     "at": 27282,
      "text": "resolved"
     },
     {
-     "at": 30948,
+     "at": 30990,
      "text": "the right to lodge a complaint with a supervisory authority"
     },
     {
-     "at": 31788,
+     "at": 31830,
      "text": "Model Training"
     },
     {
-     "at": 31836,
+     "at": 31878,
      "text": "Terms of Service"
     },
     {
-     "at": 33937,
+     "at": 33979,
      "text": "Name"
     },
     {
-     "at": 34098,
+     "at": 34140,
      "text": "Records"
     },
     {
-     "at": 37064,
+     "at": 37106,
      "text": "status"
     },
     {
-     "at": 41227,
+     "at": 41269,
      "text": "verify"
     },
     {
-     "at": 42330,
+     "at": 42372,
      "text": "General"
     },
     {
-     "at": 43739,
+     "at": 43781,
      "text": "Basis"
     },
     {
-     "at": 50719,
+     "at": 50761,
      "text": "verifiable"
     },
     {
-     "at": 52059,
+     "at": 52101,
      "text": "Vercel Inc."
     },
     {
-     "at": 52071,
+     "at": 52113,
      "text": "440 N Barranca Avenue #4133 Covina, CA 91723"
     },
     {
-     "at": 53151,
+     "at": 53218,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 53241,
+     "at": 53308,
      "text": "GitHub"
     }
    ]
@@ -9949,139 +9963,148 @@
   "vercel-dpa": {
    "url": "https://vercel.com/legal/dpa",
    "status": 200,
-   "length": 63156,
-   "sha256": "ddca1ebda2fb304231d44c166cba96c7f2fbb62a38004a61a09c354246f8f502",
+   "fetched": "2026-11-13",
+   "length": 63223,
+   "sha256": "ed786b90a92734bcc266737949f9a8b25719a4c2673e8b6d20437f8627ecb8bc",
    "spans": [
     {
-     "at": 186,
-     "text": "Security"
-    },
-    {
-     "at": 270,
+     "at": 203,
      "text": "Vercel"
     },
     {
-     "at": 1149,
+     "at": 268,
+     "text": "Security"
+    },
+    {
+     "at": 1191,
      "text": "General"
     },
     {
-     "at": 1416,
+     "at": 1458,
      "text": "Provision"
     },
     {
-     "at": 1480,
+     "at": 1522,
      "text": "Personal Data"
     },
     {
-     "at": 2160,
+     "at": 2202,
      "text": "Service"
     },
     {
-     "at": 2297,
+     "at": 2240,
+     "text": "Agreement"
+    },
+    {
+     "at": 2339,
      "text": "Vercel Inc."
     },
     {
-     "at": 4378,
+     "at": 4420,
      "text": "business"
     },
     {
-     "at": 4944,
+     "at": 4986,
      "text": "record"
     },
     {
-     "at": 5002,
+     "at": 5044,
      "text": "or a"
     },
     {
-     "at": 5963,
+     "at": 6005,
      "text": "promise"
     },
     {
-     "at": 10052,
+     "at": 10094,
      "text": "(c)"
     },
     {
-     "at": 10922,
+     "at": 10964,
      "text": "https://"
     },
     {
-     "at": 11635,
+     "at": 11677,
      "text": "resolved"
     },
     {
-     "at": 13470,
+     "at": 13512,
      "text": "credentials"
     },
     {
-     "at": 15325,
+     "at": 15367,
      "text": "verify"
     },
     {
-     "at": 18017,
+     "at": 18059,
      "text": "United States"
     },
     {
-     "at": 18718,
+     "at": 18760,
      "text": "n one"
     },
     {
-     "at": 20975,
+     "at": 21017,
      "text": "the criteria used to determine that period"
     },
     {
-     "at": 24638,
+     "at": 24680,
      "text": "center"
     },
     {
-     "at": 25355,
+     "at": 25397,
      "text": "as a business"
     },
     {
-     "at": 26802,
+     "at": 26844,
      "text": "Business"
     },
     {
-     "at": 26811,
+     "at": 26853,
      "text": "Continuity"
     },
     {
-     "at": 26843,
+     "at": 26885,
      "text": "Acceptable Use"
     },
     {
-     "at": 27760,
+     "at": 27802,
      "text": "removed"
     },
     {
-     "at": 30280,
+     "at": 30322,
      "text": "Software"
     },
     {
-     "at": 41367,
+     "at": 41409,
      "text": "asis"
     },
     {
-     "at": 50823,
+     "at": 50865,
      "text": "Personal data"
     },
     {
-     "at": 56562,
+     "at": 56604,
      "text": "(1)"
     },
     {
-     "at": 62929,
+     "at": 61196,
+     "text": "disproportionate"
+    },
+    {
+     "at": 62996,
      "text": "Terms of Service"
     },
     {
-     "at": 62964,
+     "at": 63031,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 63054,
+     "at": 63121,
      "text": "GitHub"
     },
     {
-     "at": 63098,
+     "at": 63165,
      "text": "status"
     }
    ]
@@ -10089,8 +10112,9 @@
   "vercel-logs-docs": {
    "url": "https://vercel.com/docs/logs",
    "status": 200,
-   "length": 5831,
-   "sha256": "7f6279ff616ccf2970d2a020b20f97aa1ead833c7a25c303411aeccc832be486",
+   "fetched": "2026-11-13",
+   "length": 5872,
+   "sha256": "a651ac321b5ca3a1be7f79d6b1afa14795d3b92a04a8264126a3f6577e08693f",
    "spans": [
     {
      "at": 163,
@@ -10101,35 +10125,35 @@
      "text": "ora"
     },
     {
-     "at": 1528,
+     "at": 1544,
      "text": "Service"
     },
     {
-     "at": 1772,
+     "at": 1788,
      "text": "Security"
     },
     {
-     "at": 1832,
+     "at": 1848,
      "text": "Limits"
     },
     {
-     "at": 4343,
+     "at": 4359,
      "text": "verify"
     },
     {
-     "at": 4772,
+     "at": 4788,
      "text": "Last updated"
     },
     {
-     "at": 5671,
+     "at": 5712,
      "text": "Terms of Service"
     },
     {
-     "at": 5706,
+     "at": 5747,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 5796,
+     "at": 5837,
      "text": "GitHub"
     }
    ]
@@ -10137,63 +10161,64 @@
   "vercel-runtime-logs-docs": {
    "url": "https://vercel.com/docs/logs/runtime",
    "status": 200,
-   "length": 15176,
-   "sha256": "ffe7d063c5b4afc3c0464547f31c5da8506aa87abf552859dfb5036ca1b76f91",
+   "fetched": "2026-11-13",
+   "length": 15217,
+   "sha256": "4dbc2468871ebcc5e2342510b5ed88194363a6816c07c944d617328841a679a0",
    "spans": [
     {
      "at": 171,
      "text": "Vercel"
     },
     {
-     "at": 1536,
+     "at": 1552,
      "text": "Service"
     },
     {
-     "at": 1780,
+     "at": 1796,
      "text": "Security"
     },
     {
-     "at": 1840,
+     "at": 1856,
      "text": "Limits"
     },
     {
-     "at": 4807,
+     "at": 4823,
      "text": "status"
     },
     {
-     "at": 5566,
+     "at": 5582,
      "text": "or a"
     },
     {
-     "at": 10188,
+     "at": 10204,
      "text": "Name"
     },
     {
-     "at": 10862,
+     "at": 10878,
      "text": "Other"
     },
     {
-     "at": 11116,
+     "at": 11132,
      "text": "the right"
     },
     {
-     "at": 11279,
+     "at": 11295,
      "text": "record"
     },
     {
-     "at": 14104,
+     "at": 14120,
      "text": "Last updated"
     },
     {
-     "at": 15016,
+     "at": 15057,
      "text": "Terms of Service"
     },
     {
-     "at": 15051,
+     "at": 15092,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 15141,
+     "at": 15182,
      "text": "GitHub"
     }
    ]
@@ -10201,8 +10226,9 @@
   "vercel-limits-docs": {
    "url": "https://vercel.com/docs/limits",
    "status": 200,
-   "length": 50407,
-   "sha256": "9a2beb258f901f88b002f046311b3de3d2170457a0c2ce246c236de66b09b7d4",
+   "fetched": "2026-11-13",
+   "length": 50307,
+   "sha256": "2bfd100e931d4b1d144bef66a03c9d18c8ba3edb4c039cd4f123afd9b12b2d82",
    "spans": [
     {
      "at": 0,
@@ -10213,75 +10239,75 @@
      "text": "Vercel"
     },
     {
-     "at": 1530,
+     "at": 1546,
      "text": "Service"
     },
     {
-     "at": 1774,
+     "at": 1790,
      "text": "Security"
     },
     {
-     "at": 2004,
+     "at": 2020,
      "text": "Fair Use Guidelines"
     },
     {
-     "at": 2062,
+     "at": 2078,
      "text": "General"
     },
     {
-     "at": 3764,
+     "at": 3780,
      "text": "or a"
     },
     {
-     "at": 6791,
+     "at": 6666,
      "text": "prefix"
     },
     {
-     "at": 10634,
+     "at": 10509,
      "text": "Name"
     },
     {
-     "at": 14690,
+     "at": 14565,
      "text": "verify"
     },
     {
-     "at": 16233,
+     "at": 16108,
      "text": "suffix"
     },
     {
-     "at": 18008,
+     "at": 17883,
      "text": "status"
     },
     {
-     "at": 18590,
+     "at": 18465,
      "text": "record"
     },
     {
-     "at": 24991,
+     "at": 24866,
      "text": "User s"
     },
     {
-     "at": 37997,
+     "at": 37872,
      "text": "credentials"
     },
     {
-     "at": 46633,
+     "at": 46508,
      "text": "n one"
     },
     {
-     "at": 49321,
+     "at": 49196,
      "text": "Last updated"
     },
     {
-     "at": 50247,
+     "at": 50147,
      "text": "Terms of Service"
     },
     {
-     "at": 50282,
+     "at": 50182,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 50372,
+     "at": 50272,
      "text": "GitHub"
     }
    ]
@@ -11912,9 +11938,9 @@
   "vercel-fair-use": {
    "url": "https://vercel.com/docs/limits/fair-use-guidelines",
    "status": 200,
-   "fetched": "2026-11-12",
-   "length": 7613,
-   "sha256": "f241dce3d1f34e326a127ae327a10d6605c0e64fb4ae91c4ed30cc8533cac58f",
+   "fetched": "2026-11-13",
+   "length": 6679,
+   "sha256": "72c94595a48be0ba40257c55fcee8fc60ca983022327cdd00ced5dcfda034565",
    "spans": [
     {
      "at": 0,
@@ -11925,63 +11951,55 @@
      "text": "Vercel"
     },
     {
-     "at": 1543,
+     "at": 1559,
      "text": "Service"
     },
     {
-     "at": 1787,
+     "at": 1803,
      "text": "Security"
     },
     {
-     "at": 1847,
+     "at": 1863,
      "text": "Limits"
     },
     {
-     "at": 2136,
+     "at": 2152,
      "text": "Other"
     },
     {
-     "at": 2174,
-     "text": "Commercial usage"
-    },
-    {
-     "at": 2191,
+     "at": 2190,
      "text": "General"
     },
     {
-     "at": 2936,
+     "at": 2935,
      "text": "title"
     },
     {
-     "at": 3575,
+     "at": 3574,
      "text": "Provision"
     },
     {
-     "at": 3869,
+     "at": 3868,
      "text": "or a"
     },
     {
-     "at": 5341,
-     "text": "Commercial usage is defined as any Deployment that is used for the purpose of financial gain of anyone involved in any part of the production of the project"
-    },
-    {
-     "at": 5958,
-     "text": "Asking for Donations does not fall under commercial usage."
-    },
-    {
-     "at": 6461,
+     "at": 5502,
      "text": "Terms of Service"
     },
     {
-     "at": 6516,
+     "at": 5546,
+     "text": "Agreement"
+    },
+    {
+     "at": 5557,
      "text": "Last updated"
     },
     {
-     "at": 7488,
+     "at": 6554,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 7578,
+     "at": 6644,
      "text": "GitHub"
     }
    ]
@@ -11989,9 +12007,9 @@
   "vercel-hobby": {
    "url": "https://vercel.com/docs/plans/hobby",
    "status": 200,
-   "fetched": "2026-11-12",
-   "length": 7713,
-   "sha256": "1e49e76052e2f20a7a9c08a2aa1236a37f81448660a007a6012b0f46b582a69c",
+   "fetched": "2026-11-13",
+   "length": 7550,
+   "sha256": "fa042e0158412707448e8abe2c02dc8b6d4dc6a14bb8d944f1875f43621b2456",
    "spans": [
     {
      "at": 0,
@@ -12002,43 +12020,43 @@
      "text": "Hobby Plan"
     },
     {
-     "at": 1541,
+     "at": 1557,
      "text": "Service"
     },
     {
-     "at": 1785,
+     "at": 1801,
      "text": "Security"
     },
     {
-     "at": 1845,
+     "at": 1861,
      "text": "Limits"
     },
     {
-     "at": 2438,
+     "at": 2358,
      "text": "asis"
     },
     {
-     "at": 2900,
+     "at": 2820,
      "text": "Provision"
     },
     {
-     "at": 6245,
+     "at": 6057,
      "text": "or a"
     },
     {
-     "at": 6632,
+     "at": 6444,
      "text": "Last updated"
     },
     {
-     "at": 7553,
+     "at": 7390,
      "text": "Terms of Service"
     },
     {
-     "at": 7588,
+     "at": 7425,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 7678,
+     "at": 7515,
      "text": "GitHub"
     }
    ]
@@ -12046,9 +12064,9 @@
   "vercel-plans": {
    "url": "https://vercel.com/docs/plans",
    "status": 200,
-   "fetched": "2026-11-12",
-   "length": 6794,
-   "sha256": "055e46a05280b878dddd3dcacc12bf86ad309304e016169a1097c296873bdc80",
+   "fetched": "2026-11-13",
+   "length": 6798,
+   "sha256": "719a74816c3f99b18c1f40c9724425945674f872766bff3baa88fde4fba795f5",
    "spans": [
     {
      "at": 17,
@@ -12059,43 +12077,43 @@
      "text": "ora"
     },
     {
-     "at": 1547,
+     "at": 1563,
      "text": "Service"
     },
     {
-     "at": 1791,
+     "at": 1807,
      "text": "Security"
     },
     {
-     "at": 1851,
+     "at": 1867,
      "text": "Limits"
     },
     {
-     "at": 2020,
+     "at": 2036,
      "text": "Hobby Plan"
     },
     {
-     "at": 2165,
+     "at": 2181,
      "text": "General"
     },
     {
-     "at": 3149,
+     "at": 3128,
      "text": "business"
     },
     {
-     "at": 5726,
+     "at": 5705,
      "text": "Last updated"
     },
     {
-     "at": 6634,
+     "at": 6638,
      "text": "Terms of Service"
     },
     {
-     "at": 6669,
+     "at": 6673,
      "text": "Acceptable Use Policy"
     },
     {
-     "at": 6759,
+     "at": 6763,
      "text": "GitHub"
     }
    ]
