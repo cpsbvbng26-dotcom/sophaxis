@@ -14,12 +14,4 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mkdir -p arts
-          for id in 43336679823; do
-            gh run download $id -R ${{ github.repository }} -n sources-full -D arts/$id > /dev/null 2>&1 || echo "no artifact $id"
-          done
-          git show 1b4ba81^:verification/sources-raw.json > old-raw.json
-          node probe.js
+      - run: node probe.js
