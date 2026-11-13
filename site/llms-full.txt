@@ -1012,6 +1012,7 @@ The statement on generative models, an abstract given in the form, a reason for 
 A record also gives the number of its submission issue, which shows the submitter's GitHub username.
 Sophaxis keeps records without a time limit, so that citations do not break.
 The issues, with the GitHub usernames in them, stay as long as GitHub keeps them; removing a record empties the issues that name it, and the operator then deletes them.
+The logs of the automatic steps that read an issue keep no text of the issue, and GitHub keeps them, with the list of runs, for the period set for the repository, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
 Vercel keeps its request logs for the period its service sets, and the operator does not copy them.
 A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
 Earlier versions stay in the history of the public repository and in the saves of the Internet Archive; the operator asks GitHub and the Internet Archive to remove them.
@@ -1232,7 +1233,7 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.html
 
 # Withdrawal Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [撤回の規程（日本語訳）](https://sophaxis.vercel.app/policies/withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1275,6 +1276,7 @@ A record that is already withdrawn can still be removed.
 The operator removes the record by labelling the verified issue `upheld`, and aims to do so within 7 days.
 Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
 No reason is shown, and the withdrawal issue itself is emptied, closed and locked.
+The logs of the automatic steps keep no text of the issue, as the same section of the Takedown Policy sets out.
 
 ## An author's name
 
@@ -1395,6 +1397,9 @@ In the issues:
 
 - Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
 - Deleting an issue also deletes its edit history.
+- The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step, with the address of any lookup that failed (which can hold the DOI or the ORCID iD given in the issue), and not the issue's text.
+- Before 2026-11-13 the logs kept the text of the issue as it was when a step ran. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.
+- GitHub keeps the logs and the list of runs for the period set for the repository; GitHub's documentation gives at most 90 days for a public repository. The list of runs names each run by the title of its issue, which for an emptied issue is the emptied title, and by the account that started it.
 - A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
 
 Outside the site:
@@ -2970,6 +2975,7 @@ Vercel は、その[プライバシーの方針](https://vercel.com/legal/privac
 
 記録は、引用が壊れないよう、期限を設けずに保ちます。
 issue とそこに載る GitHub のユーザー名は、GitHub が issue を保つ間、残ります。記録を削除すると、その記録を名指す issue を空にし、運営者がそのあと削除します。
+issue を読む自動の手順の実行の記録（ログ）には、issue の本文は残りません。GitHub は、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)が定めるとおり、実行の記録と実行の一覧をリポジトリに定めた期間だけ保ちます。
 Vercel の閲覧の要求の記録は、そのサービスが定める期間だけ残ります。運営者はそれを写しません。
 削除の求めがあれば、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って記録を削除します。
 著者の求めでも削除します。
@@ -4090,6 +4096,9 @@ issue では：
 
 - その記録についての自動のコメントはすべて消し、その記録を挙げる issue は中身を空にして閉じ、ロックします。その後、運営者がそれらを削除します。
 - issue を削除すると、その編集履歴も消えます。
+- 自動の手順は、GitHub Actions が渡す出来事のファイルから issue を読みます。そのため、実行の記録（ログ）に残るのは、issue の番号と各手順の結果、照会に失敗したときのその宛先（issue に書かれた DOI か ORCID iD を含むことがあります）だけで、issue の本文は残りません。
+- 2026-11-13 より前の実行の記録には、手順が動いたときの issue の本文が残っていました。その日より前に中身を空にした三つの issue の実行の記録は、2026-11-13 に消しました。
+- GitHub は、実行の記録と実行の一覧を、リポジトリに定めた期間だけ保ちます。GitHub の説明書によれば、公開のリポジトリでは長くて 90 日です。実行の一覧は、各実行を issue の題（中身を空にした issue では空にしたあとの題）と、実行を起こしたアカウントで示します。
 - 削除の求めそのものは、それへの判断とともに残ります。削除を求めた撤回の issue は、ほかと同じように中身を空にします。
 
 サイトの外では：
@@ -4146,7 +4155,7 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.ja.html
 
 # 撤回の規程（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-13。
 
 これは英語の [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4189,6 +4198,7 @@ PDF の写しはサイトから外し、記録は預け先へのリンクだけ�
 運営者は、確かめられた issue に `upheld` のラベルを付けて記録を削除し、7 日以内に行うことを目指します。
 その後に残るのは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)の「削除した記録に残るもの」の節が定めるとおり、Sophaxis の番号だけです。
 理由は示さず、撤回の issue そのものも中身を空にして閉じ、ロックします。
+自動の手順の実行の記録（ログ）に issue の本文が残らないことも、削除の規程の同じ節が定めるとおりです。
 
 ## 著者の名前
 
