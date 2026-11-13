@@ -8,6 +8,14 @@
   <updated>2026-11-13T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c19</id>
+    <title>GitHub's notifications can carry a copy of an issue</title>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>The Takedown Policy listed what an emptied or deleted issue leaves, and the Privacy Policy said how long the issues stay, without naming GitHub's notifications. GitHub sends a notification of the activity on an issue to the accounts set to receive it, an email notification holds a copy of the content, and the operator's account may be one of them. The Takedown Policy and the Privacy Policy, in both languages, now say that these notifications may carry a copy of the content of an issue, that the copy is handled under GitHub's Terms of Service and Privacy Statement, that the pages of GitHub's documentation that were fetched do not say that it goes away when the issue is emptied or deleted, and that the operator makes no other copy of an issue. This is a correction of an incomplete statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes; it narrows no right and adds no duty. Policies: Takedown Policy, Privacy Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c18</id>
     <title>The logs of the automatic steps keep no text of an issue</title>
     <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
