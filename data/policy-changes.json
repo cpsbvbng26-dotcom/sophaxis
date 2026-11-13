@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-13",
+    "policies": ["takedown", "privacy"],
+    "title": "GitHub's notifications can carry a copy of an issue",
+    "text": "The Takedown Policy listed what an emptied or deleted issue leaves, and the Privacy Policy said how long the issues stay, without naming GitHub's notifications. GitHub sends a notification of the activity on an issue to the accounts set to receive it, an email notification holds a copy of the content, and the operator's account may be one of them. The Takedown Policy and the Privacy Policy, in both languages, now say that these notifications may carry a copy of the content of an issue, that the copy is handled under GitHub's Terms of Service and Privacy Statement, that the pages of GitHub's documentation that were fetched do not say that it goes away when the issue is emptied or deleted, and that the operator makes no other copy of an issue. This is a correction of an incomplete statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes; it narrows no right and adds no duty."
+  },
+  {
+    "date": "2026-11-13",
     "policies": ["takedown", "withdrawal", "privacy"],
     "title": "The logs of the automatic steps keep no text of an issue",
     "text": "The Takedown Policy said what an emptied or deleted issue leaves, and did not name the logs of the automatic steps that read it. Until 2026-11-13 those steps received the text of the issue in their environment, which GitHub Actions prints in the log of each run, so the logs kept the text after the issue was emptied. The steps now read the issue from the event file that GitHub Actions gives them, and their logs keep the issue's number and the outcome of each step, not its text. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13. The Takedown Policy, the Withdrawal Policy and the Privacy Policy, in both languages, now say so, and say that GitHub keeps the logs and the list of runs for the period set for the repository. This is a correction of an incomplete statement, effective on publication, 2026-11-13. It adds a deletion, narrows no right and adds no duty."

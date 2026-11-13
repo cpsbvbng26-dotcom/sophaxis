@@ -87,6 +87,7 @@ The statement on generative models, an abstract given in the form, a reason for 
 A record also gives the number of its submission issue, which shows the submitter's GitHub username.
 Sophaxis keeps records without a time limit, so that citations do not break.
 The issues, with the GitHub usernames in them, stay as long as GitHub keeps them; removing a record empties the issues that name it, and the operator then deletes them.
+GitHub's notifications may carry a copy of the content of an issue to the accounts set to receive them, by email too, and the operator's account may be one of them; that copy is handled under GitHub's Terms of Service and Privacy Statement, and the pages of GitHub's documentation that were fetched do not say that it goes away when the issue is emptied or deleted. Apart from it, the operator makes no copy of an issue.
 The logs of the automatic steps that read an issue keep no text of the issue, and GitHub keeps them, with the list of runs, for the period set for the repository, as the [Takedown Policy](./takedown.md) sets out.
 Vercel keeps its request logs for the period its service sets, and the operator does not copy them.
 A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](./takedown.md) sets out.

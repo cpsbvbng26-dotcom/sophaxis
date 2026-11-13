@@ -1012,6 +1012,7 @@ The statement on generative models, an abstract given in the form, a reason for 
 A record also gives the number of its submission issue, which shows the submitter's GitHub username.
 Sophaxis keeps records without a time limit, so that citations do not break.
 The issues, with the GitHub usernames in them, stay as long as GitHub keeps them; removing a record empties the issues that name it, and the operator then deletes them.
+GitHub's notifications may carry a copy of the content of an issue to the accounts set to receive them, by email too, and the operator's account may be one of them; that copy is handled under GitHub's Terms of Service and Privacy Statement, and the pages of GitHub's documentation that were fetched do not say that it goes away when the issue is emptied or deleted. Apart from it, the operator makes no copy of an issue.
 The logs of the automatic steps that read an issue keep no text of the issue, and GitHub keeps them, with the list of runs, for the period set for the repository, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
 Vercel keeps its request logs for the period its service sets, and the operator does not copy them.
 A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
@@ -1400,6 +1401,7 @@ In the issues:
 - The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step, with the address of any lookup that failed (which can hold the DOI or the ORCID iD given in the issue), and not the issue's text.
 - Before 2026-11-13 the logs kept the text of the issue as it was when a step ran. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.
 - GitHub keeps the logs and the list of runs for the period set for the repository; GitHub's documentation gives at most 90 days for a public repository. The list of runs names each run by the title of its issue, which for an emptied issue is the emptied title, and by the account that started it.
+- GitHub's notifications may already have carried a copy of an issue's content to the accounts set to receive them, by email too; the operator's account may be one of them. Those copies are handled under GitHub's Terms of Service and Privacy Statement. The pages of GitHub's documentation that were fetched do not say that they go away when the issue is emptied or deleted. Apart from them, the operator makes no copy of the issue.
 - A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
 
 Outside the site:
@@ -2975,6 +2977,7 @@ Vercel は、その[プライバシーの方針](https://vercel.com/legal/privac
 
 記録は、引用が壊れないよう、期限を設けずに保ちます。
 issue とそこに載る GitHub のユーザー名は、GitHub が issue を保つ間、残ります。記録を削除すると、その記録を名指す issue を空にし、運営者がそのあと削除します。
+GitHub の通知は、issue の中身の写しを、受け取る設定のアカウントに、電子メールでも届けることがあります。運営者のアカウントもその一つであることがあります。その写しは、GitHub の利用規約とプライバシーステートメントのもとで扱われます。issue を空にしたり削除したりしたときにその写しが消えるとは、取り寄せた GitHub の説明書は書いていません。運営者は、これとは別に、issue の写しを作りません。
 issue を読む自動の手順の実行の記録（ログ）には、issue の本文は残りません。GitHub は、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)が定めるとおり、実行の記録と実行の一覧をリポジトリに定めた期間だけ保ちます。
 Vercel の閲覧の要求の記録は、そのサービスが定める期間だけ残ります。運営者はそれを写しません。
 削除の求めがあれば、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って記録を削除します。
@@ -4099,6 +4102,7 @@ issue では：
 - 自動の手順は、GitHub Actions が渡す出来事のファイルから issue を読みます。そのため、実行の記録（ログ）に残るのは、issue の番号と各手順の結果、照会に失敗したときのその宛先（issue に書かれた DOI か ORCID iD を含むことがあります）だけで、issue の本文は残りません。
 - 2026-11-13 より前の実行の記録には、手順が動いたときの issue の本文が残っていました。その日より前に中身を空にした三つの issue の実行の記録は、2026-11-13 に消しました。
 - GitHub は、実行の記録と実行の一覧を、リポジトリに定めた期間だけ保ちます。GitHub の説明書によれば、公開のリポジトリでは長くて 90 日です。実行の一覧は、各実行を issue の題（中身を空にした issue では空にしたあとの題）と、実行を起こしたアカウントで示します。
+- GitHub の通知は、issue の中身の写しを、受け取る設定のアカウントに、電子メールでも届けていることがあります。運営者のアカウントもその一つであることがあります。その写しは、GitHub の利用規約とプライバシーステートメントのもとで扱われます。issue を空にしたり削除したりしたときにその写しが消えるとは、取り寄せた GitHub の説明書は書いていません。運営者は、これとは別に、issue の写しを作りません。
 - 削除の求めそのものは、それへの判断とともに残ります。削除を求めた撤回の issue は、ほかと同じように中身を空にします。
 
 サイトの外では：

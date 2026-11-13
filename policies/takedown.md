@@ -92,6 +92,7 @@ In the issues:
 - The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step, with the address of any lookup that failed (which can hold the DOI or the ORCID iD given in the issue), and not the issue's text.
 - Before 2026-11-13 the logs kept the text of the issue as it was when a step ran. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.
 - GitHub keeps the logs and the list of runs for the period set for the repository; GitHub's documentation gives at most 90 days for a public repository. The list of runs names each run by the title of its issue, which for an emptied issue is the emptied title, and by the account that started it.
+- GitHub's notifications may already have carried a copy of an issue's content to the accounts set to receive them, by email too; the operator's account may be one of them. Those copies are handled under GitHub's Terms of Service and Privacy Statement. The pages of GitHub's documentation that were fetched do not say that they go away when the issue is emptied or deleted. Apart from them, the operator makes no copy of the issue.
 - A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
 
 Outside the site:

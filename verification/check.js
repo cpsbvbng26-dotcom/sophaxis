@@ -6399,7 +6399,7 @@ console.log('\n128. No issue text in the logs of the runs: the scripts read an i
     ['the setting said to be verified', aud(real.aud.replace('このリポジトリに定めた保つ期間は、確かめていません。Claude の手元の道具では、その設定を読めないためです。', 'このリポジトリに定めた保つ期間は 90 日です。'))],
     ['the count changed', aud(real.aud.replace('この表の判定は、根拠不足 1、漏れ 4、表現 2、問題なし 3 です。', 'この表の判定は、根拠不足 1、漏れ 3、表現 2、問題なし 3 です。'))],
     ['a reason taken out', aud(real.aud.replace('出来事のファイルは実行の記録に写らず、本文を記録に残さずに同じ確かめができるためです', '出来事のファイルを使います'))],
-    ['the sentence on lawyers taken out', aud(real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'))],
+    ['the sentence on lawyers taken out', aud(real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-13：十六度目の見落とし', '\n\n## 2026-11-13：十六度目の見落とし'))],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   /* A condition may test the text: GitHub evaluates it and does not print it. */
@@ -6407,6 +6407,87 @@ console.log('\n128. No issue text in the logs of the runs: the scripts read an i
   const condOk = problems(cond).length === 0;
   ok('break on purpose: the issue text, its title, a comment, the title of a pull request or the whole event in a step, a script reading the environment, printing the text or a field, writing another way or not reading the event file, the policies, the section, the runs, a quotation, the setting, the count, a reason and the sentence on lawyers each fail, and a condition that tests the text is not counted (' + (breaks.length - missed.length + (condOk ? 1 : 0)) + ' / ' + (breaks.length + 1) + ')',
     missed.length === 0 && condOk, missed.concat(condOk ? [] : ['a condition']).join(' / '));
+}
+console.log('\n129. GitHub\'s notifications: the Takedown and Privacy Policies say that they may carry a copy of an issue, and no page says that no other copy of an issue is made without saying so (2026-11-13)');
+{
+  /* A sixteenth read-only pass found that Nusquama's privacy page said that no other copy of an issue is made, and did not name GitHub's
+   * notifications. Sophaxis's pages did not say that, but the Takedown Policy listed what an emptied or deleted issue leaves, and the
+   * Privacy Policy said how long issues stay, without the notifications. GitHub sends a notification of activity on an issue to the accounts
+   * set to receive it; an email notification holds a copy of the content; the operator's account may be one of them. The operator's settings
+   * cannot be checked, so Claude decided on 2026-11-13 that the policies say the copy may be carried, not that it is stopped. */
+  const AUD = 'docs/legal-audit-2026-11-12.md', HEAD = '\n## 2026-11-13：十六度目の見落とし\n';
+  const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const WANT = {
+    'policies/takedown.md': ["GitHub's notifications may already have carried a copy of an issue's content to the accounts set to receive them, by email too; the operator's account may be one of them.", "Those copies are handled under GitHub's Terms of Service and Privacy Statement.", "The pages of GitHub's documentation that were fetched do not say that they go away when the issue is emptied or deleted.", 'Apart from them, the operator makes no copy of the issue.'],
+    'policies/takedown.ja.md': ['GitHub の通知は、issue の中身の写しを、受け取る設定のアカウントに、電子メールでも届けていることがあります。', '運営者のアカウントもその一つであることがあります。', 'その写しは、GitHub の利用規約とプライバシーステートメントのもとで扱われます。', 'issue を空にしたり削除したりしたときにその写しが消えるとは、取り寄せた GitHub の説明書は書いていません。', '運営者は、これとは別に、issue の写しを作りません。'],
+    'policies/privacy.md': ["GitHub's notifications may carry a copy of the content of an issue to the accounts set to receive them, by email too, and the operator's account may be one of them; that copy is handled under GitHub's Terms of Service and Privacy Statement, and the pages of GitHub's documentation that were fetched do not say that it goes away when the issue is emptied or deleted.", 'Apart from it, the operator makes no copy of an issue.'],
+    'policies/privacy.ja.md': ['GitHub の通知は、issue の中身の写しを、受け取る設定のアカウントに、電子メールでも届けることがあります。', '運営者のアカウントもその一つであることがあります。', 'その写しは、GitHub の利用規約とプライバシーステートメントのもとで扱われます。', 'issue を空にしたり削除したりしたときにその写しが消えるとは、取り寄せた GitHub の説明書は書いていません。', '運営者は、これとは別に、issue の写しを作りません。'],
+  };
+  const SECTIONS = { 'policies/takedown.md': '\nIn the issues:\n', 'policies/takedown.ja.md': '\nissue では：\n', 'policies/privacy.md': '\n## Records\n', 'policies/privacy.ja.md': '\n## 保存の期間\n' };
+  const NOCOPY = /no (?:other )?copy of (?:an|the) issue|issue の写しを作りません|issue の中身の写しを作りません|no other copy is made|別の写しも作りません/i;
+  const NOTICE = /GitHub's notifications may|GitHub の通知は、issue の中身の写しを/;
+  const SRC = ['`6d56af0c8b62bde11bb3d9df46244fab5f0a00f9`', '88abdf864746c3540835e2bf774e4c809889431dec08ed2190967a971dd56300', '4155eef5fdb60cea35ad1ef3f49a524cdf6c80a2df9ccc3b1f3fad9e815a611b',
+    '「By default, you also automatically watch all repositories that you create and are owned by your personal account.」',
+    '「After enabling email notifications, {% data variables.product.prodname_dotcom %} will send notifications to you as multipart emails that contain both HTML and plain text copies of the content.」'];
+  const pages = fs.readdirSync(ROOT).filter((f) => f.endsWith('.md') && !['CLAUDE.md', 'CHANGELOG.md'].includes(f)).concat(fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => f.endsWith('.md')).map((f) => 'policies/' + f));
+  const built = { 'policies/takedown.md': 'site/policies/takedown.html', 'policies/takedown.ja.md': 'site/policies/takedown.ja.html', 'policies/privacy.md': 'site/policies/privacy.html', 'policies/privacy.ja.md': 'site/policies/privacy.ja.html' };
+  const real = {};
+  for (const f of pages.concat(Object.values(built), [AUD, 'data/policy-changes.json', 'site/llms-full.txt'])) real[f] = read(path.join(ROOT, f));
+  const unq = (s) => s.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&#x27;/g, "'").replace(/&amp;/g, '&').replace(/<[^>]+>/g, '');
+  function problems(c) {
+    const bad = [];
+    for (const [f, xs] of Object.entries(WANT)) {
+      const t = c[f] || '', i = t.indexOf(SECTIONS[f]), j = i < 0 ? -1 : t.indexOf('\n## ', i + SECTIONS[f].length - 1);
+      const part = i < 0 ? '' : t.slice(i, j < 0 ? undefined : j);
+      for (const s of xs) {
+        if (!part.includes(s)) bad.push(f + ': ' + s.slice(0, 40));
+        if (!unq(c[built[f]] || '').includes(s)) bad.push(built[f] + ': ' + s.slice(0, 40));
+        if (!(c['site/llms-full.txt'] || '').includes(s)) bad.push('llms-full.txt: ' + s.slice(0, 40));
+      }
+    }
+    for (const f of pages) if (NOCOPY.test(c[f] || '') && !NOTICE.test(c[f] || '')) bad.push(f + ': no other copy of an issue, without the notifications');
+    let feed = [];
+    try { feed = JSON.parse(c['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
+    const e = feed.find((x) => x.title === "GitHub's notifications can carry a copy of an issue");
+    if (!e || e.date !== '2026-11-13' || ['takedown', 'privacy'].some((p) => !e.policies.includes(p)) || !e.text.includes('effective on publication, 2026-11-13') || !e.text.includes('it narrows no right and adds no duty')) bad.push('the entry in the feed of policy changes');
+    const a = c[AUD] || '', i = a.indexOf(HEAD), j = i < 0 ? -1 : a.indexOf('\n## ', i + 5);
+    const sec = i < 0 || j < 0 ? '' : a.slice(i, j);
+    if (!sec || a.indexOf('\n## この記録について\n') < i) return bad.concat(['no sixteenth section before the end of the record']);
+    for (const q of SRC) if (!sec.includes(q)) bad.push('the record lacks ' + q.slice(0, 30));
+    const t0 = sec.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
+    const rows = t0 < 0 ? [] : sec.slice(t0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rows.length < 5 || !rows.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the shape of the table');
+    const m = /この表の判定は、([^。]+)です。/.exec(sec);
+    const said = m ? Object.fromEntries(m[1].split('、').map((x) => { const [k, n] = x.trim().split(' '); return [k, Number(n)]; })) : {};
+    if (!m || !KINDS.every((k) => (said[k] || 0) === rows.filter((y) => y[4] === k).length)) bad.push('the count of findings');
+    if ((sec.match(/2026-11-13 に Claude が決めました。/g) || []).length < 3) bad.push('the decisions');
+    if (!sec.includes('運営者のアカウントの通知の設定は、確かめていません。')) bad.push('the unchecked setting');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the sentence on lawyers');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the Takedown and Privacy Policies (both languages, built pages, llms-full.txt) say that GitHub\'s notifications may carry a copy of an issue, handled under GitHub\'s terms, that the fetched documentation does not say it goes away, and that the operator makes no other copy; no page (' + pages.length + ') says that no other copy of an issue is made without saying so; the feed and the record have their entry and section',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
+  const breaks = [
+    ['the Takedown Policy without the notifications', w('policies/takedown.md', WANT['policies/takedown.md'][0], '')],
+    ['the Japanese Takedown Policy without the unchecked deletion', w('policies/takedown.ja.md', WANT['policies/takedown.ja.md'][3], '')],
+    ['the Privacy Policy without the operator\'s copy', w('policies/privacy.md', 'Apart from it, the operator makes no copy of an issue.', '')],
+    ['the Japanese Privacy Policy without the email', w('policies/privacy.ja.md', WANT['policies/privacy.ja.md'][0], '')],
+    ['the built page left behind', w('site/policies/takedown.ja.html', '運営者のアカウントもその一つであることがあります。', '')],
+    ['llms-full.txt left behind', w('site/llms-full.txt', 'Apart from them, the operator makes no copy of the issue.', '')],
+    ['another page saying no other copy is made', w('policies/terms.md', '\n## ', '\nNo other copy of an issue is made.\n\n## ')],
+    ['the feed entry taken out', w('data/policy-changes.json', "GitHub's notifications can carry a copy of an issue", 'Notifications')],
+    ['the section taken out', w(AUD, HEAD, '\n## 2026-11-13：通知\n')],
+    ['a hash altered', w(AUD, '88abdf864746c3540835e2bf774e4c809889431dec08ed2190967a971dd56300', '88abdf864746c3540835e2bf774e4c809889431dec08ed2190967a971dd56301')],
+    ['a quotation altered', w(AUD, 'that you create and are owned by your personal account.」', 'that you create.」')],
+    ['the setting said to be checked', w(AUD, '運営者のアカウントの通知の設定は、確かめていません。', '運営者のアカウントは、通知を受け取りません。')],
+    ['the count changed', w(AUD, 'この表の判定は、漏れ 4、問題なし 2 です。', 'この表の判定は、漏れ 3、問題なし 2 です。')],
+    ['the sentence on lawyers taken out', w(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each policy (both languages), a built page, llms-full.txt, another page saying no other copy is made, the feed, the section, a hash, a quotation, the unchecked setting, the count, the lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
