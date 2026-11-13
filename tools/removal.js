@@ -14,8 +14,9 @@
  *   - Once a day, open requests that are close to the 7 days and that the operator has not answered get a reminder.
  *
  * Modes, from the environment (MODE):
- *   intake   ISSUE_NUMBER, ISSUE_AUTHOR, ISSUE_BODY            a removal issue was opened or edited
- *   decide   ISSUE_NUMBER, ISSUE_BODY, DECISION                 the operator labelled it upheld or not-upheld
+ *   intake   (the issue, from GITHUB_EVENT_PATH)                a removal issue was opened or edited
+ *   decide   DECISION (and the issue, from GITHUB_EVENT_PATH)   the operator labelled it upheld or not-upheld
+ * The issue is read from the event file, never from the environment, as in tools/intake.js.
  *   manual   ID, ACTION (hold | release | remove | remove-pdf)  a request that came by email
  *   remind                                                      the daily reminder
  *
@@ -343,8 +344,8 @@ async function label(n, add, remove) {
 const today = () => jstDay(new Date().toISOString());
 
 async function intake() {
-  const n = process.env.ISSUE_NUMBER;
-  const form = parse(process.env.ISSUE_BODY);
+  const { number: n, body: text } = I.issueEvent();
+  const form = parse(text);
   const record = readRecord(form.id);
   const issue = await I.github('GET', '/issues/' + n);
   const before = (await comments(n)).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
@@ -367,9 +368,9 @@ async function intake() {
 
 /* An author's request in a withdrawal issue to remove the record (Withdrawal Policy). Only a verified request
  * that asks for removal is carried out; withdrawal itself is done by a pull request, as before. */
-async function decideWithdrawal(n, labels, decision) {
+async function decideWithdrawal(n, labels, decision, text) {
   const W = require('./withdraw.js');
-  const form = W.parse(process.env.ISSUE_BODY);
+  const form = W.parse(text);
   const say = (body) => I.github('POST', '/issues/' + n + '/comments', { body: MARK + '\n' + body });
   if (decision !== 'upheld') return say('The operator does not remove the record. The operator gives the reasons in this issue.');
   if (form.mode !== 'remove') return say('This issue asks for withdrawal, not removal. The operator withdraws the record by a pull request.');
@@ -385,11 +386,11 @@ async function decideWithdrawal(n, labels, decision) {
 }
 
 async function decide() {
-  const n = process.env.ISSUE_NUMBER;
+  const { number: n, body: text } = I.issueEvent();
   const decision = process.env.DECISION;
   const labels = (((await I.github('GET', '/issues/' + n)) || {}).labels || []).map((l) => l.name);
-  if (labels.includes('withdrawal')) return decideWithdrawal(n, labels, decision);
-  const form = parse(process.env.ISSUE_BODY);
+  if (labels.includes('withdrawal')) return decideWithdrawal(n, labels, decision, text);
+  const form = parse(text);
   const record = readRecord(form.id);
   const day = today();
   if (decision === 'not-upheld') {
