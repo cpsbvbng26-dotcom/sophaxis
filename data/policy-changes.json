@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-13",
+    "policies": ["takedown", "withdrawal", "privacy"],
+    "title": "The logs of the automatic steps keep no text of an issue",
+    "text": "The Takedown Policy said what an emptied or deleted issue leaves, and did not name the logs of the automatic steps that read it. Until 2026-11-13 those steps received the text of the issue in their environment, which GitHub Actions prints in the log of each run, so the logs kept the text after the issue was emptied. The steps now read the issue from the event file that GitHub Actions gives them, and their logs keep the issue's number and the outcome of each step, not its text. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13. The Takedown Policy, the Withdrawal Policy and the Privacy Policy, in both languages, now say so, and say that GitHub keeps the logs and the list of runs for the period set for the repository. This is a correction of an incomplete statement, effective on publication, 2026-11-13. It adds a deletion, narrows no right and adds no duty."
+  },
+  {
+    "date": "2026-11-13",
     "policies": ["privacy"],
     "title": "What the Internet Archive has said about its security",
     "text": "The Privacy Policy said that no statement of the measures the Internet Archive takes to protect personal data was found. The Internet Archive's own copy of its terms page, saved on 2024-01-01, holds a privacy policy dated 10 March 2001 that speaks of standard computer security. The Privacy Policy, in both languages, now quotes it, and still says that the Internet Archive's current terms can be read only with a script running. This is a correction of an untrue statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes, and no right is narrowed."
