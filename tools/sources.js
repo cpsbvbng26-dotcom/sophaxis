@@ -203,8 +203,11 @@ const PAGES = {
   'courts-quotation-search': PAGE('https://www.courts.go.jp/hanrei/search1/index.html?query1=' + encodeURIComponent('引用 明瞭に区別') + '#searched', { lang: 'ja', links: /detail|\.pdf/i, follow: { re: /detail|\.pdf/i, max: 6 }, scripts: true }),
   // GitHub's site-policy repository, which holds the terms quoted: its licence, at the commit the weekly watch recorded.
   'github-site-policy-license': PAGE('https://raw.githubusercontent.com/github/site-policy/' + JSON.parse(fs.readFileSync(path.join(ROOT, 'verification', 'statutes.json'), 'utf8')).policies.find((p) => p.name === 'GitHub Terms of Service').commit + '/LICENSE.md', { markdown: true }),
-  // Vercel: what it calls commercial use, for the Hobby plan.
+  // Vercel: what it called commercial use, for the Hobby plan. The page held a section "Commercial usage" until 2026-11-12;
+  // the page fetched on 2026-11-13 has none. The Internet Archive's copy of 2026-10-31, pinned to its timestamp, still holds
+  // it, so that the earlier records that quote the section are read against a fetched text.
   'vercel-fair-use': PAGE('https://vercel.com/docs/limits/fair-use-guidelines'),
+  'vercel-fair-use-archived': PAGE('https://web.archive.org/web/20261031091625id_/https://vercel.com/docs/limits/fair-use-guidelines'),
   'vercel-hobby': PAGE('https://vercel.com/docs/plans/hobby'),
   'vercel-plans': PAGE('https://vercel.com/docs/plans'),
   // Zenodo and OSF. The OSF terms are kept in Markdown by the Center for Open Science on GitHub, read at a fixed commit.
@@ -649,22 +652,28 @@ async function fetchPage(key, p) {
   return out;
 }
 
-/* ------------------------------------------------------------ What the repository keeps (2026-11-12)
+/* ------------------------------------------------------------ What the repository keeps (2026-11-12; narrowed 2026-11-13)
  * Laws are kept whole: the Japanese laws from the e-Gov law API (`sources` "egov:…" and `laws`), and the foreign laws in
- * the text that their state, or an organ of it, publishes (WHOLE). Japan's Copyright Act, Article 13, leaves "憲法その他の法令"
- * and their translations made by an organ of the state outside copyright. Every other text (terms of services, licences,
- * guidance, the pages under `pages`, and translations not made by a state) is not the operator's to republish, and is kept
+ * their own official language, in the text that their state, or an organ of it, publishes (WHOLE). Japan's Copyright Act,
+ * Article 13, item 1, leaves "憲法その他の法令" outside copyright; whether a foreign law is a "法令" in that item cannot be settled
+ * from its text, and keeping those laws whole rests on that unsettled reading. Item 4 covers only the translations "国若しくは
+ * 地方公共団体の機関、独立行政法人又は地方独立行政法人が作成するもの", which are Japan's own bodies: it says nothing for a
+ * translation made by a foreign government or a foreign agency. So every translation (a foreign government's or agency's
+ * English text of a law in another language, as for Switzerland, China, Thailand, Saudi Arabia, the United Arab Emirates and
+ * Qatar, and the Korea Legislation Research Institute's) is kept in parts, like every other text that is not a law (terms
+ * of services, licences, guidance, the pages under `pages`). Such a text is not the operator's to republish, and is kept
  * only as its address, final address, day, length and SHA-256 of the text as fetched, with the parts that the repository
  * quotes or relies on (`spans`: each part with its place `at` in that text). The whole texts of a run go to
  * verification/sources-full.json, which is not committed: the workflow keeps it as an artifact of its run.
- * Korea's laws are read in the English translation of the Korea Legislation Research Institute, which is not an organ of
- * the state; the U.S. Code is read on Cornell's Legal Information Institute's page, which carries its own matter around
- * the text. Both are kept as parts. */
+ * The U.S. Code is read on Cornell's Legal Information Institute's page, which carries its own matter around the text, and
+ * is kept in parts too. 2026-11-13 に Claude が決めました（the translations taken out of WHOLE). */
 const FULL = path.join(ROOT, 'verification', 'sources-full.json');
 const HEAD = 300;
-const WHOLE = new Set(['gdpr', 'dsa', 'dsm', 'directive-2015-1535', 'uk-gdpr', 'osa', 'coppa', 'fadp', 'anpd', 'lgpd', 'pipl', 'thai-pdpa', 'saudi-pdpl',
+const WHOLE = new Set(['gdpr', 'dsa', 'dsm', 'directive-2015-1535', 'uk-gdpr', 'osa', 'coppa', 'anpd', 'lgpd',
   'india-act', 'india-rules', 'ru-152', 'kz', 'ar-25326', 'uy-18331', 'co-1581', 'mx-lfpdppp', 'nz-privacy', 'au-privacy', 'cl-19628', 'ca-pipeda',
-  'mc-1565', 'gh-dpa', 'ph-dpa', 'zw-dpa', 'ke-dpa', 'za-popia', 'sg-pdpa', 'ae-pdpl', 'qa-pdpl']);
+  'mc-1565', 'gh-dpa', 'ph-dpa', 'zw-dpa', 'ke-dpa', 'za-popia', 'sg-pdpa']);
+/* The translations, kept in parts from 2026-11-13: never in WHOLE (verification/check.js, 126). */
+const TRANSLATIONS = ['fadp', 'pipl', 'thai-pdpa', 'saudi-pdpl', 'ae-pdpl', 'qa-pdpl', 'korea-pipa', 'korea-decree'];
 const wholeSource = (key) => key.startsWith('egov:') || WHOLE.has(key);
 
 /* A needle is found as written, or else with white space dropped and curly quotation marks read as straight ones. */
@@ -920,6 +929,6 @@ async function main() {
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 }
 
-module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, LAWS, NO_DIRECT, direct, IA, WHOLE, wholeSource, spansOf, harvest, keptProblems, reduceAll, FULL, HEAD };
+module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, LAWS, NO_DIRECT, direct, IA, WHOLE, TRANSLATIONS, wholeSource, spansOf, harvest, keptProblems, reduceAll, FULL, HEAD };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });
