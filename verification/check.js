@@ -6071,8 +6071,8 @@ console.log('\n125. What an eleventh, read-only pass found: the Internet Archive
     if (!c.ja.includes('いまの規約は、スクリプトを動かさないと読めないためです。Internet Archive 自身が 2024-01-01 に保存したその頁の写しには、2001 年 3 月 10 日付けのプライバシーの方針があり、「the Archive endeavors to enforce its Terms of Use and maintain standard computer security」と書いています。') || /ほかにその措置を述べたものも見つからなかった/.test(c.ja)) bad.push('the Japanese Privacy Policy');
     if (!c.changes.some((e) => e.date === '2026-11-13' && e.policies.join() === 'privacy' && /correction of an untrue statement, effective on publication, 2026-11-13/.test(e.text) && /no right is narrowed/.test(e.text) && /2024-01-01/.test(e.text))) bad.push('the feed');
     /* The record. */
-    const at = c.aud.indexOf(HEAD11), end = c.aud.indexOf('\n## この記録について\n');
-    if (at < 0 || end < at) return bad.concat(['no eleventh section before the end of the record']);
+    const at = c.aud.indexOf(HEAD11), end = at < 0 ? -1 : c.aud.indexOf('\n## ', at + 5);
+    if (at < 0 || end < at || c.aud.indexOf('\n## この記録について\n') < at) return bad.concat(['no eleventh section before the end of the record']);
     const sec = c.aud.slice(at, end);
     if (!sec.includes('| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n')) bad.push('the columns');
     const trs = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
@@ -6119,7 +6119,7 @@ console.log('\n125. What an eleventh, read-only pass found: the Internet Archive
     ['the run not named', w('aud', real.aud.replace('取り寄せの実行は 43332663139 で、', '取り寄せの実行は、'))],
     ['the probe logs not said deleted', w('aud', real.aud.replace('読み終えた同じ日に、その実行の記録を消しました。', ''))],
     ['the address back in the list of texts not fetched', w('aud', real.aud.replace('- Internet Archive のいまの利用規約。', '- Internet Archive の住所。'))],
-    ['the sentence on lawyers taken out', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'))],
+    ['the sentence on lawyers taken out', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-13：公開の頁の書き方', '\n\n## 2026-11-13：公開の頁の書き方'))],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: the copy without its timestamp, another text, the clause on personal data not kept, DataCite\'s imprint read or kept again, a name back in a row read from a copy (DataCite, OpenAI), the Internet Archive not fetched, the old Privacy Policy (both languages), the feed, the count, a decision without its reason, a quotation altered, the run, the probe, the list of texts not fetched and the sentence on lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
@@ -6172,8 +6172,8 @@ console.log('\n126. Vercel changed its Fair Use Guidelines on 2026-11-12 and kep
     }
     if (!c.srcjs.includes('Item 4 covers only the translations "国若しくは') || /and their translations made by an organ of the state outside copyright/.test(c.srcjs)) bad.push('the note on item 4');
     /* The record. */
-    const at = c.aud.indexOf('\n## 2026-11-12 の続き：十一度目の見落とし\n'), end = c.aud.indexOf('\n## この記録について\n');
-    const sec = at < 0 || end < at ? '' : c.aud.slice(at, end);
+    const at = c.aud.indexOf('\n## 2026-11-12 の続き：十一度目の見落とし\n'), end = at < 0 ? -1 : c.aud.indexOf('\n## ', at + 5);
+    const sec = at < 0 || end < at || c.aud.indexOf('\n## この記録について\n') < at ? '' : c.aud.slice(at, end);
     const sub = sec.includes(HEAD) ? sec.slice(sec.indexOf(HEAD), sec.indexOf('\n### ', sec.indexOf(HEAD) + 5)) : '';
     if (!sub) bad.push('no subsection in the eleventh section');
     for (const x of [SHA_FUG, '取り寄せ直した実行は 43338777855 で、結果は枝 `sources/20261113-0040` にあります。', 'これまでのコミットには、訳の全文が残っています。公開した履歴は書き換えません。', '読み終えた同じ日にその実行の記録を消しました。']) if (!sub.includes(x)) bad.push('the subsection: ' + x.slice(0, 30));
@@ -6207,6 +6207,74 @@ console.log('\n126. Vercel changed its Fair Use Guidelines on 2026-11-12 and kep
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: the page of 2026-11-12, the section kept as current, the copy without its timestamp or without the definition, section 4, the review as before, a translation whole again or with its text, the old note on item 4, the run, a quotation and the row without its reason (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
+}
+console.log('\n127. The public pages state positions: no page that the site serves says that something the operator keeps doing might break the law (2026-11-13)');
+{
+  /* Claude decided on 2026-11-13 that the public pages state the operator's position and do not list doubts; where the text of a law
+   * does not settle a point, a page says so and says how the operator treats it, and the reasons stay in the record. Every source that
+   * the site serves (the Markdown of the pages, in English and Japanese) and every page built from it is read against a list of phrasings,
+   * in English and in Japanese, that admit that an ongoing practice may be unlawful. The quoted texts of laws (details.source) are not
+   * counted, being the words of the law. The record has its section, with its table, its count, who decided and why, and the sentence on lawyers. */
+  const NOT = ['README.md', 'CHANGELOG.md', 'CLAUDE.md', 'CONTRIBUTING.md', 'SECURITY.md'];
+  const ADMIT_JA = ['おそれは減', 'なくなりはしません', 'なくなるわけではない', 'おそれを断たない', '余地は残る', '余地もある', '当たりうる', '言い切れません', 'はっきりしない', 'はっきりしません',
+    '裁判所の判断による', '判断は裁判所による', '除ききれない', '残る危険', '違法となるおそれ', '違反するおそれ', '違反となるおそれ', '抵触するおそれ', '読む道が残ります', '無効とされる余地',
+    '守るものではない', '違法の可能性', '違反の可能性'];
+  const ADMIT_EN = ['does not remove the risk', 'reduces the possibility', 'a reading remains', 'risks that remain', 'risk that remains', 'risk of illegality', 'how small the risk', 'cannot be ruled out',
+    'is unclear, because', 'for a court to decide', 'that is for a court', 'may also be held void', 'may still count as', 'may violate', 'may breach', 'may infringe', 'may be unlawful', 'may be illegal',
+    'could be unlawful', 'could be illegal', 'might be unlawful', 'might be illegal', 'has not been settled', 'does not protect where'];
+  const md = fs.readdirSync(ROOT).filter((f) => f.endsWith('.md') && !NOT.includes(f)).concat(fs.readdirSync(path.join(ROOT, 'policies')).filter((f) => f.endsWith('.md')).map((f) => 'policies/' + f));
+  const html = md.map((f) => 'site/' + f.replace(/\.md$/, '.html')).filter((f) => fs.existsSync(path.join(ROOT, f)));
+  const pages = md.concat(html);
+  const HEAD = '\n## 2026-11-13：公開の頁の書き方\n';
+  const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const prose = (f, t) => (f.endsWith('.html') ? t.replace(/<details class="source">[\s\S]*?<\/details>/g, '') : t);
+  function problems(c) {
+    const bad = [];
+    for (const f of pages) {
+      const t = prose(f, c[f]);
+      for (const w of ADMIT_JA.concat(ADMIT_EN)) if (t.includes(w)) bad.push(f + ': ' + w);
+    }
+    const at = c.aud.indexOf(HEAD), end = at < 0 ? -1 : c.aud.indexOf('\n## ', at + 5);
+    const sec = at < 0 ? '' : c.aud.slice(at, end < 0 ? undefined : end);
+    if (!sec || c.aud.indexOf('\n## この記録について\n') < at) return bad.concat(['no section before the end of the record']);
+    const t0 = sec.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
+    const rows = t0 < 0 ? [] : sec.slice(t0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rows.length < 8 || !rows.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the table');
+    const said = (k) => Number((new RegExp(k + ' (\\d+) 件').exec(sec) || [])[1]);
+    if (!KINDS.filter((k) => rows.some((y) => y[4] === k)).every((k) => said(k) === rows.filter((y) => y[4] === k).length) || Number((/合わせて (\d+) 件です。/.exec(sec) || [])[1]) !== rows.length) bad.push('the count');
+    const nPages = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[1]), nOther = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[2]);
+    if (nPages !== md.filter((f) => f.startsWith('policies/')).length || nOther !== md.filter((f) => !f.startsWith('policies/')).length) bad.push('the number of pages read');
+    if ((sec.match(/2026-11-13 に Claude が決めました。/g) || []).length < 2 || !sec.includes('見つけたことと直したことを記録が示し、頁が立場を示せば、頁は確かさを言い過ぎず、理由は記録で確かめられるためです。')
+      || !sec.includes('注は、提供しない国と地域を決めた根拠の所在を示すもので、続けている行いの疑いを並べるものではないためです。')) bad.push('who decided, and why');
+    if (!sec.includes('1. 扱い 1：') || !sec.includes('2. 扱い 2：') || !sec.includes('検査 127 が')) bad.push('the two ways, or the check');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec.replace('弁護士が確かめたとも書きません。', ''))) bad.push('the sentence on lawyers');
+    return bad;
+  }
+  const real = Object.assign(Object.fromEntries(pages.map((f) => [f, read(path.join(ROOT, f))])), { aud: read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md')) });
+  const now = problems(real);
+  ok('no page the site serves (' + md.length + ' sources and ' + html.length + ' built pages) uses a phrasing that admits an ongoing practice may be unlawful (' + ADMIT_JA.length + ' in Japanese, ' + ADMIT_EN.length + ' in English), outside the quoted texts of laws; the record has its section, table, count, decisions and the sentence on lawyers',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (k, v) => Object.assign({}, real, { [k]: v });
+  const breaks = [
+    ['an admission in the Terms', w('policies/terms.md', real['policies/terms.md'].replace('\n## ', '\nThis may be unlawful, but Sophaxis goes on.\n\n## '))],
+    ['an admission in the Japanese Privacy Policy', w('policies/privacy.ja.md', real['policies/privacy.ja.md'].replace('\n## ', '\n違法となるおそれは残りますが、続けます。\n\n## '))],
+    ['an admission in another served page', w('disclaimer.md', real['disclaimer.md'].replace('\n## ', '\nThe risk that remains cannot be ruled out.\n\n## '))],
+    ['an admission in a built page, outside a quoted law', w('site/policies/takedown.html', real['site/policies/takedown.html'].replace('<h2', '<p>The practice may violate the law.</p><h2'))],
+    ['the section taken out of the record', w('aud', real.aud.replace(HEAD, '\n## 公開の頁\n'))],
+    ['a row taken out', w('aud', real.aud.replace(/\n\| 削除の規程「削除した記録に残るもの」[^\n]*/, ''))],
+    ['the count changed', w('aud', real.aud.replace('判定は、問題なし 8 件で、合わせて 8 件です。', '判定は、問題なし 7 件で、合わせて 7 件です。'))],
+    ['the number of pages read changed', w('aud', real.aud.replace('規程の 16 の頁と、ほかの 46 の頁', '規程の 16 の頁と、ほかの 45 の頁'))],
+    ['the reason taken out', w('aud', real.aud.replace('頁は確かさを言い過ぎず、理由は記録で確かめられるためです。', '頁は立場を示します。'))],
+    ['the reason for the notes taken out', w('aud', real.aud.replace('注は、提供しない国と地域を決めた根拠の所在を示すもので、続けている行いの疑いを並べるものではないためです。', ''))],
+    ['the sentence on lawyers taken out', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'))],
+    ['a lawyer said to have checked it', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\nこの節も、弁護士の確認は受けていません。弁護士が確かめました。\n\n## この記録について'))],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  /* A phrasing inside a quoted law is not counted: the words of the law are not changed for a check. */
+  const quoted = w('site/policies/privacy.html', real['site/policies/privacy.html'].replace('</details>', 'may violate</details>'));
+  const quotedOk = problems(quoted).length === 0;
+  ok('break on purpose: an admission in the Terms, in the Japanese Privacy Policy, in another served page or in a built page, the section, a row, the count, the number of pages, the reasons and the sentence on lawyers each fail, and a phrasing inside a quoted law is not counted (' + (breaks.length - missed.length + (quotedOk ? 1 : 0)) + ' / ' + (breaks.length + 1) + ')',
+    missed.length === 0 && quotedOk, missed.concat(quotedOk ? [] : ['inside a quoted law']).join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
