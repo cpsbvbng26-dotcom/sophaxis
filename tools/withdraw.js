@@ -2,7 +2,7 @@
 /* Read a withdrawal issue, check that the account asking belongs to an author of the record, and draft the change.
  *
  * In GitHub Actions (see .github/workflows/intake.yml):
- *   ISSUE_NUMBER, ISSUE_AUTHOR, ISSUE_BODY, GITHUB_TOKEN, GITHUB_REPOSITORY
+ *   GITHUB_EVENT_PATH, GITHUB_TOKEN, GITHUB_REPOSITORY (the issue is read from the event file, as in tools/intake.js)
  *   node tools/withdraw.js
  *
  * It reads the record in data/papers and the name, the websites and the works of the public ORCID record
@@ -106,9 +106,8 @@ To link your GitHub account, add \`https://github.com/<your username>\` under "W
 }
 
 async function main() {
-  const n = process.env.ISSUE_NUMBER;
-  const login = process.env.ISSUE_AUTHOR;
-  const form = parse(process.env.ISSUE_BODY);
+  const { number: n, author: login, body: text } = I.issueEvent();
+  const form = parse(text);
   const file = path.join(ROOT, 'data', 'papers', form.id + '.json');
   const record = form.id && fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
   let person = null, works = null;

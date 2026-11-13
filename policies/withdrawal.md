@@ -1,6 +1,6 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -43,6 +43,7 @@ A record that is already withdrawn can still be removed.
 The operator removes the record by labelling the verified issue `upheld`, and aims to do so within 7 days.
 Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.md) sets out.
 No reason is shown, and the withdrawal issue itself is emptied, closed and locked.
+The logs of the automatic steps keep no text of the issue, as the same section of the Takedown Policy sets out.
 
 ## An author's name
 

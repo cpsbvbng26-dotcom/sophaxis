@@ -33,12 +33,9 @@ jobs:
           node-version: 22
       # poppler-utils reads the shape of the PDF for the moderator. If it cannot be installed, the comment says the shape was not read.
       - run: sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed'
-      # The issue text reaches the script only through the environment, never through the shell.
+      # The script reads the issue from the event file (GITHUB_EVENT_PATH), never from the environment or the shell: the run's log prints a step's environment, and would keep the issue text after the issue is emptied.
       - run: node tools/intake.js
         env:
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   withdrawal:
     if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')
@@ -49,12 +46,9 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      # The issue text reaches the script only through the environment, never through the shell.
+      # The script reads the issue from the event file (GITHUB_EVENT_PATH), never from the environment or the shell: the run's log prints a step's environment, and would keep the issue text after the issue is emptied.
       - run: node tools/withdraw.js
         env:
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   published:
     if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'published')
@@ -65,10 +59,7 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      # The issue text reaches the script only through the environment, never through the shell.
+      # The script reads the issue from the event file (GITHUB_EVENT_PATH), never from the environment or the shell: the run's log prints a step's environment, and would keep the issue text after the issue is emptied.
       - run: node tools/published.js
         env:
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

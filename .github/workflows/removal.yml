@@ -42,13 +42,10 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      # The issue text reaches the script only through the environment, never through the shell.
+      # The script reads the issue from the event file (GITHUB_EVENT_PATH), never from the environment or the shell: the run's log prints a step's environment, and would keep the issue text after the issue is emptied.
       - run: node tools/removal.js
         env:
           MODE: intake
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # A push made by this workflow starts no other workflow, so the search engines are told here (tools/indexnow.js).
       - run: node tools/indexnow.js
@@ -69,12 +66,11 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+      # The script reads the issue from the event file (GITHUB_EVENT_PATH), never from the environment, which the run's log prints.
       - run: node tools/removal.js
         env:
           MODE: decide
           DECISION: ${{ github.event.label.name }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # A push made by this workflow starts no other workflow, so the search engines are told here (tools/indexnow.js).
       - run: node tools/indexnow.js

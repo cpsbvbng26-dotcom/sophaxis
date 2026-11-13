@@ -25,10 +25,9 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      # The inputs reach the script only through the environment.
+      # The number and the branch reach the script through the environment; the title is read from the event file (GITHUB_EVENT_PATH), since the run's log prints the environment.
       - run: node tools/record.js
         env:
           PR: ${{ github.event.pull_request.number }}
           BRANCH: ${{ github.event.pull_request.head.ref }}
-          TITLE: ${{ github.event.pull_request.title }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

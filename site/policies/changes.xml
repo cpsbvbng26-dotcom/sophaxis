@@ -8,6 +8,15 @@
   <updated>2026-11-13T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c18</id>
+    <title>The logs of the automatic steps keep no text of an issue</title>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/withdrawal.html" title="Withdrawal Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>The Takedown Policy said what an emptied or deleted issue leaves, and did not name the logs of the automatic steps that read it. Until 2026-11-13 those steps received the text of the issue in their environment, which GitHub Actions prints in the log of each run, so the logs kept the text after the issue was emptied. The steps now read the issue from the event file that GitHub Actions gives them, and their logs keep the issue's number and the outcome of each step, not its text. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13. The Takedown Policy, the Withdrawal Policy and the Privacy Policy, in both languages, now say so, and say that GitHub keeps the logs and the list of runs for the period set for the repository. This is a correction of an incomplete statement, effective on publication, 2026-11-13. It adds a deletion, narrows no right and adds no duty. Policies: Takedown Policy, Withdrawal Policy, Privacy Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c17</id>
     <title>What the Internet Archive has said about its security</title>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>

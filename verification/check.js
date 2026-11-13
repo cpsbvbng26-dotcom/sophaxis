@@ -406,8 +406,10 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
-  ok('the workflow passes the issue text through the environment, never into the shell', runs.join() === "sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js,node tools/withdraw.js,node tools/published.js"
-    && (wf.match(/ISSUE_BODY: \$\{\{ github\.event\.issue\.body \}\}/g) || []).length === 3);
+  /* Until 2026-11-13 the issue text went to the scripts through the environment, which the run's log prints; now each script reads it from the event file (check 128). */
+  ok('the workflow passes the issue text neither into the shell nor through the environment: each of the three scripts reads it from the event file', runs.join() === "sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js,node tools/withdraw.js,node tools/published.js"
+    && !/ISSUE_BODY|github\.event\.issue\.body/.test(wf.replace(/^    if: [\s\S]*?\n(?=    name: )/gm, ''))
+    && ['intake.js', 'withdraw.js', 'published.js'].every((f) => /= (I\.)?issueEvent\(\);/.test(read(path.join(ROOT, 'tools', f)))));
   ok('the workflow may only read the code and write to issues', /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
   ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version', (wf.match(/^    if: /gm) || []).length === 3
     && wf.includes("if: >-\n      contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')")
@@ -818,7 +820,7 @@ console.log('\n18. Withdrawal: the policy, the form and the check');
   const rwf = read(path.join(ROOT, '.github', 'workflows', 'removal.yml'));
   ok('the owner\'s label "upheld" on a verified withdrawal issue that asks for removal removes the record, and only then',
     rwf.includes("(contains(github.event.issue.labels.*.name, 'removal') || contains(github.event.issue.labels.*.name, 'withdrawal'))")
-    && rsrc.includes("if (labels.includes('withdrawal')) return decideWithdrawal(n, labels, decision);")
+    && rsrc.includes("if (labels.includes('withdrawal')) return decideWithdrawal(n, labels, decision, text);")
     && rsrc.includes("if (form.mode !== 'remove') return say(") && rsrc.includes("if (!labels.includes('verified')) return say("));
   ok('the Withdrawal Policy lets an author have the record removed, and points to what removal leaves',
     ['## Removal at an author\'s request', 'An author can ask, in the same issue, for the record to be removed instead of withdrawn.', 'A record that is already withdrawn can still be removed.',
@@ -1739,7 +1741,7 @@ console.log('\n43. The published version of a listed preprint');
     Object.keys(P.FIELDS).every((label) => form1.includes('label: ' + label)) && Object.keys(P.PEER).every((x) => form1.includes('- ' + x)) && form1.includes('labels: ["published"]'));
   ok('the submission form offers the same peer-review answers', Object.keys(P.PEER).every((x) => read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')).includes('- ' + x)));
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
-  ok('a labelled report runs tools/published.js, with the issue text only in the environment', wf.includes("contains(github.event.issue.labels.*.name, 'published')") && wf.includes('- run: node tools/published.js'));
+  ok('a labelled report runs tools/published.js, which reads the issue text from the event file', wf.includes("contains(github.event.issue.labels.*.name, 'published')") && wf.includes('- run: node tools/published.js'));
   const pol = read(path.join(ROOT, 'policies', 'submission.md'));
   ok('the Submission Policy says the preprint stays listed, who reports and how it is checked, that Sophaxis does not judge peer review, and what the weekly check does',
     ['A listed preprint stays listed when a later version is published', 'Any one author reports the published version', 'Sophaxis does not judge the peer review of a journal.',
@@ -2063,7 +2065,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
     page.includes('<h1>Record under review</h1>') && page.includes('If it is not upheld, they are put back.') && !page.includes('Record removed') && page.includes('<meta name="robots" content="noindex">'));
   const wf = read(path.join(ROOT, '.github', 'workflows', 'removal.yml'));
   const src = read(path.join(ROOT, 'tools', 'removal.js'));
-  ok('only the repository owner\'s labels "upheld" and "not-upheld" act on a decision; the issue text reaches the script only through the environment',
+  ok('only the repository owner\'s labels "upheld" and "not-upheld" act on a decision; the issue text reaches the script only through the event file',
     wf.includes("&& github.event.sender.login == github.repository_owner") && wf.includes("(github.event.label.name == 'upheld' || github.event.label.name == 'not-upheld')")
     && wf.includes("github.event.action != 'labeled'") && [...wf.matchAll(/^\s*- run: (.*)$/gm)].every((m) => m[1] === 'node tools/removal.js' || m[1] === 'node tools/indexnow.js')
     && !/\$\{\{ github\.event\.issue\.body \}\}[^\n]*\n\s+run:/.test(wf));
@@ -6266,8 +6268,9 @@ console.log('\n127. The public pages state positions: no page that the site serv
     ['the number of pages read changed', w('aud', real.aud.replace('規程の 16 の頁と、ほかの 46 の頁', '規程の 16 の頁と、ほかの 45 の頁'))],
     ['the reason taken out', w('aud', real.aud.replace('頁は確かさを言い過ぎず、理由は記録で確かめられるためです。', '頁は立場を示します。'))],
     ['the reason for the notes taken out', w('aud', real.aud.replace('注は、提供しない国と地域を決めた根拠の所在を示すもので、続けている行いの疑いを並べるものではないためです。', ''))],
-    ['the sentence on lawyers taken out', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'))],
-    ['a lawyer said to have checked it', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\nこの節も、弁護士の確認は受けていません。弁護士が確かめました。\n\n## この記録について'))],
+    /* The section after this one (2026-11-13：十五度目の見落とし) now follows; the break aims at this section's own sentence. */
+    ['the sentence on lawyers taken out', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-13：十五度目の見落とし', '\n\n## 2026-11-13：十五度目の見落とし'))],
+    ['a lawyer said to have checked it', w('aud', real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-13：十五度目の見落とし', '\n\nこの節も、弁護士の確認は受けていません。弁護士が確かめました。\n\n## 2026-11-13：十五度目の見落とし'))],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   /* A phrasing inside a quoted law is not counted: the words of the law are not changed for a check. */
@@ -6275,6 +6278,135 @@ console.log('\n127. The public pages state positions: no page that the site serv
   const quotedOk = problems(quoted).length === 0;
   ok('break on purpose: an admission in the Terms, in the Japanese Privacy Policy, in another served page or in a built page, the section, a row, the count, the number of pages, the reasons and the sentence on lawyers each fail, and a phrasing inside a quoted law is not counted (' + (breaks.length - missed.length + (quotedOk ? 1 : 0)) + ' / ' + (breaks.length + 1) + ')',
     missed.length === 0 && quotedOk, missed.concat(quotedOk ? [] : ['inside a quoted law']).join(' / '));
+}
+console.log('\n128. No issue text in the logs of the runs: the scripts read an issue from the event file, and no workflow puts the text of an issue, a comment or a pull request in a step\'s environment or its command (2026-11-13)');
+{
+  /* GitHub Actions prints a step's environment in the run's log, and the log stays after the issue is emptied. Until 2026-11-13 five steps
+   * passed the issue text as ISSUE_BODY, and the logs of the runs for #75, #76 and #77 kept it after the issues were emptied (those logs were
+   * deleted on 2026-11-13). Claude decided that day that the scripts read the issue from the event file (GITHUB_EVENT_PATH), which is never
+   * printed. Conditions (if:) are evaluated by GitHub and not printed, so they may test the text. Each script prints only fixed words,
+   * the result, error messages and issue numbers; intake.js prints more only in its --dry-run, which runs by hand and never in a workflow. */
+  const WFDIR = path.join(ROOT, '.github', 'workflows');
+  const TOOLS = ['intake.js', 'withdraw.js', 'published.js', 'removal.js', 'record.js'];
+  const TEXT = /github\.event\.(issue|comment|pull_request|review|discussion|discussion_comment)\.(body|title)\b|toJSON\(\s*github\.event\b|github\.event\.(issue|comment|pull_request)\s*\}\}/;
+  const PRINTS = [/^'[^']*'$/, /^(e|err)\.message$/, /^'[a-z -]+: ' \+ (e|err)\.message$/, /^action \+ ': ' \+ e\.message$/, /^verified \? 'verified' : 'not verified'$/,
+    /^held \? 'held' : 'acknowledged'$/, /^'emptied: ' \+ emptied\.map\(\(x\) => '#' \+ x\)\.join\(', '\)$/, /^'follow-up: #' \+ issue\.number$/];
+  /* What a workflow passes outside its conditions: every line, with each if: and the lines that continue it taken out. */
+  function outsideIf(text) {
+    const out = [];
+    let col = -1;
+    for (const line of text.split('\n')) {
+      const ind = line.length - line.trimStart().length;
+      if (col >= 0 && line.trim() && ind > col) continue;
+      col = -1;
+      const m = /^(\s*(?:- )?)if:/.exec(line);
+      if (m) { col = m[1].length; continue; }
+      out.push(line);
+    }
+    return out.join('\n');
+  }
+  function problems(c) {
+    const bad = [];
+    for (const [f, t] of Object.entries(c.wf)) {
+      const rest = outsideIf(t);
+      if (TEXT.test(rest)) bad.push(f + ': the text of an issue, a comment or a pull request outside a condition');
+      if (/^\s+(ISSUE_BODY|ISSUE_TITLE|ISSUE_AUTHOR|COMMENT_BODY|TITLE|BODY):/m.test(rest)) bad.push(f + ': a step passes issue data through its environment');
+    }
+    for (const [f, t] of Object.entries(c.tools)) {
+      const code = t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+      if (/process\.env\.(ISSUE_BODY|ISSUE_TITLE|ISSUE_AUTHOR|ISSUE_NUMBER|COMMENT_BODY|TITLE|BODY)\b/.test(code)) bad.push(f + ': reads issue data from the environment');
+      const live = f === 'intake.js' ? code.replace(/if \(args\.includes\('--dry-run'\)\) \{[\s\S]*?\n    return;\n  \}/, '') : code;
+      for (const m of live.matchAll(/console\.(log|error|warn|info)\(([^;]*)\);/g)) {
+        const arg = m[2].trim();
+        if (!PRINTS.some((r) => r.test(arg))) bad.push(f + ': prints ' + arg.slice(0, 60));
+      }
+      if (/process\.stdout\.write|process\.stderr\.write|console\.(dir|table|debug|trace)\(/.test(live)) bad.push(f + ': writes to the log another way');
+    }
+    if (!['intake.js', 'withdraw.js', 'published.js', 'removal.js'].every((f) => /= (I\.)?issueEvent\(\);/.test(c.tools[f])) || !/process\.env\.GITHUB_EVENT_PATH/.test(c.tools['record.js'])) bad.push('a script does not read the event file');
+    /* The policies say what the logs keep, in both languages. */
+    const P = c.pol;
+    if (!P.tk.includes("- The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step")
+      || !P.tk.includes('The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.') || !P.tk.includes("GitHub's documentation gives at most 90 days for a public repository")
+      || !P.tkJa.includes('- 自動の手順は、GitHub Actions が渡す出来事のファイルから issue を読みます。') || !P.tkJa.includes('その日より前に中身を空にした三つの issue の実行の記録は、2026-11-13 に消しました。')
+      || !P.tkJa.includes('GitHub の説明書によれば、公開のリポジトリでは長くて 90 日です。')) bad.push('the Takedown Policy');
+    if (!P.wd.includes('The logs of the automatic steps keep no text of the issue') || !P.wdJa.includes('自動の手順の実行の記録（ログ）に issue の本文が残らないこと')
+      || !P.pv.includes('The logs of the automatic steps that read an issue keep no text of the issue') || !P.pvJa.includes('issue を読む自動の手順の実行の記録（ログ）には、issue の本文は残りません。')) bad.push('the Withdrawal Policy or the Privacy Policy');
+    /* The record: its section before the end, the runs whose logs were deleted, the quoted documentation, the table, the count, who decided, and lawyers. */
+    const HEAD = '\n## 2026-11-13：十五度目の見落とし\n';
+    const at = c.aud.indexOf(HEAD), end = at < 0 ? -1 : c.aud.indexOf('\n## ', at + 5);
+    const sec = at < 0 || end < 0 ? '' : c.aud.slice(at, end);
+    if (!sec || c.aud.indexOf('\n## この記録について\n') < at) return bad.concat(['no fifteenth section before the end of the record']);
+    if (!sec.includes('| 41428590807・41428596043・41428602132 | #75・#76・#77 |') || !sec.includes('#75・#76・#77 の三つの実行の記録を、2026-11-13 に消しました。')
+      || !sec.includes('運営者自身の試しの投稿の文です')) bad.push('the runs whose logs were deleted');
+    if (!sec.includes('「By default, checks, workflow runs, commit statuses, and the artifacts and log files generated by workflows are retained for 90 days before they are automatically deleted.」')
+      || !sec.includes('「For public repositories: you can change this retention period to anywhere between 1 day or 90 days.」') || !sec.includes('`6d56af0c8b62bde11bb3d9df46244fab5f0a00f9`')
+      || !sec.includes('このリポジトリに定めた保つ期間は、確かめていません。Claude の手元の道具では、その設定を読めないためです。')) bad.push('the documentation quoted, and what is not verified');
+    const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+    const t0 = sec.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
+    const rows = t0 < 0 ? [] : sec.slice(t0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rows.length < 10 || !rows.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the table');
+    const said = (/この表の判定は、([^。]+)です。/.exec(sec) || [])[1] || '';
+    const counts = Object.fromEntries(said.split('、').map((x) => { const m = /^(\S+) (\d+)$/.exec(x.trim()); return m ? [m[1], Number(m[2])] : ['?', 0]; }));
+    if (!KINDS.every((k) => (counts[k] || 0) === rows.filter((y) => y[4] === k).length)) bad.push('the count');
+    if ((sec.match(/2026-11-13 に Claude が決めました。/g) || []).length < 6 || !sec.includes('出来事のファイルは実行の記録に写らず、本文を記録に残さずに同じ確かめができるためです')) bad.push('who decided, and why');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the sentence on lawyers');
+    return bad;
+  }
+  const wfFiles = fs.readdirSync(WFDIR).filter((f) => /\.ya?ml$/.test(f)).sort();
+  const real = {
+    wf: Object.fromEntries(wfFiles.map((f) => [f, read(path.join(WFDIR, f))])),
+    tools: Object.fromEntries(TOOLS.map((f) => [f, read(path.join(ROOT, 'tools', f))])),
+    pol: { tk: read(path.join(ROOT, 'policies', 'takedown.md')), tkJa: read(path.join(ROOT, 'policies', 'takedown.ja.md')), wd: read(path.join(ROOT, 'policies', 'withdrawal.md')),
+      wdJa: read(path.join(ROOT, 'policies', 'withdrawal.ja.md')), pv: read(path.join(ROOT, 'policies', 'privacy.md')), pvJa: read(path.join(ROOT, 'policies', 'privacy.ja.md')) },
+    aud: read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md')),
+  };
+  const now = problems(real);
+  ok('no workflow of ' + wfFiles.length + ' passes the text of an issue, a comment or a pull request through a step\'s environment or command, the ' + TOOLS.length + ' scripts read it from the event file and print only fixed words, results, errors and issue numbers; the policies, in both languages, and the record say what the logs keep',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  /* The event file: the number, the author, the text and the title of the issue that started the run; an event without an issue fails. */
+  const os = require('os');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sophaxis-event-'));
+  const file = path.join(dir, 'event.json');
+  fs.writeFileSync(file, JSON.stringify({ action: 'opened', issue: { number: 75, title: '[Submission] T', body: '### DOI\n\n10.5281/zenodo.1', user: { login: 'janedoe' } } }));
+  const ev = require('../tools/intake.js').issueEvent(file);
+  fs.writeFileSync(file, JSON.stringify({ action: 'created', comment: { body: 'I vouch' } }));
+  let threw = false;
+  try { require('../tools/intake.js').issueEvent(file); } catch (e) { threw = true; }
+  fs.rmSync(dir, { recursive: true, force: true });
+  ok('the event file gives the issue\'s number, author, text and title, and an event without an issue stops the script',
+    ev.number === '75' && ev.author === 'janedoe' && ev.body === '### DOI\n\n10.5281/zenodo.1' && ev.title === '[Submission] T' && threw);
+  const wf = (f, t) => Object.assign({}, real, { wf: Object.assign({}, real.wf, { [f]: t }) });
+  const tool = (f, t) => Object.assign({}, real, { tools: Object.assign({}, real.tools, { [f]: t }) });
+  const pol = (k, t) => Object.assign({}, real, { pol: Object.assign({}, real.pol, { [k]: t }) });
+  const aud = (t) => Object.assign({}, real, { aud: t });
+  const breaks = [
+    ['the issue text back in the environment', wf('intake.yml', real.wf['intake.yml'].replace('          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n', '          ISSUE_BODY: ${{ github.event.issue.body }}\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n'))],
+    ['the issue title in the environment of removal.yml', wf('removal.yml', real.wf['removal.yml'].replace('          MODE: intake\n', '          MODE: intake\n          NAME: ${{ github.event.issue.title }}\n'))],
+    ['a comment in a command', wf('intake.yml', real.wf['intake.yml'].replace("      - run: node tools/intake.js\n", "      - run: echo \"${{ github.event.comment.body }}\"\n      - run: node tools/intake.js\n"))],
+    ['the title of a pull request back in the environment', wf('record.yml', real.wf['record.yml'].replace('          GITHUB_TOKEN:', '          TITLE: ${{ github.event.pull_request.title }}\n          GITHUB_TOKEN:'))],
+    ['the whole event in the environment', wf('watch.yml', real.wf['watch.yml'].replace(/\n(\s+)env:\n/, '\n$1env:\n$1  EVENT: ${{ toJSON(github.event) }}\n'))],
+    ['a script reading the text from the environment', tool('withdraw.js', real.tools['withdraw.js'].replace('const form = parse(text);', 'const form = parse(process.env.ISSUE_BODY || text);'))],
+    ['a script printing the issue text', tool('published.js', real.tools['published.js'].replace("console.log(verified ? 'verified' : 'not verified');", "console.log(text);\n  console.log(verified ? 'verified' : 'not verified');"))],
+    ['a script printing a form field', tool('removal.js', real.tools['removal.js'].replace("console.log(held ? 'held' : 'acknowledged');", "console.log('id: ' + form.id);\n  console.log(held ? 'held' : 'acknowledged');"))],
+    ['a script writing to the log another way', tool('intake.js', real.tools['intake.js'].replace("  console.log(verified ? 'verified' : 'not verified');\n}", "  process.stdout.write(text);\n  console.log(verified ? 'verified' : 'not verified');\n}"))],
+    ['a script not reading the event file', tool('intake.js', real.tools['intake.js'].replace('= issueEvent();', '= { number: 0 };'))],
+    ['the Takedown Policy without the logs', pol('tk', real.pol.tk.replace('The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.', ''))],
+    ['the Japanese Takedown Policy without the period', pol('tkJa', real.pol.tkJa.replace('GitHub の説明書によれば、公開のリポジトリでは長くて 90 日です。', ''))],
+    ['the Japanese Privacy Policy without the logs', pol('pvJa', real.pol.pvJa.replace('issue を読む自動の手順の実行の記録（ログ）には、issue の本文は残りません。', ''))],
+    ['the section taken out', aud(real.aud.replace('\n## 2026-11-13：十五度目の見落とし\n', '\n## 2026-11-13：実行の記録\n'))],
+    ['the runs not named', aud(real.aud.replace('| 41428590807・41428596043・41428602132 | #75・#76・#77 |', '| 三つの実行 | #75・#76・#77 |'))],
+    ['a quotation altered', aud(real.aud.replace('retained for 90 days before they are automatically deleted.」', 'retained for 400 days before they are automatically deleted.」'))],
+    ['the setting said to be verified', aud(real.aud.replace('このリポジトリに定めた保つ期間は、確かめていません。Claude の手元の道具では、その設定を読めないためです。', 'このリポジトリに定めた保つ期間は 90 日です。'))],
+    ['the count changed', aud(real.aud.replace('この表の判定は、根拠不足 1、漏れ 4、表現 2、問題なし 3 です。', 'この表の判定は、根拠不足 1、漏れ 3、表現 2、問題なし 3 です。'))],
+    ['a reason taken out', aud(real.aud.replace('出来事のファイルは実行の記録に写らず、本文を記録に残さずに同じ確かめができるためです', '出来事のファイルを使います'))],
+    ['the sentence on lawyers taken out', aud(real.aud.replace('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'))],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  /* A condition may test the text: GitHub evaluates it and does not print it. */
+  const cond = wf('removal.yml', real.wf['removal.yml'].replace("    if: github.event_name == 'issues' && github.event.action != 'labeled'", "    if: github.event_name == 'issues' && !contains(github.event.issue.body, 'x') && github.event.action != 'labeled'"));
+  const condOk = problems(cond).length === 0;
+  ok('break on purpose: the issue text, its title, a comment, the title of a pull request or the whole event in a step, a script reading the environment, printing the text or a field, writing another way or not reading the event file, the policies, the section, the runs, a quotation, the setting, the count, a reason and the sentence on lawyers each fail, and a condition that tests the text is not counted (' + (breaks.length - missed.length + (condOk ? 1 : 0)) + ' / ' + (breaks.length + 1) + ')',
+    missed.length === 0 && condOk, missed.concat(condOk ? [] : ['a condition']).join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {

@@ -89,6 +89,9 @@ In the issues:
 
 - Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
 - Deleting an issue also deletes its edit history.
+- The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step, with the address of any lookup that failed (which can hold the DOI or the ORCID iD given in the issue), and not the issue's text.
+- Before 2026-11-13 the logs kept the text of the issue as it was when a step ran. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.
+- GitHub keeps the logs and the list of runs for the period set for the repository; GitHub's documentation gives at most 90 days for a public repository. The list of runs names each run by the title of its issue, which for an emptied issue is the emptied title, and by the account that started it.
 - A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
 
 Outside the site:

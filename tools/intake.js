@@ -2,8 +2,11 @@
 /* Read a submission issue, look the DOI up, check who is submitting, and draft the record.
  *
  * In GitHub Actions (see .github/workflows/intake.yml):
- *   ISSUE_NUMBER, ISSUE_AUTHOR, ISSUE_BODY, GITHUB_TOKEN, GITHUB_REPOSITORY
+ *   GITHUB_EVENT_PATH, GITHUB_TOKEN, GITHUB_REPOSITORY
  *   node tools/intake.js
+ * The issue's number, author and text are read from the event file (GITHUB_EVENT_PATH), never from the environment:
+ * GitHub Actions prints a step's environment in the run's log, and the log would keep the text after the issue is emptied
+ * (Claude decided on 2026-11-13; docs/legal-audit-2026-11-12.md, 「2026-11-13：十五度目の見落とし」).
  *
  * By hand, without writing to GitHub:
  *   node tools/intake.js --dry-run --doi 10.6084/m9.figshare.1 --orcid 0000-0002-1825-0097 --login alice [--opened 2026-12-01]
@@ -896,6 +899,15 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
   return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices }), meta, versions, pub };
 }
 
+/* The issue that started the run, from the event file that GitHub Actions writes for it (GITHUB_EVENT_PATH).
+ * The same file serves an issue event and a comment on an issue. Nothing read here is printed. */
+function issueEvent(file = process.env.GITHUB_EVENT_PATH) {
+  const event = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const issue = event.issue || {};
+  if (!Number.isInteger(issue.number) || issue.number < 1) throw new Error('the event names no issue');
+  return { number: String(issue.number), author: (issue.user && issue.user.login) || '', body: issue.body || '', title: issue.title || '' };
+}
+
 async function github(method, url, body) {
   const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + url, {
     method,
@@ -917,9 +929,8 @@ async function main() {
     if (meta) console.log('versions: ' + JSON.stringify(versions));
     return;
   }
-  const n = process.env.ISSUE_NUMBER;
-  const login = process.env.ISSUE_AUTHOR;
-  const form = parseIssue(process.env.ISSUE_BODY);
+  const { number: n, author: login, body: text } = issueEvent();
+  const form = parseIssue(text);
   /* The age of the DOI is counted on the day the issue was opened, not the day it was last edited. */
   const issue = await github('GET', '/issues/' + n);
   const opened = jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString());
@@ -970,6 +981,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

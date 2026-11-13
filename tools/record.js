@@ -48,7 +48,9 @@ async function github(method, p, body) {
 }
 
 async function main() {
-  const n = process.env.PR, branch = process.env.BRANCH, title = process.env.TITLE;
+  /* The title of the pull request is read from the event file (GITHUB_EVENT_PATH), never from the environment, whose values the run's log prints. */
+  const n = process.env.PR, branch = process.env.BRANCH;
+  const title = String(((JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')).pull_request) || {}).title || '');
   const say = (body) => github('POST', '/issues/' + n + '/comments', { body });
   git('config', 'user.name', 'github-actions[bot]');
   git('config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com');
