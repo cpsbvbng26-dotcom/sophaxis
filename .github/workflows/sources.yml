@@ -1,42 +1,22 @@
 name: sources
-# The primary texts that the legal pages cite are fetched (tools/sources.js) and written to verification/sources-raw.json,
-# on a new branch sources/<date>, never on main. Run by hand. The operator reads what was fetched before any quotation
-# in verification/sources.json is taken from it, and brings it in by a pull request of its own.
-# With `only`, just the keys named (or "new": the keys not yet in the file) are fetched, and the rest of the file is kept.
-# Laws are kept whole. Every other text is committed only as its address, day, SHA-256 and the parts quoted or relied on;
-# the whole texts of the run (verification/sources-full.json) are kept as an artifact of the run, never committed.
+# Probe (2026-11-13): compares Vercel's pages fetched now with the texts recorded on main, from the artifacts of earlier
+# runs, and prints the differences to the log. Not to be merged. Nothing is pushed.
 on:
   workflow_dispatch:
-    inputs:
-      only:
-        description: 'Keys to fetch again, comma-separated, or "new"; empty fetches everything'
-        required: false
-        default: ''
 permissions:
-  contents: write
+  contents: read
+  actions: read
 jobs:
-  fetch:
-    name: Fetch the cited texts
+  probe:
+    name: Probe
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: 22
-      - run: sudo apt-get install -y -q poppler-utils > /dev/null
-      - run: node tools/sources.js
-        env:
-          SOURCES_ONLY: ${{ inputs.only }}
-      - run: node tools/sources.js verify
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
-        with:
-          name: sources-full
-          path: verification/sources-full.json
-          retention-days: 90
-          if-no-files-found: error
-      - run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add verification/sources-raw.json
-          git commit -m "Sources: the fetched texts" || exit 0
-          git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)"
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p arts
+          for id in 43336679823 43332663139 43308656854 43308144509 43301977313 43300228531 43274367372 43261089424 43250860786 43250117000; do
+            gh run download $id -R ${{ github.repository }} -n sources-full -D arts/$id > /dev/null 2>&1 || echo "no artifact $id"
+          done
+          node probe.js
