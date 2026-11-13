@@ -4991,7 +4991,12 @@ const FIFTH_PASS_PAGES = ['zenodo-developers', 'arxiv-api-tou', 'arxiv-bulk-data
 const EIGHTH_PASS_PAGES = ['github-additional-terms'];
 /* The pages fetched by the eleventh pass (check 125): the Internet Archive's terms from its copy of 2024-01-01, and its two robots.txt files. */
 const ELEVENTH_PASS_PAGES = ['ia-terms-archived-2024', 'ia-robots', 'wayback-robots'];
-const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES, ELEVENTH_PASS_PAGES);
+/* The page fetched on 2026-11-13 after Vercel changed its Fair Use Guidelines (check 126): the Internet Archive's copy of 2026-10-31. */
+const VERCEL_PASS_PAGES = ['vercel-fair-use-archived'];
+const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES, ELEVENTH_PASS_PAGES, VERCEL_PASS_PAGES);
+/* The translations of laws by foreign governments and agencies, kept whole on 2026-11-12 and in parts from 2026-11-13 (check 126).
+ * The counts of 2026-11-12 (texts kept whole that were not laws) do not hold them. */
+const LATER_PARTS = ['fadp', 'pipl', 'thai-pdpa', 'saudi-pdpl', 'ae-pdpl', 'qa-pdpl'];
 /* Pages kept on 2026-11-12 and no longer read: DataCite's imprint, dropped by the eleventh pass (check 125). The counts of that day still hold them. */
 const DROPPED_PAGES = ['datacite-imprint'];
 console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct requests where terms forbid them, texts by others kept only in parts, and the reply time an aim from 2026-11-26');
@@ -5029,7 +5034,7 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
   };
   const wp = wfProblems(wf, read(path.join(ROOT, '.gitignore')), tracked);
   /* What is kept: laws whole, every other text in parts with its SHA-256, and no whole text, links or forms of a page. */
-  const PARTS = ['cc-by', 'cc-by-sa', 'cc0', 'github-terms', 'vercel-terms', 'mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa', 'korea-pipa', 'korea-decree', 'usc17'];
+  const PARTS = ['cc-by', 'cc-by-sa', 'cc0', 'github-terms', 'vercel-terms', 'mic-entry-manual', 'mic-entry-procedures', 'ppc-guidelines', 'ppc-qa', 'korea-pipa', 'korea-decree', 'usc17'].concat(LATER_PARTS);
   const nonLaw = Object.keys(RAW.sources).filter((k) => !S.wholeSource(k)).sort();
   const kp = S.keptProblems(RAW);
   const pages = Object.keys(RAW.pages).filter((k) => RAW.pages[k].sha256 && !LATER_PAGES.includes(k)).length + DROPPED_PAGES.filter((k) => !RAW.pages[k]).length;
@@ -5088,7 +5093,7 @@ console.log('\n116. What a second, read-only pass of 2026-11-12 found: no direct
     if (qs.length < 10) bad.push('too few quotations');
     for (const q of qs) if (!poolFlat.includes(flat(q))) bad.push('not in a kept text: ' + q.slice(0, 30));
     /* The count is of the pages kept on that day; the pages fetched by the later passes (checks 117 and 118) are not among them. */
-    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256 && !LATER_PAGES.includes(k)).length + DROPPED_PAGES.filter((k) => !raw.pages[k]).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k)).length;
+    const nPages = Object.keys(raw.pages).filter((k) => raw.pages[k].sha256 && !LATER_PAGES.includes(k)).length + DROPPED_PAGES.filter((k) => !raw.pages[k]).length, nParts = Object.keys(raw.sources).filter((k) => !S.wholeSource(k) && !LATER_PARTS.includes(k)).length;
     if (!sec.includes('ファイルは、' + nPages + ' の頁と、ライセンス・規約・手引き・私人の英訳など ' + nParts + ' の文を、全文で置いていました')) bad.push('the counts of the texts');
     for (const x of ['公開した履歴は書き換えません。2026-11-12 に Claude が決めました。', '最後に全体を置いていたのは、main のコミット 8fcaef4 です。', 'その実行の成果物 `sources-full` として 90 日のあいだ残り', '点検の表の「規約や外国の法令の訳の引用」の行は、頁に置く短い一節だけを見て問題なしとしました。', '### 下げられずに残る危険']) if (!sec.includes(x)) bad.push('missing: ' + x.slice(0, 20));
     return bad;
@@ -6108,7 +6113,7 @@ console.log('\n125. What an eleventh, read-only pass found: the Internet Archive
     ['the old English sentence back', w('en', real.en.replace(/its current terms can be read only with a script running\. The Internet Archive's own copy[^\n]*/, 'its terms can be read only with a script running, and no other statement of those measures was found.'))],
     ['the Japanese without the quotation', w('ja', real.ja.replace('「the Archive endeavors to enforce its Terms of Use and maintain standard computer security」と書いています。', ''))],
     ['the feed without the correction', w('changes', real.changes.filter((e) => !/2024-01-01/.test(e.text)))],
-    ['the count', w('aud', real.aud.replace('この表の判定は、根拠不足 2、漏れ 3、表現 1、問題なし 1 です。', 'この表の判定は、根拠不足 2、漏れ 2、表現 1、問題なし 1 です。'))],
+    ['the count', w('aud', real.aud.replace('この表の判定は、根拠不足 3、漏れ 5、表現 2、問題なし 2 です。', 'この表の判定は、根拠不足 3、漏れ 4、表現 2、問題なし 2 です。'))],
     ['a decision without its reason', w('aud', real.aud.replace('例外を置かずに禁じているためです |', '例外を置かずに禁じています |'))],
     ['a quotation altered', w('aud', real.aud.replace('「not to collect or store personal data about anyone」', '「not to collect personal data about anyone」'))],
     ['the run not named', w('aud', real.aud.replace('取り寄せの実行は 43332663139 で、', '取り寄せの実行は、'))],
@@ -6118,6 +6123,89 @@ console.log('\n125. What an eleventh, read-only pass found: the Internet Archive
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: the copy without its timestamp, another text, the clause on personal data not kept, DataCite\'s imprint read or kept again, a name back in a row read from a copy (DataCite, OpenAI), the Internet Archive not fetched, the old Privacy Policy (both languages), the feed, the count, a decision without its reason, a quotation altered, the run, the probe, the list of texts not fetched and the sentence on lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+/* ------------------------------------------------------------ 126 */
+console.log('\n126. Vercel changed its Fair Use Guidelines on 2026-11-12 and kept its date: the page fetched again has no section on commercial usage, the review no longer quotes it as current, and the translations of laws are kept in parts');
+{
+  /* The Fair Use Guidelines lost their section "Commercial usage" between two fetches of 2026-11-12 (UTC), with "Last updated
+   * September 14, 2026" unchanged. Section 4 of the Terms of Service is unchanged. The page is kept as fetched again; the earlier
+   * rows that quote the section are read against the Internet Archive's copy of 2026-10-31, pinned to its timestamp. The review
+   * says that the definition is gone and rests the conclusion on section 4. Japan's Copyright Act, Article 13, item 4, covers
+   * only translations made by Japan's own bodies, so the translations of laws by foreign governments and agencies are kept in
+   * parts with their SHA-256, never whole, and tools/sources.js no longer says that item 4 covers foreign bodies. */
+  const S = require('../tools/sources.js');
+  const kept = (p) => (p && Array.isArray(p.spans) ? p.spans.map((x) => x.text).join(' ') : '');
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  const SHA_FUG = '72c94595a48be0ba40257c55fcee8fc60ca983022327cdd00ced5dcfda034565';
+  const ARCH = 'https://web.archive.org/web/20261031091625id_/https://vercel.com/docs/limits/fair-use-guidelines';
+  const SHA_ARCH = 'fcc8293b90ff7f573850bce75fab82400f767d4f733d9b2bcea3972b207684e3';
+  const OLD = ['Commercial usage is defined as any Deployment that is used for the purpose of financial gain of anyone involved in any part of the production of the project', 'Asking for Donations does not fall under commercial usage.'];
+  const NOW = ['Last updated September 14, 2026', 'Examples of fair use Never fair use Usage guidelines Typical monthly usage guidelines Other guidelines Additional resources General Limits Learn More'];
+  const HOBBY = 'You shall only use the Services under a Hobby plan for your personal or non-commercial use.';
+  const TR = ['fadp', 'pipl', 'thai-pdpa', 'saudi-pdpl', 'ae-pdpl', 'qa-pdpl', 'korea-pipa', 'korea-decree'];
+  const HEAD = '\n### Vercel の頁と法令の訳（2026-11-13 の続き）\n';
+  function problems(c) {
+    const bad = [];
+    /* The page as fetched again, without the section. */
+    const fu = c.raw.pages['vercel-fair-use'] || {};
+    if (fu.status !== 200 || fu.sha256 !== SHA_FUG) bad.push('the Fair Use Guidelines are not kept as fetched again');
+    for (const q of NOW) if (!kept(fu).includes(q)) bad.push('not kept from the page: ' + q.slice(0, 30));
+    if (/Commercial usage is defined|Hobby teams are restricted/.test(kept(fu))) bad.push('the page kept with the section');
+    /* The copy of 2026-10-31, pinned, with the passages the earlier rows quote. */
+    if (!c.pages['vercel-fair-use-archived'] || c.pages['vercel-fair-use-archived'].url !== ARCH) bad.push('the copy is not read at its timestamp');
+    const ar = c.raw.pages['vercel-fair-use-archived'] || {};
+    if (ar.url !== ARCH || ar.status !== 200 || ar.sha256 !== SHA_ARCH) bad.push('the copy is not kept as fetched');
+    for (const q of OLD) if (!kept(ar).includes(q)) bad.push('not kept from the copy: ' + q.slice(0, 30));
+    /* Section 4, unchanged. */
+    const vt = c.raw.sources['vercel-terms'] || {};
+    if (((vt.sha256 || {})['4']) !== '2d0d059d02faeb2c18a58ce9fe727095d0e386a26f8283b571f498e3ebff661f' || !((vt.articles || {})['4'] || []).some((x) => x.text.includes(HOBBY))) bad.push('section 4 of the Terms');
+    /* The review. */
+    if (!c.rv.includes('The same page, fetched again on 2026-11-13, has no section on commercial usage') || !c.rv.includes('from 2026-11-13 the conclusion rests on section 4 alone')
+      || !c.rv.includes('section 4 of Vercel\'s Terms of Service says "' + HOBBY + '"') || /Fair Use Guidelines[^.]*\bdefine it:|Hobby teams are restricted/.test(c.rv)) bad.push('the review');
+    /* The translations. */
+    for (const k of TR) {
+      if (c.whole.has(k)) bad.push('a translation kept whole: ' + k);
+      const r = c.raw.sources[k];
+      if (!r) { bad.push('a translation not kept: ' + k); continue; }
+      for (const [a, t] of Object.entries(r.articles || {})) if (!Array.isArray(t) || !/^[0-9a-f]{64}$/.test(((r.sha256 || {})[a]) || '')) bad.push('a translation kept whole: ' + k + ' ' + a);
+    }
+    if (!c.srcjs.includes('Item 4 covers only the translations "国若しくは') || /and their translations made by an organ of the state outside copyright/.test(c.srcjs)) bad.push('the note on item 4');
+    /* The record. */
+    const at = c.aud.indexOf('\n## 2026-11-12 の続き：十一度目の見落とし\n'), end = c.aud.indexOf('\n## この記録について\n');
+    const sec = at < 0 || end < at ? '' : c.aud.slice(at, end);
+    const sub = sec.includes(HEAD) ? sec.slice(sec.indexOf(HEAD), sec.indexOf('\n### ', sec.indexOf(HEAD) + 5)) : '';
+    if (!sub) bad.push('no subsection in the eleventh section');
+    for (const x of [SHA_FUG, '取り寄せ直した実行は 43338777855 で、結果は枝 `sources/20261113-0040` にあります。', 'これまでのコミットには、訳の全文が残っています。公開した履歴は書き換えません。', '読み終えた同じ日にその実行の記録を消しました。']) if (!sub.includes(x)) bad.push('the subsection: ' + x.slice(0, 30));
+    const pool = flat(kept(fu) + kept(ar) + ((vt.articles || {})['4'] || []).map((x) => x.text).join(''));
+    for (const m of sub.matchAll(/「([^「」]{12,})」/g)) if (/^[\x20-\x7E’]+$/.test(m[1]) && !pool.includes(flat(m[1]))) bad.push('not in a kept text: ' + m[1].slice(0, 30));
+    if (!/\| `tools\/sources\.js` の `WHOLE` と、その注釈（法令の訳） \| 著作権法 第 13 条 \|[^\n]*\| 根拠不足 \|[^\n]*2026-11-13 に Claude が決めました。[^|\n]*ためです \|/.test(sec)) bad.push('the row on the translations');
+    return bad;
+  }
+  const real = { pages: S.PAGES, whole: S.WHOLE, raw: JSON.parse(read(path.join(ROOT, 'verification', 'sources-raw.json'))), rv: read(path.join(ROOT, 'docs', 'legal-review.md')),
+    aud: read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md')), srcjs: read(path.join(ROOT, 'tools', 'sources.js')) };
+  const now = problems(real);
+  ok('the Fair Use Guidelines are kept as fetched on 2026-11-13, without the section on commercial usage; the copy of 2026-10-31 holds the passages the earlier rows quote; section 4 of the Terms is unchanged; the review rests on section 4 alone; the translations of laws (' + TR.length + ') are kept in parts; the record says so',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const cl = (o) => JSON.parse(JSON.stringify(o));
+  const w = (k, v) => Object.assign({}, real, { [k]: v });
+  const rawWith = (fn) => { const t = cl(real.raw); fn(t); return w('raw', t); };
+  const breaks = [
+    ['the page of 2026-11-12 back', rawWith((t) => { t.pages['vercel-fair-use'].sha256 = 'f241dce3d1f34e326a127ae327a10d6605c0e64fb4ae91c4ed30cc8533cac58f'; })],
+    ['the section kept from the page as current', rawWith((t) => { t.pages['vercel-fair-use'].spans.push({ at: 99999, text: OLD[0] }); })],
+    ['the copy read without its timestamp', w('pages', Object.assign({}, real.pages, { 'vercel-fair-use-archived': { url: 'https://web.archive.org/web/2026id_/https://vercel.com/docs/limits/fair-use-guidelines' } }))],
+    ['the copy without the definition', rawWith((t) => { t.pages['vercel-fair-use-archived'].spans = t.pages['vercel-fair-use-archived'].spans.filter((x) => !x.text.includes('financial gain')); })],
+    ['section 4 changed', rawWith((t) => { t.sources['vercel-terms'].sha256['4'] = '0'.repeat(64); })],
+    ['the review as before', w('rv', real.rv.replace(/defined commercial use: /, 'define it: ').replace('The same page, fetched again on 2026-11-13, has no section on commercial usage', 'The page has a section on commercial usage'))],
+    ['a translation whole again', w('whole', new Set([...real.whole, 'thai-pdpa']))],
+    ['a translation kept with its text', rawWith((t) => { const a = Object.keys(t.sources['pipl'].articles)[0]; t.sources['pipl'].articles[a] = 'Article 3 The whole text.'; })],
+    ['the old note on item 4', w('srcjs', real.srcjs.replace('Item 4 covers only the translations "国若しくは', 'and their translations made by an organ of the state outside copyright. "国若しくは'))],
+    ['the run not named', w('aud', real.aud.replace('取り寄せ直した実行は 43338777855 で、', '取り寄せ直した実行は、'))],
+    ['a quotation altered', w('aud', real.aud.replace('「Last updated September 14, 2026」のままです', '「Last updated September 15, 2026」のままです'))],
+    ['the row on the translations without its reason', w('aud', real.aud.replace('訳を作る者を日本の機関に限っているためです |', '訳を作る者を日本の機関に限っています |'))],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: the page of 2026-11-12, the section kept as current, the copy without its timestamp or without the definition, section 4, the review as before, a translation whole again or with its text, the old note on item 4, the run, a quotation and the row without its reason (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
