@@ -161,3 +161,5 @@ The only change to a record made without the operator is the one in step 4.
 Sophaxis does not rely on the limitation of the liability of providers in that Act, which does not apply to a provider that is the sender, and the operator is liable for the record pages and the copies as Japanese law provides, including Article 709 of the Civil Code.
 From 2026-11-26, the operator aims to answer within 7 days and does not leave a dispute without reply; during a pause described under "Continuity" above, the answer waits until the pause ends.
 Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'.
+From 2026-11-29, a place is also not offered where the operator judges that offering Sophaxis would not conform to the law of that place.
+When the operator so judges, the place and the reason are added to the table.

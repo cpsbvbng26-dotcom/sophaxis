@@ -1,6 +1,13 @@
 [
   {
     "date": "2026-11-13",
+    "policies": ["submission"],
+    "from": "2026-11-29",
+    "title": "A place where offering Sophaxis would not conform to its law is not offered",
+    "text": "From 2026-11-29, the Submission Policy says that Sophaxis is also not offered in a place where the operator judges that offering Sophaxis would not conform to the law of that place, and that, when the operator so judges, the place and the reason are added to the table. The rule is also stated in Article 10 of the Statement of Purpose, published on 2026-11-13; that statement creates no rights or obligations, so the rule takes effect through the Submission Policy. This narrows who can be listed, so it is announced on the top page at least 14 days ahead. A place added under it is announced on the top page before it takes effect, as every change to the table is."
+  },
+  {
+    "date": "2026-11-13",
     "policies": ["takedown", "privacy"],
     "title": "GitHub's notifications can carry a copy of an issue",
     "text": "The Takedown Policy listed what an emptied or deleted issue leaves, and the Privacy Policy said how long the issues stay, without naming GitHub's notifications. GitHub sends a notification of the activity on an issue to the accounts set to receive it, an email notification holds a copy of the content, and the operator's account may be one of them. The Takedown Policy and the Privacy Policy, in both languages, now say that these notifications may carry a copy of the content of an issue, that the copy is handled under GitHub's Terms of Service and Privacy Statement, that the pages of GitHub's documentation that were fetched do not say that it goes away when the issue is emptied or deleted, and that the operator makes no other copy of an issue. This is a correction of an incomplete statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes; it narrows no right and adds no duty."

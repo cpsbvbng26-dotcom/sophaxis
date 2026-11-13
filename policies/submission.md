@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -40,6 +40,8 @@ From 2026-11-26, the rule also covers two more kinds of duty that Sophaxis canno
 One is a duty to give people there, before their personal data is collected, a postal address or a telephone number of the operator, which Sophaxis does not publish.
 The other is a duty to process the personal data of a minor there only with a parent's consent that the service confirms, or not at all.
 From the same day, a place is also not offered when its data protection law, found by a survey of the laws of 195 countries made on 2026-11-12, could not be read at its source, through its official address and one other route; the table gives such a place as "No, not fetched".
+From 2026-11-29, a place is also not offered where the operator judges that offering Sophaxis would not conform to the law of that place.
+When the operator so judges, the place and the reason are added to the table.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
 Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
