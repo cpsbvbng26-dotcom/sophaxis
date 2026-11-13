@@ -19,7 +19,8 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
 7. 投稿は `tools/intake.js` が受ける（`.github/workflows/intake.yml`）。DOI の登録情報（DataCite・Crossref）と、
    ORCID の公開記録のうち名前・リンク・業績だけを読む。ORCID の記録をそのまま記録・ログ・コメントに写さない
    （メールアドレスや所在の国が入っている）。本人確認が通らない投稿は載せない。
-   issue の本文は環境変数でだけ渡し、シェルに展開しない。
+   issue の本文と題は、スクリプトが出来事のファイル（`GITHUB_EVENT_PATH`）から読む。環境変数にもシェルにも入れない。
+   環境変数は実行の記録（Actions のログ）に写り、issue を空にしても残るため（2026-11-13 に Claude が決めた。検査 128）。
    撤回の issue は `tools/withdraw.js` が受ける（同じワークフローの別の仕事）。本人確認は投稿と同じ。
    撤回した記録は消さない。`status: "withdrawn"`・`withdrawal_date`・`withdrawal_note` を付け、PDF の写しは外す。
 8. PDF の写しは `tools/fetch_pdf.js` が預け先から取る（`.github/workflows/pdf.yml`、手で起動）。`data/pdf/` に置き、
