@@ -1689,7 +1689,7 @@
       "by": [
         {
           "file": "policies/privacy.md",
-          "text": "Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its terms can be read only with a script running, and no other statement of those measures was found."
+          "text": "Sophaxis cannot give information on the measures the Internet Archive takes to protect personal data: its current terms can be read only with a script running."
         },
         {
           "file": "policies/privacy.md",

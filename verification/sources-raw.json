@@ -10961,52 +10961,6 @@
     }
    ]
   },
-  "datacite-imprint": {
-   "url": "https://web.archive.org/web/2026id_/https://datacite.org/imprint/",
-   "status": 200,
-   "fetched": "2026-11-12",
-   "final": "https://web.archive.org/web/20261026094729id_/https://datacite.org/imprint/",
-   "length": 4198,
-   "sha256": "d4218ec5f38ef2b57c64ab63f38cc1892507d4a73e6f917f90f9ad6560786a2d",
-   "spans": [
-    {
-     "at": 10,
-     "text": "DataCite"
-    },
-    {
-     "at": 74,
-     "text": "Service"
-    },
-    {
-     "at": 1717,
-     "text": "DataCite – International Data Citation Initiative e.V."
-    },
-    {
-     "at": 1772,
-     "text": "Welfengarten 1 B, 30167 Hannover"
-    },
-    {
-     "at": 1816,
-     "text": "Representative"
-    },
-    {
-     "at": 1962,
-     "text": "Matthew Buys, Executive Director"
-    },
-    {
-     "at": 2442,
-     "text": "Business"
-    },
-    {
-     "at": 2523,
-     "text": "Copyright"
-    },
-    {
-     "at": 3149,
-     "text": "categorize"
-    }
-   ]
-  },
   "crossref-privacy": {
    "url": "https://www.crossref.org/operations-and-sustainability/privacy/",
    "status": 200,
@@ -16956,6 +16910,116 @@
      "text": "Edit"
     }
    ]
+  },
+  "ia-terms-archived-2024": {
+   "url": "https://web.archive.org/web/20240101002842id_/https://archive.org/about/terms.php",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 19911,
+   "sha256": "fd3203a8e7630a74a2c5d38558a35cd3d2f1d5e685f002c2aedcb961738b00bd",
+   "spans": [
+    {
+     "at": 0,
+     "text": "Internet Archive"
+    },
+    {
+     "at": 287,
+     "text": "The Internet Archive"
+    },
+    {
+     "at": 2825,
+     "text": "Record"
+    },
+    {
+     "at": 3891,
+     "text": "Collections"
+    },
+    {
+     "at": 4589,
+     "text": "Page"
+    },
+    {
+     "at": 5134,
+     "text": "This terms of use agreement (the \"Agreement\") governs your use of the collection of Web pages and other digital content (the \"Collections\") available through the Internet Archive (the \"Archive\")."
+    },
+    {
+     "at": 5528,
+     "text": "Access to the Archive’s Collections is provided at no cost to you and is granted for scholarship and research purposes only."
+    },
+    {
+     "at": 6062,
+     "text": "You agree not to interfere with the work of other users or Archive personnel, servers, or resources."
+    },
+    {
+     "at": 6574,
+     "text": "none"
+    },
+    {
+     "at": 7649,
+     "text": "not to collect or store personal data about anyone"
+    },
+    {
+     "at": 8844,
+     "text": "authors"
+    },
+    {
+     "at": 8856,
+     "text": "publisher"
+    },
+    {
+     "at": 9432,
+     "text": "as is"
+    },
+    {
+     "at": 13782,
+     "text": "While the Archive endeavors to enforce its Terms of Use and maintain standard computer security"
+    },
+    {
+     "at": 13974,
+     "text": "Users"
+    },
+    {
+     "at": 14477,
+     "text": "Person"
+    },
+    {
+     "at": 17482,
+     "text": "the right"
+    },
+    {
+     "at": 19826,
+     "text": "Internet Archive, 300 Funston Ave., San Francisco, CA 94118"
+    }
+   ]
+  },
+  "ia-robots": {
+   "url": "https://archive.org/robots.txt",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 238,
+   "sha256": "893b9a0cbefc7751154d5728342ed907456794ecc1e47562adebcca2b07f495a",
+   "spans": [
+    {
+     "at": 116,
+     "text": "Internet Archive"
+    },
+    {
+     "at": 183,
+     "text": "User-agent: * Disallow: /control/"
+    },
+    {
+     "at": 217,
+     "text": "Disallow: /report/"
+    }
+   ]
+  },
+  "wayback-robots": {
+   "url": "https://web.archive.org/robots.txt",
+   "status": 404,
+   "fetched": "2026-11-12",
+   "length": 146,
+   "sha256": "3724b3843bdd39aef527f03251b94d59fcb3f2ea8ac0ed8ebf7d7091d37c3587",
+   "spans": []
   }
  },
  "laws": {

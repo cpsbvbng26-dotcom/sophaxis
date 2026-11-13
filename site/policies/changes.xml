@@ -8,6 +8,13 @@
   <updated>2026-11-13T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c17</id>
+    <title>What the Internet Archive has said about its security</title>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>The Privacy Policy said that no statement of the measures the Internet Archive takes to protect personal data was found. The Internet Archive's own copy of its terms page, saved on 2024-01-01, holds a privacy policy dated 10 March 2001 that speaks of standard computer security. The Privacy Policy, in both languages, now quotes it, and still says that the Internet Archive's current terms can be read only with a script running. This is a correction of an untrue statement, effective on publication, 2026-11-13. Nothing that Sophaxis does changes, and no right is narrowed. Policies: Privacy Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c16</id>
     <title>The address in the OAI-PMH interface is the address for requests</title>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>

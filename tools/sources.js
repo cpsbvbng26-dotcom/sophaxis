@@ -159,7 +159,9 @@ const PAGES = {
   // DataCite, Crossref and JaLC: the DOI metadata. DataCite's website forbids automated collection on it (see NO_DIRECT below),
   // so its pages are read only from the Internet Archive's copies.
   'datacite-privacy': PAGE(IA('https://datacite.org/privacy-policy/'), { links: /imprint|privacy|contact|team/i }),
-  'datacite-imprint': PAGE(IA('https://datacite.org/imprint/')),
+  /* DataCite's imprint is no longer read (2026-11-13, the eleventh pass). It was read only for its representative's name, and
+   * only from the Internet Archive's copy, whose terms of use ask users "not to collect or store personal data about anyone".
+   * DataCite's name and address are read from its terms (datacite-terms), whose copy names no person in what is kept. */
   'crossref-privacy': PAGE('https://www.crossref.org/operations-and-sustainability/privacy/', { links: /contact|privacy|people|governance/i }),
   'crossref-people': PAGE('https://www.crossref.org/people/'),
   'crossref-about': PAGE('https://www.crossref.org/community/about/', { links: /contact|address|governance/i }),
@@ -217,6 +219,14 @@ const PAGES = {
   'ia-terms-archived': PAGE('https://web.archive.org/web/2026id_/https://archive.org/about/terms.php'),
   'ia-contact-archived': PAGE('https://web.archive.org/web/2026id_/https://archive.org/about/contact.php'),
   'ia-terms-archived-2022': PAGE('https://web.archive.org/web/2022id_/https://archive.org/about/terms.php'),
+  /* Added on 2026-11-13 (the eleventh pass): the latest copy of the Internet Archive's terms of use that holds their text. The page
+   * itself, and its copies of 2025 and 2026, ask for a script; the copy for the end of 2024 is a 404. This copy, made on
+   * 2024-01-01, holds the Terms of Use of 31 Dec 2014 and the Privacy and Copyright Policies of 10 March 2001. Pinned to its
+   * timestamp, so that every run reads the same copy. */
+  'ia-terms-archived-2024': PAGE('https://web.archive.org/web/20240101002842id_/https://archive.org/about/terms.php'),
+  // The robots.txt of the Internet Archive's site and of the Wayback Machine, which the tools read copies from.
+  'ia-robots': PAGE('https://archive.org/robots.txt', { markdown: true }),
+  'wayback-robots': PAGE('https://web.archive.org/robots.txt', { markdown: true }),
   'openai-privacy-archived': PAGE('https://web.archive.org/web/2026id_/https://openai.com/policies/row-privacy-policy/'),
   'openai-privacy-us-archived': PAGE('https://web.archive.org/web/2026id_/https://openai.com/policies/privacy-policy/'),
   'xai-legal': PAGE('https://x.ai/legal', { links: /legal|privacy|terms/i }),

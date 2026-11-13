@@ -113,7 +113,7 @@ EU の十分性認定はありません。APEC の CBPR システムには、201
 - Vercel：[Vercel Privacy Notice](https://vercel.com/legal/privacy-notice)。EU-米国データプライバシーフレームワークに従うと述べています。
 - ORCID：[ORCID Privacy Policy](https://info.orcid.org/privacy-policy/)。毎年、EU-米国データプライバシーフレームワークの基準で評価を受けていると述べています。
 - Crossref：[Crossref privacy](https://www.crossref.org/operations-and-sustainability/privacy/)
-- Internet Archive：[Terms of Use](https://archive.org/about/terms)。受け取るのは公開の頁と PDF の写しだけで、記録がすでに公開している以上の個人データは含みません。Internet Archive が個人情報を守るために講じている措置については、情報を示すことができません。その規約はスクリプトを動かさないと読めず、ほかにその措置を述べたものも見つからなかったためです。
+- Internet Archive：[Terms of Use](https://archive.org/about/terms)。受け取るのは公開の頁と PDF の写しだけで、記録がすでに公開している以上の個人データは含みません。Internet Archive がいま個人情報を守るために講じている措置については、情報を示すことができません。いまの規約は、スクリプトを動かさないと読めないためです。Internet Archive 自身が 2024-01-01 に保存したその頁の写しには、2001 年 3 月 10 日付けのプライバシーの方針があり、「the Archive endeavors to enforce its Terms of Use and maintain standard computer security」と書いています。これより新しい、その措置を述べたものは見つかっていません。
 - Anthropic：プライバシーポリシーで、個人データを紛失・誤用・不正なアクセス・開示・改変・破壊から守るための、適切な技術的・組織的な安全管理措置を講じていると述べています。
 - OpenAI：OpenAI が個人情報を守るために講じている措置については、情報を示すことができません。そのプライバシーポリシーは、2026-11-12 の自動の取り寄せに、JavaScript と cookie を求める頁を返しました。ほかにその措置を述べたものも取り寄せていません。
 - xAI：[Privacy Policy](https://x.ai/legal/privacy-policy)。いまは SpaceX Super Intelligence LLC のプライバシーポリシーです。この会社が個人情報を守るために講じている措置については、情報を示すことができません。2026-11-12 に取り寄せた方針は、データの使い方と渡し先を述べていますが、安全管理の措置を述べていないためです。
