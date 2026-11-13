@@ -1336,7 +1336,8 @@ console.log('\n35. General terms: notice of changes, precedence, severability, w
     && !/means accepting it/.test(terms) && terms.includes('A person who does not accept a change can stop using Sophaxis'));
   ok('the announcement is one setting in site.json, and the top page shows it exactly when it is set',
     'termsNotice' in site && termsNotice({ text: 'Fees stay at zero.', from: '2027-01-15' }).includes('<b>Change to the policies from 2027-01-15.</b> Fees stay at zero.')
-    && termsNotice(null) === '' && read(path.join(ROOT, 'site', 'index.html')).includes('Change to the policies from') === !!(site.termsNotice && site.termsNotice.text));
+    && termsNotice({ text: 'Fees stay at zero.', from: '2027-01-15', since: '2027-01-01' }).includes('<b>Changes to the policies, some in effect since 2027-01-01 and the rest from 2027-01-15 on.</b> Fees stay at zero.')
+    && termsNotice(null) === '' && /<b>Changes? to the policies[ ,]/.test(read(path.join(ROOT, 'site', 'index.html'))) === !!(site.termsNotice && site.termsNotice.text));
   const g = (/## General\n([\s\S]*?)\n## /.exec(terms) || [, ''])[1];
   ok('General: which text prevails, severability, no waiver, minors, how notices are given',
     g.includes('Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply.')
@@ -2332,7 +2333,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
 {
   const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
   const pages = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'].map((slug) => ({ slug, dir: 'policies/' }))
-    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'].map((slug) => ({ slug, dir: '' })));
+    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission'].map((slug) => ({ slug, dir: '' })));
   for (const { slug, dir } of pages) {
     const en = read(path.join(ROOT, dir, slug + '.md'));
     const ja = read(path.join(ROOT, dir, slug + '.ja.md'));
@@ -2749,7 +2750,7 @@ console.log('\n68. Who Sophaxis is not offered to, and why, at the top: by resid
     && site.scopeNotice.includes('Article 53 of China\'s Personal Information Protection Law') && site.scopeNotice.includes('section 37(5) of Thailand\'s Personal Data Protection Act') && site.scopeNotice.includes('Article 18(5) of Russia\'s Federal Law No. 152-FZ') && site.scopeNotice.includes(N) && site.scopeNotice.includes('an author of any nationality who lives elsewhere and does not stay there can submit') && site.scopeNotice.includes('or who stays in one between the submission and the listing, even briefly')
     && site.scopeNotice.includes('Article 27 of the GDPR and of the UK GDPR') && site.scopeNotice.includes('Article 13 of the EU Digital Services Act'));
   ok('the notice stands first on the top page and the submit page, before any other notice',
-    idx.indexOf(notice) > 0 && idx.indexOf(notice) < idx.indexOf('Change to the policies from') && idx.indexOf('<h1>') < idx.indexOf(notice) && sub.indexOf(notice) > sub.indexOf('<h1>Submit a preprint</h1>'));
+    idx.indexOf(notice) > 0 && idx.indexOf(notice) < idx.search(/<b>Changes? to the policies[ ,]/) && idx.indexOf('<h1>') < idx.indexOf(notice) && sub.indexOf(notice) > sub.indexOf('<h1>Submit a preprint</h1>'));
   const sp = read(path.join(ROOT, 'policies', 'submission.md')), sj = read(path.join(ROOT, 'policies', 'submission.ja.md'));
   ok('the Submission Policy, both languages, the README and the form say the same, and that the confirmation is relied on and an untrue one leads to removal',
     sp.includes('This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.') && sp.includes('Sophaxis relies on the submitter\'s confirmation and does not check where authors live or stay.')
@@ -5738,7 +5739,7 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
     ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
     ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-13.', 'Last updated: 2026-11-12.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
-    ['the page of policies dated back to the day of its English text', mut('policy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
+    ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
     ['the entry on Figshare dated back', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
     ['the entry on the places dated back', feedWith((d) => d.map((c) => (c.title.startsWith('The day from which each place') ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
     ['a day of effect before the entry', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { text: c.text.replace('Effective on publication, 2026-11-13', 'Effective on publication, 2026-11-12') }) : c))), facts],
@@ -6278,7 +6279,10 @@ console.log('\n127. The public pages state positions: no page that the site serv
     const said = (k) => Number((new RegExp(k + ' (\\d+) 件').exec(sec) || [])[1]);
     if (!KINDS.filter((k) => rows.some((y) => y[4] === k)).every((k) => said(k) === rows.filter((y) => y[4] === k).length) || Number((/合わせて (\d+) 件です。/.exec(sec) || [])[1]) !== rows.length) bad.push('the count');
     const nPages = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[1]), nOther = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[2]);
-    if (nPages !== md.filter((f) => f.startsWith('policies/')).length || nOther !== md.filter((f) => !f.startsWith('policies/')).length) bad.push('the number of pages read');
+    /* The section counts the pages it read. The Statement of Purpose (mission.md, mission.ja.md) came later the same day; it is read
+     * here like every other page, and its own section of the record says so (check 131). */
+    const LATER = ['mission.md', 'mission.ja.md'];
+    if (nPages !== md.filter((f) => f.startsWith('policies/')).length || nOther !== md.filter((f) => !f.startsWith('policies/') && !LATER.includes(f)).length) bad.push('the number of pages read');
     if ((sec.match(/2026-11-13 に Claude が決めました。/g) || []).length < 2 || !sec.includes('見つけたことと直したことを記録が示し、頁が立場を示せば、頁は確かさを言い過ぎず、理由は記録で確かめられるためです。')
       || !sec.includes('注は、提供しない国と地域を決めた根拠の所在を示すもので、続けている行いの疑いを並べるものではないためです。')) bad.push('who decided, and why');
     if (!sec.includes('1. 扱い 1：') || !sec.includes('2. 扱い 2：') || !sec.includes('検査 127 が')) bad.push('the two ways, or the check');
@@ -6545,7 +6549,9 @@ console.log('\n130. The top pages show the later of the day the records last cha
   const SHOWN = /(?:Last updated: |最終更新：)(?:<time datetime="(\d{4}-\d{2}-\d{2})">\1<\/time>|(\d{4}-\d{2}-\d{2}))[.。]/;
   const walk = (d) => fs.readdirSync(path.join(ROOT, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(d + '/' + e.name) : e.name.endsWith('.html') ? [d + '/' + e.name] : []));
   const dated = walk('site').filter((f) => SHOWN.test(read(path.join(ROOT, f))));
-  const facts = { shallow, others: dated.filter((f) => !['site/index.html', 'site/index.ja.html'].includes(f)).length,
+  /* The seventeenth section counts the built pages it compared with the history. The two pages of the Statement of Purpose came later
+   * the same day; check 121 compares them like every other page, and their own section of the record says so (check 131). */
+  const facts = { shallow, others: dated.filter((f) => !['site/index.html', 'site/index.ja.html', 'site/mission.html', 'site/mission.ja.html'].includes(f)).length,
     first: Object.fromEntries(effectDays(JSON.parse(real['site.json'])).map((d) => [d, lines(['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', 'From ' + d, '--', 'site.json'])[0] || today])) };
   function problems(c, h) {
     const bad = [];
@@ -6557,7 +6563,8 @@ console.log('\n130. The top pages show the later of the day the records last cha
     if (!c['build.js'].includes("const last = lastUpdated(all, topUpdated('en'));") || !c['build.js'].includes("const last = lastUpdated(all, topUpdated('ja'));")) bad.push('build.js: a top page without its own day');
     const a = c[AUD] || '', i = a.indexOf(HEAD), j = i < 0 ? -1 : a.indexOf('\n## ', i + HEAD.length);
     const sec = i < 0 ? '' : a.slice(i, j < 0 ? undefined : j).split('\n### 下げられずに残る危険\n').join('\n');
-    const whole = i < 0 ? '' : a.slice(i, a.indexOf('\n## この記録について\n') > i ? a.indexOf('\n## この記録について\n') : undefined);
+    /* The section runs to the next section of the record; a later section (2026-11-13：運営理念・声明) is not read as part of it. */
+    const whole = i < 0 ? '' : a.slice(i, j < 0 ? (a.indexOf('\n## この記録について\n') > i ? a.indexOf('\n## この記録について\n') : undefined) : j);
     if (!sec || a.indexOf('\n## この記録について\n') < i) return bad.concat(['no seventeenth section before the end of the record']);
     const t0 = whole.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
     const rows = t0 < 0 ? [] : whole.slice(t0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
@@ -6591,10 +6598,142 @@ console.log('\n130. The top pages show the later of the day the records last cha
     ['a decision without its reason', w(AUD, '頁ごとに、その頁の文が最後に変わった日を示すためです |', '頁ごとに日を示します |'), facts],
     ['the way the periods were counted taken out', w(AUD, 'これまでの記録は、告知の期間を、main に入った時から数えていました。', ''), facts],
     ['the number of the other pages wrong', w(AUD, (/(\d+) の頁を、`<main>` の文で履歴と照らしました。/.exec(real[AUD]) || [''])[0], (facts.others + 1) + ' の頁を、`<main>` の文で履歴と照らしました。'), facts],
-    ['the sentence on lawyers taken out', w(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'), facts],
+    ['the sentence on lawyers taken out', (() => { const a = real[AUD], i = a.indexOf(HEAD), j = a.indexOf('\n## ', i + HEAD.length); return Object.assign({}, real, { [AUD]: a.slice(0, i) + a.slice(i, j).replace('\n\nこの節も、弁護士の確認は受けていません。', '') + a.slice(j) }); })(), facts],
   ];
   const missed = breaks.filter(([, b, h]) => problems(b, h).length === 0).map(([k]) => k);
   ok('break on purpose: a day of effect 13 days after it was first held, a new day 5 days ahead, site.json without a day, a top page on the records alone, a shallow history, the section, the count, a reason, the way the periods were counted, the number of pages, the lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+console.log('\n131. The Statement of Purpose: its count of places is the table\'s, it keeps its non-binding clauses, its new exclusion stands in the Submission Policy, the README gives its first two articles, and no page says that a lawyer is retained (2026-11-13)');
+{
+  /* The operator asked on 2026-11-13 for a Statement of Purpose, and Claude wrote it (mission.md, translated in mission.ja.md). It creates
+   * no rights or obligations, so its places clause takes effect through the Submission Policy, announced 14 days ahead (check 130 counts
+   * the days). The README gives Articles 1 and 2 word for word. The operator also asked to write that lawyers would be on the operator's
+   * side; no lawyer is engaged, so Claude decided to write that, and nothing that says or suggests that a lawyer is retained, attached or
+   * has reviewed anything. The record has its section 「2026-11-13：運営理念・声明」. */
+  const B131 = require('../build.js');
+  const F = { en: 'mission.md', ja: 'mission.ja.md', readme: 'README.md', sub: 'policies/submission.md', subja: 'policies/submission.ja.md', site: 'site.json',
+    aud: 'docs/legal-audit-2026-11-12.md', changes: 'data/policy-changes.json', commitments: 'verification/commitments.txt',
+    idx: 'site/index.html', idxja: 'site/index.ja.html', pol: 'site/policy.html', polja: 'site/policy.ja.html', sitemap: 'site/sitemap.xml', llms: 'site/llms.txt', menhtml: 'site/mission.html', mjahtml: 'site/mission.ja.html' };
+  const real = Object.fromEntries(Object.entries(F).map(([k, f]) => [k, fs.existsSync(path.join(ROOT, f)) ? read(path.join(ROOT, f)) : '']));
+  const HEAD = '\n## 2026-11-13：運営理念・声明\n';
+  const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const NEG_EN = 'At present, the operator has not engaged a lawyer or any other professional. This statement, the Terms of Use and the other policies have not been reviewed by a lawyer.';
+  const NEG_JA = '運営者は、現在、弁護士その他の専門家に依頼していません。この声明と、利用規約・各規程は、弁護士の確認を受けていません。';
+  const LAWYER_JA = /弁護士が(つく|付く|ついて|付いて|確認|監修|顧問)/;
+  const LAWYER_EN = /our lawyers|legal counsel will|reviewed by (a )?lawyer|retained/i;
+  const article = (t, head) => { const i = t.indexOf(head); if (i < 0) return ''; const j = t.indexOf('\n## ', i + head.length); return t.slice(i + head.length, j < 0 ? undefined : j).trim(); };
+  const rows = (t, header) => { const i = t.indexOf('\n' + header + '\n'); return i < 0 ? -1 : t.slice(i + 1).split('\n\n')[0].split('\n').slice(2).filter((l) => l.startsWith('| ')).length; };
+  function problems(c) {
+    const bad = [];
+    let site = {}, changes = [];
+    try { site = JSON.parse(c.site); } catch (e) { bad.push('site.json'); }
+    try { changes = JSON.parse(c.changes); } catch (e) { bad.push('the feed of policy changes'); }
+    /* The count of places. */
+    const n = (site.notOffered || []).length;
+    const ne = Number((/As of 2026-11-13, the table lists (\d+) places\./.exec(c.en) || [])[1]), nj = Number((/2026-11-13 時点で、表は (\d+) の国と地域を挙げています。/.exec(c.ja) || [])[1]);
+    const te = rows(c.sub, '| Place | What the law requires | Law | Read at its source | From |'), tj = rows(c.subja, '| 国と地域 | 法令が求めるもの | 法令 | 原文で読んだか | 適用の日 |');
+    const re = Number((/\*\*Not offered in (\d+) places\*\*/.exec(c.readme) || [])[1]), rj = Number((/Sophaxis を提供しない (\d+) の国と地域/.exec(c.readme) || [])[1]);
+    if (!(n > 0 && ne === n && nj === n && te === n && tj === n && re === n && rj === n)) bad.push('the count of places (' + [n, ne, nj, te, tj, re, rj].join(', ') + ')');
+    /* Article 2, the aim, Article 11, and the last article. */
+    const a2e = article(c.en, '## Article 2 (What this statement is)'), a2j = article(c.ja, '## 第 2 条（この声明の性格）');
+    for (const s of ['This statement is not a term of the [Terms of Use](./policies/terms.md) or of the other [policies](./policy.md).', 'By itself, it creates no rights or obligations, for the operator, or for authors, readers or any other users.',
+      'Where this statement and the Terms of Use or another policy differ, the Terms of Use or that policy applies.', 'A "better influence" is what the operator aims at. The operator neither promises nor guarantees that it will come about.', 'This statement is not legal advice.'])
+      if (!a2e.includes(s)) bad.push('Article 2 lacks: ' + s.slice(0, 40));
+    for (const s of ['この声明は、[利用規約](./policies/terms.ja.md)と[各規程](./policy.ja.md)の条項ではありません。', 'それ自体で、運営者にも、著者・読者その他の利用者にも、権利や義務を生じさせません。',
+      'この声明と、利用規約・各規程とが食い違うときは、利用規約・各規程が適用されます。', '「より良い影響」は、運営者が目指すものです。その影響が生じることを、約束も保証もしません。', 'この声明は、法的な助言ではありません。'])
+      if (!a2j.includes(s)) bad.push('第 2 条 lacks: ' + s.slice(0, 20));
+    if (!/aims to/.test(article(c.en, '## Article 1 (Purpose)')) || !article(c.ja, '## 第 1 条（目的）').includes('目的としています。')) bad.push('Article 1 is not an aim');
+    if (!article(c.en, '## Article 11 (Who runs Sophaxis)').includes('Sophaxis is not a project of any university or other institution.') || !article(c.ja, '## 第 11 条（運営主体）').includes('Sophaxis は、大学その他の機関の事業ではありません。')) bad.push('Article 11');
+    const lastE = c.en.split('\n## ').pop(), lastJ = c.ja.split('\n## ').pop();
+    if (!lastE.startsWith('Article 14 (Changes to this statement)') || !lastE.includes('A change to this statement changes no commitment in the Terms of Use or the other policies.')
+      || !lastJ.startsWith('第 14 条（この声明の変更）') || !lastJ.includes('この声明を変えても、利用規約と各規程の約束は変わりません。')) bad.push('the last article');
+    /* The new exclusion stands in the Submission Policy, the notice, the feed and the list of commitments, from one day. */
+    const entry = changes.find((x) => /would not conform to its law/.test(x.title || '')) || {};
+    const d = entry.from || '';
+    const RULE = 'From ' + d + ', a place is also not offered where the operator judges that offering Sophaxis would not conform to the law of that place.';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || !(entry.policies || []).includes('submission')
+      || !c.en.includes('3. From ' + d + ', Sophaxis is also not offered in a place where the operator judges that offering Sophaxis would not conform to the law of that place.')
+      || !c.ja.includes('3. ' + d + ' から、Sophaxis の提供がその国や地域の法令に適合しないと運営者が判断した国と地域でも、Sophaxis を提供しません。')
+      || !c.sub.includes('\n' + RULE + '\nWhen the operator so judges, the place and the reason are added to the table.\n')
+      || !c.subja.includes('\n' + d + ' から、Sophaxis の提供がその国や地域の法令に適合しないと運営者が判断した国と地域にも、Sophaxis を提供しません。\n判断したときは、その国や地域と理由を、表に書き足します。\n')
+      || !String((site.termsNotice || {}).text).includes('From ' + d + ', Sophaxis is also not offered in a place where the operator judges') || !c.commitments.split('\n').includes(RULE)) bad.push('the new exclusion, from ' + d);
+    /* The README gives Articles 1 and 2 word for word, and links the whole statement. */
+    /* The README is read for citations of laws (tools/citations.js), so it heads the two articles by their titles, not their numbers. */
+    for (const [h, src, t] of [['Article 1 (Purpose)', c.en, '### Purpose'], ['Article 2 (What this statement is)', c.en, '### What this statement is'], ['第 1 条（目的）', c.ja, '#### 目的'], ['第 2 条（この声明の性格）', c.ja, '#### この声明の性格']]) {
+      const body = article(src, '## ' + h);
+      if (!body || !c.readme.includes('\n' + t + '\n\n' + body + '\n')) bad.push('the README lacks ' + h);
+    }
+    for (const l of ['## Statement of Purpose\n', '### 運営理念・声明\n', '(https://sophaxis.vercel.app/mission.html)', '(https://sophaxis.vercel.app/mission.ja.html)', '[mission.md](mission.md)', '[mission.ja.md](mission.ja.md)'])
+      if (!c.readme.includes(l)) bad.push('the README lacks ' + l.trim());
+    /* No lawyer retained, attached or reviewing, outside the one negated sentence of Article 13. */
+    if (!article(c.en, '## Article 13 (Disputes)').includes('1. ' + NEG_EN) || !article(c.ja, '## 第 13 条（紛争への対応）').includes('1. ' + NEG_JA)) bad.push('Article 13 without its first item');
+    if (!c.en.includes('4. This article is not a warning to anyone.') || !c.ja.includes('4. この条は、誰かに対する警告ではありません。')) bad.push('Article 13 without its last item');
+    if (!article(c.en, '## Article 13 (Disputes)').includes('"Law", "Disputes" and "People outside Japan"') || !article(c.ja, '## 第 13 条（紛争への対応）').includes('「準拠法」「紛争」「日本国外の方へ」')) bad.push('Article 13 without the sections of the Terms');
+    for (const k of ['en', 'ja', 'readme']) {
+      const t = c[k].split(NEG_EN).join('').split(NEG_JA).join('');
+      if (LAWYER_JA.test(t) || LAWYER_EN.test(t)) bad.push(F[k] + ': a lawyer retained, attached or reviewing');
+    }
+    /* Links from both top pages, both indexes of the policies, the sitemap and llms.txt; the pages are built. */
+    if (!c.idx.includes('<a href="./mission.html">Statement of Purpose</a>') || !c.idxja.includes('<a href="./mission.ja.html">運営理念・声明</a>') || !c.pol.includes('href="./mission.html"') || !c.polja.includes('href="./mission.ja.html"')
+      || !c.sitemap.includes((site.baseUrl || '') + 'mission.html</loc>') || !c.sitemap.includes((site.baseUrl || '') + 'mission.ja.html</loc>')
+      || !c.llms.includes((site.baseUrl || '') + 'mission.html)') || !c.llms.includes((site.baseUrl || '') + 'mission.ja.html)') || !c.menhtml.includes('<h1') || !c.mjahtml.includes('<html lang="ja"')) bad.push('a link or a page');
+    /* The heading of the notice names the day from which a change in it has been in effect. */
+    const n0 = site.termsNotice || {}, since = (/\bSince (?:its publication on )?(\d{4}-\d{2}-\d{2})\b/.exec(n0.text || '') || [])[1];
+    if ((since || '') !== (n0.since || '') || (since && (!c.idx.includes('<b>' + B131.noticeHeading(n0) + '</b>') || !c.idxja.includes('<b>規程の変更を告知しています。</b>' + since + ' から効力を持っている変更と、' + n0.from + ' から順に効力を持つ変更です。')))) bad.push('the heading of the notice');
+    /* The record. */
+    const a = c.aud, i = a.indexOf(HEAD), end = a.indexOf('\n## この記録について\n');
+    if (i < 0 || end < i) return bad.concat(['no section before the end of the record']);
+    const sec = a.slice(i, a.indexOf('\n## ', i + HEAD.length) > 0 ? a.indexOf('\n## ', i + HEAD.length) : undefined);
+    const t0 = sec.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
+    const rs = t0 < 0 ? [] : sec.slice(t0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rs.length < 10 || !rs.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the shape of the table');
+    const m = /この表の判定は、([^。]+)です。/.exec(sec);
+    const said = m ? Object.fromEntries(m[1].split('、').map((x) => { const [k, v] = x.trim().split(' '); return [k, Number(v)]; })) : {};
+    if (!m || !KINDS.every((k) => (said[k] || 0) === rs.filter((y) => y[4] === k).length)) bad.push('the count of findings');
+    for (const r of rs) if (!/^2026-11-13 に(?:利用者が求め、| )Claude が(書き|決め)ました。[^|]*ためです$/.test(r[5] || '')) bad.push('a row without who wrote or decided it, or why: ' + r[0].slice(0, 30));
+    if (!rs.some((r) => r[0].startsWith('「紛争への対応」の条') && r[5].startsWith('2026-11-13 に利用者が求め、Claude が決めました。'))) bad.push('the row on disputes');
+    if (!sec.includes('効力の日は ' + d + ' です。') || !sec.includes('この節も、弁護士の確認は受けていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the day of effect or the sentence on lawyers');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the Statement of Purpose gives the ' + (JSON.parse(real.site).notOffered || []).length + ' places of the table, keeps its non-binding clauses, its aim and Article 11 in both languages, its new exclusion stands from one day in the Submission Policy, the notice, the feed and the commitments, the README gives Articles 1 and 2 word for word, no text says that a lawyer is retained or has reviewed anything, it is linked and built, the notice names the day already in effect, and the record has its section',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (k, x, y) => Object.assign({}, real, { [k]: real[k].replace(x, y) });
+  const breaks = [
+    ['a wrong count in English', w('en', 'the table lists 43 places', 'the table lists 42 places')],
+    ['a wrong count in Japanese', w('ja', '表は 43 の国と地域', '表は 44 の国と地域')],
+    ['a row taken out of the table', w('sub', /\n\| Qatar \|[^\n]*/, '')],
+    ['the binding clause taken out', w('en', 'By itself, it creates no rights or obligations, for the operator, or for authors, readers or any other users.', 'It binds the operator.')],
+    ['the Japanese binding clause taken out', w('ja', 'それ自体で、運営者にも、著者・読者その他の利用者にも、権利や義務を生じさせません。', '')],
+    ['the aim made a promise', w('en', 'The operator neither promises nor guarantees that it will come about.', 'The operator promises that it will come about.')],
+    ['the Japanese aim made a promise', w('ja', 'その影響が生じることを、約束も保証もしません。', 'その影響が生じることを約束します。')],
+    ['Article 11 without the institution', w('ja', 'Sophaxis は、大学その他の機関の事業ではありません。', 'Sophaxis は、大学の事業です。')],
+    ['the last article changed', w('en', 'A change to this statement changes no commitment in the Terms of Use or the other policies.', 'A change to this statement changes the policies.')],
+    ['the exclusion only in the statement', w('sub', 'When the operator so judges, the place and the reason are added to the table.\n', '')],
+    ['the exclusion on another day in Japanese', w('subja', '2026-11-29 から、Sophaxis の提供が', '2026-11-28 から、Sophaxis の提供が')],
+    ['the exclusion not announced', w('site', 'From 2026-11-29, Sophaxis is also not offered', 'Sophaxis is also not offered')],
+    ['the exclusion not in the commitments', w('commitments', 'From 2026-11-29, a place is also not offered where', 'A place is also not offered where')],
+    ['the README with another purpose', w('readme', 'and to have a better influence on society.\n\n### What', 'and to change society.\n\n### What')],
+    ['the README without the Japanese binding clause', w('readme', '2. この声明は、[利用規約](./policies/terms.ja.md)と[各規程](./policy.ja.md)の条項ではありません。それ自体で', '2. この声明は、[利用規約](./policies/terms.ja.md)と[各規程](./policy.ja.md)の一部です。それ自体で')],
+    ['the README without its link', w('readme', '(https://sophaxis.vercel.app/mission.ja.html)', '(https://sophaxis.vercel.app/)')],
+    ['a lawyer attached in Japanese', w('ja', '4. この条は、誰かに対する警告ではありません。', '4. 訴えられたときは、弁護士が付きます。')],
+    ['a lawyer retained in English', w('en', '4. This article is not a warning to anyone.', '4. The operator has retained counsel.')],
+    ['our lawyers in the README', w('readme', '## Statement of Purpose\n', '## Statement of Purpose\n\nOur lawyers will defend Sophaxis.\n')],
+    ['a review by a lawyer claimed in Japanese', w('readme', '### 運営理念・声明\n', '### 運営理念・声明\n\nこの声明は弁護士が確認しました。\n')],
+    ['the negated sentence taken out', w('en', NEG_EN, 'The operator has a lawyer.')],
+    ['the sections of the Terms taken out', w('ja', '「準拠法」「紛争」「日本国外の方へ」', '「準拠法」')],
+    ['the Japanese top page without its link', w('idxja', '<a href="./mission.ja.html">運営理念・声明</a>', '運営理念・声明')],
+    ['llms.txt without the page', w('llms', /mission\.html\)/g, 'mission)')],
+    ['the notice without its day in effect', w('site', ', "since": "2026-11-13"', '')],
+    ['the Japanese heading back to one day', w('idxja', '2026-11-13 から効力を持っている変更と、', '')],
+    ['the section taken out of the record', w('aud', HEAD, '\n## 2026-11-13：声明\n')],
+    ['the count of the record changed', w('aud', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 4、問題なし 7 です。', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 4、問題なし 6 です。')],
+    ['the row on disputes without who decided', w('aud', '| 問題なし | 2026-11-13 に利用者が求め、Claude が決めました。依頼していないこと', '| 問題なし | 依頼していないこと')],
+    ['the sentence on lawyers taken out of the record', w('aud', '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: the count in either language or in the table, the clauses that bind nothing, the aim, Article 11, the last article, the exclusion in the policy, its day, the notice and the commitments, the README\'s articles and link, a lawyer attached, retained, ours or reviewing, the negated sentence, the sections of the Terms, the links, the heading of the notice, and the record\'s section, count, decision and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
