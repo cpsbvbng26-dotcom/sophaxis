@@ -7,6 +7,8 @@ Sophaxis の場そのもの。哲学と数理のオーバーレイ型プレプ�
 1. `site/` は生成物。`site.json`・`policy.md`・`policies/*.md`・`data/papers/*.json` を直して `node build.js`。手で直さない。
    `site/vercel.json`（`/abs/<id>`・`/pdf/<id>` の短い URL）も同じく生成物。Vercel のプロジェクトのルートが `site/` なので、設定はそこに置く。
    規約（`policies/*.md`）を変えたら、その頁の「Last updated」の日付も変える。
+   トップの頁の文（`site.json` の告知など、記録のほかに頁が示すもの）が変わったら、`site.json` の `topUpdated` のその言語の日付も変える（日本時間）。
+   ビルドは git を読まない。検査 121 が、組み上がった頁の `<main>` の文を履歴と照らし、日付が最後の変更の日と違えば落ちる（2026-11-13 に Claude が決めた）。
 2. 掲載を決めるのは運営者（根本卓哉）。受理された Issue の中身から `data/papers/<id>.json` を作り、PR で入れる。勝手に受理しない。
 3. 規約の約束（査読ではない、質を保証しない、費用を取らない、言語モデルは開示で受ける・著者にしない、記録を消さない、
    全著者の同意と共有の権利を確かめる、削除の手続き）を弱めない。`verification/check.js` が文で固めている。

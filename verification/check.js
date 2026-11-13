@@ -1982,13 +1982,17 @@ console.log('\n48. The last update and the ISSN, as the ISSN Japan Centre asks o
     .concat([p.listed, p.updated, p.withdrawal_date, p.published && p.published.reported], (p.notes || []).map((n) => n.date))).filter(Boolean));
   const last = dates.sort().pop();
   const idx = read(path.join(ROOT, 'site', 'index.html'));
-  ok('the top page shows the day the records last changed (' + last + '), and how often they are updated',
-    idx.includes('Last updated: <time datetime="' + last + '">' + last + '</time>. Records are added as they are accepted, and every record is checked once a week.'));
+  /* Since 2026-11-13 the date is the later of that day and the day the rest of the top page last changed (site.json "topUpdated"),
+   * which check 121 compares with the history of the built page. */
+  const top = [last, (S.topUpdated || {}).en].filter(Boolean).sort().pop();
+  ok('the top page shows the later of the day the records last changed (' + last + ') and the day its own text last changed (' + (S.topUpdated || {}).en + '), and how often they are updated',
+    top >= last && idx.includes('Last updated: <time datetime="' + top + '">' + top + '</time>. Records are added as they are accepted, and every record is checked once a week.'));
   const rec = (patch) => Object.assign({ id: '2026.0001', status: 'listed', listed: '2026-10-31', versions: [{ version: 1, doi: '10.5281/zenodo.1', date: '2026-10-01' }] }, patch);
-  ok('the last update is the latest of every change: a new version, an update, a note, a withdrawal, a removal, not only the day of listing',
+  ok('the last update is the latest of every change: a new version, an update, a note, a withdrawal, a removal, not only the day of listing, and the day of the page\'s own text when one is given',
     B.lastUpdated([rec({})]) === '2026-10-31' && B.lastUpdated([rec({ versions: [{ version: 1, doi: 'x', date: '2026-10-01' }, { version: 2, doi: 'y', date: '2026-11-05' }] })]) === '2026-11-05'
     && B.lastUpdated([rec({ updated: '2026-11-07' })]) === '2026-11-07' && B.lastUpdated([rec({ notes: [{ date: '2026-11-08', text: 'n' }] })]) === '2026-11-08'
-    && B.lastUpdated([rec({}), { id: '2026.0002', status: 'removed', removal_date: '2026-11-09' }]) === '2026-11-09');
+    && B.lastUpdated([rec({}), { id: '2026.0002', status: 'removed', removal_date: '2026-11-09' }]) === '2026-11-09'
+    && B.lastUpdated([rec({})], '2026-11-13') === '2026-11-13' && B.lastUpdated([rec({ updated: '2026-11-20' })], '2026-11-13') === '2026-11-20');
   ok('the weekly check that the top page names runs on a schedule', /schedule:\n\s+- cron: '[^']+'/.test(read(path.join(ROOT, '.github', 'workflows', 'watch.yml'))));
   ok('an ISSN is valid only with its check digit (ISO 3297)', B.issnOk('0317-8471') && !B.issnOk('0317-8472') && !B.issnOk('03178471') && !B.issnOk('0317-847'));
   ok('the ISSN is shown on the top page exactly when site.json has one, and only one given there',
@@ -5640,7 +5644,7 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
    * differs from the last commit is taken as changed today (Japan time); so is an entry not yet in any commit. The versions
    * are read in one call of git cat-file. */
   const body = (s) => String(s || '').replace(/^(?:Last updated: \d{4}-\d{2}-\d{2}\.|最終更新：\d{4}-\d{2}-\d{2}。)$/gm, '');
-  const lastTextDays = (fs_) => {
+  const lastTextDays = (fs_, norm = body) => {
     const logs = Object.fromEntries(fs_.map((f) => [f, lines(['log', '--format=%H %cd', '--date=format-local:%Y-%m-%d', '--', f]).map((l) => l.split(' '))]));
     const want = fs_.flatMap((f) => logs[f].map(([h]) => h + ':' + f));
     let buf = Buffer.alloc(0);
@@ -5655,8 +5659,8 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
     let k = 0;
     for (const f of fs_) {
       const l = logs[f], v = l.map(() => blobs[k++]);
-      if (!l.length || body(read(path.join(ROOT, f))) !== body(v[0])) { out[f] = today; continue; }
-      const i = v.findIndex((x, j) => j + 1 >= v.length || body(x) !== body(v[j + 1]));
+      if (!l.length || norm(read(path.join(ROOT, f))) !== norm(v[0])) { out[f] = today; continue; }
+      const i = v.findIndex((x, j) => j + 1 >= v.length || norm(x) !== norm(v[j + 1]));
       out[f] = (l[i] || [])[1] || today;
     }
     return out;
@@ -5668,13 +5672,33 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const files = pages.concat(WF, [CH, AUD, 'site.json']);
   const real = Object.fromEntries(files.map((f) => [f, read(path.join(ROOT, f))]));
   const titleKey = (c) => '"title": ' + JSON.stringify(c.title);
-  const facts = { shallow, last: lastTextDays(pages), first: Object.fromEntries(JSON.parse(real[CH]).map((c) => [c.title, firstDay(CH, titleKey(c))])) };
+  /* The built pages (2026-11-13, a seventeenth read-only pass). A page of site/ can show text that is not in its Markdown: the top
+   * pages show the notices and the rest of site.json, press.html its table of facts, history.html the news. The date a built page
+   * shows is compared with the last commit that changed the text of its <main>, the date itself left out: not earlier on any page,
+   * and on the two top pages the same day, since their date comes from site.json ("topUpdated") and the records, not from a text
+   * whose own date is checked above. The top pages showed 2026-11-07, the day the records last changed, while their notices changed
+   * on 2026-11-11 and 2026-11-13. */
+  const SHOWN = /(?:Last updated: |最終更新：)(?:<time datetime="(\d{4}-\d{2}-\d{2})">\1<\/time>|(\d{4}-\d{2}-\d{2}))[.。]/;
+  const shownText = (h) => { const m = /<main[^>]*>([\s\S]*?)<\/main>/.exec(String(h || '')); return m ? m[1].replace(new RegExp(SHOWN.source, 'g'), '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : String(h || ''); };
+  const walk = (d) => fs.readdirSync(path.join(ROOT, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(d + '/' + e.name) : e.name.endsWith('.html') ? [d + '/' + e.name] : []));
+  const BUILT = walk('site').filter((f) => SHOWN.test(read(path.join(ROOT, f)))).sort();
+  const TOP = ['site/index.html', 'site/index.ja.html'];
+  const PAPERS = path.join(ROOT, 'data', 'papers');
+  const recordsDay = Bd.lastUpdated(fs.readdirSync(PAPERS).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(PAPERS, f)))));
+  for (const f of BUILT) real[f] = read(path.join(ROOT, f));
+  const facts = { shallow, last: lastTextDays(pages), built: lastTextDays(BUILT, shownText), records: recordsDay, first: Object.fromEntries(JSON.parse(real[CH]).map((c) => [c.title, firstDay(CH, titleKey(c))])) };
   const section = (txt, head) => { const i = txt.indexOf('\n## ' + head + '\n'); if (i < 0) return ''; const j = txt.indexOf('\n## ', i + 5); return txt.slice(i, j < 0 ? undefined : j); };
   const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
   const dateProblems = (x, h) => {
     const bad = [];
     if (h.shallow) bad.push('the history is shallow or git cannot be read, so the dates cannot be compared');
     for (const f of pages) { const m = UPD.exec(x[f] || ''); const d = m && (m[1] || m[2]); if (!d || d < h.last[f]) bad.push(f + ': last updated ' + d + ', changed ' + h.last[f]); }
+    if (!TOP.every((f) => BUILT.includes(f))) bad.push('a top page shows no date');
+    for (const f of BUILT) {
+      const m = SHOWN.exec(x[f] || ''), d = m && (m[1] || m[2]), c = h.built[f];
+      if (!d || d < c) bad.push(f + ': shows ' + d + ', its text changed ' + c);
+      else if (TOP.includes(f) && (d !== c || d < h.records)) bad.push(f + ': shows ' + d + ', but its text last changed ' + c + ' and the records ' + h.records + ' (site.json "topUpdated")');
+    }
     let changes = [];
     try { changes = JSON.parse(x[CH]); } catch (e) { bad.push('the feed cannot be read'); }
     for (const c of changes) {
@@ -5703,8 +5727,10 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
     return bad;
   };
   const bad = dateProblems(real, facts);
-  ok('the "Last updated" of the ' + pages.length + ' pages is not earlier than the last commit that changed the text of each, no entry of the feed of policy changes is dated earlier than the first commit that held it or gives a day of effect earlier than itself, the notice does not, the Terms say the dates are Japan time, the checks fetch the whole history, and the record is complete (dates in Japan time)',
+  ok('the "Last updated" of the ' + pages.length + ' pages is not earlier than the last commit that changed the text of each, the date on the ' + BUILT.length + ' built pages that show one is not earlier than the last commit that changed the text they show, and on the two top pages is that day and not before the records, no entry of the feed of policy changes is dated earlier than the first commit that held it or gives a day of effect earlier than itself, the notice does not, the Terms say the dates are Japan time, the checks fetch the whole history, and the record is complete (dates in Japan time)',
     bad.length === 0, bad.join(' / '));
+  const SINCE = '2026-10-30';
+  const nextDay = (d) => new Date(Date.parse(d + 'T00:00:00Z') + 86400000).toISOString().slice(0, 10);
   const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
   const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
   const breaks = [
@@ -5725,12 +5751,19 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
     ['a page changed today without a new date', real, Object.assign({}, facts, { last: Object.assign({}, facts.last, { 'policies/licences.md': '2026-12-01' }) })],
     ['the check without the whole history', mut('.github/workflows/check.yml', '          fetch-depth: 0\n', ''), facts],
     ['the PDF workflow without the whole history', mut('.github/workflows/pdf.yml', '          fetch-depth: 0\n', ''), facts],
+    ['the English top page dated back to the day of the records', mut('site/index.html', SHOWN.exec(real['site/index.html'])[0], 'Last updated: <time datetime="' + SINCE + '">' + SINCE + '</time>.'), facts],
+    ['the Japanese top page dated after its last change', mut('site/index.ja.html', SHOWN.exec(real['site/index.ja.html'])[0], '最終更新：<time datetime="' + nextDay(SHOWN.exec(real['site/index.ja.html'])[1]) + '">' + nextDay(SHOWN.exec(real['site/index.ja.html'])[1]) + '</time>。'), facts],
+    ['a notice on the top page changed without a new date', real, Object.assign({}, facts, { built: Object.assign({}, facts.built, { 'site/index.html': '2099-01-01' }) })],
+    ['the Japanese top page changed without a new date', real, Object.assign({}, facts, { built: Object.assign({}, facts.built, { 'site/index.ja.html': '2099-01-01' }) })],
+    ['the table of facts in press.ja.html changed without a new date', real, Object.assign({}, facts, { built: Object.assign({}, facts.built, { 'site/press.ja.html': '2099-01-01' }) })],
+    ['a record changed after the date of the top page', real, Object.assign({}, facts, { records: '2099-01-01' })],
+    ['the date taken off the top page', mut('site/index.html', SHOWN.exec(real['site/index.html'])[0], ''), facts],
     ['the record\'s count', mut(AUD, 'この表の判定は、誤り 5、根拠不足 1、漏れ 2、表現 2、問題なし 2 です。', 'この表の判定は、誤り 4、根拠不足 1、漏れ 2、表現 2、問題なし 2 です。'), facts],
     ['a decision without its reason', mut(AUD, '作業の時計の日付ではないためです |', '作業の時計の日付ではありません |'), facts],
     ['the record without the sentence on lawyers', mut(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-12 の続き：七度目の見落とし', '\n\n## 2026-11-12 の続き：七度目の見落とし'), facts],
   ];
   const caught = breaks.filter(([, x, h]) => dateProblems(x, h).length > 0).map(([k]) => k);
-  ok('break on purpose: a page or its translation dated back, an entry dated back, a day of effect before its entry, a "from" on its day, a new entry dated before today, the notice from midnight, the Terms in both languages, a shallow history, a page changed today, either workflow without the whole history, and the record\'s count, reason and lawyers all fail (' + caught.length + ' / ' + breaks.length + ')',
+  ok('break on purpose: a page or its translation dated back, either top page dated back, dated after its change, changed without a new date, or without a date, a built table changed without a new date, a record after the top page\'s date, an entry dated back, a day of effect before its entry, a "from" on its day, a new entry dated before today, the notice from midnight, the Terms in both languages, a shallow history, a page changed today, either workflow without the whole history, and the record\'s count, reason and lawyers all fail (' + caught.length + ' / ' + breaks.length + ')',
     caught.length === breaks.length, breaks.filter(([k]) => !caught.includes(k)).map(([k]) => k).join(' / '));
 }
 
@@ -6483,10 +6516,85 @@ console.log('\n129. GitHub\'s notifications: the Takedown and Privacy Policies s
     ['a quotation altered', w(AUD, 'that you create and are owned by your personal account.」', 'that you create.」')],
     ['the setting said to be checked', w(AUD, '運営者のアカウントの通知の設定は、確かめていません。', '運営者のアカウントは、通知を受け取りません。')],
     ['the count changed', w(AUD, 'この表の判定は、漏れ 4、問題なし 2 です。', 'この表の判定は、漏れ 3、問題なし 2 です。')],
-    ['the sentence on lawyers taken out', w(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
+    ['the sentence on lawyers taken out', w(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-13：十七度目の見落とし', '\n\n## 2026-11-13：十七度目の見落とし')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each policy (both languages), a built page, llms-full.txt, another page saying no other copy is made, the feed, the section, a hash, a quotation, the unchecked setting, the count, the lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+console.log('\n130. The top pages show the later of the day the records last changed and the day their own text last changed, and every day of effect in the notice is at least 14 days after the commit on main that first held it (2026-11-13)');
+{
+  /* A seventeenth read-only pass found that both top pages showed 2026-11-07, the day the records last changed, while the notices on
+   * them changed every day from 2026-11-08 to 2026-11-13 (Japan time). The day the rest of each top page last changed is kept in
+   * site.json ("topUpdated"), so that a build reads no git history; check 121 compares it with the history of the built pages.
+   * The notice periods were counted from the time each change reached main, never from the date a page showed: here each day of
+   * effect in the notice ("From YYYY-MM-DD") is counted from the first commit on the first-parent line of main that held it in
+   * site.json, in Japan time. A day not yet in any commit counts from today. A shallow history cannot be counted, and fails. */
+  const { execFileSync } = require('child_process');
+  const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'Asia/Tokyo' }), stdio: ['ignore', 'pipe', 'ignore'] });
+  const lines = (args) => { try { return git(args).split('\n').filter(Boolean); } catch (e) { return []; } };
+  const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  let shallow = true;
+  try { shallow = git(['rev-parse', '--is-shallow-repository']).trim() !== 'false'; } catch (e) { shallow = true; }
+  const AUD = 'docs/legal-audit-2026-11-12.md', HEAD = '\n## 2026-11-13：十七度目の見落とし\n';
+  const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const real = {};
+  for (const f of [AUD, 'site.json', 'build.js']) real[f] = read(path.join(ROOT, f));
+  const effectDays = (site) => [...new Set([...String((site.termsNotice || {}).text || '').matchAll(/\bFrom (\d{4}-\d{2}-\d{2})\b/g)].map((m) => m[1]))].sort();
+  const dayNo = (d) => Date.parse(d + 'T00:00:00Z') / 86400000;
+  const SHOWN = /(?:Last updated: |最終更新：)(?:<time datetime="(\d{4}-\d{2}-\d{2})">\1<\/time>|(\d{4}-\d{2}-\d{2}))[.。]/;
+  const walk = (d) => fs.readdirSync(path.join(ROOT, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(d + '/' + e.name) : e.name.endsWith('.html') ? [d + '/' + e.name] : []));
+  const dated = walk('site').filter((f) => SHOWN.test(read(path.join(ROOT, f))));
+  const facts = { shallow, others: dated.filter((f) => !['site/index.html', 'site/index.ja.html'].includes(f)).length,
+    first: Object.fromEntries(effectDays(JSON.parse(real['site.json'])).map((d) => [d, lines(['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', 'From ' + d, '--', 'site.json'])[0] || today])) };
+  function problems(c, h) {
+    const bad = [];
+    if (h.shallow) bad.push('the history is shallow or git cannot be read');
+    let site = {};
+    try { site = JSON.parse(c['site.json']); } catch (e) { bad.push('site.json does not parse'); }
+    for (const l of ['en', 'ja']) if (!/^\d{4}-\d{2}-\d{2}$/.test((site.topUpdated || {})[l] || '')) bad.push('site.json: no topUpdated.' + l);
+    for (const d of effectDays(site)) { const f = h.first[d] || today; if (dayNo(d) - dayNo(f) < 14) bad.push('the notice gives ' + d + ', first held on main on ' + f + ', less than 14 days before'); }
+    if (!c['build.js'].includes("const last = lastUpdated(all, topUpdated('en'));") || !c['build.js'].includes("const last = lastUpdated(all, topUpdated('ja'));")) bad.push('build.js: a top page without its own day');
+    const a = c[AUD] || '', i = a.indexOf(HEAD), j = i < 0 ? -1 : a.indexOf('\n## ', i + HEAD.length);
+    const sec = i < 0 ? '' : a.slice(i, j < 0 ? undefined : j).split('\n### 下げられずに残る危険\n').join('\n');
+    const whole = i < 0 ? '' : a.slice(i, a.indexOf('\n## この記録について\n') > i ? a.indexOf('\n## この記録について\n') : undefined);
+    if (!sec || a.indexOf('\n## この記録について\n') < i) return bad.concat(['no seventeenth section before the end of the record']);
+    const t0 = whole.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
+    const rows = t0 < 0 ? [] : whole.slice(t0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rows.length < 6 || !rows.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the shape of the table');
+    const m = /この表の判定は、([^。]+)です。/.exec(whole);
+    const said = m ? Object.fromEntries(m[1].split('、').map((x) => { const [k, n] = x.trim().split(' '); return [k, Number(n)]; })) : {};
+    if (!m || !KINDS.every((k) => (said[k] || 0) === rows.filter((y) => y[4] === k).length)) bad.push('the count of findings');
+    for (const r of rows.filter((y) => y[4] !== '問題なし')) if (!/^2026-11-13 に Claude が決めました。[^|]*ためです$/.test(r[5] || '')) bad.push('a decision without its maker or reason: ' + r[0].slice(0, 30));
+    for (const s of ['「Last updated: 2026-11-07.」を示していました。', '「最終更新：2026-11-07。」を示していました。', 'これまでの記録は、告知の期間を、main に入った時から数えていました。', '頁が示した最終更新の日付からは数えていません', 'どの変更も、main に入った日から効力の日まで 14 日あります。'])
+      if (!whole.includes(s)) bad.push('the record lacks ' + s.slice(0, 30));
+    const n = /(\d+) の頁を、`<main>` の文で履歴と照らしました。/.exec(whole), n2 = /ほかの組み上がった頁の最終更新（(\d+) 頁）/.exec(whole);
+    if (!n || !n2 || Number(n[1]) !== h.others || Number(n2[1]) !== h.others) bad.push('the number of the other built pages (' + h.others + ')');
+    if (!whole.includes('この節も、弁護士の確認は受けていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(whole)) bad.push('the sentence on lawyers');
+    return bad;
+  }
+  const now = problems(real, facts);
+  ok('both top pages take their own day from site.json ("topUpdated"), each of the ' + Object.keys(facts.first).length + ' days of effect in the notice is at least 14 days after the commit on main that first held it, and the record has its seventeenth section, with the ' + facts.others + ' other built pages counted',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (f, x, y) => Object.assign({}, real, { [f]: real[f].replace(x, y) });
+  const firstDay = Object.keys(facts.first)[0] || '2026-11-22';
+  const before = (d, k) => new Date((dayNo(d) - k) * 86400000).toISOString().slice(0, 10);
+  const withSite = (fn) => { const x = JSON.parse(real['site.json']); fn(x); return Object.assign({}, real, { 'site.json': JSON.stringify(x) }); };
+  const breaks = [
+    ['a day of effect 13 days after it was first held', real, Object.assign({}, facts, { first: Object.assign({}, facts.first, { [firstDay]: before(firstDay, 13) }) })],
+    ['a new day of effect only 5 days ahead', withSite((x) => { x.termsNotice.text += ' From ' + before(today, -5) + ', a trial change.'; }), facts],
+    ['site.json without the Japanese day', withSite((x) => { delete x.topUpdated.ja; }), facts],
+    ['the Japanese top page back on the records alone', w('build.js', "const last = lastUpdated(all, topUpdated('ja'));", 'const last = lastUpdated(all);'), facts],
+    ['a shallow history', real, Object.assign({}, facts, { shallow: true })],
+    ['the section taken out', w(AUD, HEAD, '\n## 2026-11-13：日付\n'), facts],
+    ['the count changed', w(AUD, 'この表の判定は、誤り 2、漏れ 1、問題なし 3 です。', 'この表の判定は、誤り 1、漏れ 1、問題なし 3 です。'), facts],
+    ['a decision without its reason', w(AUD, '頁ごとに、その頁の文が最後に変わった日を示すためです |', '頁ごとに日を示します |'), facts],
+    ['the way the periods were counted taken out', w(AUD, 'これまでの記録は、告知の期間を、main に入った時から数えていました。', ''), facts],
+    ['the number of the other pages wrong', w(AUD, (/(\d+) の頁を、`<main>` の文で履歴と照らしました。/.exec(real[AUD]) || [''])[0], (facts.others + 1) + ' の頁を、`<main>` の文で履歴と照らしました。'), facts],
+    ['the sentence on lawyers taken out', w(AUD, '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について'), facts],
+  ];
+  const missed = breaks.filter(([, b, h]) => problems(b, h).length === 0).map(([k]) => k);
+  ok('break on purpose: a day of effect 13 days after it was first held, a new day 5 days ahead, site.json without a day, a top page on the records alone, a shallow history, the section, the count, a reason, the way the periods were counted, the number of pages, the lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));

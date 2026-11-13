@@ -1134,10 +1134,15 @@ function scopeNotice(text = SITE.scopeNotice, L = SITE.notOffered || []) {
 }
 
 /* The day the records last changed: a record added, a new version, a note, an update, a withdrawal or a removal.
- * The ISSN Japan Centre asks a database to show its last update and how often it is updated. */
-function lastUpdated(all) {
-  return all.map((p) => (p.status === 'removed' ? p.removal_date : [changed(p), p.listed, p.updated].filter(Boolean).sort().pop())).filter(Boolean).sort().pop() || SITE.since;
+ * The ISSN Japan Centre asks a database to show its last update and how often it is updated.
+ * With `text`, the later of that day and the day the rest of the page last changed: the top pages show the notices and
+ * other text from site.json, and the Terms say that the date on each page shows its last change. That day is kept in
+ * site.json ("topUpdated", one per language, Japan time), so that a build needs no git history and gives the same page
+ * in any clone; verification/check.js (121) compares it with the history of the built page and fails when they differ. */
+function lastUpdated(all, text) {
+  return all.map((p) => (p.status === 'removed' ? p.removal_date : [changed(p), p.listed, p.updated].filter(Boolean).sort().pop())).concat([text]).filter(Boolean).sort().pop() || SITE.since;
 }
+const topUpdated = (lang) => (SITE.topUpdated || {})[lang];
 
 /* An ISSN is valid when its check digit (ISO 3297, modulus 11) matches. */
 function issnOk(s) {
@@ -1201,7 +1206,7 @@ function operatingCounts(all, reports = loadReports(), ja = false) {
 }
 
 function indexPage(papers, all = papers) {
-  const last = lastUpdated(all);
+  const last = lastUpdated(all, topUpdated('en'));
   const body = `
 <h1>${esc(SITE.tagline)}</h1>
 ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
@@ -1620,7 +1625,7 @@ function rootJaPage(slug) {
 /* The top page in Japanese. The lists and the statistics stay in English; each record has a Japanese page, linked from the
  * listing here. The titles and abstracts are those of the DOI metadata, in the authors' language. */
 function indexJaPage(papers, all = papers) {
-  const last = lastUpdated(all);
+  const last = lastUpdated(all, topUpdated('ja'));
   const L = SITE.notOffered || [];
   const jaLinks = Object.keys(JA_POLICIES).map((slug) => `<li><a href="./policies/${slug}.ja.html">${esc(jaTitle(slug))}</a></li>`)
     .concat(['<li><a href="./disclaimer.ja.html">免責事項</a></li>'], JA_PAGES.filter(hasRootJa).map((slug) => `<li><a href="./${slug}.ja.html">${esc(rootJaTitle(slug))}</a></li>`)).join('');
@@ -1811,7 +1816,7 @@ function sitemap(papers) {
   const newest = [SITE.since].concat(papers.map(changed)).sort().pop();
   const policyDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(policySource(slug)) || [, newest])[1];
   const latestPolicy = POLICIES.map(([slug]) => policyDate(slug)).sort().pop();
-  const urls = [['', newest], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest],
+  const urls = [['', [newest, topUpdated('en')].filter(Boolean).sort().pop()], ['submit.html', latestPolicy], ['policy.html', latestPolicy], ['search.html', newest],
     ['contact.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(contactSource()) || [, newest])[1]],
     ['faq.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(faqSource()) || [, newest])[1]],
     ['process.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(processSource()) || [, newest])[1]],
@@ -1825,7 +1830,7 @@ function sitemap(papers) {
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
-    .concat([['index.ja.html', newest]], JA_PAGES.filter(hasRootJa).map((slug) => [slug + '.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(rootJaSource(slug)) || [, newest])[1]]))
+    .concat([['index.ja.html', [newest, topUpdated('ja')].filter(Boolean).sort().pop()]], JA_PAGES.filter(hasRootJa).map((slug) => [slug + '.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(rootJaSource(slug)) || [, newest])[1]]))
     .concat([['collections.html', newest]], (SITE.collections || []).map((c) => ['collection/' + c.slug + '.html', newest]))
     .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map(changed).sort().pop()]))
     .concat(papers.flatMap((p) => [['abs/' + p.id + '.html', changed(p)], ['abs/' + p.id + '.ja.html', changed(p)]]))
@@ -1921,6 +1926,7 @@ function build(out, paperDir) {
   (SITE.directoryEntries || []).forEach((x, i) => {
     if (!x || !x.name || !x.page || !/^https:\/\//.test(x.url || '') || !Array.isArray(x.sections) || !x.sections.length || !DATE.test(x.since || '') || !DATE.test(x.asOf || '') || x.asOf < x.since) problems.push('site.json: directoryEntries[' + i + '] needs a name, a page, an https url, sections, a since date and an asOf date not before it (YYYY-MM-DD)');
   });
+  for (const l of ['en', 'ja']) if (!DATE.test(topUpdated(l) || '')) problems.push('site.json: topUpdated needs "' + l + '", the day the text of that top page last changed (YYYY-MM-DD, Japan time)');
   if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
   for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));
   problems.push(...newsProblems(loadNews()));
@@ -2027,7 +2033,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
