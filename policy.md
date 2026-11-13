@@ -1,6 +1,6 @@
 # Policies
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-13.
 
 Japanese: [規程（日本語訳）](./policy.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -60,6 +60,7 @@ Abstracts in both keep the licence of their work.
 
 These pages describe how Sophaxis works and what it promises.
 They are not legal advice.
+The [Statement of Purpose](./mission.md) says why Sophaxis is run. It is not a policy, and it creates no rights or obligations; where it and a policy differ, the policy applies.
 Each policy is put in a few sentences on [The policies in brief](./rules.md); the policies themselves govern.
 Each page shows the date of its last change, and every earlier version is kept in the public repository.
 The changes to the policies alone are also given, newest first, in an Atom feed of their own, apart from the news: [policies/changes.xml](https://sophaxis.vercel.app/policies/changes.xml).
