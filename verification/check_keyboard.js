@@ -187,6 +187,43 @@ async function walk(pg) {
       await c4.close();
     }
   }
+  /* The entrance of the two top pages (2026-11-15): on a phone 390 px wide, the first screen (844 px high) holds the name, the
+   * sentence on what Sophaxis is and the row of three emblems with their captions, and nothing scrolls sideways. The same
+   * measure is then broken on purpose: the row pushed below the screen, and a line too wide, must each fail. */
+  {
+    const FIRST = { width: 390, height: 844 };
+    const measure = () => {
+      const H = window.innerHeight, W = document.documentElement.clientWidth;
+      const box = (el) => { if (!el) return null; const r = el.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, left: r.left, right: r.right, w: r.width, h: r.height }; };
+      const h1 = document.querySelector('main .entrance h1'), st = document.querySelector('main .entrance .statement');
+      const figs = [...document.querySelectorAll('main .entrance .emblems figure')];
+      const all = [h1, st].concat(figs).map(box);
+      return { figures: figs.length, over: document.documentElement.scrollWidth - W, inside: all.every((b) => b && b.top >= 0 && b.bottom <= H && b.left >= 0 && b.right <= W && b.w > 0 && b.h > 0),
+        drawn: figs.every((f) => { const s = f.querySelector('svg'); return s && s.getBoundingClientRect().width >= 80; }), name: h1 ? h1.textContent : '' };
+    };
+    const firstScreen = async (page, style) => {
+      const c5 = await browser.newContext({ viewport: FIRST, bypassCSP: !!style });
+      const p5 = await c5.newPage();
+      await p5.goto(base + page, { waitUntil: 'load' });
+      if (style) await p5.addStyleTag({ content: style });
+      const m = await p5.evaluate(measure);
+      await c5.close();
+      const bad = [];
+      if (m.name !== 'Sophaxis' || m.figures !== 3 || !m.inside) bad.push('the name, the sentence and the three emblems are not all on the first screen');
+      if (!m.drawn) bad.push('an emblem drawn smaller than 80 px');
+      if (m.over > 1) bad.push(m.over + ' px too wide');
+      return bad;
+    };
+    for (const page of ['index.html', 'index.ja.html']) {
+      const bad = await firstScreen(page);
+      ok(page + ': at ' + FIRST.width + ' × ' + FIRST.height + ' px, the first screen holds the name, the sentence and the three emblems with their captions, and does not scroll sideways', bad.length === 0, bad.join(' / '));
+      const missed = [];
+      if (!(await firstScreen(page, '.entrance .statement { margin-bottom: 40rem !important; }')).length) missed.push('the emblems pushed below the screen');
+      if (!(await firstScreen(page, '.entrance h1 { width: 30rem !important; }')).length) missed.push('a line too wide');
+      if (!(await firstScreen(page, '.emblems { grid-template-columns: repeat(3, 3rem) !important; }')).length) missed.push('the emblems drawn too small');
+      ok(page + ': break on purpose: the emblems pushed below the screen, a line too wide, the emblems too small (' + (3 - missed.length) + ' / 3)', missed.length === 0, missed.join(' / '));
+    }
+  }
   /* The leaflet says that it fits one sheet: print it to A4 and count the pages. */
   {
     const c3 = await browser.newContext();
