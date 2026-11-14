@@ -549,6 +549,10 @@ function authorOf(meta, doi0, orcid, person, works, byIdOnly = false) {
 /* From this day, a work with more than one author is listed only after every other author confirms their own agreement. */
 const COAUTHORS_FROM = '2026-11-21';
 const AGREE = 'I agree to the listing of this work on Sophaxis.';
+/* From SITE.checkedFrom (2026-12-01), the fixed words carry the consent to the review by the three language models, after the
+ * information that Article 28(2) of Japan's APPI asks, which the Privacy Policy gives under "Services outside Japan" (the owner
+ * decided this on 2026-11-15). Only these words count from then; the old words alone no longer do. */
+const AGREE_CHECKED = 'I agree to the listing of this work on Sophaxis, and I consent to the public parts of this submission, what I write in its issue among them, being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Services outside Japan".';
 const BY_EMAIL = 'Confirmed by email through the ORCID record:';
 const COAUTHOR_LABEL = 'Every other author has confirmed their own agreement';
 const squash = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -564,7 +568,7 @@ function confirmationsIn(comments, owner, checked = false) {
     if (!orcid) continue;
     /* From SITE.checkedFrom, the operator's record of an email is not a check that the intake can make, and does not count. */
     const byOperator = !checked && !!owner && c.user.login.toLowerCase() === owner.toLowerCase() && body.includes(squash(BY_EMAIL));
-    if (byOperator || body.includes(squash(AGREE))) out.push({ login: c.user.login, orcid, byOperator });
+    if (byOperator || (checked ? [AGREE_CHECKED] : [AGREE, AGREE_CHECKED]).some((w) => body.includes(squash(w)))) out.push({ login: c.user.login, orcid, byOperator });
   }
   return out;
 }
@@ -632,9 +636,10 @@ Identity and licence are verified for the account that opened this issue. The ot
 Each of them comments in this issue, from a GitHub account that their ORCID record links, with these words and their own ORCID iD, which the DOI metadata must list for them:
 
 ~~~~
-${AGREE} ORCID: 0000-0000-0000-0000
+${AGREE_CHECKED} ORCID: 0000-0000-0000-0000
 ~~~~
 
+Before writing them, read what Article 28(2) of Japan's Act on the Protection of Personal Information asks to be given: the country (the United States), the information on its system, and what each recipient says of its measures, in the [Privacy Policy](${SITE.baseUrl}policies/privacy.html#services-outside-japan).
 An author for whom the DOI metadata gives no ORCID iD cannot confirm yet: the work waits until the metadata at the repository names one. The check then reads that author's public records under the place rule, as it reads the submitter's.
 If every check has not passed ${SITE.checkedDays} days after this issue was opened, the submission is not accepted (the issue is not closed), and a new one can be opened later.
 The agreement also covers the provision of the author's personal data that the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out, including to services in the United States.
@@ -1140,6 +1145,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

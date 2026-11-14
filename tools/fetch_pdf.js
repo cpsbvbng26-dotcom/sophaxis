@@ -8,9 +8,9 @@
  * and adds { version, file, sha256, source } to the record's "pdfs". Versions that already
  * have a copy are left alone.
  *
- * Only repositories whose own pages let a script fetch the file are used: Zenodo, whose developer documentation lists
- * "Files — download/upload of files." among what its REST API supports, and arXiv, whose page on bulk data access asks
- * scripts to use export.arxiv.org, "specifically set aside for programmatic access". Figshare and Research Square were used
+ * Only a repository whose own pages let a script fetch the file is used: Zenodo, whose developer documentation lists
+ * "Files — download/upload of files." among what its REST API supports. arXiv was read through export.arxiv.org until
+ * 2026-11-15, when the owner decided that nothing reads arXiv by script any more. Figshare and Research Square were used
  * until 2026-11-12; their terms, fetched that day, forbid robots and scripts (docs/legal-audit-2026-11-12.md), so from
  * 2026-11-13 they are not. Where the repository does not let a script fetch the file, the
  * authors can attach the deposited PDF to their submission issue; --from takes that attachment,
@@ -39,11 +39,8 @@ function sourceFor(doi, n) {
   if ((m = /^10\.5281\/zenodo\.(\d+)$/i.exec(doi))) {
     return { kind: 'zenodo', api: `https://zenodo.org/api/records/${m[1]}` };
   }
-  if ((m = /^10\.48550\/arxiv\.(\d{4}\.\d{4,5})$/i.exec(doi))) {
-    /* arXiv asks scripts to use export.arxiv.org, not the site that people read. */
-    return { kind: 'direct', url: `https://export.arxiv.org/pdf/${m[1]}v${n}` };
-  }
-  /* Figshare (10.6084/m9.figshare.…) and Research Square (10.21203/rs.3.rs-…): their terms forbid scripts; no copy. */
+  /* arXiv (10.48550/arXiv.…): nothing reads it by script from 2026-11-15; the authors attach the PDF. Figshare
+   * (10.6084/m9.figshare.…) and Research Square (10.21203/rs.3.rs-…): their terms forbid scripts; no copy. */
   return null;
 }
 
