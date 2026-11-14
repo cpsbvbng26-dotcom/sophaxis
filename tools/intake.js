@@ -21,11 +21,12 @@
  *   - the affiliations in the DOI metadata, for the same advice (a place where Sophaxis is not offered), shown as a count;
  *   - the name, the websites and the works of the public ORCID record given in the form;
  *   - from SITE.checkedFrom (the checked intake), for every person whose identity the check verifies, the countries of
- *     the public addresses and of the current employments and educations of their ORCID record, the organisations of
- *     those affiliations (for a researcher who vouches), and the location of their GitHub profile (tools/place.js).
+ *     the public addresses and of the current employments and educations of their ORCID record, and the organisations of
+ *     those affiliations (for a researcher who vouches) (tools/place.js). Since 2026-11-15, nothing from the GitHub profile.
  * Nothing from the ORCID record is written anywhere except the result of the checks: never a country or an organisation.
  *
- * The checks decide nothing. A moderator accepts or declines in the issue.
+ * The checks decide nothing. A moderator accepts or declines in the issue. Nothing here closes or locks an issue
+ * (2026-11-15): a claim that fails is turned away by a label and a fixed comment, and the issue stays open for a person.
  */
 'use strict';
 const { request } = require('./ua.js');
@@ -597,20 +598,31 @@ function placeCheck(placed) {
 }
 
 /* From SITE.checkedFrom, a submission that has not passed every check SITE.checkedDays days after its issue was opened
- * is closed by the daily run (intake.yml), with this fixed comment. */
+ * gets, from the daily run (intake.yml), the label NOT_LISTED and this fixed comment. The issue is not closed or locked
+ * (2026-11-15): it stays open for a person. Once labelled, the intake does not check it again. */
+const NOT_LISTED = 'not listed';
+const PERSON = 'needs a person';
 const DEADLINE_NOTE = MARK + `-deadline
-**The checked intake: the time to pass the checks has ended.** This submission did not pass every automatic check within ${SITE.checkedDays} days of the day its issue was opened, as the [Submission Policy](${SITE.baseUrl}policies/submission.html) sets out, so the issue is closed. Nothing is listed. A new issue can be opened once every check can pass.
-**突き合わせの受付：確かめの期限が過ぎました。** この投稿は、issue を開いた日から ${SITE.checkedDays} 日のうちに、自動の確かめのすべてを通りませんでした。投稿の規程のとおり、issue を閉じます。何も載せません。すべての確かめを通れるようになったら、新しい issue を開けます。
+**The checked intake: the time to pass the checks has ended.** This submission did not pass every automatic check within ${SITE.checkedDays} days of the day its issue was opened, as the [Submission Policy](${SITE.baseUrl}policies/submission.html) sets out, so it is not accepted, and nothing is listed. The issue is not closed; a person reads it. A new issue can be opened once every check can pass.
+**突き合わせの受付：確かめの期限が過ぎました。** この投稿は、issue を開いた日から ${SITE.checkedDays} 日のうちに、自動の確かめのすべてを通りませんでした。投稿の規程のとおり、この投稿は受け付けず、何も載せません。issue は閉じず、人が読みます。すべての確かめを通れるようになったら、新しい issue を開けます。
 `;
-/* Pure: whether the daily run closes an open issue: a submission, not verified, opened on or after SITE.checkedFrom,
- * at least SITE.checkedDays days ago (days in Japan time). A request (removal, withdrawal) is never closed. */
+/* Pure: whether the daily run labels an open issue NOT_LISTED: a submission, not verified, opened on or after
+ * SITE.checkedFrom, at least SITE.checkedDays days ago (days in Japan time), not labelled already, and not labelled as
+ * needing a person. A request (removal, withdrawal) is never labelled. */
 function pastDeadline(issue, today) {
   const names = (issue.labels || []).map((l) => (typeof l === 'string' ? l : l.name));
   if (issue.pull_request || issue.state !== 'open' || !names.includes('submission') || names.includes('verified')) return false;
-  if (names.some((n) => ['removal', 'withdrawal', 'published', 'correction'].includes(n))) return false;
+  if (names.some((n) => ['removal', 'withdrawal', 'published', 'correction', NOT_LISTED, PERSON].includes(n))) return false;
   const opened = jstDay(issue.created_at);
   if (!opened || opened < SITE.checkedFrom) return false;
   return Date.parse(today + 'T00:00:00Z') - Date.parse(opened + 'T00:00:00Z') >= SITE.checkedDays * 24 * 3600 * 1000;
+}
+/* Pure: whether the title, the text or any comment of a person (not a bot) reads as a request that the law requires the
+ * operator to receive or consider, by the words of the checked intake (.github/checked-intake/verify.js). Such an issue is
+ * left to a person: the daily run neither labels nor comments on it. The words are a signal only; nothing closes in any case. */
+function readsAsRequest(issue, comments) {
+  const { legalRequest } = require('../.github/checked-intake/verify.js');
+  return legalRequest(issue.title) || legalRequest(issue.body) || (comments || []).some((c) => c.user && c.user.type !== 'Bot' && legalRequest(c.body));
 }
 
 /* From SITE.checkedFrom: the note while other authors are awaited. No route by email: only a check counts. */
@@ -624,10 +636,10 @@ ${AGREE} ORCID: 0000-0000-0000-0000
 ~~~~
 
 An author for whom the DOI metadata gives no ORCID iD cannot confirm yet: the work waits until the metadata at the repository names one. The check then reads that author's public records under the place rule, as it reads the submitter's.
-If every check has not passed ${SITE.checkedDays} days after this issue was opened, the issue is closed, and a new one can be opened later.
+If every check has not passed ${SITE.checkedDays} days after this issue was opened, the submission is not accepted (the issue is not closed), and a new one can be opened later.
 The agreement also covers the provision of the author's personal data that the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out, including to services in the United States.
 Saving to the Internet Archive is a separate consent, given in the form above or not at all.
-Any author can withdraw a consent at any time, by the removal form or by email; this is never closed automatically.
+Any author can withdraw a consent at any time, by the removal form or by email; no automatic step closes an issue.
 Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
 `;
 }
@@ -688,13 +700,13 @@ function peerWorks(json) {
 }
 
 /* Pure: why a vouching comment does not count, or null when it does. */
-/* From SITE.checkedFrom (`checked`), also: a researcher whose vouching was found untrue cannot vouch (SITE.vouchBarred);
- * the place rule; and no current organisation shared with the submitter in ORCID (`placed`, `shares`). */
+/* From SITE.checkedFrom (`checked`), also: the place rule; and no current organisation shared with the submitter in ORCID
+ * (`placed`, `shares`). No list of researchers is kept: since 2026-11-15, a vouching found untrue is no longer relied on and
+ * the listing is reviewed after the researcher is heard, and no researcher is barred or named. */
 function vouchProblem({ e, person, peer, meta, submitter, checked = false, placed = null, shares = null }) {
   if (SITE.operator.github && e.login.toLowerCase() === SITE.operator.github.toLowerCase()) return 'the operator cannot vouch';
   if (e.orcid === SITE.operator.orcid) return 'the operator cannot vouch';
   if (submitter && e.orcid === submitter) return 'the submitter cannot vouch';
-  if (checked && (SITE.vouchBarred || []).includes(e.orcid)) return 'a vouching by this researcher was found untrue, and they can no longer vouch';
   if (!person) return 'the ORCID record could not be read';
   if (!linksGithub(person.urls, e.login)) return 'the ORCID record does not link this GitHub account';
   if (meta.authors.some((a) => (a.orcid && a.orcid === e.orcid) || sameName(person, a))) return 'an author of the work cannot vouch';
@@ -731,8 +743,8 @@ A researcher whose public ORCID record lists a journal article, a book chapter o
 ${VOUCH_CHECKED} ORCID: 0000-0000-0000-0000
 ~~~~
 
-The authors of the work and the operator cannot vouch. Vouching states facts that the researcher knows; it is not a guarantee, and Sophaxis claims no money from the researcher. If it proves untrue, the researcher can no longer vouch, the vouching is recorded as untrue in the history of the record, and the listing is reviewed. It is not a review, and the moderator still decides.
-The check reads the researcher's public ORCID record (the name, the websites, the works, and the countries and organisations of the place rule and of the conflict check) and the location of their GitHub profile, keeps and writes none of the countries or organisations, and compares the current organisations with the submitter's. The GitHub username, ORCID iD and comment of the researcher are public, as the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out.
+The authors of the work and the operator cannot vouch. Vouching states facts that the researcher knows; it is not a guarantee, and Sophaxis claims no money from the researcher. If it turns out to be untrue, Sophaxis no longer relies on it and the listing is reviewed; before that is decided, the researcher is told and can answer. No researcher is named anywhere as having vouched untruly. It is not a review, and the moderator still decides.
+The check reads the researcher's public ORCID record (the name, the websites, the works, and the countries and organisations of the place rule and of the conflict check), keeps and writes none of the countries or organisations, and compares the current organisations with the submitter's. It reads nothing from their GitHub profile. The GitHub username, ORCID iD and comment of the researcher are public, as the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out.
 `;
 }
 
@@ -988,22 +1000,19 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
 }
 
 /* From SITE.checkedFrom: what the place rule and the conflict check read for one person, and nothing else: the address,
- * employments and educations sections of the public ORCID record, and the location of the GitHub profile. Nothing of it is
- * printed, kept or written. Null when a section cannot be read, so that the person is not placed. */
-async function placeRecords(orcid, login) {
-  try { return await readPlaceRecords(orcid, login); } catch { console.error('the place records could not be read'); return null; }
+ * employments and educations sections of the public ORCID record. Since 2026-11-15, nothing from the GitHub profile.
+ * Nothing of it is printed, kept or written. Null when a section cannot be read, so that the person is not placed. */
+async function placeRecords(orcid) {
+  try { return await readPlaceRecords(orcid); } catch { console.error('the place records could not be read'); return null; }
 }
-async function readPlaceRecords(orcid, login) {
+async function readPlaceRecords(orcid) {
   const at = (s) => getJson('https://pub.orcid.org/v3.0/' + orcid + '/' + s);
   const [address, employments, educations] = [await at('address'), await at('employments'), await at('educations')];
   if (!address || !employments || !educations) return null;
-  const r = await request('https://api.github.com/users/' + encodeURIComponent(login), { headers: { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + process.env.GITHUB_TOKEN } });
-  if (!r.ok) return null;
-  const location = (await r.json()).location || '';
-  return { address, employments, educations, location };
+  return { address, employments, educations };
 }
 /* Pure: whether the records place a person, on the day the issue was opened. */
-const placedBy = (rec, opened) => !!rec && P.placeOf({ signals: P.strongSignals(rec), location: rec.location, opened }).placed;
+const placedBy = (rec, opened) => !!rec && P.placeOf({ signals: P.strongSignals(rec), opened }).placed;
 
 /* The issue that started the run, from the event file that GitHub Actions writes for it (GITHUB_EVENT_PATH).
  * The same file serves an issue event and a comment on an issue. Nothing read here is printed. */
@@ -1024,22 +1033,27 @@ async function github(method, url, body) {
   return r.status === 204 || r.status === 404 ? null : r.json();
 }
 
+/* The daily run of the checked intake (--deadline). `gh` is the call on GitHub, passed in so that verification/check.js runs it
+ * on issues it makes. It reads the open submissions and their comments, and writes only a comment and a label: it never
+ * closes or locks an issue (2026-11-15). */
+async function deadlineRun(gh, today) {
+  for (let page = 1; page <= 10; page++) {
+    const list = (await gh('GET', '/issues?state=open&labels=submission&per_page=100&page=' + page)) || [];
+    for (const i of list.filter((x) => pastDeadline(x, today))) {
+      const comments = (await gh('GET', '/issues/' + i.number + '/comments?per_page=100')) || [];
+      if (readsAsRequest(i, comments)) { console.log('left for a person: #' + i.number); continue; }
+      await gh('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });
+      await gh('POST', '/issues/' + i.number + '/labels', { labels: [NOT_LISTED] });
+      console.log('not listed at the end of its time: #' + i.number);
+    }
+    if (list.length < 100) break;
+  }
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const arg = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : ''; };
-  if (args.includes('--deadline')) {
-    const today = jstDay(new Date().toISOString());
-    for (let page = 1; page <= 10; page++) {
-      const list = (await github('GET', '/issues?state=open&labels=submission&per_page=100&page=' + page)) || [];
-      for (const i of list.filter((x) => pastDeadline(x, today))) {
-        await github('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });
-        await github('PATCH', '/issues/' + i.number, { state: 'closed', state_reason: 'not_planned' });
-        console.log('closed at the end of its time: #' + i.number);
-      }
-      if (list.length < 100) break;
-    }
-    return;
-  }
+  if (args.includes('--deadline')) return deadlineRun(github, jstDay(new Date().toISOString()));
   if (args.includes('--dry-run')) {
     const form = { doi: arg('--doi'), orcid: arg('--orcid'), category: arg('--category') || 'mathematics', llm: 'Dry run: no statement is given here.' };
     const { result, meta, versions } = await run(form, arg('--login'), arg('--opened') || undefined);
@@ -1052,6 +1066,8 @@ async function main() {
   const form = parseIssue(text);
   /* The age of the DOI is counted on the day the issue was opened, not the day it was last edited. */
   const issue = await github('GET', '/issues/' + n);
+  /* A submission whose time has ended (NOT_LISTED) is not checked again; a person reads it. */
+  if (((issue && issue.labels) || []).some((l) => (typeof l === 'string' ? l : l.name) === NOT_LISTED)) { console.log('past its time: not checked again'); return; }
   const opened = jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString());
   const { result, meta, raw, versions, pub } = await run(form, login, opened);
   const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
@@ -1077,7 +1093,7 @@ async function main() {
     const placed = [];
     for (const v of people) {
       let rec = null;
-      rec = await placeRecords(v.orcid, v.login);
+      rec = await placeRecords(v.orcid);
       if (v === people[0]) submitterRecords = rec;
       placed.push(placedBy(rec, opened));
     }
@@ -1097,7 +1113,7 @@ async function main() {
           person = p && orcidPerson(p);
           peer = w ? peerWorks(w) : new Set();
           if (checked) {
-            const rec = await placeRecords(e.orcid, e.login);
+            const rec = await placeRecords(e.orcid);
             placed = placedBy(rec, opened);
             shares = rec && submitterRecords ? P.sharesOrganisation(rec, submitterRecords) : null;
           }
@@ -1124,6 +1140,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

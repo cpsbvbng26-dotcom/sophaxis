@@ -1,6 +1,6 @@
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-14。
+最終更新：2026-11-15。
 
 これは英語の [What runs by itself](./automation.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -28,15 +28,15 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
 - 2026-11-23 から、載っている作品の著者にまだなっていない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
 - 2026-11-14 から、何も決めない助言もモデレーターに示します（[tools/pdf_advice.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/pdf_advice.js)）。PDF の最初の頁に印刷されたライセンスが DOI のメタデータと合うか。最初の頁より後に、著者自身のものを除いて、メールアドレス・電話番号・郵便番号の形をした文字列がいくつあるか。PDF が埋め込む画像がいくつあるか。ファイルが預け先のチェックサムと合うか。DOI のメタデータの所属、または最初の頁の行のうち、Sophaxis を提供しない国と地域を挙げるものがいくつあるか。コメントと実行の記録が示すのは、数と決まった語だけで、見つけたものそのものは示しません。
-- 2026-12-01 から、その日以後に開かれた issue には、突き合わせの受付を当てます。ORCID iD を著者に結ぶのは DOI のメタデータだけです。ほかの著者は DOI のメタデータに ORCID iD を持たなければならず、メールでの確かめは数えません。本人確認を通ったどの著者と紹介する研究者についても、投稿の規程の場所の決まりのもとで、ORCID の記録の「住所」・「勤め先」・「在学先」の部分と GitHub のプロフィールの所在の欄を読み、通った人の数だけを書きます。紹介する研究者のいまの組織を、投稿者のものと比べます。紹介の新しい言葉を読みます。国も組織も、保存せず、書きません。
+- 2026-12-01 から、その日以後に開かれた issue には、突き合わせの受付を当てます。ORCID iD を著者に結ぶのは DOI のメタデータだけです。ほかの著者は DOI のメタデータに ORCID iD を持たなければならず、メールでの確かめは数えません。本人確認を通ったどの著者と紹介する研究者についても、投稿の規程の場所の決まりのもとで、ORCID の記録の「住所」・「勤め先」・「在学先」の部分の国の符号を読み（2026-11-15 から、GitHub のプロフィールからは何も読みません）、通った人の数だけを書きます。紹介する研究者のいまの組織を、投稿者のものと比べます。紹介の新しい言葉を読みます。国も組織も、保存せず、書きません。
 - 運営者に残すこと：投稿を受理するか、断るか。
 - コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js)。[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
 
 ## 記録の誤りの知らせが開かれたか編集されたとき（2026-12-01 から）
 
 - 読むもの：様式に書かれた Sophaxis の番号と引いた語、リポジトリにある記録の頁（`site/abs/<id>.html`）。
-- 書くもの：英語と日本語の決まった文のコメントと、`quote verified` のラベル。引いた語が記録の頁にないときは、`not verified` のラベルを付け、issue を「計画しない」として閉じます。知らせに書かれたことを繰り返しません。
-- 削除・権利・個人情報・氏名・同意の撤回についての求めと読める issue は閉じず、`needs a person` のラベルを付けて開いたままにします。投稿・削除・撤回・出版版の issue には何もしません。
+- 書くもの：英語と日本語の決まった文のコメントと、`quote verified` のラベル。引いた語が記録の頁にないときは、`not verified` のラベルを付けます。知らせに書かれたことを繰り返しません。
+- どの issue も閉じず、鍵も掛けません（2026-11-15）。削除・権利・個人情報・氏名・同意の撤回についての求めと読める issue には、`needs a person` のラベルも付けます。投稿・削除・撤回・出版版の issue と、リポジトリの持ち主が送った出来事には何もしません。
 - 運営者に残すこと：記録が誤っているかどうかと、その訂正。
 - コード：[.github/checked-intake/verify.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/checked-intake/verify.js)。[checked-intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/checked-intake.yml) が動かします。
 
@@ -75,7 +75,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：開いている削除の求めと、確かめられた撤回。
 - 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる 2 日前から書きます。
-- 2026-12-01 から、issue を開いてから 30 日たっても確かめられていない投稿を、[投稿の規程](./policies/submission.ja.md#突き合わせの受付)のとおり、決まった文のコメントを付けて閉じます。削除・撤回・出版版・訂正の issue は閉じません。コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js) に `--deadline` を付けて、[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
+- 2026-12-01 から、issue を開いてから 30 日たっても確かめられていない投稿に、[投稿の規程](./policies/submission.ja.md#突き合わせの受付)のとおり、`not listed` のラベルと決まった文のコメントを付け、人が読むよう開いたままにします。`needs a person` のラベルのある issue と、題・本文・人のコメントのどれかが求めと読める issue は飛ばします。どの issue も閉じず、鍵も掛けません。削除・撤回・出版版・訂正の issue には何もしません。コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js) に `--deadline` を付けて、[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
 ## 月に一度、1 日の日本時間 09:17

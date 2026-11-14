@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -77,14 +77,14 @@ From 2026-12-01, for the place rule of the checked intake, it also asks for the 
 It does not ask for the person section as a whole, so public email addresses are never received.
 From 2026-12-01, it receives the country of each public address, and the country and the name of the organisation of each current employment and education, and uses them only to decide whether each person is placed where Sophaxis is offered and, for a researcher who vouches, whether they share an organisation with the submitter.
 The check uses only the name, the websites and the works, and, from 2026-12-01, the countries and organisations that the place rule reads; it keeps or writes nothing else from the ORCID record, and it never keeps, writes or prints a country or an organisation.
-From 2026-12-01, it also reads the location field of the GitHub profile of each such person.
-It reads that field only to find there the name or code of a place where Sophaxis is not offered, and keeps or writes none of it.
+It reads only the country code of each such entry, never a nationality, and since 2026-11-15 nothing from the GitHub profile: the location field of the GitHub profile, which it was to read from 2026-12-01, is no longer read.
 The issue shows only how many people passed, never whose record or which entry.
 Since 2026-11-14, the check also reads the PDF that it fetches to read its shape, and the affiliations in the DOI metadata, to give the moderator advice. It counts strings shaped like email addresses, telephone numbers and postal codes, and the affiliations and lines that name a place where Sophaxis is not offered. It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading. The weekly check reads the PDF copies on the site in the same way. For this advice, it does not read the country of an ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
 From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
-From 2026-12-01, the place rule reads the same sections of the record of each co-author and researcher whose identity it verifies, and the location of their GitHub profile, in the same way.
+From 2026-12-01, the place rule reads the same sections of the record of each co-author and researcher whose identity it verifies, in the same way.
+Sophaxis keeps no list of researchers who vouched. If a vouching is said to be untrue, the researcher is told privately and heard, as the Submission Policy sets out, and this is not published.
 
 Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
 Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
@@ -204,8 +204,9 @@ The measures, under the headings that Japan's Personal Information Protection Co
 ## Automated processing
 
 The automatic checks compare public records and post the result in the issue. They make no decision about a person.
-From 2026-12-01, the checked intake closes a submission that has not passed every check 30 days after its issue was opened, and a report of an error in a record whose quoted words are not on the record page, each with a fixed comment; a new issue can be opened. Closing an issue decides only that the claim in it was not checked.
+From 2026-12-01, the checked intake labels a submission that has not passed every check 30 days after its issue was opened, and a report of an error in a record whose quoted words are not on the record page, each with a fixed comment; a new issue can be opened. The label decides only that the claim in it was not checked.
 The checked intake never closes a request about removal, withdrawal, rights or personal data, or the withdrawal of a consent.
+It never closes or locks any other issue either, and a person reads every one.
 No decision with legal or similarly significant effects on a person is made solely by automated means.
 The language models that help the review make no decision; every decision on a submission is taken by a person, as the Moderation Policy sets out.
 One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.
@@ -252,7 +253,7 @@ The operator gives those grounds in writing.
 
 From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
 It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.
-This depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
 Anyone can read the site, but Sophaxis does not direct itself to people there.
 The operator therefore considers that the General Data Protection Regulation and the UK GDPR do not reach Sophaxis under Article 3(2).
 The rights in this section are honoured all the same, as far as they apply.
@@ -282,7 +283,7 @@ A record of the processing is kept in the public repository, in `docs/records-of
 
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
 Article 53 of China's Personal Information Protection Law requires a processor abroad that offers products or services to people in China to set up an agency or designate a representative in China, and Sophaxis has none.
-This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
 The rights in "Your choices" are honoured all the same, as far as they apply.
 
 <!-- text: PIPL 53 -->
@@ -292,7 +293,7 @@ The rights in "Your choices" are honoured all the same, as far as they apply.
 From 2026-11-22, Sophaxis does not offer its service to people in Thailand either.
 Section 37(5) of Thailand's Personal Data Protection Act requires a controller abroad that offers goods or services to people in Thailand to designate in writing a representative in Thailand, and Sophaxis has none.
 Section 38 exempts a controller that engages in the profession or business of processing personal data without a large amount of it; Sophaxis is not a business, so the exemption is not relied on.
-This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
 The rights in "Your choices" are honoured all the same, as far as they apply.
 
 <!-- text: Thailand PDPA 37; Thailand PDPA 38 -->
@@ -306,7 +307,7 @@ From 2026-11-26, the list also covers places whose law asks for the operator's p
 Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
-This depends only on where a person lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
 The rights in "Your choices" are honoured all the same, as far as they apply.
 
 <!-- text: Russia 152-FZ 1; India DPDP Rules 10 -->

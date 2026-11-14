@@ -5,8 +5,17 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-14T00:00:00Z</updated>
+  <updated>2026-11-15T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c27</id>
+    <title>The checked intake closes no issue, reads nothing from GitHub, and names no researcher</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <updated>2026-11-15T00:00:00Z</updated>
+    <summary>Since its publication on 2026-11-15, the checked intake that takes effect on 2026-12-01 never closes or locks an issue: a claim that fails gets a label (not verified, or not listed at the end of 30 days) and a fixed comment, and a person reads every issue, because no list of words can tell every request that the law requires the operator to receive from a submission or a report of an error. The place rule reads only the country codes of the public addresses and of the current employments and educations in the ORCID record, never a nationality, and no longer the location field of the GitHub profile, whose free text matched places it did not mean. A vouching found untrue is no longer relied on and the listing is reviewed, after the researcher is told privately and heard; no researcher is barred from vouching or named, and Sophaxis keeps no list of them. The top page in Japanese lists each announced change with its day. These changes widen what authors and researchers can do and narrow nothing, so they take effect on publication. Policies: Submission Policy, Privacy Policy, Moderation Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c26</id>
     <title>The checked intake: claims are accepted only when public records check them</title>
