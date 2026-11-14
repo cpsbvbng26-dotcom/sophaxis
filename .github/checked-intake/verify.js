@@ -499,9 +499,9 @@ async function selfTest() {
   t('an issue opened before the day of "from" (Japan time) is not taken', specFor({ labels: ['erratum'], created_at: before }, conf) === null && specFor({ labels: ['erratum'] }, conf) === null);
   const limited = Object.assign({}, spec, { when: { field: ['Kind'], in: ['The title is wrong'] } });
   t('a form limited to some kinds takes only those, and leaves any other kind to a person', applies(limited, parseForm('### Kind\n\nThe title is wrong\n')) && !applies(limited, parseForm('### Kind\n\nSomething else\n')) && !applies(limited, parseForm('')) && applies(spec, parseForm('')));
-  const secret = 'SECRET-WORDS-OF-THE-CLAIMANT';
-  const r1 = q('ERRATA.md', secret + ' long enough');
-  t('a comment never repeats what was written', Object.keys(TEXTS).every((k) => !commentFor({ ok: false, reason: k }).includes(secret)) && !commentFor(r1).includes(secret) && commentFor(r1).startsWith(MARK));
+  const planted = 'PLANTED-WORDS-OF-THE-CLAIMANT';
+  const r1 = q('ERRATA.md', planted + ' long enough');
+  t('a comment never repeats what was written', Object.keys(TEXTS).every((k) => !commentFor({ ok: false, reason: k }).includes(planted)) && !commentFor(r1).includes(planted) && commentFor(r1).startsWith(MARK));
   t('a comment of a fail says how to open a new issue; one of a legal request does not say it is closed', commentFor({ ok: false, reason: 'absent' }).includes(AGAIN) && !commentFor({ ok: false, reason: 'absent' }, { legal: true }).includes(AGAIN));
   t('the configuration of the fixture has no problem, and a broken one has', configProblems(conf, root).length === 0
     && configProblems(Object.assign({}, conf, { forms: [{ label: 'removal', kind: 'quote', where: ['W'], quote: ['Q'] }] }), root).length > 0
