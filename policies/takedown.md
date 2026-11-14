@@ -95,7 +95,7 @@ In the records and the OAI-PMH interface:
 
 In the issues:
 
-- Every automatic comment about the record is deleted, and the issues that name it are emptied and closed; no automatic step locks them. From 2026-12-01, the lines of consent in them (which account consented, on which day, and to what) are first copied into the record of provision, as the [Privacy Policy](./privacy.md#records) sets out. The operator then deletes them.
+- Every automatic comment about the record is deleted, and the issues that name it are emptied and closed; no automatic step locks them. From 2026-12-01, the lines of consent in them (which account consented, on which day, and to what, and nothing else of the issue) are first copied into the record of provision (`docs/records-of-provision.md`), which Japanese law asks for; these lines stay public there for three years from the day they are copied, the period that the record of provision quotes. The operator then deletes them.
 - Deleting an issue also deletes its edit history.
 - The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step, with the address of any lookup that failed (which can hold the DOI or the ORCID iD given in the issue), and not the issue's text.
 - Before 2026-11-13 the logs kept the text of the issue as it was when a step ran. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.

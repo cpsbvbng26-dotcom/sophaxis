@@ -103,7 +103,7 @@ GitHub・Vercel・ORCID への提供の同意を撤回すると、記録を削�
 - ORCID（米国）：ORCID の公開記録を読むため
 - Internet Archive（米国）：公開した頁と PDF の写しを保存するため
 - OpenAlex（米国）：載せた作品をどう収めているかを、DOI だけで問い合わせるため。人については問い合わせません
-- Anthropic・OpenAI・xAI（いずれも米国）：審査を助けるため。運営者が、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、それぞれの言語モデル Claude・ChatGPT・Grok に手で読ませます。読ませるのは、下の「審査での言語モデル」のとおり、issue に書いたすべてのアカウントが同意しているときだけです。掲載の後には渡しません
+- Anthropic・OpenAI・xAI（いずれも米国）：審査を助けるため。運営者が、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、それぞれの言語モデル Claude・ChatGPT・Grok に手で読ませます。2026-11-15 から、issue に書いた全員が同意したときだけ読ませます。掲載の後には渡しません
 
 それぞれの事業者の個人情報の扱いは、各社の規約によります。
 米国の制度については、個人情報保護委員会が[米国の制度についての情報](https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/)を公表しており、Sophaxis はこれに拠ります。2021 年 10 月の調査に基づく情報です。
@@ -165,34 +165,6 @@ Vercel は、その[プライバシーの方針](https://vercel.com/legal/privac
 
 <!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
 
-## 審査での言語モデル
-
-2026-11-15 の公開から、投稿の公開されている部分を Claude（Anthropic）・ChatGPT（OpenAI）・Grok（xAI）に渡すのは、そこに書いたものが含まれるすべての GitHub のアカウントが同意しているときだけです。[モデレーションの規程](./moderation.ja.md)が定めるとおり、投稿者、共著者全員、紹介する研究者、issue にコメントした人のすべてです。
-一人でも同意していなければ、その issue には言語モデルを使いません。人が審査するか、待ちます。
-投稿者は、投稿の様式の外国にある事業者についての確認の欄で同意します。
-ほかの人は、issue へのコメントに次の文を書いて同意します。英語の文が正で、日本語は訳です。
-
-~~~~
-I consent to what I have written in this issue being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Language models in the review".
-~~~~
-
-（訳：この issue に私が書いたものが、審査の手助けのために、Sophaxis の個人情報の取り扱いについての「審査での言語モデル」が定めるとおり、米国の Anthropic・OpenAI・xAI に渡されることに同意します。）
-
-2026-12-01 から、共著者が同意を確かめる決まった文にも、同じ同意が入ります。[投稿の規程](./submission.ja.md#著者が複数いる作品)が定めるとおりです。
-同意の前に、上の「外国にある事業者の利用」で、個人情報保護法第 28 条第 2 項が求める情報を示します。国の名（米国）、個人情報保護委員会が公表しているその国の制度の情報、受け手それぞれが述べている措置か、示せない理由です。
-同条第 2 項は「個人情報取扱事業者は、前項の規定により本人の同意を得ようとする場合には、個人情報保護委員会規則で定めるところにより、あらかじめ、当該外国における個人情報の保護に関する制度、当該第三者が講ずる個人情報の保護のための措置その他当該本人に参考となるべき情報を当該本人に提供しなければならない。」と定めます。
-同意は、削除依頼の issue かメールで、いつでも撤回できます。撤回の前に渡したものは、そのままです。
-同意するコメントは、その人自身の行為で issue に公開されます。
-
-三つの事業者の文が、渡されたものを学習に使うことについて書いていることは、次のとおりです。2026-11-15 に `tools/sources.js` が取り寄せた文から、そのまま引きます。
-
-- Anthropic の消費者向けの利用規約：「We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings.」事業者向けの利用規約：「Anthropic may not train models on Customer Content from Services.」
-- OpenAI の利用規約：「If you do not want us to use your Content to train our models, you can opt out by following the instructions in this article」。OpenAI 自身の頁が JavaScript と cookie を求めたので、2026-11-09 の Internet Archive の写しから読みました。事業者向けの Services Agreement（2026-11-10 の写し）：「OpenAI will not use Customer Content to develop or improve the Services, unless Customer explicitly agrees to such use.」
-- xAI の消費者向けの利用規約：「When logged into our Service, you can select whether or not you want us to use your User Content to improve our products and services and train our models.」事業者向けの利用規約：「SpaceXSI will not use any User Content to train any foundation models, large language models, or other artificial intelligence systems or to develop any new products, services, or features, subject to disclosures to Customer and Customer-controlled user settings.」
-
-運営者は、公開されている部分を、各サービスのチャットで手で渡します。
-運営者のアカウントにどの規約が掛かるか、学習を止める設定にしているかを、運営者は示していません。この方針は、そのどちらも述べません。
-
 ## 安全のための措置
 
 記録は、DOI の登録情報など、すでに公開されている情報だけで作ります。
@@ -232,8 +204,6 @@ Vercel の閲覧の要求の記録は、そのサービスが定める期間だ�
 削除の求めがあれば、[削除の規程](./takedown.ja.md)に沿って記録を削除します。
 著者の求めでも削除します。
 削除した記録に残るのは、Sophaxis の番号と削除の日だけです。
-2026-12-01 から、求めによって issue を空にするか削除する前に、その中の同意の行を、提供の記録（`docs/records-of-provision.md`）に写します。写すのは、どのアカウントが、いつ、何に同意したかだけで、issue のほかの中身は写しません。個人情報保護法第 29 条がこの記録を求め、同法施行規則第 21 条が保存の期間を三年と定めるため、この行は写した日から三年、そこに公開のまま残ります。
-2026-12-01 から、削除依頼の issue が個人情報の露出を知らせたときは、自動の手順が、その issue を開いたアカウントの以前の削除依頼の issue の公開のラベルを読みます。モデレーションの規程の「自動で下げること」の例外を当てはめるためで、読んだものは何も残しません。
 公開のリポジトリの履歴と、Internet Archive の保存には、以前の版が残ります。
 運営者は、GitHub と Internet Archive にその削除を頼みます。
 
@@ -327,7 +297,7 @@ Sophaxis は、無報酬で、無料の範囲で運営しています。
 国や地域は、そうした務めが報告された時点で表に足し、法令を原文で読んでから外します。
 2026-11-26 からは、個人データを集める前に運営者の住所か電話番号を知らせるよう求める法令、未成年者の個人データをサービスが確かめた親の同意があるときに限って扱わせる法令（または扱わせない法令）のある国と地域と、データ保護法を原文で読めなかった国と地域も表に入ります。それぞれの法令は投稿の規程にあります。
 ロシアの連邦法第 152-FZ 号は、国外に住むロシア国民のデータにも、本人が処理に同意していれば及びます（第 1 条第 1.1 項）。Sophaxis は住んでいる場所と滞在している場所で決め、国籍は尋ねないので、この部分には対応していません。ロシアの当局から指摘があれば、運営者は判断を見直します。
-2026-12-01 から、著者のだれかが 16 歳未満である作品は受け付けません。
+2026-12-01 から、16 歳未満の著者の作品は受け付けません。
 2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
 インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
 これは国籍・人種・民族その他の個人の属性によるものではなく、国籍は読みません。

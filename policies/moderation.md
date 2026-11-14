@@ -58,6 +58,16 @@ The submitter consents by the box of the submission form on services outside Jap
 If one of them has not consented, no language model is used for that issue: a person reviews it, or it waits.
 Before anything is given, `tools/llm.js` reads the issue and its comments and lists every account that has written in it without consenting; the operator gives nothing while that list is not empty.
 Comments of bots and of the operator's own account are not counted.
+
+What the three providers' own texts say about training on what they are given, as fetched on 2026-11-15 by `tools/sources.js`:
+
+- Anthropic's Consumer Terms of Service: "We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings." Its Commercial Terms of Service, for business customers: "Anthropic may not train models on Customer Content from Services."
+- OpenAI's Terms of Use, read from the Internet Archive's copy of 2026-11-09, because OpenAI's own page asked for JavaScript and cookies: "If you do not want us to use your Content to train our models, you can opt out by following the instructions in this article". Its Services Agreement, for business customers, from the Internet Archive's copy of 2026-11-10: "OpenAI will not use Customer Content to develop or improve the Services, unless Customer explicitly agrees to such use."
+- xAI's Terms of Service for consumers: "When logged into our Service, you can select whether or not you want us to use your User Content to improve our products and services and train our models." Its Terms of Service for enterprises: "SpaceXSI will not use any User Content to train any foundation models, large language models, or other artificial intelligence systems or to develop any new products, services, or features, subject to disclosures to Customer and Customer-controlled user settings."
+
+The operator gives the public parts by hand in the chat of each service.
+Which of these terms govern the operator's accounts, and whether training is turned off in them, the operator has not shown, and this policy states neither.
+
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 What a model points out is given as a reason for a decision only after the operator has checked it.
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.

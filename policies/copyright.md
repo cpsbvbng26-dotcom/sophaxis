@@ -25,6 +25,7 @@ It is shown under the work's own licence, with its authors and a link to the wor
 Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
 It copies the file by script only from Zenodo, whose own pages let a script fetch it.
 Zenodo's developer documentation lists, among what its REST API supports, "Files — download/upload of files."
+Until 2026-11-15, Sophaxis also copied files from arXiv, through export.arxiv.org, as arXiv's page on bulk data access asks: "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access." arXiv's terms of use for its APIs forbid storing and serving its e-prints "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted".
 Since this change was published on 2026-11-15, Sophaxis reads nothing from arXiv by script, and makes no copy from it; the authors of a work there can attach the deposited PDF to the submission issue. The links to arXiv stay.
 Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.
 Figshare's terms list, among what a user shall not do, "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine". The only exception is for means "expressly authorized for you by Figshare in advance in writing".
@@ -33,7 +34,7 @@ The copies already taken from Figshare stay, under the work's own licence.
 These pages were read on 2026-11-12: Zenodo's directly, and Figshare's and Research Square's from the Internet Archive's copies.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
-For any other repository, arXiv among them, the authors can attach the deposited PDF to their submission issue.
+For any other repository, the authors can attach the deposited PDF to their submission issue. arXiv is among them since 2026-11-15.
 Since the change was published on 2026-11-13, this includes Figshare and Research Square.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.

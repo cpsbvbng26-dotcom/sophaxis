@@ -25,6 +25,7 @@ DataCite のメタデータは、公開の REST API からだけ読みます。D
 Sophaxis は、検索エンジンが本文を索引できるように、載っているそれぞれの版の PDF の写しを、手を加えずに置きます。
 スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている Zenodo からだけです。
 Zenodo の開発者向けの文書は、REST API でできることに「Files — download/upload of files.」を挙げます。
+2026-11-15 までは、arXiv からも export.arxiv.org を通して写していました。arXiv の一括取得の頁が「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と求めるためです。arXiv の API の利用規約は、e-print を保って配ることを禁じます。例外は「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合です。
 この変更を公開した 2026-11-15 から、Sophaxis は arXiv からスクリプトで何も読まず、写しも作りません。そこに預けた作品の著者は、預けた PDF を投稿の issue に添付できます。arXiv へのリンクは残します。
 この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。どちらの規約も、これを禁じているためです。
 Figshare の規約は、利用者がしてはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げます。例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。

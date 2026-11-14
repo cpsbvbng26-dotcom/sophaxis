@@ -54,10 +54,28 @@
 審査を助けるため、運営者は、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、三つの言語モデル、Claude（Anthropic）、ChatGPT（OpenAI）、Grok（xAI）に読ませ、それぞれの指摘を見比べます。
 運営者はこれを、各サービスのチャットで手で行います。投稿を自動で送ることはなく、公開されていないものは渡しません。
 2026-11-15 の公開から、運営者がこれを行うのは、渡すものに書いたものが含まれるすべての GitHub のアカウントが同意しているときだけです。投稿者、共著者全員、紹介する研究者、コメントした人のすべてです。
-投稿者は、投稿の様式の外国にある事業者についての確認の欄で同意します。ほかの人は、[個人情報の取り扱いについて](./privacy.ja.md#審査での言語モデル)が示す決まった文を、issue へのコメントに書いて同意します。
+投稿者は、投稿の様式の外国にある事業者についての確認の欄で同意します。ほかの人は、[個人情報の取り扱いについて](./privacy.ja.md#外国にある事業者の利用)が示す決まった文を、issue へのコメントに書いて同意します。
 一人でも同意していなければ、その issue には言語モデルを使いません。人が審査するか、待ちます。
 渡す前に、`tools/llm.js` が issue とそのコメントを読み、同意せずに書いたアカウントを挙げます。挙がったアカウントがある間、運営者は何も渡しません。
 ボットと運営者自身のアカウントのコメントは数えません。
+コメントで同意する文は次のとおりです。英語の文が正です。
+
+~~~~
+I consent to what I have written in this issue being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Language models in the review".
+~~~~
+
+訳は「この issue に私が書いたものが、審査の手助けのために、Sophaxis の個人情報の取り扱いについての「審査での言語モデル」が定めるとおり、米国の Anthropic・OpenAI・xAI に渡されることに同意します。」です。この訳をコメントに書いても同意になります。
+2026-12-01 から共著者が書く決まった文（[投稿の規程](./submission.ja.md#著者が複数いる作品)）の訳は「この作品を Sophaxis に載せることに同意し、この投稿の公開されている部分（私がその issue に書くものを含みます）が、審査の手助けのために、米国の Anthropic・OpenAI・xAI に渡されることに同意します。」です。
+
+三つの事業者の文が、渡されたものを学習に使うことについて書いていることは、次のとおりです。2026-11-15 に `tools/sources.js` が取り寄せた文から、そのまま引きます。
+
+- Anthropic の消費者向けの利用規約：「We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings.」事業者向けの利用規約：「Anthropic may not train models on Customer Content from Services.」
+- OpenAI の利用規約：「If you do not want us to use your Content to train our models, you can opt out by following the instructions in this article」。OpenAI 自身の頁が JavaScript と cookie を求めたので、2026-11-09 の Internet Archive の写しから読みました。事業者向けの Services Agreement（2026-11-10 の写し）：「OpenAI will not use Customer Content to develop or improve the Services, unless Customer explicitly agrees to such use.」
+- xAI の消費者向けの利用規約：「When logged into our Service, you can select whether or not you want us to use your User Content to improve our products and services and train our models.」事業者向けの利用規約：「SpaceXSI will not use any User Content to train any foundation models, large language models, or other artificial intelligence systems or to develop any new products, services, or features, subject to disclosures to Customer and Customer-controlled user settings.」
+
+運営者は、公開されている部分を、各サービスのチャットで手で渡します。
+運営者のアカウントにどの規約が掛かるか、学習を止める設定にしているかを、運営者は示していません。この方針は、そのどちらも述べません。
+
 言語モデルは補助にとどまります。言語モデルが投稿を受理したり断ったりすることはなく、判断はすべて、投稿を読んだ運営者かモデレーターが下します。
 言語モデルの指摘を判断の理由にするのは、運営者がその指摘を確かめた後だけです。
 目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。
