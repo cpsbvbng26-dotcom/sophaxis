@@ -22,12 +22,13 @@ Read the [policies](policy.md) before submitting: [Terms of Use](policies/terms.
 ## Statement of Purpose
 
 Sophaxis has a Statement of Purpose. Its first two articles, on its purpose and on what the statement is, are given here in full.
+Where they say "at present", it means as of the date the statement's page was last updated.
 
 ### Purpose
 
 Sophaxis is a place that lists preprints in philosophy and mathematics, and in the fields around them (logic, the philosophy of mathematics and the philosophy of science).
 If the works it lists are likened to a bookshelf, Sophaxis is a bookshelf from which anyone can take a work without paying.
-The operator runs this bookshelf free of charge.
+At present, the operator runs this bookshelf free of charge.
 By doing so, the operator aims to widen the opportunities to reach scholarly work, and to have a better influence on society.
 
 ### What this statement is
@@ -282,12 +283,13 @@ Sophaxis（ソファクシス）は、哲学・数学・論理学・数理哲学
 ### 運営理念・声明
 
 Sophaxis には運営理念・声明があります。運営する目的と、この声明の性格を述べた初めの二つの条を、そのまま載せます。
+載せた条で「現在」と書いたことは、声明の頁の最終更新の日の時点のことです。
 
 #### 目的
 
 Sophaxis は、哲学と数学、そしてその周辺の分野（論理学、数理哲学、科学哲学）のプレプリントを並べる場です。
 並べた作品の集まりを本棚にたとえれば、Sophaxis は、誰もが料金を払わずに手に取れる本棚です。
-運営者は、この本棚を無償で運営します。
+運営者は、現在、この本棚を無償で運営しています。
 それによって、学術の成果に触れる機会を広げ、社会により良い影響を与えることを目的としています。
 
 #### この声明の性格
