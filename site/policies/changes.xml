@@ -8,13 +8,37 @@
   <updated>2026-11-15T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
-    <id>https://sophaxis.vercel.app/policies/changes.xml#c27</id>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c29</id>
     <title>The checked intake closes no issue, reads nothing from GitHub, and names no researcher</title>
     <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
     <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
     <updated>2026-11-15T00:00:00Z</updated>
     <summary>Since its publication on 2026-11-15, the checked intake that takes effect on 2026-12-01 never closes or locks an issue: a claim that fails gets a label (not verified, or not listed at the end of 30 days) and a fixed comment, and a person reads every issue, because no list of words can tell every request that the law requires the operator to receive from a submission or a report of an error. The place rule reads only the country codes of the public addresses and of the current employments and educations in the ORCID record, never a nationality, and no longer the location field of the GitHub profile, whose free text matched places it did not mean. A vouching found untrue is no longer relied on and the listing is reviewed, after the researcher is told privately and heard; no researcher is barred from vouching or named, and Sophaxis keeps no list of them. The top page in Japanese lists each announced change with its day. These changes widen what authors and researchers can do and narrow nothing, so they take effect on publication. Policies: Submission Policy, Privacy Policy, Moderation Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c28</id>
+    <title>No language model without everyone's consent, the court from 2026-11-25 for suits on the Terms only, and what the providers' texts say</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/withdrawal.html" title="Withdrawal Policy"/>
+    <updated>2026-11-15T00:00:00Z</updated>
+    <summary>Since its publication on 2026-11-15, the operator gives a submission to a language model only when every GitHub account that wrote in its issue has consented: the submitter by the box of the form, anyone else by a comment with fixed words; otherwise a person reviews it, or it waits. The Privacy Policy quotes what Anthropic's, OpenAI's and xAI's own terms say about training on what they are given, and states no setting of the operator's accounts. From 2026-11-25, the agreement on the Utsunomiya courts covers only suits based on the Terms of Use, or on the person's own works under them, on its first day as on every later one. The Terms no longer invoke the Unfair Competition Prevention Act for the name, and say of GitHub's age only what its terms say. Vercel keeps runtime logs for the period Vercel sets. The Copyright Policy quotes DataCite's texts that permit the use of its API, and Sophaxis no longer reads arXiv by script; the links stay. No automatic step locks an issue. These changes widen what authors and others can do and narrow nothing, so they take effect on publication. Policies: Submission Policy, Privacy Policy, Moderation Policy, Terms of Use, Copyright Policy, Takedown Policy, Withdrawal Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c27</id>
+    <title>Authors from 16, the co-author's consent to the review, kept lines of consent, automatic hiding, and locking</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-15T00:00:00Z</updated>
+    <summary>From 2026-12-01, a work is not accepted if any of its authors is under 16. A co-author confirms with fixed words that also consent to the public parts of the submission being given to Anthropic, OpenAI and xAI in the United States for the review, after the information that Article 28(2) of Japan's Act on the Protection of Personal Information asks. Before an issue is emptied or deleted on request, its lines of consent (which account, which day, what) are copied into the record of provision and stay public there for three years. An account whose two earlier requests to take material offline a person found groundless, and which has been told so, no longer has material taken offline automatically; a person reads its requests promptly instead, and Sophaxis keeps no list of such accounts. The operator may lock an issue that carries abuse or others' personal data; a request that the law gives can still be made in a new issue or by email, and is read. These narrow what an author or a requester can do, or add a duty, so they are announced on the top page at least 14 days ahead. In effect from 2026-12-01. Policies: Submission Policy, Privacy Policy, Moderation Policy, Terms of Use, Takedown Policy.</summary>
   </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c26</id>
