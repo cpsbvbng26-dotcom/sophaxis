@@ -6,7 +6,8 @@ on:
   issue_comment:
     types: [created, edited, deleted]
   # The checked intake (from 2026-12-01): once a day, a submission that has not passed every check 30 days after its issue
-  # was opened is closed with a fixed comment (tools/intake.js --deadline). A removal or withdrawal issue is never closed.
+  # was opened gets the label "not listed" and a fixed comment (tools/intake.js --deadline). Nothing closes or locks an issue
+  # (2026-11-15); an issue labelled "needs a person", or one that reads as a request, is left to a person.
   schedule:
     - cron: '17 0 * * *'
 permissions:
@@ -69,7 +70,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deadline:
     if: github.event_name == 'schedule'
-    name: Close submissions whose time to pass the checks has ended
+    name: Label submissions whose time to pass the checks has ended
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

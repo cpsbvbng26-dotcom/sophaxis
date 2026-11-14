@@ -1671,6 +1671,18 @@ ${n.url ? `    <link href="${esc(newsHref(n, SITE.baseUrl))}"/>\n` : ''}    <upd
  * newest first, each with the day it was published, the policies it touches, a title and a text, and `from`,
  * the day it takes effect, when that is later. verification/check.js holds every policy's "Last updated" date to an entry. */
 const loadPolicyChanges = () => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'policy-changes.json'), 'utf8'));
+/* The announced changes still to take effect: each change in data/policy-changes.json with a day of effect ("from") on or
+ * after the day the notice on the top page starts (site.json termsNotice.from), earliest first. Each carries a Japanese
+ * summary ("ja") that names its day, so that the Japanese top page lists the same changes, with the same days, as the
+ * English notice (Article 548-4(2) of the Civil Code asks that a change be made known before it takes effect; 2026-11-15,
+ * check 135). */
+const pendingChanges = (items = loadPolicyChanges(), n = SITE.termsNotice) => (n && n.from ? items.filter((c) => c.from && c.from >= n.from)
+  .sort((a, b) => (a.from === b.from ? (a.date < b.date ? -1 : a.date > b.date ? 1 : 0) : a.from < b.from ? -1 : 1)) : []);
+function termsNoticeJa(n = SITE.termsNotice, items = loadPolicyChanges()) {
+  if (!(n && n.text)) return '';
+  const list = pendingChanges(items, n).map((c) => `<li>${esc(c.ja)}</li>`).join('');
+  return `<div class="notice"><b>規程の変更を告知しています。</b>${noticeDaysJa(n)}効力の前のものを、効力の日とともに挙げます。<ul>${list}</ul>英語の告知は<a href="./index.html">英語のトップの頁</a>に、文は各規程の日本語訳にあります。</div>\n`;
+}
 function policyChangeProblems(items) {
   const e = [], slugs = POLICIES.map(([s]) => s);
   if (!Array.isArray(items) || !items.length) return ['data/policy-changes.json: a list of changes, newest first'];
@@ -1679,6 +1691,7 @@ function policyChangeProblems(items) {
     if (!DATE.test(c.date || '') || !c.title || !c.text) e.push(at + ' needs a date, a title and a text');
     if (!Array.isArray(c.policies) || !c.policies.length || !c.policies.every((x) => slugs.includes(x))) e.push(at + ' names one or more of the policies: ' + slugs.join(', '));
     if (c.from !== undefined && !(DATE.test(c.from) && c.from > c.date)) e.push(at + ': from is a day after the date');
+    if (c.from !== undefined && !(typeof c.ja === 'string' && c.ja.includes(c.from + ' から'))) e.push(at + ': a change with a day of effect needs a Japanese summary ("ja") that names that day');
     if (i > 0 && c.date > items[i - 1].date) e.push('data/policy-changes.json: changes are newest first');
   });
   return e;
@@ -1777,9 +1790,8 @@ function indexJaPage(papers, all = papers) {
 <p>${esc(SITE.name)} は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、${esc(SITE.name)} がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>
 <div class="notice">掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。${esc(SITE.name)} は、著者からも読者からも料金を取りません。</div>
 <p class="meta">${esc(SITE.name)} を運営する目的は、<a href="./mission.ja.html">運営理念・声明</a>に述べています。声明は権利や義務を生じさせず、<a href="./policy.ja.html">規程</a>が適用されます。</p>
-<div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、住んでいる場所と滞在した場所だけによります。理由と法令は<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
-${SITE.termsNotice && SITE.termsNotice.text ? `<div class="notice"><b>規程の変更を告知しています。</b>${noticeDaysJa(SITE.termsNotice)}内容は<a href="./index.html">英語のトップの頁</a>と、各規程の日本語訳にあります。</div>
-` : ''}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
+<div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、場所の決まりによります。国籍は読みません。2026-12-01 からは、著者の ORCID の公開記録にもよります。公開の住所、いまの勤め先、いまの在学先の国の符号を読み、提供していない場所を指す項目があるとき、二つの国を指すとき、issue を開く 30 日以上前に足された、提供している場所を指す項目が無いときは、受け付けません。理由と法令と決まりは<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
+${termsNoticeJa()}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
 ${operatingCounts(all, loadReports(), true)}${directoryEntries(true)}
 <h2>日本語の頁</h2>
@@ -2182,7 +2194,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
