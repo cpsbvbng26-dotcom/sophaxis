@@ -76,7 +76,7 @@ No such provision has been made so far.
 ## Lines of consent kept from emptied issues
 
 From 2026-12-01, before an issue is emptied or deleted on request, `tools/removal.js` copies its lines of consent here and pushes them, and only then empties the issue: which account consented, on which day (Japan time), and to what, in the fixed words of the form or the comment, with the number of the issue. Nothing else of the issue is copied. The owner decided this on 2026-11-15, because the consent is the item that Article 20(1)(ii) of the APPI Enforcement Rules asks the record to hold, and the issue that held it is emptied.
-Each line stays here, in public, until the day in its last column: three years after the day it was copied, the period that Article 21(iii) of the APPI Enforcement Rules sets.
+Each line stays here, in public, until the day in its last column: three years after the day it was copied, the period that Article 21 of the APPI Enforcement Rules sets for a record made each time: 「三年」.
 
 | Day of consent | Account | Words of consent | Issue | Copied | Kept until |
 | --- | --- | --- | --- | --- | --- |
