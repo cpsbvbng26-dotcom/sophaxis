@@ -5753,9 +5753,9 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
   const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
   const breaks = [
-    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-14.', 'Last updated: 2026-11-13.'), facts],
-    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-14。', '最終更新：2026-11-13。'), facts],
-    ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-13.', 'Last updated: 2026-11-12.'), facts],
+    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
+    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-15。', '最終更新：2026-11-14。'), facts],
+    ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
     ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
     ['the entry on Figshare dated back', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
