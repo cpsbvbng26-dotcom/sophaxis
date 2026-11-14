@@ -15,6 +15,8 @@ const crypto = require('crypto');
 const ROOT = __dirname;
 const OUT = path.resolve(process.argv[2] || path.join(ROOT, 'site'));
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
+/* The design: every number of the logo, the glyphs, the band and the shelf is in design.js (2026-11-14). */
+const D = require('./design.js');
 
 /* Headers that a <meta> element cannot give. frame-ancestors keeps the pages out of frames on other sites, which a
  * Content-Security-Policy in <meta> cannot do; the rest of the policy stays in each page. A second policy only narrows
@@ -311,9 +313,13 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
 @media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
-`;
+` + D.css(SITE.fields || {});
+/* The pages with a shelf, a catalogue card, the register or the construction drawing carry the rest of the design too. */
+const CSS_SHELF = CSS + D.css(SITE.fields || {}, 'shelf');
+const SHELF_PAGE = /class="(?:shelf|card |register|construction)"?/;
 
 const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('base64') + "'";
+const STYLE_HASH_SHELF = "'sha256-" + crypto.createHash('sha256').update(CSS_SHELF).digest('base64') + "'";
 
 /* The id of a heading, as GitHub gives it to the same heading of the Markdown source, so that a link to a section works on
  * the site and on github.com alike: lower case, every character but letters, marks, numbers, "_", "-" and spaces dropped,
@@ -380,6 +386,7 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
   if (src) body = sourceLinks(sections(body, lang === 'ja'), src, canonical);
   /* The 404 page is served at any address, so it links from the root. */
   const up = root ? '/' : rel ? '../' : './';
+  const shelfPage = SHELF_PAGE.test(body);
   /* The top page names the site for search engines: WebSite microdata, without a script. */
   const home = canonical === '';
   const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">${SITE.osf ? `<link itemprop="sameAs" href="${esc(SITE.osf.url)}"><link itemprop="sameAs" href="https://doi.org/${esc(SITE.osf.doi)}">` : ''}${SITE.zenodo ? `<link itemprop="sameAs" href="https://doi.org/${esc(SITE.zenodo.doi)}">` : ''}` : '>';
@@ -396,7 +403,7 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="${csp || CSP}">
+<meta http-equiv="Content-Security-Policy" content="${shelfPage ? (csp || CSP).replace(STYLE_HASH, STYLE_HASH_SHELF) : csp || CSP}">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(SITE.baseUrl + canonical)}">
@@ -412,11 +419,11 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
 <meta property="og:image" content="${esc(image || SITE.baseUrl + 'og.png')}">
 ${head || ''}${/^(policies\/|policy(\.ja)?\.html$)/.test(canonical) ? POLICY_FEED(up) : ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">${SITE.x ? `\n<meta name="twitter:site" content="@${esc(SITE.x)}">` : ''}
-<style>${CSS}</style>
+<style>${shelfPage ? CSS_SHELF : CSS}</style>
 </head>
 <body>
 <a class="skip" href="#main"${en}>Skip to content</a>
-<header class="top"><div class="wrap"${site}
+<header class="top">${D.bandSvg()}<div class="wrap"${site}
 <a class="brand" ${brand}${en}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
 <nav${en}><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a><a href="${up}faq.html">FAQ</a></nav>${switcher}
 </div></header>
@@ -555,6 +562,125 @@ const initials = (g) => g.split(/[\s-]+/).filter(Boolean).map((w) => w[0].toUppe
 /* Both styles put a comma before the last "&" or "and", even with two authors. */
 const andList = (xs, conj) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ', ' + conj + ' ' + xs[xs.length - 1]);
 const latest = (p) => p.versions[p.versions.length - 1];
+
+/* ------------------------------------------------------------ the shelf (2026-11-14)
+ * The statement of purpose likens Sophaxis to a shelf (mission.md, Article 1). The shelf is a picture of the listing, drawn
+ * from the records: each field has a code and a colour of its own (site.json "fields"), each record a shelf mark (its field's
+ * code and its Sophaxis id), and the records are numbered in the order of listing in the accession register. The shelf mark
+ * and the accession number are labels, not identifiers: a record is cited by its Sophaxis id and the DOI. */
+const FIELD_CODE = /^[A-Z]{3}$/;
+const HEX = /^#[0-9a-f]{6}$/;
+function fieldProblems(F = SITE.fields, categories = SITE.categories) {
+  const e = [];
+  if (!F || typeof F !== 'object') return ['site.json: fields is missing'];
+  const keys = Object.keys(F), cs = Object.keys(categories);
+  for (const c of cs) if (!F[c]) e.push('site.json: fields has no entry for the category ' + c);
+  for (const k of keys) {
+    if (!cs.includes(k)) e.push('site.json: fields names ' + k + ', which is not a category');
+    const f = F[k] || {};
+    if (!FIELD_CODE.test(f.code || '')) e.push('site.json: fields.' + k + '.code is not three capital letters');
+    if (!D.GLYPHS[f.code]) e.push('site.json: fields.' + k + '.code has no glyph in design.js');
+    for (const s of ['light', 'dark']) {
+      if (!HEX.test(f[s] || '')) e.push('site.json: fields.' + k + '.' + s + ' is not a colour #rrggbb');
+      else if (D.fieldRatio(f[s], s) < 4.5) e.push('site.json: fields.' + k + '.' + s + ' reaches only ' + D.r2(D.fieldRatio(f[s], s)) + ':1');
+    }
+  }
+  const codes = keys.map((k) => (F[k] || {}).code);
+  if (new Set(codes).size !== codes.length) e.push('site.json: the field codes are not unique');
+  return e;
+}
+const fieldCode = (slug) => SITE.fields[slug].code;
+const shelfMark = (p) => fieldCode(p.category) + ' · ' + p.id;
+const fieldClass = (slug) => 'f-' + fieldCode(slug).toLowerCase();
+/* The label of a field or a record: the glyph and the code, in the field's colour. */
+const fieldLabel = (slug, text) => `<span class="mark ${fieldClass(slug)}">${D.glyphSvg(fieldCode(slug))}<span class="code">${esc(text || fieldCode(slug))}</span></span>`;
+const markLabel = (p) => fieldLabel(p.category, shelfMark(p));
+/* The order of listing: every record kept in data/papers, removed ones included, by Sophaxis id. Ids are given in the order
+ * of listing, so the accession number of a record is its place in this order, and it never changes. */
+const byId = (a, b) => a.id.localeCompare(b.id);
+const accession = (all) => new Map(all.slice().sort(byId).map((p, i) => [p.id, i + 1]));
+/* The shelf: the records shown, as spines, ordered by field (in the order of site.json) and then by shelf mark. The width of
+ * a spine follows the pages of its last PDF copy and its height the length of its title; neither says anything of the work. */
+const spineWidth = (p) => { const n = ((p.pdfs || []).slice(-1)[0] || {}).pages || 0; return n >= 40 ? 'w3' : n >= 15 ? 'w2' : 'w1'; };
+const spineHeight = (p) => (p.title.length < 60 ? 'h3' : p.title.length < 110 ? 'h1' : 'h2');
+const fieldOrder = (slug) => Object.keys(SITE.categories).indexOf(slug);
+function shelf(papers, up, ja = false, legend = true) {
+  if (!papers.length) return `<p class="meta shelf-note">${ja ? '書架はまだ空です。' : 'The shelf is empty for now.'}</p>\n`;
+  const sorted = papers.slice().sort((a, b) => fieldOrder(a.category) - fieldOrder(b.category) || byId(a, b));
+  const spines = sorted.map((p) => `<li class="${fieldClass(p.category)} ${spineWidth(p)} ${spineHeight(p)}${p.status === 'withdrawn' ? ' withdrawn' : ''}"><a href="${up}abs/${esc(p.id)}${ja ? '.ja' : ''}.html">${D.glyphSvg(fieldCode(p.category))}<span class="sm"><span class="code">${esc(fieldCode(p.category))}</span><span class="dot"> · </span><span class="sid">${esc(p.id)}</span></span> <span class="t"${ja ? langAttr(authorLang(p, p.title)) : ''}>${esc(p.title)}</span>${p.status === 'withdrawn' ? ` <span class="wd">${ja ? '撤回' : 'withdrawn'}</span>` : ''}</a></li>`).join('\n');
+  const codes = legend ? `<ul class="glyphs" aria-label="${ja ? '分野の符号' : 'Field codes'}">${Object.keys(SITE.categories).map((slug) => `<li>${fieldLabel(slug)} ${esc((ja ? SITE.categoriesJa : SITE.categories)[slug])}</li>`).join('')}</ul>\n` : '';
+  const note = ja
+    ? `<p class="meta shelf-note">書架は、下の一覧を絵にしたものです。背の一本が記録の一件で、主な分野の色と、書架記号（分野の符号と Sophaxis の番号）が付いています。書架はたとえで、${esc(SITE.name)} は図書館ではありません。記録は Sophaxis の番号と DOI で引きます（<a href="${up}brand.ja.html">名前・ロゴ・バッジ</a>）。</p>\n`
+    : `<p class="meta shelf-note">The shelf is a picture of the listing below. Each spine is one record, in the colour of its main field, with its shelf mark: the field's code and the Sophaxis id. The shelf is a metaphor; ${esc(SITE.name)} is not a library. Cite a record by its Sophaxis id and the DOI (<a href="${up}brand.html">Name, logo and badge</a>).</p>\n`;
+  return codes + `<ul class="shelf" aria-label="${ja ? '書架' : 'Shelf'}">\n${spines}\n</ul>\n` + note;
+}
+/* The catalogue card of a record page: what the page already says, laid out as a card. */
+function catalogueCard(p, ja = false) {
+  const v = latest(p);
+  const row = (k, val) => `<dt>${k}</dt><dd>${val}</dd>`;
+  const fieldsText = cats(p).map((c) => fieldLabel(c) + ' ' + esc((ja ? SITE.categoriesJa : SITE.categories)[c])).join(ja ? '、' : ', ');
+  const versions = p.versions.map((x) => `v${x.version} ${esc(x.date)}`).join(ja ? '、' : ', ');
+  const status = p.status === 'withdrawn' ? (ja ? `${esc(p.withdrawal_date)} に撤回` : `Withdrawn on ${esc(p.withdrawal_date)}`) : (ja ? '掲載中' : 'Listed');
+  const rows = ja
+    ? [row('書架記号', markLabel(p)), row('題', `<span${langAttr(authorLang(p, p.title))}>${esc(p.title)}</span>`), row('著者', `<span lang="en">${esc(authorsText(p))}</span>`), row('分野', fieldsText),
+      row('ライセンス', esc(SITE.licenses[p.license])), row('DOI', `<a href="https://doi.org/${esc(v.doi)}">${esc(v.doi)}</a>`), row('版', versions),
+      row('掲載日', esc(p.listed)), ...(p.updated ? [row('更新日', esc(p.updated))] : []), row('状態', status)]
+    : [row('Shelf mark', markLabel(p)), row('Title', esc(p.title)), row('Authors', esc(authorsText(p))), row('Field', fieldsText),
+      row('Licence', esc(SITE.licenses[p.license])), row('DOI', `<a href="https://doi.org/${esc(v.doi)}">${esc(v.doi)}</a>`), row('Versions', versions),
+      row('Listed', esc(p.listed)), ...(p.updated ? [row('Updated', esc(p.updated))] : []), row('Status', status)];
+  return `<section class="card ${fieldClass(p.category)}" aria-labelledby="card">
+<h2 id="card">${ja ? '目録カード' : 'Catalogue card'}</h2>
+<dl>${rows.join('')}</dl>
+<p class="meta">${ja ? `書架記号は書架の上の札で、識別子ではありません。この記録は、Sophaxis の番号（${esc(SITE.name)}:${esc(p.id)}）と DOI で引きます。` : `The shelf mark is a label on the shelf, not an identifier. Cite this record by its Sophaxis id (${esc(SITE.name)}:${esc(p.id)}) and the DOI.`}</p>
+<span class="hole" aria-hidden="true"></span>
+</section>
+`;
+}
+/* The accession register: every listing, in order, and every withdrawal as an entry of its own, by month (Japan time).
+ * Removed records leave every list (Takedown Policy); their numbers are not shown. */
+function registerEvents(all) {
+  const no = accession(all);
+  const shown = all.filter((p) => p.status !== 'removed');
+  return shown.map((p) => ({ date: p.listed, kind: 'listed', p, no: no.get(p.id) }))
+    .concat(shown.filter((p) => p.status === 'withdrawn').map((p) => ({ date: p.withdrawal_date, kind: 'withdrawn', p, no: no.get(p.id) })))
+    .sort((a, b) => a.date.localeCompare(b.date) || a.no - b.no || (a.kind === 'listed' ? -1 : 1));
+}
+function registerFill(html, all, ja = false) {
+  if (!html.includes('<p>&lt;!-- register --&gt;</p>')) throw new Error('register: the place for the register is missing');
+  const ev = registerEvents(all);
+  const months = [...new Set(ev.map((e) => e.date.slice(0, 7)))];
+  const name = (m) => (ja ? m.slice(0, 4) + ' 年 ' + Number(m.slice(5)) + ' 月' : new Date(m + '-01T00:00:00Z').toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' }));
+  const head = ja ? '<tr><th scope="col">番号</th><th scope="col">日</th><th scope="col">出来事</th><th scope="col">記録</th><th scope="col">分野</th></tr>'
+    : '<tr><th scope="col">No.</th><th scope="col">Date</th><th scope="col">Entry</th><th scope="col">Record</th><th scope="col">Field</th></tr>';
+  const rowOf = (e) => `<tr><td class="no">${e.no}</td><td><time datetime="${esc(e.date)}">${esc(e.date)}</time></td><td>${e.kind === 'listed' ? (ja ? '掲載' : 'Listed') : (ja ? '撤回' : 'Withdrawn')}</td><td><a class="id" href="./abs/${esc(e.p.id)}${ja ? '.ja' : ''}.html">${esc(e.p.id)}</a> <span${ja ? langAttr(authorLang(e.p, e.p.title)) : ''}>${esc(e.p.title)}</span></td><td>${fieldLabel(e.p.category)}</td></tr>`;
+  const body = months.length ? months.map((m) => { const xs = ev.filter((e) => e.date.startsWith(m)); return `<h3>${esc(name(m))}</h3>\n<div class="table"><table class="register">${head}${xs.map(rowOf).join('')}</table></div>\n<p class="meta">${ja ? `${xs.length} 件。` : `${xs.length} ${xs.length === 1 ? 'entry' : 'entries'}.`}</p>`; }).join('\n')
+    : `<p class="meta">${ja ? 'まだ記入はありません。' : 'No entry yet.'}</p>`;
+  const day = lastUpdated(all, proseDayOf('register', ja));
+  return html.replace('<p>&lt;!-- register --&gt;</p>', body)
+    .replace(ja ? /<p>最終更新：\d{4}-\d{2}-\d{2}。<\/p>/ : /<p>Last updated: \d{4}-\d{2}-\d{2}\.<\/p>/, ja ? `<p>最終更新：${day}。</p>` : `<p>Last updated: ${day}.</p>`);
+}
+/* The construction page: the logo drawn again from its numbers, the measurements as a table, the glyphs and the band. */
+function constructionFill(html, ja = false) {
+  if (!html.includes('<p>&lt;!-- construction --&gt;</p>')) throw new Error('construction: the place for the drawing is missing');
+  const m = D.logoMeasures();
+  const rows = ja
+    ? [['全体', m.size + ' × ' + m.size + '、角の丸み ' + m.radius], ['枠', '内側へ ' + m.inset + '、太さ ' + m.stroke + '、内寸 ' + m.inner + '、角の丸み ' + m.frameRadius], ['格子と棒の太さ', String(m.unit)],
+      ['S の字', m.bars + ' 本の棒、' + m.s.w + ' × ' + m.s.h + '、左上 (' + m.s.x + ', ' + m.s.y + ')、枠の内側から ' + m.margin], ['棒の長さ', m.lengths.join('、')]]
+    : [['Whole', m.size + ' × ' + m.size + ', corner radius ' + m.radius], ['Frame', 'inset ' + m.inset + ', ' + m.stroke + ' thick, ' + m.inner + ' inside, corner radius ' + m.frameRadius], ['Grid and bar thickness', String(m.unit)],
+      ['The S', m.bars + ' bars, ' + m.s.w + ' × ' + m.s.h + ', top left at (' + m.s.x + ', ' + m.s.y + '), ' + m.margin + ' from the inside of the frame'], ['Bar lengths', m.lengths.join(', ')]];
+  const table = `<div class="table"><table><tr><th scope="col">${ja ? '部分' : 'Part'}</th><th scope="col">${ja ? '寸法（ロゴの 48 を単位とする）' : 'Measure (in units of the logo\'s 48)'}</th></tr>${rows.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</table></div>`;
+  const glyphs = `<div class="table"><table><tr><th scope="col">${ja ? '符号' : 'Code'}</th><th scope="col">${ja ? '分野' : 'Field'}</th><th scope="col">${ja ? '形' : 'Shape'}</th></tr>${Object.keys(SITE.categories).map((slug) => `<tr><td>${fieldLabel(slug)}</td><td>${esc((ja ? SITE.categoriesJa : SITE.categories)[slug])}</td><td>${esc((ja ? D.GLYPH_SHAPES_JA : D.GLYPH_SHAPES)[fieldCode(slug)])}</td></tr>`).join('')}</table></div>`;
+  return html.replace('<p>&lt;!-- construction --&gt;</p>', D.constructionSvg(ja) + '\n' + table)
+    .replace('<p>&lt;!-- glyphs --&gt;</p>', glyphs);
+}
+/* The table of field codes and colours on the brand page, with the contrast ratios computed here (design.js) and again by the check. */
+function fieldsFill(html, ja = false) {
+  if (!html.includes('<p>&lt;!-- fields --&gt;</p>')) throw new Error('brand: the place for the field codes is missing');
+  const rows = Object.keys(SITE.categories).map((slug) => { const f = SITE.fields[slug]; return `<tr><td>${fieldLabel(slug)}</td><td>${esc((ja ? SITE.categoriesJa : SITE.categories)[slug])}</td><td><code>${f.light}</code></td><td>${D.r2(D.fieldRatio(f.light, 'light'))}</td><td><code>${f.dark}</code></td><td>${D.r2(D.fieldRatio(f.dark, 'dark'))}</td></tr>`; }).join('');
+  const head = ja ? '<tr><th scope="col">符号</th><th scope="col">分野</th><th scope="col">明るい表示</th><th scope="col">比</th><th scope="col">暗い表示</th><th scope="col">比</th></tr>'
+    : '<tr><th scope="col">Code</th><th scope="col">Field</th><th scope="col">Light</th><th scope="col">Ratio</th><th scope="col">Dark</th><th scope="col">Ratio</th></tr>';
+  return html.replace('<p>&lt;!-- fields --&gt;</p>', `<div class="table"><table class="fieldcodes">${head}${rows}</table></div>`);
+}
 /* The last day a record page changed: a new version, a note, a withdrawal, or a reported published version.
  * The sitemap and the feed use it, so a search engine and a feed reader see each of these changes. */
 const changed = (p) => [latest(p).date, p.withdrawal_date, p.published && p.published.reported]
@@ -875,7 +1001,7 @@ ${p.published ? `<p class="meta">Published version</p>
   const jump = `<p class="meta jump"><a href="#abstract">Abstract</a> · <a href="#status">Status</a> · <a href="#cite">Cite</a></p>`;
   const body = `
 ${crumbs}
-<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.subfield ? ' · ' + esc(SITE.subfields[p.category][p.subfield]) : ''}${p.operator_own ? '<span class="flag own">operator’s own submission</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categories[c])}</a>`).join(' · ')}${p.subfield ? ' · ' + esc(SITE.subfields[p.category][p.subfield]) : ''}${p.operator_own ? '<span class="flag own">operator’s own submission</span>' : ''}${markLabel(p)}</p>
 ${collectionLinks(p)}
 ${withdrawn}
 ${publishedNotice(p)}
@@ -902,7 +1028,7 @@ ${keywords}
 <h2 id="read">Read</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">Latest version (v${v.version}) at ${esc(repoName(v.doi))}</a> · licence <a href="${LICENCE_URL[p.license]}">${esc(SITE.licenses[p.license])}</a></p>
 ${copies}
-${cite}
+${catalogueCard(p)}${cite}
 <h2>Versions</h2>
 <div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th></tr>${versions}</table></div>
 <h2>Use of language models and other generative models</h2>
@@ -1022,7 +1148,7 @@ ${rel.byAuthors.length ? '<p class="meta">同じ著者のもの</p>\n' + relList
   ].map(([n, h]) => `<a href="${esc(h)}">${n}</a>`).join(' · ');
   const body = `
 ${crumbs}
-<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categoriesJa[c])}</a>`).join(' · ')}${p.subfield ? ' · <span lang="en">' + esc(SITE.subfields[p.category][p.subfield]) + '</span>' : ''}${p.operator_own ? '<span class="flag own">運営者自身の投稿</span>' : ''}</p>
+<p class="meta"><span class="id">${esc(SITE.name)}:${esc(p.id)}</span> · ${cats(p).map((c) => `<a href="../list/${esc(c)}.html">${esc(SITE.categoriesJa[c])}</a>`).join(' · ')}${p.subfield ? ' · <span lang="en">' + esc(SITE.subfields[p.category][p.subfield]) + '</span>' : ''}${p.operator_own ? '<span class="flag own">運営者自身の投稿</span>' : ''}${markLabel(p)}</p>
 ${coll.length ? `<p class="meta">集め：${coll.map((c) => `<a href="../collection/${esc(c.slug)}.html">${esc(c.ja)}</a>`).join('、')}</p>` : ''}
 ${withdrawn}
 ${published}
@@ -1048,7 +1174,7 @@ ${(p.keywords || []).length ? `<p class="meta">キーワード：<span${wl(p.key
 <h2 id="read">読む</h2>
 <p><a href="https://doi.org/${esc(v.doi)}">最新の版（v${v.version}）、${esc(repoName(v.doi))}</a> · ライセンス ${lic}</p>
 ${copies}
-<h2 id="cite">引用</h2>
+${catalogueCard(p, true)}<h2 id="cite">引用</h2>
 <p class="meta">引用の書式は英語のままです。</p>
 ${p.published ? `<p class="meta">出版された版</p>
 <p class="cite" lang="en">${esc(publishedCite(p))}</p>
@@ -1220,7 +1346,8 @@ ${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists prep
 ${operatingCounts(all)}${listedIn()}${directoryEntries()}${ownIdentifiers()}<h2>Listing</h2>
 ${ownNotice(all)}
 ${fields(papers, '', './')}
-<p class="meta">By topic: <a href="./collections.html">Collections</a>. By month: <a href="./months.html">New by month</a>. Researchers: <a href="./call.html">a call to submit</a>.</p>
+${shelf(papers, './')}<p class="meta">By topic: <a href="./collections.html">Collections</a>. By month: <a href="./months.html">New by month</a>. Researchers: <a href="./call.html">a call to submit</a>.</p>
+<p class="meta">In the order of listing: <a href="./register.html">Accession register</a>.</p>
 ${listing(papers, './', 'No preprints are listed yet.')}
 `;
   return page({
@@ -1271,7 +1398,8 @@ function fieldPage(papers, slug) {
 <h1>${esc(label)}</h1>
 ${fields(papers, slug, '../')}
 ${fieldFacts(mine)}<p class="meta">New in this field: <a href="./${esc(slug)}.xml">Atom feed</a>.</p>
-${listing(mine, '../', 'No preprints are listed in this field yet.')}
+<p class="meta">Field code: ${fieldLabel(slug)}.</p>
+${shelf(mine, '../', false, false)}${listing(mine, '../', 'No preprints are listed in this field yet.')}
 `;
   return page({
     title: label + ' | ' + SITE.name,
@@ -1439,9 +1567,14 @@ const PROSE = { checklist: 'Before submitting to ' + SITE.name + ': what the pol
   accessibility: 'The accessibility of ' + SITE.name + ': the aim, what is checked on every change, what is known, and how to report a barrier.',
   compare: 'How ' + SITE.name + ' differs from arXiv, PhilArchive, SSRN and Zenodo: a layer on top of the repositories, not one of them.',
   glossary: 'The words used on ' + SITE.name + ', defined: overlay, moderation, record, version, withdrawal, removal and others.',
-  mission: 'Why ' + SITE.name + ' is run: its Statement of Purpose. It creates no rights or obligations; the Terms of Use and the other policies apply.' };
+  mission: 'Why ' + SITE.name + ' is run: its Statement of Purpose. It creates no rights or obligations; the Terms of Use and the other policies apply.',
+  register: 'The accession register of ' + SITE.name + ': every record listed, in order, and every withdrawal, by month.',
+  construction: 'How the logo of ' + SITE.name + ' is built: its grid and measurements, the field glyphs and the band, drawn from the same numbers.' };
 const proseSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.md'), 'utf8');
 const proseDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(proseSource(slug)) || [])[1];
+/* The day a prose page shows. The register changes with the records, so it shows the later of its text's day and theirs. */
+const proseDayOf = (slug, ja = false) => (ja ? (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(rootJaSource(slug)) || [])[1] : proseDate(slug));
+const shownDay = (slug, ja = false) => (slug === 'register' ? lastUpdated(pressRecords, proseDayOf(slug, ja)) : proseDayOf(slug, ja));
 let pressRecords = [];
 function pressFacts(html, ja = false) {
   const shown = pressRecords.filter((p) => p.status !== 'removed');
@@ -1474,7 +1607,8 @@ function prosePage(slug) {
   const src = proseSource(slug);
   const title = src.split('\n')[0].replace(/^# /, '');
   const body = markdown(src);
-  return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : slug === 'history' ? historyFill(body) : slug === 'first' ? repositoriesFillList(body) : body, src: slug + '.md' });
+  return page({ title: title + ' | ' + SITE.name, description: PROSE[slug], rel: false, canonical: slug + '.html', head: rootAlternates(slug), body: slug === 'press' ? pressFacts(body) : slug === 'history' ? historyFill(body) : slug === 'first' ? repositoriesFillList(body)
+    : slug === 'register' ? registerFill(body, pressRecords) : slug === 'construction' ? constructionFill(body) : slug === 'brand' ? fieldsFill(body) : body, src: slug + '.md' });
 }
 
 /* New by month: the records shown, grouped by the month in which they were listed, newest first. */
@@ -1612,7 +1746,7 @@ function contactPage() {
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
 /* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
-const JA_PAGES = ['first', 'libraries', 'rules', 'checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission'];
+const JA_PAGES = ['first', 'libraries', 'rules', 'checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission', 'register', 'construction'];
 const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
 const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
 const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -1624,6 +1758,9 @@ function rootJaPage(slug) {
     : slug === 'press' ? pressFacts(markdown(rootJaSource(slug)), true)
     : slug === 'history' ? historyFill(markdown(rootJaSource(slug)), true)
     : slug === 'first' ? repositoriesFillList(markdown(rootJaSource(slug)))
+    : slug === 'register' ? registerFill(markdown(rootJaSource(slug)), pressRecords, true)
+    : slug === 'construction' ? constructionFill(markdown(rootJaSource(slug)), true)
+    : slug === 'brand' ? fieldsFill(markdown(rootJaSource(slug)), true)
     : slug === 'policy' ? markdown(rootJaSource(slug)).replace('<h2>Sophaxis でないもの</h2>', `<h2>規程の一覧</h2>\n<ul>${POLICIES.filter(([s]) => JA_POLICIES[s]).map(([s]) => `<li><a href="./policies/${s}.ja.html">${esc(jaTitle(s))}</a></li>`).join('')}</ul>\n<h2>Sophaxis でないもの</h2>`)
     : markdown(rootJaSource(slug)), src: slug + '.ja.md' });
 }
@@ -1651,7 +1788,8 @@ ${operatingCounts(all, loadReports(), true)}${directoryEntries(true)}
 <ul class="fields" aria-label="分野">${Object.entries(SITE.categories).map(([slug]) => `<li><a href="./list/${slug}.html">${esc(SITE.categoriesJa[slug])}（${papers.filter((p) => cats(p).includes(slug)).length}）</a></li>`).join('')}</ul>
 <ul class="fields" aria-label="集め">${(SITE.collections || []).map((c) => `<li><a href="./collection/${esc(c.slug)}.html">${esc(c.ja)}（${papers.filter((p) => (p.collections || []).includes(c.slug)).length}）</a></li>`).join('')}</ul>
 <h2>載っている作品</h2>
-${ownNotice(all, true)}${listing(papers, './', 'まだ作品は載っていません。', true)}
+${ownNotice(all, true)}${shelf(papers, './', true)}<p class="meta">載った順：<a href="./register.ja.html">受入簿</a>。</p>
+${listing(papers, './', 'まだ作品は載っていません。', true)}
 `;
   return page({ title: SITE.name + '：哲学と数学のプレプリント', description: SITE.name + ' は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。', rel: false, canonical: 'index.ja.html', lang: 'ja', head: rootAlternates('index'), body });
 }
@@ -1833,11 +1971,11 @@ function sitemap(papers) {
     ['disclaimer.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(disclaimerJaSource()) || [, newest])[1]],
     ['repositories.html', (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(repositoriesSource()) || [, newest])[1]],
     ['stats.html', newest], ['decisions.html', (loadReports()[0] || {}).asOf || SITE.since]]
-    .concat(Object.keys(PROSE).map((slug) => [slug + '.html', proseDate(slug) || newest]), [['news.html', (loadNews()[0] || {}).date || SITE.since], ['months.html', newest]])
+    .concat(Object.keys(PROSE).map((slug) => [slug + '.html', shownDay(slug) || newest]), [['news.html', (loadNews()[0] || {}).date || SITE.since], ['months.html', newest]])
     .concat(POLICIES.map(([slug]) => ['policies/' + slug + '.html', policyDate(slug)]))
     .concat(Object.keys(JA_POLICIES).map((slug) => ['policies/' + slug + '.ja.html', jaDate(slug, newest)]))
     .concat(Object.keys(SITE.categories).map((slug) => ['list/' + slug + '.html', newest]))
-    .concat([['index.ja.html', [newest, topUpdated('ja')].filter(Boolean).sort().pop()]], JA_PAGES.filter(hasRootJa).map((slug) => [slug + '.ja.html', (/最終更新：(\d{4}-\d{2}-\d{2})。/.exec(rootJaSource(slug)) || [, newest])[1]]))
+    .concat([['index.ja.html', [newest, topUpdated('ja')].filter(Boolean).sort().pop()]], JA_PAGES.filter(hasRootJa).map((slug) => [slug + '.ja.html', shownDay(slug, true) || newest]))
     .concat([['collections.html', newest]], (SITE.collections || []).map((c) => ['collection/' + c.slug + '.html', newest]))
     .concat(authorIds(papers).map((o) => ['author/' + o + '.html', papers.filter((p) => p.authors.some((a) => a.orcid === o)).map(changed).sort().pop()]))
     .concat(papers.flatMap((p) => [['abs/' + p.id + '.html', changed(p)], ['abs/' + p.id + '.ja.html', changed(p)]]))
@@ -1938,6 +2076,7 @@ function build(out, paperDir) {
   for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));
   problems.push(...newsProblems(loadNews()));
   problems.push(...policyChangeProblems(loadPolicyChanges()));
+  problems.push(...fieldProblems());
   if (problems.length) return { problems };
   /* Removed records keep only their notice page; they are left out of every list, feed and search. */
   const papers = all.filter((p) => p.status !== 'removed');
@@ -1981,6 +2120,8 @@ function build(out, paperDir) {
     'first.html': prosePage('first'),
     'libraries.html': prosePage('libraries'),
     'rules.html': prosePage('rules'),
+    'register.html': prosePage('register'),
+    'construction.html': prosePage('construction'),
     'news.xml': newsFeed(loadNews()),
     'policies/changes.xml': policyChangesFeed(loadPolicyChanges()),
     'badge.svg': badgeSvg(),
@@ -2041,7 +2182,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
