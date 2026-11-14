@@ -126,7 +126,7 @@ The operator's GitHub account, the only one that can change the repository, uses
 GitHub's own procedure is to rewrite the history first and then ask GitHub Support, which helps only with sensitive data whose risk cannot be removed otherwise; where it does not help, the earlier versions stay in the history.
 A follow-up issue lists these steps, with the request to the Internet Archive.
 Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
-This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+This rule does not depend on nationality, race, ethnic origin or any other personal characteristic, and Sophaxis never reads an author's nationality.
 Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
 A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from the date the Submission Policy gives for each place (2026-11-22, or 2026-11-26 for 15 of them), because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
@@ -181,7 +181,7 @@ From 2026-12-01, for a submission whose issue is opened on or after that day, So
 A claim that fails its check, or cannot be checked, is turned away automatically.
 From 2026-12-01, under the checked intake below, only the DOI metadata counts for the second check: it must list the ORCID iD for an author of the work.
 An author for whom it gives none cannot confirm, and the work waits until the metadata at the repository names one.
-The GitHub location is free text, so it is used only to turn a person away, never to accept one.
+It reads no nationality, and nothing from GitHub.
 The check keeps and writes none of the countries or organisations; the issue shows only how many people passed, never whose record or which entry.
 This proves that earlier public records agree, not where a person lives: a person who keeps false records for 30 days can still pass.
 Nothing in the form asks the submitter to confirm what other people will do after the submission.
@@ -189,3 +189,6 @@ The checked intake never closes a removal or withdrawal issue, a request about p
 It is a statement of what the researcher knows, not a guarantee of what the submitter does.
 Sophaxis claims no money from the researcher under these policies.
 The checked intake never closes a request about removal, withdrawal, rights or personal data, or the withdrawal of a consent.
+The checked intake never closes or locks an issue; a person reads every one.
+the operator then tells them privately what is said to be untrue, and hears their answer.
+No name, ORCID iD or account of a researcher is published as having vouched untruly, and Sophaxis keeps no list of researchers.
