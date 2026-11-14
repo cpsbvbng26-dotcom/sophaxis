@@ -252,7 +252,7 @@ body:
           required: false
         - label: "[撤回の規程](https://sophaxis.vercel.app/policies/withdrawal.ja.html)に同意します。"
           required: false
-        - label: "2026-11-21 から 13 歳未満の人は投稿できないため、私が 13 歳以上であることを確かめました。2026-12-01 からは、この作品の著者全員が 16 歳以上であることも確かめました（[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html#一般)）。"
+        - label: "私が 13 歳以上であることと、2026-12-01 からは著者全員が 16 歳以上であることを確かめました（[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html#一般)）。"
           required: false
         - label: "私が 18 歳未満なら、親または保護者の同意がある場合に限って投稿していることを確かめました。"
           required: false
