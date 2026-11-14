@@ -68,6 +68,8 @@ The text of this site may be reused under CC BY 4.0, as set out in the [Licence 
 The operator may decline or remove a submission that breaks these rules.
 If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](./takedown.md) as soon as the operator learns of it. From 2026-11-22, the operator may also decline further submissions from the same GitHub account or ORCID iD.
 The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.md) says it is not.
+From 2026-12-01, the checked intake of the [Submission Policy](./submission.md#the-checked-intake) is the exception: it checks the identity of the authors, their agreement, and the place that their public records give.
+The checked intake proves only that earlier public records agree, so these rules on untrue confirmations apply to what it checks as well.
 The confirmations stay in the public issue, so that what was confirmed, and when, can be shown.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
 

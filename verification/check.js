@@ -166,8 +166,8 @@ console.log('\n4. The policy keeps its promises in writing');
     'Only an author of a work can submit it.',
     'A submission that does not pass both is not listed.',
     'It is not an official identity check.',
-    'It does not ask for the person section as a whole, so public email addresses and the country are never received.',
-    'The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.',
+    'It does not ask for the person section as a whole, so public email addresses are never received.',
+    'The check uses only the name, the websites and the works, and, from 2026-12-01, the countries and organisations that the place rule reads; it keeps or writes nothing else from the ORCID record, and it never keeps, writes or prints a country or an organisation.',
     'Records are kept to preserve the scholarly record, for freedom of expression and information (Article 17(3)(a)).',
     'The OAI-PMH interface gives the same email address as the operator\'s ORCID record, because the protocol requires one.',
     'Material that was taken offline while the request was reviewed is put back.',
@@ -407,11 +407,11 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
   /* Until 2026-11-13 the issue text went to the scripts through the environment, which the run's log prints; now each script reads it from the event file (check 128). */
-  ok('the workflow passes the issue text neither into the shell nor through the environment: each of the three scripts reads it from the event file', runs.join() === "sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js,node tools/withdraw.js,node tools/published.js"
+  ok('the workflow passes the issue text neither into the shell nor through the environment: each of the three scripts reads it from the event file', runs.join() === "sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js,node tools/withdraw.js,node tools/published.js,node tools/intake.js --deadline"
     && !/ISSUE_BODY|github\.event\.issue\.body/.test(wf.replace(/^    if: [\s\S]*?\n(?=    name: )/gm, ''))
     && ['intake.js', 'withdraw.js', 'published.js'].every((f) => /= (I\.)?issueEvent\(\);/.test(read(path.join(ROOT, 'tools', f)))));
   ok('the workflow may only read the code and write to issues', /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
-  ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version', (wf.match(/^    if: /gm) || []).length === 3
+  ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version, and the daily close of the checked intake only on its schedule', (wf.match(/^    if: /gm) || []).length === 4 && wf.includes("if: github.event_name == 'schedule'\n    name: Close submissions whose time to pass the checks has ended")
     && wf.includes("if: >-\n      contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')")
     && wf.includes("if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'published')"));
   ok('a comment runs the submission check again only when it carries the words of a confirmation, never a bot\'s comment or one on a pull request',
@@ -570,7 +570,7 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
     && ['取り扱う者', '取り扱う個人情報', '利用目的', '公開と第三者への提供', '外国にある事業者の利用', '安全のための措置', '保存の期間', '開示・訂正・利用停止・削除の求め'].every((h) => new RegExp('<h2 id="[^"]+">' + h + '</h2>').test(ja)));
   ok('the Japanese page names every foreign service the English policy names, and links back to it', ['GitHub（米国）', 'Vercel（米国）', 'DataCite（ドイツ）', 'Crossref（米国）', 'ORCID（米国）', 'Internet Archive（米国）'].every((s) => ja.includes(s))
     && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>' + /最終更新：(\d{4}-\d{2}-\d{2})。/.exec(read(path.join(ROOT, 'policies', 'privacy.ja.md')))[1]));
-  ok('Japanese lines join without a space, English lines with one', ja.includes('どこにも書き写しません。2026-11-14 から、検査は、形を読むために取得する PDF') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
+  ok('Japanese lines join without a space, English lines with one', ja.includes('issue に示すのは通った人の数だけです。2026-11-14 から、検査は、形を読むために取得する PDF') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
   {
     const en = read(path.join(ROOT, 'site', 'policies', 'privacy.html'));
     const pair = '<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/privacy.html">\n'
@@ -2147,9 +2147,9 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml' };
+  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml', 'checked-intake.yml': 'checked-intake.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml', 'checked-intake.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
@@ -2158,7 +2158,7 @@ console.log('\n51. What runs by itself, said on the site and in the README');
     && auto.includes('and once a day at ' + jst(cronOf('live.yml')) + ' Japan time, every file in `site/` is fetched from the live site') && cronOf('live.yml').endsWith(' * * *')
     && cronOf('watch.yml').endsWith(' * * 1') && cronOf('monthly.yml').endsWith(' 1 * *') && auto.includes('## Once a month, on the 1st at ' + jst(cronOf('monthly.yml')) + ' Japan time') && cronOf('statutes.yml') === cronOf('watch.yml') && cronOf('removal.yml').endsWith(' * * *') && (Number(cronOf('watch.yml').split(' ')[1]) + 9) < 24);
   ok('the page says that no step decides, uses a language model or holds another key, and names the one step that acts before a decision',
-    ['No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.', 'No step uses a language model. The steps are ordinary code.',
+    ['No automatic step accepts a submission or a correction, and none decides on a withdrawal or a removal request. The operator decides every one; from 2026-12-01, the checked intake only turns away a submission or a report of an error whose claim fails its check', 'No step uses a language model. The steps are ordinary code.',
       'No step signs in to any account.', 'One step acts before the operator decides: when a removal issue reports exposure of personal data'].every((x) => auto.includes(x)));
   const readme = read(path.join(ROOT, 'README.md'));
   ok('the README, in both languages, points to the page', readme.includes('### What runs by itself') && readme.includes('(https://sophaxis.vercel.app/automation.html) (`automation.md`)')
@@ -2610,7 +2610,7 @@ console.log('\n65. The separate consent to the Internet Archive, the residence o
   ok('the draft record keeps the record out of the saves when the box is left empty, and only then',
     /'archive' in form && !\/\^- \\\[\[xX\]\\\] \/m\.test/.test(read(path.join(ROOT, 'tools', 'intake.js'))));
   ok('from ' + site.residenceFrom + ' the form names every place where Sophaxis is not offered, asks that no author lives in one, and the check needs the box',
-    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('I confirm that no author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study).') && res.includes('I confirm that no author under 18 lives or stays in India.') && site.notOffered.length >= 23 && res.includes('who lives in any of these places, or who stays in one between the submission and the listing, even briefly (' + B.notOfferedPlaces() + ').')
+    res.includes('label: Where the authors live') && res.includes('Required from ' + site.residenceFrom + '.') && res.includes('I confirm that, on the day of submission, no author of this work lives in any of the places listed above, or is staying in one, even briefly (such as for travel, work or study).') && res.includes('I agree to report in this issue, before the listing, any change to these two confirmations that I learn of, from 2026-12-01.') && res.includes('I confirm that no author under 18 lives or stays in India.') && site.notOffered.length >= 23 && res.includes('who lives in any of these places, or who stays in one between the submission and the listing, even briefly (' + B.notOfferedPlaces() + ').')
     && site.residenceFrom === '2026-11-22' && read(path.join(ROOT, 'policies', 'submission.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not list work by an author who lives in any of the ' + site.notOffered.length + ' places in the table below')
     && read(path.join(ROOT, 'policies', 'privacy.md')).includes('From ' + site.residenceFrom + ', Sophaxis does not offer its service to people in the European Union'));
   const ix = I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md')));
@@ -5950,7 +5950,7 @@ console.log('\n123. What an eighth, read-only pass found: GitHub\'s terms for Ac
     ['a new workflow without a row', problems(w({ wf: WF.concat(['newsletter.yml']) }))],
     ['a row for a workflow taken away', problems(w({ wf: WF.filter((f) => f !== 'audit.yml') }))],
     ['a row dropped', problems(w({ aud: AUD.replace(/\n\| `\.github\/workflows\/pdf\.yml`[^\n]*/, '') }))],
-    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 13 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 13 です。') }))],
+    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 14 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 14 です。') }))],
     ['a decision without its maker', problems(w({ aud: AUD.replace('ワークフローから呼ばれなくなりました。2026-11-13 に Claude が決めました。', 'ワークフローから呼ばれなくなりました。') }))],
     ['a quotation altered', problems(w({ aud: AUD.replace('or publication of the software project associated', 'or promotion of the software project associated') }))],
     ['the posts for X written again', problems(w({ wfText: Object.assign({}, wfText, { 'monthly.yml': wfText['monthly.yml'] + '\n      - run: node tools/monthly.js\n' }) }))],
@@ -6328,7 +6328,9 @@ console.log('\n128. No issue text in the logs of the runs: the scripts read an i
   const TOOLS = ['intake.js', 'withdraw.js', 'published.js', 'removal.js', 'record.js'];
   const TEXT = /github\.event\.(issue|comment|pull_request|review|discussion|discussion_comment)\.(body|title)\b|toJSON\(\s*github\.event\b|github\.event\.(issue|comment|pull_request)\s*\}\}/;
   const PRINTS = [/^'[^']*'$/, /^(e|err)\.message$/, /^'[a-z -]+: ' \+ (e|err)\.message$/, /^action \+ ': ' \+ e\.message$/, /^verified \? 'verified' : 'not verified'$/,
-    /^held \? 'held' : 'acknowledged'$/, /^'emptied: ' \+ emptied\.map\(\(x\) => '#' \+ x\)\.join\(', '\)$/, /^'follow-up: #' \+ issue\.number$/];
+    /^held \? 'held' : 'acknowledged'$/, /^'emptied: ' \+ emptied\.map\(\(x\) => '#' \+ x\)\.join\(', '\)$/, /^'follow-up: #' \+ issue\.number$/,
+    /* The daily close of the checked intake (from 2026-12-01): the number of each issue it closes, and nothing else. */
+    /^'closed at the end of its time: #' \+ i\.number$/];
   /* What a workflow passes outside its conditions: every line, with each if: and the lines that continue it taken out. */
   function outsideIf(text) {
     const out = [];
@@ -6846,7 +6848,7 @@ console.log('\n132. Keeping the form and tightening (2026-11-14): advice for the
     'policies/copyright.ja.md': ['その許諾に係る利用方法及び条件の範囲内でだけ利用できるとしています。Sophaxis は、同法のどの例外にも拠りません。', 'そのライセンスはその許諾になりません。'],
     'policies/moderation.md': ['Since 2026-11-14, the automatic check also gives the moderator advice, read by machine, which decides nothing', 'It shows counts and fixed words only, never what was found.'],
     'policies/moderation.ja.md': ['2026-11-14 から、自動の確認は、機械で読んだ助言もモデレーターに示します。助言は何も決めません。', '示すのは数と決まった語だけで、見つけたものそのものは示しません。'],
-    'policies/privacy.md': ['It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading.', 'It does not read the country of an ORCID record.', '- since 2026-11-14, to give the moderator advice, as counts only'],
+    'policies/privacy.md': ['It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading.', 'For this advice, it does not read the country of an ORCID record.', '- since 2026-11-14, to give the moderator advice, as counts only'],
     'policies/privacy.ja.md': ['書くのは数だけで、見つけた文字列も国や地域の名も書かず、何も保存せず、読んだあとファイルを消します。', 'ORCID の記録の国は読みません。', '- 2026-11-14 から、投稿された作品やその DOI のメタデータが示す他人の連絡先と国と地域について'],
     'automation.md': ['The comment and the log show counts and fixed words only, never what was found.', 'each PDF copy in the repository, against its recorded SHA-256'],
     'automation.ja.md': ['コメントと実行の記録が示すのは、数と決まった語だけで、見つけたものそのものは示しません。', '記録した SHA-256 と照らし'],
@@ -6904,7 +6906,7 @@ console.log('\n132. Keeping the form and tightening (2026-11-14): advice for the
     if (!/This limit applies only to negligence that is not gross negligence\./.test(c.pages['policies/terms.md']) || !/この限りは、重大な過失を除く過失にだけ適用されます。/.test(c.pages['policies/terms.ja.md'])) bad.push('the limit does not say it applies only to negligence that is not gross');
     /* The notice: the day is in the notice and the feed, and the commitments hold the clauses. */
     if (!c.site.termsNotice.text.includes("From 2026-12-01, for a submission made on or after that day, the Terms of Use limit the operator's liability") || !c.changes.some((e) => e.from === '2026-12-01' && e.date === '2026-11-14' && e.policies.includes('terms'))) bad.push('the notice or the feed of 2026-12-01');
-    for (const s of ['From 2026-12-01, one limit applies to a person who agrees to these terms in a form on or after that day.', 'A measure taken on a request goes no further than is needed to stop the material concerned from being sent.', 'It does not read the country of an ORCID record.']) if (!c.com.includes(s + '\n')) bad.push('the commitments: ' + s.slice(0, 40));
+    for (const s of ['From 2026-12-01, one limit applies to a person who agrees to these terms in a form on or after that day.', 'A measure taken on a request goes no further than is needed to stop the material concerned from being sent.', 'For this advice, it does not read the country of an ORCID record.']) if (!c.com.includes(s + '\n')) bad.push('the commitments: ' + s.slice(0, 40));
     /* The record: its section before the end, the texts it quotes found in the fetched texts, the hashes, the table, the count, who decided, and lawyers. */
     const HEAD = '\n## 2026-11-14：形を保って詰める\n';
     const i = c.aud.indexOf(HEAD), end = c.aud.indexOf('\n## この記録について\n');
@@ -6965,11 +6967,11 @@ console.log('\n132. Keeping the form and tightening (2026-11-14): advice for the
     ['the copies not said to be sent by Sophaxis (Japanese)', page('policies/takedown.ja.md', 'そのため写しについては Sophaxis が発信者であり、', '')],
     ['the fee back in the Takedown Policy', page('policies/takedown.md', 'Sophaxis has not, because it registers with no office, so it does not rely on that limitation.', 'Sophaxis has not designated an agent, which charges a fee.')],
     ['the copies on an exception of the Copyright Act', page('policies/copyright.md', 'and relies on no exception of that Act.', 'and on the exceptions of that Act.')],
-    ['the Privacy Policy reading the ORCID country', page('policies/privacy.md', 'It does not read the country of an ORCID record.', 'It reads the country of the ORCID record.')],
+    ['the Privacy Policy reading the ORCID country', page('policies/privacy.md', 'For this advice, it does not read the country of an ORCID record.', 'It reads the country of the ORCID record.')],
     ['the moderation advice deciding', page('policies/moderation.md', 'which decides nothing', 'which decides')],
     ['the notice without 2026-12-01', set('site', Object.assign({}, real.site, { termsNotice: Object.assign({}, real.site.termsNotice, { text: real.site.termsNotice.text.replace("From 2026-12-01, for a submission made on or after that day, the Terms of Use limit", "The Terms of Use limit") }) }))],
     ['the feed without the entry', set('changes', real.changes.filter((e) => e.from !== '2026-12-01'))],
-    ['a commitment dropped', set('com', real.com.replace('It does not read the country of an ORCID record.\n', ''))],
+    ['a commitment dropped', set('com', real.com.replace('For this advice, it does not read the country of an ORCID record.\n', ''))],
     ['the section taken out', aud('\n## 2026-11-14：形を保って詰める\n', '\n## 2026-11-14：詰める\n')],
     ['a quotation changed', aud('送信可能化の回数又は送信可能化に用いる自動公衆送信装置に係るものを除く。', '送信可能化の回数を除く。')],
     ['a hash changed', aud('| a85d04f2fd20d7867d5579bee40676b13405c58ea7fd7eb27f1e7a5a03bda100 |', '| a85d04f2fd20d7867d5579bee40676b13405c58ea7fd7eb27f1e7a5a03bda101 |')],
@@ -7195,12 +7197,220 @@ console.log('\n133. The shelf (2026-11-14): field codes and colours, shelf marks
     ['the record\'s section taken out', aud(HEAD, '\n## 2026-11-14：意匠\n')],
     ['the record\'s count', aud('この表の判定は、根拠不足 1、問題なし 5 です。', 'この表の判定は、問題なし 6 です。')],
     ['a choice without its reason', aud('引き方が二つになって引用が割れるためです |', '引き方が二つになります |')],
-    ['the record without the sentence on lawyers', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
+    /* 2026-11-14: a section followed this one, so the break aims at the end of this section. */
+    ['the record without the sentence on lawyers', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-14：突き合わせの受付', '\n\n## 2026-11-14：突き合わせの受付')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: a code twice, missing or another scheme\'s, a pale colour in either scheme, the logo, the band, a glyph, an SVG without a title, the drawing, a font loaded or as a file, motion, an outside image, the shelf style without need, the brand table, a shelf mark, the card, a withdrawal unmarked, a spine missing or twice, the register\'s order, day and removed records, the sitemap, a shelf mark in BibTeX or a Highwire tag, a scheme named, the metaphor, the label, and the record\'s section, count, reason and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
+/* ------------------------------------------------------------ 134 */
+console.log('\n134. The checked intake (from 2026-12-01): a claim is accepted only when public records check it; the place rule, co-authors, the words of vouching, the deadline, requests that are never closed, and the record (2026-11-14)');
+{
+  /* The owner asked on 2026-11-14 for an intake that turns away, by itself, every claim that cannot be checked; Claude decided the
+   * design. Every branch of the place rule (tools/place.js) is run on ORCID and GitHub answers made here, the intake's new rows on
+   * records made here, and every rule is broken on purpose. */
+  const Pl = require('../tools/place.js');
+  const I = require('../tools/intake.js');
+  const CI = require('../.github/checked-intake/verify.js');
+  const J = (f) => JSON.parse(read(path.join(ROOT, f)));
+  const site = J('site.json');
+  const DAY = 24 * 3600 * 1000;
+  const OPEN = '2026-12-10';
+  const t0 = Date.parse(OPEN + 'T00:00:00+09:00');
+  const addr = (c, days) => ({ country: { value: c }, 'created-date': { value: t0 - days * DAY } });
+  const aff = (key, c, days, end, name, id) => ({ summaries: [{ [key]: { organization: { name: name || 'Org ' + c, address: { country: c }, ...(id ? { 'disambiguated-organization': { 'disambiguated-organization-identifier': id, 'disambiguation-source': 'ROR' } } : {}) }, 'created-date': { value: t0 - days * DAY }, 'end-date': end ? { year: { value: '2020' } } : null } }] });
+  const rec = ({ a = [], e = [], d = [], loc = '' } = {}) => ({ address: { address: a }, employments: { 'affiliation-group': e }, educations: { 'affiliation-group': d }, location: loc });
+  const place = (r, opened = OPEN, notOffered = site.notOffered) => Pl.placeOf({ signals: Pl.strongSignals(r), location: r.location, opened, notOffered }).reason;
+  /* The fixtures, one per branch of the rule. */
+  const cases = [
+    ['an address in Japan, 60 days old', rec({ a: [addr('JP', 60)] }), 'placed'],
+    ['a current employment in Japan, 31 days old', rec({ e: [aff('employment-summary', 'JP', 31)] }), 'placed'],
+    ['a current education in Japan, 30 days old to the day', rec({ d: [aff('education-summary', 'JP', 30)] }), 'placed'],
+    ['an address in Japan added 29 days before', rec({ a: [addr('JP', 29)] }), 'unplaced'],
+    ['no public record', rec(), 'unplaced'],
+    ['an entry without a day', rec({ a: [{ country: { value: 'JP' } }] }), 'unplaced'],
+    ['an address in France, however old', rec({ a: [addr('FR', 400)] }), 'excluded'],
+    ['an address in Japan and an old one in Germany', rec({ a: [addr('JP', 60), addr('DE', 900)] }), 'excluded'],
+    ['a current employment in the United Kingdom', rec({ a: [addr('JP', 60)], e: [aff('employment-summary', 'GB', 2)] }), 'excluded'],
+    ['an employment in France that has ended', rec({ a: [addr('JP', 60)], e: [aff('employment-summary', 'FR', 900, true)] }), 'placed'],
+    ['a GitHub location naming France', rec({ a: [addr('JP', 60)], loc: 'Paris, France' }), 'excluded'],
+    ['a GitHub location with a code alone', rec({ a: [addr('JP', 60)], loc: 'Lyon, FR' }), 'excluded'],
+    ['a GitHub location in Japanese', rec({ a: [addr('JP', 60)], loc: '中国・北京' }), 'excluded'],
+    ['a GitHub location of Quebec, with an address in Canada', rec({ a: [addr('CA', 60)], loc: 'Montréal, Québec' }), 'excluded'],
+    ['an address in Canada alone', rec({ a: [addr('CA', 60)] }), 'unplaced'],
+    ['an address in Japan and an employment in the United States', rec({ a: [addr('JP', 60)], e: [aff('employment-summary', 'US', 60)] }), 'conflict'],
+    ['a GitHub location that names New Mexico or Papua New Guinea', rec({ a: [addr('JP', 60)], loc: 'Albuquerque, New Mexico; Port Moresby, Papua New Guinea' }), 'placed'],
+    ['a GitHub location alone in Japan, with no ORCID entry', rec({ loc: 'Tokyo, Japan' }), 'unplaced'],
+  ];
+  const wrong = cases.filter(([, r, want]) => place(r) !== want).map(([n, r]) => n + ' → ' + place(r));
+  ok('the place rule on ' + cases.length + ' records made here: placed only by an ORCID entry in a place where Sophaxis is offered, kept ' + site.checkedDays + ' days; turned away by any entry or GitHub location in a place not offered, by two countries, by Canada alone, by no entry',
+    wrong.length === 0 && site.checkedDays === 30 && site.checkedFrom === '2026-12-01', wrong.join(' / '));
+  ok('a place not offered from a later day is not yet excluded before it, and every place of the table has its codes',
+    Pl.excludedCodes('2026-11-25').has('AR') === false && Pl.excludedCodes('2026-11-26').has('AR') && site.notOffered.every((p) => (p.codes || []).length > 0)
+    && site.notOffered.find((p) => p.place === 'Quebec').codes.join() === 'CA-QC' && Pl.ambiguous(Pl.excludedCodes(OPEN)).has('CA'));
+  /* The intake: identity by the DOI metadata only, no confirmation by email, an author without an iD waits, counts only. */
+  const meta = { doi: '10.5281/zenodo.1', authors: [{ name: 'Ada Lovelace', given: 'Ada', family: 'Lovelace', orcid: '0000-0002-1825-0097' }, { name: 'Bo Ito', given: 'Bo', family: 'Ito', orcid: null }] };
+  const person = { given: 'Bo', family: 'Ito', urls: ['https://github.com/boito'] };
+  const works = new Set(['10.5281/zenodo.1']);
+  const comments = [{ user: { login: 'cpsbvbng26-dotcom', type: 'User' }, body: I.BY_EMAIL + ' 0000-0001-5109-3700' }, { user: { login: 'boito', type: 'User' }, body: I.AGREE + ' ORCID: 0000-0001-5109-3700' }];
+  const row = I.coauthorCheck(meta.authors, meta.authors[0], [], '2026-12-10', true);
+  ok('from 2026-12-01, only the DOI metadata connects an ORCID iD to an author; an operator\'s record of an email does not count; an author without an iD in the metadata is named as waiting for one',
+    I.authorOf(meta, meta.doi, '0000-0001-5109-3700', person, works, true).author === null && I.authorOf(meta, meta.doi, '0000-0001-5109-3700', person, works, false).author === meta.authors[1]
+    && I.confirmationsIn(comments, 'cpsbvbng26-dotcom', true).every((c) => !c.byOperator) && I.confirmationsIn(comments, 'cpsbvbng26-dotcom', false).some((c) => c.byOperator)
+    && row[1] === false && row[2].includes('the DOI metadata gives no ORCID iD for Bo Ito'));
+  const codes = [...new Set(site.notOffered.flatMap((p) => p.codes))].concat(['JP', 'US', 'CA']);
+  const placeRow = I.placeCheck([true, false]);
+  const commentText = I.comment({ ok: false, checks: [placeRow] }, null, [], null, null, true);
+  const leaks = (t) => codes.filter((c) => new RegExp('\\b' + c.replace('-', '\\-') + '\\b').test(t)).concat(['Org JP', 'Org FR', 'Paris', 'Lyon'].filter((x) => t.includes(x)));
+  ok('the row of the place rule and the comment give counts and a fixed reason only: no country, code, organisation or location, and not whose record',
+    placeRow[2] === '1 of 2 verified authors' && placeRow[1] === false && I.placeCheck([true]).every((x, i) => i !== 1 || x === true) && I.placeCheck([])[1] === false
+    && commentText.includes(Pl.PLACE_NOTE.trim().slice(0, 60)) && leaks(commentText.replace(/https?:\/\/\S+/g, '')).length === 0 && !/[A-Z]{2}-[A-Z]{2}/.test(Pl.PLACE_NOTE));
+  /* Vouching from 2026-12-01: the words, the attestation, and the new reasons. */
+  const e = { login: 'vouch', orcid: '0000-0003-1415-9265' };
+  const vp = (o) => I.vouchProblem(Object.assign({ e, person: { given: 'Cy', family: 'Rao', urls: ['https://github.com/vouch'] }, peer: new Set(['10.1/x']), meta, submitter: '0000-0002-1825-0097', checked: true, placed: true, shares: false }, o));
+  const sub = read(path.join(ROOT, 'policies', 'submission.md')), subJa = read(path.join(ROOT, 'policies', 'submission.ja.md'));
+  const VJA = 'Sophaxis へのこの投稿を推薦します。私の知るかぎり、投稿者はこの作品の著者であり、そのライセンスのもとでこれを投稿する権利を持ち、Sophaxis を提供していない場所に住んでも滞在してもいません。私はこの作品の著者ではなく、著者と同じ計画の者でもなく、著者との利益相反もありません。私は、Sophaxis を提供していない場所に住んでも滞在してもいません。これは私の知っていることを述べるもので、保証ではありません。';
+  const vouchProblems = (x) => {
+    const bad = [];
+    if (!x.V.startsWith(I.VOUCH) && !x.V.startsWith('I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence')) bad.push('the words');
+    if (!/This states what I know; it is not a guarantee\.$/.test(x.V)) bad.push('the words without "not a guarantee"');
+    if (!x.sub.includes('"' + x.V + '"') || !x.subJa.includes('「' + x.V + '」') || !x.subJa.includes('訳は「' + VJA + '」です。')) bad.push('the policy, in English and Japanese');
+    if (!x.sub.includes('It is a statement of what the researcher knows, not a guarantee of what the submitter does.') || !x.sub.includes('Sophaxis claims no money from the researcher under these policies.')
+      || !x.sub.includes('If a vouching proves untrue, the researcher can no longer vouch, the vouching is recorded as untrue in the history of the record, and the listing is reviewed.')) bad.push('the attestation, no money, and the consequence');
+    if (/(compensat|damages|indemnif|liable)/i.test(x.sub.split('## A researcher who vouches for a first submission')[1].split('\n## ')[0])) bad.push('a claim for money in the section on vouching');
+    return bad;
+  };
+  const realV = { V: I.VOUCH_CHECKED, sub, subJa };
+  ok('the words of vouching from 2026-12-01 attest what the researcher knows and say they are not a guarantee, in the policy in English (canonical) and with its Japanese translation; the section asks no money; the intake turns away a researcher barred, not placed, or sharing an organisation, and one it could not compare',
+    vouchProblems(realV).length === 0 && vp({}) === null && /no longer vouch/.test(vp({ e: Object.assign({}, e) }) || 'x') === false
+    && /do not place them/.test(vp({ placed: false })) && /conflict of interest/.test(vp({ shares: true })) && /could not be compared/.test(vp({ shares: null }))
+    && vp({ checked: false, placed: false, shares: true }) === null && I.vouchesIn([{ user: { login: 'vouch', type: 'User' }, body: I.VOUCH_CHECKED + ' ORCID: 0000-0003-1415-9265' }], I.VOUCH_CHECKED).length === 1
+    && I.vouchesIn([{ user: { login: 'vouch', type: 'User' }, body: I.VOUCH + ' ORCID: 0000-0003-1415-9265' }], I.VOUCH_CHECKED).length === 0
+    && I.vouchNoteChecked().includes(I.VOUCH_CHECKED) && Pl.sharesOrganisation(rec({ e: [aff('employment-summary', 'JP', 60, false, 'Univ X', 'https://ror.org/1')] }), rec({ d: [aff('education-summary', 'JP', 60, false, 'Other name', 'https://ror.org/1')] }))
+    && !Pl.sharesOrganisation(rec({ e: [aff('employment-summary', 'JP', 60, true, 'Univ X')] }), rec({ e: [aff('employment-summary', 'JP', 60, false, 'Univ X')] })));
+  /* The deadline: 30 days, only an unverified submission opened from the day; never a request. */
+  const iss = (o) => Object.assign({ state: 'open', created_at: '2026-12-01T00:00:00+09:00', labels: [{ name: 'submission' }, { name: 'unverified' }] }, o);
+  const dl = [[iss({}), '2026-12-31', true], [iss({}), '2026-12-30', false], [iss({ labels: ['submission', 'verified'] }), '2027-02-01', false], [iss({ labels: ['submission', 'removal'] }), '2027-02-01', false],
+    [iss({ labels: ['withdrawal'] }), '2027-02-01', false], [iss({ created_at: '2026-11-30T14:59:00Z' }), '2027-02-01', false], [iss({ pull_request: {} }), '2027-02-01', false], [iss({ state: 'closed' }), '2027-02-01', false]];
+  const dlWrong = dl.filter(([i, d, want]) => I.pastDeadline(i, d) !== want).map(([i, d]) => JSON.stringify(i.labels) + ' ' + d);
+  const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
+  ok('the daily run closes only an unverified submission opened on or after ' + site.checkedFrom + ', ' + site.checkedDays + ' days after it was opened, never a request or a verified submission, with a fixed comment that repeats nothing',
+    dlWrong.length === 0 && wf.includes("if: github.event_name == 'schedule'") && wf.includes('node tools/intake.js --deadline') && !/\$\{\{[^}]*(body|title)/.test(I.DEADLINE_NOTE) && I.DEADLINE_NOTE.includes('A new issue can be opened'), dlWrong.join(' / '));
+  /* Requests that are never closed: by label, by kind and by their words. */
+  const conf = JSON.parse(read(path.join(ROOT, '.github', 'checked-intake', 'config.json')));
+  const neverProblems = (c) => {
+    const bad = [];
+    for (const l of ['submission', 'removal', 'withdrawal', 'published']) if (!(c.neverClose || []).includes(l)) bad.push('the label ' + l + ' is not kept from closing');
+    if ((c.forms || []).some((f) => f.label !== 'correction')) bad.push('a form other than the correction');
+    const f = (c.forms || [])[0] || {};
+    if (!f.when || (f.when.in || []).some((k) => /Something else|PDF|link/i.test(k)) || (f.when.in || []).length !== 3) bad.push('kinds beyond the three about the record\'s words');
+    if (c.from !== site.checkedFrom) bad.push('the day');
+    return bad;
+  };
+  const requests = ['I ask for the removal of my personal data.', 'この記録の私の氏名を削除してください。', 'The record infringes my copyright.', 'I withdraw my consent to this listing.', '名誉を傷つける記述があります。'];
+  const corr = (k, q) => CI.parseForm('### Sophaxis id\n\n2026.0001\n\n### Kind of error\n\n' + k + '\n\n### Words on the record page, as shown\n\n' + q + '\n\n### What is wrong, and where\n\n' + q + '\n');
+  const spec = conf.forms[0];
+  ok('the checked intake never closes a submission, removal, withdrawal or published-version issue, takes only the three kinds of correction about the record\'s words, and leaves a request in any of ' + requests.length + ' forms open for a person',
+    neverProblems(conf).length === 0 && CI.specFor({ labels: ['correction', 'removal'], created_at: '2026-12-02T00:00:00Z' }, conf) === null && CI.specFor({ labels: ['correction'], created_at: '2026-11-29T00:00:00Z' }, conf) === null
+    && !CI.applies(spec, corr('Something else', 'x')) && !CI.applies(spec, corr('A link is broken', 'x')) && CI.applies(spec, corr('A version, a date or a DOI is wrong', 'x'))
+    && requests.every((r) => CI.legalRequest(r) && CI.actionFor('quote', { ok: false, reason: 'absent' }, { legal: true }).close === false)
+    && CI.checkQuote(corr(spec.when.in[0], 'no such words on the page at all'), spec, conf, ROOT).reason === 'absent');
+  /* The policies, the notice, the feed, the privacy items, the rule of CLAUDE.md, the boxes. */
+  const pv = read(path.join(ROOT, 'policies', 'privacy.md')), pvJa = read(path.join(ROOT, 'policies', 'privacy.ja.md'));
+  const changes = J('data/policy-changes.json');
+  const ch = changes.find((c) => c.from === site.checkedFrom && /checked intake/.test(c.title));
+  const days = ch ? (Date.parse(ch.from) - Date.parse(ch.date)) / DAY : 0;
+  const res = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')), resJa = read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission-ja.yml'));
+  const claude = read(path.join(ROOT, 'CLAUDE.md'));
+  const policyProblems = (x) => {
+    const bad = [];
+    if (!x.ch || x.days < 17 || !['submission', 'privacy', 'terms'].every((p) => x.ch.policies.includes(p))) bad.push('the feed entry, 17 days ahead (14 if the merge slips 3 days)');
+    if (!x.notice.includes('From 2026-12-01, for an issue opened on or after that day, the checked intake accepts a claim only when public records check it')) bad.push('the notice on the top page');
+    if (!x.pv.includes('From 2026-12-01, for the place rule of the checked intake, it also asks for the address, employments and educations sections.') || !x.pv.includes('it never keeps, writes or prints a country or an organisation')
+      || x.pv.includes('public email addresses and the country are never received')) bad.push('the Privacy Policy');
+    if (!x.pvJa.includes('「住所」・「勤め先」・「在学先」の部分も問い合わせ') || !x.pvJa.includes('国と組織は、保存も書き写しも表示もせず') || x.pvJa.includes('公開のメールアドレスや国を受け取ることはありません')) bad.push('the Japanese Privacy Policy');
+    if (!x.claude.includes('ORCID の公開記録の住所・勤め先・在学先の部分の国と組織') || !x.claude.includes('国も組織も記録・ログ・コメント・リポジトリに写さない')) bad.push('rule 7 of CLAUDE.md');
+    if (/stays in one between the submission and the listing, even briefly \(such as/.test(x.res) || /投稿から掲載までのあいだに（旅行/.test(x.resJa)) bad.push('a box that asks about what others will do');
+    if (!x.res.includes('any change to these two confirmations that I learn of, from 2026-12-01.') || !x.resJa.includes('この issue で知らせることに同意します。')) bad.push('the undertaking to report a change');
+    if (!x.sub.includes('No system can stop a person from lying in general; this one makes every claim it accepts a checked claim.') || !x.sub.includes('This proves that earlier public records agree, not where a person lives: a person who keeps false records for 30 days can still pass.')
+      || !x.subJa.includes('偽りの記録を 30 日保つ人は、通ることがあります。')) bad.push('the principle and its limits');
+    return bad;
+  };
+  const realP = { ch, days, notice: site.termsNotice.text, pv, pvJa, claude, res, resJa, sub, subJa };
+  ok('the change is announced ' + days + ' days ahead (from ' + (ch || {}).date + ' to ' + site.checkedFrom + ', so 14 if the merge slips 3 days), in the feed and on the top page; the Privacy Policy in both languages names the purposes and the items and keeps no country; rule 7 of CLAUDE.md says the same; no box asks what others will do, and the submitter agrees to report a change',
+    policyProblems(realP).length === 0, policyProblems(realP).join(' / '));
+  /* The record. */
+  const AUD = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
+  const HEAD134 = '\n## 2026-11-14：突き合わせの受付\n';
+  const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const TEXTS = Object.values(J('verification/statutes-texts.json')).map((x) => x.replace(/\s+/g, ''));
+  const recordProblems = (a) => {
+    const at = a.indexOf(HEAD134), end = a.indexOf('\n## この記録について\n');
+    if (at < 0 || end < at) return ['the section, before the end of the record'];
+    const sec = a.slice(at, a.indexOf('\n## ', at + 5));
+    const bad = [];
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length < 10 || !rows.every((r) => r.length === 6 && KINDS.includes(r[4]))) bad.push('the table');
+    const tally = 'この表の判定は、' + KINDS.filter((k) => rows.some((r) => r[4] === k)).map((k) => k + ' ' + rows.filter((r) => r[4] === k).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    if (!sec.includes('2026-11-14 に利用者が求め、Claude が決めました。') || rows.some((r) => !/2026-11-14 に Claude が決めました。[^|]*ためです$/.test(r[5]))) bad.push('who decided, and why');
+    for (const r of rows.filter((x) => /法 第|民法|消費者契約法/.test(x[1]))) for (const m of r[2].matchAll(/「([^「」]+)」/g)) if (!TEXTS.some((t) => t.includes(m[1].replace(/\s+/g, '')))) bad.push('a quotation not in the fetched texts: ' + m[1].slice(0, 20));
+    if (!sec.includes('マージが 3 日遅れて 2026-11-17 に公開されても、告知の期間は 14 日を保ちます。') || !sec.includes('実行 43596847231')) bad.push('the days and the run');
+    if (!sec.includes('この節も、弁護士は見ていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the sentence on lawyers');
+    return bad;
+  };
+  ok('the record has its section before its end: a table of six columns, its count, who asked and who decided with each reason, quotations found word for word in the fetched texts, the days of notice, and no lawyer',
+    recordProblems(AUD).length === 0, recordProblems(AUD).join(' / '));
+  /* Break on purpose. */
+  /* Each break changes the rule as a careless edit could, and at least one record of the table must then come out wrong. */
+  const wrongUnder = (f) => cases.filter(([, r, want]) => f(r) !== want).length > 0;
+  const noEnd = (r) => JSON.parse(JSON.stringify(r).replace(/"end-date":\{[^}]*\}\}/g, '"end-date":null'));
+  const breaks = [
+    ['the 30 days made 0', wrongUnder((r) => Pl.placeOf({ signals: Pl.strongSignals(r), location: r.location, opened: OPEN, days: 0 }).reason)],
+    ['an ended employment counted', wrongUnder((r) => place(noEnd(r)))],
+    ['the weak signal used to accept', wrongUnder((r) => Pl.placeOf({ signals: Pl.strongSignals(r).concat(/Japan/.test(r.location) ? [{ country: 'JP', created: t0 - 90 * DAY }] : []), location: r.location, opened: OPEN }).reason)],
+    ['Canada placing by itself', wrongUnder((r) => place(r, OPEN, site.notOffered.filter((p) => p.place !== 'Quebec')))],
+    ['two countries let through', wrongUnder((r) => Pl.placeOf({ signals: Pl.strongSignals(r).slice(0, 1), location: r.location, opened: OPEN }).reason)],
+    ['a later place excluded early', Pl.excludedCodes('2026-11-25', site.notOffered.map((p) => Object.assign({}, p, { from: undefined }))).has('AR')],
+  ].filter(([, caught]) => !caught).map(([n]) => n);
+  const realC = conf;
+  const cbreaks = [
+    ['removal taken off the labels never closed', Object.assign({}, realC, { neverClose: realC.neverClose.filter((l) => l !== 'removal') })],
+    ['the correction taking every kind', Object.assign({}, realC, { forms: [Object.assign({}, realC.forms[0], { when: undefined })] })],
+    ['the correction taking "Something else"', Object.assign({}, realC, { forms: [Object.assign({}, realC.forms[0], { when: { field: realC.forms[0].when.field, in: realC.forms[0].when.in.concat(['Something else']).slice(1) } })] })],
+    ['another day', Object.assign({}, realC, { from: '2026-11-15' })],
+  ].filter(([, c]) => neverProblems(c).length === 0).map(([n]) => n);
+  const vbreaks = [
+    ['the words made a guarantee', Object.assign({}, realV, { V: I.VOUCH_CHECKED.replace('This states what I know; it is not a guarantee.', 'I guarantee that the submitter will not breach the Terms of Use.') })],
+    ['the Japanese translation dropped', Object.assign({}, realV, { subJa: realV.subJa.replace('訳は「' + VJA + '」です。', '') })],
+    ['damages asked of the researcher', Object.assign({}, realV, { sub: realV.sub.replace('Sophaxis claims no money from the researcher under these policies.', 'The researcher compensates the operator for any loss.') })],
+  ].filter(([, v]) => vouchProblems(v).length === 0).map(([n]) => n);
+  const pbreaks = [
+    ['the notice cut to 13 days', Object.assign({}, realP, { days: 13 })],
+    ['the old box back', Object.assign({}, realP, { res: realP.res + '\n- I confirm that no author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study).' })],
+    ['the Privacy Policy saying the country is never received', Object.assign({}, realP, { pv: realP.pv + '\nIt does not ask for the person section as a whole, so public email addresses and the country are never received.' })],
+    ['the Japanese Privacy Policy keeping the country', Object.assign({}, realP, { pvJa: realP.pvJa.replace('国と組織は、保存も書き写しも表示もせず', '国と組織を保存し') })],
+    ['rule 7 without the countries', Object.assign({}, realP, { claude: realP.claude.replace('国も組織も記録・ログ・コメント・リポジトリに写さない', '') })],
+    ['the limits taken out', Object.assign({}, realP, { sub: realP.sub.replace('a person who keeps false records for 30 days can still pass', 'no one can pass with false records') })],
+  ].filter(([, x]) => policyProblems(x).length === 0).map(([n]) => n);
+  const aud = (a, b) => AUD.replace(a, b);
+  const rbreaks = [
+    ['the section moved after the end', aud(HEAD134, '\n## 突き合わせ\n')],
+    ['the count changed', aud('この表の判定は、漏れ 1、表現 1、問題なし 10 です。', 'この表の判定は、問題なし 12 です。')],
+    ['a quotation changed by one word', aud('「保証契約は、書面でしなければ、その効力を生じない。」', '「保証契約は、口頭でしなければ、その効力を生じない。」')],
+    ['who asked taken out', aud('2026-11-14 に利用者が求め、Claude が決めました。\n利用者は', '利用者は')],
+    ['a lawyer said to have seen it', aud('この節も、弁護士は見ていません。\n\n## この記録について', 'この節は、弁護士が確かめました。\n\n## この記録について')],
+    ['the days of slipping taken out', aud('マージが 3 日遅れて 2026-11-17 に公開されても、告知の期間は 14 日を保ちます。', '')],
+  ].filter(([, a]) => recordProblems(a).length === 0).map(([n]) => n);
+  /* A comment that names a place fails the leak test. */
+  const leakCaught = leaks(commentText + ' FR').length > 0 && leaks(commentText + ' Org JP').length > 0;
+  const missed = breaks.concat(cbreaks, vbreaks, pbreaks, rbreaks, leakCaught ? [] : ['a place in a comment']);
+  const total = 6 + 4 + 3 + 6 + 6 + 1;
+  ok('break on purpose: the rule (30 days, ended entries, the weak signal, Canada, two countries, a later place), the labels and kinds never closed and the day, the words of vouching, the Japanese translation and a claim for money, the notice, the old box, the Privacy Policy in both languages, rule 7, the limits, the record\'s section, count, quotation, who asked, lawyers and days, and a place in a comment each fail (' + (total - missed.length) + ' / ' + total + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

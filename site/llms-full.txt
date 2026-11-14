@@ -76,6 +76,8 @@ The text of this site may be reused under CC BY 4.0, as set out in the [Licence 
 The operator may decline or remove a submission that breaks these rules.
 If a confirmation turns out to be untrue, the operator removes the record under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) as soon as the operator learns of it. From 2026-11-22, the operator may also decline further submissions from the same GitHub account or ORCID iD.
 The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) says it is not.
+From 2026-12-01, the checked intake of the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html#the-checked-intake) is the exception: it checks the identity of the authors, their agreement, and the place that their public records give.
+The checked intake proves only that earlier public records agree, so these rules on untrue confirmations apply to what it checks as well.
 The confirmations stay in the public issue, so that what was confirmed, and when, can be shown.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
 
@@ -243,7 +245,7 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 
 # Submission Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [投稿の規程（日本語訳）](https://sophaxis.vercel.app/policies/submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -264,6 +266,7 @@ Sophaxis confirms this through ORCID, before a moderator reads the work.
 - The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.
 
 A submission that does not pass both is not listed.
+From 2026-12-01, under the checked intake below, only the DOI metadata counts for the second check: it must list the ORCID iD for an author of the work.
 The first check confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
@@ -287,7 +290,9 @@ From 2026-11-29, a place is also not offered where the operator judges that offe
 When the operator so judges, the place and the reason are added to the table.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
-Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+From 2026-12-01, Sophaxis also checks, for every author whose identity it verifies, that the public records the author set at least 30 days earlier place them where Sophaxis is offered.
+The section "The checked intake" below says how, and its limits.
 If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html), and the operator reviews the decision on a representative.
 
 | Place | What the law requires | Law | Read at its source | From |
@@ -380,6 +385,8 @@ This consent covers the listing, and the provision of their personal data that t
 An email confirmation says the same, and the operator's reply links the Privacy Policy.
 Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
 Any author can withdraw a consent at any time, by a removal issue or by email.
+From 2026-12-01, under the checked intake, only the first way counts, and only for an author for whom the DOI metadata gives an ORCID iD.
+An author for whom it gives none cannot confirm, and the work waits until the metadata at the repository names one.
 
 ## A researcher who vouches for a first submission
 
@@ -394,11 +401,39 @@ The automatic check in the issue reads the researcher's public ORCID record as i
 The researcher can take it back by deleting the comment before the listing.
 A submitter who is already an author of a listed work needs no one to vouch, and neither does a new version of a listed work.
 
+From 2026-12-01, for a submission whose issue is opened on or after that day, the researcher comments with these words instead, and the English words are canonical: "I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence, and does not live in, or stay in, a place where Sophaxis is not offered. I am not an author of this work, I am not from the same project as its authors, and I have no conflict of interest with them. I do not live in, or stay in, a place where Sophaxis is not offered. This states what I know; it is not a guarantee."
+It is a statement of what the researcher knows, not a guarantee of what the submitter does.
+Sophaxis makes no contract of guarantee with the researcher, and sets no amount.
+If a vouching proves untrue, the researcher can no longer vouch, the vouching is recorded as untrue in the history of the record, and the listing is reviewed.
+Sophaxis claims no money from the researcher under these policies.
+
+## The checked intake
+
+From 2026-12-01, for a submission whose issue is opened on or after that day, Sophaxis accepts a claim only when it can be checked against a source that the claimant does not write at the moment of claiming.
+A claim that fails its check, or cannot be checked, is turned away automatically.
+No system can stop a person from lying in general; this one makes every claim it accepts a checked claim.
+
+- Identity: the DOI metadata lists the ORCID iD for an author, and that ORCID record links the GitHub account that opened the issue.
+- Where the authors live: the place rule below, for every author whose identity is verified, and for a researcher who vouches, who must also share no current organisation with the submitter in ORCID.
+- The time: a submission that has not passed every check 30 days after its issue was opened is closed, and a new issue can be opened later.
+
+The place rule reads, in the person's ORCID record, the country of each public address and of the organisation of each current employment and education, with the day each was added, and the location field of their GitHub profile.
+The GitHub location is free text, so it is used only to turn a person away, never to accept one.
+A person is turned away if any of these names a place where Sophaxis is not offered, or if the ORCID entries name more than one country.
+A person is placed only if an ORCID entry names a place where Sophaxis is offered and was added at least 30 days before the issue was opened; otherwise the place cannot be checked, and a fixed comment says how to make the record checkable.
+Canada holds Quebec, so it places no one by its country alone.
+The check keeps and writes none of the countries or organisations; the issue shows only how many people passed, never whose record or which entry.
+This proves that earlier public records agree, not where a person lives: a person who keeps false records for 30 days can still pass.
+The consequence of an untrue confirmation, and the removal of the record once the operator learns of it, therefore stay as the [Terms of Use](https://sophaxis.vercel.app/policies/terms.html#what-is-not-allowed) set them.
+Nothing in the form asks the submitter to confirm what other people will do after the submission.
+
+The checked intake never closes a removal or withdrawal issue, a request about personal data, a notice of an infringement of rights, a request about a statement about a person, or the withdrawal of a consent; a person handles these.
+
 ## What the submitter confirms
 
 Every author of the work agrees to its listing on Sophaxis.
 The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
-The submitter confirms both, and each point below, by ticking its box in the submission form, which has the same 29 boxes, in the same words and order.
+The submitter confirms both, and each point below, by ticking its box in the submission form, which has the same 30 boxes, in the same words and order.
 The automatic check in the issue refuses a submission unless every box of a group is ticked: the confirmations always, the consent and agreement from 2026-11-21, and where the authors live from 2026-11-22.
 
 ### Confirmations
@@ -436,8 +471,9 @@ The automatic check in the issue refuses a submission unless every box of a grou
 
 ### Where the authors live
 
-- I confirm that no author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study).
+- I confirm that, on the day of submission, no author of this work lives in any of the places listed above, or is staying in one, even briefly (such as for travel, work or study).
 - I confirm that no author under 18 lives or stays in India.
+- I agree to report in this issue, before the listing, any change to these two confirmations that I learn of, from 2026-12-01.
 
 One more box, on saving the record page and the PDF copies to the Internet Archive, may be left empty; the work is listed either way.
 ## How to submit
@@ -763,6 +799,8 @@ A collection says nothing of the quality of a work, and an author can ask, in th
 
 Corrections are added to the record as dated notes.
 Anyone can report an error in a record through the link on its page, which opens a public correction issue.
+From 2026-12-01, a report that the title, the authors, the abstract, a version, a date, a DOI or the statement on generative models is wrong must quote, character by character, the words on the record page that are wrong; the checked intake of the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html#the-checked-intake) closes it with a fixed comment if they are not there, and labels it `quote verified` if they are.
+A report of any other kind, a concern about research integrity, and an issue that reads as a request about removal, rights, personal data, a name or the withdrawal of a consent are never closed by it; a person reads them.
 The notes do not replace the work.
 A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.
 
@@ -970,6 +1008,7 @@ Personal data is used only for these purposes:
 - to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
 - since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
+- from 2026-12-01, under the checked intake of the Submission Policy, to check that the public records of every author whose identity is verified, and of a researcher who vouches, place them where Sophaxis is offered, and that a researcher who vouches shares no current organisation with the submitter; only whether each check passes is used;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
 - to check the listed DOIs and licences each week, and, for works whose authors consent to it, to save the pages and the PDF copies to the Internet Archive each week and when they change;
@@ -977,6 +1016,8 @@ Personal data is used only for these purposes:
 - to answer requests to withdraw, correct or remove a record, and requests about personal data;
 - to serve the site, and to find and fix faults from Vercel's request logs;
 - to answer questions, complaints, disputes and security reports.
+
+The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day.
 
 ## The site
 
@@ -1017,12 +1058,18 @@ It reads the name, the websites and the works of the ORCID record given in the f
 It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
 The same check runs when a withdrawal issue or a published-version issue is opened or edited.
 The check asks ORCID only for the personal details (the name), the websites and the works sections of the record.
-It does not ask for the person section as a whole, so public email addresses and the country are never received.
-The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
-Since 2026-11-14, the check also reads the PDF that it fetches to read its shape, and the affiliations in the DOI metadata, to give the moderator advice. It counts strings shaped like email addresses, telephone numbers and postal codes, and the affiliations and lines that name a place where Sophaxis is not offered. It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading. The weekly check reads the PDF copies on the site in the same way. It does not read the country of an ORCID record.
+From 2026-12-01, for the place rule of the checked intake, it also asks for the address, employments and educations sections.
+It does not ask for the person section as a whole, so public email addresses are never received.
+From 2026-12-01, it receives the country of each public address, and the country and the name of the organisation of each current employment and education, and uses them only to decide whether each person is placed where Sophaxis is offered and, for a researcher who vouches, whether they share an organisation with the submitter.
+The check uses only the name, the websites and the works, and, from 2026-12-01, the countries and organisations that the place rule reads; it keeps or writes nothing else from the ORCID record, and it never keeps, writes or prints a country or an organisation.
+From 2026-12-01, it also reads the location field of the GitHub profile of each such person.
+It reads that field only to find there the name or code of a place where Sophaxis is not offered, and keeps or writes none of it.
+The issue shows only how many people passed, never whose record or which entry.
+Since 2026-11-14, the check also reads the PDF that it fetches to read its shape, and the affiliations in the DOI metadata, to give the moderator advice. It counts strings shaped like email addresses, telephone numbers and postal codes, and the affiliations and lines that name a place where Sophaxis is not offered. It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading. The weekly check reads the PDF copies on the site in the same way. For this advice, it does not read the country of an ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
 From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
+From 2026-12-01, the place rule reads the same sections of the record of each co-author and researcher whose identity it verifies, and the location of their GitHub profile, in the same way.
 
 Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
 Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
@@ -1142,6 +1189,8 @@ The measures, under the headings that Japan's Personal Information Protection Co
 ## Automated processing
 
 The automatic checks compare public records and post the result in the issue. They make no decision about a person.
+From 2026-12-01, the checked intake closes a submission that has not passed every check 30 days after its issue was opened, and a report of an error in a record whose quoted words are not on the record page, each with a fixed comment; a new issue can be opened. Closing an issue decides only that the claim in it was not checked.
+The checked intake never closes a request about removal, withdrawal, rights or personal data, or the withdrawal of a consent.
 No decision with legal or similarly significant effects on a person is made solely by automated means.
 The language models that help the review make no decision; every decision on a submission is taken by a person, as the Moderation Policy sets out.
 One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.
@@ -2077,7 +2126,7 @@ Sophaxis runs a number of steps by itself, as GitHub Actions in its public repos
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
 The code of each step is public, and each section links to it.
 
-- No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
+- No automatic step accepts a submission or a correction, and none decides on a withdrawal or a removal request. The operator decides every one; from 2026-12-01, the checked intake only turns away a submission or a report of an error whose claim fails its check, as the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html#the-checked-intake) sets out.
 - Every step on this page that runs as GitHub Actions depends on GitHub. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no such step runs by itself: the operator takes the steps by hand, as soon as the operator can, and none of them happens at once.
 - One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once, while GitHub Actions runs. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
 - No step uses a language model. The steps are ordinary code.
@@ -2096,8 +2145,17 @@ The code of each step is public, and each section links to it.
 - From 2026-11-24, it also checks that the statements on funding, on competing interests, and on human participants and research ethics are given. It does not judge what they say.
 - From 2026-11-23, for a submitter who is not yet an author of a listed work, it also counts a researcher who vouches for the work: it reads the name, the websites and the works of that researcher's public ORCID record, and runs again when such a comment is written, edited or deleted.
 - Since 2026-11-14, it also gives the moderator advice that decides nothing ([tools/pdf_advice.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/pdf_advice.js)): whether the licence printed on the first pages of the PDF agrees with the DOI metadata; how many strings shaped like an email address, a telephone number or a postal code appear after the first page, outside the authors' own; how many images the PDF embeds; whether the file matches the repository's checksum; and how many affiliations in the DOI metadata, or lines of the first page, name a place where Sophaxis is not offered. The comment and the log show counts and fixed words only, never what was found.
+- From 2026-12-01, for an issue opened on or after that day, the checked intake: only the DOI metadata connects the ORCID iD to an author; every other author must have an ORCID iD in the DOI metadata, and a confirmation by email no longer counts; for every author whose identity it verifies, and for a researcher who vouches, it reads the address, employments and educations sections of the ORCID record and the location of the GitHub profile, under the place rule of the Submission Policy, and writes only how many people passed; it compares the current organisations of a researcher who vouches with the submitter's; and it reads the new words of vouching. It keeps and writes no country or organisation.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
+
+## When a report of an error in a record is opened or edited (from 2026-12-01)
+
+- Reads: the Sophaxis id and the words quoted in the form, and the record page in the repository (`site/abs/<id>.html`).
+- Writes: a fixed comment, in English and Japanese, and the label `quote verified`; or, when the words are not on the record page, the label `not verified`, and closes the issue as not planned. It never repeats what the report says.
+- Never closes an issue that reads as a request about removal, rights, personal data, a name or the withdrawal of a consent: such an issue gets the label `needs a person` and stays open. Never acts on a submission, removal, withdrawal or published-version issue.
+- Leaves to the operator: whether the record is wrong, and the correction.
+- Code: [.github/checked-intake/verify.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/checked-intake/verify.js), run by [checked-intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/checked-intake.yml).
 
 ## When a withdrawal issue is opened or edited
 
@@ -2134,6 +2192,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the open removal requests and the verified withdrawals.
 - Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
+- From 2026-12-01, closes each open submission that is not verified 30 days after its issue was opened, with a fixed comment, as the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html#the-checked-intake) sets out. It never closes a removal, withdrawal, published-version or correction issue. Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js) with `--deadline`, run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 - Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
 
 ## Once a month, on the 1st at 09:17 Japan time
@@ -2973,11 +3032,14 @@ Sophaxis の運営者、根本卓哉です。住所は公開していません�
 - 撤回や出版版の報告の様式に書かれた内容
 - 2026-11-21 から、共著者が同意を確かめるコメントに書く GitHub のユーザー名と ORCID iD
 - 2026-11-23 から、初めての投稿を紹介する研究者がコメントに書く GitHub のユーザー名と ORCID iD。その ORCID の公開記録のうち、氏名・ウェブサイト・業績も同じように読みます。これらはその研究者自身の行為で issue に公開されます
+- 2026-12-01 から、場所の決まりのために、本人確認を通った著者と紹介する研究者の、ORCID の公開記録の住所の国、いまの勤め先と在学先の組織の国と名、GitHub のプロフィールの所在の欄
 
 本人確認では、ORCID に、公開記録のうち「個人の詳細」（氏名）・「ウェブサイト」・「業績」の部分だけを問い合わせます。
-「人物」の部分をまとめて問い合わせないので、公開のメールアドレスや国を受け取ることはありません。
-検査が使うのは氏名・ウェブサイト・業績だけで、ほかは保存せず、どこにも書き写しません。
-2026-11-14 から、検査は、形を読むために取得する PDF と、DOI のメタデータの所属も、モデレーターへの助言のために読みます。メールアドレス・電話番号・郵便番号の形をした文字列と、Sophaxis を提供しない国と地域を挙げる所属と行を数えます。書くのは数だけで、見つけた文字列も国や地域の名も書かず、何も保存せず、読んだあとファイルを消します。毎週の確認も、サイトにある PDF の写しを同じように読みます。ORCID の記録の国は読みません。
+2026-12-01 からは、場所の決まりのために、「住所」・「勤め先」・「在学先」の部分も問い合わせ、GitHub のプロフィールの所在の欄も読みます。
+「人物」の部分をまとめて問い合わせないので、公開のメールアドレスを受け取ることはありません。
+受け取った国と組織は、場所を確かめられるかどうかと、紹介する研究者が投稿者と組織を同じくしているかどうかを決めるためだけに使います。
+検査が使うのは氏名・ウェブサイト・業績と、2026-12-01 からは場所の決まりが読む国と組織だけで、ほかは保存せず、どこにも書き写しません。国と組織は、保存も書き写しも表示もせず、issue に示すのは通った人の数だけです。
+2026-11-14 から、検査は、形を読むために取得する PDF と、DOI のメタデータの所属も、モデレーターへの助言のために読みます。メールアドレス・電話番号・郵便番号の形をした文字列と、Sophaxis を提供しない国と地域を挙げる所属と行を数えます。書くのは数だけで、見つけた文字列も国や地域の名も書かず、何も保存せず、読んだあとファイルを消します。毎週の確認も、サイトにある PDF の写しを同じように読みます。この助言のためには、ORCID の記録の国は読みません。
 サイトは、閲覧者の個人情報を集めません。Cookie も、アクセス解析も使いません。
 頁には、閲覧者の情報を外へ送るコードもタグもありません。
 電気通信事業法の外部送信の規律（第 27 条の 12）が掛かるのは、電気通信事業者と、登録も届出も要らないとされる電気通信事業を営む者だけです。そのうちでも、総務省令が定める役務に限られます。役務を使うのに要る情報は、この規律から除かれています。
@@ -3007,6 +3069,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 - 2026-11-14 から、投稿された作品やその DOI のメタデータが示す他人の連絡先と国と地域について、数だけの助言をモデレーターに示し、モデレーションの規程を当てはめられるようにするため
 - 2026-11-21 から、同意を確かめる共著者が、その論文の著者本人であることを確かめるため
 - 2026-11-23 から、初めての投稿を紹介する研究者が、その論文の著者でなく、学術誌の論文・本の章・本を持つことを確かめるため
+- 2026-12-01 から、突き合わせの受付のもとで、本人確認を通った著者と紹介する研究者の公開の記録が Sophaxis を提供している場所を指すことと、紹介する研究者が投稿者といまの組織を同じくしていないことを確かめるため。使うのは、通ったかどうかだけです
 - 撤回や出版版の報告をする人が、その論文の著者本人であることを確かめるため
 - 論文の記録の頁、著者ごとの頁、一覧と検索を作り、公開するため
 - 記録を `feed.xml`・`papers.json`・OAI-PMH（`/oai`）で再利用できる形にするため
@@ -3017,6 +3080,8 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 - 問い合わせ・苦情・紛争・安全についての報告に応えるため
 
 ほかの目的には使いません。
+
+2026-12-01 の目的は、その日以後に issue を開いた投稿にだけ当てます。
 
 ## 公開と第三者への提供
 
@@ -3132,6 +3197,7 @@ Vercel は、その[プライバシーの方針](https://vercel.com/legal/privac
 ## 自動の処理
 
 自動の検査は、公開されている記録を照らし合わせ、その結果を issue に書くだけです。人についての判断はしません。
+2026-12-01 からは、突き合わせの受付が、30 日のうちにすべての確かめを通らない投稿と、引いた語が記録の頁にない誤りの知らせを閉じます。閉じることが決めるのは、申し立てが確かめられなかったことだけです。削除・撤回・権利・個人情報の求めと同意の撤回は、決して閉じません。
 人に法的な効果、またはそれに近い重大な影響を与える判断を、自動の処理だけで下すことはありません。
 審査を助ける言語モデルは、判断をしません。投稿についての判断は、モデレーションの規程のとおり、すべて人が下します。
 運営者の判断の前に動く手順が一つだけあります。削除依頼が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）を下げる手順です。
@@ -3327,6 +3393,8 @@ PDF の写しは、著者が預けたファイルを手を加えずに置いた�
 運営者は、これらの決まりに反する投稿を、断り、または削除することがあります。
 確認が事実でないと分かったときは、運営者は、知った時点で[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って記録を削除します。2026-11-22 からは、同じ GitHub アカウントや ORCID iD からのその後の投稿を断ることもあります。
 運営者は、確認を信頼して受け、確かめません。事実でない確認で載った作品があっても、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が提供しないとする国と地域で、Sophaxis を提供していることにはなりません。
+2026-12-01 からは、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html#突き合わせの受付)の突き合わせの受付が例外です。著者の本人確認、著者の同意、公開の記録が示す場所を確かめます。
+突き合わせの受付が証せるのは前からある公開の記録が食い違わないことだけなので、事実でない確認についてのこれらの決まりは、それが確かめることにも当てはまります。
 確認は公開の issue に残るので、何をいつ確かめたかを示せます。
 投稿者に、違約金や、法令が定める以上の損害の賠償を求めることはありません。
 
@@ -3494,7 +3562,7 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 これは英語の [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3515,6 +3583,7 @@ Sophaxis は、モデレーターが作品を読む前に、ORCID を通して�
 - その ORCID iD が作品の著者のものである。DOI のメタデータがそれを著者の一人として挙げているか、ORCID の記録がその DOI を業績に挙げ、名前が著者の一人と合う。
 
 この両方を通らない投稿は載せません。
+2026-12-01 からは、下の「突き合わせの受付」のとおり、二つ目の確認では DOI のメタデータだけを数えます。DOI のメタデータが、その ORCID iD を作品の著者の一人として挙げていなければなりません。
 一つ目の確認は、ORCID の記録を管理している人が issue を開いたことを確かめるものです。公的な本人確認ではありません。
 ORCID iD を持たない著者は投稿できません。
 2026-11-21 から、13 歳未満の人は投稿できません。
@@ -3536,7 +3605,9 @@ ORCID iD を持たない著者は投稿できません。
 判断したときは、その国や地域と理由を、表に書き足します。
 国や地域を表に足すのは、そうした務めが報告された時点です。法令の原文を読むのを待ちません。表から外すのは、その法令を原文で読み、Sophaxis に及ばないと確かめてからです。
 表を変えるときは、利用規約のとおり、効力が始まる前にトップの頁で告知します。
-Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか、どこに滞在しているかは調べません。
+2026-11-30 までは、Sophaxis は投稿者の確認に拠り、著者がどこに住んでいるか、どこに滞在しているかは調べません。
+2026-12-01 からは、本人確認を通ったどの著者についても、その著者が 30 日以上前から置いている公開の記録が、Sophaxis を提供している場所を指すことも確かめます。
+やり方と限りは、下の「突き合わせの受付」にあります。
 著者がこれらの国と地域に住んでいる、または投稿から掲載までのあいだにそこに滞在したと分かったときは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って記録を削除し、運営者は代理人についての判断を見直します。
 2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
 インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
@@ -3631,6 +3702,8 @@ issue の自動の確認が、それぞれの確認を数えます。
 メールで確かめるときも同じことを書きます。運営者は、返信に個人情報の取り扱いについての頁へのリンクを添えます。
 記録を Internet Archive に保存するには、著者全員の別の同意が要ります。様式がこれを尋ね、空けておくこともできます。同意がなければ、記録はそこに保存しません。
 どの著者も、いつでも、削除依頼の issue かメールで同意を撤回できます。
+2026-12-01 からは、突き合わせの受付のとおり、一つ目のやり方だけを、DOI のメタデータが ORCID iD を示している著者について数えます。
+示していない著者は確かめられず、メタデータが示すまで作品は待ちます。
 
 ## 初めての投稿の紹介
 
@@ -3645,11 +3718,39 @@ issue の自動の確認が、共著者のときと同じように、紹介す�
 紹介した研究者は、掲載の前ならコメントを消して紹介を取り消せます。
 すでに載っている作品の著者である投稿者と、載っている作品の新しい版には、紹介は要りません。
 
+2026-12-01 から、その日以後に issue を開いた投稿では、研究者は代わりに次の言葉でコメントします。英語が正で、訳は「Sophaxis へのこの投稿を推薦します。私の知るかぎり、投稿者はこの作品の著者であり、そのライセンスのもとでこれを投稿する権利を持ち、Sophaxis を提供していない場所に住んでも滞在してもいません。私はこの作品の著者ではなく、著者と同じ計画の者でもなく、著者との利益相反もありません。私は、Sophaxis を提供していない場所に住んでも滞在してもいません。これは私の知っていることを述べるもので、保証ではありません。」です。「I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence, and does not live in, or stay in, a place where Sophaxis is not offered. I am not an author of this work, I am not from the same project as its authors, and I have no conflict of interest with them. I do not live in, or stay in, a place where Sophaxis is not offered. This states what I know; it is not a guarantee.」
+紹介は、研究者が知っていることを述べるものであり、投稿者がすることを保証するものではありません。
+Sophaxis は研究者と保証の契約を結ばず、額も定めません。
+紹介が真実でないと分かったときは、その研究者はもう紹介できず、その紹介を記録の履歴に真実でないものとして記し、掲載を見直します。
+Sophaxis は、これらの規程のもとで、研究者に金銭を求めません。
+
+## 突き合わせの受付
+
+2026-12-01 から、その日以後に issue を開いた投稿では、Sophaxis は、申し立てた人がその場で書けない出どころと突き合わせられる申し立てだけを受けます。
+通らない申し立てと確かめられない申し立ては、自動で退けます。
+どんな仕組みも、人が嘘をつくこと一般を止めることはできません。この仕組みは、受けた申し立てをすべて確かめた申し立てにします。
+
+- 本人：DOI のメタデータが ORCID iD を著者に挙げ、その記録が issue を開いた GitHub のアカウントにリンクしている。
+- 著者の住んでいる場所：本人確認を通ったどの著者と、紹介する研究者に、下の場所の決まりを当てる。紹介する研究者は、ORCID で投稿者といまの組織を同じくしていないことも確かめる。
+- 期限：issue を開いて 30 日のうちにすべてを通らない投稿は閉じる。新しい issue は開ける。
+
+場所の決まりは、ORCID の記録の公開の住所と、いまの勤め先と在学先の組織の国を、足した日とともに読み、GitHub のプロフィールの所在の欄も読みます。
+所在の欄は自由な文なので、退けるときにだけ使います。
+これらのどれかが Sophaxis を提供していない場所を指すとき、または ORCID の項目が二つ以上の国を指すときは、その人を退けます。
+ORCID の項目が Sophaxis を提供している場所を指し、issue を開く 30 日以上前に足されたときに限り、場所を確かめたとします。そのほかは確かめられないものとし、確かめられる形にするやり方を決まった文で示します。
+カナダはケベック州を含むので、国だけでは確かめません。
+国も組織も残さず書かず、issue には通った人の数だけを示し、だれのどの項目かは示しません。
+これで証せるのは、前からある公開の記録が食い違わないことであって、人がどこに住んでいるかではありません。偽りの記録を 30 日保つ人は、通ることがあります。
+そのため、事実でない確認の結果と、知ったときに記録を削除する定めは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html#してはいけないこと)のとおり保ちます。
+様式は、投稿のあとにほかの人がすることを、投稿者に確かめさせません。
+
+突き合わせの受付は、削除や撤回の issue、個人データについての求め、権利の侵害の知らせ、人についての記述についての求め、同意の撤回を、決して閉じず、人が扱います。
+
 ## 投稿者が確認すること
 
 作品の著者全員が、Sophaxis への掲載に同意している。
 著者は、この版をそのライセンスで共有する権利を持っている。学術誌が出版した作品なら、出版者がそれを許している。
-投稿者は、この二つと下の一つ一つを、投稿の様式のボックスに印を付けて確かめます。様式には、同じ 29 のボックスが、同じ言葉と順で並んでいます。
+投稿者は、この二つと下の一つ一つを、投稿の様式のボックスに印を付けて確かめます。様式には、同じ 30 のボックスが、同じ言葉と順で並んでいます。
 issue の自動の確認は、群ごとにすべてのボックスに印がなければ投稿を受け付けません。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。
 
 ### 確認
@@ -3687,8 +3788,9 @@ issue の自動の確認は、群ごとにすべてのボックスに印がな�
 
 ### 著者の住んでいる場所
 
-- この作品のどの著者も、上に挙げた場所のどれにも住んでおらず、投稿から掲載までのあいだに（旅行・仕事・留学などで）短くでもそこに滞在しないことを確かめました。
+- 投稿の日に、この作品のどの著者も、上に挙げた場所のどれにも住んでおらず、（旅行・仕事・留学などで）短くでもそこに滞在していないことを確かめました。
 - インドに住んでいるか滞在している 18 歳未満の著者がいないことを確かめました。
+- 2026-12-01 から、この二つの確認に変わりがあると知ったときは、掲載の前に、この issue で知らせることに同意します。
 
 Internet Archive への記録の頁と PDF の写しの保存についてのボックスは、もう一つあり、空のままでもかまいません。どちらでも作品は載ります。
 ## 投稿の手順
@@ -4014,6 +4116,8 @@ Sophaxis は、剽窃を見つけるソフトウェアを使いません。
 
 訂正は、日付付きの注記として記録に加えます。
 誰でも、記録の頁のリンクから、記録の誤りを報告できます。そのリンクは公開の訂正の issue を開きます。
+2026-12-01 から、題・著者・要旨・版・日付・DOI・生成モデルについての申告が誤っているという知らせは、記録の頁の誤っている語を一字ずつ引かなければなりません。[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html#突き合わせの受付)の突き合わせの受付は、その語がなければ決まった文のコメントを付けて閉じ、あれば `quote verified` のラベルを付けます。
+ほかの種類の知らせ、研究の公正についての懸念、削除・権利・個人情報・氏名・同意の撤回についての求めと読める issue は、これで閉じることはありません。人が読みます。
 注記が作品に置き換わることはありません。
 申告されていない生成モデルの使用のような問題が明らかになった場合、記録に告知を付けることがあります。
 
@@ -5152,7 +5256,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 この頁は、そのすべてを挙げます。いつ動くか、何を読むか、何を書くか、何を運営者に残すかです。
 どの手順のコードも公開しており、各節からリンクしています。
 
-- 投稿・撤回・訂正・削除の求めについて判断する自動の手順はありません。判断はすべて運営者が下します。
+- 投稿や訂正を受ける自動の手順はなく、撤回や削除の求めについて判断する自動の手順もありません。判断はすべて運営者が下します。2026-12-01 からは、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html#突き合わせの受付)のとおり、突き合わせの受付が、申し立てが確かめに通らない投稿と誤りの知らせを退けるだけです。
 - この頁の手順のうち GitHub Actions として動くものは、GitHub に頼っています。GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、どの手順もひとりでには動きません。運営者ができしだい手で行い、どれもすぐには行われません。
 - 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
 - 言語モデルを使う手順はありません。どの手順も通常のコードです。
@@ -5171,8 +5275,17 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
 - 2026-11-23 から、載っている作品の著者にまだなっていない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
 - 2026-11-14 から、何も決めない助言もモデレーターに示します（[tools/pdf_advice.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/pdf_advice.js)）。PDF の最初の頁に印刷されたライセンスが DOI のメタデータと合うか。最初の頁より後に、著者自身のものを除いて、メールアドレス・電話番号・郵便番号の形をした文字列がいくつあるか。PDF が埋め込む画像がいくつあるか。ファイルが預け先のチェックサムと合うか。DOI のメタデータの所属、または最初の頁の行のうち、Sophaxis を提供しない国と地域を挙げるものがいくつあるか。コメントと実行の記録が示すのは、数と決まった語だけで、見つけたものそのものは示しません。
+- 2026-12-01 から、その日以後に開かれた issue には、突き合わせの受付を当てます。ORCID iD を著者に結ぶのは DOI のメタデータだけです。ほかの著者は DOI のメタデータに ORCID iD を持たなければならず、メールでの確かめは数えません。本人確認を通ったどの著者と紹介する研究者についても、投稿の規程の場所の決まりのもとで、ORCID の記録の「住所」・「勤め先」・「在学先」の部分と GitHub のプロフィールの所在の欄を読み、通った人の数だけを書きます。紹介する研究者のいまの組織を、投稿者のものと比べます。紹介の新しい言葉を読みます。国も組織も、保存せず、書きません。
 - 運営者に残すこと：投稿を受理するか、断るか。
 - コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js)。[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
+
+## 記録の誤りの知らせが開かれたか編集されたとき（2026-12-01 から）
+
+- 読むもの：様式に書かれた Sophaxis の番号と引いた語、リポジトリにある記録の頁（`site/abs/<id>.html`）。
+- 書くもの：英語と日本語の決まった文のコメントと、`quote verified` のラベル。引いた語が記録の頁にないときは、`not verified` のラベルを付け、issue を「計画しない」として閉じます。知らせに書かれたことを繰り返しません。
+- 削除・権利・個人情報・氏名・同意の撤回についての求めと読める issue は閉じず、`needs a person` のラベルを付けて開いたままにします。投稿・削除・撤回・出版版の issue には何もしません。
+- 運営者に残すこと：記録が誤っているかどうかと、その訂正。
+- コード：[.github/checked-intake/verify.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/checked-intake/verify.js)。[checked-intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/checked-intake.yml) が動かします。
 
 ## 撤回の issue が開かれたか編集されたとき
 
@@ -5209,6 +5322,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：開いている削除の求めと、確かめられた撤回。
 - 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる 2 日前から書きます。
+- 2026-12-01 から、issue を開いてから 30 日たっても確かめられていない投稿を、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html#突き合わせの受付)のとおり、決まった文のコメントを付けて閉じます。削除・撤回・出版版・訂正の issue は閉じません。コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js) に `--deadline` を付けて、[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
 ## 月に一度、1 日の日本時間 09:17

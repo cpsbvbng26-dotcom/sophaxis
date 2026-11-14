@@ -11,6 +11,8 @@ body:
         An error in the work itself is corrected by its authors, in a new version at the repository. To ask for a record to be removed, use the removal form instead.
         Personal data given here is used only for the purposes in the Privacy Policy: https://sophaxis.vercel.app/policies/privacy.html
         Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation, by the removal form or by email.
+
+        From 2026-12-01, for the first three kinds of error below, this form is checked by the checked intake: the words given under "Words on the record page, as shown" must occur on the record page of the Sophaxis id given, as shown there (differences of white space are ignored). If they do, the label "quote verified" is added and a moderator reads the report. If they do not, the issue is closed with a fixed comment, and a new issue can be opened. Any other kind, such as a broken link, a PDF copy or a concern about research integrity, goes to a person without this check. An issue that asks for removal, or concerns rights, personal data, a name or the withdrawal of consent, is never closed automatically; a request about one's own personal data can also go by the removal form or by email.
   - type: input
     id: id
     attributes:
@@ -31,6 +33,13 @@ body:
         - Something else
     validations:
       required: true
+  - type: textarea
+    id: quote
+    attributes:
+      label: Words on the record page, as shown
+      description: Required from 2026-12-01 for the first three kinds of error. Copy, character by character, the words or the address on the record page that are wrong; at least 6 characters, not counting spaces.
+    validations:
+      required: false
   - type: textarea
     id: details
     attributes:

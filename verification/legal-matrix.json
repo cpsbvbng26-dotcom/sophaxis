@@ -555,6 +555,23 @@
         }
       ]
     },
+    "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)": {
+      "duties": [
+        {
+          "duty": "a researcher who vouches states what they know, and gives no guarantee that would need writing and a maximum amount",
+          "by": [
+            {
+              "file": "policies/submission.md",
+              "text": "It is a statement of what the researcher knows, not a guarantee of what the submitter does."
+            },
+            {
+              "file": "policies/submission.md",
+              "text": "Sophaxis claims no money from the researcher under these policies."
+            }
+          ]
+        }
+      ]
+    },
     "Trade and advertising (Act on Specified Commercial Transactions; Act against Unjustifiable Premiums and Misleading Representations)": {
       "forms": [
         {

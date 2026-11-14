@@ -19,8 +19,11 @@
  *     and the advice of tools/pdf_advice.js (the licence printed on it, counts of contact details of others, the number of
  *     images, the repository's checksum), which shows counts and fixed words only;
  *   - the affiliations in the DOI metadata, for the same advice (a place where Sophaxis is not offered), shown as a count;
- *   - the name, the websites and the works of the public ORCID record given in the form.
- * Nothing from the ORCID record is written anywhere except the result of the checks.
+ *   - the name, the websites and the works of the public ORCID record given in the form;
+ *   - from SITE.checkedFrom (the checked intake), for every person whose identity the check verifies, the countries of
+ *     the public addresses and of the current employments and educations of their ORCID record, the organisations of
+ *     those affiliations (for a researcher who vouches), and the location of their GitHub profile (tools/place.js).
+ * Nothing from the ORCID record is written anywhere except the result of the checks: never a country or an organisation.
  *
  * The checks decide nothing. A moderator accepts or declines in the issue.
  */
@@ -33,6 +36,7 @@ const { validate, orcidOk, repoPrefix } = require('../build.js');
 const { sourceFor, LIMITS, download, accept } = require('./fetch_pdf.js');
 const { shapeOfFile, shapeNote } = require('./pdf_shape.js');
 const A = require('./pdf_advice.js');
+const P = require('./place.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
@@ -460,7 +464,7 @@ const BOX_LABELS = {
   residence: 'No author lives in a place where Sophaxis is not offered',
 };
 
-function check({ form, login, meta, person, works, listed, pub, today, age, notices }) {
+function check({ form, login, meta, person, works, listed, pub, today, age, notices, checked = false }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
   const pre = repoPrefix(form.doi || '');
@@ -518,17 +522,21 @@ function check({ form, login, meta, person, works, listed, pub, today, age, noti
   add('There is an abstract', meta.abstract || (form.abstract || '').trim(), meta.abstract ? 'from the DOI metadata' : 'from the form');
   if (!person) { add('The ORCID record could be read', false); return { ok: false, checks }; }
   add('The ORCID record links this GitHub account', linksGithub(person.urls, login), 'https://github.com/' + login);
-  const m = authorOf(meta, form.doi, form.orcid, person, works);
+  const m = authorOf(meta, form.doi, form.orcid, person, works, checked);
   add('The ORCID iD belongs to an author of the work', m.author,
-    m.how === 'id' ? 'the DOI metadata lists this ORCID iD' : m.how === 'name' ? 'the ORCID record lists this DOI and its name matches an author' : 'neither the DOI metadata nor the ORCID record connects them');
+    m.how === 'id' ? 'the DOI metadata lists this ORCID iD' : m.how === 'name' ? 'the ORCID record lists this DOI and its name matches an author'
+      : checked ? 'the DOI metadata does not list this ORCID iD for an author; from ' + SITE.checkedFrom + ', only the DOI metadata connects them' : 'neither the DOI metadata nor the ORCID record connects them');
   return { ok: checks.every((c) => c[1]), checks, author: m.author, licence: lic };
 }
 
 /* Pure: the author of the work that an ORCID record is, if any. Either the DOI metadata lists the ORCID iD,
- * or the ORCID record lists the DOI and its name matches an author. */
-function authorOf(meta, doi0, orcid, person, works) {
+ * or the ORCID record lists the DOI and its name matches an author. With byIdOnly (the checked intake, from
+ * SITE.checkedFrom), only the first: the DOI metadata is a source that the claimant does not write at the moment of
+ * claiming, while an ORCID record can list any DOI on the spot. */
+function authorOf(meta, doi0, orcid, person, works, byIdOnly = false) {
   const byId = meta.authors.find((a) => a.orcid && a.orcid === orcid);
   if (byId) return { author: byId, how: 'id' };
+  if (byIdOnly) return { author: null, how: null };
   const doi = String(meta.doi || doi0).toLowerCase();
   const claimed = works && [...works].some((w) => w === doi || w.startsWith(doi + '.v'));
   const byName = claimed && person && meta.authors.find((a) => sameName(person, a));
@@ -546,14 +554,15 @@ const squash = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
 
 /* Pure: the confirmations in the comments of an issue. A co-author writes AGREE with their ORCID iD, from their own account;
  * the operator writes BY_EMAIL with the ORCID iD of an author who confirmed by email. Comments by bots are ignored. */
-function confirmationsIn(comments, owner) {
+function confirmationsIn(comments, owner, checked = false) {
   const out = [];
   for (const c of comments || []) {
     if (!c.user || c.user.type === 'Bot') continue;
     const body = squash(c.body);
     const orcid = orcidOf(c.body);
     if (!orcid) continue;
-    const byOperator = !!owner && c.user.login.toLowerCase() === owner.toLowerCase() && body.includes(squash(BY_EMAIL));
+    /* From SITE.checkedFrom, the operator's record of an email is not a check that the intake can make, and does not count. */
+    const byOperator = !checked && !!owner && c.user.login.toLowerCase() === owner.toLowerCase() && body.includes(squash(BY_EMAIL));
     if (byOperator || body.includes(squash(AGREE))) out.push({ login: c.user.login, orcid, byOperator });
   }
   return out;
@@ -561,19 +570,66 @@ function confirmationsIn(comments, owner) {
 
 /* Pure: whether a confirmation holds. `person` and `works` come from the ORCID record it names.
  * A comment counts only from a GitHub account that the ORCID record links; the operator's record of an email counts as it is. */
-function confirmedAuthor(meta, doi, conf, person, works) {
+function confirmedAuthor(meta, doi, conf, person, works, checked = false) {
   if (!person) return null;
   if (!conf.byOperator && !linksGithub(person.urls, conf.login)) return null;
-  return authorOf(meta, doi, conf.orcid, person, works).author;
+  return authorOf(meta, doi, conf.orcid, person, works, checked).author;
 }
 
 /* Pure: the check row, or null before COAUTHORS_FROM. `confirmed` are authors of the work, as confirmedAuthor gives them. */
-function coauthorCheck(authors, submitter, confirmed, today) {
+function coauthorCheck(authors, submitter, confirmed, today, checked = false) {
   if (String(today).slice(0, 10) < COAUTHORS_FROM) return null;
   if (authors.length <= 1) return [COAUTHOR_LABEL, true, 'the work has one author'];
   const missing = authors.filter((a) => a !== submitter && !confirmed.includes(a));
   const n = authors.length - missing.length;
-  return [COAUTHOR_LABEL, missing.length === 0, n + ' of ' + authors.length + ' authors' + (missing.length ? '; waiting for ' + missing.map((a) => a.name).join(', ') : '')];
+  /* From SITE.checkedFrom, an author without an ORCID iD in the DOI metadata cannot confirm: the work waits until the metadata names one. */
+  const noId = checked ? missing.filter((a) => !a.orcid) : [];
+  return [COAUTHOR_LABEL, missing.length === 0, n + ' of ' + authors.length + ' authors' + (missing.length ? '; waiting for ' + missing.map((a) => a.name).join(', ') : '')
+    + (noId.length ? '; the DOI metadata gives no ORCID iD for ' + noId.map((a) => a.name).join(', ') : '')];
+}
+
+/* From SITE.checkedFrom: the place rule (tools/place.js) for every person whose identity the check verifies. */
+const PLACE_LABEL = 'The public records of every verified author place them where Sophaxis is offered';
+/* Pure: the row of the check. `placed` holds one boolean per verified author. Only counts are written. */
+function placeCheck(placed) {
+  const n = placed.filter(Boolean).length;
+  return [PLACE_LABEL, placed.length > 0 && n === placed.length, n + ' of ' + placed.length + ' verified authors'];
+}
+
+/* From SITE.checkedFrom, a submission that has not passed every check SITE.checkedDays days after its issue was opened
+ * is closed by the daily run (intake.yml), with this fixed comment. */
+const DEADLINE_NOTE = MARK + `-deadline
+**The checked intake: the time to pass the checks has ended.** This submission did not pass every automatic check within ${SITE.checkedDays} days of the day its issue was opened, as the [Submission Policy](${SITE.baseUrl}policies/submission.html) sets out, so the issue is closed. Nothing is listed. A new issue can be opened once every check can pass.
+**突き合わせの受付：確かめの期限が過ぎました。** この投稿は、issue を開いた日から ${SITE.checkedDays} 日のうちに、自動の確かめのすべてを通りませんでした。投稿の規程のとおり、issue を閉じます。何も載せません。すべての確かめを通れるようになったら、新しい issue を開けます。
+`;
+/* Pure: whether the daily run closes an open issue: a submission, not verified, opened on or after SITE.checkedFrom,
+ * at least SITE.checkedDays days ago (days in Japan time). A request (removal, withdrawal) is never closed. */
+function pastDeadline(issue, today) {
+  const names = (issue.labels || []).map((l) => (typeof l === 'string' ? l : l.name));
+  if (issue.pull_request || issue.state !== 'open' || !names.includes('submission') || names.includes('verified')) return false;
+  if (names.some((n) => ['removal', 'withdrawal', 'published', 'correction'].includes(n))) return false;
+  const opened = jstDay(issue.created_at);
+  if (!opened || opened < SITE.checkedFrom) return false;
+  return Date.parse(today + 'T00:00:00Z') - Date.parse(opened + 'T00:00:00Z') >= SITE.checkedDays * 24 * 3600 * 1000;
+}
+
+/* From SITE.checkedFrom: the note while other authors are awaited. No route by email: only a check counts. */
+function coauthorNoteChecked() {
+  return `
+Identity and licence are verified for the account that opened this issue. The other authors have not all confirmed their own agreement yet, as the [Submission Policy](${SITE.baseUrl}policies/submission.html) asks.
+Each of them comments in this issue, from a GitHub account that their ORCID record links, with these words and their own ORCID iD, which the DOI metadata must list for them:
+
+~~~~
+${AGREE} ORCID: 0000-0000-0000-0000
+~~~~
+
+An author for whom the DOI metadata gives no ORCID iD cannot confirm yet: the work waits until the metadata at the repository names one. The check then reads that author's public records under the place rule, as it reads the submitter's.
+If every check has not passed ${SITE.checkedDays} days after this issue was opened, the issue is closed, and a new one can be opened later.
+The agreement also covers the provision of the author's personal data that the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out, including to services in the United States.
+Saving to the Internet Archive is a separate consent, given in the form above or not at all.
+Any author can withdraw a consent at any time, by the removal form or by email; this is never closed automatically.
+Anyone can object, at any time, to the use of their personal data on Sophaxis, on grounds of their own situation.
+`;
 }
 
 function coauthorNote() {
@@ -602,15 +658,19 @@ Nor does it list work by an author under 18 who lives or stays in India.
  * a book chapter or a book with a DOI. The authors of the work and the operator cannot vouch. */
 const VOUCH = 'I vouch for this submission to Sophaxis. I am not an author of this work, and I do not live in, or stay in, a place where Sophaxis is not offered.';
 const VOUCH_LABEL = 'A researcher with a journal article, a book chapter or a book vouches for a first submission';
+/* From SITE.checkedFrom, the researcher attests what they know of the submitter, and has no conflict of interest. It is a
+ * statement of facts that the researcher knows, not a guarantee of the submitter's conduct (docs/legal-audit-2026-11-12.md,
+ * 「2026-11-14：突き合わせの受付」, on Articles 446 and 465-2 of the Civil Code). The English words are canonical. */
+const VOUCH_CHECKED = 'I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence, and does not live in, or stay in, a place where Sophaxis is not offered. I am not an author of this work, I am not from the same project as its authors, and I have no conflict of interest with them. I do not live in, or stay in, a place where Sophaxis is not offered. This states what I know; it is not a guarantee.';
 const PEER_TYPES = new Set(['journal-article', 'book-chapter', 'book']);
 
 /* Pure: the comments that vouch, with the ORCID iD each gives. */
-function vouchesIn(comments) {
+function vouchesIn(comments, words = VOUCH) {
   const out = [];
   for (const c of comments || []) {
     if (!c.user || c.user.type === 'Bot') continue;
     const orcid = orcidOf(c.body);
-    if (orcid && squash(c.body).includes(squash(VOUCH))) out.push({ login: c.user.login, orcid });
+    if (orcid && squash(c.body).includes(squash(words))) out.push({ login: c.user.login, orcid });
   }
   return out;
 }
@@ -628,14 +688,19 @@ function peerWorks(json) {
 }
 
 /* Pure: why a vouching comment does not count, or null when it does. */
-function vouchProblem({ e, person, peer, meta, submitter }) {
+/* From SITE.checkedFrom (`checked`), also: a researcher whose vouching was found untrue cannot vouch (SITE.vouchBarred);
+ * the place rule; and no current organisation shared with the submitter in ORCID (`placed`, `shares`). */
+function vouchProblem({ e, person, peer, meta, submitter, checked = false, placed = null, shares = null }) {
   if (SITE.operator.github && e.login.toLowerCase() === SITE.operator.github.toLowerCase()) return 'the operator cannot vouch';
   if (e.orcid === SITE.operator.orcid) return 'the operator cannot vouch';
   if (submitter && e.orcid === submitter) return 'the submitter cannot vouch';
+  if (checked && (SITE.vouchBarred || []).includes(e.orcid)) return 'a vouching by this researcher was found untrue, and they can no longer vouch';
   if (!person) return 'the ORCID record could not be read';
   if (!linksGithub(person.urls, e.login)) return 'the ORCID record does not link this GitHub account';
   if (meta.authors.some((a) => (a.orcid && a.orcid === e.orcid) || sameName(person, a))) return 'an author of the work cannot vouch';
   if (!peer || !peer.size) return 'the ORCID record lists no journal article, book chapter or book with a DOI';
+  if (checked && placed !== true) return 'the public records of the researcher do not place them where Sophaxis is offered';
+  if (checked && shares !== false) return shares === null ? 'the ORCID records could not be compared for a conflict of interest' : 'the ORCID records show a conflict of interest with the submitter';
   return null;
 }
 
@@ -655,6 +720,20 @@ function vouchCheck(results, exempt) {
   const good = results.filter((r) => !r.problem);
   if (good.length) return [VOUCH_LABEL, true, 'vouched for by ORCID ' + good.map((r) => r.e.orcid).join(', ')];
   return [VOUCH_LABEL, false, results.length ? results.map((r) => 'ORCID ' + r.e.orcid + ': ' + r.problem).join('; ') : 'waiting for a researcher to vouch for it'];
+}
+
+function vouchNoteChecked() {
+  return `
+This is a first submission, and it needs one researcher to vouch for it, as the [Submission Policy](${SITE.baseUrl}policies/submission.html#a-researcher-who-vouches-for-a-first-submission) asks.
+A researcher whose public ORCID record lists a journal article, a book chapter or a book with a DOI, and links their GitHub account, comments in this issue with these words and their own ORCID iD:
+
+~~~~
+${VOUCH_CHECKED} ORCID: 0000-0000-0000-0000
+~~~~
+
+The authors of the work and the operator cannot vouch. Vouching states facts that the researcher knows; it is not a guarantee, and Sophaxis claims no money from the researcher. If it proves untrue, the researcher can no longer vouch, the vouching is recorded as untrue in the history of the record, and the listing is reviewed. It is not a review, and the moderator still decides.
+The check reads the researcher's public ORCID record (the name, the websites, the works, and the countries and organisations of the place rule and of the conflict check) and the location of their GitHub profile, keeps and writes none of the countries or organisations, and compares the current organisations with the submitter's. The GitHub username, ORCID iD and comment of the researcher are public, as the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out.
+`;
 }
 
 function vouchNote() {
@@ -775,7 +854,7 @@ function metadataAdvice(doi, dir = path.join(ROOT, 'deposit-check')) {
   }
 }
 
-function comment(result, d, advice = [], shape = null, readings = null) {
+function comment(result, d, advice = [], shape = null, readings = null, checked = false) {
   const safe = (s) => String(s).replace(/[`|<>]/g, '');
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
   let out = `${MARK}
@@ -798,8 +877,10 @@ ${JSON.stringify(d.record, null, 2).replace(/~~~~/g, '~ ~ ~ ~')}
   } else if (d && d.problems && d.problems.length) {
     out += '\nThe draft record does not validate: ' + safe(d.problems.join('; ')) + '\n';
   } else if (result.checks.some((c) => c[0] === COAUTHOR_LABEL || c[0] === VOUCH_LABEL) && result.checks.every((c) => c[1] || c[0] === COAUTHOR_LABEL || c[0] === VOUCH_LABEL)) {
-    if (result.checks.some((c) => c[0] === COAUTHOR_LABEL && !c[1])) out += coauthorNote();
-    if (result.checks.some((c) => c[0] === VOUCH_LABEL && !c[1])) out += vouchNote();
+    if (result.checks.some((c) => c[0] === COAUTHOR_LABEL && !c[1])) out += checked ? coauthorNoteChecked() : coauthorNote();
+    if (result.checks.some((c) => c[0] === VOUCH_LABEL && !c[1])) out += checked ? vouchNoteChecked() : vouchNote();
+  } else if (result.checks.some((c) => c[0] === PLACE_LABEL && !c[1]) && result.checks.every((c) => c[1] || [PLACE_LABEL, COAUTHOR_LABEL, VOUCH_LABEL].includes(c[0]))) {
+    out += P.PLACE_NOTE;
   } else {
     out += `
 Not verified. Fix what failed, then edit this issue to run the checks again.
@@ -903,8 +984,26 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
     pub = null;
     try { if (/^10\.\d{4,9}\/\S+$/.test(form.published)) pub = await require('./published.js').lookUpPublished(form.published); } catch (e) { console.error(e.message); }
   }
-  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices }), meta, raw, versions, pub };
+  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices, checked: opened >= SITE.checkedFrom }), meta, raw, versions, pub };
 }
+
+/* From SITE.checkedFrom: what the place rule and the conflict check read for one person, and nothing else: the address,
+ * employments and educations sections of the public ORCID record, and the location of the GitHub profile. Nothing of it is
+ * printed, kept or written. Null when a section cannot be read, so that the person is not placed. */
+async function placeRecords(orcid, login) {
+  try { return await readPlaceRecords(orcid, login); } catch { console.error('the place records could not be read'); return null; }
+}
+async function readPlaceRecords(orcid, login) {
+  const at = (s) => getJson('https://pub.orcid.org/v3.0/' + orcid + '/' + s);
+  const [address, employments, educations] = [await at('address'), await at('employments'), await at('educations')];
+  if (!address || !employments || !educations) return null;
+  const r = await request('https://api.github.com/users/' + encodeURIComponent(login), { headers: { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + process.env.GITHUB_TOKEN } });
+  if (!r.ok) return null;
+  const location = (await r.json()).location || '';
+  return { address, employments, educations, location };
+}
+/* Pure: whether the records place a person, on the day the issue was opened. */
+const placedBy = (rec, opened) => !!rec && P.placeOf({ signals: P.strongSignals(rec), location: rec.location, opened }).placed;
 
 /* The issue that started the run, from the event file that GitHub Actions writes for it (GITHUB_EVENT_PATH).
  * The same file serves an issue event and a comment on an issue. Nothing read here is printed. */
@@ -928,6 +1027,19 @@ async function github(method, url, body) {
 async function main() {
   const args = process.argv.slice(2);
   const arg = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : ''; };
+  if (args.includes('--deadline')) {
+    const today = jstDay(new Date().toISOString());
+    for (let page = 1; page <= 10; page++) {
+      const list = (await github('GET', '/issues?state=open&labels=submission&per_page=100&page=' + page)) || [];
+      for (const i of list.filter((x) => pastDeadline(x, today))) {
+        await github('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });
+        await github('PATCH', '/issues/' + i.number, { state: 'closed', state_reason: 'not_planned' });
+        console.log('closed at the end of its time: #' + i.number);
+      }
+      if (list.length < 100) break;
+    }
+    return;
+  }
   if (args.includes('--dry-run')) {
     const form = { doi: arg('--doi'), orcid: arg('--orcid'), category: arg('--category') || 'mathematics', llm: 'Dry run: no statement is given here.' };
     const { result, meta, versions } = await run(form, arg('--login'), arg('--opened') || undefined);
@@ -943,33 +1055,54 @@ async function main() {
   const opened = jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString());
   const { result, meta, raw, versions, pub } = await run(form, login, opened);
   const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
+  const checked = opened >= SITE.checkedFrom;
+  /* The people whose identity the check verifies, for the place rule: the submitter, then each confirming author. */
+  const people = meta && result.author ? [{ orcid: form.orcid, login }] : [];
   if (meta && result.author) {
     const confirmed = [];
-    for (const c of confirmationsIn(all, SITE.operator.github)) {
+    for (const c of confirmationsIn(all, SITE.operator.github, checked)) {
       try {
         const p = await orcidPersonJson(c.orcid);
         const w = await getJson('https://pub.orcid.org/v3.0/' + c.orcid + '/works');
-        const a = confirmedAuthor(meta, form.doi, c, p && orcidPerson(p), w ? orcidDois(w) : new Set());
-        if (a) confirmed.push(a);
+        const a = confirmedAuthor(meta, form.doi, c, p && orcidPerson(p), w ? orcidDois(w) : new Set(), checked);
+        if (a && !confirmed.includes(a)) { confirmed.push(a); people.push({ orcid: c.orcid, login: c.login }); }
       } catch (e) { console.error(e.message); }
     }
     /* The policies give their dates in Japan time. */
-    const row = coauthorCheck(meta.authors, result.author, confirmed, new Date(Date.now() + 9 * 3600 * 1000).toISOString());
+    const row = coauthorCheck(meta.authors, result.author, confirmed, new Date(Date.now() + 9 * 3600 * 1000).toISOString(), checked);
     if (row) { result.checks.push(row); result.ok = result.ok && row[1]; }
+  }
+  let submitterRecords = null;
+  if (checked && people.length) {
+    const placed = [];
+    for (const v of people) {
+      let rec = null;
+      rec = await placeRecords(v.orcid, v.login);
+      if (v === people[0]) submitterRecords = rec;
+      placed.push(placedBy(rec, opened));
+    }
+    const row = placeCheck(placed);
+    result.checks.push(row);
+    result.ok = result.ok && row[1];
   }
   if (meta && result.author && !form.update && opened >= SITE.vouchFrom) {
     const exempt = listedAuthor(form.orcid, loadRecords());
     const results = [];
     if (!exempt) {
-      for (const e of vouchesIn(all)) {
-        let person = null, peer = null;
+      for (const e of vouchesIn(all, checked ? VOUCH_CHECKED : VOUCH)) {
+        let person = null, peer = null, placed = null, shares = null;
         try {
           const p = await orcidPersonJson(e.orcid);
           const w = await getJson('https://pub.orcid.org/v3.0/' + e.orcid + '/works');
           person = p && orcidPerson(p);
           peer = w ? peerWorks(w) : new Set();
+          if (checked) {
+            const rec = await placeRecords(e.orcid, e.login);
+            placed = placedBy(rec, opened);
+            shares = rec && submitterRecords ? P.sharesOrganisation(rec, submitterRecords) : null;
+          }
         } catch (err) { console.error(err.message); }
-        results.push({ e, problem: vouchProblem({ e, person, peer, meta, submitter: form.orcid }) });
+        results.push({ e, problem: vouchProblem({ e, person, peer, meta, submitter: form.orcid, checked, placed, shares }) });
       }
     }
     const row = vouchCheck(results, exempt);
@@ -981,7 +1114,7 @@ async function main() {
   const shape = meta && !form.update ? await pdfShape(versions, meta.title, about) : null;
   /* Without a PDF that the repository lets Sophaxis fetch, the advice reads the DOI metadata only. */
   const readings = shape && shape.advice ? shape.advice : about ? A.adviceOf(about) : null;
-  const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : [], shape, readings);
+  const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : [], shape, readings, checked);
   const mine = all.find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await github('PATCH', '/issues/comments/' + mine.id, { body });
   else await github('POST', '/issues/' + n + '/comments', { body });
@@ -991,6 +1124,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

@@ -5,6 +5,10 @@ on:
   # A co-author confirms, or a researcher vouches, in a comment (Submission Policy); only comments that carry those words run the check again.
   issue_comment:
     types: [created, edited, deleted]
+  # The checked intake (from 2026-12-01): once a day, a submission that has not passed every check 30 days after its issue
+  # was opened is closed with a fixed comment (tools/intake.js --deadline). A removal or withdrawal issue is never closed.
+  schedule:
+    - cron: '17 0 * * *'
 permissions:
   contents: read
   issues: write
@@ -61,5 +65,17 @@ jobs:
           node-version: 22
       # The script reads the issue from the event file (GITHUB_EVENT_PATH), never from the environment or the shell: the run's log prints a step's environment, and would keep the issue text after the issue is emptied.
       - run: node tools/published.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deadline:
+    if: github.event_name == 'schedule'
+    name: Close submissions whose time to pass the checks has ended
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: node tools/intake.js --deadline
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

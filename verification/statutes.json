@@ -511,6 +511,123 @@
       "article": "63",
       "title": "著作権法",
       "sha256": "db2290e44f3633fa8ed12d13d67d5fed560696afefac682d6674d4b7eb2f5071"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 446",
+      "law_id": "129AC0000000089",
+      "article": "446",
+      "sha256": "42f1a2c3678aee4269f6630c0e33a99c0c96333cc6df691265c1aac7e4411e6a",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-2",
+      "law_id": "129AC0000000089",
+      "article": "465_2",
+      "sha256": "7c2081530d967af365eb3b7ebc277297b88ddde712c81eba32ffc82d974368fd",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-3",
+      "law_id": "129AC0000000089",
+      "article": "465_3",
+      "sha256": "c2572e3b386b196a60a65810fd3353c2feea240872a8f542b394eaf973897c85",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-4",
+      "law_id": "129AC0000000089",
+      "article": "465_4",
+      "sha256": "1a1f050073086d4323ab675370f8381ed64919dcc3721e1bbc00057794ac4c62",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-5",
+      "law_id": "129AC0000000089",
+      "article": "465_5",
+      "sha256": "3521539848c4ca6d3be1a77ea02a44081e2dbff20866fb7caa29eb8d0da72348",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-6",
+      "law_id": "129AC0000000089",
+      "article": "465_6",
+      "sha256": "58de6492d2cfe32a79eacf2554a5ab631779578c0bc64b45fb38580f89378bc2",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-7",
+      "law_id": "129AC0000000089",
+      "article": "465_7",
+      "sha256": "6d53a7006e6a7d064d118bfb39baf06cf4eb01b6e38dad091a399ae804ebe839",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-8",
+      "law_id": "129AC0000000089",
+      "article": "465_8",
+      "sha256": "4ba3631dfb9e541fcc5049dbca0587cd85befb5a8078c931df111a2651d70d25",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-9",
+      "law_id": "129AC0000000089",
+      "article": "465_9",
+      "sha256": "e3db5855fefb5ef6cd77223b635cf084f8eb6a8f61fdf4fc68029d6c8147a835",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Civil Code",
+      "label": "Article 465-10",
+      "law_id": "129AC0000000089",
+      "article": "465_10",
+      "sha256": "c4f5f4490fcdc48686e1fe3c79cc7e92390d72b14e7b0632d8efb737bab3835a",
+      "title": "民法"
+    },
+    {
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
+      "name": "Consumer Contract Act",
+      "label": "Article 2",
+      "law_id": "412AC0000000061",
+      "article": "2",
+      "sha256": "14c712b33adf99fcaf96827911456aa3e23897277c783ef50b32e60d8cb8286f",
+      "title": "消費者契約法"
+    },
+    {
+      "law": "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
+      "name": "Act on providers of specified telecommunications services",
+      "label": "Article 5",
+      "law_id": "413AC0000000137",
+      "article": "5",
+      "sha256": "b4f46f837cf149cc8a63706b95ca924ec0dd4d4b0acd8e5de6903917b0c7bdd6",
+      "title": "特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律"
+    },
+    {
+      "law": "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
+      "name": "Act on providers of specified telecommunications services",
+      "label": "Article 6",
+      "law_id": "413AC0000000137",
+      "article": "6",
+      "sha256": "8bc57df7029da0ff418f53d1280749c1f3075b593d10042e7d8942edb7c98c7c",
+      "title": "特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律"
     }
   ],
   "policies": [
