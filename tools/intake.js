@@ -611,11 +611,20 @@ const DEADLINE_NOTE = MARK + `-deadline
  * needing a person. A request (removal, withdrawal) is never labelled. */
 function pastDeadline(issue, today) {
   const names = (issue.labels || []).map((l) => (typeof l === 'string' ? l : l.name));
-  if (issue.pull_request || issue.state !== 'open' || !names.includes('submission') || names.includes('verified')) return false;
+  /* Only a submission that a check has labelled unverified: one that no check has labelled yet is checked first (unchecked, 2026-11-15). */
+  if (issue.pull_request || issue.state !== 'open' || !names.includes('submission') || names.includes('verified') || !names.includes('unverified')) return false;
   if (names.some((n) => ['removal', 'withdrawal', 'published', 'correction', NOT_LISTED, PERSON].includes(n))) return false;
   const opened = jstDay(issue.created_at);
   if (!opened || opened < SITE.checkedFrom) return false;
   return Date.parse(today + 'T00:00:00Z') - Date.parse(opened + 'T00:00:00Z') >= SITE.checkedDays * 24 * 3600 * 1000;
+}
+/* Pure: whether an open submission has never been labelled by a check (verified or unverified): its run was cancelled, or never
+ * started. The daily run checks it as if its issue had just been edited (2026-11-15). Requests and issues labelled for a person,
+ * or not listed, are left alone. */
+function unchecked(issue) {
+  const names = (issue.labels || []).map((l) => (typeof l === 'string' ? l : l.name));
+  if (issue.pull_request || issue.state !== 'open' || !names.includes('submission')) return false;
+  return !names.some((n) => ['verified', 'unverified', 'removal', 'withdrawal', 'published', 'correction', NOT_LISTED, PERSON].includes(n));
 }
 /* Pure: whether the title, the text or any comment of a person (not a bot) reads as a request that the law requires the
  * operator to receive or consider, by the words of the checked intake (.github/checked-intake/verify.js). Such an issue is
@@ -857,7 +866,8 @@ function metadataAdvice(doi, dir = path.join(ROOT, 'deposit-check')) {
   const bin = path.join(dir, 'bin', 'deposit-check.js');
   if (!fs.existsSync(bin) || !/^10\.\d{4,9}\/\S+$/.test(String(doi || ''))) return [];
   try {
-    const out = require('child_process').execFileSync('node', [bin, '--doi', doi, '--format', 'json', '--fail-on', 'never'], { encoding: 'utf8', timeout: 120000, stdio: ['ignore', 'pipe', 'ignore'] });
+    /* deposit-check reads public APIs only: it gets no token (2026-11-15). */
+    const out = require('child_process').execFileSync('node', [bin, '--doi', doi, '--format', 'json', '--fail-on', 'never'], { encoding: 'utf8', timeout: 120000, stdio: ['ignore', 'pipe', 'ignore'], env: { PATH: process.env.PATH || '/usr/bin:/bin', HOME: process.env.HOME || '/tmp', LANG: 'C.UTF-8' } });
     const rules = require(path.join(dir, 'src', 'rules.js'));
     return adviceFrom(JSON.parse(out)).map((f) => Object.assign({ title: (rules.byId(f.rule) || {}).title }, f));
   } catch (e) {
@@ -933,7 +943,8 @@ async function pdfShape(versions, title, o = null) {
 /* ------------------------------------------------------------ network */
 
 async function getJson(url, accept) {
-  const r = await request(url, { headers: { Accept: accept || 'application/json' } });
+  /* An answer that does not come within a minute is an error, never a wait until the job's time runs out (2026-11-15). */
+  const r = await request(url, { headers: { Accept: accept || 'application/json' }, signal: AbortSignal.timeout(60000) });
   if (r.status === 404) return null;
   if (!r.ok) throw new Error(url.split('?')[0] + ': HTTP ' + r.status);
   return r.json();
@@ -1036,7 +1047,18 @@ async function github(method, url, body) {
 /* The daily run of the checked intake (--deadline). `gh` is the call on GitHub, passed in so that verification/check.js runs it
  * on issues it makes. It reads the open submissions and their comments, and writes only a comment and a label: it never
  * closes or locks an issue (2026-11-15). */
-async function deadlineRun(gh, today) {
+async function deadlineRun(gh, today, recheck = null) {
+  /* First, every submission that no check has labelled is checked; only then is any submission labelled not listed. */
+  if (recheck) {
+    for (let page = 1; page <= 10; page++) {
+      const list = (await gh('GET', '/issues?state=open&labels=submission&per_page=100&page=' + page)) || [];
+      for (const i of list.filter(unchecked)) {
+        console.log('checked by the daily run: #' + i.number);
+        await recheck(i);
+      }
+      if (list.length < 100) break;
+    }
+  }
   for (let page = 1; page <= 10; page++) {
     const list = (await gh('GET', '/issues?state=open&labels=submission&per_page=100&page=' + page)) || [];
     for (const i of list.filter((x) => pastDeadline(x, today))) {
@@ -1053,7 +1075,7 @@ async function deadlineRun(gh, today) {
 async function main() {
   const args = process.argv.slice(2);
   const arg = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : ''; };
-  if (args.includes('--deadline')) return deadlineRun(github, jstDay(new Date().toISOString()));
+  if (args.includes('--deadline')) return deadlineRun(github, jstDay(new Date().toISOString()), (i) => checkSubmission(String(i.number), (i.user && i.user.login) || '', i.body || ''));
   if (args.includes('--dry-run')) {
     const form = { doi: arg('--doi'), orcid: arg('--orcid'), category: arg('--category') || 'mathematics', llm: 'Dry run: no statement is given here.' };
     const { result, meta, versions } = await run(form, arg('--login'), arg('--opened') || undefined);
@@ -1063,9 +1085,15 @@ async function main() {
     return;
   }
   const { number: n, author: login, body: text } = issueEvent();
-  const form = parseIssue(text);
+  return checkSubmission(n, login, text);
+}
+
+/* One submission: from the event, or from the daily run for one that no check has labelled. */
+async function checkSubmission(n, login, text) {
   /* The age of the DOI is counted on the day the issue was opened, not the day it was last edited. */
   const issue = await github('GET', '/issues/' + n);
+  /* The issue as it is now, so that a check that runs after a cancelled one reads the latest text (2026-11-15); the event's text if it cannot be read. */
+  const form = parseIssue(issue && typeof issue.body === 'string' ? issue.body : text);
   /* A submission whose time has ended (NOT_LISTED) is not checked again; a person reads it. */
   if (((issue && issue.labels) || []).some((l) => (typeof l === 'string' ? l : l.name) === NOT_LISTED)) { console.log('past its time: not checked again'); return; }
   const opened = jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString());
@@ -1140,6 +1168,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

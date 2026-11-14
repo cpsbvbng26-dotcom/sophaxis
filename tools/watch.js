@@ -11,7 +11,10 @@
  *   node tools/watch.js --dry-run     # report only; open no issue, save nothing
  *
  * Problems and new versions are reported in one open issue labelled "watch"; when there are none, that issue is closed.
- * Saving to the Internet Archive is best effort and never fails the run.
+ * What could not be checked (an answer of 429 or 5xx, a time-out, an answer that cannot be read) and the saves to the Internet
+ * Archive that did not succeed are reported in the same issue, keep it open, and make the run fail: the run never says that it
+ * found no problems while something was not checked (2026-11-15). Until then a failed lookup was only logged, and a save that
+ * failed never failed the run. OpenAlex is read for information only, and does not count.
  */
 'use strict';
 const { request } = require('./ua.js');
@@ -136,17 +139,23 @@ function archiveUrls(list) {
 /* Save addresses to the Internet Archive, spaced and retried as above. Used by the weekly watch and, for the pages
  * a push changed, by tools/indexnow.js. A failure is logged and does not stop the others. */
 async function saveToArchive(urls, list = records(path.join(ROOT, 'data', 'papers'))) {
+  const failed = [];
   for (const u of savable(urls, list)) {
+    let saved = false;
     for (let attempt = 0; attempt <= RETRY_WAITS_MS.length; attempt++) {
       if (attempt) await pause(RETRY_WAITS_MS[attempt - 1]);
       try {
         const r = await request('https://web.archive.org/save/' + u);
         console.log('archive ' + r.status + ' ' + u);
+        saved = r.ok;
         if (r.ok) break;
       } catch (e) { console.log('archive failed ' + u + ': ' + describe(e)); }
     }
+    if (!saved) failed.push(u);
     await pause(SAVE_GAP_MS);
   }
+  /* The addresses whose save did not succeed after every try (2026-11-15): the weekly watch reports them and fails. */
+  return failed;
 }
 
 /* ------------------------------------------------------------ the PDF copies (2026-11-14) */
@@ -187,7 +196,7 @@ function copyTable(readings) {
       + (c.sha === null ? ' | | | |' : mark(c.licence) + ' | ' + mark(c.contacts) + ' | ' + n(c.images, /^(\d+)/) + ' | ' + mark(c.places) + ' |')).join('\n') + '\n';
 }
 
-function report(problems, when, news = [], pubs = [], index = '', copies = '') {
+function report(problems, when, news = [], pubs = [], index = '', copies = '', notChecked = [], unsaved = []) {
   const list = (xs) => xs.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n');
   return `${MARK}
 **Weekly check, ${when}**
@@ -195,6 +204,12 @@ ${problems.length ? `
 ${list(problems)}
 
 The operator looks into each problem under the Moderation Policy.
+` : ''}${notChecked.length || unsaved.length ? `
+Not checked this week (${notChecked.length}), and not saved to the Internet Archive (${unsaved.length}):
+
+${list(notChecked.concat(unsaved.map((u) => 'not saved: ' + u)))}
+
+These are not problems of the records: the answer could not be read, or the save did not succeed. They are tried again next week; until then this issue stays open and the run fails.
 ` : ''}${news.length ? `
 New versions at the repository:
 
@@ -224,11 +239,13 @@ async function main() {
   const dry = process.argv.includes('--dry-run');
   const list = records(path.join(ROOT, 'data', 'papers'));
   const found = {};
+  /* What could not be checked (2026-11-15): each DOI, notice, version or published version whose answer could not be read. */
+  const notChecked = [];
   for (const p of list.filter((x) => x.status !== 'removed')) {
     for (const v of p.versions) {
       const d = v.doi.toLowerCase();
       if (d in found) continue;
-      try { found[d] = (await lookUp(v.doi)).meta; } catch (e) { console.log('could not check ' + v.doi + ': ' + e.message); }
+      try { found[d] = (await lookUp(v.doi)).meta; } catch (e) { console.log('could not check ' + v.doi + ': ' + e.message); notChecked.push(p.id + ': the DOI ' + v.doi + ' could not be checked (' + e.message + ')'); }
     }
   }
   const problems = list.flatMap((p) => compare(p, found));
@@ -239,12 +256,12 @@ async function main() {
     for (const v of p.versions) {
       const d = v.doi.toLowerCase();
       if (d in notices) continue;
-      try { notices[d] = await N.lookUpNotices(v.doi); } catch (e) { console.log('could not read the notices of ' + v.doi + ': ' + describe(e)); }
+      try { notices[d] = await N.lookUpNotices(v.doi); } catch (e) { console.log('could not read the notices of ' + v.doi + ': ' + describe(e)); notChecked.push(p.id + ': the notices of ' + v.doi + ' could not be read (' + describe(e) + ')'); }
       await pause(LOOKUP_GAP_MS);
     }
   }
   problems.push(...list.flatMap((p) => N.newNotices(p, notices)));
-  console.log(problems.length ? problems.join('\n') : 'every DOI resolves and keeps its licence');
+  console.log(problems.length ? problems.join('\n') : notChecked.length ? notChecked.length + ' could not be checked; no problem in the rest' : 'every DOI resolves and keeps its licence');
   /* The PDF copies: each file against its recorded SHA-256, and the advice, from the files in the repository (no request). */
   const pdfDir = path.join(ROOT, 'data', 'pdf');
   const readCopy = (p) => (file) => {
@@ -265,7 +282,7 @@ async function main() {
     try {
       const { meta, raw } = await lookUp(doi);
       if (meta) news.push(...newVersions(p, (await versionsOf(doi, meta, raw)).length));
-    } catch (e) { console.log('could not look for new versions of ' + p.id + ': ' + e.message); }
+    } catch (e) { console.log('could not look for new versions of ' + p.id + ': ' + e.message); notChecked.push(p.id + ': new versions could not be looked for (' + e.message + ')'); }
   }
   console.log(news.length ? news.join('\n') : 'no new versions at the repositories');
 
@@ -290,6 +307,7 @@ async function main() {
           continue;
         }
         console.log('could not look for the published version of ' + p.id + ': ' + describe(e));
+        notChecked.push(p.id + ': the published version could not be looked for (' + describe(e) + ')');
         break;
       }
     }
@@ -316,8 +334,10 @@ async function main() {
   /* The Internet Archive answers 429 to saves that come too close together, or refuses the connection:
    * space them, and retry after a longer wait each time (SAVE_GAP_MS, RETRY_WAITS_MS).
    * Any answer other than success is tried again: on 2026-11-02 it answered 404 for a PDF copy that was served. */
+  let unsavedUrls = [];
   if (dry) archiveUrls(list).forEach((u) => console.log('would save ' + u));
-  else await saveToArchive(archiveUrls(list));
+  else unsavedUrls = await saveToArchive(archiveUrls(list));
+  console.log(notChecked.length + ' not checked; ' + unsavedUrls.length + ' not saved to the Internet Archive');
   /* A save can fail while an earlier copy exists. Say which, so a failure is not read as "never saved". */
   for (const u of archiveUrls(list)) {
     if (dry) break;
@@ -331,14 +351,15 @@ async function main() {
 
   const open = ((await github('GET', '/issues?state=open&labels=watch&per_page=20')) || []).find((i) => (i.body || '').startsWith(MARK));
   const when = new Date().toISOString().slice(0, 10);
-  if (problems.length || news.length || pubs.length) {
-    const body = report(problems, when, news, pubs, index, copies);
+  if (problems.length || news.length || pubs.length || notChecked.length || unsavedUrls.length) {
+    const body = report(problems, when, news, pubs, index, copies, notChecked, unsavedUrls);
     if (open) await github('PATCH', '/issues/' + open.number, { body });
-    else await github('POST', '/issues', { title: problems.length ? 'Weekly check: problems found' : news.length ? 'Weekly check: new versions at the repository' : 'Weekly check: possible published versions', body, labels: ['watch'] });
+    else await github('POST', '/issues', { title: problems.length ? 'Weekly check: problems found' : notChecked.length || unsavedUrls.length ? 'Weekly check: some checks could not run' : news.length ? 'Weekly check: new versions at the repository' : 'Weekly check: possible published versions', body, labels: ['watch'] });
   } else if (open) {
     await github('POST', '/issues/' + open.number + '/comments', { body: `${MARK}\nThe check on ${when} found no problems. Closing.` });
     await github('PATCH', '/issues/' + open.number, { state: 'closed', state_reason: 'completed' });
   }
+  if (notChecked.length || unsavedUrls.length) throw new Error(notChecked.length + ' not checked and ' + unsavedUrls.length + ' not saved; the weekly issue says which');
 }
 
 module.exports = { copyReadings, copyProblems, copyTable, saveToArchive, savable, unsaved, compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };

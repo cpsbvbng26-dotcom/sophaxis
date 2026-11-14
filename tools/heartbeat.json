@@ -1,0 +1,7 @@
+{
+  "owner": "cpsbvbng26-dotcom",
+  "repos": ["cpsbvbng26-dotcom"],
+  "only": { "cpsbvbng26-dotcom": ["ecosystem.yml"] },
+  "yearly": {},
+  "lang": "en"
+}

@@ -1,0 +1,7 @@
+{
+  "base": "https://sophaxis.vercel.app/",
+  "dir": "site",
+  "include": ["**"],
+  "exclude": ["vercel.json", "api/"],
+  "lang": "en"
+}

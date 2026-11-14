@@ -12,13 +12,18 @@
  *     Not upheld: material taken offline while the request was reviewed is put back from the git history.
  *   - A request sent by email is handled the same way, by running the workflow by hand with the id.
  *   - Once a day, open requests that are close to the 7 days and that the operator has not answered get a reminder.
+ *   - Once a day, too, every open removal issue that the bot has not acknowledged yet (its run was cancelled, or did not
+ *     happen) is taken up as if it had just been opened (the sweep, 2026-11-15).
+ *   - From SITE.autoHoldFrom, at most SITE.autoHoldsPerDay records are taken offline automatically on one day (Japan time),
+ *     counted over every request from the commits of main. A request beyond that is not held automatically: it gets the label
+ *     "needs a person" and a fixed comment, and the operator reads it promptly (2026-11-15).
  *
  * Modes, from the environment (MODE):
  *   intake   (the issue, from GITHUB_EVENT_PATH)                a removal issue was opened or edited
  *   decide   DECISION (and the issue, from GITHUB_EVENT_PATH)   the operator labelled it upheld or not-upheld
  * The issue is read from the event file, never from the environment, as in tools/intake.js.
  *   manual   ID, ACTION (hold | release | remove | remove-pdf)  a request that came by email
- *   remind                                                      the daily reminder
+ *   remind                                                      the daily sweep and reminder
  *
  * It reads the records in data/papers and the issues of this repository, and nothing else.
  * No personal data is written anywhere: the comments name only the Sophaxis id, the kind of request and dates.
@@ -39,6 +44,9 @@ const REMIND = '<!-- sophaxis-reminder -->';
 const NOTICE = '<!-- sophaxis-removal-notice -->';
 const ID = /^\d{4}\.\d{4}$/;
 const DAYS = 7;
+const PERSON = 'needs a person';
+/* The trailer of the commit of a hold made by the automatic step, never by the operator's hand: the cap counts these. */
+const AUTO_HOLD = 'Sophaxis-Hold: automatic';
 const FIELDS = {
   'Sophaxis id': 'id',
   'Kind of problem': 'kind',
@@ -69,6 +77,11 @@ function parse(body) {
 const jstDay = (iso) => new Date(new Date(iso).getTime() + 9 * 3600 * 1000).toISOString().slice(0, 10);
 const addDays = (day, n) => new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
 const dueDay = (createdIso) => addDays(jstDay(createdIso), DAYS);
+
+/* Pure: whether the automatic holds already made on `today` (Japan time) reach the cap, from SITE.autoHoldFrom. */
+function overCap(count, today, site = SITE) {
+  return !!site.autoHoldFrom && today >= site.autoHoldFrom && count >= site.autoHoldsPerDay;
+}
 
 /* Pure: a record put back after a hold, with today as its update. */
 function restored(p, today) {
@@ -131,12 +144,13 @@ function plan(action, p, today) {
   return { skip: 'unknown action ' + action };
 }
 
-function ack({ form, record, held, failed, due }) {
+function ack({ form, record, held, failed, capped, due }) {
   const lines = [MARK, '**Removal request received.** The operator aims to answer by ' + due + ' (Japan time), within ' + DAYS + ' days, under the [Takedown Policy](' + SITE.baseUrl + 'policies/takedown.html).', ''];
   if (!form.kind) lines.push('The kind of problem could not be read. The operator reads the request as it is.');
   else if (!ID.test(form.id) || !record) lines.push('There is no record ' + (form.id || '(no id)') + '. Edit the issue to give the Sophaxis id.');
   else if (held) lines.push('The issue reports exposure of personal data, so the record page of ' + form.id + ' (its title, authors, abstract and PDF copy) was taken offline at once, before the decision. This is not a decision on the request.');
   else if (failed) lines.push('The issue reports exposure of personal data. Taking the material offline automatically did not succeed, so the operator does it by hand.');
+  else if (capped) lines.push('The issue reports exposure of personal data. ' + SITE.autoHoldsPerDay + ' records were already taken offline automatically today (Japan time), the most that are taken offline automatically on one day, so the record page of ' + form.id + ' stays online until the operator reads this request. The label "' + PERSON + '" marks it, and the operator reads it promptly.');
   else if (form.kind.hold && isHeld(record)) lines.push('The record page of ' + form.id + ' (its title, authors, abstract and PDF copy) is already offline while a request is reviewed.');
   else lines.push('The record ' + form.id + ' stays online while the request is reviewed.');
   if (form.kind && form.kind.slug === 'data-request') lines.push('', 'Requests cost nothing. Before data is disclosed or changed, the operator confirms who is asking, through the ORCID record or by email to the address on the operator\'s ORCID record. Do not post personal data here. A copy of personal data is sent by email, never in this issue. The answer comes within one month at the latest.');
@@ -263,6 +277,29 @@ const followUpReminder = () => FOLLOW + '\nSome of the follow-up of this removal
 const paperFile = (id) => path.join(ROOT, 'data', 'papers', id + '.json');
 const readRecord = (id) => (ID.test(id || '') && fs.existsSync(paperFile(id)) ? JSON.parse(fs.readFileSync(paperFile(id), 'utf8')) : null);
 const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' });
+/* The environment of the build and of the checks, which read the PDF copies: no token (2026-11-15). */
+const CLEAN_ENV = { PATH: process.env.PATH || '/usr/bin:/bin', HOME: process.env.HOME || '/tmp', LANG: 'C.UTF-8' };
+/* The checkout keeps no token (removal.yml, persist-credentials: false): a push carries it in its own command only. */
+function authed(...args) {
+  const basic = Buffer.from('x-access-token:' + (process.env.GITHUB_TOKEN || '')).toString('base64');
+  return execFileSync('git', ['-c', 'http.https://github.com/.extraheader=AUTHORIZATION: basic ' + basic, ...args], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'ignore', 'ignore'] });
+}
+
+/* Start from main as it is now, not as it was when the event came: a run that waited for another one builds on its push. */
+function syncMain() {
+  git('fetch', '-q', 'origin', 'main');
+  git('checkout', '-q', '-B', 'main', 'origin/main');
+}
+
+/* Pure: the start of a day in Japan time, as git takes it. */
+const dayStart = (day) => day + 'T00:00:00+09:00';
+/* The automatic holds of main made on `day` (Japan time), counted from the commits that changed the records. */
+function holdsOn(day, run = git) {
+  return run('log', 'origin/main', '--since=' + dayStart(day), '--format=%H', '--grep=^' + AUTO_HOLD + '$', '--', 'data/papers').split('\n').filter(Boolean).length;
+}
+
+/* The head of main before the first push of this run, for the IndexNow job of removal.yml. */
+let before = null;
 
 function write(change) {
   fs.writeFileSync(paperFile(change.record.id), JSON.stringify(change.record, null, 2) + '\n');
@@ -282,18 +319,23 @@ function restore(id, today = new Date(Date.now() + 9 * 3600 * 1000).toISOString(
 }
 
 /* Build, check, and commit the data and the generated site separately, then push to main. Throws on any failure. */
-function commit(action, id, summary) {
-  execFileSync('node', ['build.js'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync('node', ['verification/check.js'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] });
+function commit(action, id, summary, extra = []) {
+  execFileSync('node', ['build.js'], { cwd: ROOT, stdio: 'inherit', env: CLEAN_ENV });
+  execFileSync('node', ['verification/check.js'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'], env: CLEAN_ENV });
   git('config', 'user.name', 'github-actions[bot]');
   git('config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com');
   /* Commits made by the workflow carry only the action: no model wrote them, so they name no model as co-author. */
-  const trailer = ['-m', 'Sophaxis-Action: ' + action + ' ' + id];
+  const trailer = ['-m', ['Sophaxis-Action: ' + action + ' ' + id].concat(extra).join('\n')];
   git('add', '-A', 'data');
   git('commit', '-q', '-m', summary, ...trailer);
   git('add', '-A', 'site');
   if (git('diff', '--cached', '--name-only').trim()) git('commit', '-q', '-m', 'サイトを生成し直す（生成物、' + id + '）', ...trailer);
-  git('push', 'origin', 'HEAD:main');
+  if (before === null) {
+    before = git('rev-parse', 'origin/main').trim();
+    if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, 'before=' + before + '\n');
+  }
+  authed('push', 'origin', 'HEAD:main');
+  git('fetch', '-q', 'origin', 'main');
 }
 
 const SUMMARY = {
@@ -345,25 +387,55 @@ const today = () => jstDay(new Date().toISOString());
 
 async function intake() {
   const { number: n, body: text } = I.issueEvent();
+  syncMain();
+  await intakeIssue(n, text);
+}
+
+/* One removal issue, from the event or from the daily sweep. */
+async function intakeIssue(n, text) {
   const form = parse(text);
   const record = readRecord(form.id);
   const issue = await I.github('GET', '/issues/' + n);
-  const before = (await comments(n)).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
-  let held = false, failed = false;
+  const acked = (await comments(n)).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
+  let held = false, failed = false, capped = false;
   /* One hold per issue: an edit that names another id is left to the operator. */
-  if (form.kind && form.kind.hold && record && record.status !== 'removed' && !before) {
+  if (form.kind && form.kind.hold && record && record.status !== 'removed' && !acked) {
     const change = plan('hold', record, today());
-    try {
-      if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
-      write(change);
-      commit('hold', form.id, SUMMARY.hold(form.id) + '（#' + n + '）');
-      held = true;
-    } catch (e) { console.error('hold: ' + e.message); failed = true; }
+    if (overCap(holdsOn(today()), today())) capped = true;
+    else {
+      try {
+        if (change.skip || change.problems.length) throw new Error(change.skip || change.problems.join('; '));
+        write(change);
+        commit('hold', form.id, SUMMARY.hold(form.id) + '（#' + n + '）', [AUTO_HOLD]);
+        held = true;
+      } catch (e) { console.error('hold: ' + e.message); failed = true; }
+    }
   }
-  await upsert(n, MARK, ack({ form, record, held, failed, due: dueDay(issue.created_at) }));
-  await label(n, [form.kind ? form.kind.slug : 'unread'].concat(held ? ['held'] : []));
-  if (record && !before && tellsAuthors(form.kind)) await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id: form.id, kind: form.kind, issue: n, held: held || isHeld(record) }) });
-  console.log(held ? 'held' : 'acknowledged');
+  await upsert(n, MARK, ack({ form, record, held, failed, capped, due: dueDay(issue.created_at) }));
+  await label(n, [form.kind ? form.kind.slug : 'unread'].concat(held ? ['held'] : [], capped ? [PERSON] : []));
+  if (record && !acked && tellsAuthors(form.kind)) await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id: form.id, kind: form.kind, issue: n, held: held || isHeld(record) }) });
+  console.log(held ? 'held' : capped ? 'not held: the cap of the day is reached' : 'acknowledged');
+}
+
+/* Pure: the open removal issues that the bot has not acknowledged yet. `issues` carry their comments. */
+function unacknowledged(issues) {
+  return issues.filter((i) => !i.pull_request && i.state === 'open' && (i.labels || []).some((l) => (typeof l === 'string' ? l : l.name) === 'removal')
+    && !(i.comments_list || []).some((c) => c.user && c.user.type === 'Bot' && String(c.body || '').startsWith(MARK)));
+}
+
+/* The daily sweep: a removal issue whose run was cancelled, or never started, is taken up as if it had just been opened. */
+async function sweep() {
+  const open = [];
+  for (let page = 1; page <= 10; page++) {
+    const list = (await I.github('GET', '/issues?state=open&labels=removal&per_page=100&page=' + page)) || [];
+    open.push(...list);
+    if (list.length < 100) break;
+  }
+  for (const i of open) i.comments_list = await comments(i.number);
+  for (const i of unacknowledged(open)) {
+    console.log('taken up by the daily sweep: #' + i.number);
+    await intakeIssue(String(i.number), i.body || '');
+  }
 }
 
 /* An author's request in a withdrawal issue to remove the record (Withdrawal Policy). Only a verified request
@@ -387,6 +459,7 @@ async function decideWithdrawal(n, labels, decision, text) {
 
 async function decide() {
   const { number: n, body: text } = I.issueEvent();
+  syncMain();
   const decision = process.env.DECISION;
   const labels = (((await I.github('GET', '/issues/' + n)) || {}).labels || []).map((l) => l.name);
   if (labels.includes('withdrawal')) return decideWithdrawal(n, labels, decision, text);
@@ -432,6 +505,7 @@ function emailDecision({ id, action, grounds, today }) {
 async function manual() {
   const id = process.env.ID, action = process.env.ACTION;
   if (!ID.test(id || '')) throw new Error('the id must look like 2026.0001');
+  syncMain();
   const grounds = String(process.env.GROUNDS || '').trim();
   if (['remove', 'remove-pdf', 'no-archive'].includes(action) && !grounds) throw new Error('give the grounds of the decision, without personal data');
   const record = readRecord(id);
@@ -499,6 +573,8 @@ async function followUps() {
 }
 
 async function remind() {
+  syncMain();
+  await sweep();
   const owner = SITE.operator.github;
   const day = today();
   const open = [];
@@ -508,7 +584,7 @@ async function remind() {
   await followUps();
 }
 
-module.exports = { write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, followUpBody, followUpState, tickedByHand, archived, cdxUrl, FOLLOW, FOLLOW_DAYS, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { overCap, holdsOn, unacknowledged, dayStart, AUTO_HOLD, PERSON, CLEAN_ENV, write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, followUpBody, followUpState, tickedByHand, archived, cdxUrl, FOLLOW, FOLLOW_DAYS, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];

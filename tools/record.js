@@ -35,6 +35,17 @@ function allowed(branch, changed) {
   return !!k && changed.length > 0 && changed.every((f) => k.files.includes(f));
 }
 
+/* Pure: whether the tip of the branch is the commit that the label was put on (pull_request.head.sha of the event file).
+ * A push to the branch after the label would otherwise be merged without the owner having seen it (2026-11-15). */
+function sameTip(tip, event) {
+  const want = String(((event && event.pull_request && event.pull_request.head) || {}).sha || '');
+  return /^[0-9a-f]{40}$/.test(want) && String(tip || '').trim() === want;
+}
+const MOVED = 'Not recorded: the branch has moved since the label was added. Nothing was merged; the watch proposes it again on its next run, and adding the label again starts a new run.';
+
+/* The environment of the checks, which read the files of the merged result: no token (2026-11-15). */
+const CLEAN_ENV = { PATH: process.env.PATH || '/usr/bin:/bin', HOME: process.env.HOME || '/tmp', LANG: 'C.UTF-8', GITHUB_EVENT_NAME: 'record' };
+
 /* Pure: the changelog with the pull request's number in place of (#PR). */
 const fillNumber = (log, n) => log.split('(#PR)').join('(#' + n + ')');
 
@@ -50,15 +61,17 @@ async function github(method, p, body) {
 async function main() {
   /* The title of the pull request is read from the event file (GITHUB_EVENT_PATH), never from the environment, whose values the run's log prints. */
   const n = process.env.PR, branch = process.env.BRANCH;
-  const title = String(((JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')).pull_request) || {}).title || '');
+  const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
+  const title = String((event.pull_request || {}).title || '');
   const say = (body) => github('POST', '/issues/' + n + '/comments', { body });
   git('config', 'user.name', 'github-actions[bot]');
   git('config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com');
   git('fetch', '-q', 'origin', 'main', branch);
   git('checkout', '-q', '-B', 'main', 'origin/main');
+  if (!sameTip(git('rev-parse', 'origin/' + branch), event)) { await say(MOVED); process.exit(1); }
   const changed = git('diff', '--name-only', 'origin/main...origin/' + branch).split('\n').filter(Boolean);
   if (!allowed(branch, changed)) { await say('Not recorded: this branch changes files that the label `record` may not merge: ' + changed.join(', ')); process.exit(1); }
-  try { git('merge', '-q', '--no-ff', '--no-commit', 'origin/' + branch); } catch (e) { await say('Not recorded: the branch does not merge cleanly into main. The watch proposes it again on its next run.'); process.exit(1); }
+  try { git('merge', '-q', '--no-ff', '--no-commit', event.pull_request.head.sha); } catch (e) { await say('Not recorded: the branch does not merge cleanly into main. The watch proposes it again on its next run.'); process.exit(1); }
   if (fs.existsSync(path.join(ROOT, 'CHANGELOG.md'))) {
     fs.writeFileSync(path.join(ROOT, 'CHANGELOG.md'), fillNumber(fs.readFileSync(path.join(ROOT, 'CHANGELOG.md'), 'utf8'), n));
     git('add', 'CHANGELOG.md');
@@ -66,7 +79,7 @@ async function main() {
   git('commit', '-q', '-m', mergeTitle(n, title), '-m', 'Recorded at the operator\'s label `record`, after the checks below passed on the merged result.\n\nCo-authored-by: ' + BOT);
   const checks = [['node', 'verification/check.js'], ...KINDS[branch].verify];
   for (const [cmd, ...args] of checks) {
-    try { run(cmd, args, { stdio: ['ignore', 'ignore', 'inherit'], env: { ...process.env, GITHUB_EVENT_NAME: 'record' } }); }
+    try { run(cmd, args, { stdio: ['ignore', 'ignore', 'inherit'], env: CLEAN_ENV }); }
     catch (e) { await say('Not recorded: `' + [cmd, ...args].join(' ') + '` failed on the merged result. Nothing was pushed.'); process.exit(1); }
   }
   try { git('push', '-q', 'origin', 'HEAD:main'); }
@@ -80,5 +93,5 @@ async function main() {
   await say('Recorded in ' + git('rev-parse', 'HEAD').trim().slice(0, 7) + ', after `' + checks.map((c) => c.join(' ')).join('` and `') + '` passed on the merged result.');
 }
 
-module.exports = { allowed, fillNumber, mergeTitle, KINDS };
+module.exports = { allowed, fillNumber, mergeTitle, sameTip, MOVED, CLEAN_ENV, KINDS };
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
