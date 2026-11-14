@@ -501,10 +501,12 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
 
   const wf = read(path.join(ROOT, '.github', 'workflows', 'pdf.yml'));
   ok('the PDF workflow is started by hand, may only write contents, and passes the id through the environment', /on:\n  workflow_dispatch:/.test(wf)
-    && /permissions:\n  contents: write\n(?!  \w)/.test(wf) && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')));
+    /* 2026-11-15: the job that reads the PDF from outside holds only the right to read; only the job that pushes, which reads no PDF, writes. */
+    && /^permissions:\n  contents: read\n(?!  \w)/m.test(wf) && wf.includes('  fetch:\n') && wf.includes('    permissions:\n      contents: read\n') && wf.includes('  push:\n    needs: fetch\n') && wf.includes('    permissions:\n      contents: write\n')
+    && !/pdftotext|poppler|fetch_pdf|check\.js/.test(wf.split('\n  push:\n')[1] || 'pdftotext') && ![...wf.matchAll(/^\s*(- )?run: (.*)$/gm)].some((m) => m[2].includes('${{')));
   ok('a PDF is asked for with */* as well, since Zenodo answers 406 to application/pdf alone', /^application\/pdf, \*\/\*;q=0\.\d$/.test(F.PDF_ACCEPT)
     && read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes('await get(url, PDF_ACCEPT)'));
-  ok('the PDF workflow pushes only to a branch of its own, never to main', wf.includes('git push origin "claude/pdf-$ID"') && !/git push[^\n]*main/.test(wf));
+  ok('the PDF workflow pushes only to a branch of its own, never to main', wf.includes('git push -f origin "claude/pdf-$ID"') && !/git push[^\n]*main/.test(wf) && wf.includes("grep -vE '^(data|site)/'"));
 }
 
 /* ------------------------------------------------------------ 11 */
@@ -2097,7 +2099,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   ok('an upheld removal deletes every comment of the bot in the issues that name the record, copies their lines of consent first, and empties and closes them without locking; removal requests are left',
     src.includes("if (c.user.type === 'Bot') await I.github('DELETE', '/issues/comments/' + c.id)") && src.includes("body: EMPTIED, state: 'closed'")
     && !/\/lock'/.test(src) && src.indexOf('withConsentLines(fs.readFileSync(PROVISION') > 0 && src.indexOf('withConsentLines(fs.readFileSync(PROVISION') < src.indexOf("body: EMPTIED, state: 'closed'")
-    && src.includes("!(i.labels || []).some((l) => l.name === 'removal')"));
+    && src.includes("!(i.labels || []).some((l) => (typeof l === 'string' ? l : l.name) === 'removal')"));
   ok('the Takedown Policy says the notice gives no reason, that every trace in the issues goes, and that earlier versions on Vercel are not public',
     ['When a record is removed, its page is replaced by a notice that says only that the record with that Sophaxis id was removed.', 'The notice gives no reason and no other detail.',
       'Every automatic comment about the record is deleted, and the issues that name it are emptied and closed; no automatic step locks them.',
@@ -3867,7 +3869,7 @@ console.log('\n95. Every citation of a law in the legal pages is to an article i
     && read(path.join(ROOT, 'disclaimer.ja.md')).includes('法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。'));
   const wf = read(path.join(ROOT, '.github', 'workflows', 'sources.yml'));
   ok('the texts are fetched only when the operator runs it, onto a new branch sources/<date>, never main',
-    /on:\n  workflow_dispatch:\n(?!\s+push)/.test(wf) && !/\n  push:|\n  schedule:|\n  pull_request:/.test(wf) && wf.includes('git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)"') && !/push origin (?:main|HEAD:main)/.test(wf));
+    /on:\n  workflow_dispatch:\n(?!\s+push)/.test(wf) && !/\n  push:|\n  schedule:|\n  pull_request:/.test(wf) && wf.includes('git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)-$GITHUB_RUN_ID"') && !/push origin (?:main|HEAD:main)/.test(wf));
 }
 
 console.log('\n96. Links that work on GitHub and on the site, sections linked near the top, and every box of the forms enforced and listed');
@@ -4085,6 +4087,7 @@ console.log('\n98. No dependencies, workflows with the least they need, pinned a
     'removal.yml': { intake: 'contents: write, issues: write', decide: 'contents: write, issues: write', manual: 'contents: write, issues: write', remind: 'contents: write, issues: write', indexnow: 'contents: read' },
     'record.yml': { record: 'contents: write, issues: write, pull-requests: write' },
     'statutes.yml': { compare: 'contents: read', statutes: 'contents: write, issues: write, pull-requests: write' },
+    'pdf.yml': { fetch: 'contents: read', push: 'contents: write' },
   };
   const jobPerms = (t) => Object.fromEntries((t.split(/^jobs:\n/m)[1] || '').split(/\n(?=  [a-z]+:\n)/).map((b) => [(/^  ([a-z]+):/.exec(b) || [])[1], (/\n    permissions:\n((?:      [a-z-]+: (?:read|write)\n)+)/.exec(b + '\n') || [])[1]]).filter(([k]) => k)
     .map(([k, v]) => [k, v ? [...v.matchAll(/([a-z-]+): (read|write)/g)].map((x) => x[1] + ': ' + x[2]).join(', ') : null]));
@@ -4095,7 +4098,7 @@ console.log('\n98. No dependencies, workflows with the least they need, pinned a
   /* The same for each job that holds its own permissions: a job that may write the repository pushes. */
   const jobText = (t, j) => ((t.split(/^jobs:\n/m)[1] || '').split(/\n(?=  [a-z]+:\n)/).find((b) => b.startsWith('  ' + j + ':\n')) || '');
   for (const { f, t } of wfs.filter(({ f }) => JOB_PERMS[f])) for (const [j, p] of Object.entries(jobPerms(t))) if (/contents: write/.test(p || '') && !pushes(jobText(t, j))) writesUnused.push(f + ' (' + j + ')');
-  ok('every workflow (' + wfs.length + ') declares the permissions of its token at the top, none per job except in the three that give each job its own, none in bulk, and the checks only read',
+  ok('every workflow (' + wfs.length + ') declares the permissions of its token at the top, none per job except in the four that give each job its own, none in bulk, and the checks only read',
     noPerm.length === 0 && broad.length === 0 && JSON.stringify(perms(read(path.join(wfDir, 'check.yml')))) === '{"contents":"read"}', noPerm.concat(broad).join(', '));
   ok('a workflow may write the repository only if it pushes, and open pull requests only if it makes them', writesUnused.length === 0, writesUnused.join(', '));
   /* Every action is pinned to the full commit, with its tag in a comment; Dependabot updates both together. */
@@ -7584,7 +7587,8 @@ console.log('\n135. The eighteenth read-only pass (2026-11-15): the checked inta
   const dailyProblems = (r) => {
     const bad = [];
     const w = writes(r).map((c) => c.m + ' ' + c.u).join();
-    if (w !== 'POST /issues/11/comments,POST /issues/11/labels') bad.push('writes: ' + w);
+    /* 2026-11-15: the label first, then the comment, so that a run that stops between them leaves no comment without its label. */
+    if (w !== 'POST /issues/11/labels,POST /issues/11/comments') bad.push('writes: ' + w);
     if (!r.calls.every(allowedDaily)) bad.push('a call that closes or locks');
     if (!writes(r).some((c) => /labels$/.test(c.u) && c.b.labels.join() === I.NOT_LISTED)) bad.push('the label');
     if (r.logs.join('|') !== 'not listed at the end of its time: #11|left for a person: #12|left for a person: #14') bad.push('the log: ' + r.logs.join('|'));
@@ -7691,7 +7695,7 @@ console.log('\n136. The owner\'s answers of 2026-11-15 to the audit of 2026-11-1
     for (const k of ['removal', 'intake', 'fetchPdf']) if (/\/lock'|lock_reason/.test(code(x[k]))) bad.push('a lock in ' + k);
     if (/arxiv\.org/i.test(code(x.fetchPdf)) || /PAGE\('https?:\/\/(?:[a-z.]*\.)?arxiv\.org/i.test(code(x.sources))) bad.push('a script reads arXiv');
     if (!['https://export.arxiv.org/pdf/1', 'https://x.com/en/tos'].every(S.direct)) bad.push('NO_DIRECT');
-    const r = x.removal, at = r.indexOf("git('push', 'origin', 'HEAD:main');\n    }\n  }"), emp = r.indexOf("body: EMPTIED, state: 'closed'");
+    const r = x.removal, at = r.indexOf("authed('push', 'origin', 'HEAD:main');\n      git('fetch', '-q', 'origin', 'main');\n    }\n  }"), emp = r.indexOf("body: EMPTIED, state: 'closed'");
     if (!(r.indexOf('withConsentLines(fs.readFileSync(PROVISION') > 0 && at > 0 && emp > at)) bad.push('the lines of consent are not pushed before an issue is emptied');
     /* What is quoted is on its page and in the parts kept. */
     let raw = {};
@@ -7752,7 +7756,8 @@ console.log('\n136. The owner\'s answers of 2026-11-15 to the audit of 2026-11-1
   ok('before an issue is emptied, only its lines of consent are copied (who, which day, which fixed words, the issue), each kept until three years after it is copied, and nothing else of the issue',
     lines.length === 2 && lines.map((l) => l.login).join() === 'sub,co' && rowsAdded.length === 2 && rowsAdded.every((l) => l.endsWith(' | 2026-12-10 | 2029-12-10 |'))
     && !added.includes('An address that must not be copied') && !added.includes('and more text'));
-  const hold = (n, notice) => ({ number: n, labels: [{ name: 'removal' }, { name: 'not-upheld' }], body: '### Kind of problem\n\nExposure of personal data\n' });
+  /* 2026-11-15: the kind is read from the label the bot put (personal-data), not from the text. */
+  const hold = (n, notice) => ({ number: n, labels: [{ name: 'removal' }, { name: 'not-upheld' }, { name: 'personal-data' }], body: '### Kind of problem\n\nExposure of personal data\n' });
   const two = [hold(1), hold(2)];
   const notes = (withNotice) => (k) => (withNotice && k === 2 ? [{ user: { type: 'Bot' }, body: Rm.HOLD_NOTICE + '\n@x: told' }] : []);
   ok('from 2026-12-01 an account with two requests to take material offline found groundless, and told so, is read by a person and not held automatically; one request, no notice, or a day before 2026-12-01 leaves the automatic hold as it was; the notice is given on the second',
@@ -7804,7 +7809,8 @@ console.log('\n137. The automation hardened (2026-11-15): the job of a pull requ
   const T = (f) => read(path.join(ROOT, f));
   const real = { wf: files, removal: T('tools/removal.js'), record: T('tools/record.js'), intake: T('tools/intake.js'), watch: T('tools/watch.js'), advice: T('tools/pdf_advice.js'), shape: T('tools/pdf_shape.js'),
     site: T('site.json'), tk: T('policies/takedown.md'), tkJa: T('policies/takedown.ja.md'), pv: T('policies/privacy.md'), pvJa: T('policies/privacy.ja.md'), auto: T('automation.md'), autoJa: T('automation.ja.md'),
-    sec: T('SECURITY.md'), changes: T('data/policy-changes.json'), com: T('verification/commitments.txt'), aud: T('docs/legal-audit-2026-11-12.md'), hb: T('tools/heartbeat.json'), live: T('tools/live.json') };
+    sec: T('SECURITY.md'), changes: T('data/policy-changes.json'), com: T('verification/commitments.txt'), aud: T('docs/legal-audit-2026-11-12.md'), hb: T('tools/heartbeat.json'), live: T('tools/live.json'),
+    limits: T('tools/limits.js'), audit: T('tools/audit.js'), report: T('tools/report_issue.js'), wd: T('tools/withdraw.js'), pub: T('tools/published.js'), statutes: T('tools/statutes.js') };
   /* The jobs of a workflow, by their key: the lines of each. */
   const jobs = (text) => Object.fromEntries((String(text).split(/^jobs:\n/m)[1] || '').split(/\n(?=  [a-z][a-z0-9_-]*:\n)/).map((b) => [(/^  ([a-z][a-z0-9_-]*):/.exec(b) || [])[1], b]).filter(([k]) => k));
   const CAP_EN = 'From 2026-12-01, at most 3 records are taken offline automatically on one day (Japan time), counted over every request, whoever sends it.';
@@ -7879,6 +7885,30 @@ console.log('\n137. The automation hardened (2026-11-15): the job of a pull requ
     const lj = jobs(x.wf['live.yml']);
     if (JSON.stringify(hb.only) !== JSON.stringify({ 'cpsbvbng26-dotcom': ['ecosystem.yml'] }) || !lj.heartbeat || !lj.heartbeat.includes('      - run: node tools/heartbeat.js --test\n      - run: node tools/heartbeat.js\n') || /^concurrency:/m.test(x.wf['live.yml'])) bad.push('the heartbeat');
     if (lv.base !== site.baseUrl || lv.dir !== 'site' || !(lv.exclude || []).includes('vercel.json') || !(lv.exclude || []).includes('api/')) bad.push('live.json');
+    /* The second audit (2026-11-15). T1: the pages say what taking offline does. */
+    if (!x.auto.includes('Taking it offline means that the change is pushed to `main` at once; the live site changes when Vercel deploys that push, and the daily comparison of the live site with `main` shows whether it did.')
+      || !x.autoJa.includes('下げるとは、その変更をすぐに `main` に push することです。公開中のサイトは、Vercel がその push を配ったときに変わります。')
+      || !x.auto.includes('- After every push to main that a person makes, and once a day') || x.auto.includes('- After every push to main, and once a day')) bad.push('T1: the pages');
+    /* M2, M4, M5: resumable, checked again, tried again. */
+    if (!rm.includes("if (!sameAsAcked(said, form.id)) {") || !rm.includes("if (!(await W.verify(form, (issue.user && issue.user.login) || '', record)).ok) return say(") || !rm.includes('const left = action === \'remove\' ? removalLeft(record, await followUpOpen(form.id)) : { remove: true };')
+      || !rm.includes("if (!done || !noted(said, decision))") || !rm.includes('withRetry(() => {') || !rm.includes("(!acked || String(acked.body).includes(HOLD_FAILED))")) bad.push('M2, M4, M5: the decision and the hold');
+    /* M3, M7: every page, no cap; the search for the id. */
+    if (/page <= 10; page\+\+\) \{\n    const list = \(await I\.github\('GET', '\/issues\?state=all/.test(rm) || !rm.includes("I.allPages(I.github, '/issues?state=all')") || !rm.includes("api.github.com/search/issues?per_page=100&q=")
+      || !rm.includes("async function comments(n) { return I.allPages(I.github, '/issues/' + n + '/comments'); }") || !it.includes("const all = await allPages(github, '/issues/' + n + '/comments');")) bad.push('M3, M7: the pages');
+    /* M9: one issue each, errors are errors, the label first. */
+    if (!x.report.includes("String(i.body || '').startsWith(MARK) && String(i.body).includes('The decisions of ' + year + ',')") || !x.audit.includes("if (!r.ok) throw new Error('GET /issues: HTTP ' + r.status);") || !x.limits.includes("if (!r.ok) throw new Error('GET /issues: HTTP ' + r.status);")
+      || !(it.indexOf("await gh('POST', '/issues/' + i.number + '/labels', { labels: [NOT_LISTED] });") < it.indexOf("await gh('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });"))) bad.push('M9: the writers of issues');
+    /* C1: the deployments from the status "Vercel". */
+    if (!x.limits.includes("const first = vercelDay(await r.json());") || !x.limits.includes("if (shas.length && !dates.length) throw new Error(") || /\/deployments\?/.test(x.limits)) bad.push('C1: the deployments');
+    /* M10: Japan time. */
+    for (const [k, f] of [['wd', 'withdraw.js'], ['pub', 'published.js'], ['statutes', 'statutes.js']]) if (/new Date\(\)\.toISOString\(\)\.slice\(0, 10\)/.test(x[k])) bad.push('M10: ' + f + ' writes a day in UTC');
+    /* J2: outside text made harmless. */
+    if (!it.includes("const neutral = (s) => String(s).replace(/[`|<>]/g, '').replace(/@/g, '＠').replace(/^\\s*::/gm, ': :');") || !it.includes('  const safe = neutral;') || !w.includes("n(desc.title)")) bad.push('J2: outside text');
+    /* J5: the kind from the label, the notice once. */
+    if (!rm.includes("names(i).some((l) => holding.includes(l))") || /parse\(i\.body\)\.kind/.test(rm) || !rm.includes('groundlessHolds(issues).length >= GROUNDLESS_LIMIT')) bad.push('J5: the groundless requests');
+    /* M11, J4: one fetch at a time, branches that do not collide, the PDF read where nothing is written. */
+    for (const f of ['sources.yml', 'statutes.yml']) if (!/\n    concurrency:\n      group: (sources|statutes)\n      cancel-in-progress: false\n/.test(x.wf[f])) bad.push('M11: ' + f);
+    if (!x.wf['sources.yml'].includes('-$GITHUB_RUN_ID"') || !x.wf['pdf.yml'].includes('git push -f origin "claude/pdf-$ID"') || /poppler|fetch_pdf|check\.js/.test(x.wf['pdf.yml'].split('\n  push:\n')[1] || 'poppler')) bad.push('M11, J4: pdf.yml and sources.yml');
     /* The record. */
     const a = x.aud, i = a.indexOf(HEAD), j = i < 0 ? -1 : a.indexOf('\n## ', i + HEAD.length);
     const sec = i < 0 || j < 0 ? '' : a.slice(i, j);
@@ -7896,7 +7926,7 @@ console.log('\n137. The automation hardened (2026-11-15): the job of a pull requ
   ok('the job of a pull request reads only; the record merges only the commit labelled; at most 3 automatic holds a day from 2026-12-01, in every page, the notice, the feed and the commitments; the sweep; concurrency on the jobs that work; no token for poppler, deposit-check or the checks; no checkout keeps a token where the job does not push; every job of the ' + Object.keys(files).length + ' workflows has a time limit; IndexNow in a job of its own; the weekly watch fails on what it could not check; the heartbeat; and the record',
     now.length === 0, now.slice(0, 6).join(' / '));
   /* The pure parts, on cases made here. */
-  const R = require('../tools/removal.js'), Rc = require('../tools/record.js'), I = require('../tools/intake.js'), W = require('../tools/watch.js');
+  const R = require('../tools/removal.js'), Rc = require('../tools/record.js'), I = require('../tools/intake.js'), W = require('../tools/watch.js'), Rm2 = R;
   const S = JSON.parse(real.site);
   const sha = 'a'.repeat(40);
   ok('the cap: from 2026-12-01 a fourth automatic hold of a day is refused and the third is not; before that day there is no cap; the count reads only the automatic holds of that day on main',
@@ -7930,6 +7960,44 @@ console.log('\n137. The automation hardened (2026-11-15): the job of a pull requ
     })();`], { encoding: 'utf8' }));
   ok('the daily run (fixture issues): the submission no check labelled is checked first, and only the unverified one past its time gets the label not listed',
     daily[0] === 'recheck #21' && daily.includes('POST /issues/22/labels') && !daily.includes('POST /issues/21/labels') && daily.indexOf('recheck #21') < daily.indexOf('POST /issues/22/labels'));
+  /* The second audit, on cases made here. */
+  const bot = (body) => ({ user: { type: 'Bot' }, body });
+  ok('the decision goes ahead only on the id acknowledged, posts its note once, and resumes an upheld removal from what is left (M2, M4)',
+    R.sameAsAcked([bot(R.MARK + '\nx\n' + R.ACKED + '2026.0001 -->')], '2026.0001') && !R.sameAsAcked([bot(R.MARK + '\nx\n' + R.ACKED + '2026.0001 -->')], '2026.0002') && R.sameAsAcked([bot(R.MARK + '\nold')], '2026.0002')
+    && R.noted([bot(R.MARK + '\n**Upheld** (2026-12-02).')], 'upheld') && !R.noted([bot(R.MARK + '\n**Upheld** (2026-12-02).')], 'not-upheld')
+    && JSON.stringify(R.removalLeft({ id: '2026.0001', status: 'removed', removal_date: 'd' }, false)) === '{"remove":false,"erase":true,"followUp":true}'
+    && JSON.stringify(R.removalLeft({ id: '2026.0001', status: 'listed' }, true)) === '{"remove":true,"erase":true,"followUp":false}'
+    && R.removalLeft({ id: '2026.0001', status: 'removed', removal_reason: 'under-review' }, false).remove === true);
+  let tries = 0, syncs = 0;
+  const third = R.withRetry(() => { tries++; if (tries < 3) throw new Error('main moved'); return 'pushed'; }, 3, () => { syncs++; });
+  let gaveUp = false;
+  try { R.withRetry(() => { throw new Error('always'); }, 3, () => {}); } catch (e) { gaveUp = e.message === 'always'; }
+  ok('a hold that cannot be pushed is made again on the latest main, up to 3 times, and the sweep takes up again a hold whose acknowledgement says it failed (M5)',
+    third === 'pushed' && tries === 3 && syncs === 2 && gaveUp && R.TRIES === 3
+    && R.unacknowledged([{ number: 9, state: 'open', labels: [{ name: 'removal' }], comments_list: [bot(R.MARK + '\n' + R.HOLD_FAILED)] }]).length === 1);
+  ok('erase reads every page, skips pull requests, and keeps the issues the search finds by the id (M3)',
+    R.namingIssues([{ number: 1, body: 'about 2026.0001' }, { number: 2, body: 'about 2026.0001', pull_request: {} }, { number: 3, body: 'about 2026.0001', labels: [{ name: 'removal' }] }, { number: 4, body: 'x' }], '2026.0001').map((i) => i.number).join() === '1'
+    && R.namingIssues([{ number: 5, body: 'id edited away' }], '2026.0001', true).length === 1);
+  /* allPages is asynchronous: it runs in a child process, on pages made here. */
+  const paged = JSON.parse(require('child_process').execFileSync(process.execPath, ['-e', `
+    const I = require(${JSON.stringify(path.join(ROOT, 'tools', 'intake.js'))});
+    (async () => {
+      const p = [1, 2, 3].map((k) => Array.from({ length: 100 }, (_, i) => ({ number: k * 100 + i }))).concat([[{ number: 999, body: 'mine' }]]);
+      const got = await I.allPages(async (m, u) => p[Number(/&page=(\\d+)/.exec(u)[1]) - 1], '/issues?state=open');
+      let notList = false;
+      await I.allPages(async () => ({ message: 'API rate limit' }), '/issues').catch(() => { notList = true; });
+      process.stdout.write(JSON.stringify({ n: got.length, last: got[got.length - 1].number, notList }));
+    })();`], { encoding: 'utf8' }));
+  const pages = { length: paged.n, 300: { number: paged.last } }, notList = paged.notList;
+  ok('every list is read to its end: an issue on the fourth page is found, and an answer that is not a list stops the run (M1, M7, fixture pages)', pages.length === 301 && pages[300].number === 999 && notList);
+  ok('outside text in an issue or a log mentions nobody and gives the runner no command (J2)', I.neutral('@someone\n::set-output name=x::y `code` <b>') === '＠someone\n: :set-output name=x::y code b');
+  const gh2 = (n, labels) => ({ number: n, labels: labels.map((name) => ({ name })), body: '### Kind of problem\n\nExposure of personal data\n' });
+  ok('the groundless requests are counted from the label the bot put, never from the text, and the account is told once, from the second on (J5)',
+    Rm2.groundlessHolds([gh2(1, ['removal', 'not-upheld', 'personal-data']), gh2(2, ['removal', 'not-upheld'])]).length === 1
+    && Rm2.holdNoticeDue([gh2(1, ['removal', 'not-upheld', 'personal-data']), gh2(2, ['removal', 'not-upheld', 'personal-data']), gh2(3, ['removal', 'not-upheld', 'personal-data'])], '2026-12-02', () => [])
+    && !Rm2.holdNoticeDue([gh2(1, ['removal', 'not-upheld', 'personal-data']), gh2(2, ['removal', 'not-upheld', 'personal-data'])], '2026-12-02', (k) => (k === 1 ? [bot(Rm2.HOLD_NOTICE + '\ntold')] : [])));
+  const Lm = require('../tools/limits.js');
+  ok('the deployments are counted from the first status "Vercel" of each commit (C1)', Lm.vercelDay([{ context: 'Vercel', created_at: '2026-11-02T00:00:00Z' }, { context: 'Vercel', created_at: '2026-11-01T00:00:00Z' }, { context: 'ci', created_at: '2026-10-01T00:00:00Z' }]) === '2026-11-01T00:00:00Z' && Lm.vercelDay([]) === null);
   let hbTest = '';
   try { hbTest = require('child_process').execFileSync(process.execPath, [path.join(ROOT, 'tools', 'heartbeat.js'), '--test'], { encoding: 'utf8' }); } catch (e) { hbTest = String(e.stdout || ''); }
   ok('the self-test of the heartbeat passes, a stale schedule failing on purpose', /\d+ passed, 0 failed/.test(hbTest) && hbTest.includes('a stale schedule'), hbTest.split('\n').filter((l) => /FAIL/.test(l)).join(' / '));
@@ -7965,8 +8033,22 @@ console.log('\n137. The automation hardened (2026-11-15): the job of a pull requ
     ['IndexNow back in the job that holds', wfSet('removal.yml', real.wf['removal.yml'].replace("          MODE: intake\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n", "          MODE: intake\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n      - run: node tools/indexnow.js\n"))],
     ['the heartbeat watching something else', set('hb', real.hb.replace('"ecosystem.yml"', '"verify.yml"'))],
     ['the record without its section', set('aud', real.aud.replace(HEAD, '\n## 2026-11-15：自動化\n'))],
-    ['the count of the record changed', set('aud', real.aud.replace('この表の判定は、誤り 1、漏れ 9、問題なし 3 です。', 'この表の判定は、漏れ 10、問題なし 3 です。'))],
+    ['the count of the record changed', set('aud', real.aud.replace('この表の判定は、誤り 2、漏れ 16、表現 2、問題なし 4 です。', 'この表の判定は、誤り 2、漏れ 17、表現 2、問題なし 4 です。'))],
     ['the record saying GitHub was read', set('aud', real.aud.replace('GitHub の説明書を取り寄せて確かめていません。', 'GitHub の説明書で確かめました。'))],
+    ['T1: the page saying every push again', set('auto', real.auto.replace('- After every push to main that a person makes, and once a day', '- After every push to main, and once a day'))],
+    ['M4: the decision without the id acknowledged', set('removal', real.removal.replace('if (!sameAsAcked(said, form.id)) {', 'if (false) {'))],
+    ['M2: the note posted again on every label', set('removal', real.removal.replace('if (!done || !noted(said, decision))', 'if (true)'))],
+    ['M5: the hold not tried again', set('removal', real.removal.replace('withRetry(() => {', '(() => {'))],
+    ['M3: erase capped at one page', set('removal', real.removal.replace("for (const i of namingIssues(await I.allPages(I.github, '/issues?state=all'), record.id)) issues.add(i.number);", "for (let page = 1; page <= 1; page++) {\n    const list = (await I.github('GET', '/issues?state=all&per_page=100&page=' + page)) || [];\n    namingIssues(list, record.id).forEach((i) => issues.add(i.number));\n  }"))],
+    ['M7: the comments of a submission cut at 100', set('intake', real.intake.replace("const all = await allPages(github, '/issues/' + n + '/comments');", "const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];"))],
+    ['M9: the comment before the label', set('intake', real.intake.replace("      await gh('POST', '/issues/' + i.number + '/labels', { labels: [NOT_LISTED] });\n      await gh('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });", "      await gh('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });\n      await gh('POST', '/issues/' + i.number + '/labels', { labels: [NOT_LISTED] });"))],
+    ['M9: the yearly count opened twice', set('report', real.report.replace("String(i.body).includes('The decisions of ' + year + ',')", 'false'))],
+    ['C1: the deployments counted from nothing', set('limits', real.limits.replace("  if (shas.length && !dates.length) throw new Error(", "  if (false) throw new Error("))],
+    ['M10: a day in UTC', set('wd', real.wd.replace('new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10)', 'new Date().toISOString().slice(0, 10)'))],
+    ['J2: a mention through', set('intake', real.intake.replace(".replace(/@/g, '＠')", ''))],
+    ['J5: the kind from the text', set('removal', real.removal.replace("names(i).some((l) => holding.includes(l))", '(parse(i.body).kind || {}).hold'))],
+    ['M11: two fetches at once', wfSet('sources.yml', real.wf['sources.yml'].replace('    concurrency:\n      group: sources\n      cancel-in-progress: false\n', ''))],
+    ['J4: the PDF read by the job that pushes', wfSet('pdf.yml', real.wf['pdf.yml'].replace("          git apply --index change.patch\n", "          git apply --index change.patch\n          node verification/check.js\n"))],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each of ' + breaks.length + ' ways (a token or a write on a pull request, the record merging what was not labelled, the cap, its notice and pages, the sweep, the concurrency, the daily run, the weekly watch, a token for poppler or the checks, a checkout keeping its token, a time limit, IndexNow, the heartbeat and the record) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
