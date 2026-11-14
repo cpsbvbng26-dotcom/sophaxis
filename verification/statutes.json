@@ -513,7 +513,7 @@
       "sha256": "db2290e44f3633fa8ed12d13d67d5fed560696afefac682d6674d4b7eb2f5071"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 446",
       "law_id": "129AC0000000089",
@@ -522,7 +522,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-2",
       "law_id": "129AC0000000089",
@@ -531,7 +531,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-3",
       "law_id": "129AC0000000089",
@@ -540,7 +540,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-4",
       "law_id": "129AC0000000089",
@@ -549,7 +549,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-5",
       "law_id": "129AC0000000089",
@@ -558,7 +558,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-6",
       "law_id": "129AC0000000089",
@@ -567,7 +567,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-7",
       "law_id": "129AC0000000089",
@@ -576,7 +576,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-8",
       "law_id": "129AC0000000089",
@@ -585,7 +585,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-9",
       "law_id": "129AC0000000089",
@@ -594,7 +594,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Civil Code",
       "label": "Article 465-10",
       "law_id": "129AC0000000089",
@@ -603,7 +603,7 @@
       "title": "民法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "law": "Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)",
       "name": "Consumer Contract Act",
       "label": "Article 2",
       "law_id": "412AC0000000061",
@@ -612,7 +612,7 @@
       "title": "消費者契約法"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (requests that are never turned away)",
+      "law": "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
       "name": "Act on providers of specified telecommunications services",
       "label": "Article 5",
       "law_id": "413AC0000000137",
@@ -621,7 +621,7 @@
       "title": "特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律"
     },
     {
-      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (requests that are never turned away)",
+      "law": "Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)",
       "name": "Act on providers of specified telecommunications services",
       "label": "Article 6",
       "law_id": "413AC0000000137",
