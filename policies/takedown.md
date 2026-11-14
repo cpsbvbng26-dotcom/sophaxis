@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -50,14 +50,21 @@ When a removal issue reports exposure of personal data, the record page (its tit
 The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
 A request about the requester's own personal data concerns that person, not the work, so the authors are not told of it.
-Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
+Except where serious harm requires it at once, the operator removes material on a request only after asking the authors, in their submission issue, whether they agree to its removal, showing them the material concerned, the right said to be infringed and the reason given; if no objection reaches the operator within 7 days from the day the question is posted, the operator may remove it.
+A measure taken on a request goes no further than is needed to stop the material concerned from being sent.
+The automatic step cannot tell which part of the record a report concerns, so it takes the title, the authors, the abstract and the PDF copy offline; once the operator has read the request, any of them that the request does not concern is put back.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 The operator writes every record page and places every PDF copy on the site; authors submit in GitHub issues, on GitHub's service, and nothing they write reaches the site until the operator merges it.
 The operator therefore considers that, for the record pages and the copies, Sophaxis is itself the sender, as Japan's Act on providers of specified telecommunications services defines the sender; since the amendment of 2024 the title of that Act is 特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律.
 Sophaxis does not rely on the limitation of the liability of providers in that Act, which does not apply to a provider that is the sender, and the operator is liable for the record pages and the copies as Japanese law provides, including Article 709 of the Civil Code.
+This holds for the PDF copies too. The operator records each copy on the services that serve the site, so for the copy Sophaxis is the sender, and Article 3(1) of Japan's Act on providers of specified telecommunications services withholds its limitation from a provider that is the sender of the material.
+What others write in the issues of the Sophaxis repository is kept on GitHub's service, and its sender is the person who wrote it.
+Whether the operator is also a provider of that service under the Act, its text does not settle. For that material the operator follows the conditions of Article 3 of Japan's Act on providers of specified telecommunications services, so that its limitations are available if the operator is such a provider.
+When the operator knows that text in an issue infringes another person's rights, or has reasonable grounds to believe so, the operator hides or edits it without delay, as far as is needed to stop it from being sent.
+Otherwise, on a request that shows the text concerned, the right said to be infringed and the reason, the operator asks the person who wrote it, showing them the same, whether they agree to the measure, and takes it if no objection reaches the operator within 7 days from the day they receive the question.
 The 7 days given to the authors follow the form that the same Act gives for a provider who asks the sender before taking material down.
 
-<!-- text: Civil Code 709 -->
+<!-- text: Civil Code 709; Providers Act 3 -->
 
 If the request is upheld, the record is removed, as the next section sets out.
 If the request is not upheld, the operator says why in the issue.
@@ -125,7 +132,7 @@ Sophaxis takes the worst case here too, and follows the Digital Services Act of 
 
 ## Copyright notices under United States law
 
-Sophaxis has not designated an agent with the United States Copyright Office, which charges a fee, so it does not rely on the limitation of liability in 17 U.S.C. 512.
+The limitation of liability in 17 U.S.C. 512(c) applies only to a service provider that has designated an agent and given its details to the United States Copyright Office. Sophaxis has not, because it registers with no office, so it does not rely on that limitation.
 A notice of claimed infringement under that law is handled under this policy, like any other request.
 
 <!-- text: 17 U.S.C. 512 -->

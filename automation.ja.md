@@ -1,6 +1,6 @@
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 これは英語の [What runs by itself](./automation.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -19,7 +19,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 ## 投稿の issue が開かれたか編集されたとき、または著者がコメントで確かめたとき
 
-- 読むもの：DataCite、Crossref、JaLC のどれかにある DOI のメタデータ。そのメタデータが作品の前の版として挙げる DOI それぞれの登録の日。Crossref がその DOI について記録している通知。最新の版の PDF。これは預け先がスクリプトに取得を許している場合だけで、モデレーターのために形を読むだけです。読んだあとは消します。issue が開かれた日。様式に書かれた公開の ORCID の記録の、氏名・ウェブサイト・業績。deposit-check によるメタデータについての助言。
+- 読むもの：DataCite、Crossref、JaLC のどれかにある DOI のメタデータ。そのメタデータが作品の前の版として挙げる DOI それぞれの登録の日。Crossref がその DOI について記録している通知。最新の版の PDF。これは預け先がスクリプトに取得を許している場合だけで、モデレーターのために形と助言を読むだけです。読んだあとは消します。issue が開かれた日。様式に書かれた公開の ORCID の記録の、氏名・ウェブサイト・業績。deposit-check によるメタデータについての助言。
 - 書くもの：それぞれの確認の結果と記録の下書きを載せたコメント。`verified` か `unverified` のラベル。
 - 様式の必須のボックスすべてに印があるかを確かめます。ボックスは、リポジトリにある二つの投稿の様式から読みます。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。[投稿の規程](./policies/submission.ja.md#投稿者が確認すること)にも同じボックスを並べてあります。
 - 2026-11-21 から、[投稿の規程](./policies/submission.ja.md)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
@@ -27,6 +27,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
 - 2026-11-23 から、載っている作品の著者にまだなっていない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
+- 2026-11-14 から、何も決めない助言もモデレーターに示します（[tools/pdf_advice.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/pdf_advice.js)）。PDF の最初の頁に印刷されたライセンスが DOI のメタデータと合うか。最初の頁より後に、著者自身のものを除いて、メールアドレス・電話番号・郵便番号の形をした文字列がいくつあるか。PDF が埋め込む画像がいくつあるか。ファイルが預け先のチェックサムと合うか。DOI のメタデータの所属、または最初の頁の行のうち、Sophaxis を提供しない国と地域を挙げるものがいくつあるか。コメントと実行の記録が示すのは、数と決まった語だけで、見つけたものそのものは示しません。
 - 運営者に残すこと：投稿を受理するか、断るか。
 - コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js)。[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
 
@@ -106,8 +107,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 ## 週に一度、月曜日の日本時間 13:37
 
-- 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
-- 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
+- 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。リポジトリにある PDF の写しのそれぞれ。記録した SHA-256 と照らし、投稿のときと同じ助言のために読みます。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
+- 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、PDF の写しが記録した SHA-256 と違うか、記録と違うライセンスを印刷しているとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
 - コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
 

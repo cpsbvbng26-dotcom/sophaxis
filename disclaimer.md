@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -53,7 +53,7 @@ This use does not change what is listed or how.
 - Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it; such a work stays on the operator's own shelf, outside Sophaxis.
 - Sophaxis is not run for profit. It charges no one, sells nothing, shows no advertising and earns nothing.
 - Sophaxis does not publish works. Each work is published by its repository under its DOI, and Sophaxis links to it.
-- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](./policies/copyright.md).
+- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](./policies/copyright.md). It is provided as it is, and the work itself is the deposit in its repository.
 - Sophaxis takes no copyright and no exclusive licence in any work.
 - A rights holder can ask for the removal of a work under the [Takedown Policy](./policies/takedown.md).
 
@@ -82,7 +82,7 @@ Sophaxis has no arrangement with Anthropic, receives nothing from it, and does n
 ## Links
 
 Sophaxis links to repositories, DOIs and other sites that it does not control.
-It is not responsible for their content, their availability or their terms.
+It is not responsible for their content, their availability or their terms, unless the law makes the operator responsible for them.
 
 ## Availability
 
@@ -105,7 +105,11 @@ They are not legal or professional advice.
 ## Liability
 
 The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+From 2026-12-01, toward a person who agrees to the Terms of Use in a form on or after that day, the operator is liable for loss caused by negligence that is not gross negligence only as far as the loss would ordinarily arise, as the section "No warranty" of the Terms of Use sets out; that limit never applies to intent or gross negligence, or to a reader who has not agreed to the Terms.
 The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+That sentence speaks of loss to which no intent or negligence of the operator contributed.
+A listing is not a statement that a work is correct or of any quality.
+The way to have material on Sophaxis removed is the [Takedown Policy](./policies/takedown.md); it takes away no right to go to a court.
 Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
 This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
 The responsibility for an act done by someone else against the Terms of Use, or outside them, lies with the person who did it.

@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -22,6 +22,7 @@ How content is moderated is set out in the Moderation Policy and the Takedown Po
 
 Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 It gives each listed work a record page, a search, a feed and, where the repository allows, a copy of the PDF.
+A PDF copy is the file that the authors deposited, kept unmodified and provided as it is; the work itself is the deposit in its repository.
 It does this free of charge.
 
 ## The authors bear full responsibility
@@ -39,10 +40,17 @@ This covers:
 Moderation does not move any of this to the operator.
 A listing says only that a submission passed the checks in the [Moderation Policy](./moderation.md).
 If a third party makes a claim against Sophaxis or its operator because something the submitter confirmed at submission is untrue, the authors are responsible for it, as the law provides.
+From 2026-12-01, for a submission made on or after that day, the submitter undertakes to the operator that each confirmation in the form is true when it is made.
+If a third party then makes such a claim, the operator tells the submitter, in the submission issue or by email, and hears them before agreeing to pay anything.
+The submitter compensates the operator for the loss that the untrue confirmation caused, as Articles 415 and 416 of Japan's Civil Code provide.
+Nothing is owed where the untrue confirmation is due to a cause for which the submitter is not responsible, and nothing beyond those Articles is asked.
 Authors agree that the record page (its title, authors, abstract and PDF copy) may be taken offline while a removal request is reviewed under the [Takedown Policy](./takedown.md), and that OAI-PMH then reports the record as deleted until it is put back.
+No more is kept offline than the review needs, as the Takedown Policy sets out.
 Text written in the forms is shared as the [Licence Policy](./licences.md) sets out.
 The operator still acts on requests under the [Takedown Policy](./takedown.md).
 A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so; for them, this section describes what the law already places on the authors of a work.
+
+<!-- text: Civil Code 415; Civil Code 416 -->
 
 ## What readers may do
 
@@ -93,9 +101,18 @@ This does not exclude or limit the operator's liability for loss that the operat
 Sophaxis is provided as it is.
 It does not guarantee the quality, correctness or completeness of listed work.
 It does not guarantee that the site will always be reachable.
+Nothing on Sophaxis states that a listed work is correct, original or of any quality, and the operator makes no such statement on which anyone could rely; a listing says only that the submission passed the checks of the [Moderation Policy](./moderation.md).
 The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+From 2026-12-01, one limit applies to a person who agrees to these terms in a form on or after that day.
+For loss that the operator, or anyone acting for the operator, causes in performing these terms by negligence that is not gross negligence, whether the claim is for non-performance or in tort, the operator is liable only for the loss that would ordinarily arise (Article 416(1) of Japan's Civil Code), and not for loss arising from special circumstances (Article 416(2) of the Civil Code).
+This limit applies only to negligence that is not gross negligence. It does not apply to intent or gross negligence, which stay as the sentence above says, and it does not apply to anyone who has not agreed to these terms in a form, such as a reader.
 The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+That sentence speaks of loss to which no intent or negligence of the operator contributed, and does not limit the liability above.
+The operator is responsible for what it does itself: the record pages it writes, the PDF copies it places on the site, its handling of personal data under the [Privacy Policy](./privacy.md), and its handling of requests under the [Takedown Policy](./takedown.md).
+The way to have material on Sophaxis removed is the Takedown Policy; it takes away no right to go to a court.
 Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
+
+<!-- text: Civil Code 416; Consumer Contract Act 8 -->
 
 ## Changes and closure
 
@@ -176,7 +193,7 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 
 - Submitting to Sophaxis means using GitHub: opening an issue, commenting and attaching files are governed by GitHub's Terms of Service and Privacy Statement, between the user and GitHub.
 - Reading Sophaxis means receiving pages from Vercel, which handles each request, including the IP address, under its own terms and privacy policy, possibly in countries other than Japan or the reader's own.
-- These terms bind the operator and the people who use Sophaxis. They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel, or against the operator for what GitHub or Vercel does.
+- These terms bind the operator and the people who use Sophaxis. They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel, or against the operator for what GitHub or Vercel does. Nor do they take away a claim that the law gives.
 - A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court. The steps in Disputes above cover only the operator and Sophaxis.
 - Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](./takedown.md) whether or not GitHub or Vercel has acted.
 - If GitHub or Vercel removes, limits or blocks something on their side, for example under the law of the United States, Sophaxis may not be able to restore it.
