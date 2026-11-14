@@ -17957,6 +17957,149 @@
      "text": "Archive"
     }
    ]
+  },
+  "arxiv-api-tou": {
+   "url": "https://info.arxiv.org/help/api/tou.html",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 8814,
+   "sha256": "068a6bd8062a67c8ceef00616199893fa6ccc12dde307c0b2eebb1b5b2a40024",
+   "spans": [
+    {
+     "at": 143,
+     "text": "GitHub"
+    },
+    {
+     "at": 306,
+     "text": "Edit"
+    },
+    {
+     "at": 694,
+     "text": "Required"
+    },
+    {
+     "at": 1279,
+     "text": "ORCID"
+    },
+    {
+     "at": 1307,
+     "text": "Records"
+    },
+    {
+     "at": 1327,
+     "text": "Person"
+    },
+    {
+     "at": 1470,
+     "text": "Service"
+    },
+    {
+     "at": 1614,
+     "text": "publisher"
+    },
+    {
+     "at": 1637,
+     "text": "Name"
+    },
+    {
+     "at": 2044,
+     "text": "English"
+    },
+    {
+     "at": 2384,
+     "text": "the right"
+    },
+    {
+     "at": 3434,
+     "text": "authors"
+    },
+    {
+     "at": 6676,
+     "text": "n one"
+    },
+    {
+     "at": 7487,
+     "text": "Direct users to arXiv.org to retrieve e-print content (PDF, source files, etc)."
+    },
+    {
+     "at": 7731,
+     "text": "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted"
+    }
+   ]
+  },
+  "arxiv-bulk-data": {
+   "url": "https://info.arxiv.org/help/bulk_data.html",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 7531,
+   "sha256": "9a6a45848a7840cc8cf651063a2c3ca5640f64719b666b999b0a79eedd8292f3",
+   "spans": [
+    {
+     "at": 133,
+     "text": "GitHub"
+    },
+    {
+     "at": 296,
+     "text": "Edit"
+    },
+    {
+     "at": 684,
+     "text": "Required"
+    },
+    {
+     "at": 1269,
+     "text": "ORCID"
+    },
+    {
+     "at": 1297,
+     "text": "Records"
+    },
+    {
+     "at": 1317,
+     "text": "Person"
+    },
+    {
+     "at": 1460,
+     "text": "Service"
+    },
+    {
+     "at": 1604,
+     "text": "publisher"
+    },
+    {
+     "at": 1627,
+     "text": "Name"
+    },
+    {
+     "at": 2034,
+     "text": "English"
+    },
+    {
+     "at": 2374,
+     "text": "the right"
+    },
+    {
+     "at": 5483,
+     "text": "authors"
+    },
+    {
+     "at": 6131,
+     "text": "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access."
+    }
+   ]
+  },
+  "arxiv-export-robots": {
+   "url": "https://export.arxiv.org/robots.txt",
+   "status": 200,
+   "fetched": "2026-11-12",
+   "length": 25,
+   "sha256": "1ef535a33969769647f9eb3fffde67133ba8efe7566be25407fdc4de0ffba9fb",
+   "spans": [
+    {
+     "at": 0,
+     "text": "User-agent: * Disallow: /"
+    }
+   ]
   }
  },
  "laws": {
