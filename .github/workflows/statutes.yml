@@ -36,6 +36,10 @@ jobs:
     name: The texts the legal review relies on
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # One watch at a time: it replaces the branch statutes/record (push -f), so two runs never collide (2026-11-15).
+    concurrency:
+      group: statutes
+      cancel-in-progress: false
     # The proposal is pushed to statutes/record, and the pull request or the issue is written.
     permissions:
       contents: write
