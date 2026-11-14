@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -47,6 +47,8 @@ For personal data and other serious harm, the record page (its title, authors, a
 The automatic steps below run as GitHub Actions. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, the operator takes these steps by hand, as soon as the operator learns of the request, and the record page is then not taken offline at once.
 A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
 When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
+From 2026-12-01, at most 3 records are taken offline automatically on one day (Japan time), counted over every request, whoever sends it. A request beyond that is not taken offline automatically: it gets the label `needs a person` and a fixed comment, and the operator reads it promptly.
+A removal issue that has no acknowledgement because the automatic step did not run for it is taken up by the daily step, as if it had just been opened.
 The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
 A request about the requester's own personal data concerns that person, not the work, so the authors are not told of it.

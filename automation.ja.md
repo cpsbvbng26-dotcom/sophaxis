@@ -59,6 +59,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 読むもの：記録と、リポジトリの issue。
 - 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
 - issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.md)のとおり、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。GitHub Actions が動かないときは、運営者が手で下げ、すぐには下がりません。
+- 2026-12-01 から、自動で公開から外す記録は、だれの求めかによらず数えて、一日（日本時間）に 3 件までです。それを超える求めは自動では外さず、ラベル `needs a person` と決まった文のコメントを付け、運営者がすぐに読みます。件数は、その日に自動の手順が `main` に加えたコミットから数えます。
 - 運営者に残すこと：判断。
 - コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
 
@@ -75,6 +76,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：開いている削除の求めと、確かめられた撤回。
 - 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる 2 日前から書きます。
+- 自動の手順がその issue で動かず、受け取ったことの知らせが付いていない削除の issue は、毎日の手順が、開かれたばかりのものとして拾い上げます。一日に 3 件までの決まりは、ここにも掛かります。
+- どの投稿に `not listed` のラベルを付けるよりも前に、どの確かめもまだ `verified` か `unverified` のラベルを付けていない開いた投稿を、issue が直されたばかりのものとして確かめます。
 - 2026-12-01 から、issue を開いてから 30 日たっても確かめられていない投稿に、[投稿の規程](./policies/submission.ja.md#突き合わせの受付)のとおり、`not listed` のラベルと決まった文のコメントを付け、人が読むよう開いたままにします。`needs a person` のラベルのある issue と、題・本文・人のコメントのどれかが求めと読める issue は飛ばします。どの issue も閉じず、鍵も掛けません。削除・撤回・出版版・訂正の issue には何もしません。コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js) に `--deadline` を付けて、[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
@@ -112,6 +115,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - Vercel が保つ以前の版のサイトは、公開していません。
 - main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。10 分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
 - コード：[tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js)。[live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml) が動かします。
+- 同じワークフローで一日に一度、見張り（heartbeat）が、cpsbvbng26-dotcom のリポジトリ横断の毎日の検査が2 日のうちに成功したかを読みます。その検査は、Sophaxis のすべての定期の仕事を見ています。成功していなければ、決まった語と数だけの issue を一つ開くか直します。その検査がまた成功すれば、ひとりでに閉じます。コード：[tools/heartbeat.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/heartbeat.js)。
 - `robots.txt` は、サイトのほかの部分と一緒に組み立てます。削除した記録と、著者が保存に同意していない記録を集めないよう、Internet Archive のクローラーに求めます。
 - コード：[tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js)。[indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) が動かし、削除の手順の push のあとにも動きます。
 
@@ -119,6 +123,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。リポジトリにある PDF の写しのそれぞれ。記録した SHA-256 と照らし、投稿のときと同じ助言のために読みます。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
 - 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、PDF の写しが記録した SHA-256 と違うか、記録と違うライセンスを印刷しているとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
+- 確かめられなかったもの（429 か 5xx の答え、時間切れ、読めない答え）と、Internet Archive への保存のうち成功しなかったものは、同じ issue に挙げます。その issue は開いたままになり、実行は落ちます。確かめられなかったものがあるあいだは、問題が無かったとは書きません。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
 - コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
 
