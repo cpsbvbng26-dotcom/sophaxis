@@ -105,6 +105,26 @@
       ],
       "egov": "412AC0000000061"
     },
+    "Electronic Consumer Contracts Act": {
+      "en": [
+        "Electronic Consumer Contracts Act",
+        "Act on Special Provisions to the Civil Code concerning Electronic Consumer Contracts"
+      ],
+      "ja": [
+        "電子消費者契約法",
+        "電子消費者契約に関する民法の特例に関する法律"
+      ],
+      "egov": "413AC0000000095"
+    },
+    "Constitution of Japan": {
+      "en": [
+        "Constitution of Japan"
+      ],
+      "ja": [
+        "日本国憲法"
+      ],
+      "egov": "321CONSTITUTION"
+    },
     "Code of Civil Procedure": {
       "en": [
         "Code of Civil Procedure"

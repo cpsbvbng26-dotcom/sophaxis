@@ -1,6 +1,6 @@
 # History and name
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-15.
 
 Japanese: [沿革と名前（日本語訳）](./history.ja.md). It is a translation; where the two differ, the English text applies.
 

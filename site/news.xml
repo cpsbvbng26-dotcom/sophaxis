@@ -4,8 +4,15 @@
   <id>https://sophaxis.vercel.app/news.html</id>
   <link rel="self" href="https://sophaxis.vercel.app/news.xml"/>
   <link href="https://sophaxis.vercel.app/news.html"/>
-  <updated>2026-11-12T00:00:00Z</updated>
+  <updated>2026-11-15T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n17</id>
+    <title>From 2026-12-01: authors from 16, and the co-author's consent to the review</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html"/>
+    <updated>2026-11-15T00:00:00Z</updated>
+    <summary>From 2026-12-01, Sophaxis does not accept a work if any of its authors is under 16, and a co-author confirms their agreement with fixed words that also consent to the review by language models, after the information that Japan's law asks. Since 2026-11-15, the operator gives a submission to a language model only when everyone who wrote in its issue has consented. The Terms of Use and the Submission Policy give the details.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/news.html#n16</id>
     <title>Fifteen more places where Sophaxis is not offered, from 2026-11-26</title>

@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -87,7 +87,7 @@ The articles it names are quoted at the end of this section.
 | Giving another person's ORCID iD in the form, or signing in to another person's ORCID or GitHub account to pass the identity check | Penal Code, Article 233; Act on the Prohibition of Unauthorized Computer Access, Article 3 | Use only your own iD and your own accounts. |
 | Confirming the agreement of a co-author who did not agree, or confirming anything else that is not true in a form | Penal Code, Article 233; Civil Code, Article 709 | Confirm only what is true. The record is removed as soon as the operator learns of it. |
 | Presenting a listing on Sophaxis as peer review or as publication in a journal, in a CV, an application for funding or an advertisement | Penal Code, Article 246; Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Describe a listing as what it is: a moderated listing of a preprint, which is not peer review ([Moderation Policy](./moderation.md)). |
-| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Unfair Competition Prevention Act, Article 2(1)(i) and (ii); Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](../brand.md) says how they may be used. |
+| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](../brand.md) says how they may be used. |
 | Reusing a PDF copy or a record beyond what its licence allows, for example without the credit that the licence asks | Copyright Act, Articles 21 and 23 | Reuse each work under its own licence, which its record page names. |
 | Vouching for a submission with words that are not true, for example about where the researcher lives or stays, or about being an author | Penal Code, Article 233; Civil Code, Article 709 | Vouch only with words that are true. |
 | Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once while GitHub Actions runs for Sophaxis, and by the operator's hand when it does not, under the [Takedown Policy](./takedown.md). |
@@ -96,7 +96,7 @@ The responsibility for an act done against these terms, or outside them, lies wi
 Except where the law makes the operator responsible, the operator is not responsible for such acts.
 This does not exclude or limit the operator's liability for loss that the operator causes by intent or negligence, which is set out under No warranty below.
 
-<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Unfair Competition Prevention Act 2; Penal Code 230; Penal Code 231 -->
+<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Penal Code 230; Penal Code 231 -->
 
 ## No warranty
 
@@ -172,9 +172,8 @@ A dispute about Sophaxis or a listed work is settled by agreement wherever possi
 2. Both sides then try, in good faith, to reach an agreement by talking. Until 2026-11-25, the operator answers within 7 days and does not leave a dispute without reply. From 2026-11-26, the operator aims to answer within 7 days and does not leave a dispute without reply; during a pause described under "Continuity" above, the answer waits until the pause ends.
 3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
 
-From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
+From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form, but only for a suit based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction. This agreement is not exclusive.
 Until then, the court of first instance by agreement is, on the same terms, the district court or the summary court that has jurisdiction over the operator's place of residence.
-From 2026-11-26, this agreement on the court covers only suits based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction.
 For anyone else, the court that the law sets has jurisdiction.
 The operator's address is given on request, as the [Operator and contact](../contact.md) page says.
 This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
@@ -203,7 +202,7 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 Their terms were read at their sources on 2026-11-09: GitHub's [Terms of Service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (effective 2026-04-27), [Acceptable Use Policies](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies) and [General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) (effective 2026-04-27); Vercel's [Terms of Service](https://vercel.com/legal/terms) (last updated 2026-10-19), [Acceptable Use Policy](https://vercel.com/legal/acceptable-use-policy) (last updated 2026-04-21) and [Privacy Notice](https://vercel.com/legal/privacy-notice) (last updated 2026-06-01).
 What they say that matters to people who use Sophaxis:
 
-- GitHub accepts only users aged 13 or over, or older where a user's own country requires it (GitHub Terms, B.3).
+- GitHub accepts only users aged 13 or over (GitHub Terms, B.3).
 - What is written or attached in an issue must follow GitHub's Acceptable Use Policies, among them its rules on spam, harassment and other people's private information (GitHub Terms, C).
 - GitHub may refuse or remove content that breaks the law or its terms, and may close accounts (GitHub Terms, D.2 and M.3).
 - Content in a public repository and in its issues can be seen by everyone, and GitHub's terms do not restrict its lawful use by others (GitHub Terms, D.5 and D.8). GitHub and its affiliates may store, copy and display it, and use it to train AI features and the models of their affiliates (GitHub Terms, D.4); there is no setting that turns this off for public content (GitHub Terms, J.3).
@@ -220,6 +219,7 @@ What they say that matters to people who use Sophaxis:
 - If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows. This does not apply to a clause that excludes or limits the operator's liability: such a clause applies only as it is written, and is not read as reaching as far as the law allows.
 - If the operator does not enforce a part of these terms at one time, that does not waive it.
 - From 2026-11-21, a person under 13 cannot submit.
+- From 2026-12-01, a work is not accepted if any of its authors is under 16.
 - A person under 18 may submit only with the consent of a parent or guardian.
 - Where the law gives a person who submitted as a minor a right to have the listing removed, the [Takedown Policy](./takedown.md) applies.
 - A notice to the operator is given by email to the address on the ORCID record, or in an issue. A notice to an author is given in their submission issue.

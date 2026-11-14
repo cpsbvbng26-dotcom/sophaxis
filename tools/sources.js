@@ -57,8 +57,8 @@ const SOURCES = {
   'ru-152': { pages: [1, 2, 3, 4, 5, 6, 7].map((n) => 'http://www.kremlin.ru/acts/bank/24154/page/' + n), body: [/Показать предыдущую страницу документа/, /Показать следующую страницу документа|Текст Поделиться Прямая ссылка/], split: /Статья (\d+(?:\.\d+)?)\. /g, sup: true, supGuess: true, altPrefix: 'https://web.archive.org/web/2026id_/' },
   // adilet.zan.kz answers with a page that asks for a script; the Internet Archive's copy is tried after it (`alt`).
   kz: { url: 'https://adilet.zan.kz/rus/docs/Z1300000094', split: /Статья (\d+)\. /g, alt: ['https://web.archive.org/web/2026id_/https://adilet.zan.kz/rus/docs/Z1300000094'] },
-  /* Added on 2026-11-12, for the data protection laws that another project's public survey of the world's laws
-   * found, so that the scope, representative, registration, transfer and minors articles are read at their sources by number.
+  /* Added on 2026-11-12, for the data protection laws that a survey of the world's laws (its part on Sophaxis is kept in
+   * verification/world-2026-11-12.json since 2026-11-15) found, so that the scope, representative, registration, transfer and minors articles are read at their sources by number.
    * The survey kept only the articles its search words matched; these are fetched whole here. `whole` keeps the text as
    * article "all" beside the cut articles; `alt` is one other official route, or the Internet Archive's copy. */
   'ar-25326': { url: 'https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/texact.htm', lang: 'es', split: /ARTICULO (\d+)(?:°|º|\.)? ?(?:—|–|-) /g },
@@ -115,9 +115,15 @@ const IA = (u) => 'https://web.archive.org/web/2026id_/' + u;
  * Internet Archive's copy. api.datacite.org is DataCite's API, for machines, and is not among them.
  * Figshare ("use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape,
  * spider or mine", except as Figshare authorizes in writing) and Research Square ("any robot, spider, other automated device,
- * or manual process to monitor or copy any content from the Web Sites") joined them on 2026-11-12 (the fifth pass). */
-const NO_DIRECT = /^https?:\/\/(?:[a-z0-9-]+\.)*(?:ssrn\.com|edx\.org|philpapers\.org|philarchive\.org|datacite\.org|figshare\.com|researchsquare\.com)(?:[\/:?#]|$)/i;
+ * or manual process to monitor or copy any content from the Web Sites") joined them on 2026-11-12 (the fifth pass).
+ * arXiv joined them on 2026-11-15, when the owner decided that nothing reads arXiv by script; and X, whose terms forbid
+ * "crawling or scraping the Services in any form, for any purpose without our prior written consent", the same day: its terms
+ * are read from the Internet Archive's copy. */
+const NO_DIRECT = /^https?:\/\/(?:[a-z0-9-]+\.)*(?:ssrn\.com|edx\.org|philpapers\.org|philarchive\.org|datacite\.org|figshare\.com|researchsquare\.com|arxiv\.org|x\.com|twitter\.com)(?:[\/:?#]|$)/i;
 const direct = (u) => NO_DIRECT.test(u) && !/^https?:\/\/api\.(?:test\.)?datacite\.org(?:[\/:?#]|$)/i.test(u);
+/* Pages that are kept in verification/sources-raw.json as they were fetched, and never fetched again: arXiv's, read directly
+ * on 2026-11-12, which the earlier records quote. Since 2026-11-15 nothing reads arXiv by script (the owner's answer S19). */
+const RETIRED = ['arxiv-api-tou', 'arxiv-bulk-data', 'arxiv-export-robots'];
 const PPC_LINKS = /\.pdf|guideline|gaikoku|offshore|kaigai|foreign|outside|外国|ガイドライン|Ｑ＆Ａ|Q&A/i;
 const PAGES = {
   // The Commission's index pages, from which the addresses of its guidance were found.
@@ -289,16 +295,28 @@ const PAGES = {
   'za-inforeg': PAGE('https://inforegulator.org.za/popia/', { links: /\.pdf|act|popia|regist/i, follow: { re: /\.pdf/i, max: 2 }, keep: 250000 }),
   'ae-portal': PAGE('https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws', { links: /\.pdf|legislation|decree|law/i, keep: 60000 }),
   /* Added on 2026-11-12 (the fifth pass): the terms of the repositories from which tools/fetch_pdf.js copied PDFs by script,
-   * which had not been read. Zenodo and arXiv are read directly; Figshare's and Research Square's terms forbid robots and
-   * scripts, so their pages are read from the Internet Archive's copies (NO_DIRECT). */
+   * which had not been read. Zenodo is read directly; Figshare's and Research Square's terms forbid robots and
+   * scripts, so their pages are read from the Internet Archive's copies (NO_DIRECT). arXiv's pages were read directly until
+   * 2026-11-15; from then nothing reads arXiv by script (NO_DIRECT), as the owner decided. */
   'zenodo-developers': PAGE('https://developers.zenodo.org/', { keep: 60000 }),
-  'arxiv-api-tou': PAGE('https://info.arxiv.org/help/api/tou.html'),
-  'arxiv-bulk-data': PAGE('https://info.arxiv.org/help/bulk_data.html'),
-  'arxiv-export-robots': PAGE('https://export.arxiv.org/robots.txt'),
   'figshare-terms': PAGE(IA('https://figshare.com/terms')),
   'figshare-api-docs': PAGE(IA('https://docs.figshare.com/'), { keep: 60000 }),
   'researchsquare-terms': PAGE(IA('https://www.researchsquare.com/legal/terms-of-service')),
   'researchsquare-robots': PAGE(IA('https://www.researchsquare.com/robots.txt')),
+  /* Added on 2026-11-15, for the owner's answers to the audit of 2026-11-14 (docs/legal-audit-2026-11-12.md, 「2026-11-15：点検の答え」):
+   * what the three providers of language models say about training on what they are given (OpenAI's own pages ask for
+   * JavaScript and cookies, so the Internet Archive's copies are read, pinned to their timestamps); DataCite's pages that permit
+   * the use of its API, read from the Internet Archive's copies as every page of DataCite's website is (NO_DIRECT); IndexNow's
+   * terms; and X's terms, which forbid automated access, from the Internet Archive's copy. */
+  'anthropic-consumer-terms': PAGE('https://www.anthropic.com/legal/consumer-terms'),
+  'anthropic-commercial-terms': PAGE('https://www.anthropic.com/legal/commercial-terms'),
+  'openai-terms-archived': PAGE('https://web.archive.org/web/20261109094845id_/https://openai.com/policies/row-terms-of-use/'),
+  'openai-services-agreement-archived': PAGE('https://web.archive.org/web/20261110000152id_/https://openai.com/policies/services-agreement/'),
+  'xai-enterprise-terms': PAGE('https://x.ai/legal/terms-of-service-enterprise'),
+  'datacite-rest-api': PAGE('https://web.archive.org/web/20260820180234id_/https://support.datacite.org/docs/rest-api'),
+  'datacite-data-file-use': PAGE('https://web.archive.org/web/20261030091815id_/https://support.datacite.org/docs/datacite-data-file-use-policy'),
+  'indexnow-terms': PAGE('https://www.indexnow.org/terms'),
+  'x-terms-archived': PAGE('https://web.archive.org/web/20261103035734id_/https://x.com/en/tos'),
   'conatus-submissions': PAGE('https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions', { alt: 'https://web.archive.org/web/2026id_/https://ejournals.epublishing.ekt.gr/index.php/conatus/about/submissions' }),
 };
 
@@ -917,8 +935,8 @@ async function main() {
     console.log('law', key, r.status || r.error, r.title || '', (r.headings || []).length, Object.keys(r.articles || {}).length, (r.suppl || []).length);
     await sleep(1500);
   }
-  // Keys no longer in the lists are dropped, so that the file holds only what tools/sources.js names.
-  for (const k of Object.keys(out.pages)) if (!PAGES[k.split('>')[0]]) delete out.pages[k];
+  // Keys no longer in the lists are dropped, so that the file holds only what tools/sources.js names; a retired page stays as it was kept.
+  for (const k of Object.keys(out.pages)) if (!PAGES[k.split('>')[0]] && !RETIRED.includes(k)) delete out.pages[k];
   for (const k of Object.keys(out.laws)) if (!LAWS[k]) delete out.laws[k];
   // A source shared by two laws (the GDPR and the UK GDPR are not; GitHub's terms are named two ways) is fetched once.
   for (const r of Object.values(out.sources)) { if (r.want) r.want = [...new Set(r.want)].sort(); delete r.fetched_now; }
@@ -929,6 +947,6 @@ async function main() {
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 }
 
-module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, LAWS, NO_DIRECT, direct, IA, WHOLE, TRANSLATIONS, wholeSource, spansOf, harvest, keptProblems, reduceAll, FULL, HEAD };
+module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, RETIRED, LAWS, NO_DIRECT, direct, IA, WHOLE, TRANSLATIONS, wholeSource, spansOf, harvest, keptProblems, reduceAll, FULL, HEAD };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });
