@@ -16,7 +16,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const MARK = '<!-- live-site -->';
-/* The address of the site: Sophaxis keeps it in site.json, Nusquama in build.js. */
+/* The address of the site: Sophaxis keeps it in site.json; another site that uses this file keeps it in its build.js. */
 const BASE = (() => {
   if (fs.existsSync(path.join(ROOT, 'site.json'))) return JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8')).baseUrl;
   return (/const BASE = '([^']+)'/.exec(fs.readFileSync(path.join(ROOT, 'build.js'), 'utf8')) || [])[1];
