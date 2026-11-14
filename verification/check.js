@@ -407,11 +407,11 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const runs = [...wf.matchAll(/^\s*- run: (.*)$/gm)].map((m) => m[1]);
   /* Until 2026-11-13 the issue text went to the scripts through the environment, which the run's log prints; now each script reads it from the event file (check 128). */
-  ok('the workflow passes the issue text neither into the shell nor through the environment: each of the three scripts reads it from the event file', runs.join() === "sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js,node tools/withdraw.js,node tools/published.js,node tools/intake.js --deadline"
+  ok('the workflow passes the issue text neither into the shell nor through the environment: each of the three scripts reads it from the event file', runs.join() === "sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js,node tools/withdraw.js,node tools/published.js,sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed',node tools/intake.js --deadline"
     && !/ISSUE_BODY|github\.event\.issue\.body/.test(wf.replace(/^    if: [\s\S]*?\n(?=    name: )/gm, ''))
     && ['intake.js', 'withdraw.js', 'published.js'].every((f) => /= (I\.)?issueEvent\(\);/.test(read(path.join(ROOT, 'tools', f)))));
   ok('the workflow may only read the code and write to issues', /permissions:\n  contents: read\n  issues: write\n(?!  \w)/.test(wf));
-  ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version, and the daily labelling of the checked intake only on its schedule', (wf.match(/^    if: /gm) || []).length === 4 && wf.includes("if: github.event_name == 'schedule'\n    name: Label submissions whose time to pass the checks has ended")
+  ok('each job of the workflow runs only on its own kind of issue: submission, withdrawal or published version, and the daily labelling of the checked intake only on its schedule', (wf.match(/^    if: /gm) || []).length === 4 && wf.includes("if: github.event_name == 'schedule'\n    name: Check the submissions no run has labelled, and label those whose time to pass the checks has ended")
     && wf.includes("if: >-\n      contains(github.event.issue.labels.*.name, 'submission')") && wf.includes("if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')")
     && wf.includes("if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'published')"));
   ok('a comment runs the submission check again only when it carries the words of a confirmation, never a bot\'s comment or one on a pull request',
@@ -1619,7 +1619,7 @@ console.log('\n42. The weekly watch says why a save failed, and whether a copy e
   ok('the table has a row for each work: held, not held, or not read', tbl.includes('| 2026.0001 | 10.1/a | W1 | yes | 2 | yes | 2 |') && tbl.includes('| 2026.0002 | 10.1/b | not held |')
     && tbl.includes('| 2026.0003 | 10.1/c | could not be read |'));
   ok('the OpenAlex table is for information: it goes to the job summary and into the report, and does not open an issue by itself',
-    w.includes("if (problems.length || news.length || pubs.length) {") && w.includes('report(problems, when, news, pubs, index, copies)') && w.includes('process.env.GITHUB_STEP_SUMMARY')
+    w.includes("if (problems.length || news.length || pubs.length || notChecked.length || unsavedUrls.length) {") && w.includes('report(problems, when, news, pubs, index, copies, notChecked, unsavedUrls)') && w.includes('process.env.GITHUB_STEP_SUMMARY')
     && Wsp.report([], '2026-11-10', [], [], tbl).includes('For information, how OpenAlex holds the works shown:') && !Wsp.report([], 'd').includes('OpenAlex'));
   ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
 }
@@ -1802,9 +1802,17 @@ console.log('\n45. Telling search engines what changed (IndexNow)');
     isrc.includes('const urls = fresh.concat(left);') && isrc.includes("if (!all) await require('./watch.js').saveToArchive(fresh);") && !/saveToArchive\((urls|left)/.test(isrc)
     && isrc.indexOf('saveToArchive(fresh)') > isrc.indexOf("throw new Error('IndexNow refused the request"));
   const rwf = read(path.join(ROOT, '.github', 'workflows', 'removal.yml'));
-  ok('every job of the removal workflow that can push tells IndexNow afterwards, against the head it started from',
-    (rwf.match(/- run: node tools\/indexnow\.js\n\s+env:\n\s+BEFORE: \$\{\{ github\.sha \}\}/g) || []).length === 3
-    && ['intake', 'decide', 'manual'].every((j) => { const b = rwf.split('\n  ' + j + ':\n')[1].split(/\n  [a-z]+:\n/)[0]; return b.indexOf('node tools/removal.js') < b.indexOf('node tools/indexnow.js') && /fetch-depth: 0/.test(b); }));
+  /* 2026-11-15: IndexNow is told in a job of its own, after every job that can push, against the head of main before the first push
+   * of the run (each job gives it as its output "before"); a failure to tell IndexNow no longer makes the job that held a record fail. */
+  const rjob = (j) => (rwf.split('\n  ' + j + ':\n')[1] || '').split(/\n  [a-z]+:\n/)[0];
+  const rsrc2 = read(path.join(ROOT, 'tools', 'removal.js'));
+  ok('every job of the removal workflow that can push gives the head it started from, and a job of its own tells IndexNow afterwards, against that head, reading main with its history and holding only the right to read',
+    (rwf.match(/- run: node tools\/indexnow\.js\n/g) || []).length === 1
+    && ['intake', 'decide', 'manual', 'remind'].every((j) => { const b = rjob(j); return b.includes('    outputs:\n      before: ${{ steps.removal.outputs.before }}\n') && b.includes('      - id: removal\n        run: node tools/removal.js\n') && !b.includes('run: node tools/indexnow.js') && /fetch-depth: 0/.test(b); })
+    && rjob('indexnow').includes('    needs: [intake, decide, manual, remind]\n') && rjob('indexnow').includes("    if: always() && (needs.intake.outputs.before != '' || needs.decide.outputs.before != '' || needs.manual.outputs.before != '' || needs.remind.outputs.before != '')\n")
+    && rjob('indexnow').includes('          BEFORE: ${{ needs.intake.outputs.before || needs.decide.outputs.before || needs.manual.outputs.before || needs.remind.outputs.before }}\n')
+    && rjob('indexnow').includes('    permissions:\n      contents: read\n    steps:') && /ref: main\n\s+fetch-depth: 0/.test(rjob('indexnow'))
+    && rsrc2.indexOf("fs.appendFileSync(process.env.GITHUB_OUTPUT, 'before=' + before + '\\n')") > 0 && rsrc2.indexOf("fs.appendFileSync(process.env.GITHUB_OUTPUT, 'before=' + before + '\\n')") < rsrc2.indexOf("authed('push', 'origin', 'HEAD:main');"));
   const body = I.request([B + 'abs/2026.0001.html'], S);
   ok('the request names the host, the key and where the key file is', body.host === 'sophaxis.vercel.app' && body.key === S.indexNowKey
     && body.keyLocation === S.baseUrl + S.indexNowKey + '.txt' && body.urlList.length === 1 && I.ENDPOINT === 'https://api.indexnow.org/indexnow');
@@ -2074,9 +2082,12 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
     wf.includes("&& github.event.sender.login == github.repository_owner") && wf.includes("(github.event.label.name == 'upheld' || github.event.label.name == 'not-upheld')")
     && wf.includes("github.event.action != 'labeled'") && [...wf.matchAll(/^\s*- run: (.*)$/gm)].every((m) => m[1] === 'node tools/removal.js' || m[1] === 'node tools/indexnow.js')
     && !/\$\{\{ github\.event\.issue\.body \}\}[^\n]*\n\s+run:/.test(wf));
-  ok('changes to main go one at a time, and only after the site is built and every check passes',
-    /concurrency:\n  group: removal\n  cancel-in-progress: false/.test(wf)
-    && /\n  execFileSync\('node', \['build\.js'\], [^\n]*\);\n  execFileSync\('node', \['verification\/check\.js'\], [^\n]*\);\n[\s\S]*\n  git\('push', 'origin', 'HEAD:main'\);\n\}/.test(src));
+  /* 2026-11-15: the concurrency is on each job that writes, with the group "removal" (shared with record.yml) only when the job runs,
+   * and none on the workflow; the build and the checks get an environment without the token, which only the push carries. */
+  ok('changes to main go one at a time, and only after the site is built and every check passes, with no token in their environment',
+    !/^concurrency:/m.test(wf) && ['intake', 'decide', 'manual', 'remind'].every((j) => /\n    concurrency:\n      group: \$\{\{ \([^\n]*\) && 'removal' \|\| format\('removal-skipped-\{0\}', github\.run_id\) \}\}\n      cancel-in-progress: false\n/.test('\n' + (wf.split('\n  ' + j + ':\n')[1] || '').split(/\n  [a-z]+:\n/)[0].replace(/github\.event_name == 'workflow_dispatch' && 'removal'/, "(x) && 'removal'").replace(/github\.event_name == 'schedule' && 'removal'/, "(x) && 'removal'")))
+    && /\n  execFileSync\('node', \['build\.js'\], \{ cwd: ROOT, stdio: 'inherit', env: CLEAN_ENV \}\);\n  execFileSync\('node', \['verification\/check\.js'\], \{ cwd: ROOT, stdio: \['ignore', 'ignore', 'inherit'\], env: CLEAN_ENV \}\);\n[\s\S]*\n  authed\('push', 'origin', 'HEAD:main'\);\n  git\('fetch', '-q', 'origin', 'main'\);\n\}/.test(src)
+    && /const CLEAN_ENV = \{ PATH: [^}]*\};/.test(src) && !/GITHUB_TOKEN/.test((/const CLEAN_ENV = \{[^}]*\}/.exec(src) || [''])[0]));
   ok('an upheld removal deletes every comment of the bot in the issues that name the record, and empties, closes and locks them; removal requests are left',
     src.includes("if (c.user.type === 'Bot') await I.github('DELETE', '/issues/comments/' + c.id)") && src.includes("body: EMPTIED, state: 'closed'")
     && src.includes("'/issues/' + n + '/lock'") && src.includes("!(i.labels || []).some((l) => l.name === 'removal')"));
@@ -2719,7 +2730,8 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
   const rw = read(path.join(ROOT, '.github', 'workflows', 'record.yml'));
   ok('the record workflow acts only on the owner\'s label on the watch\'s own branch, one change to main at a time',
     rw.includes("github.event.label.name == 'record'") && rw.includes('github.event.sender.login == github.repository_owner') && rw.includes("github.event.pull_request.head.ref == 'statutes/record'")
-    && rw.includes('github.event.pull_request.head.repo.full_name == github.repository') && rw.includes('group: removal') && read(path.join(ROOT, '.github', 'workflows', 'statutes.yml')).includes('pull-requests: write'));
+    && rw.includes('github.event.pull_request.head.repo.full_name == github.repository') && /\n    concurrency:\n      group: \$\{\{ \([^\n]*\) && 'removal' \|\| format\('record-skipped-\{0\}', github\.run_id\) \}\}\n      cancel-in-progress: false\n/.test(rw) && !/^concurrency:/m.test(rw)
+    && read(path.join(ROOT, '.github', 'workflows', 'statutes.yml')).includes('pull-requests: write'));
   const files = Lv.served(fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => fs.statSync(path.join(ROOT, 'site', f)).isFile()).map((f) => f.split(path.sep).join('/')));
   ok('the live check fetches every file of site/ but the Vercel configuration and the functions (' + files.length + ' files)',
     files.length > 50 && files.every((x) => x.url.startsWith('https://sophaxis.vercel.app/')) && !files.some((x) => x.file === 'vercel.json' || x.file.startsWith('api/'))
@@ -4059,10 +4071,24 @@ console.log('\n98. No dependencies, workflows with the least they need, pinned a
   /* Least privilege: every workflow says what its token may do, at the top, and asks for writing only where it writes. */
   const perms = (t) => { const m = /^permissions:\n((?:  [a-z-]+: (?:read|write)\n)+)/m.exec(t); return m ? Object.fromEntries([...m[1].matchAll(/  ([a-z-]+): (read|write)/g)].map((x) => [x[1], x[2]])) : null; };
   const noPerm = wfs.filter(({ t }) => !perms(t)).map(({ f }) => f);
-  const broad = wfs.filter(({ t }) => /write-all|read-all|^\s+permissions: (?:write|read)/m.test(t) || /^ {4}permissions:/m.test(t)).map(({ f }) => f);
+  /* 2026-11-15: three workflows hold only the right to read at the top, and give each job the rights it needs (the job of a pull
+   * request in statutes.yml reads only; the jobs that write main in removal.yml and record.yml write; the IndexNow job reads).
+   * Any other per-job permissions, and any job of these three without its own, fail. */
+  const JOB_PERMS = {
+    'removal.yml': { intake: 'contents: write, issues: write', decide: 'contents: write, issues: write', manual: 'contents: write, issues: write', remind: 'contents: write, issues: write', indexnow: 'contents: read' },
+    'record.yml': { record: 'contents: write, issues: write, pull-requests: write' },
+    'statutes.yml': { compare: 'contents: read', statutes: 'contents: write, issues: write, pull-requests: write' },
+  };
+  const jobPerms = (t) => Object.fromEntries((t.split(/^jobs:\n/m)[1] || '').split(/\n(?=  [a-z]+:\n)/).map((b) => [(/^  ([a-z]+):/.exec(b) || [])[1], (/\n    permissions:\n((?:      [a-z-]+: (?:read|write)\n)+)/.exec(b + '\n') || [])[1]]).filter(([k]) => k)
+    .map(([k, v]) => [k, v ? [...v.matchAll(/([a-z-]+): (read|write)/g)].map((x) => x[1] + ': ' + x[2]).join(', ') : null]));
+  const jobBad = (f, t) => (JOB_PERMS[f] ? JSON.stringify(jobPerms(t)) !== JSON.stringify(JOB_PERMS[f]) || JSON.stringify(perms(t)) !== '{"contents":"read"}' : /^ {4}permissions:/m.test(t));
+  const broad = wfs.filter(({ f, t }) => /write-all|read-all|^\s+permissions: (?:write|read)/m.test(t) || jobBad(f, t)).map(({ f }) => f);
   const pushes = (t) => /git push/.test(t) || [...t.matchAll(/node (tools\/\w+\.js)/g)].some((m) => /'push'|git push|\['push'/.test(read(path.join(ROOT, m[1]))));
   const writesUnused = wfs.filter(({ t }) => { const p = perms(t) || {}; return (p.contents === 'write' && !pushes(t)) || (p['pull-requests'] === 'write' && !/pull/.test(t.replace(/^permissions:[\s\S]*?\n(?! )/m, '') + [...t.matchAll(/node (tools\/\w+\.js)/g)].map((m) => read(path.join(ROOT, m[1]))).join(''))); }).map(({ f }) => f);
-  ok('every workflow (' + wfs.length + ') declares the permissions of its token at the top, none per job or in bulk, and the checks only read',
+  /* The same for each job that holds its own permissions: a job that may write the repository pushes. */
+  const jobText = (t, j) => ((t.split(/^jobs:\n/m)[1] || '').split(/\n(?=  [a-z]+:\n)/).find((b) => b.startsWith('  ' + j + ':\n')) || '');
+  for (const { f, t } of wfs.filter(({ f }) => JOB_PERMS[f])) for (const [j, p] of Object.entries(jobPerms(t))) if (/contents: write/.test(p || '') && !pushes(jobText(t, j))) writesUnused.push(f + ' (' + j + ')');
+  ok('every workflow (' + wfs.length + ') declares the permissions of its token at the top, none per job except in the three that give each job its own, none in bulk, and the checks only read',
     noPerm.length === 0 && broad.length === 0 && JSON.stringify(perms(read(path.join(wfDir, 'check.yml')))) === '{"contents":"read"}', noPerm.concat(broad).join(', '));
   ok('a workflow may write the repository only if it pushes, and open pull requests only if it makes them', writesUnused.length === 0, writesUnused.join(', '));
   /* Every action is pinned to the full commit, with its tag in a comment; Dependabot updates both together. */
@@ -6332,7 +6358,10 @@ console.log('\n128. No issue text in the logs of the runs: the scripts read an i
     /^held \? 'held' : 'acknowledged'$/, /^'emptied: ' \+ emptied\.map\(\(x\) => '#' \+ x\)\.join\(', '\)$/, /^'follow-up: #' \+ issue\.number$/,
     /* The daily run of the checked intake (from 2026-12-01; since 2026-11-15 it labels and closes nothing): the number of each
      * issue it labels or leaves to a person, and nothing else. */
-    /^'not listed at the end of its time: #' \+ i\.number$/, /^'left for a person: #' \+ i\.number$/];
+    /^'not listed at the end of its time: #' \+ i\.number$/, /^'left for a person: #' \+ i\.number$/,
+    /* 2026-11-15: the hold that the cap of the day stops, the daily sweep of removal issues with no acknowledgement, and the daily
+     * check of a submission that no run has labelled: fixed words and the issue number, nothing else. */
+    /^held \? 'held' : capped \? 'not held: the cap of the day is reached' : 'acknowledged'$/, /^'taken up by the daily sweep: #' \+ i\.number$/, /^'checked by the daily run: #' \+ i\.number$/];
   /* What a workflow passes outside its conditions: every line, with each if: and the lines that continue it taken out. */
   function outsideIf(text) {
     const out = [];
@@ -6429,7 +6458,7 @@ console.log('\n128. No issue text in the logs of the runs: the scripts read an i
     ['the whole event in the environment', wf('watch.yml', real.wf['watch.yml'].replace(/\n(\s+)env:\n/, '\n$1env:\n$1  EVENT: ${{ toJSON(github.event) }}\n'))],
     ['a script reading the text from the environment', tool('withdraw.js', real.tools['withdraw.js'].replace('const form = parse(text);', 'const form = parse(process.env.ISSUE_BODY || text);'))],
     ['a script printing the issue text', tool('published.js', real.tools['published.js'].replace("console.log(verified ? 'verified' : 'not verified');", "console.log(text);\n  console.log(verified ? 'verified' : 'not verified');"))],
-    ['a script printing a form field', tool('removal.js', real.tools['removal.js'].replace("console.log(held ? 'held' : 'acknowledged');", "console.log('id: ' + form.id);\n  console.log(held ? 'held' : 'acknowledged');"))],
+    ['a script printing a form field', tool('removal.js', real.tools['removal.js'].replace("console.log(held ? 'held' : capped ? 'not held: the cap of the day is reached' : 'acknowledged');", "console.log('id: ' + form.id);\n  console.log(held ? 'held' : 'acknowledged');"))],
     ['a script writing to the log another way', tool('intake.js', real.tools['intake.js'].replace("  console.log(verified ? 'verified' : 'not verified');\n}", "  process.stdout.write(text);\n  console.log(verified ? 'verified' : 'not verified');\n}"))],
     ['a script not reading the event file', tool('intake.js', real.tools['intake.js'].replace('= issueEvent();', '= { number: 0 };'))],
     ['the Takedown Policy without the logs', pol('tk', real.pol.tk.replace('The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.', ''))],
@@ -7456,7 +7485,7 @@ console.log('\n135. The eighteenth read-only pass (2026-11-15): the checked inta
     if (CI.closeOrLock(code(x.intake)).length) bad.push('intake.js can close or lock');
     if (/\blocation\b|api\.github\.com/i.test(code(x.place).split('const PLACE_NOTE')[0]) || /api\.github\.com\/users/.test(x.intake) || /placeRecords\([^)]*,/.test(code(x.intake))) bad.push('the place rule reads the GitHub profile');
     if (/vouchBarred/.test(x.site + code(x.intake))) bad.push('a list of researchers barred');
-    if (!/^    name: Label submissions whose time to pass the checks has ended$/m.test(x.wf)) bad.push('the daily job');
+    if (!/^    name: Check the submissions no run has labelled, and label those whose time to pass the checks has ended$/m.test(x.wf)) bad.push('the daily job');
     /* The pages, the forms, the notice and the README. */
     let site = {}, changes = [];
     try { site = JSON.parse(x.site); changes = JSON.parse(x.changes); } catch (e) { bad.push('site.json or the feed does not parse'); }
@@ -7565,13 +7594,192 @@ console.log('\n135. The eighteenth read-only pass (2026-11-15): the checked inta
     ['the count changed', w('aud', 'この表の判定は、誤り 3、根拠不足 1、漏れ 2、表現 1、問題なし 2 です。', 'この表の判定は、誤り 2、根拠不足 1、漏れ 2、表現 1、問題なし 2 です。')],
     ['a quotation changed by one word', w('aud', '「定型約款の変更が、相手方の一般の利益に適合するとき。」', '「定型約款の変更が、相手方の利益に適合するとき。」')],
     ['the earlier row not said to be wrong', w('aud', '2026-11-14 の節のその行は「問題なし」としていましたが、誤りでした', '2026-11-14 の節のその行はそのままです')],
-    ['a lawyer said to have seen it', w('aud', 'この節も、弁護士は見ていません。\n\n## この記録について', 'この節は、弁護士が確かめました。\n\n## この記録について')],
+    /* Since 2026-11-15 the section 「2026-11-15：自動化を固める」 follows this one; the break is aimed at the end of this section. */
+    ['a lawyer said to have seen it', w('aud', 'この節も、弁護士は見ていません。\n\n## 2026-11-15：自動化を固める', 'この節は、弁護士が確かめました。\n\n## 2026-11-15：自動化を固める')],
   ];
   const missed = breaks.filter(([, x]) => problems(x).length === 0).map(([k]) => k);
   /* The daily run broken: closing again, or labelling a request. */
   const runBreaks = [['the daily run closes', daily[1]], ['the daily run labels a request', daily[2]]];
   for (const [k, r] of runBreaks) if (dailyProblems(r).length === 0) missed.push(k);
   ok('break on purpose: a close in verify.js, a lock in intake.js, the GitHub location, the list of researchers, a page, a Japanese policy and a form saying the intake closes, the old consequence in Japanese, the privacy page, a day and a summary missing in Japanese, the feed entry, the section, its count, a quotation, the earlier row and the lawyers, and the daily run closing or labelling a request each fail (' + (breaks.length + runBreaks.length - missed.length) + ' / ' + (breaks.length + runBreaks.length) + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+console.log('\n136. The automation hardened (2026-11-15): the job of a pull request reads only, the record merges only the commit labelled, at most 3 automatic holds a day from 2026-12-01, a sweep of removal issues, concurrency on the jobs that work, no token for poppler or the checks, time limits, the weekly watch fails on what it could not check, the heartbeat, and the record');
+{
+  /* The owner chose on 2026-11-15, for each question of a read-only audit of the workflows, the recommended answer; Claude wrote it.
+   * Each part below reads the files as they are and fails when one is broken on purpose. */
+  const WF = path.join(ROOT, '.github', 'workflows');
+  const files = Object.fromEntries(fs.readdirSync(WF).filter((f) => /\.ya?ml$/.test(f)).sort().map((f) => [f, read(path.join(WF, f))]));
+  const T = (f) => read(path.join(ROOT, f));
+  const real = { wf: files, removal: T('tools/removal.js'), record: T('tools/record.js'), intake: T('tools/intake.js'), watch: T('tools/watch.js'), advice: T('tools/pdf_advice.js'), shape: T('tools/pdf_shape.js'),
+    site: T('site.json'), tk: T('policies/takedown.md'), tkJa: T('policies/takedown.ja.md'), pv: T('policies/privacy.md'), pvJa: T('policies/privacy.ja.md'), auto: T('automation.md'), autoJa: T('automation.ja.md'),
+    sec: T('SECURITY.md'), changes: T('data/policy-changes.json'), com: T('verification/commitments.txt'), aud: T('docs/legal-audit-2026-11-12.md'), hb: T('tools/heartbeat.json'), live: T('tools/live.json') };
+  /* The jobs of a workflow, by their key: the lines of each. */
+  const jobs = (text) => Object.fromEntries((String(text).split(/^jobs:\n/m)[1] || '').split(/\n(?=  [a-z][a-z0-9_-]*:\n)/).map((b) => [(/^  ([a-z][a-z0-9_-]*):/.exec(b) || [])[1], b]).filter(([k]) => k));
+  const CAP_EN = 'From 2026-12-01, at most 3 records are taken offline automatically on one day (Japan time), counted over every request, whoever sends it.';
+  const CAP_JA = '2026-12-01 から、自動で公開から外す記録は、だれの求めかによらず数えて、一日（日本時間）に 3 件までです。';
+  const SWEEP_EN = 'A removal issue that has no acknowledgement because the automatic step did not run for it is taken up by the daily step, as if it had just been opened.';
+  const MAX = 60, LONG = { 'watch.yml/watch': 180 };
+  const HEAD = '\n## 2026-11-15：自動化を固める\n', KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  function problems(x) {
+    const bad = [];
+    /* H1: statutes.yml in two jobs. */
+    const st = jobs(x.wf['statutes.yml']);
+    if (!/^permissions:\n  contents: read\n(?!  \w)/m.test(x.wf['statutes.yml']) || !st.compare || !st.statutes) bad.push('statutes.yml: the two jobs');
+    else {
+      if (!st.compare.includes("    if: github.event_name == 'pull_request'\n") || !st.compare.includes('    permissions:\n      contents: read\n    steps:') || /GITHUB_TOKEN|secrets\./.test(st.compare) || !st.compare.includes('persist-credentials: false')) bad.push('statutes.yml: the job of a pull request writes or holds a token');
+      if (!st.statutes.includes("    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'\n") || /pull_request|push/.test((/^    if: .*$/m.exec(st.statutes) || [''])[0])) bad.push('statutes.yml: the job that writes may run on a pull request');
+    }
+    /* H4: record.js merges only the commit the label was put on. */
+    const rc = x.record;
+    if (!rc.includes("if (!sameTip(git('rev-parse', 'origin/' + branch), event)) { await say(MOVED); process.exit(1); }") || !rc.includes("git('merge', '-q', '--no-ff', '--no-commit', event.pull_request.head.sha)")
+      || rc.indexOf('sameTip(git(') > rc.indexOf("git('merge'") || !rc.includes('env: CLEAN_ENV')) bad.push('record.js: the commit labelled');
+    /* H3: the cap. */
+    let site = {};
+    try { site = JSON.parse(x.site); } catch (e) { bad.push('site.json'); }
+    if (site.autoHoldsPerDay !== 3 || site.autoHoldFrom !== '2026-12-01') bad.push('site.json: the cap');
+    const rm = x.removal;
+    if (!rm.includes("if (overCap(holdsOn(today()), today())) capped = true;") || !rm.includes("commit('hold', form.id, SUMMARY.hold(form.id) + '（#' + n + '）', [AUTO_HOLD]);")
+      || !rm.includes("const AUTO_HOLD = 'Sophaxis-Hold: automatic';") || !rm.includes("capped ? [PERSON] : []")) bad.push('removal.js: the cap');
+    for (const [k, s] of [['tk', CAP_EN], ['tkJa', CAP_JA], ['auto', CAP_EN], ['autoJa', CAP_JA], ['tk', SWEEP_EN], ['auto', SWEEP_EN]]) if (!x[k].includes(s)) bad.push(k + ': ' + s.slice(0, 30));
+    if (!x.pv.includes('From 2026-12-01, this step takes at most 3 records offline on one day, as the [Takedown Policy](./takedown.md) sets out.') || !x.pvJa.includes('2026-12-01 から、この手順で下げるのは一日に 3 件までです（[削除の規程](./takedown.ja.md)）。')
+      || !x.sec.includes('From 2026-12-01, at most 3 records are taken offline automatically on one day (Japan time)')) bad.push('the Privacy Policy or SECURITY.md');
+    let ch = [];
+    try { ch = JSON.parse(x.changes); } catch (e) { bad.push('policy-changes.json'); }
+    const e = ch.find((c) => c.from === '2026-12-01' && /At most 3 records a day/.test(c.title || ''));
+    if (!e || !e.policies.includes('takedown') || !(e.ja || '').startsWith('2026-12-01 から、') || !(site.termsNotice || {}).text || !site.termsNotice.text.includes('From 2026-12-01, on removal requests that report exposure of personal data, at most 3 records are taken offline automatically on one day')) bad.push('the notice of the cap');
+    for (const l of [CAP_EN, SWEEP_EN, 'The run never reports that it found no problems while something was not checked.']) if (!x.com.split('\n').includes(l)) bad.push('commitments: ' + l.slice(0, 30));
+    /* S1: no concurrency on the workflow; each writing job in the group "removal" when it runs; the sweep in the daily step. */
+    const rj = jobs(x.wf['removal.yml']);
+    if (/^concurrency:/m.test(x.wf['removal.yml']) || !['intake', 'decide', 'manual', 'remind'].every((j) => rj[j] && /\n    concurrency:\n      group: \$\{\{ .* && 'removal' \|\| format\('removal-skipped-\{0\}', github\.run_id\) \}\}\n      cancel-in-progress: false\n/.test(rj[j]))) bad.push('removal.yml: the concurrency');
+    if (!rm.includes('async function remind() {\n  syncMain();\n  await sweep();') || !rm.includes('for (const i of unacknowledged(open)) {')) bad.push('removal.js: the sweep');
+    /* S3: the intake, by job; a comment has a group of its own; the daily run checks the unlabelled first. */
+    const ij = jobs(x.wf['intake.yml']);
+    if (/^concurrency:/m.test(x.wf['intake.yml']) || !['intake', 'withdrawal', 'published', 'deadline'].every((j) => ij[j] && /\n    concurrency:\n      group: \$\{\{ .* \|\| format\('intake-run-\{0\}', github\.run_id\) \}\}\n/.test(ij[j]))
+      || /comment/.test((/\n      group: (.*)\n/.exec(ij.intake || '') || [])[1] || 'comment')) bad.push('intake.yml: the concurrency');
+    const it = x.intake;
+    if (!it.includes("const form = parseIssue(issue && typeof issue.body === 'string' ? issue.body : text);") || !it.includes('  if (recheck) {\n    for (let page = 1; page <= 10; page++) {')
+      || !it.includes("deadlineRun(github, jstDay(new Date().toISOString()), (i) => checkSubmission(") || !it.includes("|| !names.includes('unverified')) return false;")
+      || !(it.indexOf('for (const i of list.filter(unchecked)) {') > 0 && it.indexOf('for (const i of list.filter(unchecked)) {') < it.indexOf('for (const i of list.filter((x) => pastDeadline(x, today))) {'))) bad.push('intake.js: the daily run');
+    /* S4: the weekly watch. */
+    const w = x.watch;
+    if (!w.includes("if (notChecked.length || unsavedUrls.length) throw new Error(") || !w.includes('if (problems.length || news.length || pubs.length || notChecked.length || unsavedUrls.length) {')
+      || !w.includes('if (!saved) failed.push(u);') || !w.includes('return failed;')) bad.push('watch.js: what was not checked');
+    if (!it.includes("const r = await request(url, { headers: { Accept: accept || 'application/json' }, signal: AbortSignal.timeout(60000) });")) bad.push('intake.js: a lookup without a time limit');
+    /* H7: no token for poppler, deposit-check and the checks; checkouts keep no token where the job does not push. */
+    for (const [k, s] of [['advice', "env: { PATH: process.env.PATH || '/usr/bin:/bin', LANG: 'C.UTF-8' } };"], ['shape', "env: { PATH: process.env.PATH || '/usr/bin:/bin', LANG: 'C.UTF-8' } };"]]) if (!x[k].includes(s)) bad.push(k + ': poppler with the environment');
+    if (!/'--fail-on', 'never'\], \{[^}]*env: \{ PATH: [^}]*\} \}\)/.test(it)) bad.push('intake.js: deposit-check with the environment');
+    if (!/const CLEAN_ENV = \{ PATH: [^}]*\};/.test(rm) || /GITHUB_TOKEN/.test((/const CLEAN_ENV = \{[^}]*\}/.exec(rm) || ['GITHUB_TOKEN'])[0]) || !rm.includes("authed('push', 'origin', 'HEAD:main');") || /\n  git\('push'/.test(rm)) bad.push('removal.js: the token');
+    for (const [f, text] of Object.entries(x.wf)) for (const [j, b] of Object.entries(jobs(text))) {
+      const own = (/\n    permissions:\n((?:      .*\n)+)/.exec(b + '\n') || [])[1];
+      const writes = own ? /contents: write/.test(own) : /^permissions:\n(?:  .*\n)*?  contents: write/m.test(text + '\n');
+      const outs = b.split('- uses: actions/checkout@').slice(1);
+      const keeps = outs.filter((s) => !/^[^\n]*\n(?: {8}.*\n| {10}.*\n)*? {10}persist-credentials: false\n/.test(s));
+      if (keeps.length && (!writes || f === 'removal.yml')) bad.push(f + ' (' + j + '): a checkout keeps the token');
+      /* S8: every job has a time limit. */
+      const m = /\n    timeout-minutes: (\d+)\n/.exec('\n' + b + '\n');
+      if (!m || Number(m[1]) > (LONG[f + '/' + j] || MAX)) bad.push(f + ' (' + j + '): the time limit');
+    }
+    /* S7: IndexNow in a job of its own. */
+    if (!rj.indexnow || !rj.indexnow.includes('    needs: [intake, decide, manual, remind]\n') || /node tools\/indexnow\.js/.test(['intake', 'decide', 'manual', 'remind'].map((j) => rj[j] || '').join(''))) bad.push('removal.yml: IndexNow in the job that holds');
+    /* S5: the mirror of the heartbeat; S6: the live check of this site. */
+    let hb = {}, lv = {};
+    try { hb = JSON.parse(x.hb); lv = JSON.parse(x.live); } catch (e) { bad.push('heartbeat.json or live.json'); }
+    const lj = jobs(x.wf['live.yml']);
+    if (JSON.stringify(hb.only) !== JSON.stringify({ 'cpsbvbng26-dotcom': ['ecosystem.yml'] }) || !lj.heartbeat || !lj.heartbeat.includes('      - run: node tools/heartbeat.js --test\n      - run: node tools/heartbeat.js\n') || /^concurrency:/m.test(x.wf['live.yml'])) bad.push('the heartbeat');
+    if (lv.base !== site.baseUrl || lv.dir !== 'site' || !(lv.exclude || []).includes('vercel.json') || !(lv.exclude || []).includes('api/')) bad.push('live.json');
+    /* The record. */
+    const a = x.aud, i = a.indexOf(HEAD), j = i < 0 ? -1 : a.indexOf('\n## ', i + HEAD.length);
+    const sec = i < 0 || j < 0 ? '' : a.slice(i, j);
+    if (!sec || a.indexOf('\n## この記録について\n') < i) return bad.concat(['no section 2026-11-15：自動化を固める before the end of the record']);
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rows.length < 10 || !rows.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the table');
+    const said = ((/この表の判定は、([^。]+)です。/.exec(sec) || [])[1] || '').trim();
+    if (said !== KINDS.filter((k) => rows.some((y) => y[4] === k)).map((k) => k + ' ' + rows.filter((y) => y[4] === k).length).join('、')) bad.push('the count');
+    if (!sec.includes('\n2026-11-15 に利用者が決め、Claude が書きました。\n') || rows.some((y) => !/2026-11-15 に利用者が決め、Claude が書きました。[^|]*ためです$/.test(y[5]))) bad.push('who decided, and why');
+    if (!sec.includes('GitHub の説明書を取り寄せて確かめていません。') || !sec.includes('cpsbvbng26-dotcom の記録の同じ節に、13 のリポジトリの分をまとめて書きました。')) bad.push('what is not verified, and the rules of the branch');
+    if (!sec.includes('この節も、弁護士は見ていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the sentence on lawyers');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the job of a pull request reads only; the record merges only the commit labelled; at most 3 automatic holds a day from 2026-12-01, in every page, the notice, the feed and the commitments; the sweep; concurrency on the jobs that work; no token for poppler, deposit-check or the checks; no checkout keeps a token where the job does not push; every job of the ' + Object.keys(files).length + ' workflows has a time limit; IndexNow in a job of its own; the weekly watch fails on what it could not check; the heartbeat; and the record',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  /* The pure parts, on cases made here. */
+  const R = require('../tools/removal.js'), Rc = require('../tools/record.js'), I = require('../tools/intake.js'), W = require('../tools/watch.js');
+  const S = JSON.parse(real.site);
+  const sha = 'a'.repeat(40);
+  ok('the cap: from 2026-12-01 a fourth automatic hold of a day is refused and the third is not; before that day there is no cap; the count reads only the automatic holds of that day on main',
+    R.overCap(3, '2026-12-01', S) && !R.overCap(2, '2026-12-01', S) && !R.overCap(9, '2026-11-30', S) && R.dayStart('2026-12-01') === '2026-12-01T00:00:00+09:00'
+    && R.holdsOn('2026-12-02', (...a) => (a.join(' ') === 'log origin/main --since=2026-12-02T00:00:00+09:00 --format=%H --grep=^Sophaxis-Hold: automatic$ -- data/papers' ? 'x\ny\n' : 'wrong\nwrong\nwrong\nwrong\n')) === 2
+    && R.ack({ form: { kind: R.KINDS['Exposure of personal data'], id: '2026.0001' }, record: {}, capped: true, due: '2026-12-08' }).includes('the most that are taken offline automatically on one day'));
+  const open = (n, o) => Object.assign({ number: n, state: 'open', labels: [{ name: 'removal' }], comments_list: [] }, o);
+  ok('the sweep takes up an open removal issue without the acknowledgement of the bot (break on purpose: one that a cancelled run left), and leaves one acknowledged, a closed one and one of another kind',
+    R.unacknowledged([open(1), open(2, { comments_list: [{ user: { type: 'Bot' }, body: R.MARK + '\nReceived.' }] }), open(3, { state: 'closed' }), open(4, { labels: [{ name: 'submission' }] }), open(5, { comments_list: [{ user: { type: 'User' }, body: R.MARK }] })]).map((x) => x.number).join() === '1,5');
+  ok('the record merges only the commit labelled: a tip that moved, a missing or short sha are refused, with a fixed comment',
+    Rc.sameTip(sha + '\n', { pull_request: { head: { sha } } }) && !Rc.sameTip('b'.repeat(40), { pull_request: { head: { sha } } }) && !Rc.sameTip(sha, { pull_request: { head: {} } }) && !Rc.sameTip('abc', { pull_request: { head: { sha: 'abc' } } })
+    && Rc.MOVED.startsWith('Not recorded: the branch has moved since the label was added.') && !/GITHUB_TOKEN/.test(JSON.stringify(Object.keys(Rc.CLEAN_ENV))));
+  const sub = (n, labels) => ({ number: n, state: 'open', labels: labels.map((name) => ({ name })) });
+  ok('the daily run checks a submission that no check has labelled, and leaves one labelled, a request and one for a person; only an unverified submission can be labelled not listed',
+    I.unchecked(sub(1, ['submission'])) && !I.unchecked(sub(2, ['submission', 'unverified'])) && !I.unchecked(sub(3, ['submission', 'verified'])) && !I.unchecked(sub(4, ['submission', 'removal'])) && !I.unchecked(sub(5, ['submission', 'needs a person']))
+    && !I.pastDeadline(Object.assign(sub(6, ['submission']), { created_at: '2026-12-01T00:00:00+09:00' }), '2027-02-01') && I.pastDeadline(Object.assign(sub(7, ['submission', 'unverified']), { created_at: '2026-12-01T00:00:00+09:00' }), '2027-02-01'));
+  const rep = W.report([], '2026-11-16', [], [], '', '', ['2026.0001: the DOI 10.1/x could not be checked (HTTP 503)'], ['https://sophaxis.vercel.app/']);
+  ok('the weekly report names what could not be checked and what was not saved, with their counts, and says that the issue stays open and the run fails',
+    rep.includes('Not checked this week (1), and not saved to the Internet Archive (1):') && rep.includes('- not saved: https://sophaxis.vercel.app/') && rep.includes('this issue stays open and the run fails') && !W.report([], 'd').includes('Not checked'));
+  /* The daily run with the recheck, on issues made here: the unlabelled one is checked before any label "not listed". */
+  const daily = JSON.parse(require('child_process').execFileSync(process.execPath, ['-e', `
+    const I = require(${JSON.stringify(path.join(ROOT, 'tools', 'intake.js'))});
+    const made = [{ number: 21, state: 'open', created_at: '2026-12-02T00:00:00Z', labels: [{ name: 'submission' }], title: 'S', body: '' },
+      { number: 22, state: 'open', created_at: '2026-12-02T00:00:00Z', labels: [{ name: 'submission' }, { name: 'unverified' }], title: 'S', body: '' }];
+    (async () => {
+      const order = [];
+      const gh = async (m, u) => { if (m !== 'GET') order.push(m + ' ' + u); if (m === 'GET' && /^\\/issues\\?/.test(u)) return made; return m === 'GET' ? [] : {}; };
+      const log = console.log; console.log = () => {};
+      try { await I.deadlineRun(gh, '2027-01-15', async (i) => { order.push('recheck #' + i.number); }); } finally { console.log = log; }
+      process.stdout.write(JSON.stringify(order));
+    })();`], { encoding: 'utf8' }));
+  ok('the daily run (fixture issues): the submission no check labelled is checked first, and only the unverified one past its time gets the label not listed',
+    daily[0] === 'recheck #21' && daily.includes('POST /issues/22/labels') && !daily.includes('POST /issues/21/labels') && daily.indexOf('recheck #21') < daily.indexOf('POST /issues/22/labels'));
+  let hbTest = '';
+  try { hbTest = require('child_process').execFileSync(process.execPath, [path.join(ROOT, 'tools', 'heartbeat.js'), '--test'], { encoding: 'utf8' }); } catch (e) { hbTest = String(e.stdout || ''); }
+  ok('the self-test of the heartbeat passes, a stale schedule failing on purpose', /\d+ passed, 0 failed/.test(hbTest) && hbTest.includes('a stale schedule'), hbTest.split('\n').filter((l) => /FAIL/.test(l)).join(' / '));
+  const set = (k, v) => Object.assign({}, real, { [k]: v });
+  const wfSet = (f, v) => Object.assign({}, real, { wf: Object.assign({}, real.wf, { [f]: v }) });
+  const breaks = [
+    ['the job of a pull request with a token', wfSet('statutes.yml', real.wf['statutes.yml'].replace("      - run: node tools/statutes.js\n  statutes:", "      - run: node tools/statutes.js\n        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n  statutes:"))],
+    ['the job that writes on a pull request', wfSet('statutes.yml', real.wf['statutes.yml'].replace("    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'\n", "    if: github.event_name != 'issues'\n"))],
+    ['writing at the top of statutes.yml', wfSet('statutes.yml', real.wf['statutes.yml'].replace('permissions:\n  contents: read\njobs:', 'permissions:\n  contents: write\njobs:'))],
+    ['the record without the commit labelled', set('record', real.record.replace("  if (!sameTip(git('rev-parse', 'origin/' + branch), event)) { await say(MOVED); process.exit(1); }\n", ''))],
+    ['the record merging the branch', set('record', real.record.replace("git('merge', '-q', '--no-ff', '--no-commit', event.pull_request.head.sha)", "git('merge', '-q', '--no-ff', '--no-commit', 'origin/' + branch)"))],
+    ['the cap at 30', set('site', real.site.replace('"autoHoldsPerDay": 3,', '"autoHoldsPerDay": 30,'))],
+    ['the cap a day earlier', set('site', real.site.replace('"autoHoldFrom": "2026-12-01",', '"autoHoldFrom": "2026-11-20",'))],
+    ['the hold without the cap', set('removal', real.removal.replace('if (overCap(holdsOn(today()), today())) capped = true;', 'if (false) capped = true;'))],
+    ['the hold not counted', set('removal', real.removal.replace("[AUTO_HOLD]);", '[]);'))],
+    ['the Japanese Takedown Policy without the cap', set('tkJa', real.tkJa.replace(CAP_JA, ''))],
+    ['the notice without the cap', set('site', real.site.replace('From 2026-12-01, on removal requests that report exposure of personal data, at most 3 records', 'At most 3 records'))],
+    ['the commitment of the sweep taken out', set('com', real.com.replace(SWEEP_EN + '\n', ''))],
+    ['the concurrency back on the workflow', wfSet('removal.yml', real.wf['removal.yml'].replace('permissions:\n  contents: read\njobs:', 'permissions:\n  contents: read\nconcurrency:\n  group: removal\n  cancel-in-progress: false\njobs:'))],
+    ['a skipped job in the group', wfSet('removal.yml', real.wf['removal.yml'].replace("&& 'removal' || format('removal-skipped-{0}', github.run_id) }}", "&& 'removal' || 'removal' }}"))],
+    ['the sweep taken out', set('removal', real.removal.replace('  await sweep();\n', ''))],
+    ['a comment in the group of its issue', wfSet('intake.yml', real.wf['intake.yml'].replace("(github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'submission'))", "(contains(github.event.issue.labels.*.name, 'submission') && github.event.comment.user.type != 'Bot')"))],
+    ['the daily run labelling before it checks', set('intake', real.intake.replace("  if (recheck) {", "  if (false) {"))],
+    ['an unlabelled submission past its time labelled not listed', set('intake', real.intake.replace("|| !names.includes('unverified')) return false;", ') return false;'))],
+    ['the weekly watch passing what it could not check', set('watch', real.watch.replace("  if (notChecked.length || unsavedUrls.length) throw new Error(", "  if (false) throw new Error("))],
+    ['a failed save not counted', set('watch', real.watch.replace('    if (!saved) failed.push(u);\n', ''))],
+    ['poppler with the token', set('advice', real.advice.replace(", env: { PATH: process.env.PATH || '/usr/bin:/bin', LANG: 'C.UTF-8' } };", ' };'))],
+    ['the checks of a removal with the token', set('removal', real.removal.replace("const CLEAN_ENV = { PATH: process.env.PATH || '/usr/bin:/bin',", "const CLEAN_ENV = { GITHUB_TOKEN: process.env.GITHUB_TOKEN, PATH: process.env.PATH || '/usr/bin:/bin',"))],
+    ['a checkout of a reading job that keeps the token', wfSet('audit.yml', real.wf['audit.yml'].replace('        with:\n          persist-credentials: false\n', ''))],
+    ['a checkout of removal.yml that keeps the token', wfSet('removal.yml', real.wf['removal.yml'].replace('          fetch-depth: 0\n          persist-credentials: false\n', '          fetch-depth: 0\n'))],
+    ['a job without a time limit', wfSet('monthly.yml', real.wf['monthly.yml'].replace(/\n    timeout-minutes: \d+\n/, '\n'))],
+    ['a time limit too long', wfSet('check.yml', real.wf['check.yml'].replace(/\n    timeout-minutes: \d+\n/, '\n    timeout-minutes: 300\n'))],
+    ['IndexNow back in the job that holds', wfSet('removal.yml', real.wf['removal.yml'].replace("          MODE: intake\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n", "          MODE: intake\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n      - run: node tools/indexnow.js\n"))],
+    ['the heartbeat watching something else', set('hb', real.hb.replace('"ecosystem.yml"', '"verify.yml"'))],
+    ['the record without its section', set('aud', real.aud.replace(HEAD, '\n## 2026-11-15：自動化\n'))],
+    ['the count of the record changed', set('aud', real.aud.replace('この表の判定は、誤り 1、漏れ 9、問題なし 3 です。', 'この表の判定は、漏れ 10、問題なし 3 です。'))],
+    ['the record saying GitHub was read', set('aud', real.aud.replace('GitHub の説明書を取り寄せて確かめていません。', 'GitHub の説明書で確かめました。'))],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (a token or a write on a pull request, the record merging what was not labelled, the cap, its notice and pages, the sweep, the concurrency, the daily run, the weekly watch, a token for poppler or the checks, a checkout keeping its token, a time limit, IndexNow, the heartbeat and the record) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 
