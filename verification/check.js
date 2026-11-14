@@ -6618,10 +6618,32 @@ console.log('\n131. The Statement of Purpose: its count of places is the table\'
   const real = Object.fromEntries(Object.entries(F).map(([k, f]) => [k, fs.existsSync(path.join(ROOT, f)) ? read(path.join(ROOT, f)) : '']));
   const HEAD = '\n## 2026-11-13：運営理念・声明\n';
   const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
-  const NEG_EN = 'At present, the operator has not engaged a lawyer or any other professional. This statement, the Terms of Use and the other policies have not been reviewed by a lawyer.';
-  const NEG_JA = '運営者は、現在、弁護士その他の専門家に依頼していません。この声明と、利用規約・各規程は、弁護士の確認を受けていません。';
+  const NEG_EN = 'At present, the operator has not engaged a lawyer or any other professional. At present, this statement, the Terms of Use and the other policies have not been reviewed by a lawyer.';
+  const NEG_JA = '運営者は、現在、弁護士その他の専門家に依頼していません。この声明と、利用規約・各規程は、現在、弁護士の確認を受けていません。';
   const LAWYER_JA = /弁護士が(つく|付く|ついて|付いて|確認|監修|顧問)/;
   const LAWYER_EN = /our lawyers|legal counsel will|reviewed by (a )?lawyer|retained/i;
+  /* The operator asked on 2026-11-13 that every sentence stating how things are now say "at present" (「現在」), so that it does not
+   * turn untrue later; a rule, a commitment, a definition or a clause that binds nothing does not. The statement says near its top what
+   * "at present" means, and so does the README where it gives the articles. Each sentence below must stand in the statement, and the
+   * number of "at present" in the articles must be the number of these sentences: one left without it, or one added to a rule, fails. */
+  const AT_EN = 'Where this statement says "at present", it means as of the date this page was last updated.';
+  const AT_JA = 'この声明で「現在」と書いたことは、この頁の最終更新の日の時点のことです。';
+  const AT_README_EN = 'Where they say "at present", it means as of the date the statement\'s page was last updated.';
+  const AT_README_JA = '載せた条で「現在」と書いたことは、声明の頁の最終更新の日の時点のことです。';
+  const NOW_EN = ['At present, the operator runs this bookshelf free of charge.', 'At present, Sophaxis charges nothing, to authors or to readers.',
+    'At present, there are no submission fees, no listing fees, no fees to read and no paid tiers.', 'At present, it takes no donations, sponsorship or advertising.',
+    'At present, Sophaxis has no revenue.', 'At present, it is served within the free services of GitHub and Vercel.', 'At present, the operator pays personally for Claude Code,',
+    'At present, the operator uses Claude Code (Anthropic) as the tool with which Sophaxis is written.', 'At present, in moderation, language models assist the review.',
+    'At present, Sophaxis is run from Japan.', 'At present, the table lists 43 places.', 'At present, Sophaxis is run by one individual in Japan.', 'At present, it is not run by a company,',
+    'At present, Sophaxis is not a project of any university or other institution.', 'At present, it has no affiliation with any society, institution or sponsor',
+    'At present, no institution sponsors or endorses it.', 'At present, Sophaxis is run by one person, and is planned so that it can stop without loss.',
+    'At present, the operator has not engaged a lawyer or any other professional.', 'At present, this statement, the Terms of Use and the other policies have not been reviewed by a lawyer.'];
+  const NOW_JA = ['運営者は、現在、この本棚を無償で運営しています。', 'Sophaxis は、現在、著者からも読者からも、料金を取っていません。', '現在、投稿の料金、掲載の料金、閲覧の料金、有料の段階はありません。',
+    '現在、寄付・協賛・広告を受けていません。', 'Sophaxis には、現在、収入がありません。', '現在、GitHub と Vercel の無料のサービスの範囲で配信しています。', 'Claude Code の料金は、現在、運営者が個人で払っています',
+    '運営者は、現在、Sophaxis を書く道具として Claude Code（Anthropic）を使っています。', '現在、モデレーションでは、言語モデルが審査を助けています。', 'Sophaxis は、現在、日本から運営しています。',
+    '現在、表は 43 の国と地域を挙げています。', 'Sophaxis は、現在、日本にいる一人の個人が運営しています。', '現在、会社・大学・出版者その他の法人や団体が運営しているものではありません',
+    'Sophaxis は、現在、大学その他の機関の事業ではありません。', '現在、どの学会・機関・後援者とも、組織のうえのつながりを持っていません', '現在、どの機関からも、後援も推薦も受けていません。',
+    'Sophaxis は、現在、一人で運営しており、失うものなく止められるように組んでいます。', '運営者は、現在、弁護士その他の専門家に依頼していません。', 'この声明と、利用規約・各規程は、現在、弁護士の確認を受けていません。'];
   const article = (t, head) => { const i = t.indexOf(head); if (i < 0) return ''; const j = t.indexOf('\n## ', i + head.length); return t.slice(i + head.length, j < 0 ? undefined : j).trim(); };
   const rows = (t, header) => { const i = t.indexOf('\n' + header + '\n'); return i < 0 ? -1 : t.slice(i + 1).split('\n\n')[0].split('\n').slice(2).filter((l) => l.startsWith('| ')).length; };
   function problems(c) {
@@ -6631,7 +6653,7 @@ console.log('\n131. The Statement of Purpose: its count of places is the table\'
     try { changes = JSON.parse(c.changes); } catch (e) { bad.push('the feed of policy changes'); }
     /* The count of places. */
     const n = (site.notOffered || []).length;
-    const ne = Number((/As of 2026-11-13, the table lists (\d+) places\./.exec(c.en) || [])[1]), nj = Number((/2026-11-13 時点で、表は (\d+) の国と地域を挙げています。/.exec(c.ja) || [])[1]);
+    const ne = Number((/At present, the table lists (\d+) places\./.exec(c.en) || [])[1]), nj = Number((/現在、表は (\d+) の国と地域を挙げています。/.exec(c.ja) || [])[1]);
     const te = rows(c.sub, '| Place | What the law requires | Law | Read at its source | From |'), tj = rows(c.subja, '| 国と地域 | 法令が求めるもの | 法令 | 原文で読んだか | 適用の日 |');
     const re = Number((/\*\*Not offered in (\d+) places\*\*/.exec(c.readme) || [])[1]), rj = Number((/Sophaxis を提供しない (\d+) の国と地域/.exec(c.readme) || [])[1]);
     if (!(n > 0 && ne === n && nj === n && te === n && tj === n && re === n && rj === n)) bad.push('the count of places (' + [n, ne, nj, te, tj, re, rj].join(', ') + ')');
@@ -6644,10 +6666,19 @@ console.log('\n131. The Statement of Purpose: its count of places is the table\'
       'この声明と、利用規約・各規程とが食い違うときは、利用規約・各規程が適用されます。', '「より良い影響」は、運営者が目指すものです。その影響が生じることを、約束も保証もしません。', 'この声明は、法的な助言ではありません。'])
       if (!a2j.includes(s)) bad.push('第 2 条 lacks: ' + s.slice(0, 20));
     if (!/aims to/.test(article(c.en, '## Article 1 (Purpose)')) || !article(c.ja, '## 第 1 条（目的）').includes('目的としています。')) bad.push('Article 1 is not an aim');
-    if (!article(c.en, '## Article 11 (Who runs Sophaxis)').includes('Sophaxis is not a project of any university or other institution.') || !article(c.ja, '## 第 11 条（運営主体）').includes('Sophaxis は、大学その他の機関の事業ではありません。')) bad.push('Article 11');
+    if (!article(c.en, '## Article 11 (Who runs Sophaxis)').includes('Sophaxis is not a project of any university or other institution.') || !article(c.ja, '## 第 11 条（運営主体）').includes('Sophaxis は、現在、大学その他の機関の事業ではありません。')) bad.push('Article 11');
     const lastE = c.en.split('\n## ').pop(), lastJ = c.ja.split('\n## ').pop();
     if (!lastE.startsWith('Article 14 (Changes to this statement)') || !lastE.includes('A change to this statement changes no commitment in the Terms of Use or the other policies.')
       || !lastJ.startsWith('第 14 条（この声明の変更）') || !lastJ.includes('この声明を変えても、利用規約と各規程の約束は変わりません。')) bad.push('the last article');
+    /* "At present": defined near the top, carried by every sentence on how things are now, and by nothing else in the articles. */
+    const headE = c.en.split('\n## Article 1 ')[0], headJ = c.ja.split('\n## 第 1 条')[0];
+    if (!headE.includes('\n' + AT_EN + '\n') || !headJ.includes('\n' + AT_JA + '\n')) bad.push('the definition of "at present" near the top');
+    const bodyE = c.en.slice(headE.length), bodyJ = c.ja.slice(headJ.length);
+    for (const s of NOW_EN) if (!bodyE.includes(s)) bad.push('without "at present": ' + s.slice(0, 40));
+    for (const s of NOW_JA) if (!bodyJ.includes(s)) bad.push('「現在」の無い文：' + s.slice(0, 20));
+    const nE = (bodyE.match(/at present/gi) || []).length, nJ = (bodyJ.match(/現在/g) || []).length;
+    if (nE !== NOW_EN.length || nJ !== NOW_JA.length) bad.push('the number of "at present" (' + nE + ', ' + nJ + ') is not the number of sentences on how things are now (' + NOW_EN.length + ', ' + NOW_JA.length + ')');
+    if (!c.readme.includes('\n' + AT_README_EN + '\n') || !c.readme.includes('\n' + AT_README_JA + '\n')) bad.push('the README without the definition of "at present"');
     /* The new exclusion stands in the Submission Policy, the notice, the feed and the list of commitments, from one day. */
     const entry = changes.find((x) => /would not conform to its law/.test(x.title || '')) || {};
     const d = entry.from || '';
@@ -6697,7 +6728,7 @@ console.log('\n131. The Statement of Purpose: its count of places is the table\'
     return bad;
   }
   const now = problems(real);
-  ok('the Statement of Purpose gives the ' + (JSON.parse(real.site).notOffered || []).length + ' places of the table, keeps its non-binding clauses, its aim and Article 11 in both languages, its new exclusion stands from one day in the Submission Policy, the notice, the feed and the commitments, the README gives Articles 1 and 2 word for word, no text says that a lawyer is retained or has reviewed anything, it is linked and built, the notice names the day already in effect, and the record has its section',
+  ok('the Statement of Purpose gives the ' + (JSON.parse(real.site).notOffered || []).length + ' places of the table, keeps its non-binding clauses, its aim and Article 11 in both languages, its new exclusion stands from one day in the Submission Policy, the notice, the feed and the commitments, the README gives Articles 1 and 2 word for word, no text says that a lawyer is retained or has reviewed anything, it defines "at present" near its top and in the README and every sentence on how things are now carries it and nothing else does, it is linked and built, the notice names the day already in effect, and the record has its section',
     now.length === 0, now.slice(0, 6).join(' / '));
   const w = (k, x, y) => Object.assign({}, real, { [k]: real[k].replace(x, y) });
   const breaks = [
@@ -6708,7 +6739,7 @@ console.log('\n131. The Statement of Purpose: its count of places is the table\'
     ['the Japanese binding clause taken out', w('ja', 'それ自体で、運営者にも、著者・読者その他の利用者にも、権利や義務を生じさせません。', '')],
     ['the aim made a promise', w('en', 'The operator neither promises nor guarantees that it will come about.', 'The operator promises that it will come about.')],
     ['the Japanese aim made a promise', w('ja', 'その影響が生じることを、約束も保証もしません。', 'その影響が生じることを約束します。')],
-    ['Article 11 without the institution', w('ja', 'Sophaxis は、大学その他の機関の事業ではありません。', 'Sophaxis は、大学の事業です。')],
+    ['Article 11 without the institution', w('ja', 'Sophaxis は、現在、大学その他の機関の事業ではありません。', 'Sophaxis は、大学の事業です。')],
     ['the last article changed', w('en', 'A change to this statement changes no commitment in the Terms of Use or the other policies.', 'A change to this statement changes the policies.')],
     ['the exclusion only in the statement', w('sub', 'When the operator so judges, the place and the reason are added to the table.\n', '')],
     ['the exclusion on another day in Japanese', w('subja', '2026-11-29 から、Sophaxis の提供が', '2026-11-28 から、Sophaxis の提供が')],
@@ -6727,13 +6758,22 @@ console.log('\n131. The Statement of Purpose: its count of places is the table\'
     ['llms.txt without the page', w('llms', /mission\.html\)/g, 'mission)')],
     ['the notice without its day in effect', w('site', ', "since": "2026-11-13"', '')],
     ['the Japanese heading back to one day', w('idxja', '2026-11-13 から効力を持っている変更と、', '')],
+    ['the definition of "at present" taken out', w('en', '\n' + AT_EN + '\n', '\n')],
+    ['the Japanese definition of 「現在」 moved below Article 1', Object.assign({}, real, { ja: real.ja.replace('\n' + AT_JA + '\n', '\n').replace('## 第 2 条（この声明の性格）\n', '## 第 2 条（この声明の性格）\n\n' + AT_JA + '\n') })],
+    ['"at present" taken from the count of places', w('en', 'At present, the table lists 43 places.', 'The table lists 43 places.')],
+    ['「現在」 taken from the sentence on institutions', w('ja', 'Sophaxis は、現在、大学その他の機関の事業ではありません。', 'Sophaxis は、大学その他の機関の事業ではありません。')],
+    ['"at present" taken from the sentence on revenue', w('en', 'At present, Sophaxis has no revenue.', 'Sophaxis has no revenue.')],
+    ['"at present" added to the commitment never to charge', w('en', 'It will not start charging', 'At present, it will not start charging')],
+    ['「現在」 added to the clause that binds nothing', w('ja', 'この声明は、法的な助言ではありません。', 'この声明は、現在、法的な助言ではありません。')],
+    ['the README without the definition of "at present"', w('readme', '\n' + AT_README_EN + '\n', '\n')],
+    ['the README without the Japanese definition of 「現在」', w('readme', '\n' + AT_README_JA + '\n', '\n')],
     ['the section taken out of the record', w('aud', HEAD, '\n## 2026-11-13：声明\n')],
-    ['the count of the record changed', w('aud', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 4、問題なし 7 です。', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 4、問題なし 6 です。')],
+    ['the count of the record changed', w('aud', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 6、問題なし 8 です。', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 6、問題なし 7 です。')],
     ['the row on disputes without who decided', w('aud', '| 問題なし | 2026-11-13 に利用者が求め、Claude が決めました。依頼していないこと', '| 問題なし | 依頼していないこと')],
     ['the sentence on lawyers taken out of the record', w('aud', '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
-  ok('break on purpose: the count in either language or in the table, the clauses that bind nothing, the aim, Article 11, the last article, the exclusion in the policy, its day, the notice and the commitments, the README\'s articles and link, a lawyer attached, retained, ours or reviewing, the negated sentence, the sections of the Terms, the links, the heading of the notice, and the record\'s section, count, decision and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+  ok('break on purpose: the count in either language or in the table, the clauses that bind nothing, the aim, Article 11, the last article, the exclusion in the policy, its day, the notice and the commitments, the README\'s articles and link, the definition of "at present" (place, README) and the sentences that must or must not carry it, a lawyer attached, retained, ours or reviewing, the negated sentence, the sections of the Terms, the links, the heading of the notice, and the record\'s section, count, decision and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
