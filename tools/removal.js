@@ -8,7 +8,11 @@
  *   - The authors are told in their submission issue, and can respond.
  *   - The decision is the operator's. The operator labels the issue "upheld" or "not-upheld".
  *     Upheld: the record is replaced by a notice that says only that the record with that id was removed.
- *     Every automatic comment about it is deleted, and the issues that name it are emptied, closed and locked.
+ *     Every automatic comment about it is deleted, and the issues that name it are emptied and closed; no step locks an issue (2026-11-15).
+ *     From 2026-12-01, before an issue is emptied, its lines of consent (who, when, to what) are copied into docs/records-of-provision.md.
+ *   - From 2026-12-01, an account whose two earlier requests to take material offline a person found groundless (labelled
+ *     not-upheld), and which has been told so, gets no automatic hold: a person reads its request promptly instead. The count is
+ *     taken from the public labels each time; no list of accounts is kept (Moderation Policy, "Automatic hiding").
  *     Not upheld: material taken offline while the request was reviewed is put back from the git history.
  *   - A request sent by email is handled the same way, by running the workflow by hand with the id.
  *   - Once a day, open requests that are close to the 7 days and that the operator has not answered get a reminder.
@@ -44,6 +48,10 @@ const REMIND = '<!-- sophaxis-reminder -->';
 const NOTICE = '<!-- sophaxis-removal-notice -->';
 const ID = /^\d{4}\.\d{4}$/;
 const DAYS = 7;
+/* The owner's answers of 2026-11-15, announced 14 days ahead: the exception to the automatic hold, and the lines of consent kept. */
+const ANSWERS_FROM = '2026-12-01';
+const GROUNDLESS_LIMIT = 2;
+const HOLD_NOTICE = '<!-- sophaxis-removal-hold-notice -->';
 const PERSON = 'needs a person';
 /* The trailer of the commit of a hold made by the automatic step, never by the operator's hand: the cap counts these. */
 const AUTO_HOLD = 'Sophaxis-Hold: automatic';
@@ -144,10 +152,68 @@ function plan(action, p, today) {
   return { skip: 'unknown action ' + action };
 }
 
-function ack({ form, record, held, failed, capped, due }) {
+/* ------------------------------------------------------------ the exception to the automatic hold (pure) */
+
+const names = (i) => (i.labels || []).map((l) => (typeof l === 'string' ? l : l.name));
+/* Pure: the removal issues of one account that asked to take material offline and that a person found groundless. */
+function groundlessHolds(issues) {
+  return (issues || []).filter((i) => !i.pull_request && names(i).includes('removal') && names(i).includes('not-upheld') && (parse(i.body).kind || {}).hold);
+}
+/* Pure: whether the account is past the limit and has been told so, in a comment of the bot that starts with HOLD_NOTICE in one
+ * of those issues. `commentsOf` gives the comments of an issue by its number. */
+function holdExcluded(issues, commentsOf, today) {
+  if (String(today) < ANSWERS_FROM) return false;
+  const g = groundlessHolds(issues);
+  return g.length >= GROUNDLESS_LIMIT && g.some((i) => (commentsOf(i.number) || []).some((c) => c.user && c.user.type === 'Bot' && String(c.body).startsWith(HOLD_NOTICE)));
+}
+/* Pure: whether the decision just made (not-upheld, on a request to take material offline) reaches the limit, so that the
+ * account is told. `issues` are the removal issues of the account, this one labelled not-upheld among them. */
+const holdNoticeDue = (issues, today) => String(today) >= ANSWERS_FROM && groundlessHolds(issues).length === GROUNDLESS_LIMIT;
+const holdNotice = (login) => HOLD_NOTICE + '\n@' + login + ': a person has now found ' + GROUNDLESS_LIMIT + ' requests of this account to take material offline groundless. As the [Moderation Policy](' + SITE.baseUrl + 'policies/moderation.html#automatic-hiding) sets out, from now on the automatic step does not take anything offline on this account\'s requests; a person reads each of them promptly instead and decides. This account can still ask, and every request is read.';
+
+/* ------------------------------------------------------------ the lines of consent kept before an issue is emptied (pure) */
+
+/* Pure: the lines of consent in an issue and its comments: which account consented, on which day (Japan time), and to what.
+ * Only the fixed words are taken, never anything else the issue holds. Comments of bots are not read. */
+function consentLines(issue, comments) {
+  const out = [];
+  if (issue && issue.user && issue.user.type !== 'Bot') {
+    const t = new Set(I.tickedIn(issue.body));
+    for (const b of I.BOXES.consent.filter((x) => /consent|同意している/.test(x[0]) && /consents? to|同意/.test(x[0]))) if (t.has(b[0]) || t.has(b[1])) out.push({ day: jstDay(issue.created_at), login: issue.user.login, words: b[0], issue: issue.number });
+  }
+  const W = require('./words.js');
+  const fixed = [W.AGREE_CHECKED, I.AGREE, W.CONSENT, W.CONSENT_JA];
+  const sq = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  for (const c of comments || []) {
+    if (!c.user || c.user.type === 'Bot') continue;
+    const w = fixed.find((x) => sq(c.body).includes(sq(x)));
+    if (w) out.push({ day: jstDay(c.created_at), login: c.user.login, words: w, issue: issue && issue.number });
+  }
+  return out;
+}
+const PROVISION = path.join(ROOT, 'docs', 'records-of-provision.md');
+const KEPT_HEAD = '## Lines of consent kept from emptied issues';
+/* Pure: the file with the rows added under KEPT_HEAD, each kept until three years after the day it is copied
+ * (Article 21 of the APPI Enforcement Rules). Cells carry no vertical bar. */
+function withConsentLines(text, lines, today) {
+  const at = text.indexOf(KEPT_HEAD);
+  if (at < 0) throw new Error('docs/records-of-provision.md has no section "' + KEPT_HEAD + '"');
+  const until = String(Number(today.slice(0, 4)) + 3) + today.slice(4);
+  const cell = (s) => String(s).replace(/\|/g, '/').replace(/\s+/g, ' ').trim();
+  const rows = lines.map((l) => '| ' + [l.day, l.login, cell(l.words), '#' + l.issue, today, until].map(cell).join(' | ') + ' |');
+  const end = text.indexOf('\n## ', at + KEPT_HEAD.length);
+  const sec = end < 0 ? text.slice(at) : text.slice(at, end);
+  const tableEnd = sec.lastIndexOf('|\n') + 2;
+  if (tableEnd < 2) throw new Error('the section "' + KEPT_HEAD + '" has no table');
+  const next = sec.slice(0, tableEnd) + rows.map((r) => r + '\n').join('') + sec.slice(tableEnd);
+  return text.slice(0, at) + next + (end < 0 ? '' : text.slice(end));
+}
+
+function ack({ form, record, held, failed, capped, due, excluded }) {
   const lines = [MARK, '**Removal request received.** The operator aims to answer by ' + due + ' (Japan time), within ' + DAYS + ' days, under the [Takedown Policy](' + SITE.baseUrl + 'policies/takedown.html).', ''];
   if (!form.kind) lines.push('The kind of problem could not be read. The operator reads the request as it is.');
   else if (!ID.test(form.id) || !record) lines.push('There is no record ' + (form.id || '(no id)') + '. Edit the issue to give the Sophaxis id.');
+  else if (excluded) lines.push('As the [Moderation Policy](' + SITE.baseUrl + 'policies/moderation.html#automatic-hiding) sets out, the automatic step does not take anything offline on a request of this account, which was told so earlier. A person reads this request promptly and decides; it is not turned away.');
   else if (held) lines.push('The issue reports exposure of personal data, so the record page of ' + form.id + ' (its title, authors, abstract and PDF copy) was taken offline at once, before the decision. This is not a decision on the request.');
   else if (failed) lines.push('The issue reports exposure of personal data. Taking the material offline automatically did not succeed, so the operator does it by hand.');
   else if (capped) lines.push('The issue reports exposure of personal data. ' + SITE.autoHoldsPerDay + ' records were already taken offline automatically today (Japan time), the most that are taken offline automatically on one day, so the record page of ' + form.id + ' stays online until the operator reads this request. The label "' + PERSON + '" marks it, and the operator reads it promptly.');
@@ -179,7 +245,7 @@ function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
     ? ['- [x] the PDF copies of ' + id + ' are taken off the site; the record links to the repository only']
     : ['- [x] the record page of ' + id + ' says only that the record was removed',
       '- [x] every automatic comment about the record is deleted',
-      '- [x] the issues that name it are emptied, closed and locked' + (emptied && emptied.length ? ': ' + emptied.map((x) => '#' + x).join(', ') : ''),
+      '- [x] the lines of consent in them are copied into the record of provision, and the issues that name it are emptied and closed' + (emptied && emptied.length ? ': ' + emptied.map((x) => '#' + x).join(', ') : ''),
       '- [x] the OAI-PMH interface marks the record as deleted',
       '- [ ] delete those issues, so that their edit history goes too (by hand; only the owner can)',
       '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)',
@@ -358,7 +424,7 @@ async function upsert(n, mark, body) {
 
 /* Leave no trace of a removed record in the issues: its submission issue, and every other issue that names its id
  * (withdrawal, published version, correction), except the removal requests. Every comment of the bot there is deleted,
- * and each issue is emptied, closed and locked. Returns the issues, for the operator to delete. */
+ * and each issue is emptied and closed; it is not locked (2026-11-15). Returns the issues, for the operator to delete. */
 async function erase(record) {
   const issues = new Set([record.issue]);
   for (let page = 1; page <= 10; page++) {
@@ -366,12 +432,26 @@ async function erase(record) {
     list.filter((i) => !i.pull_request && (i.body || '').includes(record.id) && !(i.labels || []).some((l) => l.name === 'removal')).forEach((i) => issues.add(i.number));
     if (list.length < 100) break;
   }
+  /* From ANSWERS_FROM, the lines of consent are copied into the record of provision and pushed before any issue is emptied;
+   * if that fails, nothing is emptied (Article 29 of Japan's APPI). */
+  if (today() >= ANSWERS_FROM) {
+    const lines = [];
+    for (const n of issues) {
+      const issue = await I.github('GET', '/issues/' + n);
+      if (issue) lines.push(...consentLines(issue, await comments(n)));
+    }
+    if (lines.length) {
+      fs.writeFileSync(PROVISION, withConsentLines(fs.readFileSync(PROVISION, 'utf8'), lines, today()));
+      git('add', 'docs/records-of-provision.md');
+      git('commit', '-q', '-m', '提供の記録：空にする issue の同意の行を写す（' + record.id + '）', '-m', 'Sophaxis-Action: consent-lines ' + record.id);
+      git('push', 'origin', 'HEAD:main');
+    }
+  }
   for (const n of issues) {
     for (const c of await comments(n)) if (c.user.type === 'Bot') await I.github('DELETE', '/issues/comments/' + c.id);
     const issue = await I.github('GET', '/issues/' + n);
     if (!issue) continue;
     await I.github('PATCH', '/issues/' + n, { title: emptiedTitle(issue.title), body: EMPTIED, state: 'closed', state_reason: 'not_planned' });
-    await I.github('PUT', '/issues/' + n + '/lock', { lock_reason: 'resolved' });
   }
   return [...issues].sort((a, b) => a - b);
 }
@@ -397,9 +477,16 @@ async function intakeIssue(n, text) {
   const record = readRecord(form.id);
   const issue = await I.github('GET', '/issues/' + n);
   const acked = (await comments(n)).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
-  let held = false, failed = false, capped = false;
+  let held = false, failed = false, excluded = false, capped = false;
+  /* From ANSWERS_FROM: an account past the limit, and told so, gets no automatic hold; a person reads the request promptly. */
+  if (form.kind && form.kind.hold && issue && issue.user && today() >= ANSWERS_FROM) {
+    const mine = (await I.github('GET', '/issues?state=all&labels=removal&per_page=100&creator=' + encodeURIComponent(issue.user.login))) || [];
+    const seen = {};
+    for (const i of groundlessHolds(mine)) seen[i.number] = await comments(i.number);
+    excluded = holdExcluded(mine, (k) => seen[k], today());
+  }
   /* One hold per issue: an edit that names another id is left to the operator. */
-  if (form.kind && form.kind.hold && record && record.status !== 'removed' && !acked) {
+  if (!excluded && form.kind && form.kind.hold && record && record.status !== 'removed' && !acked) {
     const change = plan('hold', record, today());
     if (overCap(holdsOn(today()), today())) capped = true;
     else {
@@ -411,8 +498,8 @@ async function intakeIssue(n, text) {
       } catch (e) { console.error('hold: ' + e.message); failed = true; }
     }
   }
-  await upsert(n, MARK, ack({ form, record, held, failed, capped, due: dueDay(issue.created_at) }));
-  await label(n, [form.kind ? form.kind.slug : 'unread'].concat(held ? ['held'] : [], capped ? [PERSON] : []));
+  await upsert(n, MARK, ack({ form, record, held, failed, capped, excluded, due: dueDay(issue.created_at) }));
+  await label(n, [form.kind ? form.kind.slug : 'unread'].concat(held ? ['held'] : [], capped || excluded ? [PERSON] : []));
   if (record && !acked && tellsAuthors(form.kind)) await I.github('POST', '/issues/' + record.issue + '/comments', { body: authorNotice({ id: form.id, kind: form.kind, issue: n, held: held || isHeld(record) }) });
   console.log(held ? 'held' : capped ? 'not held: the cap of the day is reached' : 'acknowledged');
 }
@@ -475,6 +562,12 @@ async function decide() {
     else if (willRestore) await I.github('POST', '/issues/' + n + '/comments', { body: MARK + '\nPutting the record page back automatically did not succeed. The operator does it by hand.' });
     await label(n, [], ['held']);
     if (record && tellsAuthors(form.kind)) await I.github('POST', '/issues/' + record.issue + '/comments', { body: NOTICE + '\nThe removal request in #' + n + ' was not upheld.' + (restored ? ' The record page is back.' : '') });
+    /* The second request to take material offline found groundless: the account is told, before the exception applies to it. */
+    const asked = (await I.github('GET', '/issues/' + n)) || {};
+    if (form.kind && form.kind.hold && asked.user) {
+      const mine = (await I.github('GET', '/issues?state=all&labels=removal&per_page=100&creator=' + encodeURIComponent(asked.user.login))) || [];
+      if (holdNoticeDue(mine, day)) await I.github('POST', '/issues/' + n + '/comments', { body: holdNotice(asked.user.login) });
+    }
     return;
   }
   if (decision !== 'upheld') throw new Error('unknown decision ' + decision);
@@ -584,7 +677,7 @@ async function remind() {
   await followUps();
 }
 
-module.exports = { overCap, holdsOn, unacknowledged, dayStart, AUTO_HOLD, PERSON, CLEAN_ENV, write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, followUpBody, followUpState, tickedByHand, archived, cdxUrl, FOLLOW, FOLLOW_DAYS, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS };
+module.exports = { overCap, holdsOn, unacknowledged, dayStart, AUTO_HOLD, PERSON, CLEAN_ENV, write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, followUpBody, followUpState, tickedByHand, archived, cdxUrl, FOLLOW, FOLLOW_DAYS, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS, groundlessHolds, holdExcluded, holdNoticeDue, holdNotice, HOLD_NOTICE, GROUNDLESS_LIMIT, ANSWERS_FROM, consentLines, withConsentLines, KEPT_HEAD };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];

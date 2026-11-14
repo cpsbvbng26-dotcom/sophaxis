@@ -8,7 +8,7 @@ Source: https://sophaxis.vercel.app/policies/terms.html
 
 # Terms of Use
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [利用規約（日本語訳）](https://sophaxis.vercel.app/policies/terms.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -95,7 +95,7 @@ The articles it names are quoted at the end of this section.
 | Giving another person's ORCID iD in the form, or signing in to another person's ORCID or GitHub account to pass the identity check | Penal Code, Article 233; Act on the Prohibition of Unauthorized Computer Access, Article 3 | Use only your own iD and your own accounts. |
 | Confirming the agreement of a co-author who did not agree, or confirming anything else that is not true in a form | Penal Code, Article 233; Civil Code, Article 709 | Confirm only what is true. The record is removed as soon as the operator learns of it. |
 | Presenting a listing on Sophaxis as peer review or as publication in a journal, in a CV, an application for funding or an advertisement | Penal Code, Article 246; Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Describe a listing as what it is: a moderated listing of a preprint, which is not peer review ([Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html)). |
-| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Unfair Competition Prevention Act, Article 2(1)(i) and (ii); Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](https://sophaxis.vercel.app/brand.html) says how they may be used. |
+| Using the name Sophaxis or its logo on goods or services, or in advertising, so that they seem to come from Sophaxis or to be endorsed by it | Act against Unjustifiable Premiums and Misleading Representations, Article 5 | Do not use the name or the logo in trade. The page [Name, logo and badge](https://sophaxis.vercel.app/brand.html) says how they may be used. |
 | Reusing a PDF copy or a record beyond what its licence allows, for example without the credit that the licence asks | Copyright Act, Articles 21 and 23 | Reuse each work under its own licence, which its record page names. |
 | Vouching for a submission with words that are not true, for example about where the researcher lives or stays, or about being an author | Penal Code, Article 233; Civil Code, Article 709 | Vouch only with words that are true. |
 | Writing another person's personal data, or something that harms a person's reputation, in an issue, a comment or an email | Penal Code, Articles 230 and 231; Civil Code, Article 709 | Do not write it. A report of exposed personal data takes the record page offline at once while GitHub Actions runs for Sophaxis, and by the operator's hand when it does not, under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html). |
@@ -104,7 +104,7 @@ The responsibility for an act done against these terms, or outside them, lies wi
 Except where the law makes the operator responsible, the operator is not responsible for such acts.
 This does not exclude or limit the operator's liability for loss that the operator causes by intent or negligence, which is set out under No warranty below.
 
-<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Unfair Competition Prevention Act 2; Penal Code 230; Penal Code 231 -->
+<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Penal Code 230; Penal Code 231 -->
 
 ## No warranty
 
@@ -180,9 +180,8 @@ A dispute about Sophaxis or a listed work is settled by agreement wherever possi
 2. Both sides then try, in good faith, to reach an agreement by talking. Until 2026-11-25, the operator answers within 7 days and does not leave a dispute without reply. From 2026-11-26, the operator aims to answer within 7 days and does not leave a dispute without reply; during a pause described under "Continuity" above, the answer waits until the pause ends.
 3. If talking does not settle it within 60 days, either side may propose mediation, such as civil conciliation (minji chotei) at a Japanese summary court, before going to court.
 
-From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.
+From 2026-11-25, if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form, but only for a suit based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction. This agreement is not exclusive.
 Until then, the court of first instance by agreement is, on the same terms, the district court or the summary court that has jurisdiction over the operator's place of residence.
-From 2026-11-26, this agreement on the court covers only suits based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction.
 For anyone else, the court that the law sets has jurisdiction.
 The operator's address is given on request, as the [Operator and contact](https://sophaxis.vercel.app/contact.html) page says.
 This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.
@@ -211,7 +210,7 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 Their terms were read at their sources on 2026-11-09: GitHub's [Terms of Service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (effective 2026-04-27), [Acceptable Use Policies](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies) and [General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) (effective 2026-04-27); Vercel's [Terms of Service](https://vercel.com/legal/terms) (last updated 2026-10-19), [Acceptable Use Policy](https://vercel.com/legal/acceptable-use-policy) (last updated 2026-04-21) and [Privacy Notice](https://vercel.com/legal/privacy-notice) (last updated 2026-06-01).
 What they say that matters to people who use Sophaxis:
 
-- GitHub accepts only users aged 13 or over, or older where a user's own country requires it (GitHub Terms, B.3).
+- GitHub accepts only users aged 13 or over (GitHub Terms, B.3).
 - What is written or attached in an issue must follow GitHub's Acceptable Use Policies, among them its rules on spam, harassment and other people's private information (GitHub Terms, C).
 - GitHub may refuse or remove content that breaks the law or its terms, and may close accounts (GitHub Terms, D.2 and M.3).
 - Content in a public repository and in its issues can be seen by everyone, and GitHub's terms do not restrict its lawful use by others (GitHub Terms, D.5 and D.8). GitHub and its affiliates may store, copy and display it, and use it to train AI features and the models of their affiliates (GitHub Terms, D.4); there is no setting that turns this off for public content (GitHub Terms, J.3).
@@ -228,6 +227,7 @@ What they say that matters to people who use Sophaxis:
 - If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows. This does not apply to a clause that excludes or limits the operator's liability: such a clause applies only as it is written, and is not read as reaching as far as the law allows.
 - If the operator does not enforce a part of these terms at one time, that does not waive it.
 - From 2026-11-21, a person under 13 cannot submit.
+- From 2026-12-01, a work is not accepted if any of its authors is under 16.
 - A person under 18 may submit only with the consent of a parent or guardian.
 - Where the law gives a person who submitted as a minor a right to have the listing removed, the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) applies.
 - A notice to the operator is given by email to the address on the ORCID record, or in an issue. A notice to an author is given in their submission issue.
@@ -270,6 +270,7 @@ From 2026-12-01, under the checked intake below, only the DOI metadata counts fo
 The first check confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
+From 2026-12-01, a work is not accepted if any of its authors is under 16.
 A submitter under 18 needs the consent of a parent or guardian.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
@@ -386,6 +387,8 @@ An email confirmation says the same, and the operator's reply links the Privacy 
 Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
 Any author can withdraw a consent at any time, by a removal issue or by email.
 From 2026-12-01, under the checked intake, only the first way counts, and only for an author for whom the DOI metadata gives an ORCID iD.
+From the same day, the comment says, in place of the words above, "I agree to the listing of this work on Sophaxis, and I consent to the public parts of this submission, what I write in its issue among them, being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Services outside Japan"." and gives their ORCID iD.
+Before an author writes them, the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html#services-outside-japan) gives the information that Japanese law asks to be given before such a consent: the country, the information on its system, and what each recipient says of its measures; the comment of the checked intake that asks for the confirmation links it.
 An author for whom it gives none cannot confirm, and the work waits until the metadata at the repository names one.
 
 ## A researcher who vouches for a first submission
@@ -467,7 +470,7 @@ The automatic check in the issue refuses a submission unless every box of a grou
 - I agree to the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html).
 - I agree to the [Licence Policy](https://sophaxis.vercel.app/policies/licences.html).
 - I agree to the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html).
-- I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit ([Terms of Use](https://sophaxis.vercel.app/policies/terms.html#general)).
+- I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit, and, from 2026-12-01, that every author of this work is 16 or older ([Terms of Use](https://sophaxis.vercel.app/policies/terms.html#general)).
 - I confirm that, if I am under 18, I submit only with the consent of a parent or guardian.
 
 ### Where the authors live
@@ -479,11 +482,7 @@ The automatic check in the issue refuses a submission unless every box of a grou
 One more box, on saving the record page and the PDF copies to the Internet Archive, may be left empty; the work is listed either way.
 ## How to submit
 
-1. Deposit the preprint in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, under an accepted licence, and obtain its DOI.
-2. Link your ORCID record to your GitHub account: add `https://github.com/<your username>` under "Websites & social links".
-3. Open a submission issue in the Sophaxis repository and give the DOI, your ORCID iD, the category and the statement on generative models.
-4. An automatic check reads the DOI metadata and your ORCID record, and posts the result in the issue.
-5. A moderator checks the submission under the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html). If it passes, a record page is published.
+The steps from the deposit to the record page are on the page [From submission to listing](https://sophaxis.vercel.app/process.html).
 
 The title, the authors, the abstract, the licence and the versions are taken from the DOI metadata, not typed in by hand.
 
@@ -718,6 +717,21 @@ A moderator accepts or declines a submission in its issue, and labels the issue 
 Every decision stays public in its issue.
 To help the review, the operator gives the public parts of a submission (the issue, the DOI metadata and the abstract) to three language models, Claude (Anthropic), ChatGPT (OpenAI) and Grok (xAI), and compares what they point out.
 The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
+Since its publication on 2026-11-15, the operator does this only when every GitHub account whose writing is in what would be given has consented to it: the submitter, every co-author, a researcher who vouches and anyone who comments.
+The submitter consents by the box of the submission form on services outside Japan; anyone else consents by a comment in the issue with the fixed words that the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html#language-models-in-the-review) gives.
+If one of them has not consented, no language model is used for that issue: a person reviews it, or it waits.
+Before anything is given, `tools/llm.js` reads the issue and its comments and lists every account that has written in it without consenting; the operator gives nothing while that list is not empty.
+Comments of bots and of the operator's own account are not counted.
+
+What the three providers' own texts say about training on what they are given, as fetched on 2026-11-15 by `tools/sources.js`:
+
+- Anthropic's Consumer Terms of Service: "We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings." Its Commercial Terms of Service, for business customers: "Anthropic may not train models on Customer Content from Services."
+- OpenAI's Terms of Use, read from the Internet Archive's copy of 2026-11-09, because OpenAI's own page asked for JavaScript and cookies: "If you do not want us to use your Content to train our models, you can opt out by following the instructions in this article". Its Services Agreement, for business customers, from the Internet Archive's copy of 2026-11-10: "OpenAI will not use Customer Content to develop or improve the Services, unless Customer explicitly agrees to such use."
+- xAI's Terms of Service for consumers: "When logged into our Service, you can select whether or not you want us to use your User Content to improve our products and services and train our models." Its Terms of Service for enterprises: "SpaceXSI will not use any User Content to train any foundation models, large language models, or other artificial intelligence systems or to develop any new products, services, or features, subject to disclosures to Customer and Customer-controlled user settings."
+
+The operator gives the public parts by hand in the chat of each service.
+Which of these terms govern the operator's accounts, and whether training is turned off in them, the operator has not shown, and this policy states neither.
+
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 What a model points out is given as a reason for a decision only after the operator has checked it.
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
@@ -741,6 +755,23 @@ The operator then looks at the submission once more, and that decision is final.
 The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
 
 <!-- text: DSA 21 -->
+
+## Automatic hiding
+
+When a removal issue reports exposure of personal data, the automatic step of the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) takes the record page offline at once, before a person decides.
+Anyone may ask for this, and it goes on as before.
+From 2026-12-01, one exception applies.
+When a person has found two earlier requests of one GitHub account groundless, and has labelled each of those removal issues `not-upheld`, the account is told so in the second of them, in a fixed comment.
+After that notice, the automatic step no longer takes anything offline on that account's requests.
+A person reads each of its requests promptly instead, and decides on it; nothing stops the account from asking, and every request is still read.
+The count is taken from the public labels of the removal issues of that account, each time a request arrives; Sophaxis keeps no list of such accounts, in the repository or anywhere else, and publishes none.
+
+## Locking an issue
+
+From 2026-12-01, the operator may lock an issue that carries abuse, or the personal data of others, and may hide comments in it with GitHub's own tools.
+Locking an issue never removes the route for a request that the law gives: a request for removal, a request about personal data under Japan's Act on the Protection of Personal Information, a statement about a person, or the withdrawal of a consent can still be made in a new issue, or by email, and is read.
+A locked issue is still read by the operator.
+No automatic step locks an issue.
 
 ## Moderators
 
@@ -827,7 +858,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.html
 
 # Copyright Policy
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [著作権の規程（日本語訳）](https://sophaxis.vercel.app/policies/copyright.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -845,22 +876,23 @@ The work stays under the licence the authors gave it in the repository.
 ## What Sophaxis copies, and on what basis
 
 Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse; for Jxiv, they come from the public metadata of JaLC.
+DataCite's metadata is read only through its public REST API. DataCite's own texts permit this use of its API: its guide to the REST API says "Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.", and its Data File Use Policy says "Consistent with this broad waiver, DataCite does not impose any conditions on access to and use of the DataCite Data File." and "The DataCite Data File is available via the DataCite APIs and the annual public Data File." These pages are read from the Internet Archive's copies, as every page of DataCite's website is (fetched on 2026-11-15).
 The abstract is part of the work.
 It is shown under the work's own licence, with its authors and a link to the work.
 
 Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
-It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.
+It copies the file by script only from Zenodo, whose own pages let a script fetch it.
 Zenodo's developer documentation lists, among what its REST API supports, "Files — download/upload of files."
-arXiv's page on bulk data access says "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access." Sophaxis fetches from that site.
-arXiv's terms of use for its APIs forbid storing and serving its e-prints "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted". Every listed work carries one of the three accepted licences, which permit it.
+Until 2026-11-15, Sophaxis also copied files from arXiv, through export.arxiv.org, as arXiv's page on bulk data access asks: "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access." arXiv's terms of use for its APIs forbid storing and serving its e-prints "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted".
+Since this change was published on 2026-11-15, Sophaxis reads nothing from arXiv by script, and makes no copy from it; the authors of a work there can attach the deposited PDF to the submission issue. The links to arXiv stay.
 Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.
 Figshare's terms list, among what a user shall not do, "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine". The only exception is for means "expressly authorized for you by Figshare in advance in writing".
 Research Square's terms say "You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites".
 The copies already taken from Figshare stay, under the work's own licence.
-These pages were read on 2026-11-12: Zenodo's and arXiv's directly, and Figshare's and Research Square's from the Internet Archive's copies.
+These pages were read on 2026-11-12: Zenodo's directly, and Figshare's and Research Square's from the Internet Archive's copies.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
-For any other repository, the authors can attach the deposited PDF to their submission issue.
+For any other repository, the authors can attach the deposited PDF to their submission issue. arXiv is among them since 2026-11-15.
 Since the change was published on 2026-11-13, this includes Figshare and Research Square.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
@@ -1006,7 +1038,8 @@ Sophaxis applies Japan's Act on the Protection of Personal Information in full, 
 
 Personal data is used only for these purposes:
 
-- to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
+- to confirm that a person who submits, withdraws or reports a published version is an author of the work;
+- from 2026-11-21, to confirm that a co-author who confirms their agreement is an author of the work;
 - since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - from 2026-12-01, under the checked intake of the Submission Policy, to check that the public records of every author whose identity is verified, and of a researcher who vouches, place them where Sophaxis is offered, and that a researcher who vouches shares no current organisation with the submitter; only whether each check passes is used;
@@ -1088,6 +1121,7 @@ GitHub's notifications may carry a copy of the content of an issue to the accoun
 The logs of the automatic steps that read an issue keep no text of the issue, and GitHub keeps them, with the list of runs, for the period set for the repository, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
 Vercel keeps its request logs for the period its service sets, and the operator does not copy them.
 A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
+From 2026-12-01, when a removal issue reports exposure of personal data, the automatic step reads the public labels of the earlier removal issues of the account that opened it, to apply the exception of the Moderation Policy under "Automatic hiding"; it keeps nothing of them.
 Earlier versions stay in the history of the public repository and in the saves of the Internet Archive; the operator asks GitHub and the Internet Archive to remove them.
 
 ## Reuse and copies elsewhere
@@ -1106,7 +1140,7 @@ Copies that others have already taken are outside Sophaxis's control.
 
 ## Services outside Japan
 
-Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person. Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts (the issue, the DOI metadata and the abstract), which the operator gives by hand to their language models, Claude, ChatGPT and Grok, to help the review; nothing is given to them after a work is listed.
+Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person. Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts (the issue, the DOI metadata and the abstract), which the operator gives by hand to their language models, Claude, ChatGPT and Grok, to help the review, and only when every account that wrote in the issue has consented, as "Language models in the review" sets out; nothing is given to them after a work is listed.
 Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive, and the public parts of a submission that reach Anthropic, OpenAI and xAI while it is reviewed, as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
 The submission form asks for each author's consent to this, after giving the information below; the confirmation is required from 2026-11-21.
 Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
@@ -1153,7 +1187,7 @@ A person in the European Union who writes reaches the operator in Japan, for whi
 
 Vercel keeps request logs for Sophaxis, including the IP address.
 The operator can see them, and uses them only to find and fix faults.
-Vercel's documentation says that, on the Hobby plan on which Sophaxis is served, runtime logs are kept for 1 hour.
+On the Hobby plan on which Sophaxis is served, runtime logs are kept for the period Vercel sets.
 A request log holds details of the request, such as an IP address, the browser's user agent, the address asked for and the time, and no name.
 Sophaxis holds nothing that links an IP address to a person: it has no accounts, sets no cookies and runs no analytics, and finding who used an IP address would need an inquiry to that person's network provider.
 Under Japan's Act on the Protection of Personal Information, information is personal information when it identifies a person, alone or because it can easily be matched with other information; the Commission's General Guidelines read matching that needs an inquiry to another business as generally not easy.
@@ -1166,6 +1200,18 @@ Each week, an automatic step reads the date of the last update of Vercel's and A
 The services outside Japan may not be required to protect personal data in a way that, overall, provides safeguards comparable to those of the law of the place where an author lives, such as New Zealand's Privacy Act 2020.
 Section 22 of New Zealand's Privacy Act 2020, in its information privacy principle 12, lets personal information be disclosed abroad on the person's authorisation after the person is told this expressly, and the submission form says it next to the consent.
 For a person in Switzerland, the disclosure to the services in the United States rests on that person's explicit consent, which Article 17 of Switzerland's Federal Act on Data Protection allows.
+
+### Language models in the review
+
+Since its publication on 2026-11-15, the public parts of a submission are given to Claude, ChatGPT and Grok only when every GitHub account that wrote in the issue has consented: the submitter, every co-author, a researcher who vouches and anyone who comments, as the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#decisions) sets out. Otherwise no language model is used for that issue.
+The submitter consents by the box of the form; anyone else, by a comment with these words, and, from 2026-12-01, a co-author by the fixed words of the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html#when-a-work-has-more-than-one-author):
+
+~~~~
+I consent to what I have written in this issue being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Language models in the review".
+~~~~
+
+The information that Article 28(2) of Japan's Act on the Protection of Personal Information asks to be given before that consent is set out above in this section. A consent can be withdrawn at any time; what was given before stays as it was.
+What the three providers' own terms say about training on what they are given is quoted in the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#decisions); which terms govern the operator's accounts, and whether training is turned off in them, the operator has not shown.
 
 <!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
 
@@ -1292,6 +1338,7 @@ Their laws require, or are reported to require, a representative there, the stor
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
 From 2026-11-26, the list also covers places whose law asks for the operator's postal address or telephone number before personal data is collected, places whose law lets the personal data of a minor be processed only with a parent's consent that the service confirms, or not at all, and places whose data protection law could not be read at its source; the Submission Policy gives each, with its law.
 Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
+From 2026-12-01, Sophaxis does not accept a work if any of its authors is under 16.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
 This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
@@ -1310,7 +1357,7 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.html
 
 # Withdrawal Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-15.
 
 Japanese: [撤回の規程（日本語訳）](https://sophaxis.vercel.app/policies/withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1352,7 +1399,7 @@ The same check confirms that the account asking belongs to an author of the work
 A record that is already withdrawn can still be removed.
 The operator removes the record by labelling the verified issue `upheld`, and aims to do so within 7 days.
 Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) sets out.
-No reason is shown, and the withdrawal issue itself is emptied, closed and locked.
+No reason is shown, and the withdrawal issue itself is emptied and closed; no automatic step locks it.
 The logs of the automatic steps keep no text of the issue, as the same section of the Takedown Policy sets out.
 
 ## An author's name
@@ -1429,6 +1476,7 @@ For personal data and other serious harm, the operator then takes the record pag
 
 The operator aims to answer each request within 7 days.
 For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted until it is put back.
+From 2026-12-01, the automatic step does not do this on a request of an account whose two earlier such requests a person found groundless, once the account has been told so; a person reads its request promptly instead, as the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#automatic-hiding) sets out.
 The automatic steps below run as GitHub Actions. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, the operator takes these steps by hand, as soon as the operator learns of the request, and the record page is then not taken offline at once.
 A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
 When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
@@ -1481,7 +1529,7 @@ In the records and the OAI-PMH interface:
 
 In the issues:
 
-- Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
+- Every automatic comment about the record is deleted, and the issues that name it are emptied and closed; no automatic step locks them. From 2026-12-01, the lines of consent in them (which account consented, on which day, and to what, and nothing else of the issue) are first copied into the record of provision (`docs/records-of-provision.md`), which Japanese law asks for; these lines stay public there for three years from the day they are copied, the period that the record of provision quotes. The operator then deletes them.
 - Deleting an issue also deletes its edit history.
 - The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step, with the address of any lookup that failed (which can hold the DOI or the ORCID iD given in the issue), and not the issue's text.
 - Before 2026-11-13 the logs kept the text of the issue as it was when a step ran. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.
@@ -2015,7 +2063,7 @@ Source: https://sophaxis.vercel.app/process.html
 
 # From submission to listing
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-15.
 
 Japanese: [投稿から掲載まで（日本語訳）](https://sophaxis.vercel.app/process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2078,7 +2126,7 @@ Fix the cause, for example the link in your ORCID record, then edit the issue; t
 To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
 An edit that changes nothing does not start the check.
 
-If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv, and, since this was published on 2026-11-13, Figshare and Research Square among them), the comment asks you to attach the deposited PDF to the issue.
+If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo: since 2026-11-13, Figshare and Research Square among them, and since 2026-11-15, arXiv), the comment asks you to attach the deposited PDF to the issue.
 This is optional, and the file must be at most 20 MB.
 To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 
@@ -2135,6 +2183,8 @@ The code of each step is public, and each section links to it.
 - Every step on this page that runs as GitHub Actions depends on GitHub. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no such step runs by itself: the operator takes the steps by hand, as soon as the operator can, and none of them happens at once.
 - One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once, while GitHub Actions runs. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
 - No step uses a language model. The steps are ordinary code.
+- No step locks an issue (2026-11-15). The operator may lock an issue by hand, as the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#locking-an-issue) sets out.
+- The operator gives a submission to language models by hand, and, since 2026-11-15, only after `node tools/llm.js` has found that every account that wrote in the issue has consented, as the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#decisions) sets out. That script only reads the issue and its comments; it sends nothing to a language model.
 - No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.
 - A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.
 - The [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) says what personal data these steps handle.
@@ -2182,14 +2232,15 @@ The code of each step is public, and each section links to it.
 - Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
 - When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once while GitHub Actions runs, as the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) says; when Actions does not run, the operator does it by hand, not at once.
 - From 2026-12-01, at most 3 records are taken offline automatically on one day (Japan time), counted over every request, whoever sends it. A request beyond that is not taken offline automatically: it gets the label `needs a person` and a fixed comment, and the operator reads it promptly. The count is read from the commits of `main` that the automatic step made that day.
+- From 2026-12-01, before taking anything offline, reads the public labels of the earlier removal issues of the account that opened the issue. If a person has found two of its requests to take material offline groundless, and the account has been told so, nothing is taken offline: the issue gets the label `needs a person`, and a person reads it promptly ([Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#automatic-hiding)). It keeps no list of accounts.
 - Leaves to the operator: the decision.
 - Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
 
 ## When the operator labels a request `upheld` or `not-upheld`
 
 - Acts only on the label of the repository owner.
-- Upheld: removes the record, as "What a removed record leaves" in the Takedown Policy sets out, deletes the automatic comments about it, and empties, closes and locks the issues that name it.
-- Not upheld: puts back what was taken offline, from the git history.
+- Upheld: removes the record, as "What a removed record leaves" in the Takedown Policy sets out, deletes the automatic comments about it, and empties and closes the issues that name it, without locking them. From 2026-12-01, it first copies the lines of consent in those issues (which account consented, on which day, and to what) into `docs/records-of-provision.md`, and pushes them, before it empties any issue.
+- Not upheld: puts back what was taken offline, from the git history. From 2026-12-01, when this is the second request of an account to take material offline that is not upheld, it tells the account so in a fixed comment.
 - After a removal, opens a follow-up issue that lists what is left by hand: deleting the emptied issues, a request to the Internet Archive with its draft, and GitHub's procedure for the repository history.
 - Leaves to the operator: the grounds of the decision, deleting the emptied issues, and sending the requests to GitHub and the Internet Archive.
 - A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id and, for a decision, the grounds, which are posted in the authors' submission issue before it is emptied.
@@ -2451,7 +2502,7 @@ Source: https://sophaxis.vercel.app/repositories.html
 
 # For repositories and DOI registration agencies
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-15.
 
 Japanese: [預け先と DOI 登録機関へ（日本語訳）](https://sophaxis.vercel.app/repositories.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2467,9 +2518,9 @@ Sophaxis does not harvest or mirror any repository.
 
 ## What Sophaxis reads
 
-- The DOI metadata of a submitted work, from the public REST APIs of DataCite, Crossref and, for Jxiv, JaLC: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence.
+- The DOI metadata of a submitted work, from the public REST APIs of DataCite, Crossref and, for Jxiv, JaLC: once when the work is submitted or its issue is edited, and once a week for each listed DOI, to confirm that it still resolves and keeps its licence. DataCite's own texts permit this use of its API: its guide to the REST API says "Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.", and its Data File Use Policy says "Consistent with this broad waiver, DataCite does not impose any conditions on access to and use of the DataCite Data File." and "The DataCite Data File is available via the DataCite APIs and the annual public Data File." These pages are read from the Internet Archive's copies, as every page of DataCite's website is (fetched on 2026-11-15).
 - The list of versions of a work, from the same metadata.
-- The PDF of a version, unmodified, only where the work's licence allows it and the repository's own pages let a script fetch it (Zenodo and arXiv), through Zenodo's REST API and arXiv's export.arxiv.org. Until this change was published on 2026-11-13, Sophaxis also fetched PDFs from Figshare and Research Square; since then, it does not, because their terms forbid robots and scripts, as the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) quotes. The copy is taken once per version, when the operator starts it by hand. The check of a submission, when its issue is opened or edited, also fetches the PDF of the latest version, only to read its shape for the moderator, and deletes it after the reading. Where the repository publishes a checksum, the copy must match it.
+- The PDF of a version, unmodified, only where the work's licence allows it and the repository's own pages let a script fetch it (Zenodo), through Zenodo's REST API. Until this change was published on 2026-11-13, Sophaxis also fetched PDFs from Figshare and Research Square; since then, it does not, because their terms forbid robots and scripts, as the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) quotes. Since 2026-11-15, it reads nothing from arXiv by script either; links to arXiv stay. The copy is taken once per version, when the operator starts it by hand. The check of a submission, when its issue is opened or edited, also fetches the PDF of the latest version, only to read its shape for the moderator, and deletes it after the reading. Where the repository publishes a checksum, the copy must match it.
 
 Every request that Sophaxis's own code makes names Sophaxis and its repository in its User-Agent: `Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)`. The advice step of the submission check runs [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), which names itself: `deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)`.
 Sophaxis reads no pages meant for people, and does not get around any limit or block.
@@ -3124,7 +3175,7 @@ GitHub・Vercel・ORCID への提供の同意を撤回すると、記録を削�
 - ORCID（米国）：ORCID の公開記録を読むため
 - Internet Archive（米国）：公開した頁と PDF の写しを保存するため
 - OpenAlex（米国）：載せた作品をどう収めているかを、DOI だけで問い合わせるため。人については問い合わせません
-- Anthropic・OpenAI・xAI（いずれも米国）：審査を助けるため。運営者が、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、それぞれの言語モデル Claude・ChatGPT・Grok に手で読ませます。掲載の後には渡しません
+- Anthropic・OpenAI・xAI（いずれも米国）：審査を助けるため。運営者が、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、それぞれの言語モデル Claude・ChatGPT・Grok に手で読ませます。2026-11-15 から、issue に書いた全員が同意したときだけ読ませます。掲載の後には渡しません
 
 それぞれの事業者の個人情報の扱いは、各社の規約によります。
 米国の制度については、個人情報保護委員会が[米国の制度についての情報](https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/)を公表しており、Sophaxis はこれに拠ります。2021 年 10 月の調査に基づく情報です。
@@ -3170,7 +3221,7 @@ Apple が講じている措置は、[Apple のプライバシーポリシー](ht
 
 Vercel は、Sophaxis への閲覧の要求の記録（IP アドレスを含みます）を持っています。
 運営者はこれを見ることができ、不具合を見つけて直すためだけに使います。
-Vercel の説明書によれば、Sophaxis を配信している Hobby プランでは、ランタイムのログは 1 時間保たれます。
+Sophaxis を配信している Hobby プランでは、ランタイムのログは Vercel が定める期間保たれます。
 閲覧の要求の記録が持つのは、IP アドレス、ブラウザーのユーザーエージェント、求めた頁のアドレス、時刻などの要求の詳細で、名前はありません。
 Sophaxis は、IP アドレスを人に結びつけるものを持ちません。アカウントも cookie も解析もありません。ある IP アドレスを誰が使ったかを知るには、その人のネットワークの事業者に照会する必要があります。
 個人情報保護法では、それだけで、または他の情報と容易に照合して特定の個人を識別できる情報が個人情報です。委員会のガイドライン（通則編）は、他の事業者への照会を要する場合などを、一般に容易に照合できない状態と読んでいます。
@@ -3212,8 +3263,7 @@ Vercel は、その[プライバシーの方針](https://vercel.com/legal/privac
 人に法的な効果、またはそれに近い重大な影響を与える判断を、自動の処理だけで下すことはありません。
 審査を助ける言語モデルは、判断をしません。投稿についての判断は、モデレーションの規程のとおり、すべて人が下します。
 運営者の判断の前に動く手順が一つだけあります。削除依頼が個人情報の露出を報告したとき、記録の頁（題・著者・要旨・PDF の写し）を下げる手順です。
-本人を守るためのもので、依頼が認められなければ元に戻します。
-2026-12-01 から、この手順で下げるのは一日に 3 件までです（[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)）。
+本人を守るためのもので、依頼が認められなければ元に戻します（2026-12-01 から一日に 3 件まで）。
 自動の手順は、[自動で動く手順](https://sophaxis.vercel.app/automation.ja.html)の頁にすべて挙げています。
 
 ## 保存の期間
@@ -3319,6 +3369,7 @@ Sophaxis は、無報酬で、無料の範囲で運営しています。
 国や地域は、そうした務めが報告された時点で表に足し、法令を原文で読んでから外します。
 2026-11-26 からは、個人データを集める前に運営者の住所か電話番号を知らせるよう求める法令、未成年者の個人データをサービスが確かめた親の同意があるときに限って扱わせる法令（または扱わせない法令）のある国と地域と、データ保護法を原文で読めなかった国と地域も表に入ります。それぞれの法令は投稿の規程にあります。
 ロシアの連邦法第 152-FZ 号は、国外に住むロシア国民のデータにも、本人が処理に同意していれば及びます（第 1 条第 1.1 項）。Sophaxis は住んでいる場所と滞在している場所で決め、国籍は尋ねないので、この部分には対応していません。ロシアの当局から指摘があれば、運営者は判断を見直します。
+2026-12-01 から、16 歳未満の著者の作品は受け付けません。
 2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
 インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
 これは国籍・人種・民族その他の個人の属性によるものではなく、国籍は読みません。
@@ -3337,7 +3388,7 @@ Source: https://sophaxis.vercel.app/policies/terms.ja.html
 
 # 利用規約（日本語訳）
 
-最終更新：2026-11-14。
+最終更新：2026-11-15。
 
 これは英語の [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。
 
@@ -3424,7 +3475,7 @@ Sophaxis は、運営者自身の行いが、規程の挙げる法令の要件�
 | 様式に他人の ORCID iD を書くこと。本人確認を通すために、他人の ORCID や GitHub のアカウントにログインすること | 刑法第 233 条、不正アクセス禁止法第 3 条 | 自分の iD と自分のアカウントだけを使ってください。 |
 | 同意していない共著者の同意を確かめること。そのほか、様式で事実でないことを確かめること | 刑法第 233 条、民法第 709 条 | 事実だけを確かめてください。運営者が知った時点で、記録を削除します。 |
 | Sophaxis への掲載を、査読や学術誌への掲載であるかのように、履歴書、研究費の申請、広告で示すこと | 刑法第 246 条、景品表示法第 5 条 | 掲載は、モデレーションを経たプレプリントの掲載であり、査読ではありません（[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)）。そのとおりに示してください。 |
-| Sophaxis の名前やロゴを、商品・役務や広告に、Sophaxis から出たものや Sophaxis が推薦するもののように付けること | 不正競争防止法第 2 条第 1 項第 1 号・第 2 号、景品表示法第 5 条 | 名前とロゴを営業に使うことは、認めていません。使い方は[名前・ロゴ・バッジ](https://sophaxis.vercel.app/brand.ja.html)の頁にあります。 |
+| Sophaxis の名前やロゴを、商品・役務や広告に、Sophaxis から出たものや Sophaxis が推薦するもののように付けること | 景品表示法第 5 条 | 名前とロゴを営業に使うことは、認めていません。使い方は[名前・ロゴ・バッジ](https://sophaxis.vercel.app/brand.ja.html)の頁にあります。 |
 | PDF の写しや記録を、そのライセンスが認める範囲を超えて再利用すること。例として、ライセンスが求める表示をしない再利用があります | 著作権法第 21 条・第 23 条 | 各作品は、その記録の頁が示すライセンスに沿って再利用してください。 |
 | 事実でない言葉で投稿を保証すること。例として、研究者が住んでいる場所や滞在している場所、著者であるかどうかについての言葉があります | 刑法第 233 条、民法第 709 条 | 事実である言葉だけで保証してください。 |
 | issue、コメント、メールに、他人の個人データや、人の名誉を害することを書くこと | 刑法第 230 条・第 231 条、民法第 709 条 | 書かないでください。個人データが見えているとの報告があれば、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って、Sophaxis の GitHub Actions が動いている限り、記録の頁をただちに非公開にします。動かないときは、運営者が手で非公開にします。 |
@@ -3433,7 +3484,7 @@ Sophaxis は、運営者自身の行いが、規程の挙げる法令の要件�
 法令が運営者に責任を負わせる場合を除き、運営者は、そうした行いについて責任を負いません。
 これは、運営者が自らの故意または過失で生じさせた損害についての責任を、免除したり制限したりするものではありません。その責任は、下の「保証しないこと」の節に定めています。
 
-<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Unfair Competition Prevention Act 2; Penal Code 230; Penal Code 231 -->
+<!-- text: Copyright Act 21; Copyright Act 23; Penal Code 233; Unauthorized Computer Access Act 3; Civil Code 709; Penal Code 246; Premiums and Representations Act 5; Penal Code 230; Penal Code 231 -->
 
 ## 保証しないこと
 
@@ -3509,9 +3560,8 @@ Sophaxis や載っている作品についての紛争は、できるかぎり�
 2. その後、双方が誠実に話し合い、合意を目指します。2026-11-25 までは、運営者は 7 日以内に答え、紛争を返事のないまま放置しません。2026-11-26 からは、運営者は 7 日以内に答えることを目指し、紛争を返事のないまま放置しません。上の「続けるための備え」の休止のあいだは、答えは休止が終わるまで待ちます。
 3. 話し合いで 60 日以内に解決しない場合、どちらの側も、裁判の前に、日本の簡易裁判所の民事調停のような調停を申し出ることができます。
 
-2026-11-25 から、これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、宇都宮地方裁判所または宇都宮簡易裁判所を、第一審の合意管轄裁判所とします。この合意は専属的なものではありません。
+2026-11-25 から、これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、宇都宮地方裁判所または宇都宮簡易裁判所を、第一審の合意管轄裁判所とします。ただし、この合意の対象は、この規約に基づく訴えと、この規約のもとでのその人自身の作品の投稿・掲載・訂正・撤回・削除に基づく訴えに限ります。それ以外の紛争は、法令の定める裁判所が管轄します。この合意は専属的なものではありません。
 それまでは、同じ条件で、運営者の住所地を管轄する地方裁判所または簡易裁判所を、第一審の合意管轄裁判所とします。
-2026-11-26 から、この裁判所の合意の対象は、この規約に基づく訴えと、この規約のもとでのその人自身の作品の投稿・掲載・訂正・撤回・削除に基づく訴えに限ります。それ以外の紛争は、法令の定める裁判所が管轄します。
 それ以外の人との間では、法令の定める裁判所が管轄します。
 運営者の住所は、[運営者と連絡先](https://sophaxis.vercel.app/contact.ja.html)の頁にあるとおり、求めがあれば知らせます。
 これは、消費者や日本国外の人が、法令によって別の裁判所で訴えを起こし、または応じる権利を奪うものではありません。
@@ -3540,7 +3590,7 @@ Sophaxis は、米国に拠点を置く二つのサービスの上で動いて�
 二つのサービスの規約は、2026-11-09 に原文で読みました。GitHub の[利用規約](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)（2026-04-27 発効）、[許容される利用の方針](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies)、[プライバシーステートメント](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)（2026-04-27 発効）と、Vercel の[利用規約](https://vercel.com/legal/terms)（2026-10-19 更新）、[許容される利用の方針](https://vercel.com/legal/acceptable-use-policy)（2026-04-21 更新）、[プライバシーの通知](https://vercel.com/legal/privacy-notice)（2026-06-01 更新）です。
 Sophaxis を使う人に関わる定めは、次のとおりです。
 
-- GitHub が受け入れる利用者は、13 歳以上の人です。自国の法令がそれより上の年齢を求めるときは、その年齢以上です（GitHub の利用規約 B.3）。
+- GitHub が受け入れる利用者は、13 歳以上の人です（GitHub の利用規約 B.3）。
 - issue に書いたり添付したりするものは、GitHub の許容される利用の方針に従う必要があります。スパム、嫌がらせ、他人の私的な情報についての定めがあります（GitHub の利用規約 C）。
 - GitHub は、法令や規約に反する内容を拒んだり削除したりでき、アカウントを閉じることもできます（GitHub の利用規約 D.2・M.3）。
 - 公開のリポジトリとその issue の内容は、誰でも見ることができます。GitHub の規約は、ほかの人による適法な利用を制限していません（GitHub の利用規約 D.5・D.8）。GitHub とその関連会社は、その内容を保存し、複製し、表示し、AI の機能や関連会社のモデルの学習に使うことができます（GitHub の利用規約 D.4）。公開の内容について、これを止める設定はありません（GitHub の利用規約 J.3）。
@@ -3557,6 +3607,7 @@ Sophaxis を使う人に関わる定めは、次のとおりです。
 - この規約の一部が無効または執行できないとされた場合も、残りは効力を保ち、その部分は法令が許す範囲で適用されます。ただし、運営者の責任を免除し、または制限する条項には、このことは当てはまりません。そうした条項は、書かれたとおりにだけ適用され、法令が許す範囲まで及ぶものとは読みません。
 - 運営者がある時点でこの規約の一部を執行しなくても、それによってその部分を放棄したことにはなりません。
 - 2026-11-21 から、13 歳未満の人は投稿できません。
+- 2026-12-01 から、16 歳未満の著者の作品は受け付けません。
 - 18 歳未満の人は、親または保護者の同意がある場合に限り投稿できます。
 - 未成年として投稿した人に、法令が掲載の削除を求める権利を与えている場合は、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)が適用されます。
 - 運営者への通知は、ORCID の記録にあるメールアドレスへのメールか、issue で行います。著者への通知は、その著者の投稿の issue で行います。
@@ -3599,6 +3650,7 @@ Sophaxis は、モデレーターが作品を読む前に、ORCID を通して�
 一つ目の確認は、ORCID の記録を管理している人が issue を開いたことを確かめるものです。公的な本人確認ではありません。
 ORCID iD を持たない著者は投稿できません。
 2026-11-21 から、13 歳未満の人は投稿できません。
+2026-12-01 から、16 歳未満の著者の作品は受け付けません。
 18 歳未満の投稿者には、親または保護者の同意が要ります。
 2026-11-22 から、著者のだれかが下の表の 43 の国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せません。投稿者は様式でこのことを確かめます。
 表で 2026-11-26 とした 15 の国と地域については、2026-11-26 からです。
@@ -3715,6 +3767,7 @@ issue の自動の確認が、それぞれの確認を数えます。
 記録を Internet Archive に保存するには、著者全員の別の同意が要ります。様式がこれを尋ね、空けておくこともできます。同意がなければ、記録はそこに保存しません。
 どの著者も、いつでも、削除依頼の issue かメールで同意を撤回できます。
 2026-12-01 からは、突き合わせの受付のとおり、一つ目のやり方だけを、DOI のメタデータが ORCID iD を示している著者について数えます。
+同じ日から、決まった文は、審査への提供の同意も含むものに替わります。訳は[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#判断)に、その前に示す情報は[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html#外国にある事業者の利用)にあります。
 示していない著者は確かめられず、メタデータが示すまで作品は待ちます。
 
 ## 初めての投稿の紹介
@@ -3796,7 +3849,7 @@ issue の自動の確認は、群ごとにすべてのボックスに印がな�
 - [著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)に同意します。
 - [ライセンスの規程](https://sophaxis.vercel.app/policies/licences.ja.html)に同意します。
 - [撤回の規程](https://sophaxis.vercel.app/policies/withdrawal.ja.html)に同意します。
-- 2026-11-21 から 13 歳未満の人は投稿できないため、私が 13 歳以上であることを確かめました（[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html#一般)）。
+- 私が 13 歳以上であることと、2026-12-01 からは著者全員が 16 歳以上であることを確かめました（[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html#一般)）。
 - 私が 18 歳未満なら、親または保護者の同意がある場合に限って投稿していることを確かめました。
 
 ### 著者の住んでいる場所
@@ -3808,11 +3861,7 @@ issue の自動の確認は、群ごとにすべてのボックスに印がな�
 Internet Archive への記録の頁と PDF の写しの保存についてのボックスは、もう一つあり、空のままでもかまいません。どちらでも作品は載ります。
 ## 投稿の手順
 
-1. Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、受け付けるライセンスでプレプリントを預け、DOI を得る。
-2. ORCID の記録を GitHub のアカウントにリンクする。「Websites & social links」に `https://github.com/<your username>` を足す。
-3. Sophaxis のリポジトリで投稿の issue を開き、DOI、ORCID iD、分野、生成モデルについての申告を書く。
-4. 自動の確認が DOI のメタデータと ORCID の記録を読み、結果を issue に書く。
-5. モデレーターが[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)に沿って投稿を確かめる。通れば記録の頁を公開する。
+預けてから記録の頁ができるまでの手順は、[投稿から掲載まで](https://sophaxis.vercel.app/process.ja.html)の頁にあります。
 
 題・著者・要旨・ライセンス・版は、手で打ち込むのではなく、DOI のメタデータから取ります。
 
@@ -4047,6 +4096,29 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 判断はすべて、その issue で公開されたまま残ります。
 審査を助けるため、運営者は、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、三つの言語モデル、Claude（Anthropic）、ChatGPT（OpenAI）、Grok（xAI）に読ませ、それぞれの指摘を見比べます。
 運営者はこれを、各サービスのチャットで手で行います。投稿を自動で送ることはなく、公開されていないものは渡しません。
+2026-11-15 の公開から、運営者がこれを行うのは、渡すものに書いたものが含まれるすべての GitHub のアカウントが同意しているときだけです。投稿者、共著者全員、紹介する研究者、コメントした人のすべてです。
+投稿者は、投稿の様式の外国にある事業者についての確認の欄で同意します。ほかの人は、[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html#外国にある事業者の利用)が示す決まった文を、issue へのコメントに書いて同意します。
+一人でも同意していなければ、その issue には言語モデルを使いません。人が審査するか、待ちます。
+渡す前に、`tools/llm.js` が issue とそのコメントを読み、同意せずに書いたアカウントを挙げます。挙がったアカウントがある間、運営者は何も渡しません。
+ボットと運営者自身のアカウントのコメントは数えません。
+コメントで同意する文は次のとおりです。英語の文が正です。
+
+~~~~
+I consent to what I have written in this issue being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Language models in the review".
+~~~~
+
+訳は「この issue に私が書いたものが、審査の手助けのために、Sophaxis の個人情報の取り扱いについての「審査での言語モデル」が定めるとおり、米国の Anthropic・OpenAI・xAI に渡されることに同意します。」です。この訳をコメントに書いても同意になります。
+2026-12-01 から共著者が書く決まった文（[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html#著者が複数いる作品)）の訳は「この作品を Sophaxis に載せることに同意し、この投稿の公開されている部分（私がその issue に書くものを含みます）が、審査の手助けのために、米国の Anthropic・OpenAI・xAI に渡されることに同意します。」です。
+
+三つの事業者の文が、渡されたものを学習に使うことについて書いていることは、次のとおりです。2026-11-15 に `tools/sources.js` が取り寄せた文から、そのまま引きます。
+
+- Anthropic の消費者向けの利用規約：「We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings.」事業者向けの利用規約：「Anthropic may not train models on Customer Content from Services.」
+- OpenAI の利用規約：「If you do not want us to use your Content to train our models, you can opt out by following the instructions in this article」。OpenAI 自身の頁が JavaScript と cookie を求めたので、2026-11-09 の Internet Archive の写しから読みました。事業者向けの Services Agreement（2026-11-10 の写し）：「OpenAI will not use Customer Content to develop or improve the Services, unless Customer explicitly agrees to such use.」
+- xAI の消費者向けの利用規約：「When logged into our Service, you can select whether or not you want us to use your User Content to improve our products and services and train our models.」事業者向けの利用規約：「SpaceXSI will not use any User Content to train any foundation models, large language models, or other artificial intelligence systems or to develop any new products, services, or features, subject to disclosures to Customer and Customer-controlled user settings.」
+
+運営者は、公開されている部分を、各サービスのチャットで手で渡します。
+運営者のアカウントにどの規約が掛かるか、学習を止める設定にしているかを、運営者は示していません。この方針は、そのどちらも述べません。
+
 言語モデルは補助にとどまります。言語モデルが投稿を受理したり断ったりすることはなく、判断はすべて、投稿を読んだ運営者かモデレーターが下します。
 言語モデルの指摘を判断の理由にするのは、運営者がその指摘を確かめた後だけです。
 目安として、判断は投稿の当日に出ることもありますが、数週間から数か月かかることもあります。
@@ -4070,6 +4142,23 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 投稿者は、裁判所に訴えることも、デジタルサービス法第 21 条で認証された裁判外の紛争解決機関を使うこともできます。
 
 <!-- text: DSA 21 -->
+
+## 自動で下げること
+
+削除依頼の issue が個人情報の露出を知らせると、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)の自動の手順が、人が決める前に、記録の頁をすぐに下げます。
+これはだれでも求めることができ、これまでどおり続きます。
+2026-12-01 から、一つだけ例外を置きます。
+一つの GitHub のアカウントの以前の求めのうち二つを、人が根拠がないと判断し、それぞれの削除依頼の issue に `not-upheld` のラベルを付けたときは、二つ目の issue で、決まった文のコメントでそのアカウントに知らせます。
+その知らせの後は、そのアカウントの求めでは、自動の手順は何も下げません。
+代わりに、人がその求めを速やかに一つずつ読み、判断します。そのアカウントが求めることは妨げず、求めはどれも読みます。
+数は、求めが届くたびに、そのアカウントの削除依頼の issue の公開のラベルから数えます。Sophaxis は、そうしたアカウントの一覧を、リポジトリにもほかのどこにも持たず、公開もしません。
+
+## issue に鍵を掛けること
+
+2026-12-01 から、運営者は、嫌がらせや他人の個人情報を載せた issue に鍵を掛け、GitHub 自身の機能でその中のコメントを隠すことがあります。
+issue に鍵を掛けても、法令が認める求めの道は無くなりません。削除の求め、個人情報保護法による個人情報についての求め、人についての記述への申し入れ、同意の撤回は、新しい issue かメールで出すことができ、読みます。
+鍵を掛けた issue も、運営者は読みます。
+自動の手順は、issue に鍵を掛けません。
 
 ## モデレーター
 
@@ -4156,7 +4245,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.ja.html
 
 # 著作権の規程（日本語訳）
 
-最終更新：2026-11-14。
+最終更新：2026-11-15。
 
 これは英語の [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4174,22 +4263,23 @@ Sophaxis は、著作権の譲渡も、独占的な許諾も求めません。
 ## Sophaxis が写すものと、その根拠
 
 題・著者名・ライセンス・日付は、DataCite と Crossref が再利用のために公開している DOI のメタデータから取ります。Jxiv については、JaLC の公開のメタデータから取ります。
+DataCite のメタデータは、公開の REST API からだけ読みます。DataCite 自身の文が、API のこの使い方を認めています。REST API の案内は「Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.」と書き、データファイルの利用の方針は「Consistent with this broad waiver, DataCite does not impose any conditions on access to and use of the DataCite Data File.」「The DataCite Data File is available via the DataCite APIs and the annual public Data File.」と書きます。これらの頁は、DataCite のウェブサイトのほかの頁と同じく、Internet Archive の写しから読みました（2026-11-15 に取り寄せ）。
 要旨は作品の一部です。
 要旨は、作品自身のライセンスのもとで、著者と作品へのリンクを添えて示します。
 
 Sophaxis は、検索エンジンが本文を索引できるように、載っているそれぞれの版の PDF の写しを、手を加えずに置きます。
-スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。Zenodo と arXiv です。
+スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている Zenodo からだけです。
 Zenodo の開発者向けの文書は、REST API でできることに「Files — download/upload of files.」を挙げます。
-arXiv の一括取得の頁は「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と書きます。Sophaxis は、その所から取ります。
-arXiv の API の利用規約は、e-print を保って配ることを禁じます。例外は「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合です。載せる作品は、どれも受け付ける三つのライセンスのどれかを持ち、そのライセンスがこれを認めています。
+2026-11-15 までは、arXiv からも export.arxiv.org を通して写していました。arXiv の一括取得の頁が「We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access.」と求めるためです。arXiv の API の利用規約は、e-print を保って配ることを禁じます。例外は「unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted」の場合です。
+この変更を公開した 2026-11-15 から、Sophaxis は arXiv からスクリプトで何も読まず、写しも作りません。そこに預けた作品の著者は、預けた PDF を投稿の issue に添付できます。arXiv へのリンクは残します。
 この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。どちらの規約も、これを禁じているためです。
 Figshare の規約は、利用者がしてはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げます。例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。
 Research Square の規約は「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。
 Figshare からすでに写したものは、作品のライセンスのもとで残します。
-これらの頁は 2026-11-12 に読みました。Zenodo と arXiv の頁は直に読み、Figshare と Research Square の頁は Internet Archive の写しから読みました。
+これらの頁は 2026-11-12 に読みました。Zenodo の頁は直に読み、Figshare と Research Square の頁は Internet Archive の写しから読みました。
 預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 預けたものに PDF が複数ある場合、Sophaxis はどれが論文かを推測せず、写しを作りません。
-Figshare と Research Square を含むほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。
+Figshare・Research Square・arXiv を含むほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。
 その場合、Sophaxis はそのファイルを手を加えずに置き、記録には著者が提供したと書きます。
 そのようなファイルが無ければ、記録は預け先へのリンクだけになります。
 写しを置くのは、ファイルが 20 MB 以下で、写し全体が 1 GB 以内に収まるあいだだけです。
@@ -4358,6 +4448,7 @@ GitHub と Vercel は、それぞれの規約で判断します。運営者は�
 
 運営者は、それぞれの求めに 7 日以内に答えることを目指します。
 個人データやそのほかの重大な害については、Sophaxis の GitHub Actions が動いている限り、判断の前に、記録の頁（題・著者・要旨・PDF の写し）をただちに公開から外し、戻すまで OAI-PMH はその記録を削除済みとして示します。
+2026-12-01 から、以前のそうした求めのうち二つを人が根拠がないと判断し、そのことを知らせたアカウントの求めでは、自動の手順はこれを行いません。[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#自動で下げること)のとおり、人がその求めを速やかに読みます。
 この下の自動の手順は、GitHub Actions として動きます。GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、運営者が求めを知りしだい、これらの手順を手で行います。そのときは、記録の頁はただちには外れません。
 削除の issue には、運営者が答える目安の日を添えた受領の知らせが自動で付きます。
 削除の issue が個人データの露出を報告している場合、運営者が読む前に、記録の頁（題・著者・要旨・PDF の写し）が自動で公開から外れます。
@@ -4410,7 +4501,7 @@ issue の文が他人の権利を侵害していると知ったとき、また�
 
 issue では：
 
-- その記録についての自動のコメントはすべて消し、その記録を挙げる issue は中身を空にして閉じ、ロックします。その後、運営者がそれらを削除します。
+- その記録についての自動のコメントはすべて消し、その記録を挙げる issue は中身を空にして閉じます。自動の手順は、鍵を掛けません。2026-12-01 からは、その前に、issue の中の同意の行（どのアカウントが、いつ、何に同意したかだけで、issue のほかの中身は写しません）を、法令が求める提供の記録（`docs/records-of-provision.md`）に写します。この行は、その記録が引く期間の三年、写した日から公開のまま残ります。その後、運営者がそれらを削除します。
 - issue を削除すると、その編集履歴も消えます。
 - 自動の手順は、GitHub Actions が渡す出来事のファイルから issue を読みます。そのため、実行の記録（ログ）に残るのは、issue の番号と各手順の結果、照会に失敗したときのその宛先（issue に書かれた DOI か ORCID iD を含むことがあります）だけで、issue の本文は残りません。
 - 2026-11-13 より前の実行の記録には、手順が動いたときの issue の本文が残っていました。その日より前に中身を空にした三つの issue の実行の記録は、2026-11-13 に消しました。
@@ -4472,7 +4563,7 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.ja.html
 
 # 撤回の規程（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-15。
 
 これは英語の [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4514,7 +4605,7 @@ PDF の写しはサイトから外し、記録は預け先へのリンクだけ�
 すでに撤回した記録も、削除できます。
 運営者は、確かめられた issue に `upheld` のラベルを付けて記録を削除し、7 日以内に行うことを目指します。
 その後に残るのは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)の「削除した記録に残るもの」の節が定めるとおり、Sophaxis の番号だけです。
-理由は示さず、撤回の issue そのものも中身を空にして閉じ、ロックします。
+理由は示さず、撤回の issue そのものも中身を空にして閉じます。自動の手順は、鍵を掛けません。
 自動の手順の実行の記録（ログ）に issue の本文が残らないことも、削除の規程の同じ節が定めるとおりです。
 
 ## 著者の名前
@@ -4878,7 +4969,7 @@ Source: https://sophaxis.vercel.app/history.ja.html
 
 # 沿革と名前（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-15。
 
 これは英語の [History and name](https://sophaxis.vercel.app/history.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -4982,7 +5073,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 # 投稿から掲載まで（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-15。
 
 これは英語の [From submission to listing](https://sophaxis.vercel.app/process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5045,7 +5136,7 @@ ORCID の記録のリンクのような原因を直してから、issue を編�
 issue を編集するには、最初の投稿の右上のメニュー（⋯）を開き、「Edit」を選び、要るところを変えて保存します。
 何も変えない編集では、確認は走りません。
 
-預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo と arXiv 以外のすべての預け先がこれに当たります。これを公開した 2026-11-13 からは、Figshare と Research Square もこれに当たります。
+預け先が Sophaxis に PDF の取得を許さない場合は、預けた PDF を issue に添付するよう、コメントが求めます。Zenodo 以外のすべての預け先がこれに当たります。2026-11-13 からは Figshare と Research Square が、2026-11-15 からは arXiv もこれに当たります。
 添付は任意で、ファイルは 20 MB までです。
 添付するには、ファイルを issue のいちばん下のコメントの欄に引き入れ、そのリンクが出るのを待ってから、コメントを投稿します。
 
@@ -5275,6 +5366,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - この頁の手順のうち GitHub Actions として動くものは、GitHub に頼っています。GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、どの手順もひとりでには動きません。運営者ができしだい手で行い、どれもすぐには行われません。
 - 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
 - 言語モデルを使う手順はありません。どの手順も通常のコードです。
+- issue に鍵を掛ける手順はありません（2026-11-15）。運営者は、[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#issue-に鍵を掛けること)のとおり、手で鍵を掛けることがあります。
+- 運営者は、投稿を手で言語モデルに渡します。2026-11-15 からは、`node tools/llm.js` が、issue に書いたすべてのアカウントが同意していると確かめた後だけです。[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#判断)のとおりです。このスクリプトは issue とそのコメントを読むだけで、言語モデルには何も送りません。
 - どのアカウントにもサインインする手順はありません。鍵は、GitHub が実行ごとに渡すトークンだけで、その権限は手順に要る最小限です。IndexNow の鍵は、仕組みのうえで公開のものです。
 - 記録を変える手順は、先にサイトを組み立て、すべての検査を走らせます。検査が一つでも落ちれば、何も変えません。
 - これらの手順が扱う個人データは、[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html)に書いてあります。
@@ -5322,14 +5415,15 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
 - issue が個人情報の露出を報告しているときは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)のとおり、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。GitHub Actions が動かないときは、運営者が手で下げ、すぐには下がりません。
 - 2026-12-01 から、自動で公開から外す記録は、だれの求めかによらず数えて、一日（日本時間）に 3 件までです。それを超える求めは自動では外さず、ラベル `needs a person` と決まった文のコメントを付け、運営者がすぐに読みます。件数は、その日に自動の手順が `main` に加えたコミットから数えます。
+- 2026-12-01 からは、下げる前に、その issue を開いたアカウントの以前の削除依頼の issue の公開のラベルを読みます。下げる求めのうち二つを人が根拠がないと判断し、そのことをそのアカウントに知らせているときは、何も下げません。issue に `needs a person` のラベルを付け、人が速やかに読みます（[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#自動で下げること)）。アカウントの一覧は持ちません。
 - 運営者に残すこと：判断。
 - コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
 
 ## 運営者が求めに `upheld` か `not-upheld` のラベルを付けたとき
 
 - リポジトリの持ち主が付けたラベルにだけ応じます。
-- 認めたとき：削除の規程の「削除した記録に残るもの」のとおり、記録を削除します。その記録についての自動のコメントを消し、その記録を挙げる issue を空にして閉じ、ロックします。
-- 認めなかったとき：下げたものを、git の履歴から戻します。
+- 認めたとき：削除の規程の「削除した記録に残るもの」のとおり、記録を削除します。その記録についての自動のコメントを消し、その記録を挙げる issue を空にして閉じます。鍵は掛けません。2026-12-01 からは、その前に、それらの issue の中の同意の行（どのアカウントが、いつ、何に同意したか）を `docs/records-of-provision.md` に写して送り、それから issue を空にします。
+- 認めなかったとき：下げたものを、git の履歴から戻します。2026-12-01 からは、あるアカウントの下げる求めで認めなかったものが二つ目になったとき、決まった文のコメントでそのアカウントに知らせます。
 - 削除のあと、手で行うことを挙げる後始末の issue を開きます。空にした issue の削除、文面を添えた Internet Archive への依頼、リポジトリの履歴についての GitHub の手続きです。
 - 運営者に残すこと：判断の理由。空にした issue の削除。GitHub と Internet Archive への依頼を送ること。
 - メールで届いた求めも、同じように扱います。運営者が Sophaxis の id を与えて、この手順を手で動かします。判断のときは理由も与えます。理由は、著者の投稿の issue を空にする前に、そこに載ります。
@@ -5521,7 +5615,7 @@ Source: https://sophaxis.vercel.app/repositories.ja.html
 
 # 預け先と DOI 登録機関へ（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-15。
 
 これは英語の [For repositories and DOI registration agencies](https://sophaxis.vercel.app/repositories.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5537,9 +5631,9 @@ Sophaxis は、どの預け先からも収集やミラーをしません。
 
 ## Sophaxis が読むもの
 
-- 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。
+- 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。DataCite 自身の文が、API のこの使い方を認めています。REST API の案内は「Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.」と書き、データファイルの利用の方針は「Consistent with this broad waiver, DataCite does not impose any conditions on access to and use of the DataCite Data File.」「The DataCite Data File is available via the DataCite APIs and the annual public Data File.」と書きます。これらの頁は、DataCite のウェブサイトのほかの頁と同じく、Internet Archive の写しから読みました（2026-11-15 に取り寄せ）。
 - 作品の版の一覧。同じメタデータから読みます。
-- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）。Zenodo の REST API と、arXiv の export.arxiv.org を通します。この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており、[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)がその文を引いています。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
+- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo）。Zenodo の REST API を通します。この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており、[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)がその文を引いています。2026-11-15 からは、arXiv からもスクリプトで何も読みません。arXiv へのリンクは残します。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 
 Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書きます。`Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)` です。投稿の確認の助言の段階は [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) を走らせ、deposit-check は自分の名を書きます。`deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)` です。
 Sophaxis は、人が読むための頁を読みません。どんな上限も遮断も、すり抜けません。

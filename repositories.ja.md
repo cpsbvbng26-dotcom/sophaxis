@@ -1,6 +1,6 @@
 # 預け先と DOI 登録機関へ（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-15。
 
 これは英語の [For repositories and DOI registration agencies](./repositories.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -16,9 +16,9 @@ Sophaxis は、どの預け先からも収集やミラーをしません。
 
 ## Sophaxis が読むもの
 
-- 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。
+- 投稿された作品の DOI のメタデータ。DataCite と Crossref の公開の REST API から読み、Jxiv の作品は JaLC から読みます。作品が投稿されたときと、その issue が編集されたときに一度読みます。載っている DOI はそれぞれ週に一度読み、まだ解決し、ライセンスを保っていることを確かめます。DataCite 自身の文が、API のこの使い方を認めています。REST API の案内は「Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.」と書き、データファイルの利用の方針は「Consistent with this broad waiver, DataCite does not impose any conditions on access to and use of the DataCite Data File.」「The DataCite Data File is available via the DataCite APIs and the annual public Data File.」と書きます。これらの頁は、DataCite のウェブサイトのほかの頁と同じく、Internet Archive の写しから読みました（2026-11-15 に取り寄せ）。
 - 作品の版の一覧。同じメタデータから読みます。
-- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）。Zenodo の REST API と、arXiv の export.arxiv.org を通します。この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており、[著作権の規程](./policies/copyright.ja.md)がその文を引いています。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
+- 版の PDF。手を加えずに取ります。取るのは、作品のライセンスが許し、預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo）。Zenodo の REST API を通します。この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており、[著作権の規程](./policies/copyright.ja.md)がその文を引いています。2026-11-15 からは、arXiv からもスクリプトで何も読みません。arXiv へのリンクは残します。写しは版ごとに一度、運営者が手で始めたときに取ります。投稿の issue が開かれたときと編集されたときにも、確認の手順が最新の版の PDF を取ります。モデレーターのために形を読むためだけで、読んだあとは消します。預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 
 Sophaxis 自身のコードが出す要求は、どれも User-Agent に Sophaxis とそのリポジトリを書きます。`Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)` です。投稿の確認の助言の段階は [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) を走らせ、deposit-check は自分の名を書きます。`deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check)` です。
 Sophaxis は、人が読むための頁を読みません。どんな上限も遮断も、すり抜けません。

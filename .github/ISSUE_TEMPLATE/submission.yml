@@ -249,7 +249,7 @@ body:
           required: false
         - label: "I agree to the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html)."
           required: false
-        - label: "I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit ([Terms of Use](https://sophaxis.vercel.app/policies/terms.html#general))."
+        - label: "I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit, and, from 2026-12-01, that every author of this work is 16 or older ([Terms of Use](https://sophaxis.vercel.app/policies/terms.html#general))."
           required: false
         - label: "I confirm that, if I am under 18, I submit only with the consent of a parent or guardian."
           required: false
