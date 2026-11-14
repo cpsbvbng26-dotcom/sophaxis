@@ -105,6 +105,7 @@ node verification/check_keyboard.js   # Tab through every page and measure the l
 ```
 
 No dependencies. The site loads nothing from other servers. The only script is `assets/search.js`, on the search page, which reads `papers.json` from the site itself.
+The design is drawn by `design.js` from one set of numbers: the logo's measurements, the field glyphs, the band over each page and the shelf. The field codes and their colours are in `site.json` (`fields`). No font is loaded. A shelf mark is a label, not an identifier: a record is cited by its Sophaxis id and the DOI.
 `site/` is generated; edit `site.json`, `policy.md`, `policies/` or `data/papers/` and run `node build.js`.
 `site/vercel.json` is generated with the rest of `site/`, because the Vercel project's root directory is `site/`. It gives the short addresses that arXiv also has: `/abs/<id>` leads to the record page, `/pdf/<id>` to its latest PDF copy, and `/pdf/<id>v<n>` to the copy of version n.
 When a policy changes, change its "Last updated" date too.
