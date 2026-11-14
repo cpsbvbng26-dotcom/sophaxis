@@ -8,6 +8,14 @@
   <updated>2026-11-15T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c28</id>
+    <title>At most 3 records a day are taken offline automatically</title>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-15T00:00:00Z</updated>
+    <summary>From 2026-12-01, when removal issues report exposure of personal data, at most 3 records are taken offline automatically on one day (Japan time), counted over every request, whoever sends it, from the commits of main that the automatic step made that day. A request beyond that is not taken offline automatically: it gets the label needs a person and a fixed comment, and the operator reads it promptly. This narrows an automatic remedy, so it is announced on the top page at least 14 days ahead. Since its publication on 2026-11-15, a removal issue that has no acknowledgement because the automatic step did not run for it is taken up by the daily step, as if it had just been opened; this narrows nothing and takes effect on publication. In effect from 2026-12-01. Policies: Takedown Policy, Privacy Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c27</id>
     <title>The checked intake closes no issue, reads nothing from GitHub, and names no researcher</title>
     <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
