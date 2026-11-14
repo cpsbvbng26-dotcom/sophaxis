@@ -174,3 +174,4 @@ A measure taken on a request goes no further than is needed to stop the material
 When the operator knows that text in an issue infringes another person's rights, or has reasonable grounds to believe so, the operator hides or edits it without delay, as far as is needed to stop it from being sent.
 It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading.
 It does not read the country of an ORCID record.
+This does not apply to a clause that excludes or limits the operator's liability: such a clause applies only as it is written, and is not read as reaching as far as the law allows.

@@ -215,7 +215,7 @@ What they say that matters to people who use Sophaxis:
 ## General
 
 - The other policies are part of these terms. Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply. The FAQ, the step-by-step page and the Disclaimer explain these terms and do not change them.
-- If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows.
+- If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows. This does not apply to a clause that excludes or limits the operator's liability: such a clause applies only as it is written, and is not read as reaching as far as the law allows.
 - If the operator does not enforce a part of these terms at one time, that does not waive it.
 - From 2026-11-21, a person under 13 cannot submit.
 - A person under 18 may submit only with the consent of a parent or guardian.
