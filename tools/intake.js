@@ -552,7 +552,7 @@ const AGREE = 'I agree to the listing of this work on Sophaxis.';
 /* From SITE.checkedFrom (2026-12-01), the fixed words carry the consent to the review by the three language models, after the
  * information that Article 28(2) of Japan's APPI asks, which the Privacy Policy gives under "Services outside Japan" (the owner
  * decided this on 2026-11-15). Only these words count from then; the old words alone no longer do. */
-const AGREE_CHECKED = 'I agree to the listing of this work on Sophaxis, and I consent to the public parts of this submission, what I write in its issue among them, being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Services outside Japan".';
+const { AGREE_CHECKED } = require('./words.js');
 const BY_EMAIL = 'Confirmed by email through the ORCID record:';
 const COAUTHOR_LABEL = 'Every other author has confirmed their own agreement';
 const squash = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();

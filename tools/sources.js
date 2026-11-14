@@ -121,6 +121,9 @@ const IA = (u) => 'https://web.archive.org/web/2026id_/' + u;
  * are read from the Internet Archive's copy. */
 const NO_DIRECT = /^https?:\/\/(?:[a-z0-9-]+\.)*(?:ssrn\.com|edx\.org|philpapers\.org|philarchive\.org|datacite\.org|figshare\.com|researchsquare\.com|arxiv\.org|x\.com|twitter\.com)(?:[\/:?#]|$)/i;
 const direct = (u) => NO_DIRECT.test(u) && !/^https?:\/\/api\.(?:test\.)?datacite\.org(?:[\/:?#]|$)/i.test(u);
+/* Pages that are kept in verification/sources-raw.json as they were fetched, and never fetched again: arXiv's, read directly
+ * on 2026-11-12, which the earlier records quote. Since 2026-11-15 nothing reads arXiv by script (the owner's answer S19). */
+const RETIRED = ['arxiv-api-tou', 'arxiv-bulk-data', 'arxiv-export-robots'];
 const PPC_LINKS = /\.pdf|guideline|gaikoku|offshore|kaigai|foreign|outside|外国|ガイドライン|Ｑ＆Ａ|Q&A/i;
 const PAGES = {
   // The Commission's index pages, from which the addresses of its guidance were found.
@@ -932,8 +935,8 @@ async function main() {
     console.log('law', key, r.status || r.error, r.title || '', (r.headings || []).length, Object.keys(r.articles || {}).length, (r.suppl || []).length);
     await sleep(1500);
   }
-  // Keys no longer in the lists are dropped, so that the file holds only what tools/sources.js names.
-  for (const k of Object.keys(out.pages)) if (!PAGES[k.split('>')[0]]) delete out.pages[k];
+  // Keys no longer in the lists are dropped, so that the file holds only what tools/sources.js names; a retired page stays as it was kept.
+  for (const k of Object.keys(out.pages)) if (!PAGES[k.split('>')[0]] && !RETIRED.includes(k)) delete out.pages[k];
   for (const k of Object.keys(out.laws)) if (!LAWS[k]) delete out.laws[k];
   // A source shared by two laws (the GDPR and the UK GDPR are not; GitHub's terms are named two ways) is fetched once.
   for (const r of Object.values(out.sources)) { if (r.want) r.want = [...new Set(r.want)].sort(); delete r.fetched_now; }
@@ -944,6 +947,6 @@ async function main() {
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 }
 
-module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, LAWS, NO_DIRECT, direct, IA, WHOLE, TRANSLATIONS, wholeSource, spansOf, harvest, keptProblems, reduceAll, FULL, HEAD };
+module.exports = { cut, cutMarkdown, plain, egovPlain, linksOf, SOURCES, PAGES, RETIRED, LAWS, NO_DIRECT, direct, IA, WHOLE, TRANSLATIONS, wholeSource, spansOf, harvest, keptProblems, reduceAll, FULL, HEAD };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

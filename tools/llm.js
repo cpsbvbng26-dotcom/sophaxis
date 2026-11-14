@@ -16,8 +16,7 @@
 'use strict';
 const I = require('./intake.js');
 
-const CONSENT = 'I consent to what I have written in this issue being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Language models in the review".';
-const CONSENT_JA = 'この issue に私が書いたものが、審査の手助けのために、Sophaxis の個人情報の取り扱いについての「審査での言語モデル」が定めるとおり、米国の Anthropic・OpenAI・xAI に渡されることに同意します。';
+const { CONSENT, CONSENT_JA } = require('./words.js');
 const squash = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
 
 /* Pure: the box of the submission form by which the submitter consents to the review by the three providers, in either language. */

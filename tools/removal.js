@@ -169,8 +169,8 @@ function consentLines(issue, comments) {
     const t = new Set(I.tickedIn(issue.body));
     for (const b of I.BOXES.consent.filter((x) => /consent|同意している/.test(x[0]) && /consents? to|同意/.test(x[0]))) if (t.has(b[0]) || t.has(b[1])) out.push({ day: jstDay(issue.created_at), login: issue.user.login, words: b[0], issue: issue.number });
   }
-  const L = require('./llm.js');
-  const fixed = [I.AGREE_CHECKED, I.AGREE, L.CONSENT, L.CONSENT_JA];
+  const W = require('./words.js');
+  const fixed = [W.AGREE_CHECKED, I.AGREE, W.CONSENT, W.CONSENT_JA];
   const sq = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
   for (const c of comments || []) {
     if (!c.user || c.user.type === 'Bot') continue;
