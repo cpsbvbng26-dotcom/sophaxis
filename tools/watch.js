@@ -100,7 +100,9 @@ function newVersions(p, atRepository) {
  * journal article, a conference paper, a book chapter or a book, and shares an author, is worth the authors' time. */
 function candidateNote(p, desc) {
   if (!desc || !desc.kind || !desc.venue || !P.sharesAuthor(p, desc)) return [];
-  return [`${p.id}: a possible published version, ${desc.title} (${desc.venue}, ${desc.date}), https://doi.org/${desc.doi}; its metadata or the preprint's links them. The authors can report it with the published-version form`];
+  /* The title and the venue come from outside: no mention and no command of the runner in the issue or the log (2026-11-15). */
+  const n = require('./intake.js').neutral;
+  return [`${p.id}: a possible published version, ${n(desc.title)} (${n(desc.venue)}, ${n(desc.date)}), https://doi.org/${n(desc.doi)}; its metadata or the preprint's links them. The authors can report it with the published-version form`];
 }
 
 /* Pure: the problems of a recorded published version, given what its DOI says now (null if it no longer resolves). */
@@ -197,7 +199,7 @@ function copyTable(readings) {
 }
 
 function report(problems, when, news = [], pubs = [], index = '', copies = '', notChecked = [], unsaved = []) {
-  const list = (xs) => xs.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n');
+  const list = (xs) => xs.map((x) => '- ' + require('./intake.js').neutral(x)).join('\n');
   return `${MARK}
 **Weekly check, ${when}**
 ${problems.length ? `
@@ -349,7 +351,7 @@ async function main() {
   }
   if (dry) return;
 
-  const open = ((await github('GET', '/issues?state=open&labels=watch&per_page=20')) || []).find((i) => (i.body || '').startsWith(MARK));
+  const open = (await require('./intake.js').allPages(github, '/issues?state=open&labels=watch')).find((i) => !i.pull_request && (i.body || '').startsWith(MARK));
   const when = new Date().toISOString().slice(0, 10);
   if (problems.length || news.length || pubs.length || notChecked.length || unsavedUrls.length) {
     const body = report(problems, when, news, pubs, index, copies, notChecked, unsavedUrls);

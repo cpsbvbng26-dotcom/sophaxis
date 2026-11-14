@@ -6,7 +6,10 @@
  *   - a yearly one (a schedule with a day and a month) fails when the issue it opens for its last day has not been opened,
  *     two days after that day, if the workflow existed on that day; heartbeat.json gives the title of that issue;
  *   - a job that tells IndexNow (it runs a script named indexnow.js), and a job of a workflow that asks the Internet Archive
- *     to save pages, fails when the last run in which it ran did not succeed.
+ *     to save pages, fails when the last run in which it ran did not succeed;
+ *   - a workflow that runs on a push to main fails when its last finished run on main (a cancelled one is passed over) did not
+ *     succeed, and a repository that heartbeat.json names under "vercel" fails when the status "Vercel" of the head of main is
+ *     not success (pending is allowed for an hour after the commit).
  * Then it opens or updates one issue in this repository, or closes it when nothing fails. The issue holds fixed words and
  * counts only; which workflow failed is in the log of the run. It reads no issue text and writes none.
  *
@@ -17,6 +20,7 @@
  *   yearly   "<repository>/<file>": the title of the issue of a yearly workflow, {year} for the year of its day in Japan time,
  *            and {year-1} for the year before
  *   lang     the language of the issue: "en" or "ja"
+ *   vercel   the repositories whose head of main Vercel deploys and marks with the status "Vercel"
  *
  *   node tools/heartbeat.js          (GITHUB_TOKEN, GITHUB_REPOSITORY; GitHub Actions)
  *   node tools/heartbeat.js --test   the self-test, on answers made here
@@ -31,8 +35,8 @@ const MARK = '<!-- heartbeat -->';
 const HOUR = 3600 * 1000;
 const GRACE_DAYS = 2;
 const TEXTS = {
-  en: { title: 'Scheduled work has stopped', head: 'The heartbeat of the scheduled work ({when}) found:', seen: 'workflows read', stale: 'scheduled workflows with no successful scheduled run within twice their period', stopped: 'scheduled workflows that GitHub has stopped', yearly: 'yearly workflows whose issue for their last day was not opened', watched: 'jobs that tell IndexNow or save to the Internet Archive whose last run did not succeed', foot: 'The log of the run names them: {run}. This issue closes by itself when nothing fails.', closed: 'Nothing fails any more ({when}). Closing.' },
-  ja: { title: '定期の仕事が止まっている', head: '定期の仕事の見張り（{when}）の結果です。', seen: '読んだワークフロー', stale: '周期の二倍のあいだ、定期の実行が一度も成功していない定期の仕事', stopped: 'GitHub が止めている定期の仕事', yearly: '最後の日の issue が開かれていない年に一度の仕事', watched: '最後の実行が成功していない、IndexNow に知らせる仕事と Internet Archive に保存させる仕事', foot: 'どの仕事かは、この実行の記録にあります：{run}。どれも落ちなくなれば、この issue はひとりでに閉じます。', closed: 'どれも落ちなくなりました（{when}）。閉じます。' },
+  en: { title: 'Scheduled work has stopped', head: 'The heartbeat of the scheduled work ({when}) found:', seen: 'workflows read', stale: 'scheduled workflows with no successful scheduled run within twice their period', stopped: 'scheduled workflows that GitHub has stopped', yearly: 'yearly workflows whose issue for their last day was not opened', watched: 'jobs that tell IndexNow or save to the Internet Archive whose last run did not succeed', push: 'workflows run on a push to main whose last run on main did not succeed', deploy: 'repositories whose head of main Vercel has not deployed with success', foot: 'The log of the run names them: {run}. This issue closes by itself when nothing fails.', closed: 'Nothing fails any more ({when}). Closing.' },
+  ja: { title: '定期の仕事が止まっている', head: '定期の仕事の見張り（{when}）の結果です。', seen: '読んだワークフロー', stale: '周期の二倍のあいだ、定期の実行が一度も成功していない定期の仕事', stopped: 'GitHub が止めている定期の仕事', yearly: '最後の日の issue が開かれていない年に一度の仕事', watched: '最後の実行が成功していない、IndexNow に知らせる仕事と Internet Archive に保存させる仕事', push: 'main への push で動き、main での最後の実行が成功していないワークフロー', deploy: 'main の先を Vercel が成功して配っていないリポジトリ', foot: 'どの仕事かは、この実行の記録にあります：{run}。どれも落ちなくなれば、この issue はひとりでに閉じます。', closed: 'どれも落ちなくなりました（{when}）。閉じます。' },
 };
 const T = TEXTS[CONF.lang] || TEXTS.en;
 
@@ -99,6 +103,15 @@ function watchedJobs(text) {
   return jobsOf(text).filter((j) => /\bindexnow\.js\b/.test(j.text) || saves).map((j) => ({ id: j.id, name: j.name }));
 }
 
+/* Whether a workflow runs on a push to main: a push without branches, or with main among them. */
+function onPushToMain(text) {
+  const on = (/^on:\n((?: {2}.*\n|\n)*)/m.exec(String(text) + '\n') || [])[1] || '';
+  const m = /^ {2}push:\s*\n((?: {4}.*\n)*)/m.exec(on) || /^ {2}push:\s*$/m.exec(on);
+  if (!m) return false;
+  const b = /branches: \[([^\]]*)\]/.exec(m[1] || '');
+  return !b || b[1].split(',').map((x) => x.trim().replace(/^'|'$/g, '')).includes('main');
+}
+
 /* The title of the issue of a yearly workflow, for the year of its day in Japan time. */
 function yearlyTitle(pattern, t) {
   const y = new Date(t + 9 * HOUR).getUTCFullYear();
@@ -122,8 +135,17 @@ function judge(entries, now) {
       }
     }
     for (const w of e.watched || []) if (w.conclusion && w.conclusion !== 'success') out.push({ repo: e.repo, file: e.file, what: 'watched', job: w.name });
+    if (e.pushConclusion && !['success', 'skipped', 'neutral'].includes(e.pushConclusion)) out.push({ repo: e.repo, file: e.file, what: 'push' });
+    if (e.deploy === false) out.push({ repo: e.repo, file: e.file, what: 'deploy' });
   }
   return out;
+}
+
+/* Pure: whether the status "Vercel" of the head of main is fine: success, or pending within an hour of the commit. */
+function deployFine(status, committed, now) {
+  const v = ((status && status.statuses) || []).find((s) => s.context === 'Vercel');
+  if (!v) return false;
+  return v.state === 'success' || (v.state === 'pending' && now - Date.parse(committed) < HOUR);
 }
 
 /* The issue: fixed words and counts. */
@@ -135,6 +157,8 @@ function issueBody(findings, seen, when, run) {
     '- ' + T.stopped + ': ' + n('stopped'),
     '- ' + T.yearly + ': ' + n('yearly'),
     '- ' + T.watched + ': ' + n('watched'),
+    '- ' + T.push + ': ' + n('push'),
+    '- ' + T.deploy + ': ' + n('deploy'),
     '', T.foot.replace('{run}', run)].join('\n');
 }
 
@@ -149,6 +173,17 @@ async function api(p, { method = 'GET', body, auth = true } = {}) {
   if (r.status === 404) return null;
   if (!r.ok) throw new Error(method + ' ' + p.split('?')[0] + ': HTTP ' + r.status);
   return r.status === 204 ? null : r.json();
+}
+
+/* Every page of a list on GitHub, to the end; an answer that is not a list stops the run, never read as an empty list. */
+async function allPages(gh, p) {
+  const out = [];
+  for (let page = 1; ; page++) {
+    const list = await gh('GET', p + (p.includes('?') ? '&' : '?') + 'per_page=100&page=' + page);
+    if (!Array.isArray(list)) throw new Error('GET ' + p.split('?')[0] + ': not a list');
+    out.push(...list);
+    if (list.length < 100) return out;
+  }
 }
 
 /* The day the file first held a schedule on main: its commits, newest first, are read back while their file has one. */
@@ -180,7 +215,13 @@ async function gather(get = api, now = Date.now()) {
       const text = Buffer.from(c.content || '', 'base64').toString('utf8');
       const e = { repo, file, crons: cronsOf(text), state: w.state, created: w.created_at, lastSuccess: null, yearlyDue: false, yearlyFound: false, watched: [] };
       const watched = watchedJobs(text);
-      if (!e.crons.length && !watched.length) continue;
+      const pushed = onPushToMain(text);
+      if (!e.crons.length && !watched.length && !pushed) continue;
+      if (pushed) {
+        const runs = await get(base + '/actions/workflows/' + w.id + '/runs?branch=main&event=push&status=completed&per_page=10');
+        if (!runs || !Array.isArray(runs.workflow_runs)) throw new Error(repo + '/' + file + ': the runs on main could not be read');
+        e.pushConclusion = (runs.workflow_runs.find((r) => r.conclusion !== 'cancelled') || {}).conclusion || null;
+      }
       if (e.crons.length) {
         e.created = (await scheduleSince(get, base, w.path)) || w.created_at;
         const p = e.crons.map(periodOf).sort((a, b) => a.hours - b.hours)[0];
@@ -191,7 +232,7 @@ async function gather(get = api, now = Date.now()) {
             const pattern = (CONF.yearly || {})[repo + '/' + file];
             if (!pattern) throw new Error(repo + '/' + file + ': a yearly workflow without the title of its issue in heartbeat.json');
             const title = yearlyTitle(pattern, day);
-            const issues = (await get(base + '/issues?state=all&per_page=100&since=' + new Date(day).toISOString())) || [];
+            const issues = await allPages((m, p) => get(p), base + '/issues?state=all&since=' + new Date(day).toISOString());
             e.yearlyFound = issues.some((i) => !i.pull_request && i.title === title);
           }
         } else {
@@ -214,6 +255,12 @@ async function gather(get = api, now = Date.now()) {
       }
       entries.push(e);
     }
+    if ((CONF.vercel || []).includes(repo)) {
+      const head = await get(base + '/commits/main');
+      const status = await get(base + '/commits/main/status');
+      if (!head || !status) throw new Error(repo + ': the head of main or its status could not be read');
+      entries.push({ repo, file: '(Vercel)', crons: [], watched: [], deploy: deployFine(status, head.commit.committer.date, now) });
+    }
   }
   return entries;
 }
@@ -228,7 +275,7 @@ async function main() {
     const when = new Date(now).toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
     const run = (process.env.GITHUB_SERVER_URL || 'https://github.com') + '/' + process.env.GITHUB_REPOSITORY + '/actions/runs/' + (process.env.GITHUB_RUN_ID || '');
     const own = '/repos/' + process.env.GITHUB_REPOSITORY;
-    const open = ((await api(own + '/issues?state=open&per_page=100')) || []).find((i) => !i.pull_request && (i.body || '').startsWith(MARK));
+    const open = (await allPages((m, p) => api(p), own + '/issues?state=open')).find((i) => !i.pull_request && (i.body || '').startsWith(MARK));
     if (findings.length) {
       const body = issueBody(findings, entries.length, when, run);
       if (open) await api(own + '/issues/' + open.number, { method: 'PATCH', body: { body } });
@@ -276,6 +323,17 @@ async function selfTest() {
   t('a job that tells IndexNow fails when its last run failed, and not when it succeeded or never ran',
     judge([{ repo: 'r', file: 'i.yml', crons: [], watched: [{ name: 'IndexNow', conclusion: 'failure' }] }], now).map((f) => f.what).join() === 'watched'
     && judge([{ repo: 'r', file: 'i.yml', crons: [], watched: [{ name: 'IndexNow', conclusion: 'success' }, { name: 'x', conclusion: null }] }], now).length === 0);
+  t('a workflow that runs on a push to main is found from the file, with or without branches; one on other branches is not',
+    onPushToMain('on:\n  push:\n    branches: [main]\n') && onPushToMain('on:\n  push:\n  pull_request:\n') && !onPushToMain("on:\n  push:\n    branches: ['claude/x-*']\n") && !onPushToMain('on:\n  schedule:\n'));
+  t('the last run on main of a workflow run on a push fails when it failed, and passes when it succeeded or was skipped (break on purpose: a failed push run)',
+    judge([{ repo: 'r', file: 'p.yml', crons: [], watched: [], pushConclusion: 'failure' }], now).map((f) => f.what).join() === 'push' && judge([{ repo: 'r', file: 'p.yml', crons: [], watched: [], pushConclusion: 'success' }], now).length === 0);
+  const st = (state) => ({ statuses: [{ context: 'Vercel', state }] });
+  t('the status "Vercel" of the head of main: success passes; failure, none, and pending after an hour fail; pending within the hour passes',
+    deployFine(st('success'), iso(now), now) && !deployFine(st('failure'), iso(now), now) && !deployFine({ statuses: [] }, iso(now), now) && !deployFine(st('pending'), iso(now - 2 * HOUR), now) && deployFine(st('pending'), iso(now - 10 * 60000), now)
+    && judge([{ repo: 'r', file: '(Vercel)', crons: [], watched: [], deploy: false }], now).map((f) => f.what).join() === 'deploy');
+  t('every list is read to its end: an issue on the fourth page is found, and a page that is not a list stops the run',
+    await (async () => { const pages = [1, 2, 3].map((k) => Array.from({ length: 100 }, (_, i) => ({ number: k * 1000 + i, body: 'x' }))).concat([[{ number: 4001, body: MARK }]]); const got = await allPages(async (m, p) => pages[Number(/&page=(\d+)/.exec(p)[1]) - 1], '/issues?state=open'); return got.find((i) => (i.body || '').startsWith(MARK)).number === 4001; })()
+    && await allPages(async () => null, '/x').then(() => false, () => true));
   /* gather() on answers made here: the files, the workflows, the runs and the issues. */
   const A = {
     workflows: { workflows: [{ id: 1, path: '.github/workflows/daily.yml', state: 'active', created_at: iso(now - 100 * day) }, { id: 2, path: '.github/workflows/push.yml', state: 'active', created_at: iso(now - 100 * day) },
@@ -332,5 +390,5 @@ async function selfTest() {
   if (failed.length) process.exit(1);
 }
 
-module.exports = { jobsOf, cronsOf, periodOf, lastYearly, watchedJobs, yearlyTitle, judge, issueBody, gather, CONF, MARK, TEXTS };
+module.exports = { allPages, onPushToMain, deployFine, jobsOf, cronsOf, periodOf, lastYearly, watchedJobs, yearlyTitle, judge, issueBody, gather, CONF, MARK, TEXTS };
 if (require.main === module) (process.argv.includes('--test') ? selfTest() : main()).catch((e) => { console.error(e.message); process.exit(1); });

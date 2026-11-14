@@ -49,6 +49,17 @@ const CLEAN_ENV = { PATH: process.env.PATH || '/usr/bin:/bin', HOME: process.env
 /* Pure: the changelog with the pull request's number in place of (#PR). */
 const fillNumber = (log, n) => log.split('(#PR)').join('(#' + n + ')');
 
+/* Every page of a list on GitHub, to the end; an answer that is not a list stops the run, never read as an empty list (2026-11-15). */
+async function allPages(gh, p) {
+  const out = [];
+  for (let page = 1; ; page++) {
+    const list = await gh('GET', p + (p.includes('?') ? '&' : '?') + 'per_page=100&page=' + page);
+    if (!Array.isArray(list)) throw new Error('GET ' + p.split('?')[0] + ': not a list');
+    out.push(...list);
+    if (list.length < 100) return out;
+  }
+}
+
 async function github(method, p, body) {
   const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + p, {
     method, headers: { Authorization: 'Bearer ' + process.env.GITHUB_TOKEN, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
@@ -86,12 +97,12 @@ async function main() {
   catch (e) { await say('Not recorded: main moved while the checks ran. Nothing was merged; adding the label again starts a new run.'); process.exit(1); }
   try { git('push', '-q', 'origin', '--delete', branch); } catch (e) { /* the branch can stay */ }
   /* The issue that proposed it, where the repository does not let workflows open pull requests, is done too. */
-  for (const i of ((await github('GET', '/issues?state=open&per_page=50')) || []).filter((x) => !x.pull_request && (x.body || '').startsWith('<!-- statutes-proposal -->'))) {
+  for (const i of (await allPages(github, '/issues?state=open')).filter((x) => !x.pull_request && (x.body || '').startsWith('<!-- statutes-proposal -->'))) {
     await github('POST', '/issues/' + i.number + '/comments', { body: 'Recorded in #' + n + '.' });
     await github('PATCH', '/issues/' + i.number, { state: 'closed', state_reason: 'completed' });
   }
   await say('Recorded in ' + git('rev-parse', 'HEAD').trim().slice(0, 7) + ', after `' + checks.map((c) => c.join(' ')).join('` and `') + '` passed on the merged result.');
 }
 
-module.exports = { allowed, fillNumber, mergeTitle, sameTip, MOVED, CLEAN_ENV, KINDS };
+module.exports = { allowed, fillNumber, mergeTitle, sameTip, allPages, MOVED, CLEAN_ENV, KINDS };
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

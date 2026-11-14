@@ -843,6 +843,10 @@ The repository of this work does not let Sophaxis fetch the PDF. To have an unmo
 `;
 }
 
+/* Pure: text from outside (DOI metadata, a deposit-check finding) made harmless in an issue and in a log: no mention (@ becomes
+ * a full-width ＠), no command of the runner (a line that starts with ::), no code, table or tag mark (2026-11-15). */
+const neutral = (s) => String(s).replace(/[`|<>]/g, '').replace(/@/g, '＠').replace(/^\s*::/gm, ': :');
+
 /* ------------------------------------------------------------ advice on the metadata */
 
 /* deposit-check (https://github.com/cpsbvbng26-dotcom/deposit-check) reads the DOI metadata against its rules. Its errors and
@@ -856,7 +860,7 @@ function adviceFrom(report) {
 
 function adviceNote(advice) {
   if (!advice || !advice.length) return '';
-  const safe = (s) => String(s).replace(/[`|<>]/g, '');
+  const safe = neutral;
   return `
 **Advice on the metadata at the repository.** This does not decide the listing. [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check) found in the DOI metadata:
 
@@ -882,7 +886,7 @@ function metadataAdvice(doi, dir = path.join(ROOT, 'deposit-check')) {
 }
 
 function comment(result, d, advice = [], shape = null, readings = null, checked = false) {
-  const safe = (s) => String(s).replace(/[`|<>]/g, '');
+  const safe = neutral;
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
   let out = `${MARK}
 **Automatic checks** (run again whenever this issue is edited, or an author confirms in a comment)
@@ -1039,6 +1043,17 @@ function issueEvent(file = process.env.GITHUB_EVENT_PATH) {
   return { number: String(issue.number), author: (issue.user && issue.user.login) || '', body: issue.body || '', title: issue.title || '' };
 }
 
+/* Every page of a list on GitHub, to the end; an answer that is not a list stops the run, never read as an empty list (2026-11-15). */
+async function allPages(gh, p) {
+  const out = [];
+  for (let page = 1; ; page++) {
+    const list = await gh('GET', p + (p.includes('?') ? '&' : '?') + 'per_page=100&page=' + page);
+    if (!Array.isArray(list)) throw new Error('GET ' + p.split('?')[0] + ': not a list');
+    out.push(...list);
+    if (list.length < 100) return out;
+  }
+}
+
 async function github(method, url, body) {
   const r = await request('https://api.github.com/repos/' + process.env.GITHUB_REPOSITORY + url, {
     method,
@@ -1067,10 +1082,11 @@ async function deadlineRun(gh, today, recheck = null) {
   for (let page = 1; page <= 10; page++) {
     const list = (await gh('GET', '/issues?state=open&labels=submission&per_page=100&page=' + page)) || [];
     for (const i of list.filter((x) => pastDeadline(x, today))) {
-      const comments = (await gh('GET', '/issues/' + i.number + '/comments?per_page=100')) || [];
+      const comments = await allPages(gh, '/issues/' + i.number + '/comments');
       if (readsAsRequest(i, comments)) { console.log('left for a person: #' + i.number); continue; }
-      await gh('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });
+      /* The label first: a run that stops between the two leaves a labelled issue, which is not labelled or commented on twice (2026-11-15). */
       await gh('POST', '/issues/' + i.number + '/labels', { labels: [NOT_LISTED] });
+      await gh('POST', '/issues/' + i.number + '/comments', { body: DEADLINE_NOTE });
       console.log('not listed at the end of its time: #' + i.number);
     }
     if (list.length < 100) break;
@@ -1103,7 +1119,8 @@ async function checkSubmission(n, login, text) {
   if (((issue && issue.labels) || []).some((l) => (typeof l === 'string' ? l : l.name) === NOT_LISTED)) { console.log('past its time: not checked again'); return; }
   const opened = jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString());
   const { result, meta, raw, versions, pub } = await run(form, login, opened);
-  const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
+  /* Every comment, beyond the first 100 (2026-11-15). */
+  const all = await allPages(github, '/issues/' + n + '/comments');
   const checked = opened >= SITE.checkedFrom;
   /* The people whose identity the check verifies, for the place rule: the submitter, then each confirming author. */
   const people = meta && result.author ? [{ orcid: form.orcid, login }] : [];
@@ -1173,6 +1190,6 @@ async function checkSubmission(n, login, text) {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { neutral, allPages, unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

@@ -49,6 +49,17 @@ function served(files, conf = CONF) {
 const walk = (dir, pre = '') => fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => (d.name === '.git' ? [] : d.isDirectory() ? walk(path.join(dir, d.name), pre + d.name + '/') : [pre + d.name]));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/* Every page of a list on GitHub, to the end; an answer that is not a list stops the run, never read as an empty list (2026-11-15). */
+async function allPages(gh, p) {
+  const out = [];
+  for (let page = 1; ; page++) {
+    const list = await gh('GET', p + (p.includes('?') ? '&' : '?') + 'per_page=100&page=' + page);
+    if (!Array.isArray(list)) throw new Error('GET ' + p.split('?')[0] + ': not a list');
+    out.push(...list);
+    if (list.length < 100) return out;
+  }
+}
+
 async function compare(list, request = ua.request) {
   const out = [];
   for (const x of list) {
@@ -81,7 +92,7 @@ async function run({ get = ua.request, gh = github, env = process.env, log = con
   log(bad.length ? T.differ.replace('{d}', bad.length).replace('{n}', files.length) : T.same.replace('{n}', files.length));
   if (env.GITHUB_TOKEN && ['schedule', 'push', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)) {
     const when = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
-    const open = ((await gh('GET', '/issues?state=open&per_page=50')) || []).find((i) => !i.pull_request && (i.body || '').startsWith(MARK));
+    const open = (await allPages(gh, '/issues?state=open')).find((i) => !i.pull_request && (i.body || '').startsWith(MARK));
     if (bad.length) {
       const body = MARK + '\n' + T.head.replace('{base}', BASE).replace('{when}', when) + '\n\n' + bad.slice(0, 50).map((b) => '- `' + b.file + '` ' + b.why).join('\n')
         + (bad.length > 50 ? '\n- …' : '') + '\n\n' + T.foot;
@@ -95,5 +106,5 @@ async function run({ get = ua.request, gh = github, env = process.env, log = con
   return bad.length;
 }
 
-module.exports = { served, matches, compare, run, BASE, CONF, MARK, TEXTS };
+module.exports = { served, matches, compare, run, allPages, BASE, CONF, MARK, TEXTS };
 if (require.main === module) run().then((n) => { if (n) process.exit(1); }).catch((e) => { console.error(e.message); process.exit(1); });
