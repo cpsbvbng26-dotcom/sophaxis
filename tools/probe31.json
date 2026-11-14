@@ -1,0 +1,153 @@
+{
+ "ua": "Sophaxis (https://github.com/cpsbvbng26-dotcom/sophaxis)",
+ "pages": [
+  {
+   "key": "anthropic-consumer-terms",
+   "url": "https://www.anthropic.com/legal/consumer-terms",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "anthropic-commercial-terms",
+   "url": "https://www.anthropic.com/legal/commercial-terms",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "anthropic-privacy",
+   "url": "https://www.anthropic.com/legal/privacy",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "openai-terms",
+   "url": "https://openai.com/policies/terms-of-use/",
+   "alt": "https://web.archive.org/web/2026id_/https://openai.com/policies/terms-of-use/",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "openai-row-terms",
+   "url": "https://openai.com/policies/row-terms-of-use/",
+   "alt": "https://web.archive.org/web/2026id_/https://openai.com/policies/row-terms-of-use/",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "openai-business-terms",
+   "url": "https://openai.com/policies/business-terms/",
+   "alt": "https://web.archive.org/web/2026id_/https://openai.com/policies/business-terms/",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "openai-services-agreement",
+   "url": "https://openai.com/policies/services-agreement/",
+   "alt": "https://web.archive.org/web/2026id_/https://openai.com/policies/services-agreement/",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "openai-row-privacy",
+   "url": "https://web.archive.org/web/2026id_/https://openai.com/policies/row-privacy-policy/",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "xai-terms",
+   "url": "https://x.ai/legal/terms-of-service",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "xai-enterprise-terms",
+   "url": "https://x.ai/legal/terms-of-service-enterprise",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "xai-privacy",
+   "url": "https://x.ai/legal/privacy-policy",
+   "kw": "train|machine learning|improve (?:our|the|its) (?:models|services|products)|model improvement|opt[ -]?out"
+  },
+  {
+   "key": "datacite-terms",
+   "url": "https://web.archive.org/web/2026id_/https://datacite.org/terms-and-conditions/",
+   "kw": "api|rest|permit|metadata|cc0|rate limit|terms|automat|systematic|licen",
+   "links": "terms|licen|api|usage|polic",
+   "max": 40
+  },
+  {
+   "key": "datacite-api-docs",
+   "url": "https://web.archive.org/web/2026id_/https://support.datacite.org/docs/api",
+   "kw": "api|rest|permit|metadata|cc0|rate limit|terms|automat|systematic|licen",
+   "links": "terms|licen|api|usage|rate|polic",
+   "max": 40
+  },
+  {
+   "key": "datacite-rest-api",
+   "url": "https://web.archive.org/web/2026id_/https://support.datacite.org/docs/rest-api",
+   "kw": "api|rest|permit|metadata|cc0|rate limit|terms|automat|systematic|licen",
+   "links": "terms|licen|usage|rate|polic"
+  },
+  {
+   "key": "datacite-api-usage",
+   "url": "https://web.archive.org/web/2026id_/https://support.datacite.org/docs/api-usage",
+   "kw": "api|rest|permit|metadata|cc0|rate limit|terms|automat|systematic|licen",
+   "links": "terms|licen|usage|rate|polic"
+  },
+  {
+   "key": "datacite-rate-limit",
+   "url": "https://web.archive.org/web/2026id_/https://support.datacite.org/docs/is-there-a-rate-limit-for-making-requests-against-the-datacite-apis",
+   "kw": "api|rest|permit|metadata|cc0|rate limit|terms|automat|systematic|licen"
+  },
+  {
+   "key": "datacite-api-home",
+   "url": "https://api.datacite.org/",
+   "kw": "api|rest|permit|metadata|cc0|rate limit|terms|automat|systematic|licen",
+   "links": "terms|licen|usage|rate|polic|support"
+  },
+  {
+   "key": "indexnow-terms",
+   "url": "https://www.indexnow.org/terms",
+   "all": 20000
+  },
+  {
+   "key": "indexnow-doc",
+   "url": "https://www.indexnow.org/documentation",
+   "kw": "terms|agree|licen|permi|search engine|key",
+   "links": "terms|faq|doc"
+  },
+  {
+   "key": "x-tos",
+   "url": "https://x.com/en/tos",
+   "alt": "https://web.archive.org/web/2026id_/https://x.com/en/tos",
+   "kw": "automat|scrap|crawl|age|13|license|content you|Japan|governing|court|terminat",
+   "max": 30
+  }
+ ],
+ "egovFind": "電子消費者契約|日本国憲法|消費者契約法$|個人情報の保護に関する法律施行規則",
+ "egov": [
+  {
+   "id": "413AC0000000095",
+   "cap": 3000
+  },
+  {
+   "id": "321CONSTITUTION",
+   "arts": [
+    "13",
+    "14",
+    "21",
+    "32"
+   ],
+   "cap": 1500
+  },
+  {
+   "id": "412AC0000000061",
+   "arts": [
+    "3"
+   ]
+  },
+  {
+   "id": "428M60020000003",
+   "arts": [
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23"
+   ]
+  }
+ ]
+}
