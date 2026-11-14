@@ -432,7 +432,7 @@ async function selfTest() {
   const os = require('os');
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'checked-intake-'));
   const put = (rel, text) => { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), text); };
-  put('README.md', '# Fixture\n\nThe frozen paper is 10.5281/zenodo.1000001.\n');
+  put('README.md', '# Fixture\n\nThe frozen paper is 10.5555/fixture.1000001.\n');
   put('ERRATA.md', '# 正誤表\n\n第二節の式は、**収束する**と書いてある。\nThe sum converges to “one half” for every\nstarting point.\n');
   put('docs/page.html', '<html><body><p>The site says <b>forty&nbsp;two</b> &amp; more.</p><script>var hidden = "never seen";</script></body></html>');
   put('docs/index.html', '<p>Index page of the docs.</p>');
@@ -445,7 +445,7 @@ async function selfTest() {
     forms: [{ label: 'erratum', kind: 'quote', where: ['Where'], quote: ['What it says'] }, { label: 'bug', kind: 'identity', orcid: ['Your ORCID iD'], doi: ['Your DOI (optional)'] }],
     pages: [{ url: 'https://example.github.io/fixture/', dir: 'docs' }, { url: 'https://records.example/', dir: 'site' }],
     blob: 'https://github.com/example/fixture',
-    dois: { '10.5281/zenodo.1000001': ['pdf/paper.pdf'] },
+    dois: { '10.5555/fixture.1000001': ['pdf/paper.pdf'] },
     ids: [['^(\\d{4}\\.\\d{4})$', 'site/abs/{1}.html']],
     neverClose: ['removal'],
     from: '2026-12-01',
@@ -463,12 +463,12 @@ async function selfTest() {
   t('the index of a directory', q('https://example.github.io/fixture/', 'Index page of the docs').ok);
   t('a file on github.com, and its raw copy', q('https://github.com/example/fixture/blob/main/ERRATA.md#L3', '収束すると書いてある').ok && q('https://raw.githubusercontent.com/example/fixture/main/ERRATA.md', '収束すると書いてある').ok);
   t('an id of a record', q('2026.0001', 'A record title for the fixture').ok);
-  t('a DOI with a page after it, read from the PDF', !havePdf || (q('https://doi.org/10.5281/zenodo.1000001, p. 1', 'is a contraction on the simplex').ok && q('10.5281/zenodo.1000001', 'is an expansion').reason === 'absent'));
+  t('a DOI with a page after it, read from the PDF', !havePdf || (q('https://doi.org/10.5555/fixture.1000001, p. 1', 'is a contraction on the simplex').ok && q('10.5555/fixture.1000001', 'is an expansion').reason === 'absent'));
   t('pdftotext missing: not checked, never closed', (() => { try { q('pdf/paper.pdf', 'is a contraction', () => { const e = new Error('x'); e.notChecked = true; throw e; }); return false; } catch (e) { return !!e.notChecked; } })());
   t('words that are not there', q('ERRATA.md', '第二節の式は、発散すると書いてある。').reason === 'absent');
   t('a location that is not a file', q('nowhere.md', '第二節の式は').reason === 'location' && q('docs', 'Index page').reason === 'location' && q('', 'something long enough').reason === 'location');
   t('a path that leaves the repository or names .git', q('../outside.md', 'something long enough').reason === 'location' && q('.git/config', 'something long enough').reason === 'location');
-  t('a DOI that this repository does not hold', q('10.5281/zenodo.9999999', 'something long enough').reason === 'location');
+  t('a DOI that this repository does not hold', q('10.5555/fixture.9999999', 'something long enough').reason === 'location');
   t('a page of another site', q('https://elsewhere.example/page.html', 'something long enough').reason === 'location');
   t('a file of another repository on github.com', q('https://github.com/example/other/blob/main/ERRATA.md', '収束すると書いてある').reason === 'location');
   t('a quotation too short, and too long', q('ERRATA.md', '収束') .reason === 'short' && q('ERRATA.md', 'x'.repeat(QUOTE_MAX + 1)).reason === 'long');
@@ -505,8 +505,8 @@ async function selfTest() {
   t('a comment of a fail says how to open a new issue; one of a legal request does not say it is closed', commentFor({ ok: false, reason: 'absent' }).includes(AGAIN) && !commentFor({ ok: false, reason: 'absent' }, { legal: true }).includes(AGAIN));
   t('the configuration of the fixture has no problem, and a broken one has', configProblems(conf, root).length === 0
     && configProblems(Object.assign({}, conf, { forms: [{ label: 'removal', kind: 'quote', where: ['W'], quote: ['Q'] }] }), root).length > 0
-    && configProblems(Object.assign({}, conf, { dois: { '10.5281/zenodo.2': ['pdf/paper.pdf'] } }), root).length > 0
-    && configProblems(Object.assign({}, conf, { dois: { '10.5281/zenodo.1000001': ['pdf/none.pdf'] } }), root).length > 0);
+    && configProblems(Object.assign({}, conf, { dois: { '10.5555/fixture.2': ['pdf/paper.pdf'] } }), root).length > 0
+    && configProblems(Object.assign({}, conf, { dois: { '10.5555/fixture.1000001': ['pdf/none.pdf'] } }), root).length > 0);
   fs.rmSync(root, { recursive: true, force: true });
   for (const [name, ok] of results) console.log((ok ? '  OK    ' : '  FAIL  ') + name);
   const failed = results.filter((r) => !r[1]).length;
