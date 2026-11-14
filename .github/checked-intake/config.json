@@ -1,0 +1,45 @@
+{
+  "from": "2026-12-01",
+  "forms": [
+    {
+      "label": "correction",
+      "kind": "quote",
+      "where": [
+        "Sophaxis id"
+      ],
+      "quote": [
+        "Words on the record page, as shown"
+      ],
+      "when": {
+        "field": [
+          "Kind of error"
+        ],
+        "in": [
+          "The title, the authors or the abstract differ from the repository",
+          "A version, a date or a DOI is wrong",
+          "The statement on generative models is wrong or incomplete"
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://sophaxis.vercel.app/",
+      "dir": "site"
+    }
+  ],
+  "blob": "https://github.com/cpsbvbng26-dotcom/sophaxis",
+  "dois": {},
+  "ids": [
+    [
+      "^(\\d{4}\\.\\d{4})$",
+      "site/abs/{1}.html"
+    ]
+  ],
+  "neverClose": [
+    "submission",
+    "removal",
+    "withdrawal",
+    "published"
+  ]
+}
