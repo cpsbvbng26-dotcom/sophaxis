@@ -4142,15 +4142,20 @@ console.log('\n99. Every page: the language switch, the footer, the canonical ad
   const enParts = html.filter((f) => H[f].startsWith('<!doctype html>\n<html lang="ja">'))
     .filter((f) => !(H[f].includes('<a class="skip" href="#main" lang="en">') && /<nav lang="en">/.test(H[f]) && H[f].includes('<footer><div class="wrap" lang="en">')));
   ok('on a Japanese page, the skip link, the navigation and the footer, which are in English, are marked as English', enParts.length === 0, enParts.join(', '));
-  /* The footer: the same fields on every page, and nothing that links Nusquama, here or anywhere in the repository. */
+  /* The footer: the same fields on every page. Below, nothing in the repository names the operator's other site. */
   const foot = (h) => (/<footer>[\s\S]*<\/footer>/.exec(h) || [''])[0];
   const FIELDS = ['Operated by ' + site99.operator.name + '.', 'contact.html">Contact</a>', 'disclaimer.html">Disclaimer</a>', 'policies/privacy.html">Privacy</a>', 'policies/terms.html">Terms of Use</a>', 'href="' + site99.repo + '">Source</a>', 'Claude is not an author.'];
   const lacking = html.filter((f) => !FIELDS.every((x) => foot(H[f]).includes(x)));
   ok('every footer names the operator and links the contact page, the Disclaimer, the Privacy Policy, the Terms of Use and the source, with the disclosure (' + FIELDS.length + ' fields)', lacking.length === 0, lacking.join(', '));
   const tracked = require('child_process').execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' }).split('\0').filter((f) => f && !/\.(pdf|png|ico)$/.test(f));
-  /* Sophaxis and Nusquama share tools/live.js, whose comment names it; nothing links it, and no page names it. */
-  const nus = tracked.filter((f) => f !== 'verification/check.js' && (/nusquama\.vercel\.app|cpsbvbng26-dotcom\/nusquama/i.test(read(path.join(ROOT, f))) || (f.startsWith('site/') && /nusquama/i.test(read(path.join(ROOT, f))))));
-  ok('no file of the repository links Nusquama, and no page of the site names it', nus.length === 0, nus.join(', '));
+  /* The operator's other site, a work of fiction, is never linked with Sophaxis or echoed by it. Until 2026-11-15 a comment of
+   * tools/live.js, two comments here, the changelog and the record named it, and this check only kept links to it and its name
+   * off the pages. Since 2026-11-15 no tracked file names it, this one included: the words are put together here from parts.
+   * The history of git keeps the earlier text. */
+  const OTHER = new RegExp([['nus', 'quama'], ['ヌス', 'クァマ'], ['reg', 'num']].map((x) => x.join('')).join('|'), 'i');
+  const nus = tracked.filter((f) => OTHER.test(read(path.join(ROOT, f))));
+  ok('no file of the repository, this check and the site included, names the operator\'s other site', nus.length === 0 && tracked.includes('verification/check.js') && tracked.some((f) => f.startsWith('site/'))
+    && ['Nus' + 'quama', 'ヌス' + 'クァマ', 'REG' + 'NUM'].every((x) => OTHER.test('a ' + x + ' b')), nus.join(', '));
   /* Canonical addresses and the sitemap: each page names itself, and every page that may be indexed is in the sitemap, which lists only what exists. */
   const sm = read(path.join(S, 'sitemap.xml'));
   const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
@@ -6452,7 +6457,7 @@ console.log('\n128. No issue text in the logs of the runs: the scripts read an i
 }
 console.log('\n129. GitHub\'s notifications: the Takedown and Privacy Policies say that they may carry a copy of an issue, and no page says that no other copy of an issue is made without saying so (2026-11-13)');
 {
-  /* A sixteenth read-only pass found that Nusquama's privacy page said that no other copy of an issue is made, and did not name GitHub's
+  /* A sixteenth read-only pass found that the privacy page of another of the operator's sites said that no other copy of an issue is made, and did not name GitHub's
    * notifications. Sophaxis's pages did not say that, but the Takedown Policy listed what an emptied or deleted issue leaves, and the
    * Privacy Policy said how long issues stay, without the notifications. GitHub sends a notification of activity on an issue to the accounts
    * set to receive it; an email notification holds a copy of the content; the operator's account may be one of them. The operator's settings
@@ -6992,7 +6997,7 @@ console.log('\n132. Keeping the form and tightening (2026-11-14): advice for the
 /* ------------------------------------------------------------ 133 */
 console.log('\n133. The shelf (2026-11-14): field codes and colours, shelf marks, the shelf, the catalogue card, the accession register, every drawing drawn again from design.js, no font, no outside address, no classification scheme of others, both languages, and the record');
 {
-  /* The owner asked on 2026-11-14 for a design as elaborate as Nusquama's, simple enough to raise no question of copyright.
+  /* The owner asked on 2026-11-14 for an elaborate design, simple enough to raise no question of copyright.
    * Every shape comes from the numbers of design.js; this check draws each again and compares it with what the site serves.
    * The field codes are Sophaxis's own: no page names an existing classification scheme or its notation as Sophaxis's.
    * A shelf mark and an accession number are labels: no citation format, feed or harvest carries them. */
@@ -7572,6 +7577,201 @@ console.log('\n135. The eighteenth read-only pass (2026-11-15): the checked inta
   const runBreaks = [['the daily run closes', daily[1]], ['the daily run labels a request', daily[2]]];
   for (const [k, r] of runBreaks) if (dailyProblems(r).length === 0) missed.push(k);
   ok('break on purpose: a close in verify.js, a lock in intake.js, the GitHub location, the list of researchers, a page, a Japanese policy and a form saying the intake closes, the old consequence in Japanese, the privacy page, a day and a summary missing in Japanese, the feed entry, the section, its count, a quotation, the earlier row and the lawyers, and the daily run closing or labelling a request each fail (' + (breaks.length + runBreaks.length - missed.length) + ' / ' + (breaks.length + runBreaks.length) + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 136 */
+console.log('\n136. The entrance of the top pages (2026-11-15): the name, the rule, the sentence and three emblems drawn again from the records, every number counted again, every sentence the top pages carried still there word for word, the notices whole and in their order, the colours measured in both schemes, and nothing that echoes the operator\'s other site');
+{
+  /* The owner asked on 2026-11-15 for an entrance as considered as that of another site of the operator, in Sophaxis's own idiom and
+   * not like that site. This check draws the three emblems again from the records and design.js, counts every number of the entrance
+   * again from the records and site.json, and holds every sentence that the top pages carried before to its page, word for word. */
+  const Bd = require('../build.js');
+  const Dz = require('../design.js');
+  const S = path.join(ROOT, 'site');
+  const PAPERS = path.join(ROOT, 'data', 'papers');
+  const real = {
+    site: JSON.parse(read(path.join(ROOT, 'site.json'))),
+    records: fs.readdirSync(PAPERS).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(read(path.join(PAPERS, f)))),
+    en: read(path.join(S, 'index.html')), ja: read(path.join(S, 'index.ja.html')),
+    brand: read(path.join(ROOT, 'brand.md')), brandJa: read(path.join(ROOT, 'brand.ja.md')),
+    css: Dz.css(JSON.parse(read(path.join(ROOT, 'site.json'))).fields, 'entrance'),
+    log: read(path.join(ROOT, 'CHANGELOG.md')),
+  };
+  /* The sentences that the two top pages carried before the entrance, each of which must still stand on its page. */
+  const PINNED_EN = ['Sophaxis is an overlay preprint server for philosophy and mathematics.',
+    'Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.',
+    'Authors deposit their work in an open repository; Sophaxis moderates the submission and gives it a stable record page.',
+    'Acceptance is moderation, not peer review.', 'The quality of listed work is not guaranteed.',
+    'Work made with language models or other generative models is accepted when the use is disclosed.', 'Sophaxis charges nothing, to authors or to readers.',
+    'Why Sophaxis is run: the Statement of Purpose.', 'It creates no rights or obligations; the policies apply.',
+    'Records are added as they are accepted, and every record is checked once a week.', 'The shelf is a metaphor; Sophaxis is not a library.'];
+  const PINNED_JA = ['Sophaxis は哲学と数学のオーバーレイ型プレプリントサーバーです。',
+    'Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。',
+    '著者が作品を公開のリポジトリに預け、Sophaxis がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。',
+    '掲載はモデレーションであり、査読ではありません。', '載っている作品の質は保証しません。', '言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。',
+    'Sophaxis は、著者からも読者からも料金を取りません。', 'Sophaxis を運営する目的は、運営理念・声明に述べています。', '声明は権利や義務を生じさせず、規程が適用されます。',
+    '記録は受け付けたときに加わり、すべての記録を毎週確かめています。', '一覧と統計は英語です。', '書架はたとえで、Sophaxis は図書館ではありません。'];
+  const METAPHOR = ['The shelf is a metaphor. Sophaxis is not a library, and it does not keep the works: they stay at their repositories.', '書架はたとえです。Sophaxis は図書館ではなく、作品を預かりません。作品は預け先にあります。'];
+  /* Words of the other site's look: arms, a flag, a map of a territory, a crown, knights, a realm, a Latin title. */
+  const ECHO = new RegExp('\\b(?:' + ['reg' + 'num', 'shields?', 'crests?', 'coats? of arms', 'heraldry', 'heraldic', 'crowns?', 'flags?', 'banners?', 'territory', 'territories', 'maps?', 'knights?', 'kingdoms?', 'realms?', 'insignia'].join('|')
+    + ')\\b|紋章|盾|王冠|国旗|国章|旗|版図|地図|騎士|王国|王室|勲章', 'i');
+  const text = (h) => h.replace(/<style>[\s\S]*?<\/style>/g, ' ').replace(/<\/?(?:a|b|span|time|code|small)\b[^>]*>/g, '').replace(/<(?:title|text)[^>]*>([^<]*)<\/(?:title|text)>/g, ' $1 ').replace(/(?:aria-label|alt|title)="([^"]*)"/g, ' $1 >')
+    .replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ');
+  const mainText = (h) => text((/<main[^>]*>([\s\S]*?)<\/main>/.exec(h) || [, ''])[1]);
+  const between = (h, a, b) => { const i = h.indexOf(a); if (i < 0) return ''; const j = h.indexOf(b, i + a.length); return j < 0 ? '' : h.slice(i, j + b.length); };
+  /* The scheme's tokens, as the site serves them, with the stronger ones when more contrast is asked. */
+  function tokens(css) {
+    const pal = (re) => Object.fromEntries([...((re.exec(css) || [])[1] || '').matchAll(/--([a-z]+): (#[0-9a-f]{6})/g)].map((m) => [m[1], m[2]]));
+    const light = pal(/\n:root \{([^}]*)\}/), dark = pal(/@media \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/);
+    return { light, dark, 'light, more contrast': Object.assign({}, light, pal(/@media \(prefers-contrast: more\) \{ :root \{([^}]*)\}/)),
+      'dark, more contrast': Object.assign({}, dark, pal(/@media \(prefers-contrast: more\) and \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/)) };
+  }
+  /* Every colour the entrance names, on every surface it names: text at 4.5:1, a shape that carries meaning at 3:1 (WCAG 1.4.3,
+   * 1.4.11). The rule colour draws only decoration (the ruled lines of the card, the board under the header) and the surfaces are
+   * the backgrounds; they are listed, not measured as ink. */
+  const DECOR = ['rule', 'bg', 'card'];
+  function contrast(css, page, fields) {
+    const T = tokens((/<style>([\s\S]*?)<\/style>/.exec(page) || [, ''])[1]);
+    const surfaces = ['bg'].concat([...css.matchAll(/background:var\(--([a-z]+)\)/g)].map((m) => m[1]).filter((x) => x !== 'accent'));
+    const inks = [];
+    for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      const sel = m[1].trim(), isText = /text|\.n\b|figcaption|h1|statement/.test(sel);
+      for (const d of m[2].matchAll(/(color|fill|stroke|border[a-z-]*):[^;}]*?var\(--([a-z-]+)\)/g)) {
+        if (DECOR.includes(d[2])) continue;
+        inks.push({ sel, prop: d[1], token: d[2], need: d[1] === 'color' || (isText && d[1] === 'fill') ? 4.5 : 3 });
+      }
+    }
+    const rows = [], low = [];
+    for (const [scheme, pal] of Object.entries(T)) {
+      const base = scheme.startsWith('dark') ? 'dark' : 'light';
+      for (const ink of inks) {
+        const hexes = ink.token === 'f-c' ? Object.values(fields).map((f) => [f.code, f[base]]) : [[ink.token, pal[ink.token]]];
+        for (const [name, hex] of hexes) for (const s of [...new Set(surfaces)]) {
+          const r = hex && pal[s] ? Dz.ratio(hex, pal[s]) : 0;
+          rows.push([scheme, name, s, r]);
+          if (r < ink.need) low.push(scheme + ' ' + ink.sel + ' ' + ink.prop + ' ' + name + ' on ' + s + ' ' + r.toFixed(2));
+        }
+      }
+    }
+    return { rows, low, inks: inks.length };
+  }
+  function problems(x) {
+    const bad = [];
+    const F = x.site.fields || {}, C = x.site.categories, code = (slug) => (F[slug] || {}).code;
+    const shown = x.records.filter((p) => p.status !== 'removed');
+    const order = (slug) => Object.keys(C).indexOf(slug);
+    const sorted = shown.slice().sort((a, b) => order(a.category) - order(b.category) || a.id.localeCompare(b.id));
+    const items = sorted.map((p) => ({ code: code(p.category), pages: ((p.pdfs || []).slice(-1)[0] || {}).pages || 0, titleLength: p.title.length, withdrawn: p.status === 'withdrawn' }));
+    const codes = Object.keys(C).map(code);
+    const n = shown.length, w = shown.filter((p) => p.status === 'withdrawn').length, entries = n + w, places = (x.site.notOffered || []).length;
+    const tn = x.site.termsNotice || {};
+    const want = [Dz.shelfEmblem(items), Dz.fieldsEmblem(codes), Dz.cardEmblem(entries)];
+    for (const [lang, h, ja] of [['en', x.en, false], ['ja', x.ja, true]]) {
+      const P = 'index' + (ja ? '.ja' : '') + '.html: ';
+      const ent = between(h, '<div class="entrance">', '</div>\n</div>\n');
+      if (!ent) { bad.push(P + 'no entrance'); continue; }
+      /* The name, the rule, the sentence, in that order, first in <main>. */
+      const head = '<div class="entrance">\n<h1>' + x.site.name + '</h1>\n' + Dz.ruleSvg() + '\n<p class="statement">' + (ja ? x.site.name + ' は哲学と数学のオーバーレイ型プレプリントサーバーです。' : x.site.name + ' is an overlay preprint server for philosophy and mathematics.') + '</p>\n';
+      if (!ent.startsWith(head) || !/<main class="wrap" id="main">\s*<div class="entrance">/.test(h) || (h.match(/<h1[ >]/g) || []).length !== 1) bad.push(P + 'the name, the rule and the sentence do not open the page');
+      /* The emblems, drawn again, in their order, each in a figure with its caption. */
+      const figs = [...ent.matchAll(/<figure>(<svg class="em"[\s\S]*?<\/svg>)<figcaption><b><a href="([^"]+)">([^<]+)<\/a><\/b> ([^<]*)<\/figcaption><\/figure>/g)];
+      if (figs.length !== 3 || figs.some((m, i) => m[1] !== want[i])) bad.push(P + 'the emblems are not the three that design.js draws from the records');
+      /* Every number of the entrance, counted again. */
+      const cap = figs.map((m) => m[4]);
+      const capWant = ja
+        ? [n ? '記録 ' + n + ' 件を、分野の色の背で並べています。' + (w ? '撤回した ' + w + ' 件は、枠だけで示しています。' : '') : '書架はまだ空です。', codes.length + ' つの分野に、Sophaxis が自分で決めた符号と印があります。', '載った順に、記入が ' + entries + ' 件あります。']
+        : [n ? n + ' ' + (n === 1 ? 'record' : 'records') + ', each a spine in the colour of its field.' + (w ? ' ' + w + ' withdrawn, drawn in outline.' : '') : 'The shelf is empty for now.', codes.length + ' codes and glyphs of Sophaxis&#39;s own.'.replace('&#39;', "'"), entries + ' ' + (entries === 1 ? 'entry' : 'entries') + ', in the order of listing.'];
+      if (cap.join('\n') !== capWant.join('\n')) bad.push(P + 'a caption does not give the number counted from the records: ' + cap.join(' | '));
+      const links = figs.map((m) => m[2]).join(' ');
+      if (links !== (ja ? '#listing ./brand.ja.html#分野の符号と色 ./register.ja.html' : '#listing ./brand.html#field-codes-and-colours ./register.html') || !h.includes('<h2 id="listing">')) bad.push(P + 'a caption leads nowhere');
+      const nums = (text(ent).match(/\d+/g) || []).map(Number);
+      const allowed = new Set([n, w, codes.length, entries]);
+      if (nums.some((v) => !allowed.has(v)) || !nums.includes(entries) || !nums.includes(codes.length)) bad.push(P + 'a number in the entrance that the records do not give: ' + nums.join(','));
+      /* The card: what Sophaxis is and is not, then the two notices it points to, whole, in their order. */
+      const card = between(h, '<section class="card about"', '</section>');
+      if (!card || h.indexOf(card) < h.indexOf(ent) + ent.length - 1) bad.push(P + 'no card after the entrance');
+      const notes = (/<dd class="notes">([\s\S]*?)<\/dd>/.exec(card) || [, ''])[1];
+      const notesWant = ja ? '<a href="#scope">提供しない国と地域があります。</a><a href="#changes">規程の変更を告知しています。</a>'
+        : '<a href="#scope">Not offered in ' + places + ' places.</a><a href="#changes">' + (tn.since ? 'Changes to the policies, some in effect since ' + tn.since + ' and the rest from ' + tn.from + ' on.' : 'Change to the policies from ' + tn.from + '.') + '</a>';
+      if (notes !== notesWant) bad.push(P + 'the card does not point to the two notices by their own headings');
+      const scope = ja ? '<div id="scope"><div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、' + places + ' の国と地域（' : '<div id="scope">' + Bd.scopeNotice() + '</div>';
+      const terms = '<div id="changes">' + (ja ? Bd.termsNoticeJa() : Bd.termsNotice()) + '</div>';
+      const at = [h.indexOf(ent), h.indexOf(card), h.indexOf(scope), h.indexOf(terms), h.search(ja ? /<p class="meta">最終更新：/ : /<p class="meta">Last updated: /)];
+      if (at.some((v) => v < 0) || at.some((v, i) => i > 0 && v <= at[i - 1])) bad.push(P + 'the entrance, the card, the notice of places, the notice of changes and the date are not all there, in that order');
+      if (!(ja ? Bd.termsNoticeJa() : Bd.termsNotice()).includes(ja ? '<li>' : x.site.termsNotice.text.slice(-60))) bad.push(P + 'the notice of changes is not whole');
+      /* Every sentence the page carried. */
+      const t = mainText(h);
+      for (const s of (ja ? PINNED_JA : PINNED_EN).concat([METAPHOR[ja ? 1 : 0]])) if (!t.includes(s)) bad.push(P + 'lacks: ' + s.slice(0, 40));
+      if (!(ja ? x.brandJa : x.brand).split('\n').includes(METAPHOR[ja ? 1 : 0])) bad.push((ja ? 'brand.ja.md' : 'brand.md') + ' no longer says: ' + METAPHOR[ja ? 1 : 0].slice(0, 30));
+      /* The header of the top page: the logo as it is, beside the name and the subtitle of site.json. */
+      if (!h.includes('<img class="logo" src="./favicon.svg" alt="" width="42" height="42"><span>' + x.site.name + '<small>' + x.site.tagline + '</small></span></a>')) bad.push(P + 'the header lacks the logo beside the name');
+      /* Nothing that echoes the other site. Text that comes from the records is left out, since authors write it. */
+      let tt = text(h);
+      const strings = [];
+      const leaves = (v) => (typeof v === 'string' ? strings.push(v) : v && typeof v === 'object' ? Object.values(v).forEach(leaves) : null);
+      x.records.forEach(leaves);
+      /* The names of the places where Sophaxis is not offered are names of states, not words of a look. */
+      (x.site.notOffered || []).forEach((p) => strings.push(p.place, p.ja));
+      strings.sort((a, b) => b.length - a.length);
+      for (const s of strings) if (s && s.length > 3) tt = tt.split(s).join(' ');
+      const e = ECHO.exec(tt);
+      if (e) bad.push(P + 'a word of another site\'s look: ' + e[0]);
+      if (/\blang="la"/.test(h)) bad.push(P + 'a line in Latin');
+    }
+    /* The style of the entrance names no colour of its own, only the site's tokens and the field colours. */
+    if (/#[0-9a-f]{3,8}\b(?![^{]*\{)/i.test(x.css.replace(/@media print\{[^\n]*/, ''))) bad.push('the entrance names a colour of its own');
+    for (const [lang, h] of [['en', x.en], ['ja', x.ja]]) {
+      if (!h.includes(x.css)) bad.push('index' + (lang === 'ja' ? '.ja' : '') + '.html: the style of the entrance is not design.js\'s');
+      const c = contrast(x.css, h, F);
+      if (c.low.length || c.inks < 8) bad.push(lang + ' contrast: ' + c.low.slice(0, 4).join('; '));
+    }
+    /* The emblems hold any number of records: none, one and many stay inside the drawing, between the bookends. */
+    for (const k of [0, 1, 7, 240]) {
+      const it = Array.from({ length: k }, (_, i) => ({ code: codes[i % codes.length], pages: (i * 13) % 50, titleLength: (i * 37) % 160, withdrawn: i % 5 === 4 }));
+      const svg = Dz.shelfEmblem(it), xs = [...svg.matchAll(/<rect x="([\d.]+)" y="[\d.]+" width="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[1]) + Number(m[2])]);
+      const ends = [...svg.matchAll(/<polygon points="([^"]+)"/g)].map((m) => m[1].split(/[ ,]/).map(Number).filter((v, i) => i % 2 === 0));
+      if (xs.length !== k || ends.length !== 2 || xs.some(([a, b]) => a < Math.max(...ends[0]) || b > Math.min(...ends[1])) || Math.min(...ends[0]) < 0 || Math.max(...ends[1]) > Dz.ENTRANCE.view.w) bad.push('the shelf of ' + k + ' records leaves the drawing or its bookends');
+      if (!svg.includes('<title>The shelf: ' + k + ' ' + (k === 1 ? 'spine' : 'spines') + '</title>')) bad.push('the shelf of ' + k + ' records has the wrong title');
+    }
+    if (Bd.entrance([], []).indexOf('The shelf is empty for now.') < 0 || Bd.entrance([], [], true).indexOf('書架はまだ空です。') < 0) bad.push('the entrance of an empty shelf');
+    /* The record. */
+    if (!x.log.includes('The two top pages open with an entrance')) bad.push('the changelog has no entry');
+    return bad;
+  }
+  const now = problems(real);
+  const c = contrast(real.css, real.en, real.site.fields);
+  const lowest = Math.min(...c.rows.map((r) => r[3]));
+  ok('both top pages open with the name, the rule of five spines and the sentence; their three emblems are the ones design.js draws from the records, with captions whose numbers are counted again; a card holds what Sophaxis is and is not and points to the two notices, which follow whole, in order; every sentence the top pages carried stands word for word; the header shows the logo; the entrance names no colour of its own and every colour it names reaches its ratio in four schemes (lowest ' + lowest.toFixed(2) + ':1); and nothing echoes the other site',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w2 = (k, v) => Object.assign({}, real, { [k]: v });
+  const en = (a, b) => w2('en', real.en.replace(a, b)), ja = (a, b) => w2('ja', real.ja.replace(a, b));
+  const breaks = [
+    ['a spine missing from the shelf emblem', en(/(<svg class="em"[^>]*><title>The shelf[^<]*<\/title>)<rect[^>]*\/>/, '$1')],
+    ['a glyph of the fields emblem moved', ja(/(<svg class="em"[^>]*><title>The fields[\s\S]*?cx=")60"/, '$161"')],
+    ['the register emblem with another number', en(/(class="n">)\d+</, '$199<')],
+    ['a caption with a wrong count', ja(/記録 \d+ 件を/, '記録 99 件を')],
+    ['a caption with a number of its own', en(', in the order of listing.', ', in the order of listing since 2020.')],
+    ['a record more than the shelf shows', w2('records', real.records.concat([Object.assign({}, real.records.find((p) => p.status === 'listed'), { id: '2099.0001' })]))],
+    ['the sentence changed', en('<p class="statement">Sophaxis is an overlay preprint server', '<p class="statement">Sophaxis is a preprint server')],
+    ['the name not first', ja(/(<main class="wrap" id="main">\s*)<div class="entrance">/, '$1<p>x</p>\n<div class="entrance">')],
+    ['a pinned sentence taken out', en('Acceptance is moderation, not peer review. ', '')],
+    ['a Japanese pinned sentence changed', ja('載っている作品の質は保証しません。', '載っている作品の質はおおむね保証しません。')],
+    ['the notice of places moved after the notice of changes', en(/(<div id="scope">[\s\S]*?<\/div>\n<\/div>\n)(<div id="changes">[\s\S]*?<\/div>\n<\/div>\n)/, '$2$1')],
+    ['the notice of changes cut short', ja(/<li>[^<]*<\/li>/, '')],
+    ['the card pointing to a wrong count of places', en('Not offered in ' + real.site.notOffered.length + ' places.</a>', 'Not offered in 40 places.</a>')],
+    ['the logo taken out of the header', ja('<img class="logo" src="./favicon.svg" alt="" width="42" height="42">', '')],
+    ['a word of a coat of arms', en('<p class="statement">', '<p class="statement">Our crest. ')],
+    ['a Latin title line', ja('</h1>', '</h1>\n<p lang="la">Sophaxis</p>')],
+    ['a Japanese word of a flag', ja('<b><a href="#listing">書架</a></b>', '<b><a href="#listing">書架の旗</a></b>')],
+    ['a colour of its own', w2('css', real.css.replace('.em .tb{fill:var(--accent)}', '.em .tb{fill:#c9a227}'))],
+    ['a pale caption', w2('css', real.css.replace('color:var(--muted);padding', 'color:var(--rule);padding').replace('.emblems figcaption{', '.emblems figcaption{background:var(--card);'))],
+    ['a pale spine', w2('site', Object.assign({}, real.site, { fields: Object.assign({}, real.site.fields, { logic: Object.assign({}, real.site.fields.logic, { light: '#e8e4dc' }) }) }))],
+    ['the metaphor taken off the brand page', w2('brand', real.brand.replace(METAPHOR[0], 'The shelf is a metaphor.'))],
+    ['no changelog entry', w2('log', real.log.replace('The two top pages open with an entrance', 'The top pages changed'))],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: a spine, a glyph, the register\'s number, a caption\'s count, a number of its own, a record more, the sentence, the order, a pinned sentence in either language, the order and wholeness of the notices, the card\'s count, the logo, words of arms, a Latin line, a flag in Japanese, a colour of its own, a pale caption, a pale spine, the brand page and the changelog (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 
