@@ -25,6 +25,7 @@ From 2026-12-01, under the checked intake below, only the DOI metadata counts fo
 The first check confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
+From 2026-12-01, a work is not accepted if any of its authors is under 16.
 A submitter under 18 needs the consent of a parent or guardian.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
@@ -141,6 +142,8 @@ An email confirmation says the same, and the operator's reply links the Privacy 
 Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
 Any author can withdraw a consent at any time, by a removal issue or by email.
 From 2026-12-01, under the checked intake, only the first way counts, and only for an author for whom the DOI metadata gives an ORCID iD.
+From the same day, the comment says, in place of the words above, "I agree to the listing of this work on Sophaxis, and I consent to the public parts of this submission, what I write in its issue among them, being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Services outside Japan"." and gives their ORCID iD.
+Before an author writes them, the [Privacy Policy](./privacy.md#services-outside-japan) gives what Article 28(2) of Japan's Act on the Protection of Personal Information asks: the country, the information on its system, and what each recipient says of its measures; the comment of the checked intake that asks for the confirmation links it.
 An author for whom it gives none cannot confirm, and the work waits until the metadata at the repository names one.
 
 ## A researcher who vouches for a first submission
@@ -222,7 +225,7 @@ The automatic check in the issue refuses a submission unless every box of a grou
 - I agree to the [Copyright Policy](./copyright.md).
 - I agree to the [Licence Policy](./licences.md).
 - I agree to the [Withdrawal Policy](./withdrawal.md).
-- I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit ([Terms of Use](./terms.md#general)).
+- I confirm that I am 13 or older, as from 2026-11-21 a person under 13 cannot submit, and, from 2026-12-01, that every author of this work is 16 or older ([Terms of Use](./terms.md#general)).
 - I confirm that, if I am under 18, I submit only with the consent of a parent or guardian.
 
 ### Where the authors live

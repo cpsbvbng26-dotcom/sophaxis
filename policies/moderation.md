@@ -53,6 +53,11 @@ A moderator accepts or declines a submission in its issue, and labels the issue 
 Every decision stays public in its issue.
 To help the review, the operator gives the public parts of a submission (the issue, the DOI metadata and the abstract) to three language models, Claude (Anthropic), ChatGPT (OpenAI) and Grok (xAI), and compares what they point out.
 The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
+Since its publication on 2026-11-15, the operator does this only when every GitHub account whose writing is in what would be given has consented to it: the submitter, every co-author, a researcher who vouches and anyone who comments.
+The submitter consents by the box of the submission form on services outside Japan; anyone else consents by a comment in the issue with the fixed words that the [Privacy Policy](./privacy.md#language-models-in-the-review) gives.
+If one of them has not consented, no language model is used for that issue: a person reviews it, or it waits.
+Before anything is given, `tools/llm.js` reads the issue and its comments and lists every account that has written in it without consenting; the operator gives nothing while that list is not empty.
+Comments of bots and of the operator's own account are not counted.
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 What a model points out is given as a reason for a decision only after the operator has checked it.
 As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
@@ -76,6 +81,23 @@ The operator then looks at the submission once more, and that decision is final.
 The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
 
 <!-- text: DSA 21 -->
+
+## Automatic hiding
+
+When a removal issue reports exposure of personal data, the automatic step of the [Takedown Policy](./takedown.md) takes the record page offline at once, before a person decides.
+Anyone may ask for this, and it goes on as before.
+From 2026-12-01, one exception applies.
+When a person has found two earlier requests of one GitHub account groundless, and has labelled each of those removal issues `not-upheld`, the account is told so in the second of them, in a fixed comment.
+After that notice, the automatic step no longer takes anything offline on that account's requests.
+A person reads each of its requests promptly instead, and decides on it; nothing stops the account from asking, and every request is still read.
+The count is taken from the public labels of the removal issues of that account, each time a request arrives; Sophaxis keeps no list of such accounts, in the repository or anywhere else, and publishes none.
+
+## Locking an issue
+
+From 2026-12-01, the operator may lock an issue that carries abuse, or the personal data of others, and may hide comments in it with GitHub's own tools.
+Locking an issue never removes the route for a request that the law gives: a request for removal, a request about personal data under Japan's Act on the Protection of Personal Information, a statement about a person, or the withdrawal of a consent can still be made in a new issue, or by email, and is read.
+A locked issue is still read by the operator.
+No automatic step locks an issue.
 
 ## Moderators
 

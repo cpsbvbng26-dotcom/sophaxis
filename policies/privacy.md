@@ -20,7 +20,8 @@ Sophaxis applies Japan's Act on the Protection of Personal Information in full, 
 
 Personal data is used only for these purposes:
 
-- to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
+- to confirm that a person who submits, withdraws or reports a published version is an author of the work;
+- from 2026-11-21, to confirm that a co-author who confirms their agreement is an author of the work;
 - since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - from 2026-12-01, under the checked intake of the Submission Policy, to check that the public records of every author whose identity is verified, and of a researcher who vouches, place them where Sophaxis is offered, and that a researcher who vouches shares no current organisation with the submitter; only whether each check passes is used;
@@ -102,6 +103,8 @@ GitHub's notifications may carry a copy of the content of an issue to the accoun
 The logs of the automatic steps that read an issue keep no text of the issue, and GitHub keeps them, with the list of runs, for the period set for the repository, as the [Takedown Policy](./takedown.md) sets out.
 Vercel keeps its request logs for the period its service sets, and the operator does not copy them.
 A removed record keeps only its Sophaxis id and the day of removal, as the [Takedown Policy](./takedown.md) sets out.
+From 2026-12-01, before an issue is emptied or deleted on request, the lines of consent in it are copied into the record of provision (`docs/records-of-provision.md`): which account consented, on which day, and to what, and nothing else of the issue. Article 29 of Japan's Act on the Protection of Personal Information asks for that record, and Article 21 of the APPI Enforcement Rules sets three years for keeping it, so these lines stay public there for three years from the day they are copied.
+From 2026-12-01, when a removal issue reports exposure of personal data, the automatic step reads the public labels of the earlier removal issues of the account that opened it, to apply the exception of the Moderation Policy under "Automatic hiding"; it keeps nothing of them.
 Earlier versions stay in the history of the public repository and in the saves of the Internet Archive; the operator asks GitHub and the Internet Archive to remove them.
 
 ## Reuse and copies elsewhere
@@ -120,7 +123,7 @@ Copies that others have already taken are outside Sophaxis's control.
 
 ## Services outside Japan
 
-Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person. Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts (the issue, the DOI metadata and the abstract), which the operator gives by hand to their language models, Claude, ChatGPT and Grok, to help the review; nothing is given to them after a work is listed.
+Sophaxis uses these services outside Japan: GitHub (United States) to receive submissions and keep the records, Vercel (United States) to serve the site, DataCite (Germany) and Crossref (United States) for DOI metadata, ORCID (United States) for public ORCID records, and the Internet Archive (United States) to save the pages and the PDF copies. OpenAlex (United States) is asked how it holds a listed work, by its DOI only, never about a person. Anthropic, OpenAI and xAI (all United States) receive, while a submission is reviewed, its public parts (the issue, the DOI metadata and the abstract), which the operator gives by hand to their language models, Claude, ChatGPT and Grok, to help the review, and only when every account that wrote in the issue has consented, as "Language models in the review" below sets out; nothing is given to them after a work is listed.
 Sophaxis treats the personal data in records that reaches GitHub, Vercel, ORCID and the Internet Archive, and the public parts of a submission that reach Anthropic, OpenAI and xAI while it is reviewed, as provided to a third party in a foreign country, under Article 28 of Japan's Act on the Protection of Personal Information.
 The submission form asks for each author's consent to this, after giving the information below; the confirmation is required from 2026-11-21.
 Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
@@ -167,7 +170,7 @@ A person in the European Union who writes reaches the operator in Japan, for whi
 
 Vercel keeps request logs for Sophaxis, including the IP address.
 The operator can see them, and uses them only to find and fix faults.
-Vercel's documentation says that, on the Hobby plan on which Sophaxis is served, runtime logs are kept for 1 hour.
+On the Hobby plan on which Sophaxis is served, runtime logs are kept for the period Vercel sets.
 A request log holds details of the request, such as an IP address, the browser's user agent, the address asked for and the time, and no name.
 Sophaxis holds nothing that links an IP address to a person: it has no accounts, sets no cookies and runs no analytics, and finding who used an IP address would need an inquiry to that person's network provider.
 Under Japan's Act on the Protection of Personal Information, information is personal information when it identifies a person, alone or because it can easily be matched with other information; the Commission's General Guidelines read matching that needs an inquiry to another business as generally not easy.
@@ -182,6 +185,31 @@ Section 22 of New Zealand's Privacy Act 2020, in its information privacy princip
 For a person in Switzerland, the disclosure to the services in the United States rests on that person's explicit consent, which Article 17 of Switzerland's Federal Act on Data Protection allows.
 
 <!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
+
+## Language models in the review
+
+Since its publication on 2026-11-15, the public parts of a submission are given to Claude (Anthropic), ChatGPT (OpenAI) and Grok (xAI) only when every GitHub account whose writing is in them has consented: the submitter, every co-author, a researcher who vouches and anyone who comments in the issue, as the [Moderation Policy](./moderation.md) sets out.
+Otherwise no language model is used for that issue; a person reviews it, or it waits.
+The submitter consents by the box of the submission form on services outside Japan.
+Anyone else consents by a comment in the issue with these words:
+
+~~~~
+I consent to what I have written in this issue being given, for help with the review, to Anthropic, OpenAI and xAI in the United States, as the Privacy Policy of Sophaxis sets out under "Language models in the review".
+~~~~
+
+From 2026-12-01, the fixed words with which a co-author confirms their agreement carry the same consent, as the [Submission Policy](./submission.md#when-a-work-has-more-than-one-author) sets out.
+Before consenting, a person is given, under "Services outside Japan" above, what Article 28(2) of Japan's Act on the Protection of Personal Information asks: the country, which is the United States; the information that Japan's Personal Information Protection Commission publishes on its system; and what each recipient says of its measures, or why it cannot be given.
+A consent can be withdrawn at any time, by a removal issue or by email; what was given before stays as it was.
+A comment that consents is public in the issue, by the person's own act.
+
+What the three providers' own texts say about training on what they are given, as fetched on 2026-11-15 by `tools/sources.js`:
+
+- Anthropic's Consumer Terms of Service: "We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings." Its Commercial Terms of Service, for business customers: "Anthropic may not train models on Customer Content from Services."
+- OpenAI's Terms of Use, read from the Internet Archive's copy of 2026-11-09, because OpenAI's own page asked for JavaScript and cookies: "If you do not want us to use your Content to train our models, you can opt out by following the instructions in this article". Its Services Agreement, for business customers, from the Internet Archive's copy of 2026-11-10: "OpenAI will not use Customer Content to develop or improve the Services, unless Customer explicitly agrees to such use."
+- xAI's Terms of Service for consumers: "When logged into our Service, you can select whether or not you want us to use your User Content to improve our products and services and train our models." Its Terms of Service for enterprises: "SpaceXSI will not use any User Content to train any foundation models, large language models, or other artificial intelligence systems or to develop any new products, services, or features, subject to disclosures to Customer and Customer-controlled user settings."
+
+The operator gives the public parts by hand in the chat of each service.
+Which of these terms govern the operator's accounts, and whether training is turned off in them, the operator has not shown, and this policy states neither.
 
 ## Security
 
@@ -305,6 +333,7 @@ Their laws require, or are reported to require, a representative there, the stor
 A place is listed as soon as such a duty is reported, and taken off only after its law has been read at its source.
 From 2026-11-26, the list also covers places whose law asks for the operator's postal address or telephone number before personal data is collected, places whose law lets the personal data of a minor be processed only with a parent's consent that the service confirms, or not at all, and places whose data protection law could not be read at its source; the Submission Policy gives each, with its law.
 Russia's Federal Law No. 152-FZ also reaches the data of Russian citizens who live elsewhere, when they consent to its processing (Article 1(1.1)); Sophaxis decides by where a person lives or stays and does not ask about citizenship, so this reach is not covered, and the operator reviews the decision if a Russian authority raises it.
+From 2026-12-01, Sophaxis does not accept a work if any of its authors is under 16.
 From 2026-11-22, Sophaxis does not list work by an author under 18 who lives or stays in India.
 From 2027-05-13, Rule 10 of India's Digital Personal Data Protection Rules, 2025 lets the data of a person under 18 be processed only with the verifiable consent of a parent, and Sophaxis does not verify that consent.
 This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.

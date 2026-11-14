@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -44,6 +44,7 @@ For personal data and other serious harm, the operator then takes the record pag
 
 The operator aims to answer each request within 7 days.
 For personal data and other serious harm, the record page (its title, authors, abstract and PDF copy) is taken offline at once, before the decision, while GitHub Actions runs for Sophaxis, and OAI-PMH reports the record as deleted until it is put back.
+From 2026-12-01, the automatic step does not do this on a request of an account whose two earlier such requests a person found groundless, once the account has been told so; a person reads its request promptly instead, as the [Moderation Policy](./moderation.md#automatic-hiding) sets out.
 The automatic steps below run as GitHub Actions. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, the operator takes these steps by hand, as soon as the operator learns of the request, and the record page is then not taken offline at once.
 A removal issue is acknowledged automatically, with the day by which the operator aims to answer.
 When a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline automatically, before the operator reads it.
@@ -94,7 +95,7 @@ In the records and the OAI-PMH interface:
 
 In the issues:
 
-- Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.
+- Every automatic comment about the record is deleted, and the issues that name it are emptied and closed; no automatic step locks them. From 2026-12-01, the lines of consent in them (which account consented, on which day, and to what) are first copied into the record of provision, as the [Privacy Policy](./privacy.md#records) sets out. The operator then deletes them.
 - Deleting an issue also deletes its edit history.
 - The automatic steps read an issue from the event file that GitHub Actions gives them, so the logs of their runs keep the issue's number and the outcome of each step, with the address of any lookup that failed (which can hold the DOI or the ORCID iD given in the issue), and not the issue's text.
 - Before 2026-11-13 the logs kept the text of the issue as it was when a step ran. The logs of the runs for the three issues emptied before that day were deleted on 2026-11-13.

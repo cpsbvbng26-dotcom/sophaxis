@@ -12,6 +12,8 @@ The code of each step is public, and each section links to it.
 - Every step on this page that runs as GitHub Actions depends on GitHub. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no such step runs by itself: the operator takes the steps by hand, as soon as the operator can, and none of them happens at once.
 - One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once, while GitHub Actions runs. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
 - No step uses a language model. The steps are ordinary code.
+- No step locks an issue (2026-11-15). The operator may lock an issue by hand, as the [Moderation Policy](./policies/moderation.md#locking-an-issue) sets out.
+- The operator gives a submission to language models by hand, and, since 2026-11-15, only after `node tools/llm.js` has found that every account that wrote in the issue has consented, as the [Moderation Policy](./policies/moderation.md#decisions) sets out. That script only reads the issue and its comments; it sends nothing to a language model.
 - No step signs in to any account. The only key is the token that GitHub gives each run, with the least permissions the step needs; the IndexNow key is public by design.
 - A step that changes the records builds the site and runs every check first, and changes nothing if a check fails.
 - The [Privacy Policy](./policies/privacy.md) says what personal data these steps handle.
@@ -58,14 +60,15 @@ The code of each step is public, and each section links to it.
 - Reads: the record and the issues of the repository.
 - Writes: an acknowledgement with the day by which the operator aims to answer, and a notice to the authors in their submission issue.
 - When the issue reports exposure of personal data, it also takes the record page (its title, authors, abstract and PDF copy) offline at once while GitHub Actions runs, as the [Takedown Policy](./policies/takedown.md) says; when Actions does not run, the operator does it by hand, not at once.
+- From 2026-12-01, before taking anything offline, reads the public labels of the earlier removal issues of the account that opened the issue. If a person has found two of its requests to take material offline groundless, and the account has been told so, nothing is taken offline: the issue gets the label `needs a person`, and a person reads it promptly ([Moderation Policy](./policies/moderation.md#automatic-hiding)). It keeps no list of accounts.
 - Leaves to the operator: the decision.
 - Code: [tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js), run by [removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml).
 
 ## When the operator labels a request `upheld` or `not-upheld`
 
 - Acts only on the label of the repository owner.
-- Upheld: removes the record, as "What a removed record leaves" in the Takedown Policy sets out, deletes the automatic comments about it, and empties, closes and locks the issues that name it.
-- Not upheld: puts back what was taken offline, from the git history.
+- Upheld: removes the record, as "What a removed record leaves" in the Takedown Policy sets out, deletes the automatic comments about it, and empties and closes the issues that name it, without locking them. From 2026-12-01, it first copies the lines of consent in those issues (which account consented, on which day, and to what) into `docs/records-of-provision.md`, and pushes them, before it empties any issue.
+- Not upheld: puts back what was taken offline, from the git history. From 2026-12-01, when this is the second request of an account to take material offline that is not upheld, it tells the account so in a fixed comment.
 - After a removal, opens a follow-up issue that lists what is left by hand: deleting the emptied issues, a request to the Internet Archive with its draft, and GitHub's procedure for the repository history.
 - Leaves to the operator: the grounds of the decision, deleting the emptied issues, and sending the requests to GitHub and the Internet Archive.
 - A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id and, for a decision, the grounds, which are posted in the authors' submission issue before it is emptied.

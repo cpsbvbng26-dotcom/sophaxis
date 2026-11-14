@@ -1,6 +1,6 @@
 # Records of provision to third parties
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-15.
 
 This file is the record that Article 29 of Japan's Act on the Protection of Personal Information asks Sophaxis to keep when it provides personal data to a third party, together with the issues and the history of the public repository that it points to. It also names each service that gives Sophaxis personal data, for Article 30 of Japan's Act on the Protection of Personal Information.
 Claude decided on 2026-11-12 (2026-11-12 に Claude が決めました) to keep it in this form, because the issues and the history already hold the date, the people and the items of each provision, and what they lacked were the recipients' names and addresses and the period of keeping.
@@ -72,6 +72,16 @@ A row is added here for each provision that needs a record: the day, the person 
 | --- | --- | --- | --- | --- |
 
 No such provision has been made so far.
+
+## Lines of consent kept from emptied issues
+
+From 2026-12-01, before an issue is emptied or deleted on request, `tools/removal.js` copies its lines of consent here and pushes them, and only then empties the issue: which account consented, on which day (Japan time), and to what, in the fixed words of the form or the comment, with the number of the issue. Nothing else of the issue is copied. The owner decided this on 2026-11-15, because the consent is the item that Article 20(1)(ii) of the APPI Enforcement Rules asks the record to hold, and the issue that held it is emptied.
+Each line stays here, in public, until the day in its last column: three years after the day it was copied, the period that Article 21(iii) of the APPI Enforcement Rules sets.
+
+| Day of consent | Account | Words of consent | Issue | Copied | Kept until |
+| --- | --- | --- | --- | --- | --- |
+
+No line has been copied so far.
 
 ## How a new record is added
 

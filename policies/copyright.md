@@ -1,6 +1,6 @@
 # Copyright Policy
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [著作権の規程（日本語訳）](./copyright.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -18,22 +18,22 @@ The work stays under the licence the authors gave it in the repository.
 ## What Sophaxis copies, and on what basis
 
 Titles, author names, licences and dates come from the DOI metadata, which DataCite and Crossref make openly available for reuse; for Jxiv, they come from the public metadata of JaLC.
+DataCite's metadata is read only through its public REST API. DataCite's own texts permit this use of its API: its guide to the REST API says "Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.", and its Data File Use Policy says "Consistent with this broad waiver, DataCite does not impose any conditions on access to and use of the DataCite Data File." and "The DataCite Data File is available via the DataCite APIs and the annual public Data File." These pages are read from the Internet Archive's copies, as every page of DataCite's website is (fetched on 2026-11-15).
 The abstract is part of the work.
 It is shown under the work's own licence, with its authors and a link to the work.
 
 Sophaxis keeps an unmodified copy of the PDF of each listed version, so that search engines can index the full text.
-It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.
+It copies the file by script only from Zenodo, whose own pages let a script fetch it.
 Zenodo's developer documentation lists, among what its REST API supports, "Files — download/upload of files."
-arXiv's page on bulk data access says "We ask that users intent on harvesting use the dedicated site export.arxiv.org for these purposes, which contains an up-to-date copy of the corpus and is specifically set aside for programmatic access." Sophaxis fetches from that site.
-arXiv's terms of use for its APIs forbid storing and serving its e-prints "unless you have the permission of the copyright holder or are permitted to do so by the license with which the e-print was submitted". Every listed work carries one of the three accepted licences, which permit it.
+Since this change was published on 2026-11-15, Sophaxis reads nothing from arXiv by script, and makes no copy from it; the authors of a work there can attach the deposited PDF to the submission issue. The links to arXiv stay.
 Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.
 Figshare's terms list, among what a user shall not do, "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine". The only exception is for means "expressly authorized for you by Figshare in advance in writing".
 Research Square's terms say "You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites".
 The copies already taken from Figshare stay, under the work's own licence.
-These pages were read on 2026-11-12: Zenodo's and arXiv's directly, and Figshare's and Research Square's from the Internet Archive's copies.
+These pages were read on 2026-11-12: Zenodo's directly, and Figshare's and Research Square's from the Internet Archive's copies.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.
-For any other repository, the authors can attach the deposited PDF to their submission issue.
+For any other repository, arXiv among them, the authors can attach the deposited PDF to their submission issue.
 Since the change was published on 2026-11-13, this includes Figshare and Research Square.
 Sophaxis then keeps that file unmodified, and the record says that the authors provided it.
 Without such a file, the record links to the repository only.
