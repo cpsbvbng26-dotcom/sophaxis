@@ -8,14 +8,17 @@ on:
   # The checked intake (from 2026-12-01): once a day, a submission that has not passed every check 30 days after its issue
   # was opened gets the label "not listed" and a fixed comment (tools/intake.js --deadline). Nothing closes or locks an issue
   # (2026-11-15); an issue labelled "needs a person", or one that reads as a request, is left to a person.
+  # Before that, the same daily run checks every open submission that no run has labelled verified or unverified yet (a run that
+  # was cancelled, or never started), as if its issue had just been edited (2026-11-15).
   schedule:
     - cron: '17 0 * * *'
 permissions:
   contents: read
   issues: write
-concurrency:
-  group: intake-${{ github.event.issue.number }}
-  cancel-in-progress: true
+# The concurrency is set on each job, never on the workflow (2026-11-15): a run whose jobs are all skipped, such as one for a
+# comment without the words, then never takes the place of a check, and a skipped job gets a group of its own. A newer event of
+# the same issue cancels the older check, and the newer check reads the issue as it is then; a check for a comment has a group
+# of its own, so that it neither cancels nor is cancelled.
 jobs:
   intake:
     if: >-
@@ -25,14 +28,21 @@ jobs:
           && (contains(github.event.comment.body, 'I agree to the listing of this work on Sophaxis') || contains(github.event.comment.body, 'Confirmed by email through the ORCID record') || contains(github.event.comment.body, 'I vouch for this submission to Sophaxis'))))
     name: Look up the DOI and check the submitter
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: ${{ (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'submission')) && format('intake-issue-{0}', github.event.issue.number) || format('intake-run-{0}', github.run_id) }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       # deposit-check reads the DOI metadata and gives advice in the comment. It is pinned to a commit, and it does not decide the listing.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: cpsbvbng26-dotcom/deposit-check
           ref: 780899e3ae97a4330e037ba8096fac7178066f69
           path: deposit-check
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -46,8 +56,14 @@ jobs:
     if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')
     name: Check that an author asks for withdrawal
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: ${{ (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'withdrawal')) && format('intake-withdrawal-{0}', github.event.issue.number) || format('intake-run-{0}', github.run_id) }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -59,8 +75,14 @@ jobs:
     if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'published')
     name: Check a reported published version
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: ${{ (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'published')) && format('intake-published-{0}', github.event.issue.number) || format('intake-run-{0}', github.run_id) }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -70,13 +92,27 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deadline:
     if: github.event_name == 'schedule'
-    name: Label submissions whose time to pass the checks has ended
+    name: Check the submissions no run has labelled, and label those whose time to pass the checks has ended
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.event_name == 'schedule' && 'intake-daily' || format('intake-run-{0}', github.run_id) }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The same advice as the check of an issue, from the same pinned commit of deposit-check.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: cpsbvbng26-dotcom/deposit-check
+          ref: 780899e3ae97a4330e037ba8096fac7178066f69
+          path: deposit-check
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+      - run: sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed'
       - run: node tools/intake.js --deadline
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
