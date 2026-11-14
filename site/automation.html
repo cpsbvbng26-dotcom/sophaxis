@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-/jHkPSY+xNLy21N14r4ieQ56gQIIT5/2YcA6TmSfaBk='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gHVNHMhtrk3NzegK7y4APAtPk5nDUi7hd9q364vRfJ8='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>What runs by itself | Sophaxis</title>
 <meta name="description" content="Every automatic step of Sophaxis: when it runs, what it reads and writes, and what it leaves to the operator.">
 <link rel="canonical" href="https://sophaxis.vercel.app/automation.html">
@@ -90,11 +90,20 @@ td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-a
 /* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
 @media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+/* design.js */
+:root{--t1:.78rem;--t2:.88rem;--t3:1rem;--t4:1.18rem;--t5:1.75rem;--s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.5rem;--s6:2rem;--serif:Georgia,"Times New Roman","Hiragino Mincho ProN","Yu Mincho",serif;--sans:system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace;--ink:#f7f5f0}.f-phi{--f-c:#2f4a7a}.f-mat{--f-c:#1d5c52}.f-phm{--f-c:#5a3a78}.f-phs{--f-c:#6a4c10}.f-log{--f-c:#7c2b38}
+@media (prefers-color-scheme:dark){:root{--ink:#14171f}.f-phi{--f-c:#9fb6e0}.f-mat{--f-c:#8fcfc2}.f-phm{--f-c:#c6addf}.f-phs{--f-c:#dcc07a}.f-log{--f-c:#eba6b0}}
+h1{font-size:var(--t5)}h2{font-size:var(--t4)}
+nav,.meta,.crumbs,.flag,.fields,.toc,footer,.search,.mark,.shelf,.card dt,.lang{font-family:var(--sans)}.mark .code,.sm,.no{font-family:var(--mono)}
+.band{display:block;width:100%}.band .board{fill:var(--rule)}.band [class^=f-]{fill:var(--f-c)}
+.mark{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--f-c,var(--rule));color:var(--f-c,var(--fg));padding:0 .45rem;margin-left:.4rem;font-size:var(--t1);white-space:nowrap}
+.glyph{width:.85em;height:.85em;fill:none;stroke:currentColor;stroke-width:1.5;flex:none}.glyph .dot{fill:currentColor;stroke:none}
+.glyphs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}@media print{.band{display:none}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="top"><div class="wrap">
+<header class="top"><svg class="band" height="12.5" aria-hidden="true"><title>Five spines</title><pattern id="band" width="30" height="12.5" patternUnits="userSpaceOnUse"><rect x="1" y="2" width="4" height="9" class="f-phi"/><rect x="7" y="4.5" width="4" height="6.5" class="f-mat"/><rect x="13" y="0" width="4" height="11" class="f-phm"/><rect x="19" y="4.5" width="4" height="6.5" class="f-phs"/><rect x="25" y="2" width="4" height="9" class="f-log"/></pattern><rect width="100%" height="11" fill="url(#band)"/><rect y="11" width="100%" height="1.5" class="board"/></svg><div class="wrap">
 <a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
 <nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
 <p class="lang"><a href="./automation.ja.html" hreflang="ja" lang="ja">日本語</a></p>

@@ -1,10 +1,10 @@
 # Name, logo and badge
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-14.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.md). It is a translation; where the two differ, the English text applies.
 
-This page sets out the name, the logo, the colours and the badge of Sophaxis.
+This page sets out the name, the logo, the colours, the field codes, the shelf and the badge of Sophaxis.
 
 ## Name
 
@@ -31,6 +31,30 @@ Do not use it in a way that suggests that Sophaxis reviewed, recommends or is co
 | Background | `#f7f5f0` | `#14171f` |
 | Text | `#1d2330` | `#e6e2d8` |
 | Accent | `#2f4a7a` | `#9fb6e0` |
+
+## Field codes and colours
+
+Each field has a code of three capital letters, a glyph and a pair of colours, one for the light display and one for the dark.
+The codes are Sophaxis's own. They are not taken from any existing classification scheme, and they say nothing of the quality of a work.
+The ratio is the lowest contrast of the colour against the background and against a card, as the build computes it; the check computes it again and fails if it is below 4.5 or differs from this table.
+
+<!-- fields -->
+
+## Shelf marks
+
+A record page shows a shelf mark: the code of the record's main field and its Sophaxis id, such as `PHI · 2026.0003`.
+A shelf mark is a label, not an identifier. Cite a record by its Sophaxis id and the DOI of the deposited work.
+The [accession register](./register.md) numbers the records in the order of listing; that number is a label too.
+
+## The shelf
+
+The [Statement of Purpose](./mission.md) likens Sophaxis to a shelf. The top page and each field page draw the listing as a shelf: each record is a spine in the colour of its field, with its shelf mark, and a withdrawn record stays on the shelf, marked.
+The shelf is a metaphor. Sophaxis is not a library, and it does not keep the works: they stay at their repositories.
+
+## Construction and fonts
+
+The [construction of the logo](./construction.md) shows its grid and measurements, the field glyphs and the band, drawn from the same numbers as the logo.
+The site loads no font: it uses the reader's own serif, sans-serif and monospaced fonts.
 
 ## Badge for a listed work
 

@@ -6280,8 +6280,9 @@ console.log('\n127. The public pages state positions: no page that the site serv
     if (!KINDS.filter((k) => rows.some((y) => y[4] === k)).every((k) => said(k) === rows.filter((y) => y[4] === k).length) || Number((/合わせて (\d+) 件です。/.exec(sec) || [])[1]) !== rows.length) bad.push('the count');
     const nPages = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[1]), nOther = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[2]);
     /* The section counts the pages it read. The Statement of Purpose (mission.md, mission.ja.md) came later the same day; it is read
-     * here like every other page, and its own section of the record says so (check 131). */
-    const LATER = ['mission.md', 'mission.ja.md'];
+     * here like every other page, and its own section of the record says so (check 131). The accession register and the
+     * construction of the logo came on 2026-11-14, with the shelf; they are read here too, and their section says so (check 133). */
+    const LATER = ['mission.md', 'mission.ja.md', 'register.md', 'register.ja.md', 'construction.md', 'construction.ja.md'];
     if (nPages !== md.filter((f) => f.startsWith('policies/')).length || nOther !== md.filter((f) => !f.startsWith('policies/') && !LATER.includes(f)).length) bad.push('the number of pages read');
     if ((sec.match(/2026-11-13 に Claude が決めました。/g) || []).length < 2 || !sec.includes('見つけたことと直したことを記録が示し、頁が立場を示せば、頁は確かさを言い過ぎず、理由は記録で確かめられるためです。')
       || !sec.includes('注は、提供しない国と地域を決めた根拠の所在を示すもので、続けている行いの疑いを並べるものではないためです。')) bad.push('who decided, and why');
@@ -6551,7 +6552,9 @@ console.log('\n130. The top pages show the later of the day the records last cha
   const dated = walk('site').filter((f) => SHOWN.test(read(path.join(ROOT, f))));
   /* The seventeenth section counts the built pages it compared with the history. The two pages of the Statement of Purpose came later
    * the same day; check 121 compares them like every other page, and their own section of the record says so (check 131). */
-  const facts = { shallow, others: dated.filter((f) => !['site/index.html', 'site/index.ja.html', 'site/mission.html', 'site/mission.ja.html'].includes(f)).length,
+  const facts = { shallow, others: dated.filter((f) => !['site/index.html', 'site/index.ja.html', 'site/mission.html', 'site/mission.ja.html',
+    /* Built on 2026-11-14 with the shelf, after this section was written; they are dated and compared like the others (check 121). */
+    'site/register.html', 'site/register.ja.html', 'site/construction.html', 'site/construction.ja.html'].includes(f)).length,
     first: Object.fromEntries(effectDays(JSON.parse(real['site.json'])).map((d) => [d, lines(['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', 'From ' + d, '--', 'site.json'])[0] || today])) };
   function problems(c, h) {
     const bad = [];
@@ -6975,11 +6978,227 @@ console.log('\n132. Keeping the form and tightening (2026-11-14): advice for the
     ['the count changed', aud('この表の判定は、誤り 0、根拠不足 2、漏れ 4、表現 3、問題なし 11 です。', 'この表の判定は、誤り 0、根拠不足 2、漏れ 4、表現 2、問題なし 11 です。')],
     ['a decision without its reason', aud('両言語に足しました。消費者契約法第 8 条第 3 項の形を、一般の定めから作らないためです |', '両言語に足しました |')],
     ['the day counted taken out', aud('日本時間 2026-11-14 から数えて 14 日後は 2026-11-28 で', '14 日後で')],
-    ['the sentence on lawyers taken out', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
-    ['a lawyer said to have reviewed it', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\nこの節も、弁護士の確認は受けていません。弁護士が確かめました。\n\n## この記録について')],
+    ['the sentence on lawyers taken out', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-14：書架の意匠', '\n\n## 2026-11-14：書架の意匠')],
+    ['a lawyer said to have reviewed it', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-14：書架の意匠', '\n\nこの節も、弁護士の確認は受けていません。弁護士が確かめました。\n\n## 2026-11-14：書架の意匠')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: the licence, an address, images, a place, a pattern, printing, intake, the weekly copies, the workflow, the limit in either language, a whole exclusion, "to the extent permitted by law", 一切の責任, the Japanese links clause, compensation, severability, the 7 days, the sender, the fee, an exception, the ORCID country, a deciding advice, the notice, the feed, a commitment, and the record\'s section, a quotation, a hash, the U.S. quotation, the fee, the count, a reason, the day and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+/* ------------------------------------------------------------ 133 */
+console.log('\n133. The shelf (2026-11-14): field codes and colours, shelf marks, the shelf, the catalogue card, the accession register, every drawing drawn again from design.js, no font, no outside address, no classification scheme of others, both languages, and the record');
+{
+  /* The owner asked on 2026-11-14 for a design as elaborate as Nusquama's, simple enough to raise no question of copyright.
+   * Every shape comes from the numbers of design.js; this check draws each again and compares it with what the site serves.
+   * The field codes are Sophaxis's own: no page names an existing classification scheme or its notation as Sophaxis's.
+   * A shelf mark and an accession number are labels: no citation format, feed or harvest carries them. */
+  const Bd = require('../build.js');
+  const Dz = require('../design.js');
+  const S = path.join(ROOT, 'site');
+  const files = fs.readdirSync(S, { recursive: true }).map((f) => f.split(path.sep).join('/')).filter((f) => fs.statSync(path.join(S, f)).isFile());
+  const textFiles = files.filter((f) => /\.(html|xml|txt|json|js|bib|ris|svg)$/.test(f));
+  const PAPERS = path.join(ROOT, 'data', 'papers');
+  const AUD = 'docs/legal-audit-2026-11-12.md', HEAD = '\n## 2026-11-14：書架の意匠\n';
+  const real = {
+    site: JSON.parse(read(path.join(ROOT, 'site.json'))),
+    favicon: read(path.join(ROOT, 'assets', 'favicon.svg')),
+    pages: Object.fromEntries(textFiles.map((f) => [f, read(path.join(S, f))])),
+    files,
+    assets: fs.readdirSync(path.join(ROOT, 'assets'), { recursive: true }).map(String),
+    records: fs.readdirSync(PAPERS).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(read(path.join(PAPERS, f)))),
+    brand: read(path.join(ROOT, 'brand.md')), brandJa: read(path.join(ROOT, 'brand.ja.md')),
+    aud: read(path.join(ROOT, AUD)),
+  };
+  const FORBIDDEN = /\b(?:DDC|UDC|NDC|LCC)\b|Dewey Decimal|Universal Decimal Classification|Nippon Decimal|Library of Congress Classification|十進分類|デューイ十進/;
+  const FONT_FILE = /\.(?:woff2?|ttf|otf|eot|ttc)$/i;
+  const MARK = /[A-Z]{3} · \d{4}\.\d{4}/;
+  const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  const escH = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const between = (h, a, b) => { const i = h.indexOf(a); if (i < 0) return ''; const j = h.indexOf(b, i); return j < 0 ? '' : h.slice(i, j); };
+  function problems(x) {
+    const bad = [];
+    const F = x.site.fields || {}, C = x.site.categories;
+    bad.push(...Bd.fieldProblems(F, C));
+    const code = (slug) => (F[slug] || {}).code;
+    const shown = x.records.filter((p) => p.status !== 'removed');
+    const html = Object.keys(x.pages).filter((f) => f.endsWith('.html'));
+    /* The logo and every drawing, from design.js. */
+    if (Dz.logoSvg() !== x.favicon) bad.push('assets/favicon.svg is not the logo that design.js draws');
+    if (x.pages['favicon.svg'] !== x.favicon) bad.push('site/favicon.svg is not assets/favicon.svg');
+    const band = Dz.bandSvg();
+    for (const f of html) {
+      const h = x.pages[f];
+      const head = (/<header class="top">([\s\S]*?)<div class="wrap"/.exec(h) || [])[1];
+      if (head !== band || h.split(band).length !== 2) bad.push(f + ': the band is not the one design.js draws, once, at the top of the header');
+      for (const m of h.matchAll(/<svg class="glyph"[\s\S]*?<\/svg>/g)) { const c = (/<title>([A-Z]{3})<\/title>/.exec(m[0]) || [])[1]; if (!c || !Dz.GLYPHS[c] || m[0] !== Dz.glyphSvg(c)) bad.push(f + ': a glyph not drawn by design.js'); }
+      for (const m of h.matchAll(/<svg\b[\s\S]*?<\/svg>/g)) {
+        if (!/^<svg\b[^>]*><title[^>]*>[^<]+<\/title>/.test(m[0])) bad.push(f + ': an SVG without a title');
+        if (/(?:href|src)="(?!#)|url\((?!#)/.test(m[0])) bad.push(f + ': an SVG that refers outside itself');
+      }
+      const css = [...h.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join('\n');
+      if (/url\(|@import|@font-face|\bsrc\s*:/.test(css)) bad.push(f + ': the style loads something or declares a font');
+      if (/\b(?:animation|transition)\s*:/.test(css)) bad.push(f + ': the style moves something');
+      if (!css.includes(Dz.css(F))) bad.push(f + ': the style lacks the core of the design');
+      const shelfPage = /class="(?:shelf|card |register|construction)"?/.test(h);
+      if (shelfPage !== css.includes(Dz.css(F, 'shelf'))) bad.push(f + ': the style of the shelf ' + (shelfPage ? 'is missing' : 'is carried without need'));
+    }
+    for (const f of x.files.concat(x.assets)) if (FONT_FILE.test(f)) bad.push('a font file: ' + f);
+    for (const [k, v] of Object.entries(Dz.FONTS)) if (!/^(?:[A-Za-z-]+|"[A-Za-z ]+")(?:,(?:[A-Za-z-]+|"[A-Za-z ]+"))*$/.test(v) || !/(serif|sans-serif|monospace)$/.test(v)) bad.push('the font stack ' + k + ' is not a list of system fonts ending in a generic family');
+    for (const [l, j] of [['construction.html', false], ['construction.ja.html', true]]) if (!String(x.pages[l] || '').includes(Dz.constructionSvg(j))) bad.push(l + ': the drawing is not the one design.js draws');
+    /* The colours: the base is the brand's, and every field colour reaches 4.5:1 against the background and a card in each scheme. */
+    const idx = String(x.pages['index.html'] || '');
+    const style = (/<style>([\s\S]*?)<\/style>/.exec(idx) || [])[1] || '';
+    const tok = (block, k) => (new RegExp('--' + k + ': (#[0-9a-f]{6})').exec(block || '') || [])[1];
+    const lightRoot = (/\n:root \{([^}]*)\}/.exec(style) || [])[1], darkRoot = (/@media \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/.exec(style) || [])[1];
+    for (const k of ['bg', 'card', 'fg']) if (tok(lightRoot, k) !== Dz.BASE.light[k] || tok(darkRoot, k) !== Dz.BASE.dark[k]) bad.push('design.js BASE.' + k + ' is not the site\'s own colour');
+    for (const slug of Object.keys(C)) {
+      const f = F[slug] || {};
+      for (const s of ['light', 'dark']) {
+        const r = /^#[0-9a-f]{6}$/.test(f[s] || '') ? Math.min(Dz.ratio(f[s], Dz.BASE[s].bg), Dz.ratio(f[s], Dz.BASE[s].card)) : 0;
+        if (r < 4.5) bad.push(slug + ' ' + s + ' reaches ' + r.toFixed(2) + ':1');
+      }
+      const c = String(f.code || '').toLowerCase();
+      if (!style.includes('.f-' + c + '{--f-c:' + f.light + '}') || !new RegExp('@media \\(prefers-color-scheme:dark\\)\\{:root\\{--ink:' + Dz.BASE.dark.bg + '\\}[^\\n]*\\.f-' + c + '\\{--f-c:' + f.dark + '\\}').test(style)) bad.push('the style does not give ' + slug + ' its two colours');
+    }
+    const rr = (h, s) => (/^#[0-9a-f]{6}$/.test(h || '') ? Dz.r2(Dz.fieldRatio(h, s)) : '?');
+    for (const [l, ja] of [['brand.html', false], ['brand.ja.html', true]]) {
+      const t = between(String(x.pages[l] || ''), '<table class="fieldcodes">', '</table>');
+      const rows = [...t.matchAll(/<tr><td><span class="mark f-([a-z]{3})">[\s\S]*?<span class="code">([A-Z]{3})<\/span><\/span><\/td><td>([^<]+)<\/td><td><code>(#[0-9a-f]{6})<\/code><\/td><td>([\d.]+)<\/td><td><code>(#[0-9a-f]{6})<\/code><\/td><td>([\d.]+)<\/td><\/tr>/g)];
+      const want = Object.keys(C).map((slug) => { const f = F[slug] || {}; return [String(f.code).toLowerCase(), f.code, escH((ja ? x.site.categoriesJa : C)[slug]), f.light, rr(f.light, 'light'), f.dark, rr(f.dark, 'dark')].join('|'); });
+      if (rows.map((m) => m.slice(1).join('|')).join('\n') !== want.join('\n')) bad.push(l + ': the table of field codes, colours and ratios is not the one computed');
+    }
+    /* Shelf marks and catalogue cards: right on every record page in both languages, and on no removed one. */
+    for (const p of x.records) for (const ja of [false, true]) {
+      const f = 'abs/' + p.id + (ja ? '.ja' : '') + '.html', h = String(x.pages[f] || '');
+      if (p.status === 'removed') { if (/class="mark|class="card/.test(h)) bad.push(f + ': a removed record with a shelf mark or a card'); continue; }
+      const mark = code(p.category) + ' · ' + p.id;
+      const meta = (/<p class="meta"><span class="id">[^\n]*<\/p>/.exec(h) || [''])[0];
+      const card = between(h, '<section class="card f-' + String(code(p.category)).toLowerCase() + '"', '</section>');
+      const cite = ja ? 'この記録は、Sophaxis の番号（Sophaxis:' + p.id + '）と DOI で引きます。' : 'Cite this record by its Sophaxis id (Sophaxis:' + p.id + ') and the DOI.';
+      if (!meta.includes('<span class="code">' + mark + '</span>') || !card.includes('<span class="code">' + mark + '</span>') || (h.match(/<span class="code">[A-Z]{3} · \d{4}\.\d{4}<\/span>/g) || []).length !== 2) bad.push(f + ': the shelf mark is not ' + mark + ', in the line under the crumbs and on the card');
+      if (!card.includes(cite) || !card.includes(escH(p.title)) || !card.includes(escH(p.versions[p.versions.length - 1].doi)) || !card.includes(escH(x.site.licenses[p.license])) || !card.includes(p.listed)
+        || (p.status === 'withdrawn') !== card.includes(ja ? p.withdrawal_date + ' に撤回' : 'Withdrawn on ' + p.withdrawal_date)) bad.push(f + ': the catalogue card');
+    }
+    /* The shelf: every record shown, once, on both top pages; on a field page, the records of that field; withdrawn ones marked. */
+    const shelfOf = (h) => between(h, '<ul class="shelf"', '</ul>');
+    const spines = (h) => [...shelfOf(h).matchAll(/<li class="([^"]+)"><a href="[./]*abs\/(\d{4}\.\d{4})(?:\.ja)?\.html">([\s\S]*?)<\/a><\/li>/g)].map((m) => ({ cls: m[1], id: m[2], inner: m[3] }));
+    const shelfOk = (f, want) => {
+      const got = spines(String(x.pages[f] || ''));
+      const ids = got.map((g) => g.id).sort().join(), exp = want.map((p) => p.id).sort().join();
+      if (ids !== exp) return bad.push(f + ': the shelf holds ' + (ids || 'nothing') + ', not ' + (exp || 'nothing'));
+      for (const g of got) {
+        const p = want.find((q) => q.id === g.id);
+        if (g.cls.split(' ').includes('withdrawn') !== (p.status === 'withdrawn') || !g.cls.startsWith('f-' + String(code(p.category)).toLowerCase() + ' ')
+          || !g.inner.includes('<span class="code">' + code(p.category) + '</span><span class="dot"> · </span><span class="sid">' + p.id + '</span>') || !g.inner.includes(escH(p.title))) bad.push(f + ': the spine of ' + p.id);
+      }
+    };
+    shelfOk('index.html', shown); shelfOk('index.ja.html', shown);
+    for (const slug of Object.keys(C)) { const mine = shown.filter((p) => [p.category].concat(p.categories || []).includes(slug)); if (mine.length) shelfOk('list/' + slug + '.html', mine); else if (String(x.pages['list/' + slug + '.html'] || '').includes('<ul class="shelf"')) bad.push('list/' + slug + '.html: a shelf with nothing on it'); }
+    /* The register: every listing in order of the Sophaxis ids, numbered from 1 over every record kept, and every withdrawal. */
+    const listed = x.records.filter((p) => p.listed).slice().sort((a, b) => a.id.localeCompare(b.id));
+    if (listed.some((p, i) => i > 0 && p.listed < listed[i - 1].listed)) bad.push('the Sophaxis ids are not in the order of listing, so they cannot number the register');
+    const all = x.records.slice().sort((a, b) => a.id.localeCompare(b.id));
+    const want = shown.map((p) => [all.indexOf(p) + 1, p.listed, 'L', p.id]).concat(shown.filter((p) => p.status === 'withdrawn').map((p) => [all.indexOf(p) + 1, p.withdrawal_date, 'W', p.id]))
+      .sort((a, b) => a[1].localeCompare(b[1]) || a[0] - b[0] || a[2].localeCompare(b[2])).map((r) => r.join(' '));
+    for (const [f, ja] of [['register.html', false], ['register.ja.html', true]]) {
+      const h = String(x.pages[f] || '');
+      const rows = [...h.matchAll(/<tr><td class="no">(\d+)<\/td><td><time datetime="(\d{4}-\d{2}-\d{2})">\2<\/time><\/td><td>([^<]+)<\/td><td><a class="id" href="\.\/abs\/(\d{4}\.\d{4})(?:\.ja)?\.html">/g)]
+        .map((m) => [m[1], m[2], m[3] === (ja ? '掲載' : 'Listed') ? 'L' : m[3] === (ja ? '撤回' : 'Withdrawn') ? 'W' : '?', m[4]].join(' '));
+      if (rows.join('\n') !== want.join('\n')) bad.push(f + ': the entries are not every listing and withdrawal in order with their days and numbers');
+      const months = [...new Set(want.map((r) => r.split(' ')[1].slice(0, 7)))];
+      if ((h.match(/<table class="register">/g) || []).length !== months.length) bad.push(f + ': not one section per month');
+      for (const p of x.records.filter((q) => q.status === 'removed')) if (h.includes(p.id)) bad.push(f + ': names the removed record ' + p.id);
+      if (!h.includes('<link rel="alternate" hreflang="' + (ja ? 'en' : 'ja') + '"')) bad.push(f + ': no twin');
+    }
+    for (const f of ['register.html', 'register.ja.html', 'construction.html', 'construction.ja.html']) if (!String(x.pages['sitemap.xml'] || '').includes('/' + f + '</loc>')) bad.push(f + ' is not in the sitemap');
+    /* A label, not an identifier: no citation format, feed, harvest or Highwire tag carries a shelf mark. */
+    for (const f of Object.keys(x.pages)) {
+      const t = x.pages[f];
+      if (/^(cite\/|papers\.json$|feed\.xml$|list\/.*\.xml$|collection\/.*\.xml$|api\/oai\.js$|author\/.*\.bib$)/.test(f) && MARK.test(t)) bad.push(f + ': carries a shelf mark');
+      if (f.startsWith('abs/') && [...t.matchAll(/<meta name="citation_[a-z_]+" content="([^"]*)">/g)].some((m) => MARK.test(m[1]))) bad.push(f + ': a Highwire tag carries a shelf mark');
+    }
+    /* No existing classification scheme or its notation, on any served file, outside what the records themselves say. */
+    const strings = [];
+    const leaves = (v) => (typeof v === 'string' ? strings.push(v, escH(v)) : v && typeof v === 'object' ? Object.values(v).forEach(leaves) : null);
+    x.records.forEach(leaves);
+    strings.sort((a, b) => b.length - a.length);
+    for (const f of Object.keys(x.pages)) {
+      let t = x.pages[f];
+      for (const s of strings) if (s.length > 3 && t.includes(s)) t = t.split(s).join(' ');
+      if (FORBIDDEN.test(t)) bad.push(f + ': names an existing classification scheme or its notation');
+    }
+    for (const slug of Object.keys(C)) if (FORBIDDEN.test(String(code(slug))) || FORBIDDEN.test(String((F[slug] || {}).name || ''))) bad.push(slug + ': a code of another scheme');
+    /* The brand page, in both languages: the metaphor, the label and how to cite, the construction. */
+    const B_EN = ['The codes are Sophaxis\'s own. They are not taken from any existing classification scheme', 'A shelf mark is a label, not an identifier. Cite a record by its Sophaxis id and the DOI of the deposited work.', 'The shelf is a metaphor. Sophaxis is not a library', '(./construction.md)', '<!-- fields -->'];
+    const B_JA = ['符号は Sophaxis が自分で決めたものです。既にある分類の体系から取ったものではなく', '書架記号は札で、識別子ではありません。記録は、Sophaxis の番号と、預けられた作品の DOI で引きます。', '書架はたとえです。Sophaxis は図書館ではなく', '(./construction.ja.md)', '<!-- fields -->'];
+    for (const s of B_EN) if (!x.brand.includes(s)) bad.push('brand.md lacks: ' + s.slice(0, 40));
+    for (const s of B_JA) if (!x.brandJa.includes(s)) bad.push('brand.ja.md lacks: ' + s.slice(0, 20));
+    /* The print style keeps a card whole. */
+    if (!/@media print\{[^\n]*\.card\{[^}]*break-inside:avoid/.test(Dz.css(F, 'shelf'))) bad.push('the card is not kept whole on paper');
+    /* The record. */
+    const at = x.aud.indexOf(HEAD), end = at < 0 ? -1 : x.aud.indexOf('\n## ', at + 5);
+    const sec = at < 0 ? '' : x.aud.slice(at, end < 0 ? undefined : end);
+    if (!sec || x.aud.indexOf('\n## この記録について\n') < at) return bad.concat(['the record has no section before its end']);
+    const t0 = sec.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
+    const rows = t0 < 0 ? [] : sec.slice(t0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rows.length < 6 || !rows.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the record\'s table');
+    const tally = 'この表の判定は、' + KINDS.filter((k) => rows.some((y) => y[4] === k)).map((k) => k + ' ' + rows.filter((y) => y[4] === k).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the record\'s count');
+    for (const r of rows) if (!/^2026-11-14 に利用者が求め、Claude が決めました。[^|]*ためです$/.test(r[5] || '')) bad.push('a choice without who made it or why: ' + r[0].slice(0, 20));
+    for (const w of ['自分の数から描いた', '書体', '既にある分類の体系', '図書館', '識別子', '削除した記録']) if (!rows.some((y) => y.join(' ').includes(w))) bad.push('the record has no row on ' + w);
+    if (!sec.includes('この節も、弁護士の確認は受けていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the record\'s sentence on lawyers');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the ' + Object.keys(real.site.categories).length + ' field codes are Sophaxis\'s own, unique and coloured at 4.5:1 or more in both schemes, as the brand page\'s table says; every record page shows its shelf mark and catalogue card; both top pages and the field pages shelve every record shown once, withdrawn ones marked; the register lists every listing and withdrawal in order; the logo, the band, the glyphs and the drawing are design.js\'s, every SVG has a title, nothing is loaded, no font, no motion, no classification scheme of others, no shelf mark where a citation goes; and the record has its section',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (k, v) => Object.assign({}, real, { [k]: v });
+  const pg = (f, a, b) => w('pages', Object.assign({}, real.pages, { [f]: String(real.pages[f]).replace(a, b) }));
+  const fieldsWith = (fn) => w('site', Object.assign({}, real.site, { fields: fn(JSON.parse(JSON.stringify(real.site.fields))) }));
+  const rec = real.records.find((p) => p.status === 'listed');
+  const recs = (fn) => w('records', real.records.map((p) => (p.id === rec.id ? fn(JSON.parse(JSON.stringify(p))) : p)));
+  const removed = real.records.find((p) => p.status === 'removed');
+  const firstListed = real.records.filter((p) => p.listed).sort((a, b) => a.id.localeCompare(b.id))[0];
+  const aud = (a, b) => w('aud', real.aud.replace(a, b));
+  const breaks = [
+    ['two fields with one code', fieldsWith((F) => { F.logic.code = F.philosophy.code; return F; })],
+    ['a field without a code', fieldsWith((F) => { delete F.logic; return F; })],
+    ['a code taken from another scheme', fieldsWith((F) => { F.logic.code = 'LCC'; return F; })],
+    ['a pale colour', fieldsWith((F) => { F.mathematics.light = '#9fb6e0'; return F; })],
+    ['a dark colour in the dark scheme', fieldsWith((F) => { F.logic.dark = '#2f4a7a'; return F; })],
+    ['the logo file changed', w('favicon', real.favicon.replace('width="18"', 'width="19"'))],
+    ['the band drawn by hand', pg('privacy.html', '<title>Five spines</title>', '<title>Spines</title>')],
+    ['a glyph changed', pg('index.html', 'r="4.5"', 'r="4"')],
+    ['an SVG without a title', pg('construction.html', '<title id="construction-title">', '<desc id="construction-title">')],
+    ['the drawing changed', pg('construction.ja.html', 'stroke-width="18"', 'stroke-width="12"')],
+    ['a font loaded', pg('faq.html', '</style>', '@font-face{font-family:x;src:url(x.woff2)}</style>')],
+    ['a font file', w('files', real.files.concat(['fonts/serif.woff2']))],
+    ['an animation', pg('index.html', '</style>', '.shelf a{transition:transform .2s}</style>')],
+    ['an SVG that loads an image', pg('index.html', '<title>Five spines</title>', '<title>Five spines</title><image href="https://example.org/x.png"/>')],
+    ['the shelf style on a page without a shelf', pg('faq.html', '</style>', Dz.css(real.site.fields, 'shelf') + '</style>')],
+    ['the brand table with a wrong ratio', pg('brand.html', '<td>' + Dz.r2(Dz.fieldRatio(real.site.fields.philosophy.light, 'light')) + '</td>', '<td>9.99</td>')],
+    ['a wrong shelf mark', pg('abs/' + rec.id + '.html', '<span class="code">' + real.site.fields[rec.category].code + ' · ' + rec.id + '</span>', '<span class="code">XXX · ' + rec.id + '</span>')],
+    ['the card without how to cite', pg('abs/' + rec.id + '.ja.html', 'この記録は、Sophaxis の番号（Sophaxis:' + rec.id + '）と DOI で引きます。', '')],
+    ['a record withdrawn but not marked', recs((p) => Object.assign(p, { status: 'withdrawn', withdrawal_date: '2026-11-20', withdrawal_note: 'x' }))],
+    ['a spine missing from the top page', pg('index.html', /<li class="[^"]+"><a href="\.\/abs\/[^"]+">[\s\S]*?<\/a><\/li>\n/, '')],
+    ['a spine twice on the Japanese top page', pg('index.ja.html', /(<li class="[^"]+"><a href="\.\/abs\/[^"]+">[\s\S]*?<\/a><\/li>\n)/, '$1$1')],
+    ['a register entry out of order', pg('register.html', /(<tr><td class="no">1<\/td>[\s\S]*?<\/tr>)(<tr><td class="no">2<\/td>[\s\S]*?<\/tr>)/, '$2$1')],
+    ['a register entry with a wrong day', pg('register.ja.html', '<time datetime="' + firstListed.listed + '">' + firstListed.listed + '</time>', '<time datetime="2026-10-30">2026-10-30</time>')],
+    ['ids not in the order of listing', w('records', real.records.concat([{ id: '2099.9999', status: 'removed', removal_date: '2099-01-02', listed: firstListed.listed.replace(/^\d{4}/, '2000') }]))],
+    ['a removed record in the register', pg('register.html', '</table>', '<tr><td>' + removed.id + '</td></tr></table>')],
+    ['the register out of the sitemap', pg('sitemap.xml', '/register.ja.html</loc>', '/register-ja.html</loc>')],
+    ['a shelf mark in BibTeX', pg('cite/' + rec.id + '.bib', '}', ' PHI · ' + rec.id + '}')],
+    ['a shelf mark in a Highwire tag', pg('abs/' + rec.id + '.html', '<meta name="citation_title" content="', '<meta name="citation_title" content="PHI · ' + rec.id + ' ')],
+    ['a classification scheme named', pg('brand.ja.html', '</main>', '<p>符号は NDC に倣っています。</p></main>')],
+    ['the metaphor taken out', w('brand', real.brand.replace('The shelf is a metaphor. Sophaxis is not a library', 'Sophaxis is a library'))],
+    ['the label called an identifier', w('brandJa', real.brandJa.replace('書架記号は札で、識別子ではありません。', '書架記号は識別子です。'))],
+    ['the record\'s section taken out', aud(HEAD, '\n## 2026-11-14：意匠\n')],
+    ['the record\'s count', aud('この表の判定は、根拠不足 1、問題なし 5 です。', 'この表の判定は、問題なし 6 です。')],
+    ['a choice without its reason', aud('引き方が二つになって引用が割れるためです |', '引き方が二つになります |')],
+    ['the record without the sentence on lawyers', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: a code twice, missing or another scheme\'s, a pale colour in either scheme, the logo, the band, a glyph, an SVG without a title, the drawing, a font loaded or as a file, motion, an outside image, the shelf style without need, the brand table, a shelf mark, the card, a withdrawal unmarked, a spine missing or twice, the register\'s order, day and removed records, the sitemap, a shelf mark in BibTeX or a Highwire tag, a scheme named, the metaphor, the label, and the record\'s section, count, reason and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));
