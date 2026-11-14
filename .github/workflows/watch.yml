@@ -1,5 +1,5 @@
 name: watch
-# Once a week: every listed DOI still resolves and keeps its licence, new versions at Figshare and arXiv are noted, and the pages are saved to the Internet Archive.
+# Once a week: every listed DOI still resolves and keeps its licence, every PDF copy keeps its recorded SHA-256 and is read for advice, new versions at Figshare and arXiv are noted, and the pages are saved to the Internet Archive.
 on:
   schedule:
     - cron: '37 4 * * 1'
@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+      # poppler-utils reads the PDF copies for the advice of tools/pdf_advice.js. If it cannot be installed, the copies are still compared with their recorded SHA-256.
+      - run: sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed'
       - run: node tools/watch.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

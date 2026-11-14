@@ -15,7 +15,10 @@
  *   - the public metadata of the DOI, from DataCite or Crossref, or from JaLC for Jxiv, and the day each DOI that it names
  *     as an earlier version of the work was registered;
  *   - the notices that Crossref records against the DOI (tools/notices.js);
- *   - the PDF of the latest version, where the repository lets a script fetch it, only to read its shape (tools/pdf_shape.js);
+ *   - the PDF of the latest version, where the repository lets a script fetch it, only to read its shape (tools/pdf_shape.js)
+ *     and the advice of tools/pdf_advice.js (the licence printed on it, counts of contact details of others, the number of
+ *     images, the repository's checksum), which shows counts and fixed words only;
+ *   - the affiliations in the DOI metadata, for the same advice (a place where Sophaxis is not offered), shown as a count;
  *   - the name, the websites and the works of the public ORCID record given in the form.
  * Nothing from the ORCID record is written anywhere except the result of the checks.
  *
@@ -29,6 +32,7 @@ const path = require('path');
 const { validate, orcidOk, repoPrefix } = require('../build.js');
 const { sourceFor, LIMITS, download, accept } = require('./fetch_pdf.js');
 const { shapeOfFile, shapeNote } = require('./pdf_shape.js');
+const A = require('./pdf_advice.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
@@ -771,7 +775,7 @@ function metadataAdvice(doi, dir = path.join(ROOT, 'deposit-check')) {
   }
 }
 
-function comment(result, d, advice = [], shape = null) {
+function comment(result, d, advice = [], shape = null, readings = null) {
   const safe = (s) => String(s).replace(/[`|<>]/g, '');
   const rows = result.checks.map(([label, pass, detail]) => `| ${pass ? 'pass' : '**fail**'} | ${label} | ${safe(detail)} |`).join('\n');
   let out = `${MARK}
@@ -802,7 +806,7 @@ Not verified. Fix what failed, then edit this issue to run the checks again.
 To link your GitHub account, add \`https://github.com/<your username>\` under "Websites & social links" in your ORCID record.
 `;
   }
-  out += shapeNote(shape);
+  out += shapeNote(shape) + A.adviceNote(readings);
   return out;
 }
 
@@ -811,7 +815,7 @@ To link your GitHub account, add \`https://github.com/<your username>\` under "W
 /* Where the repository lets Sophaxis fetch the PDF of the latest version, its shape is read for the moderator: pages,
  * readable text, the title, an abstract and references (tools/pdf_shape.js). It decides nothing. The file is kept only
  * for the reading, in the runner's temporary folder, and deleted after. Null where the repository does not allow it. */
-async function pdfShape(versions, title) {
+async function pdfShape(versions, title, o = null) {
   const last = versions[versions.length - 1];
   const src = last && sourceFor(last.doi, versions.length);
   if (!src) return null;
@@ -821,7 +825,10 @@ async function pdfShape(versions, title) {
     const problems = accept(bytes, md5);
     if (problems.length) return { error: 'the PDF in the repository is ' + problems.join(', ') };
     fs.writeFileSync(file, bytes);
-    return shapeOfFile(file, title);
+    const shape = shapeOfFile(file, title);
+    /* The advice of 2026-11-14, from the same file while it is here (tools/pdf_advice.js): counts and fixed words only. */
+    if (o) shape.advice = A.adviceOfFile(file, Object.assign({ bytes, md5 }, o));
+    return shape;
   } catch (e) {
     console.error(e.message);
     return { error: 'the PDF could not be fetched from the repository' };
@@ -896,7 +903,7 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
     pub = null;
     try { if (/^10\.\d{4,9}\/\S+$/.test(form.published)) pub = await require('./published.js').lookUpPublished(form.published); } catch (e) { console.error(e.message); }
   }
-  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices }), meta, versions, pub };
+  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices }), meta, raw, versions, pub };
 }
 
 /* The issue that started the run, from the event file that GitHub Actions writes for it (GITHUB_EVENT_PATH).
@@ -934,7 +941,7 @@ async function main() {
   /* The age of the DOI is counted on the day the issue was opened, not the day it was last edited. */
   const issue = await github('GET', '/issues/' + n);
   const opened = jstDay(issue && issue.created_at ? issue.created_at : new Date().toISOString());
-  const { result, meta, versions, pub } = await run(form, login, opened);
+  const { result, meta, raw, versions, pub } = await run(form, login, opened);
   const all = (await github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
   if (meta && result.author) {
     const confirmed = [];
@@ -970,8 +977,11 @@ async function main() {
     result.ok = result.ok && row[1];
   }
   const d = meta && result.ok ? draft({ form, login, issue: n, meta, versions, result, pub, opened }) : null;
-  const shape = meta && !form.update ? await pdfShape(versions, meta.title) : null;
-  const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : [], shape);
+  const about = meta ? { licences: meta.licences, authors: meta.authors, raw } : null;
+  const shape = meta && !form.update ? await pdfShape(versions, meta.title, about) : null;
+  /* Without a PDF that the repository lets Sophaxis fetch, the advice reads the DOI metadata only. */
+  const readings = shape && shape.advice ? shape.advice : about ? A.adviceOf(about) : null;
+  const body = comment(result, d, d && d.record ? metadataAdvice(form.doi) : [], shape, readings);
   const mine = all.find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await github('PATCH', '/issues/comments/' + mine.id, { body });
   else await github('POST', '/issues/' + n + '/comments', { body });
