@@ -81,6 +81,8 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [ほかの場との違い（日本語訳）](https://sophaxis.vercel.app/compare.ja.html)
 - [用語集（日本語訳）](https://sophaxis.vercel.app/glossary.ja.html)
 - [運営理念・声明（日本語訳）](https://sophaxis.vercel.app/mission.ja.html)
+- [受入簿（日本語訳）](https://sophaxis.vercel.app/register.ja.html)
+- [ロゴの作図（日本語訳）](https://sophaxis.vercel.app/construction.ja.html)
 
 ## Data
 

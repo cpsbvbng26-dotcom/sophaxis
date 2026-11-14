@@ -2596,11 +2596,11 @@ Source: https://sophaxis.vercel.app/brand.html
 
 # Name, logo and badge
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-14.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](https://sophaxis.vercel.app/brand.ja.html). It is a translation; where the two differ, the English text applies.
 
-This page sets out the name, the logo, the colours and the badge of Sophaxis.
+This page sets out the name, the logo, the colours, the field codes, the shelf and the badge of Sophaxis.
 
 ## Name
 
@@ -2627,6 +2627,30 @@ Do not use it in a way that suggests that Sophaxis reviewed, recommends or is co
 | Background | `#f7f5f0` | `#14171f` |
 | Text | `#1d2330` | `#e6e2d8` |
 | Accent | `#2f4a7a` | `#9fb6e0` |
+
+## Field codes and colours
+
+Each field has a code of three capital letters, a glyph and a pair of colours, one for the light display and one for the dark.
+The codes are Sophaxis's own. They are not taken from any existing classification scheme, and they say nothing of the quality of a work.
+The ratio is the lowest contrast of the colour against the background and against a card, as the build computes it; the check computes it again and fails if it is below 4.5 or differs from this table.
+
+<!-- fields -->
+
+## Shelf marks
+
+A record page shows a shelf mark: the code of the record's main field and its Sophaxis id, such as `PHI · 2026.0003`.
+A shelf mark is a label, not an identifier. Cite a record by its Sophaxis id and the DOI of the deposited work.
+The [accession register](https://sophaxis.vercel.app/register.html) numbers the records in the order of listing; that number is a label too.
+
+## The shelf
+
+The [Statement of Purpose](https://sophaxis.vercel.app/mission.html) likens Sophaxis to a shelf. The top page and each field page draw the listing as a shelf: each record is a spine in the colour of its field, with its shelf mark, and a withdrawn record stays on the shelf, marked.
+The shelf is a metaphor. Sophaxis is not a library, and it does not keep the works: they stay at their repositories.
+
+## Construction and fonts
+
+The [construction of the logo](https://sophaxis.vercel.app/construction.html) shows its grid and measurements, the field glyphs and the band, drawn from the same numbers as the logo.
+The site loads no font: it uses the reader's own serif, sans-serif and monospaced fonts.
 
 ## Badge for a listed work
 
@@ -5745,11 +5769,11 @@ Source: https://sophaxis.vercel.app/brand.ja.html
 
 # 名前・ロゴ・バッジ（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-14。
 
 これは英語の [Name, logo and badge](https://sophaxis.vercel.app/brand.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
-この頁は、Sophaxis の名前・ロゴ・色・バッジを定めます。
+この頁は、Sophaxis の名前・ロゴ・色・分野の符号・書架・バッジを定めます。
 
 ## 名前
 
@@ -5776,6 +5800,30 @@ Sophaxis が実際にはしていない審査・推奨・関わりを思わせ�
 | 背景 | `#f7f5f0` | `#14171f` |
 | 文字 | `#1d2330` | `#e6e2d8` |
 | 強調 | `#2f4a7a` | `#9fb6e0` |
+
+## 分野の符号と色
+
+分野ごとに、ラテン文字の大文字三字の符号と、印と、明るい表示と暗い表示の二色があります。
+符号は Sophaxis が自分で決めたものです。既にある分類の体系から取ったものではなく、作品の質についても何も言いません。
+比は、背景とカードのそれぞれに対するその色のコントラストの低いほうで、ビルドが計算しています。検査はもう一度計算し、4.5 を下回るか、この表と違えば落ちます。
+
+<!-- fields -->
+
+## 書架記号
+
+記録の頁は、書架記号を示します。記録の主な分野の符号と Sophaxis の番号を並べたもので、`PHI · 2026.0003` のような形です。
+書架記号は札で、識別子ではありません。記録は、Sophaxis の番号と、預けられた作品の DOI で引きます。
+[受入簿](https://sophaxis.vercel.app/register.ja.html)は、記録に載った順の番号を付けます。この番号も札です。
+
+## 書架
+
+[運営理念・声明](https://sophaxis.vercel.app/mission.ja.html)は、Sophaxis を本棚にたとえています。トップの頁と分野の頁は、一覧を書架として描きます。記録の一件が分野の色の背の一本で、書架記号が付きます。撤回した記録も、印を付けて書架に残ります。
+書架はたとえです。Sophaxis は図書館ではなく、作品を預かりません。作品は預け先にあります。
+
+## 作図と書体
+
+[ロゴの作図](https://sophaxis.vercel.app/construction.ja.html)の頁は、ロゴの格子と寸法、分野の印、帯を、ロゴと同じ数から描いて示します。
+サイトは書体を読み込みません。読む人の端末の明朝体、ゴシック体、等幅の書体を使います。
 
 ## 載っている作品のバッジ
 
@@ -6172,4 +6220,72 @@ Sophaxis は、哲学と数学、そしてその周辺の分野（論理学、�
 1. 運営者は、この声明を変えることがあります。
 2. 変えたときは、この頁の最終更新の日付と、変更の記録（`CHANGELOG.md`）に示します。
 3. この声明を変えても、利用規約と各規程の約束は変わりません。
+
+---
+
+Source: https://sophaxis.vercel.app/register.ja.html
+
+# 受入簿（日本語訳）
+
+最終更新：2026-11-14。
+
+これは英語の [Accession register](https://sophaxis.vercel.app/register.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis の受入簿です。Sophaxis に載った記録を載った順に並べ、撤回も一件の記入として並べます。記入の日は、記録が持っている日本時間の日付です。受入簿は記録から作ります。手で書いた所はありません。
+
+## 番号
+
+記録の受入番号は、載った順の番号です。最初に載った記録が 1 番です。
+Sophaxis の番号も同じ順で付くので、受入番号は Sophaxis の番号の順に並び、あとで変わりません。
+撤回した記録は、番号と記入をそのまま残します。撤回は、効力を持った日に、別の記入として加わります。
+出てこない番号は、削除した記録のものです。[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)のとおり、削除した記録はどの一覧からも外れるためです。
+
+## 番号が意味しないこと
+
+受入番号と書架記号は、この頁と書架の上の札です。どちらも識別子ではありません。
+記録は、Sophaxis の番号と、預けられた作品の DOI で引きます。
+書架はたとえで、Sophaxis は図書館ではありません。[名前・ロゴ・バッジ](https://sophaxis.vercel.app/brand.ja.html)の頁に詳しく書いてあります。
+
+## 配信
+
+新しい記録は、載ったときに新着の配信 [feed.xml](https://sophaxis.vercel.app/feed.xml) に加わります。撤回は、配信のその記録の項目を新しくします。
+受入簿だけの配信はありません。
+
+## 記入
+
+<!-- register -->
+
+---
+
+Source: https://sophaxis.vercel.app/construction.ja.html
+
+# ロゴの作図（日本語訳）
+
+最終更新：2026-11-14。
+
+これは英語の [Construction of the logo](https://sophaxis.vercel.app/construction.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis のロゴの組み立てと、ロゴから描いた形を示します。ロゴ、分野の印、各頁の上の帯、書架は、どれもサイトのコード（`design.js`）が一組の数から描いています。サイトの検査は同じ数から描き直し、サイトが配っているものと突き合わせます。
+
+## ロゴ
+
+ロゴは、角を丸めた 48 の正方形です。7 だけ内側に枠があり、枠の中に、太さ 4 の棒五本で S を組んであります。棒は 4 の格子に乗っています。
+長方形だけを使います。書体も画像も、他の人の形も使いません。
+ロゴのファイル [favicon.svg](https://sophaxis.vercel.app/favicon.svg) は、2026-10-30 に手で描いたものです。下の図は数から描き直したもので、二つが違えば検査が落ちます。
+
+<!-- construction -->
+
+## 分野の印
+
+分野ごとに一つの印があり、符号の横に置きます。12 の枠に、太さ 1.5 の線で描きます。印はただの図形で、横の文字と同じ色になります。
+
+<!-- glyphs -->
+
+## 帯
+
+各頁の上の帯は、S の五本の棒を立てて並べたものです。書架の上の五冊の背に見立て、長さはロゴの半分にし、一本ずつ分野の色を付けています。飾りなので、読み上げでは飛ばします。
+
+## 書体
+
+サイトは書体を読み込みません。題と本文は読む人の端末の明朝体、案内と札はゴシック体、番号と書架記号は等幅の書体で出ます。
 
