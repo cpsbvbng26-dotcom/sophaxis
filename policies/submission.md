@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -33,7 +33,7 @@ For the 15 places for which the table gives 2026-11-26, this applies from 2026-1
 A stay counts even if it is short, such as for travel, work or study.
 Stays count because the laws of several of these places reach people who are there, not only people who live there; Article 3(2) of the GDPR, for example, speaks of data subjects who are in the Union.
 Sophaxis does not offer its service there, because it meets none of the duties that the law there places, or is reported to place, on a service offered to people there; the [Privacy Policy](./privacy.md) says more.
-This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
+This rule does not depend on nationality, race, ethnic origin or any other personal characteristic, and Sophaxis never reads an author's nationality.
 An author of any nationality who lives elsewhere and does not stay there can submit, and an author who lives or stays there cannot, whatever their nationality.
 The reasons are laws that require a local representative, the storage of personal data in the country, or registration there (among them Article 27 of the GDPR and of the UK GDPR; Article 13 of the EU Digital Services Act; Article 53 of China's Personal Information Protection Law; section 37(5) of Thailand's Personal Data Protection Act), which Sophaxis, run unpaid by one person within free services, does not have; the operator has decided not to appoint a representative, as the Privacy Policy explains.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
@@ -159,7 +159,9 @@ A submitter who is already an author of a listed work needs no one to vouch, and
 From 2026-12-01, for a submission whose issue is opened on or after that day, the researcher comments with these words instead, and the English words are canonical: "I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence, and does not live in, or stay in, a place where Sophaxis is not offered. I am not an author of this work, I am not from the same project as its authors, and I have no conflict of interest with them. I do not live in, or stay in, a place where Sophaxis is not offered. This states what I know; it is not a guarantee."
 It is a statement of what the researcher knows, not a guarantee of what the submitter does.
 Sophaxis makes no contract of guarantee with the researcher, and sets no amount.
-If a vouching proves untrue, the researcher can no longer vouch, the vouching is recorded as untrue in the history of the record, and the listing is reviewed.
+If a vouching turns out to be untrue, Sophaxis no longer relies on it, and the listing is reviewed.
+Before that is decided, the operator asks the researcher, in an issue comment that says nothing of what is said, to make contact by email to the address on the operator's ORCID record; the operator then tells them privately what is said to be untrue, and hears their answer. If no answer comes within 14 days, the review goes on.
+No name, ORCID iD or account of a researcher is published as having vouched untruly, and Sophaxis keeps no list of researchers.
 Sophaxis claims no money from the researcher under these policies.
 
 ## The checked intake
@@ -167,15 +169,14 @@ Sophaxis claims no money from the researcher under these policies.
 From 2026-12-01, for a submission whose issue is opened on or after that day, Sophaxis accepts a claim only when it can be checked against a source that the claimant does not write at the moment of claiming.
 A claim that fails its check, or cannot be checked, is turned away automatically.
 No system can stop a person from lying in general; this one makes every claim it accepts a checked claim.
+Turning a claim away means a label and a fixed comment that do not accept the claim and say how to submit it again. The checked intake never closes or locks an issue; a person reads every one.
 
 - Identity: the DOI metadata lists the ORCID iD for an author, and that ORCID record links the GitHub account that opened the issue.
 - Where the authors live: the place rule below, for every author whose identity is verified, and for a researcher who vouches, who must also share no current organisation with the submitter in ORCID.
-- The time: a submission that has not passed every check 30 days after its issue was opened is closed, and a new issue can be opened later.
+- The time: a submission that has not passed every check 30 days after its issue was opened is not accepted, with the label "not listed"; a new issue can be opened later.
 
-The place rule reads, in the person's ORCID record, the country of each public address and of the organisation of each current employment and education, with the day each was added, and the location field of their GitHub profile.
-The GitHub location is free text, so it is used only to turn a person away, never to accept one.
-A person is turned away if any of these names a place where Sophaxis is not offered, or if the ORCID entries name more than one country.
-A person is placed only if an ORCID entry names a place where Sophaxis is offered and was added at least 30 days before the issue was opened; otherwise the place cannot be checked, and a fixed comment says how to make the record checkable.
+The place rule reads, in the person's public ORCID record, only the country code (ISO 3166) of each public address and of the organisation of each current employment and education (one with no end date), with the day each was added. It reads no nationality, and nothing from GitHub.
+A submission is not accepted if any entry names a place where Sophaxis is not offered, if the entries name more than one country, or if no entry names a place where Sophaxis is offered and was added at least 30 days before the issue was opened; a fixed comment then says how to make the record checkable.
 Canada holds Quebec, so it places no one by its country alone.
 The check keeps and writes none of the countries or organisations; the issue shows only how many people passed, never whose record or which entry.
 This proves that earlier public records agree, not where a person lives: a person who keeps false records for 30 days can still pass.

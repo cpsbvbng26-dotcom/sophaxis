@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -135,8 +135,8 @@ A collection says nothing of the quality of a work, and an author can ask, in th
 
 Corrections are added to the record as dated notes.
 Anyone can report an error in a record through the link on its page, which opens a public correction issue.
-From 2026-12-01, a report that the title, the authors, the abstract, a version, a date, a DOI or the statement on generative models is wrong must quote, character by character, the words on the record page that are wrong; the checked intake of the [Submission Policy](./submission.md#the-checked-intake) closes it with a fixed comment if they are not there, and labels it `quote verified` if they are.
-A report of any other kind, a concern about research integrity, and an issue that reads as a request about removal, rights, personal data, a name or the withdrawal of a consent are never closed by it; a person reads them.
+From 2026-12-01, a report that the title, the authors, the abstract, a version, a date, a DOI or the statement on generative models is wrong must quote, character by character, the words on the record page that are wrong; the checked intake of the [Submission Policy](./submission.md#the-checked-intake) labels it `not verified` with a fixed comment if they are not there, and `quote verified` if they are.
+The checked intake never closes or locks an issue; a person reads every report, and a report of any other kind, a concern about research integrity, and an issue that reads as a request about removal, rights, personal data, a name or the withdrawal of a consent go to a person without the check.
 The notes do not replace the work.
 A record can receive a notice when a problem comes to light, such as undisclosed use of generative models.
 
