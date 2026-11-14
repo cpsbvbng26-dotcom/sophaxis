@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -21,6 +21,7 @@ Sophaxis confirms this through ORCID, before a moderator reads the work.
 - The ORCID iD belongs to an author of the work: either the DOI metadata lists it for an author, or the ORCID record lists the DOI among its works and its name matches an author.
 
 A submission that does not pass both is not listed.
+From 2026-12-01, under the checked intake below, only the DOI metadata counts for the second check: it must list the ORCID iD for an author of the work.
 The first check confirms that the person who controls the ORCID record opened the issue. It is not an official identity check.
 Authors without an ORCID iD cannot submit.
 From 2026-11-21, a person under 13 cannot submit.
@@ -44,7 +45,9 @@ From 2026-11-29, a place is also not offered where the operator judges that offe
 When the operator so judges, the place and the reason are added to the table.
 A place is added to the list as soon as such a duty is reported, before its law has been read at its source, and it is taken off only after that law has been read at its source and found not to reach Sophaxis.
 Each change to the list is announced on the top page before it takes effect, as the Terms of Use set out.
-Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+From 2026-12-01, Sophaxis also checks, for every author whose identity it verifies, that the public records the author set at least 30 days earlier place them where Sophaxis is offered.
+The section "The checked intake" below says how, and its limits.
 If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md), and the operator reviews the decision on a representative.
 
 | Place | What the law requires | Law | Read at its source | From |
@@ -137,6 +140,8 @@ This consent covers the listing, and the provision of their personal data that t
 An email confirmation says the same, and the operator's reply links the Privacy Policy.
 Saving the record to the Internet Archive needs a separate consent from every author, which the form asks and which may be left empty; without it the record is not saved there.
 Any author can withdraw a consent at any time, by a removal issue or by email.
+From 2026-12-01, under the checked intake, only the first way counts, and only for an author for whom the DOI metadata gives an ORCID iD.
+An author for whom it gives none cannot confirm, and the work waits until the metadata at the repository names one.
 
 ## A researcher who vouches for a first submission
 
@@ -151,11 +156,39 @@ The automatic check in the issue reads the researcher's public ORCID record as i
 The researcher can take it back by deleting the comment before the listing.
 A submitter who is already an author of a listed work needs no one to vouch, and neither does a new version of a listed work.
 
+From 2026-12-01, for a submission whose issue is opened on or after that day, the researcher comments with these words instead, and the English words are canonical: "I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence, and does not live in, or stay in, a place where Sophaxis is not offered. I am not an author of this work, I am not from the same project as its authors, and I have no conflict of interest with them. I do not live in, or stay in, a place where Sophaxis is not offered. This states what I know; it is not a guarantee."
+It is a statement of what the researcher knows, not a guarantee of what the submitter does.
+Sophaxis makes no contract of guarantee with the researcher, and sets no amount.
+If a vouching proves untrue, the researcher can no longer vouch, the vouching is recorded as untrue in the history of the record, and the listing is reviewed.
+Sophaxis claims no money from the researcher under these policies.
+
+## The checked intake
+
+From 2026-12-01, for a submission whose issue is opened on or after that day, Sophaxis accepts a claim only when it can be checked against a source that the claimant does not write at the moment of claiming.
+A claim that fails its check, or cannot be checked, is turned away automatically.
+No system can stop a person from lying in general; this one makes every claim it accepts a checked claim.
+
+- Identity: the DOI metadata lists the ORCID iD for an author, and that ORCID record links the GitHub account that opened the issue.
+- Where the authors live: the place rule below, for every author whose identity is verified, and for a researcher who vouches, who must also share no current organisation with the submitter in ORCID.
+- The time: a submission that has not passed every check 30 days after its issue was opened is closed, and a new issue can be opened later.
+
+The place rule reads, in the person's ORCID record, the country of each public address and of the organisation of each current employment and education, with the day each was added, and the location field of their GitHub profile.
+The GitHub location is free text, so it is used only to turn a person away, never to accept one.
+A person is turned away if any of these names a place where Sophaxis is not offered, or if the ORCID entries name more than one country.
+A person is placed only if an ORCID entry names a place where Sophaxis is offered and was added at least 30 days before the issue was opened; otherwise the place cannot be checked, and a fixed comment says how to make the record checkable.
+Canada holds Quebec, so it places no one by its country alone.
+The check keeps and writes none of the countries or organisations; the issue shows only how many people passed, never whose record or which entry.
+This proves that earlier public records agree, not where a person lives: a person who keeps false records for 30 days can still pass.
+The consequence of an untrue confirmation, and the removal of the record once the operator learns of it, therefore stay as the [Terms of Use](./terms.md#what-is-not-allowed) set them.
+Nothing in the form asks the submitter to confirm what other people will do after the submission.
+
+The checked intake never closes a removal or withdrawal issue, a request about personal data, a notice of an infringement of rights, a request about a statement about a person, or the withdrawal of a consent; a person handles these.
+
 ## What the submitter confirms
 
 Every author of the work agrees to its listing on Sophaxis.
 The authors have the right to share this version under its licence; if a journal has published the work, the publisher allows it.
-The submitter confirms both, and each point below, by ticking its box in the submission form, which has the same 29 boxes, in the same words and order.
+The submitter confirms both, and each point below, by ticking its box in the submission form, which has the same 30 boxes, in the same words and order.
 The automatic check in the issue refuses a submission unless every box of a group is ticked: the confirmations always, the consent and agreement from 2026-11-21, and where the authors live from 2026-11-22.
 
 ### Confirmations
@@ -193,8 +226,9 @@ The automatic check in the issue refuses a submission unless every box of a grou
 
 ### Where the authors live
 
-- I confirm that no author of this work lives in any of the places listed above, or stays in one between the submission and the listing, even briefly (such as for travel, work or study).
+- I confirm that, on the day of submission, no author of this work lives in any of the places listed above, or is staying in one, even briefly (such as for travel, work or study).
 - I confirm that no author under 18 lives or stays in India.
+- I agree to report in this issue, before the listing, any change to these two confirmations that I learn of, from 2026-12-01.
 
 One more box, on saving the record page and the PDF copies to the Internet Archive, may be left empty; the work is listed either way.
 ## How to submit

@@ -23,6 +23,7 @@ Personal data is used only for these purposes:
 - to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
 - since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
+- from 2026-12-01, under the checked intake of the Submission Policy, to check that the public records of every author whose identity is verified, and of a researcher who vouches, place them where Sophaxis is offered, and that a researcher who vouches shares no current organisation with the submitter; only whether each check passes is used;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
 - to check the listed DOIs and licences each week, and, for works whose authors consent to it, to save the pages and the PDF copies to the Internet Archive each week and when they change;
@@ -30,6 +31,8 @@ Personal data is used only for these purposes:
 - to answer requests to withdraw, correct or remove a record, and requests about personal data;
 - to serve the site, and to find and fix faults from Vercel's request logs;
 - to answer questions, complaints, disputes and security reports.
+
+The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day.
 
 ## The site
 
@@ -70,12 +73,18 @@ It reads the name, the websites and the works of the ORCID record given in the f
 It uses them only for the checks, and writes nothing else from the ORCID record anywhere.
 The same check runs when a withdrawal issue or a published-version issue is opened or edited.
 The check asks ORCID only for the personal details (the name), the websites and the works sections of the record.
-It does not ask for the person section as a whole, so public email addresses and the country are never received.
-The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
-Since 2026-11-14, the check also reads the PDF that it fetches to read its shape, and the affiliations in the DOI metadata, to give the moderator advice. It counts strings shaped like email addresses, telephone numbers and postal codes, and the affiliations and lines that name a place where Sophaxis is not offered. It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading. The weekly check reads the PDF copies on the site in the same way. It does not read the country of an ORCID record.
+From 2026-12-01, for the place rule of the checked intake, it also asks for the address, employments and educations sections.
+It does not ask for the person section as a whole, so public email addresses are never received.
+From 2026-12-01, it receives the country of each public address, and the country and the name of the organisation of each current employment and education, and uses them only to decide whether each person is placed where Sophaxis is offered and, for a researcher who vouches, whether they share an organisation with the submitter.
+The check uses only the name, the websites and the works, and, from 2026-12-01, the countries and organisations that the place rule reads; it keeps or writes nothing else from the ORCID record, and it never keeps, writes or prints a country or an organisation.
+From 2026-12-01, it also reads the location field of the GitHub profile of each such person.
+It reads that field only to find there the name or code of a place where Sophaxis is not offered, and keeps or writes none of it.
+The issue shows only how many people passed, never whose record or which entry.
+Since 2026-11-14, the check also reads the PDF that it fetches to read its shape, and the affiliations in the DOI metadata, to give the moderator advice. It counts strings shaped like email addresses, telephone numbers and postal codes, and the affiliations and lines that name a place where Sophaxis is not offered. It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading. The weekly check reads the PDF copies on the site in the same way. For this advice, it does not read the country of an ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
 From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
+From 2026-12-01, the place rule reads the same sections of the record of each co-author and researcher whose identity it verifies, and the location of their GitHub profile, in the same way.
 
 Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
 Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
@@ -195,6 +204,8 @@ The measures, under the headings that Japan's Personal Information Protection Co
 ## Automated processing
 
 The automatic checks compare public records and post the result in the issue. They make no decision about a person.
+From 2026-12-01, the checked intake closes a submission that has not passed every check 30 days after its issue was opened, and a report of an error in a record whose quoted words are not on the record page, each with a fixed comment; a new issue can be opened. Closing an issue decides only that the claim in it was not checked.
+The checked intake never closes a request about removal, withdrawal, rights or personal data, or the withdrawal of a consent.
 No decision with legal or similarly significant effects on a person is made solely by automated means.
 The language models that help the review make no decision; every decision on a submission is taken by a person, as the Moderation Policy sets out.
 One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.

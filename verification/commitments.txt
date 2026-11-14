@@ -42,8 +42,8 @@ Sophaxis does not guarantee the quality of any listed work.
 Only an author of a work can submit it.
 A submission that does not pass both is not listed.
 It is not an official identity check.
-It does not ask for the person section as a whole, so public email addresses and the country are never received.
-The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
+It does not ask for the person section as a whole, so public email addresses are never received.
+The check uses only the name, the websites and the works, and, from 2026-12-01, the countries and organisations that the place rule reads; it keeps or writes nothing else from the ORCID record, and it never keeps, writes or prints a country or an organisation.
 Records are kept to preserve the scholarly record, for freedom of expression and information (Article 17(3)(a)).
 The OAI-PMH interface gives the same email address as the operator's ORCID record, because the protocol requires one.
 Material that was taken offline while the request was reviewed is put back.
@@ -88,7 +88,7 @@ An author can ask, in the same issue, for the record to be removed instead of wi
 Serving unpaid does not lessen what the operator owes readers and authors under the [Terms of Use](./policies/terms.md) and the [Privacy Policy](./policies/privacy.md).
 Claude Code is named as a disclosure of how the site was made, not as an endorsement or an advertisement.
 Sophaxis has no arrangement with Anthropic, receives nothing from it, and does not link to its products.
-No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
+No automatic step accepts a submission or a correction, and none decides on a withdrawal or a removal request. The operator decides every one; from 2026-12-01, the checked intake only turns away a submission or a report of an error whose claim fails its check, as the [Submission Policy](./policies/submission.md#the-checked-intake) sets out.
 No step uses a language model. The steps are ordinary code.
 `robots.txt` asks the Internet Archive's crawlers not to collect the page or its PDF copies again.
 The operator reviews this decision when Sophaxis first lists a work by an author other than the operator, and whenever a data protection authority or a person in the European Union or the United Kingdom asks for a representative.
@@ -127,7 +127,7 @@ GitHub's own procedure is to rewrite the history first and then ask GitHub Suppo
 A follow-up issue lists these steps, with the request to the Internet Archive.
 Reading Sophaxis is not taken as agreement to anything; for readers, these terms describe how Sophaxis works, and the law decides what each side owes.
 This rule depends only on where an author lives or stays, not on nationality, race, ethnic origin or any other personal characteristic.
-Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
+Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
 A request to add the record of a work by an author who lives in a place where Sophaxis is not offered, as the Submission Policy lists them, or who stayed in one between the submission and the listing, is declined from the date the Submission Policy gives for each place (2026-11-22, or 2026-11-26 for 15 of them), because such a work is not listed on Sophaxis; the request itself stays with Zenodo, under CERN's own terms.
 The rule is that Sophaxis is not offered where a law requires, or is reported to require, a service offered to people there to have a representative there, to keep personal data there, to register there, or to meet conditions before personal data leaves the place that Sophaxis cannot meet.
 From 2026-11-22, Sophaxis does not offer its service to people in China either.
@@ -144,6 +144,7 @@ A provisionally registered work is not on the site.
 The models only assist. No model accepts or declines a submission; every decision is taken by the operator, or by a moderator, who reads the submission.
 The operator does this by hand, in the chat of each service; no submission is sent to them automatically, and they are given nothing that is not already public.
 The operator relies on the confirmations in good faith and does not check them. A work listed on an untrue confirmation does not mean that Sophaxis is offered where the [Submission Policy](./submission.md) says it is not.
+From 2026-12-01, the checked intake of the [Submission Policy](./submission.md#the-checked-intake) is the exception: it checks the identity of the authors, their agreement, and the place that their public records give.
 Nothing here asks a submitter for a penalty, or for damages beyond what the law provides.
 The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.md) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
@@ -173,5 +174,18 @@ No more is kept offline than the review needs, as the Takedown Policy sets out.
 A measure taken on a request goes no further than is needed to stop the material concerned from being sent.
 When the operator knows that text in an issue infringes another person's rights, or has reasonable grounds to believe so, the operator hides or edits it without delay, as far as is needed to stop it from being sent.
 It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading.
-It does not read the country of an ORCID record.
+For this advice, it does not read the country of an ORCID record.
 This does not apply to a clause that excludes or limits the operator's liability: such a clause applies only as it is written, and is not read as reaching as far as the law allows.
+From 2026-12-01, Sophaxis also checks, for every author whose identity it verifies, that the public records the author set at least 30 days earlier place them where Sophaxis is offered.
+From 2026-12-01, for a submission whose issue is opened on or after that day, Sophaxis accepts a claim only when it can be checked against a source that the claimant does not write at the moment of claiming.
+A claim that fails its check, or cannot be checked, is turned away automatically.
+From 2026-12-01, under the checked intake below, only the DOI metadata counts for the second check: it must list the ORCID iD for an author of the work.
+An author for whom it gives none cannot confirm, and the work waits until the metadata at the repository names one.
+The GitHub location is free text, so it is used only to turn a person away, never to accept one.
+The check keeps and writes none of the countries or organisations; the issue shows only how many people passed, never whose record or which entry.
+This proves that earlier public records agree, not where a person lives: a person who keeps false records for 30 days can still pass.
+Nothing in the form asks the submitter to confirm what other people will do after the submission.
+The checked intake never closes a removal or withdrawal issue, a request about personal data, a notice of an infringement of rights, a request about a statement about a person, or the withdrawal of a consent; a person handles these.
+It is a statement of what the researcher knows, not a guarantee of what the submitter does.
+Sophaxis claims no money from the researcher under these policies.
+The checked intake never closes a request about removal, withdrawal, rights or personal data, or the withdrawal of a consent.

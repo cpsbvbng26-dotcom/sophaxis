@@ -8,7 +8,7 @@ Sophaxis runs a number of steps by itself, as GitHub Actions in its public repos
 This page lists every one of them: when it runs, what it reads, what it writes, and what it leaves to the operator.
 The code of each step is public, and each section links to it.
 
-- No automatic step decides on a submission, a withdrawal, a correction or a removal request. The operator decides every one.
+- No automatic step accepts a submission or a correction, and none decides on a withdrawal or a removal request. The operator decides every one; from 2026-12-01, the checked intake only turns away a submission or a report of an error whose claim fails its check, as the [Submission Policy](./policies/submission.md#the-checked-intake) sets out.
 - Every step on this page that runs as GitHub Actions depends on GitHub. GitHub's terms let it restrict the use of GitHub Actions, and Actions can stop. While they do not run, no such step runs by itself: the operator takes the steps by hand, as soon as the operator can, and none of them happens at once.
 - One step acts before the operator decides: when a removal issue reports exposure of personal data, the record page (its title, authors, abstract and PDF copy) is taken offline at once, while GitHub Actions runs. This protects the person concerned, is not a decision on the request, and is undone if the request is not upheld.
 - No step uses a language model. The steps are ordinary code.
@@ -27,8 +27,17 @@ The code of each step is public, and each section links to it.
 - From 2026-11-24, it also checks that the statements on funding, on competing interests, and on human participants and research ethics are given. It does not judge what they say.
 - From 2026-11-23, for a submitter who is not yet an author of a listed work, it also counts a researcher who vouches for the work: it reads the name, the websites and the works of that researcher's public ORCID record, and runs again when such a comment is written, edited or deleted.
 - Since 2026-11-14, it also gives the moderator advice that decides nothing ([tools/pdf_advice.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/pdf_advice.js)): whether the licence printed on the first pages of the PDF agrees with the DOI metadata; how many strings shaped like an email address, a telephone number or a postal code appear after the first page, outside the authors' own; how many images the PDF embeds; whether the file matches the repository's checksum; and how many affiliations in the DOI metadata, or lines of the first page, name a place where Sophaxis is not offered. The comment and the log show counts and fixed words only, never what was found.
+- From 2026-12-01, for an issue opened on or after that day, the checked intake: only the DOI metadata connects the ORCID iD to an author; every other author must have an ORCID iD in the DOI metadata, and a confirmation by email no longer counts; for every author whose identity it verifies, and for a researcher who vouches, it reads the address, employments and educations sections of the ORCID record and the location of the GitHub profile, under the place rule of the Submission Policy, and writes only how many people passed; it compares the current organisations of a researcher who vouches with the submitter's; and it reads the new words of vouching. It keeps and writes no country or organisation.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
+
+## When a report of an error in a record is opened or edited (from 2026-12-01)
+
+- Reads: the Sophaxis id and the words quoted in the form, and the record page in the repository (`site/abs/<id>.html`).
+- Writes: a fixed comment, in English and Japanese, and the label `quote verified`; or, when the words are not on the record page, the label `not verified`, and closes the issue as not planned. It never repeats what the report says.
+- Never closes an issue that reads as a request about removal, rights, personal data, a name or the withdrawal of a consent: such an issue gets the label `needs a person` and stays open. Never acts on a submission, removal, withdrawal or published-version issue.
+- Leaves to the operator: whether the record is wrong, and the correction.
+- Code: [.github/checked-intake/verify.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/checked-intake/verify.js), run by [checked-intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/checked-intake.yml).
 
 ## When a withdrawal issue is opened or edited
 
@@ -65,6 +74,7 @@ The code of each step is public, and each section links to it.
 
 - Reads: the open removal requests and the verified withdrawals.
 - Writes: one reminder in each that the operator has not answered, from two days before the 7 days run out.
+- From 2026-12-01, closes each open submission that is not verified 30 days after its issue was opened, with a fixed comment, as the [Submission Policy](./policies/submission.md#the-checked-intake) sets out. It never closes a removal, withdrawal, published-version or correction issue. Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js) with `--deadline`, run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 - Follow-ups of removals: ticks the deleted issues once GitHub answers that they are gone, and the request to the Internet Archive once the Wayback Machine lists no capture of the record page or its PDF copies. Closes the follow-up when everything is ticked, and reminds once a week of what is not.
 
 ## Once a month, on the 1st at 09:17 Japan time

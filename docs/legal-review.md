@@ -64,6 +64,10 @@ Article 8(1) voids a clause that exempts a business from all of its liability, a
 
 Authors agree in the form to the version of the day, and a change that narrows a right or adds a duty is announced before it takes effect.
 
+### Guarantee and attestation (Civil Code, Articles 446 and 465-2 to 465-10; Consumer Contract Act, Article 2)
+
+From 2026-12-01, a researcher who vouches for a first submission states facts that they know of the submitter, and gives no guarantee of the submitter's conduct. A guarantee would be a contract that Article 446(2) of the Civil Code requires in writing, and, as a guarantee by an individual of a range of unspecified obligations, it would be void without a maximum amount (Article 465-2(2) of the Civil Code). Sophaxis makes no such contract, sets no amount, and claims no money from the researcher; an untrue vouching bars the researcher from vouching and is recorded in the history of the record. The record of the legal audit, 「2026-11-14：突き合わせの受付」, gives the analysis, with Articles 465-3 to 465-10 of the Civil Code, which concern loans and business debts, and Article 2 of the Consumer Contract Act.
+
 ### Trade and advertising (Act on Specified Commercial Transactions; Act against Unjustifiable Premiums and Misleading Representations)
 
 Nothing is sold and no fee is charged, now or after any change.
