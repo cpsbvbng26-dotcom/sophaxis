@@ -399,8 +399,8 @@ console.log('\n9. Submission by DOI, and the check that the submitter is an auth
   const ssrn = I.comment(r, { record: Object.assign({}, d.record, { versions: [{ version: 1, doi: '10.2139/ssrn.7537983', date: '2026-10-01' }] }), problems: [] });
   ok('where the repository does not let Sophaxis fetch the PDF, the comment asks the authors to attach it, within the limit',
     ssrn.includes('attach the deposited PDF to this issue') && ssrn.includes('at most 20 MB')
-    && ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.6084/m9.figshare.34419198.v2', '10.21203/rs.3.rs-39251/v1'].every((x) => I.pdfNote(x).includes('attach the deposited PDF'))
-    && I.pdfNote('10.5281/zenodo.1234567') === '' && I.pdfNote('10.48550/arXiv.2508.15126') === ''
+    && ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.6084/m9.figshare.34419198.v2', '10.21203/rs.3.rs-39251/v1', '10.48550/arXiv.2508.15126'].every((x) => I.pdfNote(x).includes('attach the deposited PDF'))
+    && I.pdfNote('10.5281/zenodo.1234567') === ''
     && c.includes('attach the deposited PDF')
     && !I.comment(r, { record: Object.assign({}, d.record, { versions: [{ version: 1, doi: '10.5281/zenodo.1234567', date: '2026-10-01' }] }), problems: [] }).includes('attach the deposited PDF'));
 
@@ -465,7 +465,8 @@ console.log('\n10. PDF copies and the tags Google Scholar reads');
   /* 2026-11-12 (the fifth pass): Figshare's and Research Square's terms forbid scripts; no copy is attempted from them (check 119). */
   ok('Figshare: no copy is attempted, since its terms forbid scripts', F.sourceFor('10.6084/m9.figshare.34419198.v2', 2) === null);
   ok('Zenodo: the DOI leads to its record in the API', F.sourceFor('10.5281/zenodo.1234567', 1).api === 'https://zenodo.org/api/records/1234567');
-  ok('arXiv: one DOI, the version number picks the file', F.sourceFor('10.48550/arXiv.2508.15126', 2).url === 'https://export.arxiv.org/pdf/2508.15126v2');
+  /* Since 2026-11-15 nothing reads arXiv by script (the owner's answer S19): no source for an arXiv DOI; the authors attach the PDF. */
+  ok('arXiv: no copy by script since 2026-11-15; the authors attach the PDF', F.sourceFor('10.48550/arXiv.2508.15126', 2) === null);
   ok('Research Square: no copy is attempted, since its terms forbid robots', F.sourceFor('10.21203/rs.3.rs-39251/v1', 1) === null);
   ok('no copy is attempted from OSF Preprints, Preprints.org or SSRN, or from a Figshare DOI without a version', ['10.31219/osf.io/3sj5u', '10.20944/preprints201605.0001.v1', '10.2139/ssrn.7537983', '10.6084/m9.figshare.34419198'].every((d) => F.sourceFor(d, 1) === null));
   ok('an author-provided PDF is taken only from an attachment of a GitHub issue', F.attachmentOk('https://github.com/user-attachments/files/12345678/paper.pdf')
@@ -1199,7 +1200,9 @@ console.log('\n29. Lawful use: licences, liability, takedown, and the services S
     Object.values(site.repositories).every((n) => page.includes('>' + n + '</a>, for keeping the deposits and their DOIs</li>'))
     && ['DataCite', 'Crossref', 'Japan Link Center (JaLC)', 'ORCID', 'the Internet Archive', 'GitHub', 'Vercel'].every((n) => page.includes('>' + n + '</a>, for '))
     && page.includes('Thank you to arXiv for use of its open access interoperability.'));
-  ok('scripts fetch arXiv files from export.arxiv.org, as arXiv asks', read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes('https://export.arxiv.org/pdf/') && !read(path.join(ROOT, 'tools', 'fetch_pdf.js')).includes("'https://arxiv.org/pdf/"));
+  /* Until 2026-11-15 the scripts fetched arXiv files from export.arxiv.org, as arXiv asks; since then nothing reads arXiv by
+   * script (the owner's answer S19), and check 136 holds every tool to it. */
+  ok('no script fetches an arXiv file since 2026-11-15', !/arxiv\.org/i.test(read(path.join(ROOT, 'tools', 'fetch_pdf.js')).replace(/\/\*[\s\S]*?\*\//g, '')));
 }
 
 /* ------------------------------------------------------------ 30 */
@@ -1244,8 +1247,9 @@ console.log('\n31. Disputes: agreement first, then the court named in the Terms'
   const dj = (/## 紛争\n([\s\S]*?)\n## /.exec(tj) || [, ''])[1];
   const notice = JSON.parse(read(path.join(ROOT, 'site.json'))).termsNotice || {};
   ok('the court of first instance is, from ' + (courtFrom || '(no day)') + ', the Utsunomiya District Court or the Utsunomiya Summary Court, by a non-exclusive agreement made in a form, without taking away the rights of consumers or of people outside Japan, in both languages',
-    d.includes('From ' + courtFrom + ", if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form; this agreement is not exclusive.")
-    && dj.includes(courtFrom + ' から、これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、宇都宮地方裁判所または宇都宮簡易裁判所を、第一審の合意管轄裁判所とします。この合意は専属的なものではありません。')
+    /* Since 2026-11-15 the sentence of that day carries the limit to suits based on the Terms (the owner's answer S12). */
+    d.includes('From ' + courtFrom + ", if a dispute is not settled in these ways, it goes to the Utsunomiya District Court or the Utsunomiya Summary Court, as the court of first instance by agreement, for a person who has agreed to these terms in a form, but only for a suit based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction. This agreement is not exclusive.")
+    && dj.includes(courtFrom + ' から、これらの方法で解決しない紛争は、様式でこの規約に同意した人との間では、宇都宮地方裁判所または宇都宮簡易裁判所を、第一審の合意管轄裁判所とします。ただし、この合意の対象は、この規約に基づく訴えと、この規約のもとでのその人自身の作品の投稿・掲載・訂正・撤回・削除に基づく訴えに限ります。それ以外の紛争は、法令の定める裁判所が管轄します。この合意は専属的なものではありません。')
     && d.includes('This does not take away a right that the law gives a consumer, or a person outside Japan, to bring or defend a case in another court.')
     && d.includes('urgent relief') && terms.includes('These terms are governed by the laws of Japan.'));
   ok('the court is named at least 14 days after the change, the court of the operator\'s place of residence stays until then, and the top page announces it',
@@ -2056,7 +2060,7 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   ok('the authors are told and can respond; the operator\'s decision lists what is done and what is left by hand; a request not upheld puts material back',
     said[3].includes('in #9') && said[3].includes('If the request is not upheld, it is put back.') && said[3].includes('The record page (its title, authors, abstract and PDF copy) is offline while it is reviewed.') && said[3].includes('can respond')
     && said[4].includes('- [ ] ask the Internet Archive to exclude its earlier copies (by hand)') && said[4].includes('- [x] every automatic comment about the record is deleted')
-    && said[4].includes('- [x] the issues that name it are emptied, closed and locked: #3, #12') && said[4].includes('- [ ] delete those issues, so that their edit history goes too')
+    && said[4].includes('- [x] the lines of consent in them are copied into the record of provision, and the issues that name it are emptied and closed: #3, #12') && said[4].includes('- [ ] delete those issues, so that their edit history goes too')
     && said[5].includes('put back') && said[6] === 'Removed.'
     && R.emptiedTitle('[Submission] A Title Naming the Work') === '[Submission] removed' && R.emptiedTitle('[Withdrawal] 2026.0001') === '[Withdrawal] removed' && R.emptiedTitle('Some title') === '[Removed] removed'
     && R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: R.KINDS['A request about my personal data (access, correction, restriction, objection, deletion, stopping its provision to others, a copy)'], today: '2026-11-12', done: false }).includes('The operator carries it out by hand.'));
@@ -2077,12 +2081,15 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
   ok('changes to main go one at a time, and only after the site is built and every check passes',
     /concurrency:\n  group: removal\n  cancel-in-progress: false/.test(wf)
     && /\n  execFileSync\('node', \['build\.js'\], [^\n]*\);\n  execFileSync\('node', \['verification\/check\.js'\], [^\n]*\);\n[\s\S]*\n  git\('push', 'origin', 'HEAD:main'\);\n\}/.test(src));
-  ok('an upheld removal deletes every comment of the bot in the issues that name the record, and empties, closes and locks them; removal requests are left',
+  /* Until 2026-11-15 the issues were also locked; since then no automatic step locks an issue (the owner's answer S7), and from
+   * 2026-12-01 the lines of consent are copied and pushed before any issue is emptied (S5). */
+  ok('an upheld removal deletes every comment of the bot in the issues that name the record, copies their lines of consent first, and empties and closes them without locking; removal requests are left',
     src.includes("if (c.user.type === 'Bot') await I.github('DELETE', '/issues/comments/' + c.id)") && src.includes("body: EMPTIED, state: 'closed'")
-    && src.includes("'/issues/' + n + '/lock'") && src.includes("!(i.labels || []).some((l) => l.name === 'removal')"));
+    && !/\/lock'/.test(src) && src.indexOf('withConsentLines(fs.readFileSync(PROVISION') > 0 && src.indexOf('withConsentLines(fs.readFileSync(PROVISION') < src.indexOf("body: EMPTIED, state: 'closed'")
+    && src.includes("!(i.labels || []).some((l) => l.name === 'removal')"));
   ok('the Takedown Policy says the notice gives no reason, that every trace in the issues goes, and that earlier versions on Vercel are not public',
     ['When a record is removed, its page is replaced by a notice that says only that the record with that Sophaxis id was removed.', 'The notice gives no reason and no other detail.',
-      'Every automatic comment about the record is deleted, and the issues that name it are emptied, closed and locked; the operator then deletes them.',
+      'Every automatic comment about the record is deleted, and the issues that name it are emptied and closed; no automatic step locks them.',
       'The operator also asks GitHub to remove the material from the repository history.', 'Earlier versions of the site that Vercel keeps are not open to the public.']
       .every((x) => read(path.join(ROOT, 'policies', 'takedown.md')).includes(x)));
   ok('a hold is recorded in its commit, and putting back restores the record and its copies from just before that commit',
@@ -4789,7 +4796,8 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
    * Every whole law carries the SHA-256 of each article, and every key is named in tools/sources.js. */
   const hashProblems = (raw, full = null) => {
     const bad = S.keptProblems(raw, full);
-    for (const k of Object.keys(raw.pages || {})) if (!S.PAGES[k.split('>')[0]]) bad.push('page not in tools/sources.js: ' + k);
+    /* A retired page (arXiv's, since 2026-11-15) is named in tools/sources.js too, under RETIRED, and kept as it was fetched. */
+    for (const k of Object.keys(raw.pages || {})) if (!S.PAGES[k.split('>')[0]] && !(S.RETIRED || []).includes(k)) bad.push('page not in tools/sources.js: ' + k);
     for (const [k, L] of Object.entries(raw.laws || {})) {
       if (!S.LAWS[k]) bad.push('law not in tools/sources.js: ' + k);
       if (L.status === 200 && L.title !== L.wanted) bad.push('law ' + k + ' is not the one wanted');
@@ -4853,8 +4861,9 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
   const PV = ['Sophaxis therefore meets these rules as if they applied, and gives here, for each request that its pages make a reader\'s browser send, the three things that the Ordinance asks to be made known.', 'What is sent: ', 'Who handles it: ', 'What for: '];
   const PVJ = ['そこで Sophaxis は、この規律が掛かるものとして務めを果たします。', '送られる情報は、', '取り扱うのは、', '利用目的は、'];
   const tm = read(path.join(ROOT, 'policies', 'terms.md')), tmj = read(path.join(ROOT, 'policies', 'terms.ja.md'));
-  const COURT = "From 2026-11-26, this agreement on the court covers only suits based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction.";
-  const COURT_JA = '2026-11-26 から、この裁判所の合意の対象は、この規約に基づく訴えと、この規約のもとでのその人自身の作品の投稿・掲載・訂正・撤回・削除に基づく訴えに限ります。それ以外の紛争は、法令の定める裁判所が管轄します。';
+  /* Since 2026-11-15 the limit is part of the sentence of 2026-11-25, so that the agreement never covers every dispute (S12). */
+  const COURT = "but only for a suit based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction. This agreement is not exclusive.";
+  const COURT_JA = 'ただし、この合意の対象は、この規約に基づく訴えと、この規約のもとでのその人自身の作品の投稿・掲載・訂正・撤回・削除に基づく訴えに限ります。それ以外の紛争は、法令の定める裁判所が管轄します。この合意は専属的なものではありません。';
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
   const changes = JSON.parse(read(path.join(ROOT, 'data', 'policy-changes.json')));
   /* Pure: what is wrong with the safer wording; [] when nothing is. */
@@ -4864,7 +4873,7 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
     for (const x of PVJ) if (!ja.includes(x)) bad.push('個人情報の取り扱い: ' + x.slice(0, 15));
     if (/The Ministry's Ordinance was not fetched|総務省令は取り寄せていません/.test(en + ja)) bad.push('the old sentence on the Ordinance');
     if (!t.includes(COURT) || !tj.includes(COURT_JA)) bad.push('the narrowed agreement on the court');
-    if (!String(notice.text || '').includes('From 2026-11-26, that agreement on the court covers only suits based on the Terms of Use')) bad.push('the notice on the top page');
+    if (!String(notice.text || '').includes('From 2026-11-25, that agreement on the court covers only suits based on the Terms of Use')) bad.push('the notice on the top page');
     const e = ch.find((c) => c.from === '2026-11-26' && c.policies.includes('terms'));
     if (!e || !/^\d{4}-\d{2}-\d{2}$/.test(changed) || (Date.parse(e.from) - Date.parse(changed)) / 86400000 < 14 || (Date.parse(e.from) - Date.parse(e.date)) / 86400000 < 14) bad.push('the change is not announced 14 days ahead');
     return bad;
@@ -4874,7 +4883,7 @@ console.log('\n114. The continuation of the audit: the texts fetched to close it
   // A working tree whose change is not committed yet counts from today.
   if (!changed && tm.includes(COURT)) changed = new Date().toISOString().slice(0, 10);
   const sp = saferProblems(pv, pvj, tm, tmj, site.termsNotice || {}, changes, changed);
-  ok('the Privacy Policy meets the rules on sending users\' information as if they applied, giving what is sent, who handles it and for what, in both languages; the agreed court covers only suits based on the Terms from 2026-11-26, announced on the top page and in the feed at least 14 days ahead',
+  ok('the Privacy Policy meets the rules on sending users\' information as if they applied, giving what is sent, who handles it and for what, in both languages; the agreed court covers only suits based on the Terms from 2026-11-25 (from 2026-11-26 as announced on 2026-11-12, moved a day earlier on 2026-11-15), announced on the top page and in the feed at least 14 days ahead',
     sp.length === 0, sp.join(' / ') + ' ' + changed);
   // The review: the Consumer Contract Act read again, and the definition of commercial use; the records: OpenAI and xAI.
   const rv = read(path.join(ROOT, 'docs', 'legal-review.md')), rec = read(path.join(ROOT, 'docs', 'records-of-provision.md'));
@@ -5006,7 +5015,9 @@ const EIGHTH_PASS_PAGES = ['github-additional-terms'];
 const ELEVENTH_PASS_PAGES = ['ia-terms-archived-2024', 'ia-robots', 'wayback-robots'];
 /* The page fetched on 2026-11-13 after Vercel changed its Fair Use Guidelines (check 126): the Internet Archive's copy of 2026-10-31. */
 const VERCEL_PASS_PAGES = ['vercel-fair-use-archived'];
-const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES, ELEVENTH_PASS_PAGES, VERCEL_PASS_PAGES);
+/* The pages fetched on 2026-11-15 for the owner's answers to the audit of 2026-11-14 (check 136). */
+const ANSWERS_PAGES = ['anthropic-consumer-terms', 'anthropic-commercial-terms', 'openai-terms-archived', 'openai-services-agreement-archived', 'xai-enterprise-terms', 'datacite-rest-api', 'datacite-data-file-use', 'indexnow-terms', 'x-terms-archived'];
+const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES, ELEVENTH_PASS_PAGES, VERCEL_PASS_PAGES, ANSWERS_PAGES);
 /* The translations of laws by foreign governments and agencies, kept whole on 2026-11-12 and in parts from 2026-11-13 (check 126).
  * The counts of 2026-11-12 (texts kept whole that were not laws) do not hold them. */
 const LATER_PARTS = ['fadp', 'pipl', 'thai-pdpa', 'saudi-pdpl', 'ae-pdpl', 'qa-pdpl'];
@@ -5337,11 +5348,12 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
   const DOIS = { zenodo: '10.5281/zenodo.1234567', arxiv: '10.48550/arXiv.2508.15126', figshare: '10.6084/m9.figshare.34419198.v2', rs: '10.21203/rs.3.rs-39251/v1' };
   const routeProblems = (sourceFor, src, direct) => {
     const bad = [];
-    if (!sourceFor(DOIS.zenodo, 1) || !sourceFor(DOIS.arxiv, 1) || !/^https:\/\/export\.arxiv\.org\//.test(sourceFor(DOIS.arxiv, 1).url)) bad.push('Zenodo or arXiv');
+    /* Since 2026-11-15, arXiv is not copied from either (the owner's answer S19). */
+    if (!sourceFor(DOIS.zenodo, 1) || sourceFor(DOIS.arxiv, 1) !== null) bad.push('Zenodo or arXiv');
     if (sourceFor(DOIS.figshare, 2) !== null || sourceFor(DOIS.rs, 1) !== null) bad.push('a copy from Figshare or Research Square');
     const code = src.replace(/\/\*[\s\S]*?\*\//g, ' ').split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n');
     if (/figshare\.com|researchsquare\.com|kind === 'figshare'/.test(code)) bad.push('an address of Figshare or Research Square in fetch_pdf.js');
-    if (!['https://figshare.com/terms', 'https://api.figshare.com/v2/articles/1', 'https://ndownloader.figshare.com/files/1', 'https://docs.figshare.com/', 'https://www.researchsquare.com/article/rs-1/v1.pdf'].every(direct)) bad.push('NO_DIRECT');
+    if (!['https://figshare.com/terms', 'https://api.figshare.com/v2/articles/1', 'https://ndownloader.figshare.com/files/1', 'https://docs.figshare.com/', 'https://www.researchsquare.com/article/rs-1/v1.pdf', 'https://export.arxiv.org/pdf/1', 'https://info.arxiv.org/help/api/tou.html'].every(direct)) bad.push('NO_DIRECT');
     return bad;
   };
   /* The pages read: Zenodo's and arXiv's directly, Figshare's and Research Square's from the Internet Archive's copies;
@@ -5360,6 +5372,8 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
   const pageProblems = (pages, raw) => {
     const bad = [];
     for (const k of FIFTH_PASS_PAGES) {
+      /* arXiv's pages are retired on 2026-11-15: kept as they were fetched, never fetched again (the owner's answer S19). */
+      if (/^arxiv-/.test(k)) { const r0 = raw.pages[k]; if (!S.RETIRED.includes(k) || pages[k] || !r0 || r0.status !== 200 || !Array.isArray(r0.spans) || 'text' in r0) bad.push('not retired as kept: ' + k); continue; }
       const p = pages[k], r = raw.pages[k];
       if (!p) { bad.push('not listed: ' + k); continue; }
       const ia = p.url.startsWith('https://web.archive.org/web/2026id_/');
@@ -5374,10 +5388,11 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
    * the end of the copies from Figshare and Research Square on 2026-11-13 with the words of their terms; no page names the
    * four as repositories that let a script fetch; the change announced on the top page and in the feed, ahead of its day. */
   const SAY = {
-    'policies/copyright.md': ['It copies the file by script only from a repository whose own pages let a script fetch it: Zenodo and arXiv.', 'Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.', 'Since the change was published on 2026-11-13, this includes Figshare and Research Square.'],
-    'policies/copyright.ja.md': ['スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている預け先からだけです。Zenodo と arXiv です。', 'この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。'],
-    'repositories.md': ['the repository\'s own pages let a script fetch it (Zenodo and arXiv)', 'Until this change was published on 2026-11-13, Sophaxis also fetched PDFs from Figshare and Research Square; since then, it does not, because their terms forbid robots and scripts'],
-    'repositories.ja.md': ['預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo と arXiv）', 'この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており'],
+    /* Since 2026-11-15 the policy names Zenodo alone, and says that arXiv is read by script no more (the owner's answer S19). */
+    'policies/copyright.md': ['It copies the file by script only from Zenodo, whose own pages let a script fetch it.', 'Since this change was published on 2026-11-15, Sophaxis reads nothing from arXiv by script, and makes no copy from it;', 'Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.', 'Since the change was published on 2026-11-13, this includes Figshare and Research Square.'],
+    'policies/copyright.ja.md': ['スクリプトで写すのは、スクリプトでファイルを取ることを自らの頁で認めている Zenodo からだけです。', 'この変更を公開した 2026-11-15 から、Sophaxis は arXiv からスクリプトで何も読まず、写しも作りません。', 'この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。'],
+    'repositories.md': ['the repository\'s own pages let a script fetch it (Zenodo)', 'Since 2026-11-15, it reads nothing from arXiv by script either', 'Until this change was published on 2026-11-13, Sophaxis also fetched PDFs from Figshare and Research Square; since then, it does not, because their terms forbid robots and scripts'],
+    'repositories.ja.md': ['預け先が自らの頁でスクリプトによる取得を認めている場合だけです（Zenodo）', '2026-11-15 からは、arXiv からもスクリプトで何も読みません。', 'この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。公開してからは取りません。どちらの規約もロボットとスクリプトを禁じており'],
   };
   const OLD = /Zenodo, Figshare, arXiv and Research Square|Zenodo、Figshare、arXiv、Research Square|offers it to scripts/;
   const NOTICE = 'Since its publication on 2026-11-13, ahead of the changes below because going on would act against the terms of the two repositories, Sophaxis no longer copies PDFs by script from Figshare or Research Square, whose terms forbid robots and scripts; the authors of a work there can attach the deposited PDF to the submission issue instead.';
@@ -5465,11 +5480,11 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
   const audit = read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md'));
   const rp = routeProblems(F.sourceFor, src, S.direct), gp = pageProblems(S.PAGES, RAW), pp = policyProblems(SHOWN, pool, site.termsNotice || {}, changes);
   const vp = venueProblems(SHOWN).concat(venueSay(SHOWN)), ap = auditProblems(audit, pool);
-  ok('PDFs are copied by script only from Zenodo and arXiv; none is attempted from Figshare or Research Square, whose terms forbid it, and tools/sources.js asks neither host directly',
+  ok('PDFs are copied by script only from Zenodo (from arXiv too until 2026-11-15); none is attempted from Figshare or Research Square, whose terms forbid it, and tools/sources.js asks neither host directly',
     rp.length === 0, rp.join(', '));
-  ok('the ' + FIFTH_PASS_PAGES.length + ' pages read for this are listed in tools/sources.js, Figshare\'s and Research Square\'s from the Internet Archive\'s copies, each kept in parts with its SHA-256 and holding the words quoted',
+  ok('the ' + FIFTH_PASS_PAGES.length + ' pages read for this are listed in tools/sources.js (arXiv\'s three retired since 2026-11-15, kept as fetched), Figshare\'s and Research Square\'s from the Internet Archive\'s copies, each kept in parts with its SHA-256 and holding the words quoted',
     gp.length === 0, gp.join(', '));
-  ok('the Copyright Policy and the page for repositories, in both languages, name Zenodo and arXiv with their own words, end the copies from Figshare and Research Square on 2026-11-13 with the words of their terms, no page of the ' + Object.keys(SHOWN).length + ' read names the four as letting a script fetch, and the change is on the top page and in the feed ahead of its day',
+  ok('the Copyright Policy and the page for repositories, in both languages, name Zenodo with its own words and the end of the copies from arXiv on 2026-11-15, end the copies from Figshare and Research Square on 2026-11-13 with the words of their terms, no page of the ' + Object.keys(SHOWN).length + ' read names the four as letting a script fetch, and the change is on the top page and in the feed ahead of its day',
     pp.length === 0, pp.join(' / '));
   ok('no sentence or table row in the pages, the data or the built site credits PhilArchive or SSRN with an editor, staff, moderation, a review or a check; the comparison and the guide quote their pages, in both languages',
     vp.length === 0, vp.join(' / '));
@@ -5487,9 +5502,11 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
     && routeProblems(F.sourceFor, src + "\nconst RS = 'https://www.researchsquare.com/article/';\n", S.direct).length > 0
     && routeProblems(F.sourceFor, src, (u) => !/figshare/.test(u) && S.direct(u)).length > 0
     && pageProblems({ ...S.PAGES, 'figshare-terms': { url: 'https://figshare.com/terms' } }, RAW).length > 0
-    && pageProblems((() => { const p = { ...S.PAGES }; delete p['arxiv-bulk-data']; return p; })(), RAW).length > 0
+    /* Since 2026-11-15: an arXiv page read again, or a retired one dropped from what is kept, fails (the owner's answer S19). */
+    && pageProblems({ ...S.PAGES, 'arxiv-bulk-data': { url: 'https://info.arxiv.org/help/bulk_data.html' } }, RAW).length > 0
+    && pageProblems(S.PAGES, (() => { const r = clone(RAW); delete r.pages['arxiv-bulk-data']; return r; })()).length > 0
     && pageProblems(S.PAGES, r1).length > 0 && pageProblems(S.PAGES, r2).length > 0 && pageProblems(S.PAGES, r3).length > 0
-    && policyProblems(sh('process.md', 'every repository except Zenodo and arXiv', 'every repository except Zenodo, Figshare, arXiv and Research Square'), pool, site.termsNotice || {}, changes).length > 0
+    && policyProblems(sh('process.md', 'every repository except Zenodo:', 'every repository except Zenodo, Figshare, arXiv and Research Square:'), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(sh('policies/copyright.md', 'Since then, it does not, because their terms forbid it.', ''), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(sh('policies/copyright.ja.md', 'or manual process to monitor or copy any content', 'or manual process to copy any content'), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(SHOWN, pool, { text: '' }, changes).length > 0
@@ -5741,9 +5758,9 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
   const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
   const breaks = [
-    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-14.', 'Last updated: 2026-11-13.'), facts],
-    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-14。', '最終更新：2026-11-13。'), facts],
-    ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-13.', 'Last updated: 2026-11-12.'), facts],
+    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
+    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-15。', '最終更新：2026-11-14。'), facts],
+    ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
     ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
     ['the entry on Figshare dated back', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
@@ -7570,7 +7587,8 @@ console.log('\n135. The eighteenth read-only pass (2026-11-15): the checked inta
     ['the count changed', w('aud', 'この表の判定は、誤り 3、根拠不足 1、漏れ 2、表現 1、問題なし 2 です。', 'この表の判定は、誤り 2、根拠不足 1、漏れ 2、表現 1、問題なし 2 です。')],
     ['a quotation changed by one word', w('aud', '「定型約款の変更が、相手方の一般の利益に適合するとき。」', '「定型約款の変更が、相手方の利益に適合するとき。」')],
     ['the earlier row not said to be wrong', w('aud', '2026-11-14 の節のその行は「問題なし」としていましたが、誤りでした', '2026-11-14 の節のその行はそのままです')],
-    ['a lawyer said to have seen it', w('aud', 'この節も、弁護士は見ていません。\n\n## この記録について', 'この節は、弁護士が確かめました。\n\n## この記録について')],
+    /* Since 2026-11-15 the section of the owner's answers follows this one; the break is aimed at the end of this section. */
+    ['a lawyer said to have seen it', w('aud', 'この節も、弁護士は見ていません。\n\n## 2026-11-15：点検の答え', 'この節は、弁護士が確かめました。\n\n## 2026-11-15：点検の答え')],
   ];
   const missed = breaks.filter(([, x]) => problems(x).length === 0).map(([k]) => k);
   /* The daily run broken: closing again, or labelling a request. */
@@ -7580,8 +7598,180 @@ console.log('\n135. The eighteenth read-only pass (2026-11-15): the checked inta
     missed.length === 0, missed.join(' / '));
 }
 
-/* ------------------------------------------------------------ 136 */
-console.log('\n136. The entrance of the top pages (2026-11-15): the name, the rule, the sentence and three emblems drawn again from the records, every number counted again, every sentence the top pages carried still there word for word, the notices whole and in their order, the colours measured in both schemes, and nothing that echoes the operator\'s other site');
+console.log('\n136. The owner\'s answers of 2026-11-15 to the audit of 2026-11-14: no language model without the consent of everyone who wrote, the co-author\'s consent, authors from 16, lines of consent kept, automatic hiding, locking, the court, the name, the period of the logs, training, DataCite, arXiv, and the record');
+{
+  /* The owner answered on 2026-11-15 the nineteen questions that the legal audit of 2026-11-14 left for Sophaxis; the answers are
+   * carried out as given (docs/legal-audit-2026-11-12.md, 「2026-11-15：点検の答え」). */
+  const L = require('../tools/llm.js'), Wd = require('../tools/words.js'), I = require('../tools/intake.js'), Rm = require('../tools/removal.js'), S = require('../tools/sources.js');
+  const B = require('../build.js');
+  const kept = require('../tools/citations.js').kept;
+  const R = (f) => read(path.join(ROOT, f));
+  const code = (t) => String(t || '').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const flat = (x) => String(x || '').replace(/\s+/g, '');
+  const real = {
+    mod: R('policies/moderation.md'), modJa: R('policies/moderation.ja.md'), pv: R('policies/privacy.md'), pvJa: R('policies/privacy.ja.md'),
+    sub: R('policies/submission.md'), subJa: R('policies/submission.ja.md'), terms: R('policies/terms.md'), termsJa: R('policies/terms.ja.md'),
+    td: R('policies/takedown.md'), tdJa: R('policies/takedown.ja.md'), cp: R('policies/copyright.md'), cpJa: R('policies/copyright.ja.md'),
+    rep: R('repositories.md'), repJa: R('repositories.ja.md'), auto: R('automation.md'), autoJa: R('automation.ja.md'), review: R('docs/legal-review.md'),
+    prov: R('docs/records-of-provision.md'), form: R('.github/ISSUE_TEMPLATE/submission.yml'), formJa: R('.github/ISSUE_TEMPLATE/submission-ja.yml'),
+    corr: R('.github/ISSUE_TEMPLATE/correction.yml'), rem: R('.github/ISSUE_TEMPLATE/removal.yml'), wd: R('.github/ISSUE_TEMPLATE/withdrawal.yml'),
+    removal: R('tools/removal.js'), intake: R('tools/intake.js'), fetchPdf: R('tools/fetch_pdf.js'), sources: R('tools/sources.js'),
+    site: R('site.json'), changes: R('data/policy-changes.json'), aud: R('docs/legal-audit-2026-11-12.md'), raw: R('verification/sources-raw.json'),
+  };
+  const TX = JSON.parse(R('verification/statutes-texts.json'));
+  const HEAD = '\n## 2026-11-15：点検の答え\n';
+  const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  /* The words that the providers' texts say about training, DataCite's permission, IndexNow's and X's terms: each must be on its
+   * page and in the parts kept of the page fetched on 2026-11-15. */
+  const QUOTED = {
+    'anthropic-consumer-terms': ['We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings.'],
+    'anthropic-commercial-terms': ['Anthropic may not train models on Customer Content from Services.'],
+    'openai-terms-archived': ['If you do not want us to use your Content to train our models, you can opt out by following the instructions in this article'],
+    'openai-services-agreement-archived': ['OpenAI will not use Customer Content to develop or improve the Services, unless Customer explicitly agrees to such use.'],
+    'xai-terms': ['When logged into our Service, you can select whether or not you want us to use your User Content to improve our products and services and train our models.'],
+    'xai-enterprise-terms': ['SpaceXSI will not use any User Content to train any foundation models, large language models, or other artificial intelligence systems or to develop any new products, services, or features, subject to disclosures to Customer and Customer-controlled user settings.'],
+    'datacite-rest-api': ['Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.'],
+    'datacite-data-file-use': ['Consistent with this broad waiver, DataCite does not impose any conditions on access to and use of the DataCite Data File.', 'The DataCite Data File is available via the DataCite APIs and the annual public Data File.'],
+    'indexnow-terms': ['These Terms of Service govern your use of the Website.'],
+    'x-terms-archived': ['you must be at least 13 years old to use the Services', 'access or search or attempt to access or search the Services by any means (automated or otherwise) other than through our currently available, published interfaces'],
+  };
+  const ON = { 'anthropic-consumer-terms': ['mod', 'modJa'], 'anthropic-commercial-terms': ['mod', 'modJa'], 'openai-terms-archived': ['mod', 'modJa'], 'openai-services-agreement-archived': ['mod', 'modJa'],
+    'xai-terms': ['mod', 'modJa'], 'xai-enterprise-terms': ['mod', 'modJa'], 'datacite-rest-api': ['cp', 'cpJa', 'rep', 'repJa'], 'datacite-data-file-use': ['cp', 'cpJa', 'rep', 'repJa'],
+    'indexnow-terms': ['review'], 'x-terms-archived': ['review'] };
+  const OLD = [['pv', '1 hour'], ['pvJa', '1 時間'], ['review', 'kept for 1 hour'], ['terms', 'Unfair Competition Prevention Act, Article 2(1)'], ['termsJa', '不正競争防止法第 2 条'],
+    ['terms', "or older where a user's own country requires it"], ['termsJa', '自国の法令がそれより上の年齢'], ['terms', 'From 2026-11-26, this agreement on the court covers only'],
+    ['termsJa', '2026-11-26 から、この裁判所の合意の対象は'], ['td', 'emptied, closed and locked'], ['tdJa', '閉じ、ロックします'], ['cp', 'Sophaxis fetches from that site.'], ['rep', '(Zenodo and arXiv)']];
+  const NEED = [
+    ['mod', 'only when every GitHub account whose writing is in what would be given has consented to it'], ['mod', 'If one of them has not consented, no language model is used for that issue: a person reviews it, or it waits.'],
+    ['modJa', '一人でも同意していなければ、その issue には言語モデルを使いません。人が審査するか、待ちます。'], ['pv', L.CONSENT], ['modJa', L.CONSENT], ['pv', '### Language models in the review'],
+    ['auto', 'only after `node tools/llm.js` has found that every account that wrote in the issue has consented'], ['autoJa', '`node tools/llm.js` が、issue に書いたすべてのアカウントが同意していると確かめた後だけです'],
+    ['sub', Wd.AGREE_CHECKED], ['sub', 'From 2026-12-01, a work is not accepted if any of its authors is under 16.'], ['subJa', '2026-12-01 から、16 歳未満の著者の作品は受け付けません。'],
+    ['terms', '- From 2026-12-01, a work is not accepted if any of its authors is under 16.'], ['termsJa', '- 2026-12-01 から、16 歳未満の著者の作品は受け付けません。'],
+    ['pv', 'From 2026-12-01, Sophaxis does not accept a work if any of its authors is under 16.'], ['pvJa', '2026-12-01 から、16 歳未満の著者の作品は受け付けません。'],
+    ['form', 'from 2026-12-01, that every author of this work is 16 or older'], ['formJa', '2026-12-01 からは著者全員が 16 歳以上であることを確かめました'],
+    ['td', 'these lines stay public there for three years from the day they are copied'], ['tdJa', 'この行は、その記録が引く期間の三年、写した日から公開のまま残ります。'], ['prov', Rm.KEPT_HEAD],
+    ['mod', '## Automatic hiding'], ['mod', 'Sophaxis keeps no list of such accounts, in the repository or anywhere else, and publishes none.'], ['modJa', 'Sophaxis は、そうしたアカウントの一覧を、リポジトリにもほかのどこにも持たず、公開もしません。'],
+    ['mod', '## Locking an issue'], ['mod', 'Locking an issue never removes the route for a request that the law gives'], ['mod', 'A locked issue is still read by the operator.'], ['mod', 'No automatic step locks an issue.'],
+    ['modJa', '## issue に鍵を掛けること'], ['modJa', '鍵を掛けた issue も、運営者は読みます。'], ['modJa', '自動の手順は、issue に鍵を掛けません。'],
+    ['terms', "for a person who has agreed to these terms in a form, but only for a suit based on these terms"], ['termsJa', 'ただし、この合意の対象は、この規約に基づく訴えと'],
+    ['pv', 'runtime logs are kept for the period Vercel sets'], ['pvJa', 'ランタイムのログは Vercel が定める期間保たれます'],
+    ['pv', '- from 2026-11-21, to confirm that a co-author who confirms their agreement is an author of the work;'], ['terms', '- GitHub accepts only users aged 13 or over (GitHub Terms, B.3).'],
+    ['corr', 'text written in this form is shared under CC0 1.0 by the person who writes it'], ['rem', 'text written in this form is shared under CC0 1.0 by the person who writes it'], ['wd', 'text written in this form is shared under CC0 1.0 by the person who writes it'],
+    ['cp', 'Since this change was published on 2026-11-15, Sophaxis reads nothing from arXiv by script, and makes no copy from it'], ['review', '### Electronic consumer contracts, the effort duties and the Constitution (2026-11-15)'],
+  ];
+  function problems(x) {
+    const bad = [];
+    for (const [k, w] of NEED) if (!String(x[k]).includes(w)) bad.push('lacks: ' + w.slice(0, 40));
+    for (const [k, w] of OLD) if (String(x[k]).includes(w)) bad.push('still says: ' + w);
+    /* No automatic step locks an issue; nothing reads arXiv or X by script; the lines of consent are pushed before any issue is emptied. */
+    for (const k of ['removal', 'intake', 'fetchPdf']) if (/\/lock'|lock_reason/.test(code(x[k]))) bad.push('a lock in ' + k);
+    if (/arxiv\.org/i.test(code(x.fetchPdf)) || /PAGE\('https?:\/\/(?:[a-z.]*\.)?arxiv\.org/i.test(code(x.sources))) bad.push('a script reads arXiv');
+    if (!['https://export.arxiv.org/pdf/1', 'https://x.com/en/tos'].every(S.direct)) bad.push('NO_DIRECT');
+    const r = x.removal, at = r.indexOf("git('push', 'origin', 'HEAD:main');\n    }\n  }"), emp = r.indexOf("body: EMPTIED, state: 'closed'");
+    if (!(r.indexOf('withConsentLines(fs.readFileSync(PROVISION') > 0 && at > 0 && emp > at)) bad.push('the lines of consent are not pushed before an issue is emptied');
+    /* What is quoted is on its page and in the parts kept. */
+    let raw = {};
+    try { raw = JSON.parse(x.raw); } catch (e) { bad.push('sources-raw.json'); }
+    for (const [k, ws] of Object.entries(QUOTED)) for (const w of ws) {
+      const p = (raw.pages || {})[k];
+      if (!p || p.status !== 200 || !/^[0-9a-f]{64}$/.test(p.sha256 || '') || !flat(kept(p.spans)).includes(flat(w))) bad.push('not kept: ' + k + ': ' + w.slice(0, 30));
+      if (!ON[k].every((f) => flat(x[f]).includes(flat(w)))) bad.push('not on its pages: ' + w.slice(0, 30));
+    }
+    /* The feed and the notice: the changes that narrow, from 2026-12-01, at least 14 days after 2026-11-15; the rest on publication. */
+    let site = {}, changes = [];
+    try { site = JSON.parse(x.site); changes = JSON.parse(x.changes); } catch (e) { bad.push('site.json or the feed'); }
+    const later = changes.find((c) => c.date === '2026-11-15' && c.from && /Authors from 16/.test(c.title));
+    if (!later || later.from < '2026-11-29' || !/at least 14 days ahead/.test(later.text) || !String(later.ja).includes(later.from + ' から')) bad.push('the entry from 2026-12-01');
+    const now = changes.find((c) => c.date === '2026-11-15' && !c.from && /without everyone's consent/.test(c.title));
+    if (!now || !/take effect on publication/.test(now.text)) bad.push('the entry on publication');
+    const nt = String((site.termsNotice || {}).text);
+    if (!nt.includes('From 2026-12-01, a work is not accepted if any of its authors is under 16;') || !nt.includes('From 2026-11-25, that agreement on the court covers only suits')) bad.push('the notice on the top page');
+    /* The record. */
+    const a = x.aud, i = a.indexOf(HEAD), end = a.indexOf('\n## この記録について\n');
+    if (i < 0 || end < i) return bad.concat(['the section, before the end of the record']);
+    const sec = a.slice(i, a.indexOf('\n## ', i + 5));
+    const rows = sec.split('\n').filter((l) => /^\| S\d+：/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    if (rows.length !== 19 || !rows.every((y, n) => y.length === 6 && KINDS.includes(y[4]) && y[0].startsWith('S' + (n + 1) + '：'))) bad.push('the table of the 19 answers');
+    const tally = 'この表の判定は、' + KINDS.filter((k) => rows.some((y) => y[4] === k)).map((k) => k + ' ' + rows.filter((y) => y[4] === k).length).join('、') + ' です。';
+    if (!sec.includes(tally)) bad.push('the count');
+    if (rows.some((y) => !/2026-11-15 に利用者が決め、Claude が書きました。[^|]*ためです$/.test(y[5]))) bad.push('who decided, and why');
+    const texts = Object.values(TX).concat(Object.values(raw.sources || {}).filter((s) => s.articles).flatMap((s) => Object.values(s.articles).filter((v) => typeof v === 'string'))).map(flat);
+    for (const y of rows.filter((z) => /法 第|民法|施行規則/.test(z[1]))) for (const m of y[2].matchAll(/「([^「」]+)」/g)) if (!texts.some((t) => t.includes(flat(m[1])))) bad.push('a quotation not in the fetched texts: ' + m[1].slice(0, 20));
+    if (!sec.includes('この節も、弁護士は見ていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the sentence on lawyers');
+    if (!sec.includes('2026-12-01 までは 16 日で、14 日を下りません。')) bad.push('the days of notice');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the pages, the forms, the notice, the feed and the record carry the owner\'s answers of 2026-11-15 in both languages, no old wording is left, nothing locks an issue or reads arXiv or X by script, and every quotation is kept from a text fetched on 2026-11-15',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  /* The language models: an issue made here, with the submitter's box, a co-author's new words, a researcher's words of consent,
+   * a bot and the operator; and the same with one more comment by someone who has not consented. */
+  const box = (L.REVIEW_BOX || [''])[0];
+  const issue = { number: 9, user: { login: 'sub', type: 'User' }, body: '### Confirmations\n\n- [X] ' + box + '\n' };
+  const cs = [{ user: { login: 'co', type: 'User' }, body: Wd.AGREE_CHECKED + ' ORCID: 0000-0002-1694-233X' }, { user: { login: 'voucher', type: 'User' }, body: I.VOUCH_CHECKED + '\n\n' + L.CONSENT },
+    { user: { login: 'ja', type: 'User' }, body: L.CONSENT_JA }, { user: { login: 'github-actions[bot]', type: 'Bot' }, body: 'x' }, { user: { login: 'cpsbvbng26-dotcom', type: 'User' }, body: 'A note.' }];
+  const yes = L.mayPass({ issue, comments: cs, owner: 'cpsbvbng26-dotcom' });
+  const one = L.mayPass({ issue, comments: cs.concat([{ user: { login: 'other', type: 'User' }, body: 'I think the proof is wrong.' }]), owner: 'cpsbvbng26-dotcom' });
+  const noBox = L.mayPass({ issue: Object.assign({}, issue, { body: '### Confirmations\n\n- [ ] ' + box + '\n' }), comments: cs, owner: 'cpsbvbng26-dotcom' });
+  ok('tools/llm.js lets an issue be given only when every account that wrote in it has consented: 4 accounts of an issue made here pass, a fifth who has not consented stops it, and a submitter without the box stops it; bots and the operator are not counted',
+    yes.ok && yes.writers === 4 && !one.ok && one.missing.join() === 'other' && !noBox.ok && noBox.missing.join() === 'sub');
+  /* The co-author: from 2026-12-01 only the new words count; the comment of the checked intake shows them and links the information. */
+  const co = (w) => [{ user: { login: 'co', type: 'User' }, body: w + ' ORCID: 0000-0002-1694-233X' }];
+  ok('from 2026-12-01 a co-author confirms only with the words that carry the consent, and the comment of the checked intake shows them with a link to the information on the United States',
+    I.confirmationsIn(co(Wd.AGREE_CHECKED), 'o', true).length === 1 && I.confirmationsIn(co(I.AGREE), 'o', true).length === 0 && I.confirmationsIn(co(I.AGREE), 'o', false).length === 1
+    && I.coauthorNoteChecked().includes(Wd.AGREE_CHECKED) && I.coauthorNoteChecked().includes('policies/privacy.html#services-outside-japan'));
+  /* The lines of consent, and the exception to the automatic hold. */
+  const sub = { number: 4, created_at: '2026-12-02T01:00:00Z', user: { login: 'sub', type: 'User' }, body: '- [X] ' + box + '\n- [X] something else\nAn address that must not be copied.' };
+  const lines = Rm.consentLines(sub, [{ created_at: '2026-12-03T00:00:00Z', user: { login: 'co', type: 'User' }, body: Wd.AGREE_CHECKED + ' and more text' }, { created_at: '2026-12-03T00:00:00Z', user: { login: 'x', type: 'User' }, body: 'no consent here' }]);
+  const added = Rm.withConsentLines(real.prov, lines, '2026-12-10');
+  const rowsAdded = added.split(Rm.KEPT_HEAD)[1].split('\n## ')[0].split('\n').filter((l) => /^\| \d{4}/.test(l));
+  ok('before an issue is emptied, only its lines of consent are copied (who, which day, which fixed words, the issue), each kept until three years after it is copied, and nothing else of the issue',
+    lines.length === 2 && lines.map((l) => l.login).join() === 'sub,co' && rowsAdded.length === 2 && rowsAdded.every((l) => l.endsWith(' | 2026-12-10 | 2029-12-10 |'))
+    && !added.includes('An address that must not be copied') && !added.includes('and more text'));
+  const hold = (n, notice) => ({ number: n, labels: [{ name: 'removal' }, { name: 'not-upheld' }], body: '### Kind of problem\n\nExposure of personal data\n' });
+  const two = [hold(1), hold(2)];
+  const notes = (withNotice) => (k) => (withNotice && k === 2 ? [{ user: { type: 'Bot' }, body: Rm.HOLD_NOTICE + '\n@x: told' }] : []);
+  ok('from 2026-12-01 an account with two requests to take material offline found groundless, and told so, is read by a person and not held automatically; one request, no notice, or a day before 2026-12-01 leaves the automatic hold as it was; the notice is given on the second',
+    Rm.GROUNDLESS_LIMIT === 2 && Rm.holdExcluded(two, notes(true), '2026-12-01') && !Rm.holdExcluded([hold(1)], notes(true), '2026-12-01') && !Rm.holdExcluded(two, notes(false), '2026-12-01')
+    && !Rm.holdExcluded(two, notes(true), '2026-11-30') && Rm.holdNoticeDue(two, '2026-12-01') && !Rm.holdNoticeDue([hold(1)], '2026-12-01') && !/"(?:vouchBarred|excludedAccounts|holdExcluded|groundlessAccounts)"/.test(real.site) && !Object.values(JSON.parse(real.site)).some((v) => Array.isArray(v) && v.some((e) => typeof e === 'string' && /^@?[A-Za-z0-9-]{1,39}$/.test(e) && /groundless/i.test(JSON.stringify(v)))));
+  /* Break on purpose. */
+  const w = (k, a, b) => Object.assign({}, real, { [k]: real[k].replace(a, b) });
+  const breaks = [
+    ['the rule on language models taken out of the Moderation Policy', w('mod', 'If one of them has not consented, no language model is used for that issue: a person reviews it, or it waits.', '')],
+    ['the words of consent taken out of the Privacy Policy', w('pv', L.CONSENT, 'I consent.')],
+    ['the co-author\'s old words in the Submission Policy', w('sub', Wd.AGREE_CHECKED, I.AGREE)],
+    ['13 kept as the age in Japanese', w('termsJa', '- 2026-12-01 から、16 歳未満の著者の作品は受け付けません。\n', '')],
+    ['the box without 16', w('form', 'from 2026-12-01, that every author of this work is 16 or older', 'that I am old enough')],
+    ['a lock back in removal.js', w('removal', "body: EMPTIED, state: 'closed', state_reason: 'not_planned' });", "body: EMPTIED, state: 'closed', state_reason: 'not_planned' });\n    await I.github('PUT', '/issues/' + n + '/lock', { lock_reason: 'resolved' });")],
+    ['the lines of consent copied after the issues are emptied', w('removal', "withConsentLines(fs.readFileSync(PROVISION", "withConsentLinez(fs.readFileSync(PROVISION")],
+    ['a list of accounts kept', w('mod', 'Sophaxis keeps no list of such accounts, in the repository or anywhere else, and publishes none.', 'The accounts are listed in site.json.')],
+    ['locking said to close the routes', w('modJa', '鍵を掛けた issue も、運営者は読みます。', '')],
+    ['the court on every dispute for a day', w('terms', ", but only for a suit based on these terms, or on the submission, listing, correction, withdrawal or removal of that person's own works under them; for any other dispute, the court that the law sets has jurisdiction. This agreement is not exclusive.", '; this agreement is not exclusive.')],
+    ['the Unfair Competition Prevention Act back', w('termsJa', '| 景品表示法第 5 条 | 名前とロゴ', '| 不正競争防止法第 2 条第 1 項第 1 号・第 2 号、景品表示法第 5 条 | 名前とロゴ')],
+    ['one hour back', w('pv', 'runtime logs are kept for the period Vercel sets', 'runtime logs are kept for 1 hour')],
+    ['the GitHub age with the old addition', w('termsJa', '- GitHub が受け入れる利用者は、13 歳以上の人です（', '- GitHub が受け入れる利用者は、13 歳以上の人です。自国の法令がそれより上の年齢を求めるときは、その年齢以上です（')],
+    ['the CC0 sentence taken out of the removal form', w('rem', 'text written in this form is shared under CC0 1.0 by the person who writes it', 'text written here is yours')],
+    ['a training quotation changed by one word', w('mod', 'Anthropic may not train models on Customer Content from Services.', 'Anthropic does not train models on Customer Content from Services.')],
+    ['DataCite\'s permission taken out', w('cpJa', 'Members and non-members wishing to harvest DataCite metadata should use the Public API, which does not require authentication.', '')],
+    ['a script reads arXiv again', w('fetchPdf', "  /* arXiv (10.48550/arXiv.…)", "  if (/arxiv/i.test(doi)) return { kind: 'direct', url: 'https://export.arxiv.org/pdf/' + doi };\n  /* arXiv (10.48550/arXiv.…)")],
+    ['the entry from 2026-12-01 a day early', w('changes', '"from": "2026-12-01",\n    "title": "Authors from 16', '"from": "2026-11-28",\n    "title": "Authors from 16')],
+    ['the section taken out', w('aud', HEAD, '\n## 2026-11-15：答え\n')],
+    ['the count changed', w('aud', 'この表の判定は、誤り 1、根拠不足 1、漏れ 12、表現 3、問題なし 2 です。', 'この表の判定は、誤り 1、根拠不足 1、漏れ 13、表現 3、問題なし 2 です。')],
+    ['a quotation changed by one word', w('aud', '「未成年者が法律行為をするには、その法定代理人の同意を得なければならない。」', '「未成年者が法律行為をするには、その親の同意を得なければならない。」')],
+    ['who decided taken out of a row', w('aud', '| 2026-11-15 に利用者が決め、Claude が書きました。その行から不正競争防止法を外しました。', '| その行から不正競争防止法を外しました。')],
+    ['a lawyer said to have seen it', w('aud', 'この節も、弁護士は見ていません。\n\n## この記録について', 'この節は、弁護士が確かめました。\n\n## この記録について')],
+  ];
+  const missed = breaks.filter(([, x]) => problems(x).length === 0).map(([k]) => k);
+  /* The functions broken: a commenter without consent let through, the old words counted after 2026-12-01, one groundless request enough. */
+  const loose = (o) => Object.assign({}, o, { ok: true });
+  if (loose(one).ok === one.ok) missed.push('a commenter without consent let through');
+  if (I.confirmationsIn(co(I.AGREE), 'o', true).length !== 0) missed.push('the old words counted');
+  if (Rm.holdExcluded([hold(1)], notes(true), '2026-12-01')) missed.push('one groundless request enough');
+  ok('break on purpose: the rule and the words of consent taken out, the co-author\'s old words, 13 kept as the age, the box without 16, a lock back, the lines copied late, a list of accounts, a locked issue not read, the court on every dispute, the Unfair Competition Prevention Act, one hour, the GitHub age, the CC0 sentence, a quotation of training or DataCite\'s permission changed or lost, arXiv read again, a day early, and the record\'s section, count, quotation, maker and lawyers each fail (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+/* ------------------------------------------------------------ 137 */
+console.log('\n137. The entrance of the top pages (2026-11-15): the name, the rule, the sentence and three emblems drawn again from the records, every number counted again, every sentence the top pages carried still there word for word, the notices whole and in their order, the colours measured in both schemes, and nothing that echoes the operator\'s other site');
 {
   /* The owner asked on 2026-11-15 for an entrance as considered as that of another site of the operator, in Sophaxis's own idiom and
    * not like that site. This check draws the three emblems again from the records and design.js, counts every number of the entrance

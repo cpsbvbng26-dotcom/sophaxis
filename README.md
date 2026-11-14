@@ -78,7 +78,7 @@ An automatic check (`tools/intake.js`, run by `.github/workflows/intake.yml`) co
 and posts the result and a draft record in the issue. Only verified submissions are listed.
 From 2026-12-01, for an issue opened on or after that day, the checked intake (`tools/place.js`, `.github/checked-intake/verify.js`) accepts a claim only when it can be checked against a source that the claimant does not write at the moment of claiming, and turns away the rest: the DOI metadata must list the ORCID iD; every other author must have an ORCID iD in the DOI metadata and confirm in a comment; the public ORCID records of every verified author, and of a researcher who vouches, must place them where Sophaxis is offered by an entry kept for 30 days (the check keeps and writes no country); a submission not verified 30 days after its issue was opened is labelled `not listed`; and a report of an error in a record is labelled `not verified` if its quoted words are not on the record page. It proves only that earlier public records agree, not where a person lives. Since 2026-11-15 it never closes or locks an issue, and reads nothing from the GitHub profile; a person reads every issue. The [Submission Policy](https://sophaxis.vercel.app/policies/submission.html#the-checked-intake) sets it out.
 For a verified submission the comment also gives advice on the DOI metadata from [deposit-check](https://github.com/cpsbvbng26-dotcom/deposit-check), checked out at a pinned commit: its errors and warnings, such as a missing abstract or licence. The advice does not decide the listing.
-Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo and arXiv; since this was published on 2026-11-13, Figshare and Research Square among them, because their terms forbid scripts), the comment asks the authors to attach the deposited PDF to the issue.
+Where the repository does not let Sophaxis fetch the PDF (every repository except Zenodo; since 2026-11-13, Figshare and Research Square among them, because their terms forbid scripts, and since 2026-11-15, arXiv, which Sophaxis no longer reads by script), the comment asks the authors to attach the deposited PDF to the issue.
 
 Once a week (`tools/watch.js`, run by `.github/workflows/watch.yml`), Sophaxis checks that every DOI still resolves and keeps its licence,
 notes new versions at Figshare and arXiv that a record does not list yet, and asks the Internet Archive to save the pages and the PDF copies of works whose every author consents.
@@ -117,7 +117,7 @@ When a verified submission passes moderation, add the draft record from the issu
 run `node build.js` and `node verification/check.js`, and open a pull request that closes the issue.
 When a record changes later (a new version, a note, a published version), set `updated` to that day. OAI-PMH harvesters read the later of the two as the day the record changed.
 After it is merged, run the `pdf` workflow with the record id. It copies the PDFs onto a branch `claude/pdf-<id>`; open a pull request from it.
-Where the repository does not let a script fetch the file (every repository except Zenodo and arXiv), ask the authors to attach the PDF to their submission issue,
+Where the repository does not let a script fetch the file (every repository except Zenodo), ask the authors to attach the PDF to their submission issue,
 and run the workflow with `from` set to that attachment and `version` to the version it is.
 Ids run `2026.0001`, `2026.0002`, … in order of listing.
 The id in a draft is provisional. If `data/papers/<id>.json` already exists when the record is added, give the record the next free id instead.
@@ -172,7 +172,7 @@ Follow the [Takedown Policy](policies/takedown.md). A removal issue runs `tools/
 It acknowledges the request with the day the answer is due, tells the authors in their submission issue, and, where the issue reports exposure of personal data,
 takes the record page (title, authors, abstract and PDF copy) offline at once by making the record a notice under review, while GitHub Actions runs.
 To decide, label the issue `upheld` or `not-upheld`; only the repository owner's label acts.
-Upheld, the record becomes a notice that says only that it was removed, every automatic comment about it is deleted, and the issues that name it are emptied, closed and locked, and only the owner's account can delete them; not upheld, what was taken offline is put back from the git history.
+Upheld, the record becomes a notice that says only that it was removed, every automatic comment about it is deleted, and the issues that name it are emptied and closed (no automatic step locks them; from 2026-12-01 their lines of consent are first copied into the record of provision), and only the owner's account can delete them; not upheld, what was taken offline is put back from the git history.
 Every change is built and checked before it is pushed to `main`. A request sent by email is handled by running the workflow by hand with the id.
 Once a day, removal requests and verified withdrawals that the operator has not answered get a reminder two days before the 7 days run out.
 

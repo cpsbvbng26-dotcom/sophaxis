@@ -82,7 +82,7 @@ ${rows}
   if (result.ok && form.mode === 'remove') {
     out += `
 The account asking belongs to an author of the work, and asks for the record to be removed. The operator removes it under the Withdrawal Policy by labelling this issue \`upheld\`.
-Only the Sophaxis id then stays, as "What a removed record leaves" in the Takedown Policy sets out, and this issue is emptied, closed and locked.
+Only the Sophaxis id then stays, as "What a removed record leaves" in the Takedown Policy sets out, and this issue is emptied and closed.
 `;
   } else if (result.ok && d && !d.problems.length) {
     out += `

@@ -6,6 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
+        From 2026-11-21, text written in this form is shared under CC0 1.0 by the person who writes it, as the Licence Policy sets out (https://sophaxis.vercel.app/policies/licences.html), so that it can be shown in the record. Personal data in it is still handled under the Privacy Policy, and can be removed on request.
         This issue is public. Do not include personal data.
         Corrections are added to the record as dated notes under the Moderation Policy: https://sophaxis.vercel.app/policies/moderation.html
         An error in the work itself is corrected by its authors, in a new version at the repository. To ask for a record to be removed, use the removal form instead.
