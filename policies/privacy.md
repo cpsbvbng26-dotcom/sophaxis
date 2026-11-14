@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -21,6 +21,7 @@ Sophaxis applies Japan's Act on the Protection of Personal Information in full, 
 Personal data is used only for these purposes:
 
 - to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
+- since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
@@ -71,6 +72,7 @@ The same check runs when a withdrawal issue or a published-version issue is open
 The check asks ORCID only for the personal details (the name), the websites and the works sections of the record.
 It does not ask for the person section as a whole, so public email addresses and the country are never received.
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
+Since 2026-11-14, the check also reads the PDF that it fetches to read its shape, and the affiliations in the DOI metadata, to give the moderator advice. It counts strings shaped like email addresses, telephone numbers and postal codes, and the affiliations and lines that name a place where Sophaxis is not offered. It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading. The weekly check reads the PDF copies on the site in the same way. It does not read the country of an ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
 From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.

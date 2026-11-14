@@ -97,7 +97,7 @@ Whatever form Sophaxis takes, it charges nothing, to authors or to readers.
 The operator does not use the curator's access in the Zenodo community to change the metadata or the files of any record; changes stay with the record's authors.
 Unless the operator cannot act, a closure is announced on the top page at least 30 days ahead, and new submissions stop first.
 The record page shows the level the authors chose, above their statement.
-Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
+Except where serious harm requires it at once, the operator removes material on a request only after asking the authors, in their submission issue, whether they agree to its removal, showing them the material concerned, the right said to be infringed and the reason given; if no objection reaches the operator within 7 days from the day the question is posted, the operator may remove it.
 Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.
 For anyone else, the court that the law sets has jurisdiction.
 Silence, or continuing to use Sophaxis, is not taken as agreement to a change.
@@ -163,3 +163,15 @@ From 2026-11-26, the operator aims to answer within 7 days and does not leave a 
 Texts by others that this repository quotes, or keeps to verify its quotations, are not licensed under CC BY 4.0 and remain their owners'.
 From 2026-11-29, a place is also not offered where the operator judges that offering Sophaxis would not conform to the law of that place.
 When the operator so judges, the place and the reason are added to the table.
+From 2026-12-01, one limit applies to a person who agrees to these terms in a form on or after that day.
+This limit applies only to negligence that is not gross negligence. It does not apply to intent or gross negligence, which stay as the sentence above says, and it does not apply to anyone who has not agreed to these terms in a form, such as a reader.
+That sentence speaks of loss to which no intent or negligence of the operator contributed, and does not limit the liability above.
+The way to have material on Sophaxis removed is the Takedown Policy; it takes away no right to go to a court.
+If a third party then makes such a claim, the operator tells the submitter, in the submission issue or by email, and hears them before agreeing to pay anything.
+Nothing is owed where the untrue confirmation is due to a cause for which the submitter is not responsible, and nothing beyond those Articles is asked.
+No more is kept offline than the review needs, as the Takedown Policy sets out.
+A measure taken on a request goes no further than is needed to stop the material concerned from being sent.
+When the operator knows that text in an issue infringes another person's rights, or has reasonable grounds to believe so, the operator hides or edits it without delay, as far as is needed to stop it from being sent.
+It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading.
+It does not read the country of an ORCID record.
+This does not apply to a clause that excludes or limits the operator's liability: such a clause applies only as it is written, and is not read as reaching as far as the law allows.

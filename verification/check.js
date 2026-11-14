@@ -147,7 +147,7 @@ console.log('\n4. The policy keeps its promises in writing');
     'The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.',
     'The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.',
     'For anyone else, the court that the law sets has jurisdiction.',
-    'Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.',
+    'Except where serious harm requires it at once, the operator removes material on a request only after asking the authors, in their submission issue, whether they agree to its removal, showing them the material concerned, the right said to be infringed and the reason given; if no objection reaches the operator within 7 days from the day the question is posted, the operator may remove it.',
     'Until then, the operator lists a work by an author other than the operator only after every author has given this consent in the submission issue.',
     'If Sophaxis closes, the operator will keep the repository with every record public, so that the records stay readable.',
     'A request that cannot be made in public goes by email to the address on the operator\'s [ORCID record](https://orcid.org/0009-0000-1406-0547).',
@@ -570,7 +570,7 @@ console.log('\n12. Eight policies, consent and rights, withdrawal, takedown');
     && ['取り扱う者', '取り扱う個人情報', '利用目的', '公開と第三者への提供', '外国にある事業者の利用', '安全のための措置', '保存の期間', '開示・訂正・利用停止・削除の求め'].every((h) => new RegExp('<h2 id="[^"]+">' + h + '</h2>').test(ja)));
   ok('the Japanese page names every foreign service the English policy names, and links back to it', ['GitHub（米国）', 'Vercel（米国）', 'DataCite（ドイツ）', 'Crossref（米国）', 'ORCID（米国）', 'Internet Archive（米国）'].every((s) => ja.includes(s))
     && ja.includes('href="./privacy.html"') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('GitHub (United States)') && read(path.join(ROOT, 'site', 'sitemap.xml')).includes('policies/privacy.ja.html</loc><lastmod>' + /最終更新：(\d{4}-\d{2}-\d{2})。/.exec(read(path.join(ROOT, 'policies', 'privacy.ja.md')))[1]));
-  ok('Japanese lines join without a space, English lines with one', ja.includes('どこにも書き写しません。サイトは、閲覧者の個人情報を集めません。') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
+  ok('Japanese lines join without a space, English lines with one', ja.includes('どこにも書き写しません。2026-11-14 から、検査は、形を読むために取得する PDF') && read(path.join(ROOT, 'site', 'policy.html')).includes('It lists preprints that authors have already deposited in an open repository, and it gives'));
   {
     const en = read(path.join(ROOT, 'site', 'policies', 'privacy.html'));
     const pair = '<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/policies/privacy.html">\n'
@@ -1619,7 +1619,7 @@ console.log('\n42. The weekly watch says why a save failed, and whether a copy e
   ok('the table has a row for each work: held, not held, or not read', tbl.includes('| 2026.0001 | 10.1/a | W1 | yes | 2 | yes | 2 |') && tbl.includes('| 2026.0002 | 10.1/b | not held |')
     && tbl.includes('| 2026.0003 | 10.1/c | could not be read |'));
   ok('the OpenAlex table is for information: it goes to the job summary and into the report, and does not open an issue by itself',
-    w.includes("if (problems.length || news.length || pubs.length) {") && w.includes('report(problems, when, news, pubs, index)') && w.includes('process.env.GITHUB_STEP_SUMMARY')
+    w.includes("if (problems.length || news.length || pubs.length) {") && w.includes('report(problems, when, news, pubs, index, copies)') && w.includes('process.env.GITHUB_STEP_SUMMARY')
     && Wsp.report([], '2026-11-10', [], [], tbl).includes('For information, how OpenAlex holds the works shown:') && !Wsp.report([], 'd').includes('OpenAlex'));
   ok('after the saves, the watch looks up the latest copy of each address at the Internet Archive', w.includes("'https://archive.org/wayback/available?url=' + encodeURIComponent(u)") && w.includes("'latest copy '"));
 }
@@ -2808,7 +2808,7 @@ console.log('\n69. The laws of other countries, read at their sources; the rule 
     && asec.includes('No law read was found not to reach Sophaxis, so no place is taken off the list.')
     && rsec.includes('Every country has now been screened, in commentaries if not at the source of its law.') && !rsec.includes('Each is open until it is screened.') && rv.includes('Commentators report that a controller abroad must register in the Data Controllers\' Registry through a representative in Türkiye'));
   ok('the Takedown Policy says that Sophaxis does not rely on 17 U.S.C. 512, and the Privacy Policy names the Swiss Commissioner',
-    read(path.join(ROOT, 'policies', 'takedown.md')).includes('so it does not rely on the limitation of liability in 17 U.S.C. 512') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('Federal Data Protection and Information Commissioner'));
+    read(path.join(ROOT, 'policies', 'takedown.md')).includes('The limitation of liability in 17 U.S.C. 512(c) applies only to a service provider that has designated an agent') && read(path.join(ROOT, 'policies', 'takedown.md')).includes('so it does not rely on that limitation') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('Federal Data Protection and Information Commissioner'));
 }
 
 console.log('\n70. A possible domain and NGO at 1,000 listed works: a possibility only, with no money asked and nothing decided');
@@ -3143,14 +3143,14 @@ console.log('\n79. The shape of the PDF, read by machine for the moderator (Mode
   const src = read(path.join(ROOT, 'tools', 'intake.js'));
   const none = require('child_process').execFileSync(process.execPath, ['-e', `require(${JSON.stringify(path.join(ROOT, 'tools', 'intake.js'))}).pdfShape([{ doi: '10.2139/ssrn.1', date: '2026-01-01' }], 'T').then((r) => console.log(JSON.stringify(r)))`], { encoding: 'utf8' }).trim();
   ok('the PDF is read only where the repository lets a script fetch it, only for a new work, kept in a temporary file and deleted after',
-    none === 'null' && src.includes("const shape = meta && !form.update ? await pdfShape(versions, meta.title) : null;") && src.includes("fs.rmSync(file, { force: true });")
+    none === 'null' && src.includes("const shape = meta && !form.update ? await pdfShape(versions, meta.title, about) : null;") && src.includes("fs.rmSync(file, { force: true });")
     && src.includes('const problems = accept(bytes, md5);') && src.includes("const src = last && sourceFor(last.doi, versions.length);"));
   const wf = read(path.join(ROOT, '.github', 'workflows', 'intake.yml'));
   const mod = read(path.join(ROOT, 'policies', 'moderation.md')), modJa = read(path.join(ROOT, 'policies', 'moderation.ja.md'));
   ok('the workflow installs poppler-utils before the intake and goes on without it; the Moderation Policy, in both languages, and the automation page say what is read',
     wf.indexOf('poppler-utils') > 0 && wf.indexOf('poppler-utils') < wf.indexOf('node tools/intake.js') && wf.includes("|| echo 'poppler-utils could not be installed'")
     && mod.includes('The shape decides nothing; the moderator reads the PDF.') && modJa.includes('形は何も決めません。モデレーターが PDF を読みます。')
-    && read(path.join(ROOT, 'automation.md')).includes('only to read its shape for the moderator, deleted after the reading'));
+    && read(path.join(ROOT, 'automation.md')).includes('only to read its shape and the advice for the moderator, deleted after the reading'));
 }
 
 console.log('\n80. A researcher vouches for a first submission (Submission Policy)');
@@ -5735,8 +5735,8 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
   const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
   const breaks = [
-    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-13.', 'Last updated: 2026-11-12.'), facts],
-    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
+    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-14.', 'Last updated: 2026-11-13.'), facts],
+    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-14。', '最終更新：2026-11-13。'), facts],
     ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-13.', 'Last updated: 2026-11-12.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
     ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
@@ -6770,10 +6770,216 @@ console.log('\n131. The Statement of Purpose: its count of places is the table\'
     ['the section taken out of the record', w('aud', HEAD, '\n## 2026-11-13：声明\n')],
     ['the count of the record changed', w('aud', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 6、問題なし 8 です。', 'この表の判定は、誤り 2、根拠不足 5、漏れ 1、表現 6、問題なし 7 です。')],
     ['the row on disputes without who decided', w('aud', '| 問題なし | 2026-11-13 に利用者が求め、Claude が決めました。依頼していないこと', '| 問題なし | 依頼していないこと')],
-    ['the sentence on lawyers taken out of the record', w('aud', '\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
+    ['the sentence on lawyers taken out of the record', w('aud', '\n\nこの節も、弁護士の確認は受けていません。\n\n## 2026-11-14：形を保って詰める', '\n\n## 2026-11-14：形を保って詰める')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: the count in either language or in the table, the clauses that bind nothing, the aim, Article 11, the last article, the exclusion in the policy, its day, the notice and the commitments, the README\'s articles and link, the definition of "at present" (place, README) and the sentences that must or must not carry it, a lawyer attached, retained, ours or reviewing, the negated sentence, the sections of the Terms, the links, the heading of the notice, and the record\'s section, count, decision and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+console.log('\n132. Keeping the form and tightening (2026-11-14): advice for the moderator in counts only, at intake and on the weekly copies, tested on PDFs made here; the disclaimers and the allocation go as far as the fetched texts allow and no further; the takedown steps follow Article 3 of the Act on providers; and the record has its section');
+{
+  /* The owner asked on 2026-11-14 to keep the form of Sophaxis and to tighten the law, the automatic checks and the disclaimers.
+   * Claude decided the advice (tools/pdf_advice.js), the clauses and the steps, and recorded the analysis in the section
+   * 「2026-11-14：形を保って詰める」 of docs/legal-audit-2026-11-12.md. Nothing here reads a PDF by anyone else: the PDFs are made
+   * by tools/pdf_advice.js's fixturePdf at each run, in a temporary folder, and deleted after. Addresses are built from parts,
+   * so that no address is written in the repository. */
+  const A = require('../tools/pdf_advice.js');
+  const W132 = require('../tools/watch.js');
+  const I132 = require('../tools/intake.js');
+  const at = String.fromCharCode(64);
+  const mail = (a, b) => a + at + b;
+  const OTHER = mail('someone.else', 'example.org'), OWN = mail('ada.lovelace', 'example.org');
+  const authors = [{ name: 'Ada Lovelace', given: 'Ada', family: 'Lovelace' }];
+  const dir = tmp();
+  const write = (name, pages, images) => { const f = path.join(dir, name); fs.writeFileSync(f, A.fixturePdf(pages, images)); return f; };
+  const fA = write('a.pdf', [['A Note on Order', 'Ada Lovelace, ' + OWN, 'This work is licensed under CC BY 4.0.', 'Abstract'],
+    ['Body text. Write to ' + OTHER + ' or call +00 12 3456 7890.', 'Office: 100-0001, and ZZ9 9ZZ.', 'Ada again: ' + OWN], ['References']], 2);
+  const fB = write('b.pdf', [['Another Note', 'All rights reserved.'], ['Plain body text.']], 0);
+  const fC = write('c.pdf', [['A Third Note', 'Dept. of Logic, Berlin, Germany'], ['Nothing else here.']], 0);
+  const rowOf = (rows, start) => rows.find((r) => r[0].startsWith(start)) || ['', null, ''];
+  const real = {
+    advice: { A: A.adviceOfFile(fA, { licences: ['CC-BY-4.0'], authors }), Asa: A.adviceOfFile(fA, { licences: ['CC-BY-SA-4.0'], authors }),
+      B: A.adviceOfFile(fB, { licences: ['CC-BY-4.0'], authors }), C: A.adviceOfFile(fC, { licences: ['CC0-1.0'], authors, raw: { data: { attributes: { creators: [{ name: 'X', affiliation: [{ name: 'University of Lisbon, Portugal' }] }] } } } }) },
+    bytesA: fs.readFileSync(fA),
+    tool: read(path.join(ROOT, 'tools', 'pdf_advice.js')), intake: read(path.join(ROOT, 'tools', 'intake.js')), watch: read(path.join(ROOT, 'tools', 'watch.js')),
+    wf: read(path.join(ROOT, '.github', 'workflows', 'watch.yml')),
+    pages: Object.fromEntries(['policies/terms.md', 'policies/terms.ja.md', 'disclaimer.md', 'disclaimer.ja.md', 'policies/takedown.md', 'policies/takedown.ja.md', 'policies/copyright.md', 'policies/copyright.ja.md',
+      'policies/moderation.md', 'policies/moderation.ja.md', 'policies/privacy.md', 'policies/privacy.ja.md', 'automation.md', 'automation.ja.md'].map((f) => [f, read(path.join(ROOT, f))])),
+    site: JSON.parse(read(path.join(ROOT, 'site.json'))), changes: JSON.parse(read(path.join(ROOT, 'data', 'policy-changes.json'))),
+    com: read(path.join(__dirname, 'commitments.txt')), aud: read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md')),
+    raw: JSON.parse(read(path.join(__dirname, 'sources-raw.json'))), texts: JSON.parse(read(path.join(__dirname, 'statutes-texts.json'))),
+  };
+  fs.rmSync(dir, { recursive: true, force: true });
+  const NOTE_WORDS = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]|\+00|100-0001|ZZ9|Lisbon|Portugal|Germany|Berlin/;
+  /* The clauses that must stand, word for word (English, then Japanese). */
+  const CLAUSES = {
+    'policies/terms.md': ['From 2026-12-01, one limit applies to a person who agrees to these terms in a form on or after that day.',
+      'the operator is liable only for the loss that would ordinarily arise (Article 416(1) of Japan\'s Civil Code), and not for loss arising from special circumstances (Article 416(2) of the Civil Code).',
+      'This limit applies only to negligence that is not gross negligence. It does not apply to intent or gross negligence',
+      'From 2026-12-01, for a submission made on or after that day, the submitter undertakes to the operator that each confirmation in the form is true when it is made.',
+      'and hears them before agreeing to pay anything.', 'as Articles 415 and 416 of Japan\'s Civil Code provide.',
+      'Nothing is owed where the untrue confirmation is due to a cause for which the submitter is not responsible, and nothing beyond those Articles is asked.',
+      'A PDF copy is the file that the authors deposited, kept unmodified and provided as it is', 'and the operator makes no such statement on which anyone could rely',
+      'That sentence speaks of loss to which no intent or negligence of the operator contributed, and does not limit the liability above.',
+      'The way to have material on Sophaxis removed is the Takedown Policy; it takes away no right to go to a court.', 'Nor do they take away a claim that the law gives.',
+      'such a clause applies only as it is written, and is not read as reaching as far as the law allows.', 'No more is kept offline than the review needs',
+      'The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.'],
+    'policies/terms.ja.md': ['2026-12-01 から、その日以後に様式でこの規約に同意した人に対しては、限りを一つ置きます。', '運営者は通常生ずべき損害（日本の民法第 416 条第 1 項）についてだけ責任を負い、特別の事情によって生じた損害（民法第 416 条第 2 項）については責任を負いません。',
+      'この限りは、重大な過失を除く過失にだけ適用されます。故意と重大な過失には適用されず', '投稿者は、様式の確認のそれぞれが、確認した時点で真実であることを運営者に約束します。', '何かを支払うことに同意する前に、投稿者の言い分を聴きます。',
+      '日本の民法第 415 条と第 416 条の定めるとおりに', '真実でなかったことが投稿者の責めに帰することができない事由によるときは、何も負いません。これらの条が定める以上のものは求めません。',
+      'この文は、運営者の故意も過失も加わっていない損害について述べるもので、上の責任を限るものではありません。', 'この道は、裁判所に訴える権利を奪いません。', '法令が与える請求権を奪うこともありません。',
+      'そうした条項は、書かれたとおりにだけ適用され、法令が許す範囲まで及ぶものとは読みません。', '外したままにするのは、検討に要る範囲だけです。', 'PDF の写しは、著者が預けたファイルを手を加えずに置いたもので、現状のまま提供します。'],
+    'disclaimer.md': ['It is not responsible for their content, their availability or their terms, unless the law makes the operator responsible for them.', 'that limit never applies to intent or gross negligence', 'It is provided as it is, and the work itself is the deposit in its repository.'],
+    'disclaimer.ja.md': ['それらの内容、利用できるかどうか、その規約について、法令が運営者に責任を負わせる場合を除き、責任を負いません。', 'この限りは、故意と重大な過失には決して適用されず', '写しは現状のまま提供し'],
+    'policies/takedown.md': ['showing them the material concerned, the right said to be infringed and the reason given; if no objection reaches the operator within 7 days from the day the question is posted',
+      'A measure taken on a request goes no further than is needed to stop the material concerned from being sent.', 'any of them that the request does not concern is put back.',
+      'so for the copy Sophaxis is the sender, and Article 3(1) of Japan\'s Act on providers of specified telecommunications services withholds its limitation',
+      'the operator hides or edits it without delay, as far as is needed to stop it from being sent.', 'and takes it if no objection reaches the operator within 7 days from the day they receive the question.',
+      'Sophaxis has not, because it registers with no office, so it does not rely on that limitation.'],
+    'policies/takedown.ja.md': ['関わる素材、侵害されたとする権利、その理由を示します。尋ねた日から 7 日以内に反対が運営者に届かなければ', '関わる素材が送られるのを止めるのに要る範囲を超えません。', '求めに関わらない部分は戻します。',
+      'そのため写しについては Sophaxis が発信者であり、情報流通プラットフォーム対処法第 3 条第 1 項は、発信者である提供者にはその制限を掛けません。', '遅滞なくその文を隠すか書き換えます。', 'その人が尋ねを受けた日から 7 日以内に反対が運営者に届かなければ、措置を講じます。',
+      'Sophaxis は、どの役所にも登録しないため、届けていません。'],
+    'policies/copyright.md': ['which Article 63 of that Act lets a person use only within the manner and conditions of the permission, and relies on no exception of that Act.', 'the licence is not that permission'],
+    'policies/copyright.ja.md': ['その許諾に係る利用方法及び条件の範囲内でだけ利用できるとしています。Sophaxis は、同法のどの例外にも拠りません。', 'そのライセンスはその許諾になりません。'],
+    'policies/moderation.md': ['Since 2026-11-14, the automatic check also gives the moderator advice, read by machine, which decides nothing', 'It shows counts and fixed words only, never what was found.'],
+    'policies/moderation.ja.md': ['2026-11-14 から、自動の確認は、機械で読んだ助言もモデレーターに示します。助言は何も決めません。', '示すのは数と決まった語だけで、見つけたものそのものは示しません。'],
+    'policies/privacy.md': ['It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading.', 'It does not read the country of an ORCID record.', '- since 2026-11-14, to give the moderator advice, as counts only'],
+    'policies/privacy.ja.md': ['書くのは数だけで、見つけた文字列も国や地域の名も書かず、何も保存せず、読んだあとファイルを消します。', 'ORCID の記録の国は読みません。', '- 2026-11-14 から、投稿された作品やその DOI のメタデータが示す他人の連絡先と国と地域について'],
+    'automation.md': ['The comment and the log show counts and fixed words only, never what was found.', 'each PDF copy in the repository, against its recorded SHA-256'],
+    'automation.ja.md': ['コメントと実行の記録が示すのは、数と決まった語だけで、見つけたものそのものは示しません。', '記録した SHA-256 と照らし'],
+  };
+  /* Forms that the fetched texts make void or that go beyond them: a whole exclusion, or a limit that reaches "as far as the law allows". */
+  const VOID_EN = /\bin no event\b|\bnot (?:be )?liable for any\b|to the (?:maximum |fullest )?extent (?:permitted|allowed) by (?:applicable )?law|\bany and all\b|\bunder no circumstances\b/i;
+  const VOID_JA = /一切の責任|いかなる損害|法令(?:で|が)?許される(?:最大の)?範囲で|いかなる場合も/;
+  const sentencesEn = (t) => t.replace(/<!--[\s\S]*?-->/g, '').split(/\n|(?<=[.;])\s+/);
+  const sentencesJa = (t) => t.replace(/<!--[\s\S]*?-->/g, '').split(/\n|(?<=。)/);
+  function problems(c) {
+    const bad = [];
+    const v = c.advice;
+    /* The advice, on the PDFs made here. */
+    if (!rowOf(v.A, 'The licence printed')[0] || rowOf(v.A, 'The licence printed')[1] !== false || rowOf(v.Asa, 'The licence printed')[1] !== true) bad.push('the licence printed against the metadata');
+    if (rowOf(v.B, 'The licence printed')[1] !== true || !/"all rights reserved"/.test(rowOf(v.B, 'The licence printed')[2])) bad.push('a notice of all rights reserved');
+    if (rowOf(v.C, 'No licence statement')[1] !== true) bad.push('no licence statement found');
+    const ct = rowOf(v.A, 'No email address');
+    if (ct[1] !== true || !/^1 like an email address, 1 like a telephone number, 2 like a postal code; 2 on the first page or in an author's own address, not counted$/.test(ct[2]) || rowOf(v.B, 'No email address')[1] !== false) bad.push('the counts of contact details: ' + ct[2]);
+    if (rowOf(v.A, 'The PDF embeds')[1] !== true || !/^2 embedded images: check image rights$/.test(rowOf(v.A, 'The PDF embeds')[2]) || rowOf(v.B, 'The PDF embeds')[1] !== false) bad.push('the count of images');
+    const pl = rowOf(v.C, 'No affiliation');
+    if (pl[1] !== true || !/^1 in the DOI metadata, 1 line of the first page of the PDF/.test(pl[2]) || rowOf(v.A, 'No affiliation')[1] !== false) bad.push('the places not offered: ' + pl[2]);
+    const sf = A.sameFileRow(c.bytesA, require('crypto').createHash('md5').update(c.bytesA).digest('hex')), sf2 = A.sameFileRow(c.bytesA, '0'.repeat(32));
+    if (sf[1] !== false || sf2[1] !== true || A.sameFileRow(c.bytesA, null)[1] !== false) bad.push('the repository\'s checksum');
+    if (A.placesNamed(['Las Cruces, New Mexico, USA', 'Sydney, New South Wales', 'Papua New Guinea', 'Seoul, Korea', 'Mexico City']) !== 2) bad.push('the place patterns (New Mexico, New South Wales, Papua New Guinea)');
+    const missingPattern = c.site.notOffered.map((p) => p.place).filter((p) => !A.PLACE_PATTERNS[p]);
+    if (missingPattern.length) bad.push('a place without a pattern: ' + missingPattern.join(', '));
+    if (A.affiliationsOf({ message: { author: [{ affiliation: [{ name: 'Kyoto University, Japan' }] }] } }).join() !== 'Kyoto University, Japan') bad.push('the affiliations of Crossref metadata');
+    /* Counts and fixed words only: nothing found is written into the comment or the weekly table. */
+    const notes = [A.adviceNote(v.A), A.adviceNote(v.C), I132.comment({ ok: false, checks: [] }, null, [], null, v.A)];
+    if (notes.some((n) => NOTE_WORDS.test(n)) || !notes[2].includes('**Advice for the moderator**')) bad.push('the advice writes what it found');
+    const recA = { id: '2026.9999', status: 'listed', license: 'CC-BY-4.0', authors, pdfs: [{ file: 'x.pdf', sha256: require('crypto').createHash('sha256').update(c.bytesA).digest('hex') }] };
+    const okRead = W132.copyReadings(recA, () => ({ bytes: c.bytesA, rows: v.A }));
+    const badRead = W132.copyReadings(Object.assign({}, recA, { pdfs: [{ file: 'x.pdf', sha256: '0'.repeat(64) }] }), () => ({ bytes: c.bytesA, rows: v.Asa }));
+    const gone = W132.copyReadings(recA, () => null);
+    const tbl = W132.copyTable(okRead.concat(badRead));
+    if (W132.copyProblems(okRead).length !== 0 || W132.copyProblems(badRead).length !== 2 || W132.copyProblems(gone).length !== 1 || NOTE_WORDS.test(tbl) || !tbl.includes('| 2026.9999 | x.pdf | **differs** |')) bad.push('the weekly copies');
+    /* The tool prints nothing but its own result when run by hand; intake and watch print counts only. */
+    const body = c.tool.split("if (require.main === module)")[0].replace(/\/\*[\s\S]*?\*\//g, '');
+    if (/console\.|process\.std(?:out|err)/.test(body)) bad.push('tools/pdf_advice.js prints');
+    if (!c.intake.includes("if (o) shape.advice = A.adviceOfFile(file, Object.assign({ bytes, md5 }, o));") || !c.intake.includes('const readings = shape && shape.advice ? shape.advice : about ? A.adviceOf(about) : null;')) bad.push('intake.js does not give the advice');
+    if (!c.watch.includes("console.log(copyRows.length + ' PDF copies read; ' + copyIssues.length + ' with a problem');") || !c.watch.includes('problems.push(...copyIssues);')) bad.push('watch.js does not read the copies');
+    const apt = c.wf.indexOf("- run: sudo apt-get install -y -qq --no-install-recommends poppler-utils || echo 'poppler-utils could not be installed'");
+    if (!(apt > 0 && apt < c.wf.indexOf('node tools/watch.js'))) bad.push('watch.yml does not install poppler-utils first');
+    /* The clauses, and no void form. */
+    for (const [f, list] of Object.entries(CLAUSES)) for (const s of list) if (!c.pages[f].includes(s)) bad.push(f + ': ' + s.slice(0, 50));
+    for (const f of ['policies/terms.md', 'disclaimer.md']) {
+      if (VOID_EN.test(c.pages[f])) bad.push(f + ': a void form');
+      for (const s of sentencesEn(c.pages[f])) if (/\b(?:operator|Sophaxis|It) is not (?:liable|responsible)\b|\boperator is liable only\b/.test(s) && !/unless the law makes the operator|Except where the law makes the operator|not for loss arising from special circumstances/.test(s)) bad.push(f + ': an exclusion without its limit: ' + s.slice(0, 50));
+    }
+    for (const f of ['policies/terms.ja.md', 'disclaimer.ja.md']) {
+      if (VOID_JA.test(c.pages[f])) bad.push(f + ': a void form');
+      for (const s of sentencesJa(c.pages[f])) if (/責任を負いません|責任を負わない/.test(s) && !/^それらは、/.test(s.trim()) && !/法令が運営者に責任を負わせる場合を除き|特別の事情によって生じた損害/.test(s)) bad.push(f + ': an exclusion without its limit: ' + s.trim().slice(0, 30));
+    }
+    /* The limit names gross negligence in the clause itself (Consumer Contract Act, Article 8(3)), in both languages. */
+    if (!/This limit applies only to negligence that is not gross negligence\./.test(c.pages['policies/terms.md']) || !/この限りは、重大な過失を除く過失にだけ適用されます。/.test(c.pages['policies/terms.ja.md'])) bad.push('the limit does not say it applies only to negligence that is not gross');
+    /* The notice: the day is in the notice and the feed, and the commitments hold the clauses. */
+    if (!c.site.termsNotice.text.includes("From 2026-12-01, for a submission made on or after that day, the Terms of Use limit the operator's liability") || !c.changes.some((e) => e.from === '2026-12-01' && e.date === '2026-11-14' && e.policies.includes('terms'))) bad.push('the notice or the feed of 2026-12-01');
+    for (const s of ['From 2026-12-01, one limit applies to a person who agrees to these terms in a form on or after that day.', 'A measure taken on a request goes no further than is needed to stop the material concerned from being sent.', 'It does not read the country of an ORCID record.']) if (!c.com.includes(s + '\n')) bad.push('the commitments: ' + s.slice(0, 40));
+    /* The record: its section before the end, the texts it quotes found in the fetched texts, the hashes, the table, the count, who decided, and lawyers. */
+    const HEAD = '\n## 2026-11-14：形を保って詰める\n';
+    const i = c.aud.indexOf(HEAD), end = c.aud.indexOf('\n## この記録について\n');
+    if (i < 0 || end < i) return bad.concat(['no section of 2026-11-14 before the end of the record']);
+    const sec = c.aud.slice(i, c.aud.indexOf('\n## ', i + HEAD.length));
+    const fetchedPart = sec.slice(sec.indexOf('\n### 取り寄せた文\n'), sec.indexOf('\n### 他人の PDF の写し'));
+    const egov = Object.entries(c.raw.sources).filter(([k]) => k.startsWith('egov:')).flatMap(([, s]) => Object.values(s.articles || {})).concat(Object.values(c.texts));
+    const quotes = [...fetchedPart.matchAll(/「([^「」]+)」/g)].map((m) => m[1]).filter((q) => q.length > 12 && !/^\(2\) Designated agent/.test(q));
+    const unfound = quotes.filter((q) => !egov.some((t) => t.includes(q)));
+    if (quotes.length < 25 || unfound.length) bad.push('a quotation not in the fetched texts (' + quotes.length + '): ' + unfound.map((q) => q.slice(0, 20)).join(', '));
+    const usc = (c.raw.sources.usc17 || {});
+    const usq = (/「(\(2\) Designated agent\.— [^」]+)」/.exec(fetchedPart) || [])[1] || '';
+    if (!usq || !JSON.stringify(usc).includes(JSON.stringify(usq).slice(1, -1)) || !sec.includes(((usc.sha256 || {})['512']) || '-')) bad.push('the quotation of 17 U.S.C. 512(c)(2)');
+    const HASHES = [['egov:345AC0000000048', ['2', '21', '23', '63', '112']], ['egov:129AC0000000089', ['1', '415', '416', '548-2', '548-3', '548-4', '709']], ['egov:412AC0000000061', ['2', '8', '8-3', '10']], ['egov:413AC0000000137', ['2', '3']], ['egov:359AC0000000086', ['2']]];
+    for (const [k, arts] of HASHES) for (const a of arts) { const h = ((c.raw.sources[k] || {}).sha256 || {})[a]; if (!h || !sec.includes('| ' + h + ' |')) bad.push('the hash of ' + k + ' ' + a); }
+    if (!sec.includes('Actions の実行は `sources.yml` の 43589410644 で') || !sec.includes('取り寄せておらず、確かめていません。')) bad.push('the run, or the fee marked as not verified');
+    const KINDS = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+    const t0 = sec.indexOf('\n### 確かめ直した表\n');
+    const tb = t0 < 0 ? '' : sec.slice(t0);
+    const h0 = tb.indexOf('\n| 箇所 | 法令と条 | 要件 | 事実 | 判定 | 対応 |\n| --- | --- | --- | --- | --- | --- |\n');
+    const rows = h0 < 0 ? [] : tb.slice(h0 + 1).split('\n\n')[0].split('\n').slice(2).map((l) => l.replace(/^\| | \|$/g, '').split(' | '));
+    if (rows.length < 15 || !rows.every((y) => y.length === 6 && KINDS.includes(y[4]))) bad.push('the shape of the table');
+    const m = /この表の判定は、([^。]+)です。/.exec(tb);
+    const said = m ? Object.fromEntries(m[1].split('、').map((x) => { const [k, n] = x.trim().split(' '); return [k, Number(n)]; })) : {};
+    if (!m || !KINDS.every((k) => (said[k] || 0) === rows.filter((y) => y[4] === k).length)) bad.push('the count of findings');
+    for (const r of rows.filter((y) => y[4] !== '問題なし')) if (!/^2026-11-14 に Claude が決めました。[^|]*ためです$/.test(r[5] || '')) bad.push('a decision without its maker or reason: ' + r[0].slice(0, 30));
+    if (!sec.includes('「法律を詰めるとか 自動チェックや免責事項を攻めるとか」') || !sec.includes('日本時間 2026-11-14 から数えて 14 日後は 2026-11-28')) bad.push('the owner\'s words or the day counted');
+    if (!sec.includes('この節も、弁護士の確認は受けていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push('the sentence on lawyers');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the advice on PDFs made here (licence, contact details, images, checksum, places) shows counts only, at intake and on the weekly copies; ' + Object.values(CLAUSES).flat().length + ' clauses stand in ' + Object.keys(CLAUSES).length + ' pages, no void form and no exclusion without its limit; the notice of 2026-12-01; and the record\'s section, its quotations found in the fetched texts, its hashes, table and count',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const set = (k, x) => Object.assign({}, real, { [k]: x });
+  const page = (f, a, b) => set('pages', Object.assign({}, real.pages, { [f]: real.pages[f].replace(a, b) }));
+  const adv = (k, fn) => set('advice', Object.assign({}, real.advice, { [k]: fn(real.advice[k]) }));
+  const swapRow = (rows, start, fn) => rows.map((r) => (r[0].startsWith(start) ? fn(r) : r));
+  const aud = (a, b) => set('aud', real.aud.replace(a, b));
+  const breaks = [
+    ['the licence row not flagged on a mismatch', adv('Asa', (rows) => swapRow(rows, 'The licence printed', (r) => [r[0], false, r[2]]))],
+    ['a found address in the advice', adv('A', (rows) => swapRow(rows, 'No email address', (r) => [r[0], r[1], r[2] + ' ' + OTHER]))],
+    ['the images not counted', adv('A', (rows) => swapRow(rows, 'The PDF embeds', () => ['The PDF embeds no image whose rights would need checking', false, '0 embedded images']))],
+    ['a place named in the advice', adv('C', (rows) => swapRow(rows, 'No affiliation', (r) => [r[0], r[1], r[2] + ' (Portugal)']))],
+    ['a place of site.json without a pattern', set('site', Object.assign({}, real.site, { notOffered: real.site.notOffered.concat([{ place: 'Atlantis' }]) }))],
+    ['the tool printing', set('tool', real.tool.replace("function contactRow(n) {", "function contactRow(n) {\n  console.log(n);"))],
+    ['intake without the advice', set('intake', real.intake.replace('if (o) shape.advice = A.adviceOfFile(file, Object.assign({ bytes, md5 }, o));', ''))],
+    ['the weekly copies not read', set('watch', real.watch.replace('problems.push(...copyIssues);', ''))],
+    ['watch.yml without poppler-utils', set('wf', real.wf.replace(/      - run: sudo apt-get install[^\n]*\n/, ''))],
+    ['the limit without "not gross negligence"', page('policies/terms.md', 'This limit applies only to negligence that is not gross negligence.', 'This limit applies to negligence.')],
+    ['the Japanese limit without 重大な過失を除く', page('policies/terms.ja.md', 'この限りは、重大な過失を除く過失にだけ適用されます。', 'この限りは、過失に適用されます。')],
+    ['a whole exclusion in English', page('disclaimer.md', 'It is not responsible for their content, their availability or their terms, unless the law makes the operator responsible for them.', 'It is not responsible for their content, their availability or their terms.')],
+    ['"to the extent permitted by law"', page('policies/terms.md', 'Sophaxis is provided as it is.', 'Sophaxis is provided as it is, and the operator is not liable for any loss to the extent permitted by law.')],
+    ['一切の責任 in Japanese', page('disclaimer.ja.md', '写しは現状のまま提供し', '運営者は一切の責任を負いません。写しは現状のまま提供し')],
+    ['the Japanese links clause without its limit', page('disclaimer.ja.md', 'それらの内容、利用できるかどうか、その規約について、法令が運営者に責任を負わせる場合を除き、責任を負いません。', 'それらの内容、利用できるかどうか、その規約について、責任を負いません。')],
+    ['the compensation beyond the Civil Code', page('policies/terms.md', 'Nothing is owed where the untrue confirmation is due to a cause for which the submitter is not responsible, and nothing beyond those Articles is asked.', 'The submitter also pays the operator\'s costs in full.')],
+    ['the severability reaching as far as the law allows', page('policies/terms.md', 'such a clause applies only as it is written, and is not read as reaching as far as the law allows.', 'such a clause applies as far as the law allows.')],
+    ['the 7 days without what is shown', page('policies/takedown.md', 'showing them the material concerned, the right said to be infringed and the reason given; if no objection reaches the operator within 7 days from the day the question is posted', 'if they do not object within 7 days')],
+    ['the copies not said to be sent by Sophaxis (Japanese)', page('policies/takedown.ja.md', 'そのため写しについては Sophaxis が発信者であり、', '')],
+    ['the fee back in the Takedown Policy', page('policies/takedown.md', 'Sophaxis has not, because it registers with no office, so it does not rely on that limitation.', 'Sophaxis has not designated an agent, which charges a fee.')],
+    ['the copies on an exception of the Copyright Act', page('policies/copyright.md', 'and relies on no exception of that Act.', 'and on the exceptions of that Act.')],
+    ['the Privacy Policy reading the ORCID country', page('policies/privacy.md', 'It does not read the country of an ORCID record.', 'It reads the country of the ORCID record.')],
+    ['the moderation advice deciding', page('policies/moderation.md', 'which decides nothing', 'which decides')],
+    ['the notice without 2026-12-01', set('site', Object.assign({}, real.site, { termsNotice: Object.assign({}, real.site.termsNotice, { text: real.site.termsNotice.text.replace("From 2026-12-01, for a submission made on or after that day, the Terms of Use limit", "The Terms of Use limit") }) }))],
+    ['the feed without the entry', set('changes', real.changes.filter((e) => e.from !== '2026-12-01'))],
+    ['a commitment dropped', set('com', real.com.replace('It does not read the country of an ORCID record.\n', ''))],
+    ['the section taken out', aud('\n## 2026-11-14：形を保って詰める\n', '\n## 2026-11-14：詰める\n')],
+    ['a quotation changed', aud('送信可能化の回数又は送信可能化に用いる自動公衆送信装置に係るものを除く。', '送信可能化の回数を除く。')],
+    ['a hash changed', aud('| a85d04f2fd20d7867d5579bee40676b13405c58ea7fd7eb27f1e7a5a03bda100 |', '| a85d04f2fd20d7867d5579bee40676b13405c58ea7fd7eb27f1e7a5a03bda101 |')],
+    ['the U.S. quotation changed', aud('by providing to the Copyright Office, substantially', 'by paying the Copyright Office, substantially')],
+    ['the fee no longer marked as not verified', aud('取り寄せておらず、確かめていません。', '取り寄せました。')],
+    ['the count changed', aud('この表の判定は、誤り 0、根拠不足 2、漏れ 4、表現 3、問題なし 11 です。', 'この表の判定は、誤り 0、根拠不足 2、漏れ 4、表現 2、問題なし 11 です。')],
+    ['a decision without its reason', aud('両言語に足しました。消費者契約法第 8 条第 3 項の形を、一般の定めから作らないためです |', '両言語に足しました |')],
+    ['the day counted taken out', aud('日本時間 2026-11-14 から数えて 14 日後は 2026-11-28 で', '14 日後で')],
+    ['the sentence on lawyers taken out', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\n## この記録について')],
+    ['a lawyer said to have reviewed it', aud('\n\nこの節も、弁護士の確認は受けていません。\n\n## この記録について', '\n\nこの節も、弁護士の確認は受けていません。弁護士が確かめました。\n\n## この記録について')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: the licence, an address, images, a place, a pattern, printing, intake, the weekly copies, the workflow, the limit in either language, a whole exclusion, "to the extent permitted by law", 一切の責任, the Japanese links clause, compensation, severability, the 7 days, the sender, the fee, an exception, the ORCID country, a deciding advice, the notice, the feed, a commitment, and the record\'s section, a quotation, a hash, the U.S. quotation, the fee, the count, a reason, the day and lawyers (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 console.log('\n' + '-'.repeat(60));

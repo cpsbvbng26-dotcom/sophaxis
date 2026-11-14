@@ -1,6 +1,6 @@
 # Copyright Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [著作権の規程（日本語訳）](./copyright.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -53,6 +53,8 @@ Sophaxis does not control whether or when a search engine indexes a page.
 
 Sophaxis shares a listed work only under the work's own licence, and only as that licence allows.
 The three accepted licences permit copying and sharing for any purpose.
+Keeping a copy and serving it are acts that Articles 21 and 23 of Japan's Copyright Act reserve to the copyright holder. Sophaxis does them on the permission that the licence gives, which Article 63 of that Act lets a person use only within the manner and conditions of the permission, and relies on no exception of that Act.
+Where whoever gave the licence did not hold the right to give it, the licence is not that permission; the authors confirm at submission that they may share the version, and a request under the [Takedown Policy](./takedown.md) removes the copy.
 CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credits the authors anyway.
 
 - Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI.
@@ -60,7 +62,7 @@ CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credit
 - No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do.
 - No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work.
 
-<!-- text: CC BY 4.0 3; CC BY 4.0 2 -->
+<!-- text: CC BY 4.0 3; CC BY 4.0 2; Copyright Act 21; Copyright Act 23; Copyright Act 63 -->
 
 ## Work published in a journal
 

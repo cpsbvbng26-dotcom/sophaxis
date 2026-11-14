@@ -484,6 +484,33 @@
       "article": "10",
       "title": "個人情報の保護に関する法律施行令",
       "sha256": "02f2f8e223f83c725819e7c6fd1ebada8b15043260d60b50c0797d415eabd16c"
+    },
+    {
+      "law": "policies/terms.md: The authors bear full responsibility",
+      "name": "Civil Code",
+      "label": "Article 415",
+      "law_id": "129AC0000000089",
+      "article": "415",
+      "title": "民法",
+      "sha256": "0a6b198bf29d78e5f37b242a58dab11b6cdccaa183ebe2fa551a906208abac9a"
+    },
+    {
+      "law": "policies/terms.md: No warranty",
+      "name": "Civil Code",
+      "label": "Article 416",
+      "law_id": "129AC0000000089",
+      "article": "416",
+      "title": "民法",
+      "sha256": "9453e8314878913b7a4e3812f1702fcd02c14724687a8da580efbc237609a43e"
+    },
+    {
+      "law": "policies/copyright.md: How Sophaxis meets the licences",
+      "name": "Copyright Act",
+      "label": "Article 63",
+      "law_id": "345AC0000000048",
+      "article": "63",
+      "title": "著作権法",
+      "sha256": "db2290e44f3633fa8ed12d13d67d5fed560696afefac682d6674d4b7eb2f5071"
     }
   ],
   "policies": [

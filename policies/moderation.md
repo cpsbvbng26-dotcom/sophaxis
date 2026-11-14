@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-14.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -31,6 +31,7 @@ It does not judge whether the work is correct, original or important.
 - The work is not spam, not abusive and does not expose personal data of third parties.
 - The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.md) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 - The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
+- Since 2026-11-14, the automatic check also gives the moderator advice, read by machine, which decides nothing: whether the licence printed on the first pages of the PDF agrees with the DOI metadata; how many strings shaped like an email address, a telephone number or a postal code appear after the first page, outside the authors' own; how many images the PDF embeds, whose rights the moderator then checks; whether the file matches the repository's checksum; and how many affiliations in the DOI metadata, or lines of the first page, name a place where Sophaxis is not offered. It shows counts and fixed words only, never what was found. A "check" in it is a reason for the moderator to look, not a reason for declining by itself.
 
 ## What moderation does not check
 

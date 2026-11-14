@@ -3,6 +3,8 @@
  * look for versions that the repository has and the record has not yet,
  * look for a published version that the publisher's metadata links to a listed preprint,
  * check that a recorded published version still resolves and has no new retraction or correction notice,
+ * read each PDF copy in data/pdf/ against its recorded SHA-256 and the licence of its record, with the advice of
+ * tools/pdf_advice.js (counts and fixed words only, never what a copy says),
  * and ask the Internet Archive to save the pages and the PDF copies.
  *
  * Run by .github/workflows/watch.yml (GITHUB_TOKEN, GITHUB_REPOSITORY).
@@ -16,6 +18,8 @@ const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const A = require('./pdf_advice.js');
 const { lookUp, versionsOf, github } = require('./intake.js');
 const P = require('./published.js');
 
@@ -145,7 +149,45 @@ async function saveToArchive(urls, list = records(path.join(ROOT, 'data', 'paper
   }
 }
 
-function report(problems, when, news = [], pubs = [], index = '') {
+/* ------------------------------------------------------------ the PDF copies (2026-11-14) */
+
+/* Pure: for one record, the readings of each copy: { file, sha, licence, contacts, images, places } where sha is true when
+ * the file's SHA-256 is the recorded one (null when the file is missing), and the rest are the rows of tools/pdf_advice.js.
+ * read(file) gives { bytes, rows } or null. */
+function copyReadings(p, read) {
+  if (p.status !== 'listed') return [];
+  return (p.pdfs || []).map((x) => {
+    const r = read(x.file);
+    if (!r) return { id: p.id, file: x.file, sha: null };
+    const row = (label) => r.rows.find((y) => y[0].startsWith(label)) || null;
+    return { id: p.id, file: x.file, sha: crypto.createHash('sha256').update(r.bytes).digest('hex') === x.sha256,
+      licence: row('The licence printed') || row('No licence statement'), contacts: row('No email address'), images: row('The PDF embeds'), places: row('No affiliation') };
+  });
+}
+
+/* Pure: what the readings report as problems. A copy that differs from its recorded hash, or is missing, is a problem; so is a
+ * licence printed on it that differs from its record's. Everything else is advice, shown in the table only. */
+function copyProblems(readings) {
+  const out = [];
+  for (const c of readings) {
+    if (c.sha === null) out.push(`${c.id}: the PDF copy ${c.file} is missing from data/pdf`);
+    else if (!c.sha) out.push(`${c.id}: the PDF copy ${c.file} no longer has its recorded SHA-256`);
+    if (c.licence && c.licence[1] && c.licence[0].startsWith('The licence printed')) out.push(`${c.id}: the licence printed on the PDF copy ${c.file} differs from the record's (${c.licence[2]})`);
+  }
+  return out;
+}
+
+/* Pure: the table of the copies, with counts and fixed words only. */
+function copyTable(readings) {
+  if (!readings.length) return '';
+  const mark = (r) => (!r ? '' : r[1] ? 'check' : 'ok');
+  const n = (r, re) => (r ? (re.exec(r[2]) || [, ''])[1] : '');
+  return '| Record | Copy | SHA-256 | Licence printed | Contact details of others | Embedded images | Place named on the first page |\n| --- | --- | --- | --- | --- | --- | --- |\n'
+    + readings.map((c) => '| ' + c.id + ' | ' + c.file + ' | ' + (c.sha === null ? 'missing' : c.sha ? 'as recorded' : '**differs**') + ' | '
+      + (c.sha === null ? ' | | | |' : mark(c.licence) + ' | ' + mark(c.contacts) + ' | ' + n(c.images, /^(\d+)/) + ' | ' + mark(c.places) + ' |')).join('\n') + '\n';
+}
+
+function report(problems, when, news = [], pubs = [], index = '', copies = '') {
   const list = (xs) => xs.map((x) => '- ' + x.replace(/[`<>]/g, '')).join('\n');
   return `${MARK}
 **Weekly check, ${when}**
@@ -165,6 +207,10 @@ Possible published versions:
 ${list(pubs)}
 
 Sophaxis does not record a published version by itself: an author reports it, and the same checks run again.
+` : ''}${copies ? `
+Advice on the PDF copies, read by machine for the operator. It decides nothing, and shows counts and fixed words only:
+
+${copies}
 ` : ''}${index ? `
 For information, how OpenAlex holds the works shown:
 
@@ -199,6 +245,19 @@ async function main() {
   }
   problems.push(...list.flatMap((p) => N.newNotices(p, notices)));
   console.log(problems.length ? problems.join('\n') : 'every DOI resolves and keeps its licence');
+  /* The PDF copies: each file against its recorded SHA-256, and the advice, from the files in the repository (no request). */
+  const pdfDir = path.join(ROOT, 'data', 'pdf');
+  const readCopy = (p) => (file) => {
+    const f = path.join(pdfDir, file);
+    if (!fs.existsSync(f)) return null;
+    return { bytes: fs.readFileSync(f), rows: A.adviceOfFile(f, { licences: [p.license], authors: p.authors }) };
+  };
+  const copyRows = list.flatMap((p) => copyReadings(p, readCopy(p)));
+  const copyIssues = copyProblems(copyRows);
+  problems.push(...copyIssues);
+  const copies = copyTable(copyRows);
+  console.log(copyRows.length + ' PDF copies read; ' + copyIssues.length + ' with a problem');
+  if (copies && process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## Advice on the PDF copies (counts and fixed words only)\n\n' + copies + '\n');
   const news = [];
   for (const p of list) {
     const doi = followed(p);
@@ -273,7 +332,7 @@ async function main() {
   const open = ((await github('GET', '/issues?state=open&labels=watch&per_page=20')) || []).find((i) => (i.body || '').startsWith(MARK));
   const when = new Date().toISOString().slice(0, 10);
   if (problems.length || news.length || pubs.length) {
-    const body = report(problems, when, news, pubs, index);
+    const body = report(problems, when, news, pubs, index, copies);
     if (open) await github('PATCH', '/issues/' + open.number, { body });
     else await github('POST', '/issues', { title: problems.length ? 'Weekly check: problems found' : news.length ? 'Weekly check: new versions at the repository' : 'Weekly check: possible published versions', body, labels: ['watch'] });
   } else if (open) {
@@ -282,6 +341,6 @@ async function main() {
   }
 }
 
-module.exports = { saveToArchive, savable, unsaved, compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };
+module.exports = { copyReadings, copyProblems, copyTable, saveToArchive, savable, unsaved, compare, followed, newVersions, candidateNote, publishedProblems, archiveUrls, report, describe, fromOpenAlex, indexTable, SAVE_GAP_MS, RETRY_WAITS_MS, LOOKUP_GAP_MS, LOOKUP_RETRY_WAITS_MS, OPENALEX_GAP_MS, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

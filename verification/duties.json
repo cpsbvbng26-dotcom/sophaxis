@@ -910,7 +910,7 @@
       "by": [
         {
           "file": "policies/takedown.md",
-          "text": "Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it."
+          "text": "Except where serious harm requires it at once, the operator removes material on a request only after asking the authors, in their submission issue, whether they agree to its removal, showing them the material concerned, the right said to be infringed and the reason given; if no objection reaches the operator within 7 days from the day the question is posted, the operator may remove it."
         }
       ]
     },

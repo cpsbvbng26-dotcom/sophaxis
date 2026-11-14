@@ -8,7 +8,7 @@ Source: https://sophaxis.vercel.app/policies/terms.html
 
 # Terms of Use
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [利用規約（日本語訳）](https://sophaxis.vercel.app/policies/terms.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -30,6 +30,7 @@ How content is moderated is set out in the Moderation Policy and the Takedown Po
 
 Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 It gives each listed work a record page, a search, a feed and, where the repository allows, a copy of the PDF.
+A PDF copy is the file that the authors deposited, kept unmodified and provided as it is; the work itself is the deposit in its repository.
 It does this free of charge.
 
 ## The authors bear full responsibility
@@ -47,10 +48,17 @@ This covers:
 Moderation does not move any of this to the operator.
 A listing says only that a submission passed the checks in the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html).
 If a third party makes a claim against Sophaxis or its operator because something the submitter confirmed at submission is untrue, the authors are responsible for it, as the law provides.
+From 2026-12-01, for a submission made on or after that day, the submitter undertakes to the operator that each confirmation in the form is true when it is made.
+If a third party then makes such a claim, the operator tells the submitter, in the submission issue or by email, and hears them before agreeing to pay anything.
+The submitter compensates the operator for the loss that the untrue confirmation caused, as Articles 415 and 416 of Japan's Civil Code provide.
+Nothing is owed where the untrue confirmation is due to a cause for which the submitter is not responsible, and nothing beyond those Articles is asked.
 Authors agree that the record page (its title, authors, abstract and PDF copy) may be taken offline while a removal request is reviewed under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html), and that OAI-PMH then reports the record as deleted until it is put back.
+No more is kept offline than the review needs, as the Takedown Policy sets out.
 Text written in the forms is shared as the [Licence Policy](https://sophaxis.vercel.app/policies/licences.html) sets out.
 The operator still acts on requests under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html).
 A co-author who has not agreed to these terms in a form is bound by them only as far as the law makes them so; for them, this section describes what the law already places on the authors of a work.
+
+<!-- text: Civil Code 415; Civil Code 416 -->
 
 ## What readers may do
 
@@ -101,9 +109,18 @@ This does not exclude or limit the operator's liability for loss that the operat
 Sophaxis is provided as it is.
 It does not guarantee the quality, correctness or completeness of listed work.
 It does not guarantee that the site will always be reachable.
+Nothing on Sophaxis states that a listed work is correct, original or of any quality, and the operator makes no such statement on which anyone could rely; a listing says only that the submission passed the checks of the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html).
 The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+From 2026-12-01, one limit applies to a person who agrees to these terms in a form on or after that day.
+For loss that the operator, or anyone acting for the operator, causes in performing these terms by negligence that is not gross negligence, whether the claim is for non-performance or in tort, the operator is liable only for the loss that would ordinarily arise (Article 416(1) of Japan's Civil Code), and not for loss arising from special circumstances (Article 416(2) of the Civil Code).
+This limit applies only to negligence that is not gross negligence. It does not apply to intent or gross negligence, which stay as the sentence above says, and it does not apply to anyone who has not agreed to these terms in a form, such as a reader.
 The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+That sentence speaks of loss to which no intent or negligence of the operator contributed, and does not limit the liability above.
+The operator is responsible for what it does itself: the record pages it writes, the PDF copies it places on the site, its handling of personal data under the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html), and its handling of requests under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html).
+The way to have material on Sophaxis removed is the Takedown Policy; it takes away no right to go to a court.
 Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
+
+<!-- text: Civil Code 416; Consumer Contract Act 8 -->
 
 ## Changes and closure
 
@@ -184,7 +201,7 @@ Sophaxis runs on two services based in the United States, and their own terms ap
 
 - Submitting to Sophaxis means using GitHub: opening an issue, commenting and attaching files are governed by GitHub's Terms of Service and Privacy Statement, between the user and GitHub.
 - Reading Sophaxis means receiving pages from Vercel, which handles each request, including the IP address, under its own terms and privacy policy, possibly in countries other than Japan or the reader's own.
-- These terms bind the operator and the people who use Sophaxis. They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel, or against the operator for what GitHub or Vercel does.
+- These terms bind the operator and the people who use Sophaxis. They do not bind GitHub or Vercel, and they give no one a claim against GitHub or Vercel, or against the operator for what GitHub or Vercel does. Nor do they take away a claim that the law gives.
 - A dispute with GitHub or Vercel themselves follows their terms, including their own choice of law and court. The steps in Disputes above cover only the operator and Sophaxis.
 - Material in the Sophaxis repository or its issues can also be reported to GitHub through GitHub's own process, and material on the site to Vercel. The operator acts on requests under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) whether or not GitHub or Vercel has acted.
 - If GitHub or Vercel removes, limits or blocks something on their side, for example under the law of the United States, Sophaxis may not be able to restore it.
@@ -206,7 +223,7 @@ What they say that matters to people who use Sophaxis:
 ## General
 
 - The other policies are part of these terms. Where a policy deals with a subject in more detail, it applies to that subject; otherwise, where they differ, these terms apply. The FAQ, the step-by-step page and the Disclaimer explain these terms and do not change them.
-- If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows.
+- If a part of these terms is held invalid or unenforceable, the rest stays in force, and that part applies as far as the law allows. This does not apply to a clause that excludes or limits the operator's liability: such a clause applies only as it is written, and is not read as reaching as far as the law allows.
 - If the operator does not enforce a part of these terms at one time, that does not waive it.
 - From 2026-11-21, a person under 13 cannot submit.
 - A person under 18 may submit only with the consent of a parent or guardian.
@@ -611,7 +628,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.html
 
 # Moderation Policy
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-14.
 
 Japanese: [モデレーションの規程（日本語訳）](https://sophaxis.vercel.app/policies/moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -642,6 +659,7 @@ It does not judge whether the work is correct, original or important.
 - The work is not spam, not abusive and does not expose personal data of third parties.
 - The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 - The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
+- Since 2026-11-14, the automatic check also gives the moderator advice, read by machine, which decides nothing: whether the licence printed on the first pages of the PDF agrees with the DOI metadata; how many strings shaped like an email address, a telephone number or a postal code appear after the first page, outside the authors' own; how many images the PDF embeds, whose rights the moderator then checks; whether the file matches the repository's checksum; and how many affiliations in the DOI metadata, or lines of the first page, name a place where Sophaxis is not offered. It shows counts and fixed words only, never what was found. A "check" in it is a reason for the moderator to look, not a reason for declining by itself.
 
 ## What moderation does not check
 
@@ -770,7 +788,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.html
 
 # Copyright Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [著作権の規程（日本語訳）](https://sophaxis.vercel.app/policies/copyright.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -823,6 +841,8 @@ Sophaxis does not control whether or when a search engine indexes a page.
 
 Sophaxis shares a listed work only under the work's own licence, and only as that licence allows.
 The three accepted licences permit copying and sharing for any purpose.
+Keeping a copy and serving it are acts that Articles 21 and 23 of Japan's Copyright Act reserve to the copyright holder. Sophaxis does them on the permission that the licence gives, which Article 63 of that Act lets a person use only within the manner and conditions of the permission, and relies on no exception of that Act.
+Where whoever gave the licence did not hold the right to give it, the licence is not that permission; the authors confirm at submission that they may share the version, and a request under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) removes the copy.
 CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credits the authors anyway.
 
 - Credit: every record page names the authors and the title, names the licence with a link to it, and links to the work by its DOI.
@@ -830,7 +850,7 @@ CC BY 4.0 and CC BY-SA 4.0 require credit; CC0 1.0 does not, but Sophaxis credit
 - No added terms: Sophaxis adds no condition and no technical measure that would restrict what the licence allows readers to do.
 - No endorsement: nothing on Sophaxis says or suggests that the authors endorse Sophaxis or its use of their work.
 
-<!-- text: CC BY 4.0 3; CC BY 4.0 2 -->
+<!-- text: CC BY 4.0 3; CC BY 4.0 2; Copyright Act 21; Copyright Act 23; Copyright Act 63 -->
 
 ## Work published in a journal
 
@@ -927,7 +947,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.html
 
 # Privacy Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -948,6 +968,7 @@ Sophaxis applies Japan's Act on the Protection of Personal Information in full, 
 Personal data is used only for these purposes:
 
 - to confirm that a person who submits, withdraws or reports a published version, or a co-author who confirms their agreement, is an author of the work;
+- since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
@@ -998,6 +1019,7 @@ The same check runs when a withdrawal issue or a published-version issue is open
 The check asks ORCID only for the personal details (the name), the websites and the works sections of the record.
 It does not ask for the person section as a whole, so public email addresses and the country are never received.
 The check uses only the name, the websites and the works, and keeps or writes nothing else from the ORCID record.
+Since 2026-11-14, the check also reads the PDF that it fetches to read its shape, and the affiliations in the DOI metadata, to give the moderator advice. It counts strings shaped like email addresses, telephone numbers and postal codes, and the affiliations and lines that name a place where Sophaxis is not offered. It writes only the counts, never a string or a place that it found, keeps nothing, and deletes the file after the reading. The weekly check reads the PDF copies on the site in the same way. It does not read the country of an ORCID record.
 The automatic comment in a submission issue repeats the draft record, which is public already.
 From 2026-11-21, a co-author who confirms their agreement in a comment gives their ORCID iD there, and the check reads their public ORCID record in the same way.
 From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
@@ -1311,7 +1333,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.html
 
 # Takedown Policy
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1361,14 +1383,21 @@ When a removal issue reports exposure of personal data, the record page (its tit
 The automatic steps decide nothing; the operator decides every request.
 The authors are told in their submission issue and can respond.
 A request about the requester's own personal data concerns that person, not the work, so the authors are not told of it.
-Except where serious harm requires it at once, the operator removes material on a request only after asking the authors whether they agree; if they do not object within 7 days, the operator may remove it.
+Except where serious harm requires it at once, the operator removes material on a request only after asking the authors, in their submission issue, whether they agree to its removal, showing them the material concerned, the right said to be infringed and the reason given; if no objection reaches the operator within 7 days from the day the question is posted, the operator may remove it.
+A measure taken on a request goes no further than is needed to stop the material concerned from being sent.
+The automatic step cannot tell which part of the record a report concerns, so it takes the title, the authors, the abstract and the PDF copy offline; once the operator has read the request, any of them that the request does not concern is put back.
 This notice-and-response procedure follows the approach of Japanese law on the liability of providers of online services: the person whose material is concerned hears of the request and can answer before a decision, except where serious harm requires the material to be taken offline at once.
 The operator writes every record page and places every PDF copy on the site; authors submit in GitHub issues, on GitHub's service, and nothing they write reaches the site until the operator merges it.
 The operator therefore considers that, for the record pages and the copies, Sophaxis is itself the sender, as Japan's Act on providers of specified telecommunications services defines the sender; since the amendment of 2024 the title of that Act is 特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律.
 Sophaxis does not rely on the limitation of the liability of providers in that Act, which does not apply to a provider that is the sender, and the operator is liable for the record pages and the copies as Japanese law provides, including Article 709 of the Civil Code.
+This holds for the PDF copies too. The operator records each copy on the services that serve the site, so for the copy Sophaxis is the sender, and Article 3(1) of Japan's Act on providers of specified telecommunications services withholds its limitation from a provider that is the sender of the material.
+What others write in the issues of the Sophaxis repository is kept on GitHub's service, and its sender is the person who wrote it.
+Whether the operator is also a provider of that service under the Act, its text does not settle. For that material the operator follows the conditions of Article 3 of Japan's Act on providers of specified telecommunications services, so that its limitations are available if the operator is such a provider.
+When the operator knows that text in an issue infringes another person's rights, or has reasonable grounds to believe so, the operator hides or edits it without delay, as far as is needed to stop it from being sent.
+Otherwise, on a request that shows the text concerned, the right said to be infringed and the reason, the operator asks the person who wrote it, showing them the same, whether they agree to the measure, and takes it if no objection reaches the operator within 7 days from the day they receive the question.
 The 7 days given to the authors follow the form that the same Act gives for a provider who asks the sender before taking material down.
 
-<!-- text: Civil Code 709 -->
+<!-- text: Civil Code 709; Providers Act 3 -->
 
 If the request is upheld, the record is removed, as the next section sets out.
 If the request is not upheld, the operator says why in the issue.
@@ -1436,7 +1465,7 @@ Sophaxis takes the worst case here too, and follows the Digital Services Act of 
 
 ## Copyright notices under United States law
 
-Sophaxis has not designated an agent with the United States Copyright Office, which charges a fee, so it does not rely on the limitation of liability in 17 U.S.C. 512.
+The limitation of liability in 17 U.S.C. 512(c) applies only to a service provider that has designated an agent and given its details to the United States Copyright Office. Sophaxis has not, because it registers with no office, so it does not rely on that limitation.
 A notice of claimed infringement under that law is handled under this policy, like any other request.
 
 <!-- text: 17 U.S.C. 512 -->
@@ -1536,7 +1565,7 @@ Source: https://sophaxis.vercel.app/disclaimer.html
 
 # Disclaimer
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [免責事項（日本語訳）](https://sophaxis.vercel.app/disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1589,7 +1618,7 @@ This use does not change what is listed or how.
 - Only an author of a work can submit it. The operator does not list a work by someone else because the operator has read it or wants to keep it; such a work stays on the operator's own shelf, outside Sophaxis.
 - Sophaxis is not run for profit. It charges no one, sells nothing, shows no advertising and earns nothing.
 - Sophaxis does not publish works. Each work is published by its repository under its DOI, and Sophaxis links to it.
-- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html).
+- A PDF copy is the unmodified file the authors deposited, shared only as the work's licence allows, with its authors, its licence and a link to the original; see the [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html). It is provided as it is, and the work itself is the deposit in its repository.
 - Sophaxis takes no copyright and no exclusive licence in any work.
 - A rights holder can ask for the removal of a work under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html).
 
@@ -1618,7 +1647,7 @@ Sophaxis has no arrangement with Anthropic, receives nothing from it, and does n
 ## Links
 
 Sophaxis links to repositories, DOIs and other sites that it does not control.
-It is not responsible for their content, their availability or their terms.
+It is not responsible for their content, their availability or their terms, unless the law makes the operator responsible for them.
 
 ## Availability
 
@@ -1641,7 +1670,11 @@ They are not legal or professional advice.
 ## Liability
 
 The operator is liable, as Japanese law provides, for loss that the operator causes by intent or negligence.
+From 2026-12-01, toward a person who agrees to the Terms of Use in a form on or after that day, the operator is liable for loss caused by negligence that is not gross negligence only as far as the loss would ordinarily arise, as the section "No warranty" of the Terms of Use sets out; that limit never applies to intent or gross negligence, or to a reader who has not agreed to the Terms.
 The operator is not liable for loss caused only by the content of a listed work, which its authors write, or only by GitHub, Vercel or a repository, unless the law makes the operator liable for it.
+That sentence speaks of loss to which no intent or negligence of the operator contributed.
+A listing is not a statement that a work is correct or of any quality.
+The way to have material on Sophaxis removed is the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html); it takes away no right to go to a court.
 Sophaxis applies Japan's Consumer Contract Act to readers and authors as if its operator were a business operator under it.
 This does not exclude or limit liability for intent or gross negligence, or any liability that the law does not allow to be excluded or limited.
 The responsibility for an act done by someone else against the Terms of Use, or outside them, lies with the person who did it.
@@ -2036,7 +2069,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-14.
 
 Japanese: [自動で動く手順（日本語訳）](https://sophaxis.vercel.app/automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2054,7 +2087,7 @@ The code of each step is public, and each section links to it.
 
 ## When a submission issue is opened or edited, or an author confirms in a comment
 
-- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the PDF of the latest version, where the repository lets a script fetch it, only to read its shape for the moderator, deleted after the reading; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
+- Reads: the DOI metadata from DataCite, Crossref or JaLC; the day each DOI that the metadata names as an earlier version of the work was registered; the notices that Crossref records against the DOI; the PDF of the latest version, where the repository lets a script fetch it, only to read its shape and the advice for the moderator, deleted after the reading; the day the issue was opened; the name, the websites and the works of the public ORCID record given in the form; advice on the metadata from deposit-check.
 - Writes: a comment with the result of each check and a draft record, and the label `verified` or `unverified`.
 - It checks that every required box of the form is ticked, reading the boxes from the two submission forms in the repository: the confirmations always, the consent and agreement from 2026-11-21, and where the authors live from 2026-11-22. The [Submission Policy](https://sophaxis.vercel.app/policies/submission.html#what-the-submitter-confirms) lists the same boxes.
 - From 2026-11-21, it also counts each other author's confirmation, as the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) sets out.
@@ -2062,6 +2095,7 @@ The code of each step is public, and each section links to it.
 - From 2026-11-23, it also checks that Crossref records no retraction, withdrawal or removal for the DOI, and sends an expression of concern to the operator.
 - From 2026-11-24, it also checks that the statements on funding, on competing interests, and on human participants and research ethics are given. It does not judge what they say.
 - From 2026-11-23, for a submitter who is not yet an author of a listed work, it also counts a researcher who vouches for the work: it reads the name, the websites and the works of that researcher's public ORCID record, and runs again when such a comment is written, edited or deleted.
+- Since 2026-11-14, it also gives the moderator advice that decides nothing ([tools/pdf_advice.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/pdf_advice.js)): whether the licence printed on the first pages of the PDF agrees with the DOI metadata; how many strings shaped like an email address, a telephone number or a postal code appear after the first page, outside the authors' own; how many images the PDF embeds; whether the file matches the repository's checksum; and how many affiliations in the DOI metadata, or lines of the first page, name a place where Sophaxis is not offered. The comment and the log show counts and fixed words only, never what was found.
 - Leaves to the operator: accepting or declining the submission.
 - Code: [tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js), run by [intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml).
 
@@ -2141,8 +2175,8 @@ The code of each step is public, and each section links to it.
 
 ## Once a week, on Monday at 13:37 Japan time
 
-- Reads: the DOI metadata of every listed version, the notices that Crossref records against each of them, the metadata of published versions, and how OpenAlex holds each work. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub, and the privacy statements of Vercel and Apple, from their sites.
-- Writes: an issue when a DOI stops resolving, a licence changes, Crossref records a notice that the record does not hold, a new version appears or a published version may exist; a pull request when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`, with the new values and texts and, for an article, the difference of its sentences (where the repository does not let workflows open pull requests, an issue with a link that opens it); an issue when one of them cannot be read; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
+- Reads: the DOI metadata of every listed version, the notices that Crossref records against each of them, the metadata of published versions, how OpenAlex holds each work, and each PDF copy in the repository, against its recorded SHA-256 and for the same advice as at submission. In a workflow of its own at the same time, the articles of Japanese law and the GitHub terms that the [legal review](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md) relies on, from the e-Gov law API and GitHub, and the privacy statements of Vercel and Apple, from their sites.
+- Writes: an issue when a DOI stops resolving, a licence changes, a PDF copy differs from its recorded SHA-256 or prints a licence other than its record's, Crossref records a notice that the record does not hold, a new version appears or a published version may exist; a pull request when an article of law, a GitHub term, or the date of the last update of Vercel's or Apple's privacy statement differs from the value recorded in `verification/statutes.json`, with the new values and texts and, for an article, the difference of its sentences (where the repository does not let workflows open pull requests, an issue with a link that opens it); an issue when one of them cannot be read; a summary of the run; a save to the Internet Archive of every page and PDF copy whose authors consented to it.
 - Leaves to the operator: acting on what the issue reports, and reading the difference before recording it.
 - Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), run by [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
 
@@ -2894,7 +2928,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.ja.html
 
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 Sophaxis の個人情報の取り扱いを、日本の個人情報保護法の項目に沿って書いたものです。英語の [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) の訳で、項目を日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
@@ -2919,6 +2953,7 @@ Sophaxis の運営者、根本卓哉です。住所は公開していません�
 本人確認では、ORCID に、公開記録のうち「個人の詳細」（氏名）・「ウェブサイト」・「業績」の部分だけを問い合わせます。
 「人物」の部分をまとめて問い合わせないので、公開のメールアドレスや国を受け取ることはありません。
 検査が使うのは氏名・ウェブサイト・業績だけで、ほかは保存せず、どこにも書き写しません。
+2026-11-14 から、検査は、形を読むために取得する PDF と、DOI のメタデータの所属も、モデレーターへの助言のために読みます。メールアドレス・電話番号・郵便番号の形をした文字列と、Sophaxis を提供しない国と地域を挙げる所属と行を数えます。書くのは数だけで、見つけた文字列も国や地域の名も書かず、何も保存せず、読んだあとファイルを消します。毎週の確認も、サイトにある PDF の写しを同じように読みます。ORCID の記録の国は読みません。
 サイトは、閲覧者の個人情報を集めません。Cookie も、アクセス解析も使いません。
 頁には、閲覧者の情報を外へ送るコードもタグもありません。
 電気通信事業法の外部送信の規律（第 27 条の 12）が掛かるのは、電気通信事業者と、登録も届出も要らないとされる電気通信事業を営む者だけです。そのうちでも、総務省令が定める役務に限られます。役務を使うのに要る情報は、この規律から除かれています。
@@ -2945,6 +2980,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 ## 利用目的
 
 - 投稿者が、その論文の著者本人であることを確かめるため
+- 2026-11-14 から、投稿された作品やその DOI のメタデータが示す他人の連絡先と国と地域について、数だけの助言をモデレーターに示し、モデレーションの規程を当てはめられるようにするため
 - 2026-11-21 から、同意を確かめる共著者が、その論文の著者本人であることを確かめるため
 - 2026-11-23 から、初めての投稿を紹介する研究者が、その論文の著者でなく、学術誌の論文・本の章・本を持つことを確かめるため
 - 撤回や出版版の報告をする人が、その論文の著者本人であることを確かめるため
@@ -3199,7 +3235,7 @@ Source: https://sophaxis.vercel.app/policies/terms.ja.html
 
 # 利用規約（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 これは英語の [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。
 
@@ -3221,6 +3257,7 @@ Sophaxis を読むことを、何かへの同意とはみなしません。読�
 
 Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せます。
 載せた作品のそれぞれに、記録の頁、検索、フィードを与えます。預け先が許す場合は、PDF の写しも置きます。
+PDF の写しは、著者が預けたファイルを手を加えずに置いたもので、現状のまま提供します。作品そのものは、預け先にある預けたものです。
 これらを無料で行います。
 
 ## 著者がすべての責任を負う
@@ -3238,10 +3275,17 @@ Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学のプ�
 モデレーションによって、これらのどれかが運営者に移ることはありません。
 掲載が示すのは、投稿が[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)の確認を通ったことだけです。
 投稿時に投稿者が確認した事柄が真実でなかったために、第三者が Sophaxis や運営者に請求をした場合、法令の定めるところにより、著者がその責任を負います。
+2026-12-01 から、その日以後の投稿について、投稿者は、様式の確認のそれぞれが、確認した時点で真実であることを運営者に約束します。
+そのうえで第三者がそうした請求をしたときは、運営者は、投稿の issue かメールで投稿者に知らせ、何かを支払うことに同意する前に、投稿者の言い分を聴きます。
+投稿者は、真実でなかった確認が生じさせた損害を、日本の民法第 415 条と第 416 条の定めるとおりに、運営者に賠償します。
+真実でなかったことが投稿者の責めに帰することができない事由によるときは、何も負いません。これらの条が定める以上のものは求めません。
 著者は、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って削除の求めを検討するあいだ、記録の頁（題・著者・要旨・PDF の写し）を公開から外すこと、そのあいだ OAI-PMH がその記録を削除済みとして示すことに同意します。
+外したままにするのは、検討に要る範囲だけです。削除の規程が定めるとおりです。
 様式に書かれた文は、[ライセンスの規程](https://sophaxis.vercel.app/policies/licences.ja.html)が定めるとおりに共有します。
 運営者は、それでも[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って求めに応じます。
 様式でこの規約に同意していない共著者は、法令がそうする範囲でだけ、この規約に拘束されます。その人にとって、この節は、法令がすでに作品の著者に負わせていることを述べるものです。
+
+<!-- text: Civil Code 415; Civil Code 416 -->
 
 ## 読者ができること
 
@@ -3292,9 +3336,18 @@ Sophaxis は、運営者自身の行いが、規程の挙げる法令の要件�
 Sophaxis は、現状のまま提供します。
 載っている作品の質・正しさ・完全さを保証しません。
 サイトにいつでも届くことも保証しません。
+Sophaxis のどの頁も、載っている作品が正しいこと、独創的であること、何らかの質を持つことを述べておらず、運営者は、誰かが頼ることのできるそうした表明をしていません。掲載が示すのは、投稿が[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html)の確認を通ったことだけです。
 運営者は、自らの故意または過失で生じさせた損害について、日本の法令の定めるとおり責任を負います。
+2026-12-01 から、その日以後に様式でこの規約に同意した人に対しては、限りを一つ置きます。
+運営者、または運営者のために行う人が、この規約の履行に際して、重大な過失を除く過失によって生じさせた損害については、債務不履行による請求でも不法行為による請求でも、運営者は通常生ずべき損害（日本の民法第 416 条第 1 項）についてだけ責任を負い、特別の事情によって生じた損害（民法第 416 条第 2 項）については責任を負いません。
+この限りは、重大な過失を除く過失にだけ適用されます。故意と重大な過失には適用されず、それらは上の文のとおりです。様式でこの規約に同意していない人、たとえば読者にも適用されません。
 著者が書いた作品の内容だけ、または GitHub・Vercel・預け先だけが原因で生じた損害については、法令が運営者に責任を負わせる場合を除き、運営者は責任を負いません。
+この文は、運営者の故意も過失も加わっていない損害について述べるもので、上の責任を限るものではありません。
+運営者が責任を負うのは、自らが行うことです。運営者が書く記録の頁、運営者がサイトに置く PDF の写し、[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html)のもとでの個人データの扱い、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)のもとでの求めへの対応です。
+Sophaxis にある素材を外させる道は、削除の規程です。この道は、裁判所に訴える権利を奪いません。
 Sophaxis は、運営者を日本の消費者契約法の事業者であるものとみなして、読者と著者に同法を適用します。
+
+<!-- text: Civil Code 416; Consumer Contract Act 8 -->
 
 ## 変更と終了
 
@@ -3375,7 +3428,7 @@ Sophaxis は、米国に拠点を置く二つのサービスの上で動いて�
 
 - Sophaxis に投稿することは、GitHub を使うことを意味します。issue を開くこと、コメントすること、ファイルを添付することは、利用者と GitHub とのあいだで、GitHub の利用規約とプライバシーステートメントに従います。
 - Sophaxis を読むことは、Vercel から頁を受け取ることを意味します。Vercel は、IP アドレスを含むそれぞれの要求を、自らの規約と個人情報の方針に沿って、日本や読者の国以外の国で処理することがあります。
-- この規約が拘束するのは、運営者と Sophaxis を使う人です。GitHub や Vercel を拘束せず、GitHub や Vercel に対する請求権も、GitHub や Vercel が行ったことについての運営者に対する請求権も、誰にも与えません。
+- この規約が拘束するのは、運営者と Sophaxis を使う人です。GitHub や Vercel を拘束せず、GitHub や Vercel に対する請求権も、GitHub や Vercel が行ったことについての運営者に対する請求権も、誰にも与えません。法令が与える請求権を奪うこともありません。
 - GitHub や Vercel そのものとの紛争は、それぞれの準拠法と裁判所の定めを含め、それぞれの規約に従います。上の「紛争」の手順が扱うのは、運営者と Sophaxis についての紛争だけです。
 - Sophaxis のリポジトリや issue の中の素材は、GitHub 自身の手続きで GitHub に通報することもでき、サイトの素材は Vercel に通報することもできます。運営者は、GitHub や Vercel が対応したかどうかにかかわらず、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って求めに応じます。
 - GitHub や Vercel が、たとえば米国の法令に基づいて、自らの側で何かを削除し、制限し、または遮断した場合、Sophaxis はそれを元に戻せないことがあります。
@@ -3397,7 +3450,7 @@ Sophaxis を使う人に関わる定めは、次のとおりです。
 ## 一般
 
 - ほかの規程は、この規約の一部です。ある規程がある事柄をより詳しく扱う場合は、その事柄についてはその規程が適用されます。それ以外で両者が食い違う場合は、この規約が適用されます。FAQ、手順を順に示す頁、免責事項は、この規約を説明するもので、この規約を変えるものではありません。
-- この規約の一部が無効または執行できないとされた場合も、残りは効力を保ち、その部分は法令が許す範囲で適用されます。
+- この規約の一部が無効または執行できないとされた場合も、残りは効力を保ち、その部分は法令が許す範囲で適用されます。ただし、運営者の責任を免除し、または制限する条項には、このことは当てはまりません。そうした条項は、書かれたとおりにだけ適用され、法令が許す範囲まで及ぶものとは読みません。
 - 運営者がある時点でこの規約の一部を執行しなくても、それによってその部分を放棄したことにはなりません。
 - 2026-11-21 から、13 歳未満の人は投稿できません。
 - 18 歳未満の人は、親または保護者の同意がある場合に限り投稿できます。
@@ -3802,7 +3855,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 # モデレーションの規程（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-14。
 
 これは英語の [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3833,6 +3886,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 - 作品がスパムでも嫌がらせでもなく、第三者の個人データを晒していない。
 - 作品に、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)の表にある、Sophaxis を提供しない国と地域の、著者の所属や住所が書かれていない。書かれていれば、モデレーターはその著者がどこに住んでいるか、投稿のあとにそこに滞在したかを投稿者に尋ね、ほかの場所に住み、そこに滞在していないのでなければ断る。
 - PDF に、DOI の登録情報のライセンスと食い違う権利の表示（出版社の「無断転載禁止」など）がない。あれば断る。
+- 2026-11-14 から、自動の確認は、機械で読んだ助言もモデレーターに示します。助言は何も決めません。PDF の最初の頁に印刷されたライセンスが DOI のメタデータと合うか。最初の頁より後に、著者自身のものを除いて、メールアドレス・電話番号・郵便番号の形をした文字列がいくつあるか。PDF が埋め込む画像がいくつあるか。画像があれば、その権利をモデレーターが確かめます。ファイルが預け先のチェックサムと合うか。DOI のメタデータの所属、または最初の頁の行のうち、Sophaxis を提供しない国と地域を挙げるものがいくつあるか。示すのは数と決まった語だけで、見つけたものそのものは示しません。助言の「check」は、モデレーターが見る理由であって、それだけで断る理由にはなりません。
 
 ## モデレーションが確かめないこと
 
@@ -3961,7 +4015,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.ja.html
 
 # 著作権の規程（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 これは英語の [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4013,6 +4067,8 @@ Sophaxis は毎週、著者全員が同意した作品について、Internet Ar
 
 Sophaxis は、載っている作品を、作品自身のライセンスのもとで、そのライセンスが認める範囲でだけ共有します。
 受け付ける三つのライセンスは、どれも、目的を問わず複製と共有を認めています。
+写しを置くことと、それを配信することは、日本の著作権法第 21 条と第 23 条が著作権者に専有させている行いです。Sophaxis は、ライセンスが与える許諾に拠ってそれを行います。同法第 63 条は、許諾を得た者が、その許諾に係る利用方法及び条件の範囲内でだけ利用できるとしています。Sophaxis は、同法のどの例外にも拠りません。
+ライセンスを与えた人がそれを与える権利を持っていなかったときは、そのライセンスはその許諾になりません。著者は投稿のときにその版を共有してよいことを確認し、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿った求めがあれば写しを外します。
 CC BY 4.0 と CC BY-SA 4.0 は表示を求めます。CC0 1.0 は求めませんが、Sophaxis はそれでも著者を示します。
 
 - 表示：記録の頁はどれも、著者と題を挙げ、ライセンスの名をリンク付きで示し、DOI で作品へリンクします。
@@ -4020,7 +4076,7 @@ CC BY 4.0 と CC BY-SA 4.0 は表示を求めます。CC0 1.0 は求めません
 - 条件を足さない：Sophaxis は、ライセンスが読者に認めていることを制限する条件も技術的な手段も足しません。
 - 推薦を装わない：Sophaxis のどこにも、著者が Sophaxis やその作品の使い方を推薦していると述べたり、ほのめかしたりするものはありません。
 
-<!-- text: CC BY 4.0 3; CC BY 4.0 2 -->
+<!-- text: CC BY 4.0 3; CC BY 4.0 2; Copyright Act 21; Copyright Act 23; Copyright Act 63 -->
 
 ## 学術誌が出版した作品
 
@@ -4117,7 +4173,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 
 # 削除の規程（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 これは英語の [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4167,14 +4223,21 @@ GitHub と Vercel は、それぞれの規約で判断します。運営者は�
 自動の処理は何も決めません。どの求めも運営者が判断します。
 著者には、その投稿の issue で知らせ、著者は応答できます。
 求めた人自身の個人データについての求めは、作品ではなくその人に関わるものなので、著者には知らせません。
-重大な害のためにただちに外す場合を除き、運営者は、求めに沿って素材を外す前に、著者に同意するかどうかを尋ねます。7 日以内に反対がなければ、外すことがあります。
+重大な害のためにただちに外す場合を除き、運営者は、求めに沿って素材を外す前に、その投稿の issue で、外すことに同意するかどうかを著者に尋ねます。そのとき、関わる素材、侵害されたとする権利、その理由を示します。尋ねた日から 7 日以内に反対が運営者に届かなければ、外すことがあります。
+求めに沿って講じる措置は、関わる素材が送られるのを止めるのに要る範囲を超えません。
+自動の手順は、報告が記録のどの部分に関わるかを見分けられないので、題・著者・要旨・PDF の写しを公開から外します。運営者が求めを読んだあと、求めに関わらない部分は戻します。
 この通知と応答の手続きは、インターネット上のサービスの提供者の責任に関する日本の法令の考え方に沿ったものです。素材に関わる人は、判断の前に求めを知り、答えることができます。ただし、重大な害のために素材をただちに公開から外す必要がある場合は除きます。
 記録の頁はすべて運営者が書き、PDF の写しもすべて運営者がサイトに置きます。著者は GitHub の issue で、GitHub のサービスの上で投稿します。著者が書いたものは、運営者が取り込むまでサイトに載りません。
 そのため運営者は、記録の頁と写しについては、Sophaxis 自身が、情報流通プラットフォーム対処法の定める「発信者」に当たると考えています。この法律の題名は、2024 年の改正から「特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律」です。
 Sophaxis は、同法が定める提供者の責任の制限には拠りません。この制限は、発信者である提供者には掛からないためです。運営者は、記録の頁と写しについて、民法第 709 条を含む日本の法令の定めるとおり責任を負います。
+このことは、PDF の写しにも当てはまります。運営者は、写しのそれぞれを、サイトを配信するサービスに記録します。そのため写しについては Sophaxis が発信者であり、情報流通プラットフォーム対処法第 3 条第 1 項は、発信者である提供者にはその制限を掛けません。
+Sophaxis のリポジトリの issue にほかの人が書くものは、GitHub のサービスに置かれ、その発信者は書いた人です。
+運営者がそのサービスについて同法の提供者にも当たるかは、同法の文からは決まりません。そうした素材については、運営者は同法第 3 条の要件に沿って動き、運営者が提供者に当たる場合に、その制限が掛かるようにします。
+issue の文が他人の権利を侵害していると知ったとき、またはそう信じるに足りる相当の理由があるときは、運営者は、それが送られるのを止めるのに要る範囲で、遅滞なくその文を隠すか書き換えます。
+そうでないときは、関わる文、侵害されたとする権利、その理由を示した求めを受けて、運営者はそれを書いた人に同じものを示し、措置に同意するかどうかを尋ねます。その人が尋ねを受けた日から 7 日以内に反対が運営者に届かなければ、措置を講じます。
 著者に与える 7 日は、提供者が発信者に尋ねてから素材を外すときについて同法が定める形に沿っています。
 
-<!-- text: Civil Code 709 -->
+<!-- text: Civil Code 709; Providers Act 3 -->
 
 求めが認められた場合、記録は次の節のとおり削除します。
 求めが認められなかった場合、運営者はその理由を issue で示します。
@@ -4242,7 +4305,7 @@ Sophaxis はここでも最も厳しい場合を想定し、その規模のサ�
 
 ## 米国法による著作権の通知
 
-Sophaxis は、手数料の掛かる米国著作権局への代理人の届け出をしていません。そのため、米国著作権法第 512 条の責任の制限には拠りません。
+米国著作権法第 512 条 (c) の責任の制限は、代理人を指定し、その詳細を米国著作権局に届けたサービスの提供者にだけ掛かります。Sophaxis は、どの役所にも登録しないため、届けていません。そのため、その責任の制限には拠りません。
 その法による侵害の通知も、ほかの求めと同じく、この規程に沿って扱います。
 
 <!-- text: 17 U.S.C. 512 -->
@@ -4341,7 +4404,7 @@ Source: https://sophaxis.vercel.app/disclaimer.ja.html
 
 # 免責事項（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 これは英語の [Disclaimer](https://sophaxis.vercel.app/disclaimer.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4394,7 +4457,7 @@ Sophaxis はそれらに代わるものではなく、ここに載る作品は�
 - 作品を投稿できるのは、その作品の著者だけです。運営者は、読んだから、手元に置きたいからといって、他人の作品を載せません。そのような作品は、Sophaxis の外の、運営者自身の本棚に置きます。
 - Sophaxis は営利のために運営していません。誰からも料金を取らず、何も売らず、広告を出さず、何の収入も得ません。
 - Sophaxis は作品を出版しません。それぞれの作品は、その預け先が DOI のもとで公開し、Sophaxis はそこへリンクします。
-- PDF の写しは、著者が預けたファイルを手を加えずに置いたもので、作品のライセンスが認める範囲でだけ、著者、ライセンス、原本へのリンクを添えて共有します。[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)を見てください。
+- PDF の写しは、著者が預けたファイルを手を加えずに置いたもので、作品のライセンスが認める範囲でだけ、著者、ライセンス、原本へのリンクを添えて共有します。[著作権の規程](https://sophaxis.vercel.app/policies/copyright.ja.html)を見てください。写しは現状のまま提供し、作品そのものは、預け先にある預けたものです。
 - Sophaxis は、どの作品についても、著作権も独占的な許諾も取りません。
 - 権利者は、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って作品の削除を求めることができます。
 
@@ -4423,7 +4486,7 @@ Sophaxis は Anthropic と何の取り決めもなく、Anthropic から何も�
 ## リンク
 
 Sophaxis は、自らが管理しない預け先、DOI、その他のサイトへリンクしています。
-それらの内容、利用できるかどうか、その規約について、責任を負いません。
+それらの内容、利用できるかどうか、その規約について、法令が運営者に責任を負わせる場合を除き、責任を負いません。
 
 ## 利用できること
 
@@ -4446,7 +4509,11 @@ Sophaxis の規程と頁は、Sophaxis の仕組みを説明するものです�
 ## 責任
 
 運営者は、自らの故意または過失で生じさせた損害について、日本の法令の定めるとおり責任を負います。
+2026-12-01 から、その日以後に様式で利用規約に同意した人に対しては、重大な過失を除く過失で生じた損害について、運営者は、通常生ずべき損害の範囲でだけ責任を負います。利用規約の「保証しないこと」の節が定めるとおりです。この限りは、故意と重大な過失には決して適用されず、利用規約に同意していない読者にも適用されません。
 著者が書いた作品の内容だけ、または GitHub・Vercel・預け先だけが原因で生じた損害については、法令が運営者に責任を負わせる場合を除き、運営者は責任を負いません。
+この文は、運営者の故意も過失も加わっていない損害について述べるものです。
+掲載は、作品が正しいことや、何らかの質を持つことを述べるものではありません。
+Sophaxis にある素材を外させる道は、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)です。この道は、裁判所に訴える権利を奪いません。
 Sophaxis は、運営者を日本の消費者契約法の事業者であるものとみなして、読者と著者に同法を適用します。
 これは、故意または重大な過失による責任や、法令が免除や制限を認めない責任を、免除したり制限したりするものではありません。
 ほかの人が利用規約に反して、または利用規約の外で行った行いの責任は、行った本人にあります。
@@ -5052,7 +5119,7 @@ Source: https://sophaxis.vercel.app/automation.ja.html
 
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-14。
 
 これは英語の [What runs by itself](https://sophaxis.vercel.app/automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5071,7 +5138,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 ## 投稿の issue が開かれたか編集されたとき、または著者がコメントで確かめたとき
 
-- 読むもの：DataCite、Crossref、JaLC のどれかにある DOI のメタデータ。そのメタデータが作品の前の版として挙げる DOI それぞれの登録の日。Crossref がその DOI について記録している通知。最新の版の PDF。これは預け先がスクリプトに取得を許している場合だけで、モデレーターのために形を読むだけです。読んだあとは消します。issue が開かれた日。様式に書かれた公開の ORCID の記録の、氏名・ウェブサイト・業績。deposit-check によるメタデータについての助言。
+- 読むもの：DataCite、Crossref、JaLC のどれかにある DOI のメタデータ。そのメタデータが作品の前の版として挙げる DOI それぞれの登録の日。Crossref がその DOI について記録している通知。最新の版の PDF。これは預け先がスクリプトに取得を許している場合だけで、モデレーターのために形と助言を読むだけです。読んだあとは消します。issue が開かれた日。様式に書かれた公開の ORCID の記録の、氏名・ウェブサイト・業績。deposit-check によるメタデータについての助言。
 - 書くもの：それぞれの確認の結果と記録の下書きを載せたコメント。`verified` か `unverified` のラベル。
 - 様式の必須のボックスすべてに印があるかを確かめます。ボックスは、リポジトリにある二つの投稿の様式から読みます。確認の群はいつも、同意の群は 2026-11-21 から、著者の住んでいる場所の群は 2026-11-22 からです。[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html#投稿者が確認すること)にも同じボックスを並べてあります。
 - 2026-11-21 から、[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)が定めるとおり、ほかの著者それぞれの同意の確認も数えます。
@@ -5079,6 +5146,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 2026-11-23 から、Crossref がその DOI について撤回・取り下げ・削除を記録していないかも確かめます。懸念表明は運営者に回します。
 - 2026-11-24 から、研究資金、利益相反、人を対象とする研究と研究倫理についての申告が書かれているかも確かめます。書かれた中身は判断しません。
 - 2026-11-23 から、載っている作品の著者にまだなっていない投稿者については、作品を紹介する研究者も数えます。その研究者の公開の ORCID の記録の、氏名・ウェブサイト・業績を読みます。そうしたコメントが書かれたり、編集されたり、消されたりすると、もう一度動きます。
+- 2026-11-14 から、何も決めない助言もモデレーターに示します（[tools/pdf_advice.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/pdf_advice.js)）。PDF の最初の頁に印刷されたライセンスが DOI のメタデータと合うか。最初の頁より後に、著者自身のものを除いて、メールアドレス・電話番号・郵便番号の形をした文字列がいくつあるか。PDF が埋め込む画像がいくつあるか。ファイルが預け先のチェックサムと合うか。DOI のメタデータの所属、または最初の頁の行のうち、Sophaxis を提供しない国と地域を挙げるものがいくつあるか。コメントと実行の記録が示すのは、数と決まった語だけで、見つけたものそのものは示しません。
 - 運営者に残すこと：投稿を受理するか、断るか。
 - コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js)。[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
 
@@ -5158,8 +5226,8 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 ## 週に一度、月曜日の日本時間 13:37
 
-- 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
-- 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
+- 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。リポジトリにある PDF の写しのそれぞれ。記録した SHA-256 と照らし、投稿のときと同じ助言のために読みます。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
+- 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、PDF の写しが記録した SHA-256 と違うか、記録と違うライセンスを印刷しているとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
 - コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
 

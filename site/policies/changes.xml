@@ -5,8 +5,44 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-13T00:00:00Z</updated>
+  <updated>2026-11-14T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c25</id>
+    <title>A limit for slight negligence, and what a submitter owes for an untrue confirmation</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <updated>2026-11-14T00:00:00Z</updated>
+    <summary>From 2026-12-01, for a person who agrees to the Terms of Use in a form on or after that day, two clauses apply. For loss that the operator causes in performing the Terms by negligence that is not gross negligence, the operator is liable only for the loss that would ordinarily arise (Article 416(1) of Japan's Civil Code), not for loss arising from special circumstances; the clause says that it applies only to negligence that is not gross negligence, as Article 8(3) of Japan's Consumer Contract Act requires, and it never applies to intent or gross negligence, or to a reader who has not agreed to the Terms. And the submitter undertakes that each confirmation in the form is true when it is made; if a third party makes a claim because one is untrue, the operator tells the submitter and hears them before agreeing to pay anything, and the submitter compensates the operator as Articles 415 and 416 of the Civil Code provide, owing nothing where the untruth is due to a cause for which the submitter is not responsible. Both narrow what an author can claim or add to what an author owes, so they are announced on the top page at least 14 days ahead. They apply only to submissions made on or after that day, and not to earlier agreements. In effect from 2026-12-01. Policies: Terms of Use.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c24</id>
+    <title>What the operator is responsible for, said precisely</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <updated>2026-11-14T00:00:00Z</updated>
+    <summary>The Terms of Use now say that a PDF copy is the deposited file provided as it is and that the work is the deposit in its repository; that nothing on Sophaxis states that a work is correct or of any quality; that the sentence on loss caused only by a work, GitHub, Vercel or a repository speaks of loss to which no intent or negligence of the operator contributed and limits nothing; what the operator is responsible for; that the Takedown Policy is the way to have material removed and takes away no right to go to a court; that no more of a record is kept offline than a review needs; that the Terms take away no claim that the law gives against the operator; and that a clause that excludes or limits the operator's liability applies only as it is written, and is never read as reaching as far as the law allows. Effective on publication, 2026-11-14. Each of these states the Terms as they already stood, or gives authors and readers more; none narrows a right or adds a duty. Policies: Terms of Use.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c23</id>
+    <title>The takedown steps follow Article 3 of Japan's Act on providers</title>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-14T00:00:00Z</updated>
+    <summary>The Takedown Policy now says that, before removing material on a request, the operator shows the authors the material concerned, the right said to be infringed and the reason, and counts the 7 days from the day the question is posted; that a measure goes no further than is needed, and that the parts of a record that a request does not concern are put back once the operator has read it; that for the PDF copies Sophaxis is the sender, so the limitation of Article 3(1) of the Act does not apply to them; and that, for what others write in the issues, the operator follows the conditions of Article 3 of the Act, hiding or editing infringing text without delay once it knows, and otherwise asking the person who wrote it. It also says, in place of an unverified statement that the United States Copyright Office charges a fee, that the limitation of 17 U.S.C. 512(c) needs an agent whose details are given to that Office, and that Sophaxis registers with no office. Effective on publication, 2026-11-14. These give the people concerned more; none narrows a right or adds a duty. Policies: Takedown Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c22</id>
+    <title>The basis of the PDF copies in the Copyright Act</title>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <updated>2026-11-14T00:00:00Z</updated>
+    <summary>The Copyright Policy now says that keeping and serving a copy are acts that Articles 21 and 23 of Japan's Copyright Act reserve to the copyright holder, that Sophaxis does them only on the permission that the work's licence gives, within its manner and conditions as Article 63 of that Act provides, and relies on no exception of that Act, and that a licence given by someone without the right is not that permission. Effective on publication, 2026-11-14. Nothing that Sophaxis does changes. Policies: Copyright Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c21</id>
+    <title>Advice for the moderator, read by machine, in counts only</title>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-14T00:00:00Z</updated>
+    <summary>Since 2026-11-14, the automatic check gives the moderator advice that decides nothing: whether the licence printed on the first pages of the PDF agrees with the DOI metadata, how many strings shaped like an email address, a telephone number or a postal code appear after the first page outside the authors' own, how many images the PDF embeds, whether the file matches the repository's checksum, and how many affiliations in the DOI metadata, or lines of the first page, name a place where Sophaxis is not offered. The weekly check reads the PDF copies on the site in the same way and compares each with its recorded SHA-256. The comment and the logs show counts and fixed words only. The Moderation Policy and the Privacy Policy, in both languages, say so, and the Privacy Policy names it as a purpose; it keeps nothing, reads no ORCID country, narrows no right and adds no duty. Policies: Moderation Policy, Privacy Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c20</id>
     <title>A place where offering Sophaxis would not conform to its law is not offered</title>
