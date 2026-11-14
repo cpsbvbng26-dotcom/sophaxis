@@ -511,6 +511,97 @@
       "article": "63",
       "title": "著作権法",
       "sha256": "db2290e44f3633fa8ed12d13d67d5fed560696afefac682d6674d4b7eb2f5071"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 446",
+      "law_id": "129AC0000000089",
+      "article": "446"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-2",
+      "law_id": "129AC0000000089",
+      "article": "465_2"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-3",
+      "law_id": "129AC0000000089",
+      "article": "465_3"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-4",
+      "law_id": "129AC0000000089",
+      "article": "465_4"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-5",
+      "law_id": "129AC0000000089",
+      "article": "465_5"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-6",
+      "law_id": "129AC0000000089",
+      "article": "465_6"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-7",
+      "law_id": "129AC0000000089",
+      "article": "465_7"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-8",
+      "law_id": "129AC0000000089",
+      "article": "465_8"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-9",
+      "law_id": "129AC0000000089",
+      "article": "465_9"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Civil Code",
+      "label": "Article 465-10",
+      "law_id": "129AC0000000089",
+      "article": "465_10"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (a voucher attests, and does not guarantee)",
+      "name": "Consumer Contract Act",
+      "label": "Article 2",
+      "law_id": "412AC0000000061",
+      "article": "2"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (requests that are never turned away)",
+      "name": "Act on providers of specified telecommunications services",
+      "label": "Article 5",
+      "law_id": "413AC0000000137",
+      "article": "5"
+    },
+    {
+      "law": "docs/legal-audit-2026-11-12.md: 2026-11-14, checked intake (requests that are never turned away)",
+      "name": "Act on providers of specified telecommunications services",
+      "label": "Article 6",
+      "law_id": "413AC0000000137",
+      "article": "6"
     }
   ],
   "policies": [
