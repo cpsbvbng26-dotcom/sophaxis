@@ -318,7 +318,7 @@ The comparison found the items below. Each was fixed in the same change as this 
 
 ## The laws of 195 countries (2026-11-12)
 
-On 2026-11-12 a survey of the constitutions and laws of the 195 member and observer states of the United Nations was made for another project of the operator, and is kept in that project's public repository, under `verification/world/`.
+On 2026-11-12 a survey of the constitutions and laws of the 195 member and observer states of the United Nations was made for another project of the operator. Since 2026-11-15 the part of it that concerns Sophaxis (the articles on data protection and quotation, and those sorted as applying or could apply to Sophaxis, each with its text, its source, the day it was fetched and its SHA-256) is kept here, in `verification/world-2026-11-12.json`, and the other project keeps nothing about Sophaxis.
 It fetched the data protection laws it could reach, kept only the articles that its search words matched, and sorted each as applying, could apply or not applying to Sophaxis.
 It sorted most of them by the type of their wording, not one by one, and its search words missed some articles on scope, such as Article 2 of the Personal Data Protection Law of Saudi Arabia, which this review had read on 2026-11-08.
 So every data protection law in its data was fetched again with `tools/sources.js`, and its articles on scope, representatives, registration, transfers abroad and minors were read here by number.
