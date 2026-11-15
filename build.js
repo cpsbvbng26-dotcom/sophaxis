@@ -317,9 +317,13 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 /* The pages with a shelf, a catalogue card, the register or the construction drawing carry the rest of the design too. */
 const CSS_SHELF = CSS + D.css(SITE.fields || {}, 'shelf');
 const SHELF_PAGE = /class="(?:shelf|card |register|construction)"?/;
+/* The two top pages carry the entrance as well (2026-11-15). */
+const CSS_TOP = CSS_SHELF + D.css(SITE.fields || {}, 'entrance');
+const TOP_PAGE = /<div class="entrance">/;
 
 const STYLE_HASH = "'sha256-" + crypto.createHash('sha256').update(CSS).digest('base64') + "'";
 const STYLE_HASH_SHELF = "'sha256-" + crypto.createHash('sha256').update(CSS_SHELF).digest('base64') + "'";
+const STYLE_HASH_TOP = "'sha256-" + crypto.createHash('sha256').update(CSS_TOP).digest('base64') + "'";
 
 /* The id of a heading, as GitHub gives it to the same heading of the Markdown source, so that a link to a section works on
  * the site and on github.com alike: lower case, every character but letters, marks, numbers, "_", "-" and spaces dropped,
@@ -386,7 +390,8 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
   if (src) body = sourceLinks(sections(body, lang === 'ja'), src, canonical);
   /* The 404 page is served at any address, so it links from the root. */
   const up = root ? '/' : rel ? '../' : './';
-  const shelfPage = SHELF_PAGE.test(body);
+  const topPage = TOP_PAGE.test(body), shelfPage = topPage || SHELF_PAGE.test(body);
+  const style = topPage ? CSS_TOP : shelfPage ? CSS_SHELF : CSS, hash = topPage ? STYLE_HASH_TOP : STYLE_HASH_SHELF;
   /* The top page names the site for search engines: WebSite microdata, without a script. */
   const home = canonical === '';
   const site = home ? ` itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="${esc(SITE.name)}">${SITE.osf ? `<link itemprop="sameAs" href="${esc(SITE.osf.url)}"><link itemprop="sameAs" href="https://doi.org/${esc(SITE.osf.doi)}">` : ''}${SITE.zenodo ? `<link itemprop="sameAs" href="https://doi.org/${esc(SITE.zenodo.doi)}">` : ''}` : '>';
@@ -403,7 +408,7 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="${shelfPage ? (csp || CSP).replace(STYLE_HASH, STYLE_HASH_SHELF) : csp || CSP}">
+<meta http-equiv="Content-Security-Policy" content="${shelfPage ? (csp || CSP).replace(STYLE_HASH, hash) : csp || CSP}">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(SITE.baseUrl + canonical)}">
@@ -419,12 +424,12 @@ function page({ title, description, rel, root, canonical, body, head, csp, lang,
 <meta property="og:url" content="${esc(SITE.baseUrl + canonical)}">
 <meta property="og:image" content="${esc(image || SITE.baseUrl + 'og.png')}">
 ${head || ''}${/^(policies\/|policy(\.ja)?\.html$)/.test(canonical) ? POLICY_FEED(up) : ''}${home && SITE.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(SITE.googleSiteVerification)}">\n` : ''}<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">${SITE.x ? `\n<meta name="twitter:site" content="@${esc(SITE.x)}">` : ''}
-<style>${shelfPage ? CSS_SHELF : CSS}</style>
+<style>${style}</style>
 </head>
 <body>
 <a class="skip" href="#main"${en}>Skip to content</a>
 <header class="top">${D.bandSvg()}<div class="wrap"${site}
-<a class="brand" ${brand}${en}>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></a>
+<a class="brand" ${brand}${en}>${topPage ? `<img class="logo" src="${up}favicon.svg" alt="" width="42" height="42"><span>${esc(SITE.name)}<small>${esc(SITE.tagline)}</small></span>` : `${esc(SITE.name)}<small>${esc(SITE.tagline)}</small>`}</a>
 <nav${en}><a href="${up}index.html">Listing</a><a href="${up}search.html">Search</a><a href="${up}submit.html">Submit</a><a href="${up}policy.html">Policies</a><a href="${up}faq.html">FAQ</a></nav>${switcher}
 </div></header>
 <main class="wrap" id="main">
@@ -1335,15 +1340,80 @@ function operatingCounts(all, reports = loadReports(), ja = false) {
   return `<p class="meta">Operating counts, from the records: in ${r.year}${r.complete ? '' : ' (counted up to ' + esc(r.asOf) + ')'}, ${n(r.submissions.opened, 'submission', 'submissions')} received and ${r.submissions.accepted} accepted; median days from submission to a decision: ${med === null ? '–' : med}. Listed now: ${listed}.${removed ? ' Removed: ' + removed + '.' : ''} <a href="./decisions.html">Decisions by year</a> · <a href="./stats.html">Statistics</a></p>\n`;
 }
 
+/* The entrance of the two top pages (2026-11-15): the name, a rule of five spines, one sentence on what Sophaxis is, and
+ * three emblems drawn by design.js from the records, each with a caption. Every number in it is counted from the records or
+ * site.json; verification/check.js (136) counts them again and draws the emblems again. Then a catalogue card holds, word
+ * for word, what the top page already said about what Sophaxis is and is not, and points to the two notices, which follow
+ * it whole. The sentence is the one the description of the page has always begun with. */
+const STATEMENT = { en: SITE.name + ' is an overlay preprint server for philosophy and mathematics.', ja: SITE.name + ' は哲学と数学のオーバーレイ型プレプリントサーバーです。' };
+/* The sentence of the brand page that says the shelf is a metaphor, taken from the page itself. */
+const metaphorLine = (ja) => (fs.readFileSync(path.join(ROOT, ja ? 'brand.ja.md' : 'brand.md'), 'utf8').split('\n').find((l) => l.startsWith(ja ? '書架はたとえです。' : 'The shelf is a metaphor.')) || '');
+/* What the entrance shows, counted from the records. */
+function entranceFacts(papers, all) {
+  const sorted = papers.slice().sort((a, b) => fieldOrder(a.category) - fieldOrder(b.category) || byId(a, b));
+  return {
+    spines: sorted.map((p) => ({ code: fieldCode(p.category), pages: ((p.pdfs || []).slice(-1)[0] || {}).pages || 0, titleLength: p.title.length, withdrawn: p.status === 'withdrawn' })),
+    records: papers.length, withdrawn: papers.filter((p) => p.status === 'withdrawn').length,
+    codes: Object.keys(SITE.categories).map(fieldCode), entries: registerEvents(all).length,
+  };
+}
+function entrance(papers, all, ja = false) {
+  const f = entranceFacts(papers, all), n = f.records, w = f.withdrawn;
+  const cap = (href, title, text) => `<figcaption><b><a href="${href}">${title}</a></b> ${text}</figcaption>`;
+  const shelfText = ja
+    ? (n ? `記録 ${n} 件を、分野の色の背で並べています。${w ? `撤回した ${w} 件は、枠だけで示しています。` : ''}` : '書架はまだ空です。')
+    : (n ? `${n} ${n === 1 ? 'record' : 'records'}, each a spine in the colour of its field.${w ? ` ${w} withdrawn, drawn in outline.` : ''}` : 'The shelf is empty for now.');
+  const fieldsText = ja ? `${f.codes.length} つの分野に、Sophaxis が自分で決めた符号と印があります。` : `${f.codes.length} codes and glyphs of ${esc(SITE.name)}'s own.`;
+  const regText = ja ? `載った順に、記入が ${f.entries} 件あります。` : `${f.entries} ${f.entries === 1 ? 'entry' : 'entries'}, in the order of listing.`;
+  const brandPage = ja ? './brand.ja.html#分野の符号と色' : './brand.html#field-codes-and-colours';
+  return `<div class="entrance">
+<h1>${esc(SITE.name)}</h1>
+${D.ruleSvg()}
+<p class="statement">${esc(ja ? STATEMENT.ja : STATEMENT.en)}</p>
+${pausedNotice()}<div class="emblems">
+<figure>${D.shelfEmblem(f.spines)}${cap('#listing', ja ? '書架' : 'The shelf', shelfText)}</figure>
+<figure>${D.fieldsEmblem(f.codes)}${cap(brandPage, ja ? '分野' : 'The fields', fieldsText)}</figure>
+<figure>${D.cardEmblem(f.entries)}${cap(ja ? './register.ja.html' : './register.html', ja ? '受入簿' : 'The register', regText)}</figure>
+</div>
+</div>
+`;
+}
+/* The card: what Sophaxis is and is not, in the sentences the top page has carried, and the two notices that follow. */
+function aboutCard(ja = false) {
+  const L = SITE.notOffered || [], n = SITE.termsNotice;
+  const row = (k, v, cls) => `<dt>${k}</dt><dd${cls ? ` class="${cls}"` : ''}>${v}</dd>\n`;
+  const notes = (ja
+    ? [SITE.scopeNotice ? '<a href="#scope">提供しない国と地域があります。</a>' : '', n && n.text ? '<a href="#changes">規程の変更を告知しています。</a>' : '']
+    : [SITE.scopeNotice ? `<a href="#scope">Not offered in ${L.length} places.</a>` : '', n && n.text && n.from ? `<a href="#changes">${noticeHeading(n)}</a>` : '']).filter(Boolean).join('');
+  const body = ja
+    ? row('であるもの', `<p>${esc(SITE.name)} は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、${esc(SITE.name)} がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>`)
+      + row('でないもの', `<p>掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。</p><p>${esc(metaphorLine(true))}</p>`)
+      + row('生成モデル', '<p>言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。</p>')
+      + row('料金', `<p>${esc(SITE.name)} は、著者からも読者からも料金を取りません。</p>`)
+      + row('目的', `<p>${esc(SITE.name)} を運営する目的は、<a href="./mission.ja.html">運営理念・声明</a>に述べています。声明は権利や義務を生じさせず、<a href="./policy.ja.html">規程</a>が適用されます。</p>`)
+      + (notes ? row('告知', notes, 'notes') : '')
+    : row('Is', `<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>`)
+      + row('Is not', `<p>Acceptance is moderation, not peer review. The quality of listed work is not guaranteed.</p><p>${esc(metaphorLine(false))}</p>`)
+      + row('Models', '<p>Work made with language models or other generative models is accepted when the use is disclosed.</p>')
+      + row('Fees', `<p>${esc(SITE.name)} charges nothing, to authors or to readers.</p>`)
+      + row('Purpose', `<p>Why ${esc(SITE.name)} is run: the <a href="./mission.html">Statement of Purpose</a>. It creates no rights or obligations; the <a href="./policy.html">policies</a> apply.</p>`)
+      + (notes ? row('Notices', notes, 'notes') : '');
+  return `<section class="card about" aria-labelledby="about">
+<h2 id="about">${ja ? esc(SITE.name) + ' であるもの、でないもの' : 'What ' + esc(SITE.name) + ' is, and is not'}</h2>
+<dl>
+${body}</dl>
+<span class="hole" aria-hidden="true"></span>
+</section>
+`;
+}
+
 function indexPage(papers, all = papers) {
   const last = lastUpdated(all, topUpdated('en'));
   const body = `
-<h1>${esc(SITE.tagline)}</h1>
-${pausedNotice()}${scopeNotice()}${termsNotice()}<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>
-<div class="notice">Acceptance is moderation, not peer review. The quality of listed work is not guaranteed. Work made with language models or other generative models is accepted when the use is disclosed. ${esc(SITE.name)} charges nothing, to authors or to readers.</div>
-<p class="meta">Why ${esc(SITE.name)} is run: the <a href="./mission.html">Statement of Purpose</a>. It creates no rights or obligations; the <a href="./policy.html">policies</a> apply.</p>
+${entrance(papers, all)}${aboutCard()}<div id="scope">${scopeNotice()}</div>
+<div id="changes">${termsNotice()}</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
-${operatingCounts(all)}${listedIn()}${directoryEntries()}${ownIdentifiers()}<h2>Listing</h2>
+${operatingCounts(all)}${listedIn()}${directoryEntries()}${ownIdentifiers()}<h2 id="listing">Listing</h2>
 ${ownNotice(all)}
 ${fields(papers, '', './')}
 ${shelf(papers, './')}<p class="meta">By topic: <a href="./collections.html">Collections</a>. By month: <a href="./months.html">New by month</a>. Researchers: <a href="./call.html">a call to submit</a>.</p>
@@ -1352,7 +1422,7 @@ ${listing(papers, './', 'No preprints are listed yet.')}
 `;
   return page({
     title: SITE.name,
-    description: SITE.name + ' is an overlay preprint server for philosophy and mathematics. It charges nothing, to authors or to readers.',
+    description: STATEMENT.en + ' It charges nothing, to authors or to readers.',
     rel: false,
     canonical: '',
     head: rootAlternates('index'),
@@ -1786,24 +1856,21 @@ function indexJaPage(papers, all = papers) {
   const jaLinks = Object.keys(JA_POLICIES).map((slug) => `<li><a href="./policies/${slug}.ja.html">${esc(jaTitle(slug))}</a></li>`)
     .concat(['<li><a href="./disclaimer.ja.html">免責事項</a></li>'], JA_PAGES.filter(hasRootJa).map((slug) => `<li><a href="./${slug}.ja.html">${esc(rootJaTitle(slug))}</a></li>`)).join('');
   const body = `
-<h1>${esc(SITE.name)}：哲学と数学のプレプリント</h1>
-<p>${esc(SITE.name)} は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、${esc(SITE.name)} がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>
-<div class="notice">掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。${esc(SITE.name)} は、著者からも読者からも料金を取りません。</div>
-<p class="meta">${esc(SITE.name)} を運営する目的は、<a href="./mission.ja.html">運営理念・声明</a>に述べています。声明は権利や義務を生じさせず、<a href="./policy.ja.html">規程</a>が適用されます。</p>
-<div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、場所の決まりによります。国籍は読みません。2026-12-01 からは、著者の ORCID の公開記録にもよります。公開の住所、いまの勤め先、いまの在学先の国の符号を読み、提供していない場所を指す項目があるとき、二つの国を指すとき、issue を開く 30 日以上前に足された、提供している場所を指す項目が無いときは、受け付けません。理由と法令と決まりは<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div>
-${termsNoticeJa()}<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
+${entrance(papers, all, true)}${aboutCard(true)}<div id="scope"><div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、場所の決まりによります。国籍は読みません。2026-12-01 からは、著者の ORCID の公開記録にもよります。公開の住所、いまの勤め先、いまの在学先の国の符号を読み、提供していない場所を指す項目があるとき、二つの国を指すとき、issue を開く 30 日以上前に足された、提供している場所を指す項目が無いときは、受け付けません。理由と法令と決まりは<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div></div>
+<div id="changes">${termsNoticeJa()}</div>
+<p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
 ${operatingCounts(all, loadReports(), true)}${directoryEntries(true)}
 <h2>日本語の頁</h2>
-<ul>${jaLinks}</ul>
+<ul class="jalinks">${jaLinks}</ul>
 <h2>分野と集め</h2>
 <ul class="fields" aria-label="分野">${Object.entries(SITE.categories).map(([slug]) => `<li><a href="./list/${slug}.html">${esc(SITE.categoriesJa[slug])}（${papers.filter((p) => cats(p).includes(slug)).length}）</a></li>`).join('')}</ul>
 <ul class="fields" aria-label="集め">${(SITE.collections || []).map((c) => `<li><a href="./collection/${esc(c.slug)}.html">${esc(c.ja)}（${papers.filter((p) => (p.collections || []).includes(c.slug)).length}）</a></li>`).join('')}</ul>
-<h2>載っている作品</h2>
+<h2 id="listing">載っている作品</h2>
 ${ownNotice(all, true)}${shelf(papers, './', true)}<p class="meta">載った順：<a href="./register.ja.html">受入簿</a>。</p>
 ${listing(papers, './', 'まだ作品は載っていません。', true)}
 `;
-  return page({ title: SITE.name + '：哲学と数学のプレプリント', description: SITE.name + ' は哲学と数学のオーバーレイ型プレプリントサーバーです。著者からも読者からも料金を取りません。', rel: false, canonical: 'index.ja.html', lang: 'ja', head: rootAlternates('index'), body });
+  return page({ title: SITE.name + '：哲学と数学のプレプリント', description: STATEMENT.ja + '著者からも読者からも料金を取りません。', rel: false, canonical: 'index.ja.html', lang: 'ja', head: rootAlternates('index'), body });
 }
 
 const JA_POLICIES = { privacy: '個人情報の取り扱いについて', terms: '利用規約（日本語訳）', submission: '投稿の規程（日本語訳）', moderation: 'モデレーションの規程（日本語訳）', copyright: '著作権の規程（日本語訳）', licences: 'ライセンスの規程（日本語訳）', takedown: '削除の規程（日本語訳）', withdrawal: '撤回の規程（日本語訳）' };
@@ -2194,7 +2261,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { STATEMENT, metaphorLine, entranceFacts, entrance, aboutCard, CSS_TOP, pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

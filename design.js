@@ -155,6 +155,24 @@ function css(fields, part = 'core') {
     '.glyph{width:.85em;height:.85em;fill:none;stroke:currentColor;stroke-width:1.5;flex:none}.glyph .dot{fill:currentColor;stroke:none}',
     '.glyphs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}@media print{.band{display:none}}',
   ].join('\n') + '\n';
+  /* The entrance of the two top pages. It names only the site's tokens and the field colours: no colour of its own. */
+  if (part === 'entrance') return [
+    '/* design.js: entrance */',
+    /* The header of the top pages: the logo beside the name, on the colour of a card, over a board. */
+    'header.top{background:var(--card);border-bottom:4px solid var(--rule)}.brand{display:inline-flex;align-items:center;gap:var(--s3)}.brand .logo{width:2.6rem;height:2.6rem;flex:none}',
+    '.entrance{margin:0 0 var(--s6)}.entrance h1{font-size:clamp(2.4rem,10vw,3.2rem);font-weight:normal;line-height:1.1;letter-spacing:.03em;margin:0 0 var(--s3)}',
+    '.rule{display:block;margin:0 0 var(--s4)}.rule [class^=f-]{fill:var(--f-c)}.rule .line{fill:var(--muted)}',
+    '.statement{font-size:var(--t4);line-height:1.5;margin:0 0 var(--s5);max-width:34rem}',
+    '.emblems{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:36rem;margin:0;padding:0}.emblems figure{margin:0;min-width:0}',
+    '.em{display:block;width:100%;height:auto;border-bottom:.45rem solid var(--muted);padding:0 4%}',
+    '.em [class^=f-]{fill:var(--f-c);stroke:var(--f-c)}.em rect[class^=f-]{stroke:none}.em .wd{fill:none;stroke-width:1;stroke-dasharray:2 1.5}.em .end{fill:var(--muted)}',
+    '.em .gl{fill:none;stroke-width:2}.em .dot{fill:var(--f-c);stroke:none}.em text{font:10px var(--mono);stroke:none}',
+    '.em .cd{fill:var(--card);stroke:var(--muted)}.em .tb{fill:var(--accent)}.em .ln{fill:var(--rule)}.em .n{font:bold 20px var(--mono);fill:var(--fg)}.em .hl{fill:var(--bg);stroke:var(--muted)}',
+    '.emblems figcaption{font:var(--t1)/1.45 var(--sans);color:var(--muted);padding:var(--s2) var(--s3) 0 0;overflow-wrap:anywhere}.emblems figcaption b{display:block;color:var(--fg)}',
+    '.about h2 a{color:inherit}.about dd p{margin:0 0 var(--s1)}.about dd p:last-child{margin:0}.about .notes a{display:block}',
+    'main>h2{border-bottom:1px solid var(--rule);padding-bottom:var(--s1)}.jalinks{columns:2 15rem;column-gap:var(--s6);padding-left:1.2rem}',
+    '@media (min-width:40rem){.emblems figcaption{font-size:var(--t2)}}@media print{.em{border-bottom-color:#000}}',
+  ].join('\n') + '\n';
   /* The rest is needed only by the pages that show a shelf, a catalogue card, the register or the construction drawing. */
   return [
     '/* design.js: shelf */',
@@ -177,4 +195,89 @@ function css(fields, part = 'core') {
   ].join('\n') + '\n';
 }
 
-module.exports = { LOGO, logoSvg, logoMeasures, GLYPH, GLYPHS, GLYPH_SHAPES, GLYPH_SHAPES_JA, glyphSvg, BAND, bandSvg, CONSTRUCTION, constructionSvg, BASE, lum, ratio, fieldRatio, r2, TYPE, SPACE, FONTS, css };
+/* The entrance of the two top pages (2026-11-15): under the name, a rule; then three emblems standing on one board, each
+ * with a caption that says what it is. Everything is drawn here from numbers and from the records, as the rest of the design.
+ * - The rule: the five spines of the band, once, and a board running on from them.
+ * - The shelf: one spine per record shown, in the colour of its field, a withdrawn one outlined, between two bookends. The
+ *   width of a spine follows the pages of its last PDF copy and its height the length of its title, as on the shelf of the
+ *   page; neither says anything of the work. With many records the spines narrow so that all of them stay on the board.
+ * - The fields: the five glyphs set round a centre, each with its code.
+ * - The card: a catalogue card with the number of entries in the accession register.
+ * The three stand on one board, the lower edge of the row (CSS). A shape drawn in outline says so in its own attributes, so that
+ * it stays an outline without CSS. Each emblem is decoration beside its caption (aria-hidden), and still has a title. The
+ * entrance uses the site's colour tokens and the field colours only: it adds no colour of its own. */
+const ENTRANCE = {
+  view: { w: 120, h: 84 },
+  rule: { length: 168 },
+  shelf: { left: 6, right: 114, board: 84, gap: 2.5, end: { w: 7, h: 26 }, width: { w1: 9, w2: 11, w3: 13 }, height: { h1: 60, h2: 68, h3: 52 } },
+  fields: { cx: 60, cy: 39, r: 28, glyph: 18, text: 10 },
+  card: { x: 14, y: 22, w: 92, h: 62, band: 4, lines: [44, 56, 68], hole: 3 },
+};
+const fix = (v) => String(Math.round(v * 100) / 100);
+/* The size of a spine from the record: pages of the last PDF copy, and the length of the title. */
+const spineSize = (pages, titleLength) => [pages >= 40 ? 'w3' : pages >= 15 ? 'w2' : 'w1', titleLength < 60 ? 'h3' : titleLength < 110 ? 'h1' : 'h2'];
+
+function ruleSvg() {
+  const m = logoMeasures(), u = LOGO.unit, g = BAND.gap, top = Math.max(...m.lengths) * BAND.scale, L = ENTRANCE.rule.length;
+  const spines = m.lengths.map((len, i) => `<rect x="${i * (u + g)}" y="${fix(top - len * BAND.scale)}" width="${u}" height="${fix(len * BAND.scale)}" class="f-${BAND.order[i].toLowerCase()}"/>`).join('');
+  const x = m.lengths.length * (u + g);
+  return `<svg class="rule" width="${L}" height="${fix(top + BAND.board)}" aria-hidden="true" focusable="false"><title>Five spines and a board</title>${spines}`
+    + `<rect x="${x}" y="${fix(top)}" width="${L - x}" height="${BAND.board}" class="line"/></svg>`;
+}
+
+/* items: the records shown, in the order of the shelf, as { code, pages, titleLength, withdrawn }. */
+function shelfEmblem(items) {
+  const V = ENTRANCE.view, S = ENTRANCE.shelf, E = S.end;
+  const sizes = items.map((p) => spineSize(p.pages || 0, p.titleLength || 0));
+  const raw = sizes.reduce((t, [w]) => t + S.width[w], 0) + S.gap * Math.max(0, items.length - 1);
+  const room = S.right - S.left - 2 * (E.w + S.gap);
+  const k = raw > room ? room / raw : 1;
+  const total = raw * k;
+  let x = (V.w - total) / 2;
+  const spines = items.map((p, i) => {
+    const w = S.width[sizes[i][0]] * k, h = S.height[sizes[i][1]], y = S.board - h;
+    const r = p.withdrawn
+      ? `<rect x="${fix(x + 0.5)}" y="${fix(y + 0.5)}" width="${fix(Math.max(w - 1, 0.5))}" height="${fix(h - 1)}" fill="none" stroke="currentColor" class="f-${p.code.toLowerCase()} wd"/>`
+      : `<rect x="${fix(x)}" y="${y}" width="${fix(w)}" height="${h}" class="f-${p.code.toLowerCase()}"/>`;
+    x += w + S.gap * k;
+    return r;
+  }).join('');
+  const a = (V.w - total) / 2 - S.gap - E.w, b = (V.w + total) / 2 + S.gap;
+  const ends = `<polygon points="${fix(a + E.w)},${S.board} ${fix(a + E.w)},${S.board - E.h} ${fix(a)},${S.board}" class="end"/>`
+    + `<polygon points="${fix(b)},${S.board} ${fix(b)},${S.board - E.h} ${fix(b + E.w)},${S.board}" class="end"/>`;
+  return `<svg class="em" viewBox="0 0 ${V.w} ${V.h}" width="${V.w}" height="${V.h}" aria-hidden="true" focusable="false"><title>The shelf: ${items.length} ${items.length === 1 ? 'spine' : 'spines'}</title>`
+    + spines + ends + '</svg>';
+}
+
+/* codes: the field codes in the order of site.json. */
+function fieldsEmblem(codes) {
+  const V = ENTRANCE.view, F = ENTRANCE.fields, n = codes.length, s = F.glyph / GLYPH.box;
+  const marks = codes.map((c, i) => {
+    const t = (-90 + (360 / n) * i) * Math.PI / 180, x = F.cx + F.r * Math.cos(t), y = F.cy + F.r * Math.sin(t);
+    /* The glyph of design.js, moved and scaled into place: each coordinate is computed, so the shapes need no transform. */
+    const X = (v) => fix(x - F.glyph / 2 + v * s), Y = (v) => fix(y - F.glyph / 2 + v * s);
+    const place = (tag, a) => {
+      const b = {};
+      for (const [k, v] of Object.entries(a)) {
+        b[k] = k === 'points' ? v.split(' ').map((pt) => { const [px, py] = pt.split(',').map(Number); return X(px) + ',' + Y(py); }).join(' ')
+          : ['x', 'cx'].includes(k) ? X(v) : ['y', 'cy'].includes(k) ? Y(v) : ['r', 'width', 'height'].includes(k) ? fix(v * s) : v;
+      }
+      return `<${tag}${attrs(b)}/>`;
+    };
+    return `<g class="f-${c.toLowerCase()}">` + GLYPHS[c].map(([tag, a]) => place(tag, Object.assign({ class: 'gl' }, a, a.class === 'dot' ? { fill: 'currentColor' } : { fill: 'none', stroke: 'currentColor' }))).join('')
+      + `<text x="${fix(x)}" y="${fix(y + F.glyph / 2 + F.text)}" text-anchor="middle">${c}</text></g>`;
+  }).join('');
+  return `<svg class="em" viewBox="0 0 ${V.w} ${V.h}" width="${V.w}" height="${V.h}" aria-hidden="true" focusable="false"><title>The fields: ${codes.join(', ')}</title>${marks}</svg>`;
+}
+
+/* entries: the number of entries in the accession register. */
+function cardEmblem(entries) {
+  const V = ENTRANCE.view, C = ENTRANCE.card;
+  const lines = C.lines.map((y) => `<rect x="${C.x + 8}" y="${y}" width="${C.w - 16}" height="1" class="ln"/>`).join('');
+  return `<svg class="em" viewBox="0 0 ${V.w} ${V.h}" width="${V.w}" height="${V.h}" aria-hidden="true" focusable="false"><title>The register: ${entries} ${entries === 1 ? 'entry' : 'entries'}</title>`
+    + `<rect x="${C.x + 0.5}" y="${C.y + 0.5}" width="${C.w - 1}" height="${C.h - 1}" rx="2" fill="none" stroke="currentColor" class="cd"/><rect x="${C.x}" y="${C.y}" width="${C.w}" height="${C.band}" class="tb"/>${lines}`
+    + `<text x="${C.x + 8}" y="${C.y + 22}" class="n">${entries}</text>`
+    + `<circle cx="${C.x + C.w / 2}" cy="${C.y + C.h - 2 * C.hole}" r="${C.hole}" fill="none" stroke="currentColor" class="hl"/></svg>`;
+}
+
+module.exports = { ENTRANCE, spineSize, ruleSvg, shelfEmblem, fieldsEmblem, cardEmblem, LOGO, logoSvg, logoMeasures, GLYPH, GLYPHS, GLYPH_SHAPES, GLYPH_SHAPES_JA, glyphSvg, BAND, bandSvg, CONSTRUCTION, constructionSvg, BASE, lum, ratio, fieldRatio, r2, TYPE, SPACE, FONTS, css };
