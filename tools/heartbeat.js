@@ -61,10 +61,10 @@ function jobsOf(text) {
   return out.map((j) => ({ id: j.id, name: j.name, text: j.lines.join('\n') }));
 }
 
-/* The cron expressions under `schedule:`. */
+/* The cron expressions under `schedule:`; a comment line among them is passed over (a yearly workflow of the repositories has one). */
 function cronsOf(text) {
-  const m = /^ {2}schedule:\n((?: {4}- cron: .*\n?)+)/m.exec(String(text));
-  return m ? [...m[1].matchAll(/- cron: '([^']+)'/g)].map((x) => x[1]) : [];
+  const m = /^ {2}schedule:\n((?: {4}(?:- cron: .*|#.*)\n?)+)/m.exec(String(text));
+  return m ? [...m[1].matchAll(/^ {4}- cron: '([^']+)'/gm)].map((x) => x[1]) : [];
 }
 
 /* The period of a cron in hours, and its kind. Only the forms these repositories use are read; any other is an error. */
@@ -298,7 +298,8 @@ async function selfTest() {
   const day = 24 * HOUR;
   const iso = (ms) => new Date(ms).toISOString();
   const wf = (crons, extra = '') => 'name: x\non:\n' + (crons.length ? '  schedule:\n' + crons.map((c) => "    - cron: '" + c + "'\n").join('') : '  workflow_dispatch:\n') + 'permissions:\n  contents: read\njobs:\n  a:\n    name: The job\n    runs-on: ubuntu-latest\n    steps:\n      - run: echo' + extra + '\n';
-  t('the schedules of a file are read, and their periods', cronsOf(wf(['17 0 * * *', '7 5 * * 1'])).join() === '17 0 * * *,7 5 * * 1'
+  t('the schedules of a file are read, also past a comment line among them, and their periods', cronsOf(wf(['17 0 * * *', '7 5 * * 1'])).join() === '17 0 * * *,7 5 * * 1'
+    && cronsOf("on:\n  schedule:\n    # once a year\n    - cron: '17 0 7 11 *'\n  workflow_dispatch:\n").join() === '17 0 7 11 *'
     && ['17 0 * * *', '7 5 * * 1', '23 5 9 * *', '17 0 30 10 *', '0 */4 * * *'].map((c) => periodOf(c).kind).join() === 'daily,weekly,monthly,yearly,hourly');
   let threw = false;
   try { periodOf('0 0 1-7 * 1'); } catch (e) { threw = true; }
