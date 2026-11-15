@@ -32,8 +32,10 @@ async function main() {
   const repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
   if (!repo || !token) throw new Error('GITHUB_REPOSITORY and GITHUB_TOKEN are needed');
   const api = (p, opts = {}) => request('https://api.github.com/repos/' + repo + p, Object.assign({ headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' } }, opts));
-  const open = await (await api('/issues?state=all&per_page=100&creator=github-actions%5Bbot%5D')).json();
-  if (Array.isArray(open) && open.some((x) => x.title === title(year))) { console.log('already opened: ' + title(year)); return; }
+  /* Every page, to the end; an answer that is not a list is an error, never read as no issue (2026-11-15). */
+  const every = async (p) => { const out = []; for (let page = 1; ; page++) { const r = await api(p + '&per_page=100&page=' + page); if (!r.ok) throw new Error('GET /issues: HTTP ' + r.status); const l = await r.json(); if (!Array.isArray(l)) throw new Error('GET /issues: not a list'); out.push(...l); if (l.length < 100) return out; } };
+  const open = await every('/issues?state=all&creator=github-actions%5Bbot%5D');
+  if (open.some((x) => !x.pull_request && x.title === title(year))) { console.log('already opened: ' + title(year)); return; }
   const r = await api('/issues', { method: 'POST', body: JSON.stringify({ title: title(year), body: body(year) }) });
   if (!r.ok) throw new Error('could not open the issue: ' + r.status);
   console.log('opened: ' + title(year));

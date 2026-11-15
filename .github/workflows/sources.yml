@@ -18,6 +18,11 @@ jobs:
   fetch:
     name: Fetch the cited texts
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # One fetch at a time; each run pushes a branch of its own, named with its run number (2026-11-15).
+    concurrency:
+      group: sources
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -39,4 +44,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add verification/sources-raw.json
           git commit -m "Sources: the fetched texts" || exit 0
-          git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)"
+          git push origin "HEAD:refs/heads/sources/$(date -u +%Y%m%d-%H%M)-$GITHUB_RUN_ID"

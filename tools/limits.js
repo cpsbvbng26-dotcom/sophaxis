@@ -5,7 +5,7 @@
  *
  *   node tools/limits.js --print     measures the PDF copies only, from the files, and prints the table
  *
- * Measured: the deployments that Vercel reports to GitHub, on the busiest day of the last 30 days (the free plan allows 100 a
+ * Measured: the deployments, counted from the commit status "Vercel" of the commits of main, on the busiest day of the last 30 days (the free plan allows 100 a
  * day); the PDF copies, in all and the largest (site.json pdfLimits); the size of the repository, against the 1 GB that GitHub
  * recommends. Not measured: Vercel's bandwidth and function use, which only the operator's Vercel account shows; the yearly
  * audit asks the operator to read them there. Run by .github/workflows/monthly.yml. */
@@ -42,6 +42,11 @@ function busiest(dates) {
   for (const d of dates) { const day = new Date(Date.parse(d) + 9 * 3600 * 1000).toISOString().slice(0, 10); per[day] = (per[day] || 0) + 1; }
   return Math.max(0, ...Object.values(per));
 }
+/* Pure: the time of the first status "Vercel" of a commit, or null. */
+function vercelDay(statuses) {
+  const v = (Array.isArray(statuses) ? statuses : []).filter((s) => s.context === 'Vercel').map((s) => s.created_at).sort();
+  return v[0] || null;
+}
 function pdfSizes() {
   const dir = path.join(ROOT, 'data', 'pdf');
   const sizes = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.pdf')).map((f) => fs.statSync(path.join(dir, f)).size) : [];
@@ -53,14 +58,26 @@ async function main() {
   const repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
   const api = (p, opts = {}) => request('https://api.github.com/repos/' + repo + p, Object.assign({ headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' } }, opts));
   const since = Date.now() - 30 * 24 * 3600 * 1000;
+  /* The deployments: Vercel marks each commit of main that it deploys with the commit status "Vercel". Until 2026-11-15 this read the
+   * deployments of the repository, which Vercel does not create here, so it always counted none; now it reads the statuses of
+   * the commits of main of the last 30 days, and fails when main has commits but none of them carries the status (2026-11-15). */
   const dates = [];
-  for (let page = 1; page <= 10; page++) {
-    const list = await (await api('/deployments?per_page=100&page=' + page)).json();
-    if (!Array.isArray(list) || !list.length) break;
-    const recent = list.filter((d) => Date.parse(d.created_at) >= since).map((d) => d.created_at);
-    dates.push(...recent);
-    if (recent.length < list.length) break;
+  const shas = [];
+  for (let page = 1; ; page++) {
+    const r = await api('/commits?sha=main&per_page=100&page=' + page + '&since=' + new Date(since).toISOString());
+    if (!r.ok) throw new Error('GET /commits: HTTP ' + r.status);
+    const list = await r.json();
+    if (!Array.isArray(list)) throw new Error('GET /commits: not a list');
+    shas.push(...list.map((c) => c.sha));
+    if (list.length < 100) break;
   }
+  for (const sha of shas) {
+    const r = await api('/commits/' + sha + '/statuses?per_page=100');
+    if (!r.ok) throw new Error('GET /commits/' + sha.slice(0, 7) + '/statuses: HTTP ' + r.status);
+    const first = vercelDay(await r.json());
+    if (first) dates.push(first);
+  }
+  if (shas.length && !dates.length) throw new Error('main has ' + shas.length + ' commits in 30 days, and none carries the status "Vercel": the deployments could not be counted');
   const info = await (await api('')).json();
   const r = rows(Object.assign({ busiestDay: busiest(dates), repoBytes: typeof info.size === 'number' ? info.size * 1024 : null }, pdfSizes()));
   const t = table(r);
@@ -68,11 +85,13 @@ async function main() {
   console.log(t);
   if (!r.some((x) => x[4])) return;
   const title = 'Near a free limit: ' + new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 7);
-  const open = await (await api('/issues?state=open&per_page=100')).json();
-  if (Array.isArray(open) && open.some((x) => x.title === title)) return;
+  /* Every page, to the end; an answer that is not a list is an error, never read as no issue (2026-11-15). */
+  const every = async (p) => { const out = []; for (let page = 1; ; page++) { const r = await api(p + '&per_page=100&page=' + page); if (!r.ok) throw new Error('GET /issues: HTTP ' + r.status); const l = await r.json(); if (!Array.isArray(l)) throw new Error('GET /issues: not a list'); out.push(...l); if (l.length < 100) return out; } };
+  const open = await every('/issues?state=open');
+  if (open.some((x) => !x.pull_request && x.title === title)) return;
   const res = await api('/issues', { method: 'POST', body: JSON.stringify({ title, body: MARK + '\nA measure has reached 80 percent of its free limit. Nothing has been changed.\n\n' + t + '\nVercel\'s bandwidth and function use are not measured here; read them in the Vercel account.\n' }) });
   if (!res.ok) throw new Error('POST /issues: HTTP ' + res.status);
 }
 
-module.exports = { rows, table, busiest, WARN, DEPLOYS_PER_DAY, REPO_BYTES };
+module.exports = { vercelDay, rows, table, busiest, WARN, DEPLOYS_PER_DAY, REPO_BYTES };
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

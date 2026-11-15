@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-11-15",
+    "policies": ["takedown", "privacy"],
+    "from": "2026-12-01",
+    "title": "At most 3 records a day are taken offline automatically",
+    "text": "From 2026-12-01, when removal issues report exposure of personal data, at most 3 records are taken offline automatically on one day (Japan time), counted over every request, whoever sends it, from the commits of main that the automatic step made that day. A request beyond that is not taken offline automatically: it gets the label needs a person and a fixed comment, and the operator reads it promptly. This narrows an automatic remedy, so it is announced on the top page at least 14 days ahead. Since its publication on 2026-11-15, a removal issue that has no acknowledgement because the automatic step did not run for it is taken up by the daily step, as if it had just been opened; this narrows nothing and takes effect on publication.",
+    "ja": "2026-12-01 から、個人情報の露出を報告する削除の求めで自動で公開から外す記録は、だれの求めかによらず数えて、一日（日本時間）に 3 件までです。それを超える求めは自動では外さず、ラベル needs a person と決まった文のコメントを付け、運営者がすぐに読みます。2026-11-15 の公開から、自動の手順が動かず受け取ったことの知らせが付いていない削除の issue は、毎日の手順が拾い上げます。"
+  },
+  {
+    "date": "2026-11-15",
     "policies": ["submission", "privacy", "moderation"],
     "title": "The checked intake closes no issue, reads nothing from GitHub, and names no researcher",
     "text": "Since its publication on 2026-11-15, the checked intake that takes effect on 2026-12-01 never closes or locks an issue: a claim that fails gets a label (not verified, or not listed at the end of 30 days) and a fixed comment, and a person reads every issue, because no list of words can tell every request that the law requires the operator to receive from a submission or a report of an error. The place rule reads only the country codes of the public addresses and of the current employments and educations in the ORCID record, never a nationality, and no longer the location field of the GitHub profile, whose free text matched places it did not mean. A vouching found untrue is no longer relied on and the listing is reviewed, after the researcher is told privately and heard; no researcher is barred from vouching or named, and Sophaxis keeps no list of them. The top page in Japanese lists each announced change with its day. These changes widen what authors and researchers can do and narrow nothing, so they take effect on publication."

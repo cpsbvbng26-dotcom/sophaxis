@@ -1,22 +1,26 @@
 name: record
 # When the repository owner adds the label `record` to a pull request that a watch proposed (statutes/record),
 # tools/record.js merges it into main, runs the checks on the merged result, and pushes only if they pass.
+# It merges only the commit that the label was put on: if the branch has moved since, nothing is merged (2026-11-15).
 on:
   pull_request:
     types: [labeled]
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-# One change to main at a time, with the removal workflow.
-concurrency:
-  group: removal
-  cancel-in-progress: false
+  contents: read
 jobs:
   record:
     if: github.event.label.name == 'record' && github.event.sender.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'statutes/record'
     name: Record what the watch proposed
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    # One change to main at a time, with the removal workflow. The concurrency is on this job, and a skipped job gets a group of its own (2026-11-15).
+    concurrency:
+      group: ${{ (github.event.label.name == 'record' && github.event.sender.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'statutes/record') && 'removal' || format('record-skipped-{0}', github.run_id) }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -25,7 +29,7 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      # The number and the branch reach the script through the environment; the title is read from the event file (GITHUB_EVENT_PATH), since the run's log prints the environment.
+      # The number and the branch reach the script through the environment; the title and the commit the label was put on are read from the event file (GITHUB_EVENT_PATH), since the run's log prints the environment.
       - run: node tools/record.js
         env:
           PR: ${{ github.event.pull_request.number }}

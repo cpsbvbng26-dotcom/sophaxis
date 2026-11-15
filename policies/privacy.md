@@ -224,6 +224,7 @@ It never closes or locks any other issue either, and a person reads every one.
 No decision with legal or similarly significant effects on a person is made solely by automated means.
 The language models that help the review make no decision; every decision on a submission is taken by a person, as the Moderation Policy sets out.
 One step acts before the operator decides: when a removal issue reports exposure of personal data, it takes the record page (its title, authors, abstract and PDF copy) offline. It protects the person concerned, and is undone if the request is not upheld.
+From 2026-12-01, this step takes at most 3 records offline on one day, as the [Takedown Policy](./takedown.md) sets out.
 Every automatic step is listed on the page [What runs by itself](../automation.md).
 
 ## Your choices

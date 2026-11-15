@@ -45,7 +45,7 @@ From 2026-11-22 Sophaxis does not list work by an author who lives in the Europe
 
 ### Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)
 
-The operator writes nothing about a person beyond the record. Material in a listed work is the authors' responsibility, and exposure of personal data is taken offline at once.
+The operator writes nothing about a person beyond the record. Material in a listed work is the authors' responsibility, and exposure of personal data is taken offline at once (from 2026-12-01, automatically for at most 3 records a day; beyond that, once the operator has read the request).
 
 ### Liability of providers and disclosure of senders (Japan's Act on providers of specified telecommunications services)
 

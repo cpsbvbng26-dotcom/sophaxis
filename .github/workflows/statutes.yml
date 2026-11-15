@@ -5,6 +5,8 @@ name: statutes
 # A change is proposed as a pull request from statutes/record, with the difference of each text; the operator records it
 # by the label `record` (record.yml). A failed fetch opens an issue, which closes when everything is read again.
 # On a pull request it only prints.
+# Two jobs (2026-11-15): the job of a pull request holds only the right to read, gets no token and writes nothing; only
+# the job of the schedule and of a run by hand may write, and a pull request never starts it.
 on:
   schedule:
     - cron: '37 4 * * 1'
@@ -12,13 +14,37 @@ on:
   pull_request:
     paths: ['tools/statutes.js', 'verification/statutes.json', '.github/workflows/statutes.yml']
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+  contents: read
 jobs:
+  compare:
+    if: github.event_name == 'pull_request'
+    name: The texts the legal review relies on, compared only
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: node tools/statutes.js
   statutes:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     name: The texts the legal review relies on
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # One watch at a time: it replaces the branch statutes/record (push -f), so two runs never collide (2026-11-15).
+    concurrency:
+      group: statutes
+      cancel-in-progress: false
+    # The proposal is pushed to statutes/record, and the pull request or the issue is written.
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0

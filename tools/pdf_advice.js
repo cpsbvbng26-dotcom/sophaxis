@@ -248,7 +248,8 @@ ${rows.map(([label, flag, detail]) => `| ${flag ? '**check**' : 'ok'} | ${label}
 
 /* Reads the text (cut at form feeds) and the number of images of a PDF with poppler-utils. Throws if they are missing. */
 function readPdf(file) {
-  const opts = { encoding: 'utf8', timeout: 60000, maxBuffer: 64 * 1024 * 1024 };
+  /* poppler reads a PDF that someone else made: it gets no token and nothing else of the environment (2026-11-15). */
+  const opts = { encoding: 'utf8', timeout: 60000, maxBuffer: 64 * 1024 * 1024, env: { PATH: process.env.PATH || '/usr/bin:/bin', LANG: 'C.UTF-8' } };
   const text = execFileSync('pdftotext', ['-enc', 'UTF-8', '-l', String(PAGES), file, '-'], opts);
   const pages = text.split('\f');
   if (pages.length > 1 && !pages[pages.length - 1].trim()) pages.pop();

@@ -3,6 +3,9 @@ name: live
 # After a push to main it waits up to ten minutes for the deployment; once a day it checks again,
 # because a push made by a workflow starts no other workflow. A difference that remains opens an issue,
 # which closes by itself when the site matches.
+# Once a day too, the heartbeat (tools/heartbeat.js, 2026-11-15) reads whether the daily check across the repositories of
+# cpsbvbng26-dotcom (its ecosystem.yml), which watches every scheduled workflow, has itself succeeded within two days;
+# if not, it opens or updates one issue here, in fixed words and counts, and closes it when the check runs again.
 on:
   push:
     branches: [main]
@@ -12,19 +15,39 @@ on:
 permissions:
   contents: read
   issues: write
-concurrency:
-  group: live
-  cancel-in-progress: true
 jobs:
   live:
     name: The live site serves main
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # A newer run cancels an older comparison; the heartbeat below has no group, so a push never cancels it (2026-11-15).
+    concurrency:
+      group: live
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       - run: node tools/live.js
         env:
           WAIT: ${{ github.event_name == 'push' && '600' || '0' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  heartbeat:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    name: The daily check across the repositories still runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: node tools/heartbeat.js --test
+      - run: node tools/heartbeat.js
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

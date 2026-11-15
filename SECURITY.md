@@ -26,7 +26,7 @@ The address is the one on the operator's [ORCID record](https://orcid.org/0009-0
 What was found, and how to reproduce it, makes the fix quicker.
 
 An exposed secret key or personal contact detail is reported the same way.
-Exposed personal data is taken offline at once, before anything is decided, while GitHub Actions runs, as the [Takedown Policy](policies/takedown.md) says. When it does not run, the operator takes it offline by hand.
+Exposed personal data is taken offline at once, before anything is decided, while GitHub Actions runs, as the [Takedown Policy](policies/takedown.md) says. When it does not run, the operator takes it offline by hand. From 2026-12-01, at most 3 records are taken offline automatically on one day (Japan time); beyond that, the request gets the label `needs a person`, and the operator reads it promptly.
 
 The aim is to answer within 7 days.
 There is no bounty.

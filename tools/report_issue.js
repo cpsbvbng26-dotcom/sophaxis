@@ -37,6 +37,15 @@ The year in review goes beside the counts, in \`data/reports/${year}.md\`, by th
 - \`## Advisers and moderators\`: who joined or left.
 - \`## Next year\`: what the operator intends, as an intention and not a promise.
 `;
+  /* One issue a year: an issue of this script (its MARK) for the year, open or closed, is not opened again (2026-11-15). */
+  const seen = [];
+  for (let page = 1; ; page++) {
+    const list = await github('GET', '/issues?state=all&per_page=100&page=' + page);
+    if (!Array.isArray(list)) throw new Error('GET /issues: not a list');
+    seen.push(...list);
+    if (list.length < 100) break;
+  }
+  if (seen.some((i) => !i.pull_request && String(i.body || '').startsWith(MARK) && String(i.body).includes('The decisions of ' + year + ','))) { console.log('already opened'); return; }
   await github('POST', '/issues', { title: 'Decisions of ' + year + ': record them', body });
   console.log(json);
 }

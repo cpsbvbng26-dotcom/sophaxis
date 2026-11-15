@@ -294,7 +294,7 @@ async function main() {
     }
   } catch (e) { console.error(e.message); person = null; }
   const result = check({ form, login, record, person, works, desc });
-  const d = result.ok ? draft(record, form, desc, n, new Date().toISOString().slice(0, 10)) : null;
+  const d = result.ok ? draft(record, form, desc, n, new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10)) : null;
   const body = comment(result, d);
   const mine = ((await I.github('GET', '/issues/' + n + '/comments?per_page=100')) || []).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await I.github('PATCH', '/issues/comments/' + mine.id, { body });

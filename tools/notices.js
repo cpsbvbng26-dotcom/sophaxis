@@ -75,7 +75,7 @@ function newNotices(p, found) {
 }
 
 async function lookUpNotices(doi) {
-  const r = await request('https://api.crossref.org/works?rows=100&filter=updates:' + encodeURIComponent(bare(doi)), { headers: { Accept: 'application/json' } });
+  const r = await request('https://api.crossref.org/works?rows=100&filter=updates:' + encodeURIComponent(bare(doi)), { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(60000) });
   if (!r.ok) throw new Error('Crossref notices for ' + doi + ': HTTP ' + r.status);
   return noticesFrom(await r.json(), doi);
 }

@@ -122,7 +122,7 @@ async function main() {
   const acting = ['schedule', 'workflow_dispatch'].includes(process.env.GITHUB_EVENT_NAME) && process.env.GITHUB_TOKEN;
   if (acting) {
     const texts = fs.existsSync(TEXTS_FILE) ? JSON.parse(fs.readFileSync(TEXTS_FILE, 'utf8')) : {};
-    const p = proposal(results, CONF, texts, new Date().toISOString().slice(0, 10));
+    const p = proposal(results, CONF, texts, new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10));
     if (p) await propose(p);
     await report(odd.filter((r) => r.state === 'missing' || r.state === 'failed'));
   }
@@ -197,7 +197,7 @@ function withChangelog(log, today, line) {
 const git = (...args) => require('child_process').execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' });
 
 async function propose(p) {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
   git('config', 'user.name', 'github-actions[bot]');
   git('config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com');
   git('checkout', '-B', BRANCH);
@@ -226,9 +226,20 @@ async function propose(p) {
     if (!/HTTP 403/.test(e.message)) throw e;
     const link = process.env.GITHUB_SERVER_URL + '/' + process.env.GITHUB_REPOSITORY + '/compare/main...' + BRANCH + '?expand=1';
     const text = PROPOSAL + '\n' + T.openPr.replace('{link}', link) + '\n\n' + body;
-    const issue = ((await github('GET', '/issues?state=open&per_page=50')) || []).find((i) => !i.pull_request && (i.body || '').startsWith(PROPOSAL));
+    const issue = (await allPages(github, '/issues?state=open')).find((i) => !i.pull_request && (i.body || '').startsWith(PROPOSAL));
     if (issue) await github('PATCH', '/issues/' + issue.number, { body: text });
     else await github('POST', '/issues', { title: p.changed ? T.prTitle : T.seedTitle, body: text, labels: CONF.labels || [] });
+  }
+}
+
+/* Every page of a list on GitHub, to the end; an answer that is not a list stops the run, never read as an empty list (2026-11-15). */
+async function allPages(gh, p) {
+  const out = [];
+  for (let page = 1; ; page++) {
+    const list = await gh('GET', p + (p.includes('?') ? '&' : '?') + 'per_page=100&page=' + page);
+    if (!Array.isArray(list)) throw new Error('GET ' + p.split('?')[0] + ': not a list');
+    out.push(...list);
+    if (list.length < 100) return out;
   }
 }
 
@@ -242,8 +253,8 @@ async function github(method, p, body) {
 }
 
 async function report(odd) {
-  const open = ((await github('GET', '/issues?state=open&per_page=50')) || []).find((i) => (i.body || '').startsWith(MARK));
-  const when = new Date().toISOString().slice(0, 10);
+  const open = (await allPages(github, '/issues?state=open')).find((i) => !i.pull_request && (i.body || '').startsWith(MARK));
+  const when = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
   if (odd.length) {
     const body = MARK + '\n' + T.issueHead.replace('{when}', when) + '\n\n'
       + odd.map((r) => '- ' + T.state[r.state] + ' ' + r.label + (r.value ? ' `' + r.value + '`' : '') + (r.note ? ' (' + r.note + ')' : '')).join('\n')
@@ -256,6 +267,6 @@ async function report(odd) {
   }
 }
 
-module.exports = { diff, sentences, proposal, withChangelog, BRANCH, PROPOSAL };
+module.exports = { diff, sentences, proposal, withChangelog, allPages, BRANCH, PROPOSAL };
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

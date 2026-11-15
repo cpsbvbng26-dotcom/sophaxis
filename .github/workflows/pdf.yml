@@ -1,6 +1,9 @@
 name: pdf
 # Copy the PDFs of a listed record from its repository, on a branch of its own.
 # The branch is reviewed and merged through a pull request like any other change.
+# Two jobs (2026-11-15): the job that fetches and reads the PDF from outside holds only the right to read, builds the site and
+# runs the checks, and hands over its changes as a patch; the job that pushes reads no PDF, takes only changes under data/ and
+# site/, commits them and pushes the branch, replacing it if a run before left it. One run per record at a time.
 on:
   workflow_dispatch:
     inputs:
@@ -14,16 +17,23 @@ on:
         description: With "from" — the version number that the attached PDF is
         required: false
 permissions:
-  contents: write
+  contents: read
 jobs:
-  pdf:
-    name: Copy the PDFs of one record
+  fetch:
+    name: Copy the PDFs of one record, and check them
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    concurrency:
+      group: pdf-${{ inputs.id }}
+      cancel-in-progress: false
     steps:
       # The checks read the git history: the ids, the first commit and the changelog.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -33,19 +43,47 @@ jobs:
       - run: |
           if [ -n "$FROM" ]; then node tools/fetch_pdf.js "$ID" --from "$FROM" --version "$VERSION"; else node tools/fetch_pdf.js "$ID"; fi
           node build.js && node verification/check.js
+          git add -A data site
+          git diff --cached --binary > change.patch
         env:
           ID: ${{ inputs.id }}
           FROM: ${{ inputs.from }}
           VERSION: ${{ inputs.version }}
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: pdf-change
+          path: change.patch
+          retention-days: 7
+          if-no-files-found: error
+  push:
+    needs: fetch
+    name: Push the copies to a branch of their own
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: pdf-push-${{ inputs.id }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: pdf-change
+      # Only changes under data/ and site/ are taken; the patch is applied, never run, and no PDF is read here.
       - run: |
+          [ -s change.patch ] || { echo 'nothing new to copy'; exit 0; }
+          if git apply --numstat change.patch | awk '{print $3}' | grep -vE '^(data|site)/'; then echo 'the patch changes files outside data/ and site/'; exit 1; fi
+          git apply --index change.patch
+          rm change.patch
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git checkout -b "claude/pdf-$ID"
+          git reset -q
           git add data
-          git diff --cached --quiet && { echo 'nothing new to copy'; exit 0; }
           git commit -q -m "$ID の PDF を預け先から写す（変更なし）" -m "Sophaxis-Action: pdf $ID"
           git add site
           git commit -q -m "サイトを生成し直す（生成物、$ID の PDF）" -m "Sophaxis-Action: pdf $ID"
-          git push origin "claude/pdf-$ID"
+          git push -f origin "claude/pdf-$ID"
         env:
           ID: ${{ inputs.id }}

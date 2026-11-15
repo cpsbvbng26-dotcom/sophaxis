@@ -11,7 +11,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 投稿や訂正を受ける自動の手順はなく、撤回や削除の求めについて判断する自動の手順もありません。判断はすべて運営者が下します。2026-12-01 からは、[投稿の規程](./policies/submission.ja.md#突き合わせの受付)のとおり、突き合わせの受付が、申し立てが確かめに通らない投稿と誤りの知らせを退けるだけです。
 - この頁の手順のうち GitHub Actions として動くものは、GitHub に頼っています。GitHub の規約は、GitHub が GitHub Actions の利用を制限することを認めています。Actions が止まることもあります。動かないあいだは、どの手順もひとりでには動きません。運営者ができしだい手で行い、どれもすぐには行われません。
-- 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
+- 運営者の判断の前に動く手順が一つだけあります。削除依頼の issue が個人情報の露出を報告したとき、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）をすぐに下げる手順です。下げるとは、その変更をすぐに `main` に push することです。公開中のサイトは、Vercel がその push を配ったときに変わります。変わったかどうかは、公開中のサイトと `main` を比べる毎日の確かめが示します。本人を守るためのもので、依頼についての判断ではありません。依頼が認められなければ元に戻します。
 - 言語モデルを使う手順はありません。どの手順も通常のコードです。
 - issue に鍵を掛ける手順はありません（2026-11-15）。運営者は、[モデレーションの規程](./policies/moderation.ja.md#issue-に鍵を掛けること)のとおり、手で鍵を掛けることがあります。
 - 運営者は、投稿を手で言語モデルに渡します。2026-11-15 からは、`node tools/llm.js` が、issue に書いたすべてのアカウントが同意していると確かめた後だけです。[モデレーションの規程](./policies/moderation.ja.md#判断)のとおりです。このスクリプトは issue とそのコメントを読むだけで、言語モデルには何も送りません。
@@ -61,6 +61,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 読むもの：記録と、リポジトリの issue。
 - 書くもの：受け取ったことの知らせ。運営者が答える目安の日を添えます。著者の投稿の issue での、著者への知らせ。
 - issue が個人情報の露出を報告しているときは、[削除の規程](./policies/takedown.ja.md)のとおり、GitHub Actions が動いている限り、記録の頁（題・著者・要旨・PDF の写し）もすぐに下げます。GitHub Actions が動かないときは、運営者が手で下げ、すぐには下がりません。
+- 2026-12-01 から、自動で公開から外す記録は、だれの求めかによらず数えて、一日（日本時間）に 3 件までです。それを超える求めは自動では外さず、ラベル `needs a person` と決まった文のコメントを付け、運営者がすぐに読みます。件数は、その日に自動の手順が `main` に加えたコミットから数えます。
 - 2026-12-01 からは、下げる前に、その issue を開いたアカウントの以前の削除依頼の issue の公開のラベルを読みます。下げる求めのうち二つを人が根拠がないと判断し、そのことをそのアカウントに知らせているときは、何も下げません。issue に `needs a person` のラベルを付け、人が速やかに読みます（[モデレーションの規程](./policies/moderation.ja.md#自動で下げること)）。アカウントの一覧は持ちません。
 - 運営者に残すこと：判断。
 - コード：[tools/removal.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/removal.js)。[removal.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/removal.yml) が動かします。
@@ -78,12 +79,14 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：開いている削除の求めと、確かめられた撤回。
 - 書くもの：運営者が答えていないものそれぞれに、催促を一つ。7 日が尽きる 2 日前から書きます。
+- 自動の手順がその issue で動かず、受け取ったことの知らせが付いていない削除の issue は、毎日の手順が、開かれたばかりのものとして拾い上げます。一日に 3 件までの決まりは、ここにも掛かります。
+- どの投稿に `not listed` のラベルを付けるよりも前に、どの確かめもまだ `verified` か `unverified` のラベルを付けていない開いた投稿を、issue が直されたばかりのものとして確かめます。
 - 2026-12-01 から、issue を開いてから 30 日たっても確かめられていない投稿に、[投稿の規程](./policies/submission.ja.md#突き合わせの受付)のとおり、`not listed` のラベルと決まった文のコメントを付け、人が読むよう開いたままにします。`needs a person` のラベルのある issue と、題・本文・人のコメントのどれかが求めと読める issue は飛ばします。どの issue も閉じず、鍵も掛けません。削除・撤回・出版版・訂正の issue には何もしません。コード：[tools/intake.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/intake.js) に `--deadline` を付けて、[intake.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/intake.yml) が動かします。
 - 削除の後始末：GitHub が消えたと答えた issue に、印を付けます。Wayback Machine が記録の頁とその PDF の写しの保存を一つも挙げなくなったら、Internet Archive への依頼に印を付けます。すべてに印が付けば、後始末の issue を閉じます。残っているものは、週に一度知らせます。
 
 ## 月に一度、1 日の日本時間 09:17
 
-- Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を Vercel の無料の枠の 1 日 100 回と、PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
+- Sophaxis が無料のサービスに収まっているかを測ります。直近 30 日でいちばん多かった日の配信の数を、`main` のコミットの状態「Vercel」から数え、Vercel の無料の枠の 1 日 100 回と比べます（`main` にコミットがあるのに、どれにもその状態が無ければ、実行は落ちます）。PDF の写しを `site.json` の上限と、リポジトリの大きさを GitHub が勧める 1 GB と比べます。表を実行のまとめに書き、どれかが 80 パーセントに達したときだけ issue を書きます。Vercel の転送量と関数の使用は測りません。運営者の Vercel のアカウントでだけ見られます。
 - 2026-11-13 までは、X の公式アカウントのための投稿文を載せた issue も書いていました。いまは書きません。GitHub の規約は、GitHub の実行環境での GitHub Actions を、ソフトウェアのプロジェクトの制作・検査・配備・公開のためにだけ認めており、投稿文はそのどれにも当たらないからです。X へは何も自動で投稿しません。
 - コード：[tools/limits.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/limits.js)。[monthly.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/monthly.yml) が動かします。
 
@@ -113,8 +116,9 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - Vercel は、リポジトリの `site/` にあるファイルを配信します。そのファイルは、`build.js` が記録から組み立てます。OAI-PMH の口は、同じ記録を読む Vercel 上の小さな関数です。
 - 新しい頁が公開されると、IndexNow を受け付ける検索エンジンに、新しい記録の頁と PDF の写し、変わったもの、消えたものを知らせます。新しいものと変わったものは、著者が同意していれば Internet Archive に保存します。消えた頁は保存しません。
 - Vercel が保つ以前の版のサイトは、公開していません。
-- main への push のたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。10 分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
+- 人が main に push するたびと、一日に一度、日本時間の 11:41 に、`site/` のすべてのファイルを公開中のサイトから取り、main とバイトごとに比べます。記録を下げるときのようにワークフローが push したときは、ほかのワークフローが動かないので、比べるのは次の日です。10 分間たっても違いが残れば、issue を開きます。配信が失敗したときや、無料のプランの一日の上限で断られたときです。その issue は、サイトが一致すればひとりでに閉じます。
 - コード：[tools/live.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/live.js)。[live.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/live.yml) が動かします。
+- 同じワークフローで一日に一度、見張り（heartbeat）が、cpsbvbng26-dotcom のリポジトリ横断の毎日の検査が2 日のうちに成功したかを読みます。その検査は、Sophaxis のすべての定期の仕事を見ています。成功していなければ、決まった語と数だけの issue を一つ開くか直します。その検査がまた成功すれば、ひとりでに閉じます。コード：[tools/heartbeat.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/heartbeat.js)。
 - `robots.txt` は、サイトのほかの部分と一緒に組み立てます。削除した記録と、著者が保存に同意していない記録を集めないよう、Internet Archive のクローラーに求めます。
 - コード：[tools/indexnow.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/indexnow.js)。[indexnow.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/indexnow.yml) が動かし、削除の手順の push のあとにも動きます。
 
@@ -122,6 +126,7 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 
 - 読むもの：載っているすべての版の DOI のメタデータ。それぞれについて Crossref が記録している通知。出版された版のメタデータ。OpenAlex がそれぞれの作品をどう収めているか。リポジトリにある PDF の写しのそれぞれ。記録した SHA-256 と照らし、投稿のときと同じ助言のために読みます。同じ時刻に別のワークフローで、[法的な検討](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/legal-review.md)が拠る日本の法令の条文と GitHub の規約を、e-Gov の法令 API と GitHub から読みます。Vercel と Apple のプライバシーの方針も、それぞれのサイトから読みます。
 - 書くもの：DOI が解決しなくなったとき、ライセンスが変わったとき、PDF の写しが記録した SHA-256 と違うか、記録と違うライセンスを印刷しているとき、記録に無い通知を Crossref が記録したとき、新しい版が現れたとき、出版された版があるかもしれないときは、issue を書きます。法令の条文、GitHub の規約、Vercel か Apple のプライバシーの方針の最終更新日が、`verification/statutes.json` に記録した値と違うときは、プルリクエストを書きます。そこには新しい値と文を載せ、条文なら文の違いも載せます。リポジトリがワークフローにプルリクエストを開かせないときは、それを開くリンクを添えた issue にします。そのどれかを読めないときも、issue を書きます。ほかに、実行のまとめを書きます。著者が同意したすべての頁と PDF の写しを、Internet Archive に保存します。
+- 確かめられなかったもの（429 か 5xx の答え、時間切れ、読めない答え）と、Internet Archive への保存のうち成功しなかったものは、同じ issue に挙げます。その issue は開いたままになり、実行は落ちます。確かめられなかったものがあるあいだは、問題が無かったとは書きません。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
 - コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
 

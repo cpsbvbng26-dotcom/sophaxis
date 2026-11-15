@@ -105,11 +105,8 @@ To link your GitHub account, add \`https://github.com/<your username>\` under "W
   return out;
 }
 
-async function main() {
-  const { number: n, author: login, body: text } = I.issueEvent();
-  const form = parse(text);
-  const file = path.join(ROOT, 'data', 'papers', form.id + '.json');
-  const record = form.id && fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
+/* The checks, with the ORCID record read now. Used at intake and again just before a removal is carried out (2026-11-15). */
+async function verify(form, login, record) {
   let person = null, works = null;
   try {
     if (record && orcidOk(form.orcid)) {
@@ -119,8 +116,16 @@ async function main() {
       works = w ? I.orcidDois(w) : new Set();
     }
   } catch (e) { console.error(e.message); person = null; }
-  const result = check({ form, login, record, person, works });
-  const d = result.ok && form.mode !== 'remove' ? draft(record, form, new Date().toISOString().slice(0, 10)) : null;
+  return check({ form, login, record, person, works });
+}
+
+async function main() {
+  const { number: n, author: login, body: text } = I.issueEvent();
+  const form = parse(text);
+  const file = path.join(ROOT, 'data', 'papers', form.id + '.json');
+  const record = form.id && fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
+  const result = await verify(form, login, record);
+  const d = result.ok && form.mode !== 'remove' ? draft(record, form, new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10)) : null;
   const body = comment(result, d, form);
   const mine = ((await I.github('GET', '/issues/' + n + '/comments?per_page=100')) || []).find((c) => c.user.type === 'Bot' && c.body.startsWith(MARK));
   if (mine) await I.github('PATCH', '/issues/comments/' + mine.id, { body });
@@ -131,6 +136,6 @@ async function main() {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { parse, check, draft, comment, MARK, FIELDS, MODES };
+module.exports = { parse, check, verify, draft, comment, MARK, FIELDS, MODES };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
