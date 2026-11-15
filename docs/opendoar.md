@@ -1,6 +1,6 @@
 # Draft: the application to OpenDOAR
 
-Draft, not sent. Prepared on 2026-11-11 for the day OpenDOAR takes new submissions again; Jisc said it would give an update in January 2027.
+Draft, not sent. Prepared on 2026-11-11 and brought up to date on 2026-11-15, for the day OpenDOAR takes new submissions again; Jisc said it would give an update in January 2027.
 
 This page adds no rule; the [policies](../policy.md) govern. Whether Sophaxis is listed is OpenDOAR's decision.
 
@@ -35,8 +35,8 @@ Sophaxis is a free overlay preprint server for philosophy, mathematics, logic, t
 
 - Full texts: an unmodified PDF copy of the deposited version, where the repository allows it; otherwise the record links the repository. Every listed work is under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, and its copy keeps that licence. [Licence Policy](https://sophaxis.vercel.app/policies/licences.html), [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html).
 - Metadata: the record data in the OAI-PMH interface, `papers.json` and `feed.xml` may be reused freely. The abstracts keep the licence of each work.
-- Submission: only an author of a work can submit it, by a public issue; an automatic check confirms the DOI, the licence and the authorship through ORCID, and the operator decides. [Submission Policy](https://sophaxis.vercel.app/policies/submission.html), [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html).
-- Where it is offered: Sophaxis does not list work by an author who lives in, or stays in, a place that the Submission Policy names.
+- Submission: only an author of a work can submit it, by a public issue. An automatic check confirms the DOI and the licence, and confirms each author whose ORCID iD is in the DOI metadata through a GitHub account that the author's ORCID record links; each co-author confirms their consent from such an account. A first submission also needs a researcher who vouches for it. The operator decides. From 2026-12-01, authors must be 16 or older. [Submission Policy](https://sophaxis.vercel.app/policies/submission.html), [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html).
+- Where it is offered: Sophaxis does not list work by an author in a place that the Submission Policy names, or, from 2026-11-29, where the operator judges that offering it would not conform to the law of that place. From 2026-12-01 this is checked against the countries in the authors' public ORCID records; nationality is never read.
 - Preservation: a withdrawn record stays, marked as withdrawn; a removed record keeps its Sophaxis id. The code and the records are archived at Zenodo with each release. [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html), [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html).
 - Privacy: [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html).
 - Fees: none.
