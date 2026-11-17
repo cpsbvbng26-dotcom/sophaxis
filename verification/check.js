@@ -6674,7 +6674,9 @@ console.log('\n130. The top pages show the later of the day the records last cha
   const withSite = (fn) => { const x = JSON.parse(real['site.json']); fn(x); return Object.assign({}, real, { 'site.json': JSON.stringify(x) }); };
   const breaks = [
     ['a day of effect 13 days after it was first held', real, Object.assign({}, facts, { first: Object.assign({}, facts.first, { [firstDay]: before(firstDay, 13) }) })],
-    ['a new day of effect only 5 days ahead', withSite((x) => { x.termsNotice.text += ' From ' + before(today, -5) + ', a trial change.'; }), facts],
+    /* 2026-11-17: the day 5 days ahead was 2026-11-22, a day the notice already held since an earlier commit, so the trial day was
+     * counted from that commit and this break did not fail. The trial day is new: it is counted from today, whatever the notice holds. */
+    ['a new day of effect only 5 days ahead', withSite((x) => { x.termsNotice.text += ' From ' + before(today, -5) + ', a trial change.'; }), Object.assign({}, facts, { first: Object.fromEntries(Object.entries(facts.first).filter(([d]) => d !== before(today, -5))) })],
     ['site.json without the Japanese day', withSite((x) => { delete x.topUpdated.ja; }), facts],
     ['the Japanese top page back on the records alone', w('build.js', "const last = lastUpdated(all, topUpdated('ja'));", 'const last = lastUpdated(all);'), facts],
     ['a shallow history', real, Object.assign({}, facts, { shallow: true })],
