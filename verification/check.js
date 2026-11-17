@@ -1410,6 +1410,30 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && rd.includes('編集できるのは、編集者が承認したアカウントだけです。') && rd.includes('この掲載は Sophaxis の審査ではありません。')
       && !en.concat(ja).some((r) => r.includes('Open Access Directory'))
       && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
+    /* 2026-11-17. The table names the day its state is from, the same in both languages. A row read on another day gives that
+     * day, earlier than the table's and not before its application, the same in both languages. The table's day is the day
+     * DOAPR's list was read, and the rows' days are the days the ASAPbio list and the CORE search were read, as the paragraphs
+     * under "Operator and contact" say; so the old day put back, or one day changed in one place, fails. */
+    const asOfEn = /the state is as of (2026-\d\d-\d\d), or as of the day a row gives\./.exec(rd);
+    const asOfJa = /状態は (2026-\d\d-\d\d) の時点のものです。行に日付を書いたものは、その日の時点のものです。/.exec(rd);
+    const asOf = asOfEn ? asOfEn[1] : null;
+    const appliedOn = (r) => r.split(' | ')[2];
+    const dayEn = en.map((r) => (/; not (?:yet )?listed as of (2026-\d\d-\d\d) \|$/.exec(r) || [])[1] || null);
+    const dayJa = ja.map((r) => (/。(2026-\d\d-\d\d) の時点で(?:まだ)?載っていない \|$/.exec(r) || [])[1] || null);
+    const iA = names.indexOf('ASAPbio'), iC = names.indexOf('CORE');
+    ok('the table of registrations under review gives the day its state is from (' + asOf + '), the same in both languages and the day DOAPR\'s list was read; a row read on an earlier day gives that day in both languages, not before its application, as the paragraph on it says',
+      asOf !== null && asOfJa !== null && asOfJa[1] === asOf
+      && en.length === names.length && ja.length === names.length
+      && JSON.stringify(dayEn) === JSON.stringify(dayJa)
+      && dayEn.every((d, i) => appliedOn(en[i]) <= asOf && appliedOn(ja[i]) === appliedOn(en[i]) && (d === null || (d >= appliedOn(en[i]) && d < asOf)))
+      && dayEn[iA] !== null && dayEn[iC] !== null
+      && rd.includes('On ' + asOf + " (Japan time) Claude read DOAPR's list of repositories, <https://doapr.coar-repositories.org/repositories/>, and Sophaxis was not on it; the application is still under review.")
+      && rd.includes(asOf + '（日本時間）に、Claude が DOAPR のリポジトリの一覧（<https://doapr.coar-repositories.org/repositories/>）を読みました。Sophaxis は載っていませんでした。申請は審査中のままです。')
+      && rd.includes('A copy of the directory, <https://asapbio.org/preprint-servers>, that Claude read on ' + dayEn[iA] + ' at 07:40 (Japan time) did not include Sophaxis. Later reads were stopped by the site\'s Cloudflare check, which Claude did not bypass.')
+      && rd.includes(dayEn[iA] + ' の 07:40（日本時間）に Claude が読んだ一覧（<https://asapbio.org/preprint-servers>）には、Sophaxis は載っていませんでした。そのあとの読み取りは、サイトの Cloudflare の確認で止まりました。Claude は、この確認を迂回していません。')
+      && rd.includes('On ' + dayEn[iC] + ' at 21:16 (Japan time) the operator searched CORE\'s data providers for "Sophaxis" in a browser, and found no match.')
+      && rd.includes(dayEn[iC] + ' の 21:16（日本時間）に、運営者がブラウザで CORE のデータ提供者を「Sophaxis」で検索しました。一致するものはありませんでした。'),
+      asOf + ' / rows ' + dayEn.join(', ') + ' / ' + dayJa.join(', '));
   }
   /* 2026-11-12 (second pass): ROAR's own pages (fetched as roar-help and roar-information) say that a deposit is put in an
    * "editorial buffer" until "approved by an editor", and do not say what is checked; so the listing is stated with its day,
