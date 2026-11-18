@@ -2191,9 +2191,9 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml', 'checked-intake.yml': 'checked-intake.yml' };
+  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml', 'checked-intake.yml': 'checked-intake.yml', 'labels.yml': 'labels.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml', 'checked-intake.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml', 'checked-intake.yml', 'labels.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
@@ -6026,7 +6026,7 @@ console.log('\n123. What an eighth, read-only pass found: GitHub\'s terms for Ac
     ['a new workflow without a row', problems(w({ wf: WF.concat(['newsletter.yml']) }))],
     ['a row for a workflow taken away', problems(w({ wf: WF.filter((f) => f !== 'audit.yml') }))],
     ['a row dropped', problems(w({ aud: AUD.replace(/\n\| `\.github\/workflows\/pdf\.yml`[^\n]*/, '') }))],
-    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 14 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 14 です。') }))],
+    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 15 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 15 です。') }))],
     ['a decision without its maker', problems(w({ aud: AUD.replace('ワークフローから呼ばれなくなりました。2026-11-13 に Claude が決めました。', 'ワークフローから呼ばれなくなりました。') }))],
     ['a quotation altered', problems(w({ aud: AUD.replace('or publication of the software project associated', 'or promotion of the software project associated') }))],
     ['the posts for X written again', problems(w({ wfText: Object.assign({}, wfText, { 'monthly.yml': wfText['monthly.yml'] + '\n      - run: node tools/monthly.js\n' }) }))],
@@ -8376,6 +8376,75 @@ console.log('\n139. A form for rights holders (2026-11-18): the name and the sit
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each of ' + breaks.length + ' ways (a form gone, the box required or its sentence changed, a field gone, removal.yml or the ORCID route changed, a section gone or unlinked, a deadline, the built page, the README, the Privacy Policy, the notice of changes, and tools/llm.js passing without the box or counting a comment) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 140 */
+console.log('\n140. The labels of the forms, and the notices from rights holders kept (2026-11-18): every label a form uses exists or is created by labels.yml, which creates "rights" and touches no other; tools/removal.js never empties or closes a notice from a rights holder');
+{
+  /* GitHub adds to an issue only those labels of its form that exist. The labels below were read with GitHub's API on 2026-11-18
+   * and exist; any other label a form uses must be created by .github/workflows/labels.yml, which creates only the new ones. */
+  const EXIST = ['submission', 'removal', 'withdrawal', 'published', 'correction'];
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const TPL = path.join(ROOT, '.github', 'ISSUE_TEMPLATE');
+  const forms = Object.fromEntries(fs.readdirSync(TPL).filter((f) => /\.ya?ml$/.test(f) && f !== 'config.yml').map((f) => ['.github/ISSUE_TEMPLATE/' + f, read(path.join(TPL, f))]));
+  const real = { forms, wf: T('.github/workflows/labels.yml'), removal: T('tools/removal.js'), rights: T('tools/rights.js') };
+  /* Load a tool from the text given; tools/rights.js comes from the text given too, so that breaking it is seen. */
+  const load = (src, rights) => {
+    const m = { exports: {} };
+    const req = (q) => {
+      if (q === './rights.js') { const r = { exports: {} }; new Function('module', 'exports', 'require', String(rights || ''))(r, r.exports, require); return r.exports; }
+      return require(q.startsWith('.') ? path.join(ROOT, 'tools', q) : q);
+    };
+    new Function('module', 'exports', 'require', '__dirname', String(src || '').replace(/^#!.*\n/, ''))(m, m.exports, req, path.join(ROOT, 'tools'));
+    return m.exports;
+  };
+  function problems(x) {
+    const bad = [];
+    const wf = String(x.wf || '');
+    const created = [...wf.matchAll(/gh label create "([^"]+)"/g)].map((m) => m[1]);
+    const used = [...new Set(Object.values(x.forms).flatMap((y) => { try { return JSON.parse((/^labels: (\[.*\])$/m.exec(y) || [, '[]'])[1]); } catch (e) { return ['(unreadable)']; } }))];
+    for (const l of used) if (!EXIST.includes(l) && !created.includes(l)) bad.push('the label ' + l + ' is used by a form, and neither exists nor is created');
+    if (!created.includes('rights')) bad.push('labels.yml does not create rights');
+    for (const l of created) if (EXIST.includes(l)) bad.push('labels.yml touches the existing label ' + l);
+    if (!/^on:\n  push:\n    branches: \[main\]\n    paths: \['\.github\/workflows\/labels\.yml'\]\n  workflow_dispatch:\n/m.test(wf)) bad.push('labels.yml does not run on its own change on main and by hand');
+    if (!/^permissions:\n  issues: write\njobs:\n/m.test(wf)) bad.push('labels.yml holds more than issues: write');
+    if (!/\n    timeout-minutes: \d+\n/.test(wf) || /uses: /.test(wf)) bad.push('labels.yml without a time limit, or with an action');
+    let R = null;
+    try { R = load(x.removal, x.rights); } catch (e) { R = null; }
+    if (!R || !R.namingIssues) return bad.concat(['tools/removal.js does not load']);
+    const ID = '2026.0001';
+    const list = [
+      { number: 1, body: 'The page https://sophaxis.vercel.app/abs/' + ID + '.html is wrong.' },
+      { number: 2, body: '### Which right\n\nCopyright\n\n### Where it is on the site\n\nhttps://sophaxis.vercel.app/abs/' + ID + '.html\n' },
+      { number: 3, body: '### どの権利か\n\n著作権\n\n### サイトのどこにあるか\n\nhttps://sophaxis.vercel.app/abs/' + ID + '.html\n' },
+      { number: 4, labels: [{ name: 'rights' }], body: 'About ' + ID + ', without the form.' },
+      { number: 5, labels: ['removal'], body: ID },
+      { number: 6, body: ID, pull_request: {} },
+    ];
+    const kept = (any) => R.namingIssues(list, ID, any).map((i) => i.number).join();
+    if (kept(false) !== '1' || kept(true) !== '1') bad.push('tools/removal.js empties ' + kept(false) + ' / ' + kept(true) + ', not only the ordinary issue');
+    if (!/require\('\.\/rights\.js'\)/.test(String(x.removal || ''))) bad.push('tools/removal.js does not share the detector');
+    return bad;
+  }
+  const now = problems(real);
+  ok('every label the forms use (' + [...new Set(Object.values(forms).map((y) => (/^labels: (\[.*\])$/m.exec(y) || [])[1]))].join(' ') + ') exists (' + EXIST.join(', ') + ', read on 2026-11-18) or is created by labels.yml, which creates rights and no existing label, on its own change on main and by hand, with issues: write only; and tools/removal.js leaves a notice from a rights holder (by its label, or its English or Japanese form) that names a removed record, while an ordinary issue naming it is still emptied',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (k, a, b) => Object.assign({}, real, { [k]: String(real[k] || '').replace(a, b) });
+  const breaks = [
+    ['labels.yml without rights', w('wf', /gh label create "rights"[^\n]*\n/, '')],
+    ['labels.yml touching an existing label', w('wf', 'gh label create "rights"', 'gh label create "removal" --color b60205 --force\n          gh label create "rights"')],
+    ['a form with a label that neither exists nor is created', Object.assign({}, real, { forms: Object.assign({}, forms, { '.github/ISSUE_TEMPLATE/x.yml': 'labels: ["legal"]\n' }) })],
+    ['labels.yml writing the repository', w('wf', 'permissions:\n  issues: write\n', 'permissions:\n  contents: write\n  issues: write\n')],
+    ['labels.yml not run on main', w('wf', "    paths: ['.github/workflows/labels.yml']\n", '')],
+    ['tools/removal.js emptying a notice', w('removal', ' && !rightsNotice(i));', ');')],
+    ['tools/removal.js keeping every issue', w('removal', ' && !rightsNotice(i));', ' && false);')],
+    ['the Japanese form not recognised', w('rights', "'### どの権利か'", "'### 権利'")],
+    ['the label not recognised', w('rights', "const RIGHTS_LABEL = 'rights';", "const RIGHTS_LABEL = 'notice';")],
+    ['the detector copied into tools/removal.js', w('removal', "const { rightsNotice } = require('./rights.js');", "const rightsNotice = (i) => (i.labels || []).some((l) => (typeof l === 'string' ? l : l.name) === 'rights') || /### (Which right|どの権利か)/.test(i.body || '');")],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (labels.yml without rights, touching an existing label, a form with a label nobody creates, labels.yml writing the repository or not run on main, tools/removal.js emptying a notice or keeping every issue, the Japanese form or the label not recognised, and the detector copied) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 
