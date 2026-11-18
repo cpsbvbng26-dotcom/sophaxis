@@ -165,3 +165,4 @@ The operator reads every notice.
 If the right is confirmed, the operator changes the name, or stops using the material.
 The decision is posted in the issue, or sent by email to a person who wrote by email, and the change is recorded in the public repository.
 If the right is not confirmed, the operator says why in the same way.
+The names and marks of Sophaxis, what was searched, and the steps when a notice comes are under "Names and trademarks" in the [Disclaimer](../disclaimer.md#names-and-trademarks).

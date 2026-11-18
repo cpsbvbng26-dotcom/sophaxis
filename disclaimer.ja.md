@@ -1,6 +1,6 @@
 # 免責事項（日本語訳）
 
-最終更新：2026-11-14。
+最終更新：2026-11-18。
 
 これは英語の [Disclaimer](./disclaimer.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./policies/terms.ja.md)の「日本国外の方へ」の節に定めています。
 
@@ -30,6 +30,97 @@ Sophaxis は、独立した個人のプロジェクトです。
 載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。
 それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。その中には商標もあります。
 それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。[預け先と DOI 登録機関へ](./repositories.ja.md)の頁も見てください。
+
+## 名称と商標
+
+この節は、Sophaxis の名としるし、その使い方、調べた記録、サイトが挙げるほかの者の名、権利者から知らせが来たときの扱いを記します。
+Sophaxis 自身の立場を書いたものです。法的な助言ではなく、弁護士の確認も受けていません。
+2026-11-18 に利用者が求め、Claude が書きました。
+引く日本の法令の条は、e-Gov 法令 API が示す条文を全文で、それを引く項の終わりに引いています。規程がほかの出どころから引く文は、2026-11-12 に取り寄せた文です。
+
+### Sophaxis の名としるし
+
+Sophaxis が使う名としるしは、次の **7** つです。
+どれも、運営者が Claude Code で、Sophaxis のために作りました。
+日付は、それぞれが公開のリポジトリの履歴に初めて現れた日（日本時間）です。
+
+- 名 Sophaxis：2026-10-30。
+- 日本語の読み、ソファクシス：2026-10-30。
+- ロゴ `favicon.svg`：2026-10-30。
+- 正方形の PNG のロゴ `og.png`：2026-10-30。
+- アイコンのロゴ `favicon.ico`・`favicon-192.png`・`apple-touch-icon.png`：2026-10-31。
+- 載っている作品のバッジ `badge.svg`：2026-11-10。
+- 分野の印と各頁の上の帯（`design.js` の数から頁の中に描くもの）：2026-11-14。
+
+X の Sophaxis のアカウントは、名にちなんで @SophaxisX という名です。
+運営者は、これらの名としるしのどれも、日本でもほかの国でも、商標の登録を出願していません。
+これからも出願しません。2026-11-18 に Claude が決めました。名を独り占めしないためです。
+
+### 名の使い方
+
+名は、サイト、その頁、記録、配信を指すために使います。
+Sophaxis は、投稿にも閲覧にも料金を取りません。
+広告を出さず、何も売りません。
+上の「誰が、なぜ Sophaxis を運営するか」のとおり、運営者は無報酬で運営しています。
+商標法第 2 条第 1 項は、商標を使い方で定めます。業として商品を生産し、証明し、または譲渡する者がその商品について使う標章と、業として役務を提供し、または証明する者がその役務について使う標章です。
+ここには事実を記します。Sophaxis の名の使い方が「業として」に当たるかどうかについて、この頁は結論を出しません。
+
+<!-- text: Trademark Act 2 -->
+
+### 調べた記録
+
+2026-11-11（日本時間）に、運営者が、特許庁のデータベースである J-PlatPat と、WIPO Global Brand Database で Sophaxis の名を調べ、その名の商標は見つかりませんでした。[名前・ロゴ・バッジ](./brand.ja.md)の頁が記しています。
+2026-11-17（日本時間）に、運営者が、EUIPO の商標のデータベースで Sophaxis を調べ、結果は **0** 件でした。
+Claude は、その結果を運営者の画面の写しで見ました。
+Claude は、J-PlatPat・WIPO・USPTO を自分では調べていません。
+J-PlatPat の利用規約は機械による利用を禁じているので、Claude は J-PlatPat に問い合わせません。
+USPTO 自身のデータベースと、ほかの国の官庁のデータベースを一つずつ調べた記録はありません。
+登録されずに使われている名と、会社の名は、調べていません。
+読みのソファクシスとロゴは、調べていません。
+調べた結果は、その日にデータベースにあったものだけを示します。
+
+### ほかの者の名
+
+[載っている作品を見つけやすくする](./findable.ja.md)の頁のほかに、サイトは、次の **75** のサービス・製品・組織の名を挙げています：Academia.edu、Adilet、Advance、Anthropic、Apple、arXiv、BBB National Programs、Bing、Bluesky、ChatGPT、Claude、Claude Code、CLOCKSS、COPE、Creative Commons、Crossref、DataCite、DOAJ、DOI、Dropbox、e-Gov、edX、eGazette、Facebook、Fedlex、Figshare、GitHub、GitHub Actions、Google Drive、Google Scholar、Grok、HAL、iCloud、IndexNow、Internet Archive、iTunes、J-PlatPat、JaLC、Jxiv、KC Works、Keepers Registry、Legal Information Institute、LinkedIn、MetaArXiv、OASPA、Open Access Directory、OpenAI、OpenAIRE、OpenAlex、ORCID、OSF、OSF Preprints、PhilArchive、PhilSci-Archive、Portico、Preprints.org、Qeios、Registry of Open Access Repositories、Research Square、ResearchGate、Retraction Watch、SciELO Preprints、ScienceOpen、SocArXiv、SpaceX、SSRN、Vercel、WAME、Wayback Machine、Windows、WIPO Global Brand Database、X、xAI、Zenodo、ZimLII。
+その頁は、著者が自分で作品を足せるサービスの名も挙げています。著者がそれを見つけられるように挙げるだけです。
+これらの名は、それぞれの持ち主に属します。その中には商標もあります。
+Sophaxis は、どの名も、そのサービス・製品・組織そのものを指すためだけに使います。
+上の「提携していないこと」のとおり、提携・後援・推薦の関係を示すものではありません。
+国・公の機関・大学・法令・人・地名・作品の名と、形式や規格の名は、一覧に入れていません。同じように、それを指すためだけに使います。
+一覧は、2026-11-18 に Claude がサイトのすべての頁を読んで作りました。載っている作品の記録から作る頁は除きました。
+
+サイトは、ほかの者のロゴを配りません。
+配る画像は、次のファイルだけです。どれも Sophaxis のために作ったものです。
+
+- `favicon.svg`：ロゴ。
+- `og.png`：正方形の PNG のロゴ。頁を共有したときに示されます。
+- `favicon.ico`・`favicon-192.png`・`apple-touch-icon.png`：アイコンのロゴ。
+- `badge.svg`：載っている作品のバッジ。
+- `card/<id>.png`：記録ごとの共有のカード。`tools/cards.js` が、ロゴと、記録の題・著者・分野で描きます。
+
+分野の印、帯、書架は、頁の中に描くもので、ファイルではありません。
+
+### 登録の表示を付けないこと
+
+サイトは、自分の名としるしに、®・™・「登録商標」・"registered trademark" を付けません。どれも登録していないからです。
+商標法第 74 条第 1 号は、登録商標以外の商標の使用をする場合に、その商標に商標登録表示またはこれと紛らわしい表示を付する行為を禁じています。
+同法第 73 条は、商標登録表示を、その商標が登録商標である旨の表示と定めています。
+
+<!-- text: Trademark Act 73; Trademark Act 74 -->
+
+### 知らせが来たとき
+
+1. 知らせは、[権利者の知らせの様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml)、同じ様式の[英語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml)、または運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールという非公開の道で届きます。
+2. 運営者は、それを読みます。
+3. 決めるまでのあいだ、運営者は、名が出る所に、Sophaxis がその権利者と関わりがないことの断り書きを足すことがあります。
+4. 権利が確かめられたときは、運営者が、サイトの題と文、Vercel のプロジェクトの名とサイトのアドレス、リポジトリの名、様式、README を変えます。リポジトリの古い名へのリンクは、GitHub が新しい名へ送ります。
+5. 運営者は、ほかのサービスにある Sophaxis の頁の名も、それぞれのサービスが許す範囲で変えます。
+6. 書き換えないものもあります。Zenodo に保存した版、お知らせ・規程の変更の知らせ・変更履歴の過去の項目、リポジトリの履歴は、古い名のまま残ります。サイトがそれらを示す所には、断り書きを添えます。
+7. 載っている作品の PDF の写しは著者のファイルで、変えません。
+8. 変えたことは、どれも公開のリポジトリの変更履歴に記します。決めたことは issue に書きます。メールで知らせた人には、メールで知らせます。
+9. 権利が確かめられないときも、同じやり方で理由を知らせます。
+
+同じ手順は、[削除の規程](./policies/takedown.ja.md#権利者の方へ)の「権利者の方へ」に短く書いてあります。
 
 ## 誰が、なぜ Sophaxis を運営するか
 

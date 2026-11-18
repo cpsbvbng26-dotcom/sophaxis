@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-18.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -30,6 +30,97 @@ Sophaxis is an independent, personal project.
 It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.
 Their names are used only to identify their services, and belong to their owners. Some of them are trade marks.
 They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.md).
+
+## Names and trademarks
+
+This section sets out the names and marks of Sophaxis, how they are used, what was searched, the names of others that the site uses, and what happens when a rights holder writes.
+It describes Sophaxis's own position. It is not legal advice, and no lawyer has reviewed it.
+The owner asked for it on 2026-11-18, and Claude wrote it.
+The articles of Japanese law that it cites are quoted in full, as the e-Gov law API gives them, at the end of each part that cites them. The texts that the policies quote from other sources were fetched on 2026-11-12.
+
+### The names and marks of Sophaxis
+
+Sophaxis uses these **7** names and marks.
+Each was made for Sophaxis by the operator, with Claude Code.
+The date is the day on which each first appears in the history of the public repository, in Japan time.
+
+- The name Sophaxis: 2026-10-30.
+- Its reading in Japanese, ソファクシス: 2026-10-30.
+- The logo, `favicon.svg`: 2026-10-30.
+- The logo as a square PNG, `og.png`: 2026-10-30.
+- The logo as icons, `favicon.ico`, `favicon-192.png` and `apple-touch-icon.png`: 2026-10-31.
+- The badge for a listed work, `badge.svg`: 2026-11-10.
+- The field glyphs and the band over each page, drawn into the pages from the numbers in `design.js`: 2026-11-14.
+
+The account of Sophaxis on X is named @SophaxisX, after the name.
+The operator has not applied to register any of these names and marks as a trade mark, in Japan or anywhere else.
+The operator will not apply. Claude decided this on 2026-11-18, so as not to keep the name for Sophaxis alone.
+
+### How the names are used
+
+The names name the site, its pages, its records and its feeds.
+Sophaxis charges no fee to submit or to read.
+It carries no advertising and sells nothing.
+The operator runs it unpaid, as "Who runs Sophaxis, and why" above sets out.
+Article 2(1) of the Trademark Act defines a trade mark by its use: a mark used by a person who produces, certifies or transfers goods 「業として」 on those goods, or by a person who provides or certifies services 「業として」 on those services.
+The facts are recorded here. This page draws no conclusion on whether Sophaxis uses its name 「業として」.
+
+<!-- text: Trademark Act 2 -->
+
+### The search record
+
+On 2026-11-11 (Japan time), the operator searched J-PlatPat, the database of the Japan Patent Office, and the WIPO Global Brand Database for the name Sophaxis, and found no trade mark of that name; the page [Name, logo and badge](./brand.md) records it.
+On 2026-11-17 (Japan time), the operator searched the trade mark database of EUIPO for Sophaxis, and it gave **0** results.
+Claude saw those results in the operator's screenshots.
+Claude did not search J-PlatPat, WIPO or the USPTO itself.
+The terms of J-PlatPat forbid automated use, so Claude does not query it.
+No search of the USPTO's own database, or of the databases of other national offices one by one, is recorded.
+Names in use that are not registered, and the names of companies, were not searched.
+The reading ソファクシス and the logo were not searched.
+A search shows only what a database held on that day.
+
+### Others' names
+
+Apart from the page [Making a listed work easy to find](./findable.md), the site names these **75** services, products and organisations: Academia.edu, Adilet, Advance, Anthropic, Apple, arXiv, BBB National Programs, Bing, Bluesky, ChatGPT, Claude, Claude Code, CLOCKSS, COPE, Creative Commons, Crossref, DataCite, DOAJ, DOI, Dropbox, e-Gov, edX, eGazette, Facebook, Fedlex, Figshare, GitHub, GitHub Actions, Google Drive, Google Scholar, Grok, HAL, iCloud, IndexNow, Internet Archive, iTunes, J-PlatPat, JaLC, Jxiv, KC Works, Keepers Registry, Legal Information Institute, LinkedIn, MetaArXiv, OASPA, Open Access Directory, OpenAI, OpenAIRE, OpenAlex, ORCID, OSF, OSF Preprints, PhilArchive, PhilSci-Archive, Portico, Preprints.org, Qeios, Registry of Open Access Repositories, Research Square, ResearchGate, Retraction Watch, SciELO Preprints, ScienceOpen, SocArXiv, SpaceX, SSRN, Vercel, WAME, Wayback Machine, Windows, WIPO Global Brand Database, X, xAI, Zenodo, ZimLII.
+That page also names services where authors can add a listed work themselves, and gives their names only so that authors can find them.
+These names belong to their owners, and some of them are trade marks.
+Sophaxis uses each of them only to name the service, the product or the organisation itself.
+Their use implies no affiliation, sponsorship or endorsement, as "No affiliation" above says.
+The names of states, public bodies, universities, laws, persons, places and works, and of formats and standards, are not in the list; they are used in the same way.
+Claude found the list by reading every page of the site on 2026-11-18, apart from the pages built from the records of listed works.
+
+The site serves no logo of anyone else.
+It serves only these image files, all of them made for Sophaxis:
+
+- `favicon.svg`: the logo.
+- `og.png`: the logo as a square PNG, shown when a page is shared.
+- `favicon.ico`, `favicon-192.png` and `apple-touch-icon.png`: the logo as icons.
+- `badge.svg`: the badge for a listed work.
+- `card/<id>.png`: the share card of each record, drawn by `tools/cards.js` with the logo, the title, the authors and the fields of the record.
+
+The field glyphs, the band and the shelf are drawn into the pages, and are not files.
+
+### No registration marks
+
+The site never puts ®, ™, 「登録商標」 or "registered trademark" on its own names and marks, because none of them is registered.
+Article 74(i) of the Trademark Act forbids putting a 商標登録表示, or an indication that may be confused with one, on a trade mark that is not a registered trade mark when it is used.
+Article 73 of the same Act defines the 商標登録表示 as an indication that a trade mark is a registered trade mark.
+
+<!-- text: Trademark Act 73; Trademark Act 74 -->
+
+### When a notice comes
+
+1. A notice comes by [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml), or the private route by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+2. The operator reads it.
+3. While deciding, the operator may add a note where the name appears, saying that Sophaxis is not connected with the rights holder.
+4. If the right is confirmed, the operator changes the title and the text of the site, the name of the Vercel project and the address of the site, the name of the repository, the forms and the README. GitHub sends links to the old name of a repository on to the new one.
+5. The operator also changes the names of the pages of Sophaxis on other services, as far as each service allows.
+6. Some things are not rewritten. The versions archived at Zenodo, past entries of the news, of the notice of changes and of the changelog, and the history of the repository keep the old name. Where the site shows them, it adds a note.
+7. The PDF copies of listed works are the authors' files and are not changed.
+8. Every change is recorded in the changelog of the public repository, and the decision is posted in the issue or sent by email to a person who wrote by email.
+9. If the right is not confirmed, the operator says why in the same way.
+
+The [Takedown Policy](./policies/takedown.md#for-rights-holders), under "For rights holders", sets out the same procedure in brief.
 
 ## Who runs Sophaxis, and why
 

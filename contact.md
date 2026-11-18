@@ -64,6 +64,7 @@ A notice that cannot be made in public goes by email to the address on the opera
 The operator reads every notice.
 If the right is confirmed, the operator changes the name, or stops using the material, and records the decision in the public repository.
 What happens is set out under "For rights holders" in the [Takedown Policy](./policies/takedown.md#for-rights-holders).
+The names and marks of Sophaxis, what was searched, and the steps when a notice comes are under "Names and trademarks" in the [Disclaimer](./disclaimer.md#names-and-trademarks).
 
 ## Sophaxis elsewhere
 
