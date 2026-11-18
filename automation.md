@@ -1,6 +1,6 @@
 # What runs by itself
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-19.
 
 Japanese: [自動で動く手順（日本語訳）](./automation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -73,6 +73,16 @@ The code of each step is public, and each section links to it.
 - After a removal, opens a follow-up issue that lists what is left by hand: deleting the emptied issues, a request to the Internet Archive with its draft, and GitHub's procedure for the repository history.
 - Leaves to the operator: the grounds of the decision, deleting the emptied issues, and sending the requests to GitHub and the Internet Archive.
 - A request sent by email is handled the same way: the operator runs the step by hand with the Sophaxis id and, for a decision, the grounds, which are posted in the authors' submission issue before it is emptied.
+
+## When an issue is opened with an empty body, and once a week, on Friday at 10:29 Japan time
+
+- Added on the request of 2026-11-18. The issue forms may not show in some mobile apps and browsers, and an issue can then be opened with a title and no body.
+- Reads: the issue, from GitHub's API: whether its body is empty or only white space, its labels, its number of comments, whether it is a pull request, who opened it and when. It writes no title and no body of an issue to a comment or to the log.
+- Acts only on an open issue with an empty body, no label and no comment, that was not opened by a bot or by the owner, a member or a collaborator of the repository. When an issue is opened, it waits 10 minutes, reads the issue again, and acts only if it still qualifies. Once a week, it acts only on such issues opened more than 24 hours before.
+- Writes: the label `empty body`, and one fixed comment, in Japanese and English, that links the issue forms of the repository and says that the forms may not show in some mobile apps and browsers. When the body of the issue is filled in later, it takes the label off.
+- Never closes, locks or deletes an issue. The title may carry a request about removal, rights, personal data, a name or the withdrawal of a consent, and no list of words can tell one; a person reads every issue. GitHub's documentation ("Deleting an issue") says that in a repository owned by a personal account, only that account can delete issues; the token of a run is not that account.
+- Leaves to the operator: anything the title asks.
+- Code: [empty-issue.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/empty-issue.yml), the same file in every repository of the operator that takes issues.
 
 ## Once a day, at 09:17 Japan time
 
