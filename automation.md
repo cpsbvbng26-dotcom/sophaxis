@@ -1,6 +1,6 @@
 # What runs by itself
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-18.
 
 Japanese: [自動で動く手順（日本語訳）](./automation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -128,6 +128,12 @@ The code of each step is public, and each section links to it.
 - What could not be checked (an answer of 429 or 5xx, a time-out, an answer that cannot be read) and every save to the Internet Archive that did not succeed are listed in the same issue, which then stays open, and the run fails. The run never reports that it found no problems while something was not checked.
 - Leaves to the operator: acting on what the issue reports, and reading the difference before recording it.
 - Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), run by [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
+
+## When the list of labels changes on main
+
+- Creates the labels that the issue forms use and that the repository does not have yet: since 2026-11-18, only `rights`, for the notices from rights holders. GitHub adds to an issue only those labels of its form that exist. The labels that existed before are left as they are.
+- Reads nothing and checks nothing out. It runs when its own file changes on main, and when the operator runs it.
+- Code: none of its own; [labels.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/labels.yml) calls `gh label create`.
 
 ## When the operator labels the watch's pull request `record`
 

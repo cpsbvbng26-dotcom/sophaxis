@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-18.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -43,6 +43,7 @@ No consent is asked of anyone who writes. The Privacy Policy, under "Services ou
 - Withdrawing a work, as one of its authors: [the withdrawal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml).
 - Reporting the published version of a listed work, as one of its authors: [the published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml).
 - Removal for legal reasons: [the removal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml).
+- A notice from a rights holder about the name Sophaxis or the site itself: [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml).
 - Anything that should not be public: email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 
 Issues are public. Do not put personal data in them.
@@ -53,6 +54,16 @@ The email address on the operator's ORCID record is also the single point of con
 The operator aims to answer within 7 days.
 
 <!-- text: DSA 11; DSA 12 -->
+
+## For rights holders
+
+A rights holder who thinks that the name Sophaxis, or something on the site itself, infringes a right can tell the operator.
+This covers a trademark or a confusingly similar name, copyright in the text or the design of the site, a likeness, and other rights.
+The notice goes by [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml).
+A notice that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator reads every notice.
+If the right is confirmed, the operator changes the name, or stops using the material, and records the decision in the public repository.
+What happens is set out under "For rights holders" in the [Takedown Policy](./policies/takedown.md#for-rights-holders).
 
 ## Sophaxis elsewhere
 

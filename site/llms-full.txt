@@ -1018,7 +1018,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.html
 
 # Privacy Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-18.
 
 Japanese: [個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -1214,6 +1214,17 @@ The information that Article 28(2) of Japan's Act on the Protection of Personal 
 What the three providers' own terms say about training on what they are given is quoted in the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#decisions); which terms govern the operator's accounts, and whether training is turned off in them, the operator has not shown.
 
 <!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
+
+### Notices from rights holders and Claude
+
+Since its publication on 2026-11-18, the operator may give the title and text of an issue opened with the [rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml), to Claude, the language model of Anthropic (United States), to help handle the notice.
+This is done only when the box of consent in the form is ticked.
+Sophaxis treats it as a provision to a third party in a foreign country under Article 28 of Japan's Act on the Protection of Personal Information.
+The system of the United States, and what Anthropic says about its measures, are set out above in this section.
+The box is optional. Without it, the operator handles the notice without giving it to Claude or to any other language model.
+Comments on the issue are not given to a language model.
+A consent can be withdrawn at any time, in the issue or by email; what was given before stays as it was.
+For an issue of that form, `tools/llm.js` tells whether its title and text may be given.
 
 ## Security
 
@@ -1432,7 +1443,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.html
 
 # Takedown Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-18.
 
 Japanese: [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1536,6 +1547,7 @@ In the issues:
 - GitHub keeps the logs and the list of runs for the period set for the repository; GitHub's documentation gives at most 90 days for a public repository. The list of runs names each run by the title of its issue, which for an emptied issue is the emptied title, and by the account that started it.
 - GitHub's notifications may already have carried a copy of an issue's content to the accounts set to receive them, by email too; the operator's account may be one of them. Those copies are handled under GitHub's Terms of Service and Privacy Statement. The pages of GitHub's documentation that were fetched do not say that they go away when the issue is emptied or deleted. Apart from them, the operator makes no copy of the issue.
 - A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
+- A notice from a rights holder also stays, with the decision on it, even when it names the removed record.
 
 Outside the site:
 
@@ -1584,6 +1596,18 @@ Where the material sits on the service of another provider, such as GitHub, a re
 
 Sophaxis cannot remove a work from Zenodo, Figshare or any other repository.
 A request about the deposit itself goes to that repository.
+
+## For rights holders
+
+A rights holder who thinks that the name Sophaxis, or something on the site itself, infringes a right can tell the operator.
+This covers a trademark or a confusingly similar name, copyright in the text or the design of the site, a likeness, and other rights.
+The notice goes by [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml).
+A notice that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+A problem in one record goes by a removal issue, as "How to ask" above sets out.
+The operator reads every notice.
+If the right is confirmed, the operator changes the name, or stops using the material.
+The decision is posted in the issue, or sent by email to a person who wrote by email, and the change is recorded in the public repository.
+If the right is not confirmed, the operator says why in the same way.
 
 ---
 
@@ -2171,7 +2195,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-18.
 
 Japanese: [自動で動く手順（日本語訳）](https://sophaxis.vercel.app/automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2299,6 +2323,12 @@ The code of each step is public, and each section links to it.
 - What could not be checked (an answer of 429 or 5xx, a time-out, an answer that cannot be read) and every save to the Internet Archive that did not succeed are listed in the same issue, which then stays open, and the run fails. The run never reports that it found no problems while something was not checked.
 - Leaves to the operator: acting on what the issue reports, and reading the difference before recording it.
 - Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), run by [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
+
+## When the list of labels changes on main
+
+- Creates the labels that the issue forms use and that the repository does not have yet: since 2026-11-18, only `rights`, for the notices from rights holders. GitHub adds to an issue only those labels of its form that exist. The labels that existed before are left as they are.
+- Reads nothing and checks nothing out. It runs when its own file changes on main, and when the operator runs it.
+- Code: none of its own; [labels.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/labels.yml) calls `gh label create`.
 
 ## When the operator labels the watch's pull request `record`
 
@@ -2563,7 +2593,7 @@ Source: https://sophaxis.vercel.app/contact.html
 
 # Operator and contact
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-18.
 
 Japanese: [運営者と連絡先（日本語訳）](https://sophaxis.vercel.app/contact.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2606,6 +2636,7 @@ No consent is asked of anyone who writes. The Privacy Policy, under "Services ou
 - Withdrawing a work, as one of its authors: [the withdrawal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml).
 - Reporting the published version of a listed work, as one of its authors: [the published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml).
 - Removal for legal reasons: [the removal form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml).
+- A notice from a rights holder about the name Sophaxis or the site itself: [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml).
 - Anything that should not be public: email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 
 Issues are public. Do not put personal data in them.
@@ -2616,6 +2647,16 @@ The email address on the operator's ORCID record is also the single point of con
 The operator aims to answer within 7 days.
 
 <!-- text: DSA 11; DSA 12 -->
+
+## For rights holders
+
+A rights holder who thinks that the name Sophaxis, or something on the site itself, infringes a right can tell the operator.
+This covers a trademark or a confusingly similar name, copyright in the text or the design of the site, a likeness, and other rights.
+The notice goes by [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml).
+A notice that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+The operator reads every notice.
+If the right is confirmed, the operator changes the name, or stops using the material, and records the decision in the public repository.
+What happens is set out under "For rights holders" in the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html#for-rights-holders).
 
 ## Sophaxis elsewhere
 
@@ -3072,9 +3113,9 @@ Source: https://sophaxis.vercel.app/policies/privacy.ja.html
 
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-15。
+最終更新：2026-11-18。
 
-Sophaxis の個人情報の取り扱いを、日本の個人情報保護法の項目に沿って書いたものです。英語の [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) の訳で、項目を日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
+Sophaxis の個人情報の取り扱いを書いた、英語の [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) の訳です。項目は日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
 この頁が引く法令・ライセンス・規約の文は、引いている節の終わりに置いています。
 日本の法令は、e-Gov 法令 API が示す条文を全文で引いています。ほかの文は、公式の出どころから 2026-11-12 に取り寄せた文を、語のまま引いています。訳は付けていません。
@@ -3162,6 +3203,7 @@ Sophaxis はコミュニティから何も写しません。運営者がそこ�
 
 Sophaxis は、外国にある次の事業者のサービスを使います。
 記録に含まれる個人データが GitHub・Vercel・ORCID・Internet Archive に渡ることと、審査のあいだ投稿の公開されている部分が Anthropic・OpenAI・xAI に渡ることを、個人情報保護法第 28 条の「外国にある第三者への提供」として扱います。
+2026-11-18 から、権利者の知らせの題と本文が、同意の印があるときだけ Claude に渡ることも同じに扱います。
 投稿の様式で、この頁の情報を示したうえで、著者それぞれの同意を求めます。この確認は 2026-11-21 から必須です。
 それまでは、運営者以外の著者の作品は、すべての著者が投稿の issue でこの同意を示してから載せます。
 Internet Archive への保存の同意は、別の欄で尋ねます。空けておくこともでき、そのときは記録をそこに保存せず、`robots.txt` で Internet Archive に集めないよう求めます。
@@ -3177,7 +3219,6 @@ GitHub・Vercel・ORCID への提供の同意を撤回すると、記録を削�
 - OpenAlex（米国）：載せた作品をどう収めているかを、DOI だけで問い合わせるため。人については問い合わせません
 - Anthropic・OpenAI・xAI（いずれも米国）：審査を助けるため。運営者が、投稿の公開されている部分（issue、DOI の登録情報、要旨）を、それぞれの言語モデル Claude・ChatGPT・Grok に手で読ませます。2026-11-15 から、issue に書いた全員が同意したときだけ読ませます。掲載の後には渡しません
 
-それぞれの事業者の個人情報の扱いは、各社の規約によります。
 米国の制度については、個人情報保護委員会が[米国の制度についての情報](https://www.ppc.go.jp/enforcement/infoprovision/laws/offshore_report_america/)を公表しており、Sophaxis はこれに拠ります。2021 年 10 月の調査に基づく情報です。
 委員会は、連邦について「包括的な法令は存在しない。」とし、個別の分野に適用される法令として、電子通信プライバシー法、金融機関についてのグラム・リーチ・ブライリー法、健康情報についての HIPAA を挙げています。
 EU の十分性認定はありません。APEC の CBPR システムには、2012 年 7 月 25 日から参加しています。
@@ -4404,7 +4445,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 
 # 削除の規程（日本語訳）
 
-最終更新：2026-11-15。
+最終更新：2026-11-18。
 
 これは英語の [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4508,6 +4549,7 @@ issue では：
 - GitHub は、実行の記録と実行の一覧を、リポジトリに定めた期間だけ保ちます。GitHub の説明書によれば、公開のリポジトリでは長くて 90 日です。実行の一覧は、各実行を issue の題（中身を空にした issue では空にしたあとの題）と、実行を起こしたアカウントで示します。
 - GitHub の通知は、issue の中身の写しを、受け取る設定のアカウントに、電子メールでも届けていることがあります。運営者のアカウントもその一つであることがあります。その写しは、GitHub の利用規約とプライバシーステートメントのもとで扱われます。issue を空にしたり削除したりしたときにその写しが消えるとは、取り寄せた GitHub の説明書は書いていません。運営者は、これとは別に、issue の写しを作りません。
 - 削除の求めそのものは、それへの判断とともに残ります。削除を求めた撤回の issue は、ほかと同じように中身を空にします。
+- 権利者の知らせも、削除した記録を挙げていても、それへの判断とともに残ります。
 
 サイトの外では：
 
@@ -4556,6 +4598,18 @@ Sophaxis はここでも最も厳しい場合を想定し、その規模のサ�
 
 Sophaxis は、Zenodo、Figshare その他の預け先から作品を削除できません。
 預けたものそのものについての求めは、その預け先へ送ります。
+
+## 権利者の方へ
+
+Sophaxis の名や、サイトそのものにあるものが権利を侵していると考える権利者は、運営者に知らせることができます。
+商標や紛らわしい名、サイトの文や意匠の著作権、肖像、そのほかの権利が対象です。
+知らせは[権利者の知らせの様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml)で出します。同じ様式の[英語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml)もあります。
+公開の場で出せない知らせは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、メールで送ります。
+一つの記録の問題は、上の「求め方」のとおり、削除の issue で求めます。
+運営者は、すべての知らせを読みます。
+権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめます。
+決めたことは issue に書きます。メールで知らせた人には、メールで知らせます。変えたことは、公開のリポジトリに記録します。
+権利が確かめられないときも、同じやり方で理由を知らせます。
 
 ---
 
@@ -5353,7 +5407,7 @@ Source: https://sophaxis.vercel.app/automation.ja.html
 
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-15。
+最終更新：2026-11-18。
 
 これは英語の [What runs by itself](https://sophaxis.vercel.app/automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5483,6 +5537,12 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
 - コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
 
+## main でラベルの一覧が変わったとき
+
+- issue の様式が使うラベルのうち、リポジトリにまだ無いものを作ります。2026-11-18 から、作るのは権利者の知らせのための `rights` だけです。GitHub は、様式のラベルのうち、あるものだけを issue に付けます。前からあるラベルには触れません。
+- 何も読まず、チェックアウトもしません。main でこのファイルが変わったときと、運営者が動かしたときに動きます。
+- コード：専用のものはありません。[labels.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/labels.yml) が `gh label create` を呼びます。
+
 ## 運営者が毎週の確認のプルリクエストに `record` のラベルを付けたとき
 
 - リポジトリの持ち主が付けたラベルにだけ応じます。応じるのはブランチ `statutes/record` だけで、そのブランチが変えてよいのは `verification/statutes.json`、`verification/statutes-texts.json`、変更履歴だけです。
@@ -5513,7 +5573,7 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-18。
 
 これは英語の [Operator and contact](https://sophaxis.vercel.app/contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5560,6 +5620,7 @@ Sophaxis を紹介する人のために、[紹介する人のために](https://
 - 作品の著者の一人として、作品を撤回すること：[撤回の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml)。
 - 作品の著者の一人として、載っている作品の出版された版を報告すること：[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)。
 - 法的な理由による削除：[削除の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml)。
+- Sophaxis の名やサイトそのものについての、権利者からの知らせ：[権利者の知らせの様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml)、または同じ様式の[英語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml)。
 - 公開すべきでないこと：運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメール。
 
 issue は公開されます。issue に個人データを書かないでください。
@@ -5570,6 +5631,16 @@ issue は公開されます。issue に個人データを書かないでくだ�
 運営者は、7 日以内に答えることを目指します。
 
 <!-- text: DSA 11; DSA 12 -->
+
+## 権利者の方へ
+
+Sophaxis の名や、サイトそのものにあるものが権利を侵していると考える権利者は、運営者に知らせることができます。
+商標や紛らわしい名、サイトの文や意匠の著作権、肖像、そのほかの権利が対象です。
+知らせは[権利者の知らせの様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml)で出します。同じ様式の[英語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml)もあります。
+公開の場で出せない知らせは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、メールで送ります。
+運営者は、すべての知らせを読みます。
+権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめ、決めたことを公開のリポジトリに記録します。
+そのあとの扱いは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html#権利者の方へ)の「権利者の方へ」にあります。
 
 ## ほかの場所にある Sophaxis
 

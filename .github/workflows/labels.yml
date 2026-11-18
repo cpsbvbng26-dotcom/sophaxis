@@ -1,0 +1,22 @@
+name: labels
+# Creates the labels that the issue forms use and that do not exist yet in the repository (2026-11-18): only "rights", for the
+# notices from rights holders (.github/ISSUE_TEMPLATE/rights.yml and rights-ja.yml). GitHub adds to an issue only the labels of its
+# form that exist. The labels that existed before are not touched here. It runs when this file changes on main, and by hand.
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/labels.yml']
+  workflow_dispatch:
+permissions:
+  issues: write
+jobs:
+  labels:
+    name: Create the labels the forms use
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh label create "rights" --color 5319e7 --description "A notice from a rights holder about the name Sophaxis or the site itself" --force

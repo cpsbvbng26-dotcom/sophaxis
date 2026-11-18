@@ -9,6 +9,7 @@
  *   - The decision is the operator's. The operator labels the issue "upheld" or "not-upheld".
  *     Upheld: the record is replaced by a notice that says only that the record with that id was removed.
  *     Every automatic comment about it is deleted, and the issues that name it are emptied and closed; no step locks an issue (2026-11-15).
+ *     A removal request and a notice from a rights holder (tools/rights.js, since 2026-11-18) are never emptied or closed.
  *     From 2026-12-01, before an issue is emptied, its lines of consent (who, when, to what) are copied into docs/records-of-provision.md.
  *   - From 2026-12-01, an account whose two earlier requests to take material offline a person found groundless (labelled
  *     not-upheld), and which has been told so, gets no automatic hold: a person reads its request promptly instead. The count is
@@ -34,6 +35,7 @@
  */
 'use strict';
 const { request } = require('./ua.js');
+const { rightsNotice } = require('./rights.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -444,9 +446,11 @@ async function upsert(n, mark, body) {
   else await I.github('POST', '/issues/' + n + '/comments', { body });
 }
 
-/* Pure: the issues that name a record, but no removal request and no pull request. `any` keeps those the search found by the id. */
+/* Pure: the issues that name a record, but no removal request, no notice from a rights holder and no pull request. `any` keeps
+ * those the search found by the id. A notice from a rights holder (tools/rights.js: the label "rights", or a heading of its form in
+ * either language) is never emptied or closed, like a removal request, so that it and the decision on it stay (2026-11-18). */
 function namingIssues(list, id, any = false) {
-  return (list || []).filter((i) => !i.pull_request && (any || (i.body || '').includes(id)) && !(i.labels || []).some((l) => (typeof l === 'string' ? l : l.name) === 'removal'));
+  return (list || []).filter((i) => !i.pull_request && (any || (i.body || '').includes(id)) && !(i.labels || []).some((l) => (typeof l === 'string' ? l : l.name) === 'removal') && !rightsNotice(i));
 }
 
 /* Leave no trace of a removed record in the issues: its submission issue, and every other issue that names its id

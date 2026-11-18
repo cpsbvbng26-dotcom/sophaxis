@@ -873,7 +873,7 @@ console.log('\n20. Operator and contact');
     src.includes('Sophaxis is operated by one person, Takuya Nemoto, in Japan.') && c.includes('href="https://orcid.org/0009-0000-1406-0547"') && /Last updated: \d{4}-\d{2}-\d{2}\./.test(src));
   const forms = fs.readdirSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE')).filter((f) => f !== 'config.yml');
   ok('the contact page links every issue form there is, and private requests go only to the ORCID record',
-    forms.length === 6 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
+    forms.length === 8 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
     && src.includes("email to the address on the operator's [ORCID record]") && !/@[a-z0-9-]+\.[a-z]/i.test(src));
   ok('the postal address is not published, and is given on request without delay',
     src.includes('The operator\'s postal address is not published.') && src.includes('It is given on request, without delay, as Japan\'s Act on the Protection of Personal Information provides.'));
@@ -2191,9 +2191,9 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml', 'checked-intake.yml': 'checked-intake.yml' };
+  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml', 'checked-intake.yml': 'checked-intake.yml', 'labels.yml': 'labels.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml', 'checked-intake.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml', 'checked-intake.yml', 'labels.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
@@ -6026,7 +6026,7 @@ console.log('\n123. What an eighth, read-only pass found: GitHub\'s terms for Ac
     ['a new workflow without a row', problems(w({ wf: WF.concat(['newsletter.yml']) }))],
     ['a row for a workflow taken away', problems(w({ wf: WF.filter((f) => f !== 'audit.yml') }))],
     ['a row dropped', problems(w({ aud: AUD.replace(/\n\| `\.github\/workflows\/pdf\.yml`[^\n]*/, '') }))],
-    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 14 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 14 です。') }))],
+    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 15 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 15 です。') }))],
     ['a decision without its maker', problems(w({ aud: AUD.replace('ワークフローから呼ばれなくなりました。2026-11-13 に Claude が決めました。', 'ワークフローから呼ばれなくなりました。') }))],
     ['a quotation altered', problems(w({ aud: AUD.replace('or publication of the software project associated', 'or promotion of the software project associated') }))],
     ['the posts for X written again', problems(w({ wfText: Object.assign({}, wfText, { 'monthly.yml': wfText['monthly.yml'] + '\n      - run: node tools/monthly.js\n' }) }))],
@@ -8279,6 +8279,172 @@ console.log('\n138. The automation hardened (2026-11-15): the job of a pull requ
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each of ' + breaks.length + ' ways (a token or a write on a pull request, the record merging what was not labelled, the cap, its notice and pages, the sweep, the concurrency, the daily run, the weekly watch, a token for poppler or the checks, a checkout keeping its token, a time limit, IndexNow, the heartbeat and the record) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 139 */
+console.log('\n139. A form for rights holders (2026-11-18): the name and the site itself, in English and Japanese, an optional box for Claude with the sentence that is searched for, the private route that was already there, the sections of the contact page and the Takedown Policy, the README, and tools/llm.js');
+{
+  /* The owner asked on 2026-11-18 for a contact for rights holders on the site and on GitHub; Claude wrote it. A problem in one
+   * record still goes by removal.yml. The private route is the one the removal form and the contact page already give. */
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const FORMS = { en: '.github/ISSUE_TEMPLATE/rights.yml', ja: '.github/ISSUE_TEMPLATE/rights-ja.yml' };
+  const PHRASE = 'I consent to the operator giving the title and text of this issue to Claude';
+  const BOX = { en: '        - label: ' + PHRASE + ' (Anthropic, United States).\n          required: false\n',
+    ja: '        - label: この issue の題と本文を、運営者が Claude（Anthropic、米国）に渡すことに同意します。 / ' + PHRASE + ' (Anthropic, United States).\n          required: false\n' };
+  const NEED = {
+    en: ['labels: ["rights"]', '      label: Which right\n', '        - A trademark, or a confusingly similar name\n        - Copyright\n        - Likeness or publicity\n        - Another right\n',
+      '      label: Where it is on the site\n', '      label: What the right is\n', 'its registration number and the office that registered it', '      label: What you ask for\n',
+      '      label: How you are concerned\n', '        - I hold the right\n        - I act on behalf of the holder\n', 'issues/new?template=removal.yml',
+      "send it by email to the address on the operator's ORCID record (https://orcid.org/0009-0000-1406-0547) instead.", 'This issue is public. Do not include personal data.',
+      'Without it, the operator handles the notice without giving it to Claude or to any other language model.', 'Comments on this issue are not given to a language model.'],
+    ja: ['labels: ["rights"]', '      label: どの権利か\n', '        - 商標、または紛らわしい名\n        - 著作権\n        - 肖像やパブリシティ\n        - そのほかの権利\n',
+      '      label: サイトのどこにあるか\n', '      label: どんな権利か\n', '登録されていればその登録番号と登録した官庁', '      label: 何を求めるか\n',
+      '      label: どう関わるか\n', '        - 権利を持っている\n        - 権利者の代理をしている\n', 'issues/new?template=removal.yml',
+      '公開の場で出せない知らせは、運営者の ORCID の記録（https://orcid.org/0009-0000-1406-0547）にあるアドレスへ、メールで送ります。', 'この issue は公開されます。個人情報は書きません。',
+      '印がなければ、運営者は、Claude にもほかの言語モデルにも渡さずに知らせを扱います。', 'この issue のコメントは、言語モデルに渡しません。'] };
+  const LINK = (f) => 'https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=' + f;
+  const SECTIONS = { 'contact.md': '## For rights holders', 'contact.ja.md': '## 権利者の方へ', 'policies/takedown.md': '## For rights holders', 'policies/takedown.ja.md': '## 権利者の方へ' };
+  const SAY = { 'contact.md': ["email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547)", 'If the right is confirmed, the operator changes the name, or stops using the material'],
+    'contact.ja.md': ['運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、メールで送ります。', '権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめ'],
+    'policies/takedown.md': ["email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547)", 'If the right is confirmed, the operator changes the name, or stops using the material.', 'A problem in one record goes by a removal issue'],
+    'policies/takedown.ja.md': ['運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、メールで送ります。', '権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめます。', '一つの記録の問題は、上の「求め方」のとおり、削除の issue で求めます。'] };
+  const BUILT = { 'site/contact.html': 'for-rights-holders', 'site/contact.ja.html': '権利者の方へ', 'site/policies/takedown.html': 'for-rights-holders', 'site/policies/takedown.ja.html': '権利者の方へ' };
+  const real = Object.fromEntries([...Object.values(FORMS), ...Object.keys(SECTIONS), ...Object.keys(BUILT), 'README.md', 'policies/privacy.md', 'policies/privacy.ja.md', 'data/policy-changes.json', 'tools/llm.js'].map((f) => [f, T(f)]));
+  const sectionOf = (t, head) => { const i = String(t || '').indexOf('\n' + head + '\n'); if (i < 0) return ''; const j = t.indexOf('\n## ', i + head.length + 2); return t.slice(i, j < 0 ? undefined : j); };
+  function problems(x) {
+    const bad = [];
+    for (const [lang, f] of Object.entries(FORMS)) {
+      const y = x[f];
+      if (y === null || y === undefined) { bad.push(f + ' is missing'); continue; }
+      const consent = (y.split('\n  - type: ').find((s) => /^checkboxes\n    id: consent\n/.test(s)) || '') + '\n';
+      if (!consent.includes(BOX[lang])) bad.push(f + ': no optional box with the sentence');
+      if (/required: true/.test(consent)) bad.push(f + ': the box of consent is required');
+      for (const s of NEED[lang]) if (!y.includes(s)) bad.push(f + ': ' + s.trim().slice(0, 40));
+      if (/@[a-z0-9-]+\.[a-z]/i.test(y)) bad.push(f + ': an email address');
+    }
+    for (const [f, head] of Object.entries(SECTIONS)) {
+      const s = sectionOf(x[f], head);
+      if (!s) { bad.push(f + ': no section ' + head); continue; }
+      if (!s.includes('](' + LINK('rights.yml') + ')') || !s.includes('](' + LINK('rights-ja.yml') + ')')) bad.push(f + ': the section does not link both forms');
+      for (const w of SAY[f]) if (!s.includes(w)) bad.push(f + ': ' + w.slice(0, 40));
+      if (/@[a-z0-9-]+\.[a-z]/i.test(s) || /within \d+ days|\d+ 日以内/.test(s)) bad.push(f + ': an email address or a deadline in the section');
+    }
+    for (const [f, id] of Object.entries(BUILT)) if (!String(x[f] || '').includes(' id="' + id + '"') || !String(x[f] || '').includes(LINK('rights.yml').replace('?', '?')) || !String(x[f] || '').includes(LINK('rights-ja.yml'))) bad.push(f + ': the built section or its links');
+    const rd = String(x['README.md'] || ''), en = rd.split('\n## 日本語\n')[0], ja = rd.split('\n## 日本語\n')[1] || '';
+    if (!sectionOf(en, '## Operator and contact').includes('](' + LINK('rights.yml') + ')') || !ja.includes('[権利者の知らせの様式](' + LINK('rights-ja.yml') + ')')) bad.push('README: the form is not linked in both parts');
+    if (!String(x['policies/privacy.md'] || '').includes('\n### Notices from rights holders and Claude\n') || !String(x['policies/privacy.md'] || '').includes('This is done only when the box of consent in the form is ticked.')
+      || !String(x['policies/privacy.ja.md'] || '').includes('2026-11-18 から、権利者の知らせの題と本文が、同意の印があるときだけ Claude に渡ることも同じに扱います。')) bad.push('the Privacy Policy does not say that a notice reaches Claude only with its box');
+    let ch = [];
+    try { ch = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('policy-changes.json'); }
+    if (!ch.some((c) => c.date === '2026-11-18' && c.policies.includes('takedown') && c.policies.includes('privacy') && String(c.ja || '').includes('2026-11-18 に利用者が求め、Claude が書きました。'))) bad.push('the notice of changes of 2026-11-18');
+    /* tools/llm.js, loaded from the text given, on issues made here. */
+    let L = null;
+    try { const m = { exports: {} }; new Function('module', 'exports', 'require', '__dirname', String(x['tools/llm.js'] || '').replace(/^#!.*\n/, ''))(m, m.exports, (q) => require(q.startsWith('.') ? path.join(ROOT, 'tools', q) : q), path.join(ROOT, 'tools')); L = m.exports; } catch (e) { L = null; }
+    if (!L || !L.mayPass) bad.push('tools/llm.js does not load');
+    else {
+      const body = (tick, lang) => '### ' + (lang === 'ja' ? 'どの権利か' : 'Which right') + '\n\nCopyright\n\n### Use\n\n- [' + tick + '] ' + (lang === 'ja' ? 'この issue の題と本文を、運営者が Claude（Anthropic、米国）に渡すことに同意します。 / ' : '') + PHRASE + ' (Anthropic, United States).\n';
+      const other = [{ user: { login: 'x', type: 'User' }, body: String(L.CONSENT || '') }];
+      const yes = L.mayPass({ issue: { user: { login: 'h' }, body: body('X', 'en') }, comments: other });
+      const yesJa = L.mayPass({ issue: { user: { login: 'h' }, labels: [{ name: 'rights' }], body: body('x', 'ja') } });
+      const no = L.mayPass({ issue: { user: { login: 'h' }, body: body(' ', 'en') }, comments: [{ user: { login: 'h', type: 'User' }, body: String(L.CONSENT || '') }] });
+      const noLabel = L.mayPass({ issue: { user: { login: 'h' }, labels: ['rights'], body: 'No form.\n' + String(L.CONSENT || '') } });
+      if (!yes.ok || !yesJa.ok || no.ok || noLabel.ok || !/to Claude/.test(String(yes.only || ''))) bad.push('tools/llm.js does not pass a notice only on its own box');
+    }
+    return bad;
+  }
+  const now = problems(real);
+  ok('the rights holder\'s form, in English and in Japanese, asks which right, where, what it is, what is asked and how the person is concerned; its box for Claude carries the searched sentence and is optional; it points one record to removal.yml and private notices to the ORCID record; the contact page, the Takedown Policy (both languages, built too) and the README link it; the Privacy Policy and the notice of changes say so; and tools/llm.js passes a notice only on its own box',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f] || '').replace(a, b) });
+  const breaks = [
+    ['the English form taken out', Object.assign({}, real, { [FORMS.en]: null })],
+    ['the box made required', w(FORMS.en, '(Anthropic, United States).\n          required: false', '(Anthropic, United States).\n          required: true')],
+    ['the sentence changed in Japanese', w(FORMS.ja, ' / ' + PHRASE, ' / I agree to the operator giving the title and text of this issue to Claude')],
+    ['a field taken out', w(FORMS.en, '      label: What the right is\n', '      label: Details\n')],
+    ['the record no longer pointed to removal.yml', w(FORMS.ja, 'issues/new?template=removal.yml', 'issues/new')],
+    ['a new private route', w(FORMS.en, "the address on the operator's ORCID record (https://orcid.org/0009-0000-1406-0547)", 'the address given in this issue')],
+    ['the section taken out of the contact page', w('contact.md', '## For rights holders', '## Rights')],
+    ['the Japanese form not linked from the Takedown Policy', w('policies/takedown.ja.md', LINK('rights-ja.yml'), LINK('removal.yml'))],
+    ['a deadline promised in the section', w('policies/takedown.md', 'The operator reads every notice.', 'The operator reads every notice within 7 days.')],
+    ['the built page without the section', w('site/policies/takedown.ja.html', ' id="権利者の方へ"', ' id="x"')],
+    ['the README without the form', w('README.md', '[権利者の知らせの様式](' + LINK('rights-ja.yml') + ')', '権利者の知らせの様式')],
+    ['the Privacy Policy without the box', w('policies/privacy.md', 'This is done only when the box of consent in the form is ticked.', '')],
+    ['the notice of changes without who asked', w('data/policy-changes.json', '2026-11-18 に利用者が求め、Claude が書きました。', '')],
+    ['tools/llm.js passing a notice without its box', w('tools/llm.js', 'const yes = rightsConsents(issue.body);', 'const yes = true;')],
+    ['tools/llm.js counting a comment for a notice', w('tools/llm.js', '  if (rightsNotice(issue)) {', '  if (false) {')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (a form gone, the box required or its sentence changed, a field gone, removal.yml or the ORCID route changed, a section gone or unlinked, a deadline, the built page, the README, the Privacy Policy, the notice of changes, and tools/llm.js passing without the box or counting a comment) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 140 */
+console.log('\n140. The labels of the forms, and the notices from rights holders kept (2026-11-18): every label a form uses exists or is created by labels.yml, which creates "rights" and touches no other; tools/removal.js never empties or closes a notice from a rights holder');
+{
+  /* GitHub adds to an issue only those labels of its form that exist. The labels below were read with GitHub's API on 2026-11-18
+   * and exist; any other label a form uses must be created by .github/workflows/labels.yml, which creates only the new ones. */
+  const EXIST = ['submission', 'removal', 'withdrawal', 'published', 'correction'];
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const TPL = path.join(ROOT, '.github', 'ISSUE_TEMPLATE');
+  const forms = Object.fromEntries(fs.readdirSync(TPL).filter((f) => /\.ya?ml$/.test(f) && f !== 'config.yml').map((f) => ['.github/ISSUE_TEMPLATE/' + f, read(path.join(TPL, f))]));
+  const real = { forms, wf: T('.github/workflows/labels.yml'), removal: T('tools/removal.js'), rights: T('tools/rights.js') };
+  /* Load a tool from the text given; tools/rights.js comes from the text given too, so that breaking it is seen. */
+  const load = (src, rights) => {
+    const m = { exports: {} };
+    const req = (q) => {
+      if (q === './rights.js') { const r = { exports: {} }; new Function('module', 'exports', 'require', String(rights || ''))(r, r.exports, require); return r.exports; }
+      return require(q.startsWith('.') ? path.join(ROOT, 'tools', q) : q);
+    };
+    new Function('module', 'exports', 'require', '__dirname', String(src || '').replace(/^#!.*\n/, ''))(m, m.exports, req, path.join(ROOT, 'tools'));
+    return m.exports;
+  };
+  function problems(x) {
+    const bad = [];
+    const wf = String(x.wf || '');
+    const created = [...wf.matchAll(/gh label create "([^"]+)"/g)].map((m) => m[1]);
+    const used = [...new Set(Object.values(x.forms).flatMap((y) => { try { return JSON.parse((/^labels: (\[.*\])$/m.exec(y) || [, '[]'])[1]); } catch (e) { return ['(unreadable)']; } }))];
+    for (const l of used) if (!EXIST.includes(l) && !created.includes(l)) bad.push('the label ' + l + ' is used by a form, and neither exists nor is created');
+    if (!created.includes('rights')) bad.push('labels.yml does not create rights');
+    for (const l of created) if (EXIST.includes(l)) bad.push('labels.yml touches the existing label ' + l);
+    if (!/^on:\n  push:\n    branches: \[main\]\n    paths: \['\.github\/workflows\/labels\.yml'\]\n  workflow_dispatch:\n/m.test(wf)) bad.push('labels.yml does not run on its own change on main and by hand');
+    if (!/^permissions:\n  issues: write\njobs:\n/m.test(wf)) bad.push('labels.yml holds more than issues: write');
+    if (!/\n    timeout-minutes: \d+\n/.test(wf) || /uses: /.test(wf)) bad.push('labels.yml without a time limit, or with an action');
+    let R = null;
+    try { R = load(x.removal, x.rights); } catch (e) { R = null; }
+    if (!R || !R.namingIssues) return bad.concat(['tools/removal.js does not load']);
+    const ID = '2026.0001';
+    const list = [
+      { number: 1, body: 'The page https://sophaxis.vercel.app/abs/' + ID + '.html is wrong.' },
+      { number: 2, body: '### Which right\n\nCopyright\n\n### Where it is on the site\n\nhttps://sophaxis.vercel.app/abs/' + ID + '.html\n' },
+      { number: 3, body: '### どの権利か\n\n著作権\n\n### サイトのどこにあるか\n\nhttps://sophaxis.vercel.app/abs/' + ID + '.html\n' },
+      { number: 4, labels: [{ name: 'rights' }], body: 'About ' + ID + ', without the form.' },
+      { number: 5, labels: ['removal'], body: ID },
+      { number: 6, body: ID, pull_request: {} },
+    ];
+    const kept = (any) => R.namingIssues(list, ID, any).map((i) => i.number).join();
+    if (kept(false) !== '1' || kept(true) !== '1') bad.push('tools/removal.js empties ' + kept(false) + ' / ' + kept(true) + ', not only the ordinary issue');
+    if (!/require\('\.\/rights\.js'\)/.test(String(x.removal || ''))) bad.push('tools/removal.js does not share the detector');
+    return bad;
+  }
+  const now = problems(real);
+  ok('every label the forms use (' + [...new Set(Object.values(forms).map((y) => (/^labels: (\[.*\])$/m.exec(y) || [])[1]))].join(' ') + ') exists (' + EXIST.join(', ') + ', read on 2026-11-18) or is created by labels.yml, which creates rights and no existing label, on its own change on main and by hand, with issues: write only; and tools/removal.js leaves a notice from a rights holder (by its label, or its English or Japanese form) that names a removed record, while an ordinary issue naming it is still emptied',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (k, a, b) => Object.assign({}, real, { [k]: String(real[k] || '').replace(a, b) });
+  const breaks = [
+    ['labels.yml without rights', w('wf', /gh label create "rights"[^\n]*\n/, '')],
+    ['labels.yml touching an existing label', w('wf', 'gh label create "rights"', 'gh label create "removal" --color b60205 --force\n          gh label create "rights"')],
+    ['a form with a label that neither exists nor is created', Object.assign({}, real, { forms: Object.assign({}, forms, { '.github/ISSUE_TEMPLATE/x.yml': 'labels: ["legal"]\n' }) })],
+    ['labels.yml writing the repository', w('wf', 'permissions:\n  issues: write\n', 'permissions:\n  contents: write\n  issues: write\n')],
+    ['labels.yml not run on main', w('wf', "    paths: ['.github/workflows/labels.yml']\n", '')],
+    ['tools/removal.js emptying a notice', w('removal', ' && !rightsNotice(i));', ');')],
+    ['tools/removal.js keeping every issue', w('removal', ' && !rightsNotice(i));', ' && false);')],
+    ['the Japanese form not recognised', w('rights', "'### どの権利か'", "'### 権利'")],
+    ['the label not recognised', w('rights', "const RIGHTS_LABEL = 'rights';", "const RIGHTS_LABEL = 'notice';")],
+    ['the detector copied into tools/removal.js', w('removal', "const { rightsNotice } = require('./rights.js');", "const rightsNotice = (i) => (i.labels || []).some((l) => (typeof l === 'string' ? l : l.name) === 'rights') || /### (Which right|どの権利か)/.test(i.body || '');")],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (labels.yml without rights, touching an existing label, a form with a label nobody creates, labels.yml writing the repository or not run on main, tools/removal.js emptying a notice or keeping every issue, the Japanese form or the label not recognised, and the detector copied) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 

@@ -1,6 +1,6 @@
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-18。
 
 これは英語の [Operator and contact](./contact.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -47,6 +47,7 @@ Sophaxis を紹介する人のために、[紹介する人のために](./press.
 - 作品の著者の一人として、作品を撤回すること：[撤回の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=withdrawal.yml)。
 - 作品の著者の一人として、載っている作品の出版された版を報告すること：[出版された版の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml)。
 - 法的な理由による削除：[削除の様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml)。
+- Sophaxis の名やサイトそのものについての、権利者からの知らせ：[権利者の知らせの様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml)、または同じ様式の[英語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml)。
 - 公開すべきでないこと：運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメール。
 
 issue は公開されます。issue に個人データを書かないでください。
@@ -57,6 +58,16 @@ issue は公開されます。issue に個人データを書かないでくだ�
 運営者は、7 日以内に答えることを目指します。
 
 <!-- text: DSA 11; DSA 12 -->
+
+## 権利者の方へ
+
+Sophaxis の名や、サイトそのものにあるものが権利を侵していると考える権利者は、運営者に知らせることができます。
+商標や紛らわしい名、サイトの文や意匠の著作権、肖像、そのほかの権利が対象です。
+知らせは[権利者の知らせの様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml)で出します。同じ様式の[英語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml)もあります。
+公開の場で出せない知らせは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、メールで送ります。
+運営者は、すべての知らせを読みます。
+権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめ、決めたことを公開のリポジトリに記録します。
+そのあとの扱いは、[削除の規程](./policies/takedown.ja.md#権利者の方へ)の「権利者の方へ」にあります。
 
 ## ほかの場所にある Sophaxis
 

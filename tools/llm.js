@@ -12,6 +12,11 @@
  * writing of another person. If one account has not consented, nothing is given: a person reviews the issue, or it waits.
  * Nothing here sends anything to a language model; it only reads the issue and its comments, and prints the result for the
  * operator. It keeps nothing. The owner decided this on 2026-11-15 (docs/legal-audit-2026-11-12.md, 「2026-11-15：点検の答え」).
+ *
+ * A notice from a rights holder (.github/ISSUE_TEMPLATE/rights.yml and rights-ja.yml, since 2026-11-18) is read otherwise: only
+ * its title and text may be given, only to Claude, and only when the box RIGHTS_BOX is ticked in the text. The box is optional,
+ * and no comment counts, whoever wrote it: a notice without the box is never given (Privacy Policy, "Notices from rights holders
+ * and Claude"). The owner asked for the form on 2026-11-18, and Claude wrote this.
  */
 'use strict';
 const I = require('./intake.js');
@@ -27,12 +32,23 @@ function submitterConsents(body) {
   return t.has(REVIEW_BOX[0]) || t.has(REVIEW_BOX[1]);
 }
 
+/* The rights holder's form: its box of consent and how a notice is known, shared with tools/removal.js. */
+const { RIGHTS_PHRASE, RIGHTS_BOX, rightsNotice } = require('./rights.js');
+/* Pure: whether the box of the rights holder's form is ticked in the text of the issue, in either language. */
+const rightsConsents = (body) => I.tickedIn(body).some((b) => b === RIGHTS_BOX || b.endsWith(' / ' + RIGHTS_BOX));
+
 /* Pure: whether a comment carries one of the fixed words of consent. */
 const consentsIn = (body) => [CONSENT, CONSENT_JA, I.AGREE_CHECKED].some((w) => squash(body).includes(squash(w)));
 
 /* Pure: { ok, missing } for an issue and its comments. `owner` is the operator's account. Every account that wrote the issue or
  * a comment, other than a bot and the operator, must have consented; `missing` lists the accounts that have not. */
 function mayPass({ issue, comments = [], owner = '' }) {
+  /* A rights holder's notice: its title and text, to Claude only, on its own box; comments are never given. */
+  if (rightsNotice(issue)) {
+    const who = (issue.user && issue.user.login) || '';
+    const yes = rightsConsents(issue.body);
+    return { ok: yes, missing: yes ? [] : [who], writers: 1, only: 'the title and text, to Claude' };
+  }
   const isOwner = (login) => !!owner && String(login || '').toLowerCase() === String(owner).toLowerCase();
   const writers = new Map();
   const note = (login, yes) => { if (!login) return; writers.set(login, writers.get(login) || yes); };
@@ -55,11 +71,17 @@ async function main() {
   if (!issue) throw new Error('no such issue');
   const comments = (await I.github('GET', '/issues/' + n + '/comments?per_page=100')) || [];
   const r = mayPass({ issue, comments, owner: SITE.operator.github });
+  if (r.only) {
+    console.log(r.ok ? 'May be given: only ' + r.only + '. #' + n + ' is a notice from a rights holder, and its box of consent is ticked. No comment is given.'
+      : 'Not to be given: #' + n + ' is a notice from a rights holder, and its box of consent is not ticked. It is handled without a language model.');
+    process.exitCode = r.ok ? 0 : 3;
+    return;
+  }
   console.log(r.ok ? 'May be given: every one of the ' + r.writers + ' accounts that wrote in #' + n + ' has consented.'
     : 'Not to be given: ' + r.missing.length + ' of the ' + r.writers + ' accounts that wrote in #' + n + ' have not consented. A person reviews it, or it waits.');
   process.exitCode = r.ok ? 0 : 3;
 }
 
-module.exports = { CONSENT, CONSENT_JA, mayPass, submitterConsents, consentsIn, REVIEW_BOX };
+module.exports = { CONSENT, CONSENT_JA, mayPass, submitterConsents, consentsIn, REVIEW_BOX, RIGHTS_PHRASE, RIGHTS_BOX, rightsNotice, rightsConsents };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

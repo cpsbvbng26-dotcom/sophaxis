@@ -5,8 +5,16 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-15T00:00:00Z</updated>
+  <updated>2026-11-18T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c31</id>
+    <title>A form for rights holders, and Claude only with its box ticked</title>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <summary>Since its publication on 2026-11-18, a rights holder who thinks that the name Sophaxis, or something on the site itself, infringes a trademark, a copyright, a likeness or another right can tell the operator by a form of its own, in English or in Japanese, or in private by email to the address on the operator's ORCID record; a problem in one record still goes by the removal form. The operator reads every notice; if the right is confirmed, the operator changes the name or stops using the material, and records the decision in the public repository. The title and text of such a notice are given to Claude only when the optional box of consent in the form is ticked. This widens what people can do and narrows nothing, so it takes effect on publication. The owner asked for this on 2026-11-18, and Claude wrote it. Policies: Takedown Policy, Privacy Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c30</id>
     <title>At most 3 records a day are taken offline automatically</title>
