@@ -2191,9 +2191,9 @@ console.log('\n51. What runs by itself, said on the site and in the README');
   const scripts = [...new Set(wfs.flatMap((f) => [...read(path.join(ROOT, '.github', 'workflows', f)).matchAll(/node (tools\/[a-z_]+\.js|verification\/check\.js)/g)].map((m) => m[1])))];
   const unsaid = scripts.filter((x) => !auto.includes('(https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/' + x + ')'));
   ok('the page links every script that a workflow runs (' + scripts.length + ')', scripts.length >= 7 && unsaid.length === 0, unsaid.join(', '));
-  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml', 'checked-intake.yml': 'checked-intake.yml', 'labels.yml': 'labels.yml' };
+  const named = { 'watch.yml': 'watch.yml', 'intake.yml': 'intake.yml', 'removal.yml': 'removal.yml', 'indexnow.yml': 'indexnow.yml', 'statutes.yml': 'statutes.yml', 'live.yml': 'live.yml', 'record.yml': 'record.yml', 'report.yml': 'report.yml', 'monthly.yml': 'monthly.yml', 'audit.yml': 'audit.yml', 'checked-intake.yml': 'checked-intake.yml', 'labels.yml': 'labels.yml', 'empty-issue.yml': 'empty-issue.yml' };
   ok('the page names each workflow that runs on an event of its own', Object.keys(named).every((f) => wfs.includes(f) && auto.includes('/.github/workflows/' + f + ')'))
-    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml', 'checked-intake.yml', 'labels.yml'].includes(f)), wfs.join(', '));
+    && wfs.every((f) => ['check.yml', 'intake.yml', 'removal.yml', 'indexnow.yml', 'watch.yml', 'pdf.yml', 'sources.yml', 'statutes.yml', 'live.yml', 'record.yml', 'report.yml', 'monthly.yml', 'audit.yml', 'checked-intake.yml', 'labels.yml', 'empty-issue.yml'].includes(f)), wfs.join(', '));
   /* The times on the page are the schedules of the workflows, in Japan time. */
   const jst = (cron) => { const [m, h] = cron.split(' ').map(Number); return String((h + 9) % 24).padStart(2, '0') + ':' + String(m).padStart(2, '0'); };
   const cronOf = (f) => (/cron: '([^']+)'/.exec(read(path.join(ROOT, '.github', 'workflows', f))) || [])[1];
@@ -6026,7 +6026,7 @@ console.log('\n123. What an eighth, read-only pass found: GitHub\'s terms for Ac
     ['a new workflow without a row', problems(w({ wf: WF.concat(['newsletter.yml']) }))],
     ['a row for a workflow taken away', problems(w({ wf: WF.filter((f) => f !== 'audit.yml') }))],
     ['a row dropped', problems(w({ aud: AUD.replace(/\n\| `\.github\/workflows\/pdf\.yml`[^\n]*/, '') }))],
-    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 15 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 15 です。') }))],
+    ['the count', problems(w({ aud: AUD.replace('この表の判定は、漏れ 4、表現 1、問題なし 16 です。', 'この表の判定は、漏れ 3、表現 1、問題なし 16 です。') }))],
     ['a decision without its maker', problems(w({ aud: AUD.replace('ワークフローから呼ばれなくなりました。2026-11-13 に Claude が決めました。', 'ワークフローから呼ばれなくなりました。') }))],
     ['a quotation altered', problems(w({ aud: AUD.replace('or publication of the software project associated', 'or promotion of the software project associated') }))],
     ['the posts for X written again', problems(w({ wfText: Object.assign({}, wfText, { 'monthly.yml': wfText['monthly.yml'] + '\n      - run: node tools/monthly.js\n' }) }))],
