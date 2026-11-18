@@ -1,5 +1,5 @@
 # Dependabot opens a pull request when a GitHub Action used by the workflows has a new version.
-# It is a free GitHub feature; the operator merges each one after its checks pass.
+# It is a free GitHub feature; each one is merged after its checks pass.
 version: 2
 updates:
   - package-ecosystem: github-actions
