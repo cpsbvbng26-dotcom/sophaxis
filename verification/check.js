@@ -873,7 +873,7 @@ console.log('\n20. Operator and contact');
     src.includes('Sophaxis is operated by one person, Takuya Nemoto, in Japan.') && c.includes('href="https://orcid.org/0009-0000-1406-0547"') && /Last updated: \d{4}-\d{2}-\d{2}\./.test(src));
   const forms = fs.readdirSync(path.join(ROOT, '.github', 'ISSUE_TEMPLATE')).filter((f) => f !== 'config.yml');
   ok('the contact page links every issue form there is, and private requests go only to the ORCID record',
-    forms.length === 6 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
+    forms.length === 8 && forms.every((f) => c.includes('issues/new?template=' + f + '"'))
     && src.includes("email to the address on the operator's [ORCID record]") && !/@[a-z0-9-]+\.[a-z]/i.test(src));
   ok('the postal address is not published, and is given on request without delay',
     src.includes('The operator\'s postal address is not published.') && src.includes('It is given on request, without delay, as Japan\'s Act on the Protection of Personal Information provides.'));
@@ -8279,6 +8279,103 @@ console.log('\n138. The automation hardened (2026-11-15): the job of a pull requ
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each of ' + breaks.length + ' ways (a token or a write on a pull request, the record merging what was not labelled, the cap, its notice and pages, the sweep, the concurrency, the daily run, the weekly watch, a token for poppler or the checks, a checkout keeping its token, a time limit, IndexNow, the heartbeat and the record) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 139 */
+console.log('\n139. A form for rights holders (2026-11-18): the name and the site itself, in English and Japanese, an optional box for Claude with the sentence that is searched for, the private route that was already there, the sections of the contact page and the Takedown Policy, the README, and tools/llm.js');
+{
+  /* The owner asked on 2026-11-18 for a contact for rights holders on the site and on GitHub; Claude wrote it. A problem in one
+   * record still goes by removal.yml. The private route is the one the removal form and the contact page already give. */
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const FORMS = { en: '.github/ISSUE_TEMPLATE/rights.yml', ja: '.github/ISSUE_TEMPLATE/rights-ja.yml' };
+  const PHRASE = 'I consent to the operator giving the title and text of this issue to Claude';
+  const BOX = { en: '        - label: ' + PHRASE + ' (Anthropic, United States).\n          required: false\n',
+    ja: '        - label: この issue の題と本文を、運営者が Claude（Anthropic、米国）に渡すことに同意します。 / ' + PHRASE + ' (Anthropic, United States).\n          required: false\n' };
+  const NEED = {
+    en: ['labels: ["rights"]', '      label: Which right\n', '        - A trademark, or a confusingly similar name\n        - Copyright\n        - Likeness or publicity\n        - Another right\n',
+      '      label: Where it is on the site\n', '      label: What the right is\n', 'its registration number and the office that registered it', '      label: What you ask for\n',
+      '      label: How you are concerned\n', '        - I hold the right\n        - I act on behalf of the holder\n', 'issues/new?template=removal.yml',
+      "send it by email to the address on the operator's ORCID record (https://orcid.org/0009-0000-1406-0547) instead.", 'This issue is public. Do not include personal data.',
+      'Without it, the operator handles the notice without giving it to Claude or to any other language model.', 'Comments on this issue are not given to a language model.'],
+    ja: ['labels: ["rights"]', '      label: どの権利か\n', '        - 商標、または紛らわしい名\n        - 著作権\n        - 肖像やパブリシティ\n        - そのほかの権利\n',
+      '      label: サイトのどこにあるか\n', '      label: どんな権利か\n', '登録されていればその登録番号と登録した官庁', '      label: 何を求めるか\n',
+      '      label: どう関わるか\n', '        - 権利を持っている\n        - 権利者の代理をしている\n', 'issues/new?template=removal.yml',
+      '公開の場で出せない知らせは、運営者の ORCID の記録（https://orcid.org/0009-0000-1406-0547）にあるアドレスへ、メールで送ります。', 'この issue は公開されます。個人情報は書きません。',
+      '印がなければ、運営者は、Claude にもほかの言語モデルにも渡さずに知らせを扱います。', 'この issue のコメントは、言語モデルに渡しません。'] };
+  const LINK = (f) => 'https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=' + f;
+  const SECTIONS = { 'contact.md': '## For rights holders', 'contact.ja.md': '## 権利者の方へ', 'policies/takedown.md': '## For rights holders', 'policies/takedown.ja.md': '## 権利者の方へ' };
+  const SAY = { 'contact.md': ["email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547)", 'If the right is confirmed, the operator changes the name, or stops using the material'],
+    'contact.ja.md': ['運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、メールで送ります。', '権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめ'],
+    'policies/takedown.md': ["email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547)", 'If the right is confirmed, the operator changes the name, or stops using the material.', 'A problem in one record goes by a removal issue'],
+    'policies/takedown.ja.md': ['運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへ、メールで送ります。', '権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめます。', '一つの記録の問題は、上の「求め方」のとおり、削除の issue で求めます。'] };
+  const BUILT = { 'site/contact.html': 'for-rights-holders', 'site/contact.ja.html': '権利者の方へ', 'site/policies/takedown.html': 'for-rights-holders', 'site/policies/takedown.ja.html': '権利者の方へ' };
+  const real = Object.fromEntries([...Object.values(FORMS), ...Object.keys(SECTIONS), ...Object.keys(BUILT), 'README.md', 'policies/privacy.md', 'policies/privacy.ja.md', 'data/policy-changes.json', 'tools/llm.js'].map((f) => [f, T(f)]));
+  const sectionOf = (t, head) => { const i = String(t || '').indexOf('\n' + head + '\n'); if (i < 0) return ''; const j = t.indexOf('\n## ', i + head.length + 2); return t.slice(i, j < 0 ? undefined : j); };
+  function problems(x) {
+    const bad = [];
+    for (const [lang, f] of Object.entries(FORMS)) {
+      const y = x[f];
+      if (y === null || y === undefined) { bad.push(f + ' is missing'); continue; }
+      const consent = (y.split('\n  - type: ').find((s) => /^checkboxes\n    id: consent\n/.test(s)) || '') + '\n';
+      if (!consent.includes(BOX[lang])) bad.push(f + ': no optional box with the sentence');
+      if (/required: true/.test(consent)) bad.push(f + ': the box of consent is required');
+      for (const s of NEED[lang]) if (!y.includes(s)) bad.push(f + ': ' + s.trim().slice(0, 40));
+      if (/@[a-z0-9-]+\.[a-z]/i.test(y)) bad.push(f + ': an email address');
+    }
+    for (const [f, head] of Object.entries(SECTIONS)) {
+      const s = sectionOf(x[f], head);
+      if (!s) { bad.push(f + ': no section ' + head); continue; }
+      if (!s.includes('](' + LINK('rights.yml') + ')') || !s.includes('](' + LINK('rights-ja.yml') + ')')) bad.push(f + ': the section does not link both forms');
+      for (const w of SAY[f]) if (!s.includes(w)) bad.push(f + ': ' + w.slice(0, 40));
+      if (/@[a-z0-9-]+\.[a-z]/i.test(s) || /within \d+ days|\d+ 日以内/.test(s)) bad.push(f + ': an email address or a deadline in the section');
+    }
+    for (const [f, id] of Object.entries(BUILT)) if (!String(x[f] || '').includes(' id="' + id + '"') || !String(x[f] || '').includes(LINK('rights.yml').replace('?', '?')) || !String(x[f] || '').includes(LINK('rights-ja.yml'))) bad.push(f + ': the built section or its links');
+    const rd = String(x['README.md'] || ''), en = rd.split('\n## 日本語\n')[0], ja = rd.split('\n## 日本語\n')[1] || '';
+    if (!sectionOf(en, '## Operator and contact').includes('](' + LINK('rights.yml') + ')') || !ja.includes('[権利者の知らせの様式](' + LINK('rights-ja.yml') + ')')) bad.push('README: the form is not linked in both parts');
+    if (!String(x['policies/privacy.md'] || '').includes('\n### Notices from rights holders and Claude\n') || !String(x['policies/privacy.md'] || '').includes('This is done only when the box of consent in the form is ticked.')
+      || !String(x['policies/privacy.ja.md'] || '').includes('2026-11-18 から、権利者の知らせの題と本文が、同意の印があるときだけ Claude に渡ることも同じに扱います。')) bad.push('the Privacy Policy does not say that a notice reaches Claude only with its box');
+    let ch = [];
+    try { ch = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('policy-changes.json'); }
+    if (!ch.some((c) => c.date === '2026-11-18' && c.policies.includes('takedown') && c.policies.includes('privacy') && String(c.ja || '').includes('2026-11-18 に利用者が求め、Claude が書きました。'))) bad.push('the notice of changes of 2026-11-18');
+    /* tools/llm.js, loaded from the text given, on issues made here. */
+    let L = null;
+    try { const m = { exports: {} }; new Function('module', 'exports', 'require', '__dirname', String(x['tools/llm.js'] || '').replace(/^#!.*\n/, ''))(m, m.exports, (q) => require(q.startsWith('.') ? path.join(ROOT, 'tools', q) : q), path.join(ROOT, 'tools')); L = m.exports; } catch (e) { L = null; }
+    if (!L || !L.mayPass) bad.push('tools/llm.js does not load');
+    else {
+      const body = (tick, lang) => '### ' + (lang === 'ja' ? 'どの権利か' : 'Which right') + '\n\nCopyright\n\n### Use\n\n- [' + tick + '] ' + (lang === 'ja' ? 'この issue の題と本文を、運営者が Claude（Anthropic、米国）に渡すことに同意します。 / ' : '') + PHRASE + ' (Anthropic, United States).\n';
+      const other = [{ user: { login: 'x', type: 'User' }, body: String(L.CONSENT || '') }];
+      const yes = L.mayPass({ issue: { user: { login: 'h' }, body: body('X', 'en') }, comments: other });
+      const yesJa = L.mayPass({ issue: { user: { login: 'h' }, labels: [{ name: 'rights' }], body: body('x', 'ja') } });
+      const no = L.mayPass({ issue: { user: { login: 'h' }, body: body(' ', 'en') }, comments: [{ user: { login: 'h', type: 'User' }, body: String(L.CONSENT || '') }] });
+      const noLabel = L.mayPass({ issue: { user: { login: 'h' }, labels: ['rights'], body: 'No form.\n' + String(L.CONSENT || '') } });
+      if (!yes.ok || !yesJa.ok || no.ok || noLabel.ok || !/to Claude/.test(String(yes.only || ''))) bad.push('tools/llm.js does not pass a notice only on its own box');
+    }
+    return bad;
+  }
+  const now = problems(real);
+  ok('the rights holder\'s form, in English and in Japanese, asks which right, where, what it is, what is asked and how the person is concerned; its box for Claude carries the searched sentence and is optional; it points one record to removal.yml and private notices to the ORCID record; the contact page, the Takedown Policy (both languages, built too) and the README link it; the Privacy Policy and the notice of changes say so; and tools/llm.js passes a notice only on its own box',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f] || '').replace(a, b) });
+  const breaks = [
+    ['the English form taken out', Object.assign({}, real, { [FORMS.en]: null })],
+    ['the box made required', w(FORMS.en, '(Anthropic, United States).\n          required: false', '(Anthropic, United States).\n          required: true')],
+    ['the sentence changed in Japanese', w(FORMS.ja, ' / ' + PHRASE, ' / I agree to the operator giving the title and text of this issue to Claude')],
+    ['a field taken out', w(FORMS.en, '      label: What the right is\n', '      label: Details\n')],
+    ['the record no longer pointed to removal.yml', w(FORMS.ja, 'issues/new?template=removal.yml', 'issues/new')],
+    ['a new private route', w(FORMS.en, "the address on the operator's ORCID record (https://orcid.org/0009-0000-1406-0547)", 'the address given in this issue')],
+    ['the section taken out of the contact page', w('contact.md', '## For rights holders', '## Rights')],
+    ['the Japanese form not linked from the Takedown Policy', w('policies/takedown.ja.md', LINK('rights-ja.yml'), LINK('removal.yml'))],
+    ['a deadline promised in the section', w('policies/takedown.md', 'The operator reads every notice.', 'The operator reads every notice within 7 days.')],
+    ['the built page without the section', w('site/policies/takedown.ja.html', ' id="権利者の方へ"', ' id="x"')],
+    ['the README without the form', w('README.md', '[権利者の知らせの様式](' + LINK('rights-ja.yml') + ')', '権利者の知らせの様式')],
+    ['the Privacy Policy without the box', w('policies/privacy.md', 'This is done only when the box of consent in the form is ticked.', '')],
+    ['the notice of changes without who asked', w('data/policy-changes.json', '2026-11-18 に利用者が求め、Claude が書きました。', '')],
+    ['tools/llm.js passing a notice without its box', w('tools/llm.js', 'const yes = rightsConsents(issue.body);', 'const yes = true;')],
+    ['tools/llm.js counting a comment for a notice', w('tools/llm.js', '  if (rightsNotice(issue)) {', '  if (false) {')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (a form gone, the box required or its sentence changed, a field gone, removal.yml or the ORCID route changed, a section gone or unlinked, a deadline, the built page, the README, the Privacy Policy, the notice of changes, and tools/llm.js passing without the box or counting a comment) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 
