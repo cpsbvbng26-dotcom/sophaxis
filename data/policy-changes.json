@@ -7,6 +7,13 @@
     "ja": "2026-11-18 の公開から、Sophaxis の名や、サイトそのものにあるものが、商標・著作権・肖像などの権利を侵していると考える権利者は、専用の様式（英語と日本語）か、運営者の ORCID の記録にあるアドレスへのメールで、運営者に知らせることができます。一つの記録の問題は、これまでどおり削除の様式で求めます。運営者はすべての知らせを読み、権利が確かめられたときは、名を変えるか、その素材を使うのをやめ、決めたことを公開のリポジトリに記録します。知らせの題と本文を Claude に渡すのは、様式の任意の同意の欄に印があるときだけです。2026-11-18 に利用者が求め、Claude が書きました。"
   },
   {
+    "date": "2026-11-18",
+    "policies": ["terms", "copyright"],
+    "title": "The quoted Japanese articles fetched again",
+    "text": "On 2026-11-18 every Japanese article that the policies quote was fetched again from the e-Gov law API, by the same steps as the weekly watch, and each was the same as the text already quoted. The quotations now give that day. Articles 2, 4, 26, 32, 36, 37, 73 and 74 of the Trademark Act and Articles 3, 4, 16, 17 and 19 of the Unfair Competition Prevention Act joined the weekly watch; the Disclaimer quotes Articles 2, 73 and 74 of the Trademark Act under \"Names and trademarks\". No rule of the Terms of Use or of the Copyright Policy changed. The owner asked for this on 2026-11-18, and Claude wrote it.",
+    "ja": "2026-11-18 に、規程が引く日本の法令の条を、週ごとの見張りと同じ手順で、e-Gov 法令 API からすべて取り寄せ直しました。どの条も、すでに引いていた文と同じでした。引用に示す日は、その日になりました。商標法第 2 条・第 4 条・第 26 条・第 32 条・第 36 条・第 37 条・第 73 条・第 74 条と、不正競争防止法第 3 条・第 4 条・第 16 条・第 17 条・第 19 条を、週ごとの見張りに加えました。免責事項の「名称と商標」が引くのは、商標法第 2 条・第 73 条・第 74 条です。利用規約と著作権の規程の決まりは、どれも変わっていません。2026-11-18 に利用者が求め、Claude が書きました。"
+  },
+  {
     "date": "2026-11-15",
     "policies": ["takedown", "privacy"],
     "from": "2026-12-01",

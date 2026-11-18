@@ -5811,8 +5811,8 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
   const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
   const breaks = [
-    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
-    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-15。', '最終更新：2026-11-14。'), facts],
+    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-18.', 'Last updated: 2026-11-14.'), facts],
+    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-18。', '最終更新：2026-11-14。'), facts],
     ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
     ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
@@ -8445,6 +8445,223 @@ console.log('\n140. The labels of the forms, and the notices from rights holders
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each of ' + breaks.length + ' ways (labels.yml without rights, touching an existing label, a form with a label nobody creates, labels.yml writing the repository or not run on main, tools/removal.js emptying a notice or keeping every issue, the Japanese form or the label not recognised, and the detector copied) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 141 */
+console.log('\n141. Names and trademarks (2026-11-18): the section of the Disclaimer in both languages and its links, the names and marks with their first days, the search record, the names of others found on the site, only Sophaxis\'s own images served, no registration mark on its own names, the quoted articles watched, and the record');
+{
+  /* The owner asked on 2026-11-18 for the trademark matters to be handled in detail; Claude wrote the section and this check.
+   * Every number of the section is counted here, every name of others it lists is found on the site, and every image the
+   * site serves is one of the files the section lists. */
+  const { execFileSync } = require('child_process');
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const L = 'Names and marks (Trademark Act; Unfair Competition Prevention Act)';
+  const SEC = {
+    en: { file: 'disclaimer.md', head: '## Names and trademarks', subs: ['### The names and marks of Sophaxis', '### How the names are used', '### The search record', "### Others' names", '### No registration marks', '### When a notice comes'], id: 'names-and-trademarks', built: 'site/disclaimer.html' },
+    ja: { file: 'disclaimer.ja.md', head: '## 名称と商標', subs: ['### Sophaxis の名としるし', '### 名の使い方', '### 調べた記録', '### ほかの者の名', '### 登録の表示を付けないこと', '### 知らせが来たとき'], id: '名称と商標', built: 'site/disclaimer.ja.html' },
+  };
+  const LINKS = {
+    'contact.md': ['## For rights holders', '](./disclaimer.md#names-and-trademarks)'], 'contact.ja.md': ['## 権利者の方へ', '](./disclaimer.ja.md#名称と商標)'],
+    'policies/takedown.md': ['## For rights holders', '](../disclaimer.md#names-and-trademarks)'], 'policies/takedown.ja.md': ['## 権利者の方へ', '](../disclaimer.ja.md#名称と商標)'],
+    'brand.md': ['## Name', '](./disclaimer.md#names-and-trademarks)'], 'brand.ja.md': ['## 名前', '](./disclaimer.ja.md#名称と商標)'],
+  };
+  const FORMS = { '.github/ISSUE_TEMPLATE/rights.yml': 'https://sophaxis.vercel.app/disclaimer.html#names-and-trademarks', '.github/ISSUE_TEMPLATE/rights-ja.yml': 'https://sophaxis.vercel.app/disclaimer.ja.html#名称と商標' };
+  /* The sentences that hold the position: the search record, no conclusion on 「業として」, no registration, the decision. */
+  const SAY = {
+    en: ['It is not legal advice, and no lawyer has reviewed it.', 'The owner asked for it on 2026-11-18, and Claude wrote it.',
+      'The operator has not applied to register any of these names and marks as a trade mark, in Japan or anywhere else.', 'The operator will not apply. Claude decided this on 2026-11-18, so as not to keep the name for Sophaxis alone.',
+      'Sophaxis charges no fee to submit or to read.', 'It carries no advertising and sells nothing.',
+      'The facts are recorded here. This page draws no conclusion on whether Sophaxis uses its name 「業として」.',
+      'On 2026-11-17 (Japan time), the operator searched the trade mark database of EUIPO for Sophaxis, and it gave **0** results.',
+      "Claude saw those results in the operator's screenshots.", 'Claude did not search J-PlatPat, WIPO or the USPTO itself.', 'The terms of J-PlatPat forbid automated use, so Claude does not query it.',
+      "No search of the USPTO's own database, or of the databases of other national offices one by one, is recorded.",
+      'These names belong to their owners, and some of them are trade marks.', 'Their use implies no affiliation, sponsorship or endorsement',
+      'The site serves no logo of anyone else.',
+      'The site never puts ®, ™, 「登録商標」 or "registered trademark" on its own names and marks, because none of them is registered.',
+      '3. While deciding, the operator may add a note where the name appears, saying that Sophaxis is not connected with the rights holder.',
+      '4. If the right is confirmed, the operator changes the title and the text of the site, the name of the Vercel project and the address of the site, the name of the repository, the forms and the README.\n', '9. If the right is not confirmed, the operator says why in the same way.'],
+    ja: ['法的な助言ではなく、弁護士の確認も受けていません。', '2026-11-18 に利用者が求め、Claude が書きました。',
+      '運営者は、これらの名としるしのどれも、日本でもほかの国でも、商標の登録を出願していません。', 'これからも出願しません。2026-11-18 に Claude が決めました。名を独り占めしないためです。',
+      'Sophaxis は、投稿にも閲覧にも料金を取りません。', '広告を出さず、何も売りません。',
+      'ここには事実を記します。Sophaxis の名の使い方が「業として」に当たるかどうかについて、この頁は結論を出しません。',
+      '2026-11-17（日本時間）に、運営者が、EUIPO の商標のデータベースで Sophaxis を調べ、結果は **0** 件でした。',
+      'Claude は、その結果を運営者の画面の写しで見ました。', 'Claude は、J-PlatPat・WIPO・USPTO を自分では調べていません。', 'J-PlatPat の利用規約は機械による利用を禁じているので、Claude は J-PlatPat に問い合わせません。',
+      'USPTO 自身のデータベースと、ほかの国の官庁のデータベースを一つずつ調べた記録はありません。',
+      'これらの名は、それぞれの持ち主に属します。その中には商標もあります。', '提携・後援・推薦の関係を示すものではありません。',
+      'サイトは、ほかの者のロゴを配りません。',
+      'サイトは、自分の名としるしに、®・™・「登録商標」・"registered trademark" を付けません。どれも登録していないからです。',
+      '3. 決めるまでのあいだ、運営者は、名が出る所に、Sophaxis がその権利者と関わりがないことの断り書きを足すことがあります。',
+      '4. 権利が確かめられたときは、運営者が、サイトの題と文、Vercel のプロジェクトの名とサイトのアドレス、リポジトリの名、様式、README を変えます。\n', '9. 権利が確かめられないときも、同じやり方で理由を知らせます。'],
+  };
+  const NO_MARK = [SAY.en[15], SAY.ja[15]];
+  const COUNT_RE = {
+    en: { marks: /^Sophaxis uses these \*\*(\d+)\*\* names and marks\.$/m, names: /the site names these \*\*(\d+)\*\* services, products and organisations: (.+)\.$/m, images: /^It serves only these image files, all of them made for Sophaxis:\n\n((?:- .+\n)+)/m },
+    ja: { marks: /^Sophaxis が使う名としるしは、次の \*\*(\d+)\*\* つです。$/m, names: /サイトは、次の \*\*(\d+)\*\* のサービス・製品・組織の名を挙げています：(.+)。$/m, images: /^配る画像は、次のファイルだけです。どれも Sophaxis のために作ったものです。\n\n((?:- .+\n)+)/m },
+  };
+  const QUOTED = ['Trademark Act 2', 'Trademark Act 73', 'Trademark Act 74'];
+  const IMG = /\.(svg|png|ico|jpe?g|gif|webp|avif|bmp|tiff?)$/i;
+  const OWN = /sophaxis|ソファクシス/gi;
+  const MARK = /®|™|℠|\(R\)|\(TM\)|登録商標|registered\s+trade\s*-?\s*mark/i;
+  const RECORD_DIRS = /^site\/(abs|cite|author|collection|list|api|pdf|card)\//;
+  const AUD = 'docs/legal-audit-2026-11-12.md', AHEAD = '\n## 2026-11-18：名称と商標\n';
+  const JUDGE = ['誤り', '根拠不足', '漏れ', '表現', '問題なし'];
+  /* The files: every tracked text file (this check aside), and the served images. */
+  const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'Asia/Tokyo' }), stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 28 });
+  const tracked = git(['ls-files']).split('\n').filter((f) => f && /\.(md|json|js|yml|yaml|html|xml|txt|cff|bib|tex|svg|css)$/.test(f) && f !== 'verification/check.js' && fs.existsSync(path.join(ROOT, f)));
+  const walk = (d) => fs.readdirSync(path.join(ROOT, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(d + '/' + e.name) : [d + '/' + e.name]));
+  const real = Object.fromEntries(tracked.concat(Object.keys(LINKS), Object.keys(FORMS), ['CHANGELOG.md', AUD, 'verification/statutes.json']).map((f) => [f, T(f)]));
+  real.__images = walk('site').filter((f) => IMG.test(f)).map((f) => f.slice('site/'.length)).sort();
+  /* The first day (Japan time) on which each file, or each name, appears in the history. */
+  const firstAdd = (f) => (git(['log', '--diff-filter=A', '--format=%cd', '--date=format-local:%Y-%m-%d', '--', f]).trim().split('\n').pop() || '');
+  const firstS = (s) => (git(['log', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', s]).trim().split('\n')[0] || '');
+  const DAYS = { Sophaxis: firstS('Sophaxis'), 'ソファクシス': firstS('ソファクシス') };
+  for (const f of ['favicon.svg', 'og.png', 'favicon.ico', 'favicon-192.png', 'apple-touch-icon.png']) DAYS[f] = firstAdd('assets/' + f);
+  DAYS['badge.svg'] = firstAdd('site/badge.svg');
+  DAYS['design.js'] = firstAdd('design.js');
+  const textOf = (h) => String(h || '').replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+  const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const sectionOf = (t, head, stop) => { const s = String(t || ''); const i = s.indexOf('\n' + head + '\n'); if (i < 0) return ''; const j = s.indexOf(stop, i + head.length + 2); return s.slice(i, j < 0 ? undefined : j); };
+  function verdict(x) {
+    const bad = [];
+    const parts = {};
+    for (const [lang, S] of Object.entries(SEC)) {
+      const s = sectionOf(x[S.file], S.head, '\n## ');
+      if (!s) { bad.push(S.file + ': no section ' + S.head); continue; }
+      parts[lang] = s;
+      let at = 0;
+      for (const h of S.subs) { const i = s.indexOf('\n' + h + '\n'); if (i < at) bad.push(S.file + ': ' + h + ' missing or out of order'); at = Math.max(at, i); }
+      for (const w of SAY[lang]) if (!s.includes(w)) bad.push(S.file + ': ' + w.slice(0, 40));
+      if (!String(x[S.built] || '').includes('<h2 id="' + S.id + '">')) bad.push(S.built + ': the section is not built with its id');
+      if (/within \d+ days|\d+ 日以内|\d+ days? of|deadline/i.test(s)) bad.push(S.file + ': a deadline');
+      /* 2026-11-18：what GitHub does after a rename was not fetched, so the section does not say it. */
+      if (/redirect|links to the old name|old name of a repository on|古い名へのリンク|新しい名へ送/i.test(s)) bad.push(S.file + ': what GitHub does after a rename, which was not fetched');
+      if (/@[a-z0-9-]+\.[a-z]/i.test(s)) bad.push(S.file + ': an email address');
+      if (/reviewed by a lawyer|a lawyer (has )?(reviewed|checked)|弁護士が(確か|確認|見)|certainly|guarantee|no risk|cannot infringe|does not infringe|違法とはならない|侵害しません|おそれはありません/i.test(s)) bad.push(S.file + ': a lawyer or a certainty claimed');
+      if (/(is not|does not use[^.]*) 「業として」|outside[^.]{0,40}「業として」|「業として」[^。]{0,20}(当たりません|に当たらない)/.test(s)) bad.push(S.file + ': a conclusion on 「業として」');
+    }
+    if (bad.length) return bad;
+    /* The names and marks: the number, the list, and the first day of each in the history. */
+    const C = {};
+    for (const lang of ['en', 'ja']) {
+      const s = parts[lang], R = COUNT_RE[lang];
+      const sub = s.split('\n### ')[1] || '';
+      const items = sub.split('\n').filter((l) => /^- /.test(l));
+      const n = (R.marks.exec(s) || [])[1];
+      if (Number(n) !== items.length) bad.push(lang + ': the number of names and marks, ' + n + ', is not the ' + items.length + ' listed');
+      for (const it of items) {
+        const day = (/(\d{4}-\d{2}-\d{2})/.exec(it) || [])[1];
+        const files = [...it.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
+        const keys = files.length ? files : Object.keys(DAYS).filter((k) => !/\./.test(k) && it.includes(k));
+        if (!keys.length) { bad.push(lang + ': a name or mark with nothing to date: ' + it.slice(0, 30)); continue; }
+        const first = keys.map((k) => DAYS[k] || '').filter(Boolean).sort()[0];
+        if (!first || first !== day) bad.push(lang + ': ' + keys.join(', ') + ' is dated ' + day + ', first in the history ' + first);
+      }
+      C[lang] = items.length;
+      /* The names of others: the number, no repeat, and each found on the site apart from the Disclaimer, the page on making a
+       * work easy to find and the pages built from the records. */
+      const m = R.names.exec(s);
+      if (!m) { bad.push(lang + ': no list of the names of others'); continue; }
+      const names = m[2].split(lang === 'en' ? ', ' : '、');
+      if (Number(m[1]) !== names.length || new Set(names).size !== names.length) bad.push(lang + ': the number of names of others, ' + m[1] + ', is not the ' + new Set(names).size + ' listed');
+      C[lang + 'names'] = names;
+      const im = R.images.exec(s);
+      C[lang + 'images'] = im ? im[1].split('\n').filter(Boolean).flatMap((l) => [...l.split('：')[0].split(':')[0].matchAll(/`([^`]+)`/g)].map((y) => y[1])) : [];
+    }
+    if (C.en !== C.ja) bad.push('the two languages list a different number of names and marks');
+    if (JSON.stringify(C.ennames) !== JSON.stringify(C.janames)) bad.push('the two languages list different names of others');
+    const pages = Object.keys(x).filter((f) => /^site\/.+\.html$/.test(f) && !RECORD_DIRS.test(f) && !/^site\/(disclaimer|findable)(\.ja)?\.html$/.test(f));
+    const text = pages.map((f) => textOf(x[f])).join('\n');
+    for (const n of C.ennames || []) if (!new RegExp('(?<![A-Za-z0-9])' + escRe(n) + '(?![A-Za-z0-9])').test(text)) bad.push('the site does not name ' + n);
+    /* The images: what the section lists is what the site serves, and every page refers only to them. */
+    if (JSON.stringify(C.enimages) !== JSON.stringify(C.jaimages) || !(C.enimages || []).length) bad.push('the two languages list different images');
+    const pats = (C.enimages || []).map((p) => new RegExp('^' + escRe(p).replace('<id>', '\\d{4}\\.\\d{4}') + '$'));
+    for (const f of x.__images) if (!pats.some((p) => p.test(f))) bad.push('an image not in the list is served: ' + f);
+    for (const p of pats) if (!x.__images.some((f) => p.test(f))) bad.push('a listed image is not served: ' + p.source);
+    for (const f of pages.concat(Object.keys(x).filter((y) => /^site\/.+\.(html|xml|json|txt)$/.test(y) && !pages.includes(y)))) {
+      const h = String(x[f] || '');
+      if (/data:image\//i.test(h)) bad.push(f + ': an image in a data: URL');
+      for (const m of h.matchAll(/(?:src|href|content|srcset)="([^"]+)"/g)) {
+        const u = m[1].split('#')[0].split('?')[0];
+        if (!IMG.test(u)) continue;
+        const rel = u.replace(/^https:\/\/sophaxis\.vercel\.app\//, '').replace(/^(?:\.\.\/|\.\/)+/, '').replace(/^\//, '');
+        if (/^[a-z]+:/i.test(rel) || !pats.some((p) => p.test(rel))) bad.push(f + ': refers to an image that is not Sophaxis\'s own: ' + m[1]);
+      }
+    }
+    /* No registration mark beside the names of Sophaxis, anywhere in the repository or the built site. */
+    for (const [f, t0] of Object.entries(x)) {
+      if (f.startsWith('__') || typeof t0 !== 'string') continue;
+      const t = NO_MARK.reduce((a, s) => a.split(s).join(''), t0);
+      for (const m of t.matchAll(OWN)) if (MARK.test(t.slice(Math.max(0, m.index - 24), m.index + m[0].length + 24))) { bad.push(f + ': a registration mark beside ' + m[0]); break; }
+    }
+    /* The quoted articles: named in both languages, and each watched with its text. */
+    let ST = null;
+    try { ST = JSON.parse(x['verification/statutes.json']); } catch (e) { bad.push('statutes.json cannot be read'); }
+    for (const lang of ['en', 'ja']) {
+      const marks = [...parts[lang].matchAll(/^<!-- text: (.+) -->$/gm)].flatMap((m) => m[1].split('; '));
+      if (JSON.stringify(marks) !== JSON.stringify(QUOTED)) bad.push(lang + ': the section quotes ' + marks.join(', '));
+    }
+    const watched = ST ? ST.statutes.filter((e) => e.law === L && /^(Trademark Act|Unfair Competition Prevention Act)$/.test(e.name)) : [];
+    for (const q of QUOTED) if (!watched.some((e) => e.name + ' ' + e.article === q && /^[0-9a-f]{64}$/.test(e.sha256 || ''))) bad.push(q + ' is not watched');
+    /* The record: the changelog and the audit, with their numbers. */
+    const ch = sectionOf(x['CHANGELOG.md'], '## 2026-11-18', '\n## ');
+    const line = ch.split('\n').find((l) => l.startsWith('- Names and trademarks.')) || '';
+    const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
+    if (!line.includes('(2026-11-18 に利用者が求め、Claude が書きました)') || !line.includes('A new check (141)') || !line.includes('It lists the ' + C.en + ' names and marks of Sophaxis')
+      || !line.includes('It lists the ' + (C.ennames || []).length + ' names of others') || !line.includes('EUIPO on 2026-11-17 with 0 results')
+      || !line.includes(WORDS[watched.length - 2] + ' articles of the Trademark Act and of the Unfair Competition Prevention Act joined the weekly watch')) bad.push('CHANGELOG.md: the entry, who asked and who wrote, or its numbers');
+    const a = String(x[AUD] || ''), i = a.indexOf(AHEAD), sec = i < 0 ? '' : a.slice(i, a.indexOf('\n## ', i + 5));
+    const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
+    const tally = 'この表の判定は、' + JUDGE.filter((j) => rows.some((r) => r[4] === j)).map((j) => j + ' ' + rows.filter((r) => r[4] === j).length).join('、') + ' です。';
+    if (!sec || rows.length < 6 || !rows.every((r) => r.length === 6 && JUDGE.includes(r[4])) || !sec.includes(tally)) bad.push(AUD + ': the section, its table or its count');
+    if (!sec.includes('2026-11-18 に利用者が求め、Claude が書きました。') || !sec.includes('この節も、弁護士は見ていません。') || /弁護士(が|の)(確かめ|確認し)(た|まし)/.test(sec)) bad.push(AUD + ': who asked and wrote, or the sentence on lawyers');
+    for (const r of rows.filter((y) => y[4] !== '問題なし')) if (!/2026-11-18 に Claude が決めました。[^|]*ためです$/.test(r[5])) bad.push(AUD + ': a finding without its maker or reason');
+    /* The links: from both sections for rights holders, the page on the name, and both forms. */
+    for (const [f, [head, link]] of Object.entries(LINKS)) if (!sectionOf(x[f], head, '\n## ').includes(link)) bad.push(f + ': ' + head + ' does not link the section');
+    for (const [f, u] of Object.entries(FORMS)) if (!String(x[f] || '').includes(u)) bad.push(f + ': the form does not link the section');
+    return bad;
+  }
+  const now = verdict(real);
+  ok('the Disclaimer has "Names and trademarks" in both languages, built with its id, linked from the sections for rights holders of the contact page and the Takedown Policy, the page on the name and both forms; its ' + SEC.en.subs.length + ' parts say what the position is, with no deadline, no email address, no lawyer, no certainty and no conclusion on 「業として」; its names and marks are counted and dated by the history; its names of others are counted, the same in both languages, and each found on the site; the site serves only the images it lists and refers to no other; no registration mark stands beside the name in ' + tracked.length + ' files; the quoted articles are watched; and the changelog and the audit carry the change',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f] || '').replace(a, b) });
+  const breaks = [
+    ['the English section taken out', w('disclaimer.md', '## Names and trademarks\n', '## Names\n')],
+    ['a Japanese part taken out', w('disclaimer.ja.md', '### 調べた記録\n', '### 記録\n')],
+    ['the built page without its id', w('site/disclaimer.ja.html', '<h2 id="名称と商標">', '<h2 id="x">')],
+    ['the contact page not linking it', w('contact.md', '](./disclaimer.md#names-and-trademarks)', '](./disclaimer.md)')],
+    ['the Japanese Takedown Policy not linking it', w('policies/takedown.ja.md', '](../disclaimer.ja.md#名称と商標)', '](../disclaimer.ja.md)')],
+    ['a form not linking it', w('.github/ISSUE_TEMPLATE/rights-ja.yml', 'https://sophaxis.vercel.app/disclaimer.ja.html#名称と商標', 'https://sophaxis.vercel.app/disclaimer.ja.html')],
+    ['the number of names and marks changed', w('disclaimer.md', 'Sophaxis uses these **7** names and marks.', 'Sophaxis uses these **8** names and marks.')],
+    ['a name or mark taken out of one list', w('disclaimer.ja.md', '- 載っている作品のバッジ `badge.svg`：2026-11-10。\n', '')],
+    ['a first day moved', w('disclaimer.md', '- The logo as a square PNG, `og.png`: 2026-10-30.', '- The logo as a square PNG, `og.png`: 2026-10-29.')],
+    ['the number of names of others changed', w('disclaimer.ja.md', '次の **75** の', '次の **76** の')],
+    ['a name the site does not use', Object.assign({}, real, { 'disclaimer.md': real['disclaimer.md'].replace(', ZimLII.', ', ZimLII, Mendeley.').replace('these **75** services', 'these **76** services'), 'disclaimer.ja.md': real['disclaimer.ja.md'].replace('、ZimLII。', '、ZimLII、Mendeley。').replace('次の **75** の', '次の **76** の') })],
+    ['a name found only on the page for finding a work', Object.assign({}, real, { 'disclaimer.md': real['disclaimer.md'].replace(', ZimLII.', ', ZimLII, researchmap.').replace('these **75** services', 'these **76** services'), 'disclaimer.ja.md': real['disclaimer.ja.md'].replace('、ZimLII。', '、ZimLII、researchmap。').replace('次の **75** の', '次の **76** の') })],
+    ['the two lists different', w('disclaimer.ja.md', '、Bing、Bluesky、', '、Bluesky、Bing、')],
+    ['an image not in the list served', Object.assign({}, real, { __images: real.__images.concat(['logo-of-someone.png']) })],
+    ['a listed image no longer served', Object.assign({}, real, { __images: real.__images.filter((f) => f !== 'badge.svg') })],
+    ['a page referring to an image elsewhere', w('site/faq.html', '</main>', '<img src="https://example.org/logo.png" alt=""></main>')],
+    ['an image in a data: URL', w('site/news.html', '</main>', '<img src="data:image/png;base64,AAAA" alt=""></main>')],
+    ['® beside the name in the README', w('README.md', 'Sophaxis is operated by', 'Sophaxis® is operated by')],
+    ['登録商標 beside the reading on a built page', w('site/brand.ja.html', 'ソファクシス', 'ソファクシス（登録商標）')],
+    ['™ beside the name in site.json', w('site.json', '"Sophaxis"', '"Sophaxis™"')],
+    ['a quoted article not named in its line', w('disclaimer.md', '<!-- text: Trademark Act 73; Trademark Act 74 -->', '<!-- text: Trademark Act 73 -->')],
+    ['a quoted article no longer watched', Object.assign({}, real, { 'verification/statutes.json': JSON.stringify(Object.assign(JSON.parse(real['verification/statutes.json']), { statutes: JSON.parse(real['verification/statutes.json']).statutes.filter((e) => !(e.name === 'Trademark Act' && e.article === '73')) })) })],
+    ['the EUIPO search changed', w('disclaimer.md', 'and it gave **0** results.', 'and it gave no result that matters.')],
+    ['a conclusion on 「業として」', w('disclaimer.md', 'This page draws no conclusion on whether Sophaxis uses its name 「業として」.', 'Sophaxis is outside the meaning of 「業として」.')],
+    ['an unfetched claim on what GitHub does after a rename', w('disclaimer.md', '5. The operator also changes', 'A renamed repository: GitHub sends links to the old name of a repository on to the new one.\n5. The operator also changes')],
+    ['the step on renaming the repository taken out', w('disclaimer.ja.md', 'リポジトリの名、様式、README を変えます。', '様式、README を変えます。')],
+    ['a deadline', w('disclaimer.ja.md', '2. 運営者は、それを読みます。', '2. 運営者は、それを 7 日以内に読みます。')],
+    ['an email address', w('disclaimer.md', '2. The operator reads it.', '2. The operator reads it at someone' + '@' + 'example.org.')],
+    ['a lawyer claimed', w('disclaimer.md', '2. The operator reads it.', '2. The operator reads it, and it is reviewed by a lawyer.')],
+    ['the changelog without who asked', w('CHANGELOG.md', '(2026-11-18 に利用者が求め、Claude が書きました)', '')],
+    ['the changelog with another count', w('CHANGELOG.md', 'Thirteen articles of the Trademark Act', 'Twelve articles of the Trademark Act')],
+    ['the audit with another tally', w(AUD, 'この表の判定は、漏れ 2、表現 1、問題なし 5 です。', 'この表の判定は、漏れ 2、問題なし 6 です。')],
+    ['the audit without the sentence on lawyers', Object.assign({}, real, { [AUD]: real[AUD].slice(0, real[AUD].indexOf(AHEAD)) + real[AUD].slice(real[AUD].indexOf(AHEAD)).replace('この節も、弁護士は見ていません。', '') })],
+  ];
+  const missed = breaks.filter(([, b]) => !b || verdict(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (a section or a part gone, the built id, a link from a section for rights holders or a form, a count or a list of names and marks, a first day, a count, a name not on the site or only on the page for finding a work, the two lists, an image served or referred to outside the list, a data: URL, a registration mark beside the name in the source, a built page or site.json, a quoted article not named or not watched, the search record, a conclusion, a deadline, an email address, a lawyer, and the changelog and the audit) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 
