@@ -1,0 +1,79 @@
+name: 権利者の知らせ（日本語の様式）
+description: Sophaxis の名や、サイトそのものにあるものが、商標・著作権・肖像などの権利を侵していると、運営者に知らせる。
+title: "[Rights] "
+labels: ["rights"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        これは英語の様式（Notice from a rights holder）の日本語版です。中身は同じです。規程や様式の英語の文と食い違うときは、英語の文が適用されます。
+        2026-11-21 から、この様式に書いた文は、ライセンスの規程のとおり、書いた人が CC0 1.0 で共有するものになります（https://sophaxis.vercel.app/policies/licences.ja.html）。記録に示せるようにするためです。そこに含まれる個人情報は、これまでどおり個人情報の取り扱いのもとで扱い、求めがあれば外します。
+        この様式は、Sophaxis の名と、サイトそのもの（文・意匠・ロゴ）についての知らせのためのものです。一つの記録（その頁・要旨・PDF の写し）の問題は、Sophaxis の id を尋ねる削除の様式で求めます：https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml
+        そのあとの扱いは、削除の規程の「権利者の方へ」にあります：https://sophaxis.vercel.app/policies/takedown.ja.html#権利者の方へ
+        運営者は、すべての知らせを読みます。権利が確かめられたときは、運営者が名を変えるか、その素材を使うのをやめ、決めたことを公開のリポジトリに記録します。
+
+        この issue は公開されます。個人情報は書きません。権利と、それがどこにあるかを、素材そのものを書き写さずに書きます。
+        ここに書く個人情報は、個人情報の取り扱いのとおり、この知らせを扱うためにだけ使います：https://sophaxis.vercel.app/policies/privacy.ja.html
+        公開の場で出せない知らせは、運営者の ORCID の記録（https://orcid.org/0009-0000-1406-0547）にあるアドレスへ、メールで送ります。
+  - type: dropdown
+    id: right
+    attributes:
+      label: どの権利か
+      options:
+        - 商標、または紛らわしい名
+        - 著作権
+        - 肖像やパブリシティ
+        - そのほかの権利
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: サイトのどこにあるか
+      description: https://sophaxis.vercel.app/ で始まる頁の URL。名そのものについては、名を示すどの頁の URL でもかまいません。
+      placeholder: https://sophaxis.vercel.app/
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: どんな権利か
+      description: 商標なら、登録されていればその登録番号と登録した官庁、指定する商品や役務。そのほかの権利なら、何を守る権利か。素材そのものは書き写しません。
+    validations:
+      required: true
+  - type: textarea
+    id: ask
+    attributes:
+      label: 何を求めるか
+      description: たとえば、名を変えること、その素材を使うのをやめること。
+    validations:
+      required: true
+  - type: dropdown
+    id: relation
+    attributes:
+      label: どう関わるか
+      options:
+        - 権利を持っている
+        - 権利者の代理をしている
+        - そのほか
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 言語モデルに渡ること（任意）
+      description: |
+        運営者は、Sophaxis の作業を Claude Code で行います。欄に印があれば、この issue の題と本文は、知らせを扱う手助けのために、Anthropic（米国）の言語モデル Claude に渡ることがあります。運営者は、これを個人情報保護法第 28 条の外国にある第三者への提供として扱います。米国の制度と Anthropic の措置は、個人情報の取り扱いの「外国にある事業者の利用」の節にあります：https://sophaxis.vercel.app/policies/privacy.ja.html#外国にある事業者の利用
+        印は任意です。印がなければ、運営者は、Claude にもほかの言語モデルにも渡さずに知らせを扱います。この issue のコメントは、言語モデルに渡しません。同意は、この issue かメールで、いつでも撤回できます。
+      options:
+        - label: この issue の題と本文を、運営者が Claude（Anthropic、米国）に渡すことに同意します。 / I consent to the operator giving the title and text of this issue to Claude (Anthropic, United States).
+          required: false
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 確かめること
+      options:
+        - label: この知らせは誠実に出すもので、書いたことは真実です。
+          required: true
+        - label: この issue に個人情報は含まれていません。
+          required: true

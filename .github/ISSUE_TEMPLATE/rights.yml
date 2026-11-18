@@ -1,0 +1,78 @@
+name: Notice from a rights holder
+description: Tell the operator that the name Sophaxis, or something on the site itself, infringes a trademark, a copyright, a likeness or another right.
+title: "[Rights] "
+labels: ["rights"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        From 2026-11-21, text written in this form is shared under CC0 1.0 by the person who writes it, as the Licence Policy sets out (https://sophaxis.vercel.app/policies/licences.html), so that it can be shown in the record. Personal data in it is still handled under the Privacy Policy, and can be removed on request.
+        This form is for the name Sophaxis, and for the site itself: its text, its design and its logo. A problem in one record (its page, its abstract or its PDF copy) goes by the removal form instead, which asks for the Sophaxis id: https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=removal.yml
+        What happens is set out under "For rights holders" in the Takedown Policy: https://sophaxis.vercel.app/policies/takedown.html#for-rights-holders
+        The operator reads every notice. If the right is confirmed, the operator changes the name, or stops using the material, and records the decision in the public repository.
+
+        This issue is public. Do not include personal data. Describe the right and where it is, without repeating the material itself.
+        Personal data given here is used only to handle the notice, as the Privacy Policy sets out: https://sophaxis.vercel.app/policies/privacy.html
+        If the notice cannot be made in public, send it by email to the address on the operator's ORCID record (https://orcid.org/0009-0000-1406-0547) instead.
+  - type: dropdown
+    id: right
+    attributes:
+      label: Which right
+      options:
+        - A trademark, or a confusingly similar name
+        - Copyright
+        - Likeness or publicity
+        - Another right
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where it is on the site
+      description: The URL of the page, beginning with https://sophaxis.vercel.app/. For the name itself, the URL of any page that shows it.
+      placeholder: https://sophaxis.vercel.app/
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What the right is
+      description: For a trademark, its registration number and the office that registered it, if it is registered, and the goods or services it covers. For another right, what it protects. Do not repeat the material itself.
+    validations:
+      required: true
+  - type: textarea
+    id: ask
+    attributes:
+      label: What you ask for
+      description: For example, that the name is changed, or that the material is no longer used.
+    validations:
+      required: true
+  - type: dropdown
+    id: relation
+    attributes:
+      label: How you are concerned
+      options:
+        - I hold the right
+        - I act on behalf of the holder
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Use of a language model (optional)
+      description: |
+        The operator works on Sophaxis with Claude Code. If the box is ticked, the title and text of this issue may be given to Claude, the language model of Anthropic (United States), to help handle the notice. The operator treats this as a provision of personal data to a third party in a foreign country under Article 28 of Japan's Act on the Protection of Personal Information. The system of the United States and Anthropic's measures are set out in the Privacy Policy, under "Services outside Japan": https://sophaxis.vercel.app/policies/privacy.html#notices-from-rights-holders-and-claude
+        The box is optional. Without it, the operator handles the notice without giving it to Claude or to any other language model. Comments on this issue are not given to a language model. The consent can be withdrawn at any time, in this issue or by email.
+      options:
+        - label: I consent to the operator giving the title and text of this issue to Claude (Anthropic, United States).
+          required: false
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: I make this notice in good faith, and what I say in it is true.
+          required: true
+        - label: This issue contains no personal data.
+          required: true
