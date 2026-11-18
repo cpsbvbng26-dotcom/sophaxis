@@ -252,6 +252,123 @@
       "sha256": "900c33bc3c6d3b7db92cc13678d27b03af57f0dfdab5215edabbea437fb08484"
     },
     {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 2",
+      "law_id": "334AC0000000127",
+      "article": "2",
+      "sha256": "b06ac9f823b9df067b259bc34d5bd65cd9dbaf7951229e61ed307696286dfe14",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 73",
+      "law_id": "334AC0000000127",
+      "article": "73",
+      "sha256": "323b77e23f24da29dc1864ae4eaa34dc18dd249cb3ff3c486ba0dd7436863423",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 74",
+      "law_id": "334AC0000000127",
+      "article": "74",
+      "sha256": "cb097a8ba74e6a6a06bff26dffe21f2a49543227f279e733963f40459f46b899",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 4",
+      "law_id": "334AC0000000127",
+      "article": "4",
+      "sha256": "f36fd266cb4df2ccb54ae56a05a58b7c32c0c2b16620498caa46c477e908762b",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 26",
+      "law_id": "334AC0000000127",
+      "article": "26",
+      "sha256": "4b00d912c91f47ee295e8984131a4702fafadaf607f0e68420739f27424eba5f",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 32",
+      "law_id": "334AC0000000127",
+      "article": "32",
+      "sha256": "dc86269371cdd9c5bc76d43387d2e32d4f85b865bfb1428ed4fae8c6b9eff1c0",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 36",
+      "law_id": "334AC0000000127",
+      "article": "36",
+      "sha256": "ce63cbb454f4f670dfb1199e59433e1cb436ec0628e30a1810365a1a8104e83d",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Trademark Act",
+      "label": "Article 37",
+      "law_id": "334AC0000000127",
+      "article": "37",
+      "sha256": "9a7b52d789231a9ef77ae79086dfd2e941ddbecb2de142433efe1a7045305ee3",
+      "title": "商標法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Unfair Competition Prevention Act",
+      "label": "Article 3",
+      "law_id": "405AC0000000047",
+      "article": "3",
+      "sha256": "763a23fc3c55588d2554d00b469d23d80e706fc1940143d0ac042b1091ea2358",
+      "title": "不正競争防止法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Unfair Competition Prevention Act",
+      "label": "Article 4",
+      "law_id": "405AC0000000047",
+      "article": "4",
+      "sha256": "6071db0aa80d1e599d03511b5bd7cac3a5222ac462244fc68f52646a580cf343",
+      "title": "不正競争防止法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Unfair Competition Prevention Act",
+      "label": "Article 16",
+      "law_id": "405AC0000000047",
+      "article": "16",
+      "sha256": "4a9a0a46a2bd6eaba647664cde79cc2bfee6297f570cf84aa8ff4b75ae1b81f4",
+      "title": "不正競争防止法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Unfair Competition Prevention Act",
+      "label": "Article 17",
+      "law_id": "405AC0000000047",
+      "article": "17",
+      "sha256": "8d894ab34b6ad693a24fbd594182aa3d4a98b7443cbd98d149daf3502cf189ba",
+      "title": "不正競争防止法"
+    },
+    {
+      "law": "Names and marks (Trademark Act; Unfair Competition Prevention Act)",
+      "name": "Unfair Competition Prevention Act",
+      "label": "Article 19",
+      "law_id": "405AC0000000047",
+      "article": "19",
+      "sha256": "530ad6ce4ec94798c2f6fa603913a1f5d1f265dd56ee13e99d9cea0c244b633f",
+      "title": "不正競争防止法"
+    },
+    {
       "law": "Minors (Civil Code, Article 5)",
       "name": "Civil Code",
       "label": "Article 5",
@@ -650,7 +767,7 @@
       "commit": "166eb97e485b7de3cd5dbaf8c8d16e4310fda46c"
     }
   ],
-  "recorded": "2026-11-11",
+  "recorded": "2026-11-18",
   "pages": [
     {
       "name": "Vercel Privacy Notice",
