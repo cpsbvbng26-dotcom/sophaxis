@@ -1805,7 +1805,7 @@ Article 73 of the same Act defines the 商標登録表示 as an indication that 
 1. A notice comes by [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml), or the private route by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 2. The operator reads it.
 3. While deciding, the operator may add a note where the name appears, saying that Sophaxis is not connected with the rights holder.
-4. If the right is confirmed, the operator changes the title and the text of the site, the name of the Vercel project and the address of the site, the name of the repository, the forms and the README. GitHub sends links to the old name of a repository on to the new one.
+4. If the right is confirmed, the operator changes the title and the text of the site, the name of the Vercel project and the address of the site, the name of the repository, the forms and the README.
 5. The operator also changes the names of the pages of Sophaxis on other services, as far as each service allows.
 6. Some things are not rewritten. The versions archived at Zenodo, past entries of the news, of the notice of changes and of the changelog, and the history of the repository keep the old name. Where the site shows them, it adds a note.
 7. The PDF copies of listed works are the authors' files and are not changed.
@@ -4899,7 +4899,7 @@ Sophaxis は、どの名も、そのサービス・製品・組織そのもの�
 1. 知らせは、[権利者の知らせの様式](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml)、同じ様式の[英語版](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml)、または運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールという非公開の道で届きます。
 2. 運営者は、それを読みます。
 3. 決めるまでのあいだ、運営者は、名が出る所に、Sophaxis がその権利者と関わりがないことの断り書きを足すことがあります。
-4. 権利が確かめられたときは、運営者が、サイトの題と文、Vercel のプロジェクトの名とサイトのアドレス、リポジトリの名、様式、README を変えます。リポジトリの古い名へのリンクは、GitHub が新しい名へ送ります。
+4. 権利が確かめられたときは、運営者が、サイトの題と文、Vercel のプロジェクトの名とサイトのアドレス、リポジトリの名、様式、README を変えます。
 5. 運営者は、ほかのサービスにある Sophaxis の頁の名も、それぞれのサービスが許す範囲で変えます。
 6. 書き換えないものもあります。Zenodo に保存した版、お知らせ・規程の変更の知らせ・変更履歴の過去の項目、リポジトリの履歴は、古い名のまま残ります。サイトがそれらを示す所には、断り書きを添えます。
 7. 載っている作品の PDF の写しは著者のファイルで、変えません。
