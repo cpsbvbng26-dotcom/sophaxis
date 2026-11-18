@@ -113,7 +113,7 @@ Article 73 of the same Act defines the 商標登録表示 as an indication that 
 1. A notice comes by [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml), or the private route by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 2. The operator reads it.
 3. While deciding, the operator may add a note where the name appears, saying that Sophaxis is not connected with the rights holder.
-4. If the right is confirmed, the operator changes the title and the text of the site, the name of the Vercel project and the address of the site, the name of the repository, the forms and the README. GitHub sends links to the old name of a repository on to the new one.
+4. If the right is confirmed, the operator changes the title and the text of the site, the name of the Vercel project and the address of the site, the name of the repository, the forms and the README.
 5. The operator also changes the names of the pages of Sophaxis on other services, as far as each service allows.
 6. Some things are not rewritten. The versions archived at Zenodo, past entries of the news, of the notice of changes and of the changelog, and the history of the repository keep the old name. Where the site shows them, it adds a note.
 7. The PDF copies of listed works are the authors' files and are not changed.
