@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-18",
+    "policies": ["takedown", "privacy"],
+    "title": "A form for rights holders, and Claude only with its box ticked",
+    "text": "Since its publication on 2026-11-18, a rights holder who thinks that the name Sophaxis, or something on the site itself, infringes a trademark, a copyright, a likeness or another right can tell the operator by a form of its own, in English or in Japanese, or in private by email to the address on the operator's ORCID record; a problem in one record still goes by the removal form. The operator reads every notice; if the right is confirmed, the operator changes the name or stops using the material, and records the decision in the public repository. The title and text of such a notice are given to Claude only when the optional box of consent in the form is ticked. This widens what people can do and narrows nothing, so it takes effect on publication. The owner asked for this on 2026-11-18, and Claude wrote it.",
+    "ja": "2026-11-18 の公開から、Sophaxis の名や、サイトそのものにあるものが、商標・著作権・肖像などの権利を侵していると考える権利者は、専用の様式（英語と日本語）か、運営者の ORCID の記録にあるアドレスへのメールで、運営者に知らせることができます。一つの記録の問題は、これまでどおり削除の様式で求めます。運営者はすべての知らせを読み、権利が確かめられたときは、名を変えるか、その素材を使うのをやめ、決めたことを公開のリポジトリに記録します。知らせの題と本文を Claude に渡すのは、様式の任意の同意の欄に印があるときだけです。2026-11-18 に利用者が求め、Claude が書きました。"
+  },
+  {
     "date": "2026-11-15",
     "policies": ["takedown", "privacy"],
     "from": "2026-12-01",
