@@ -32,16 +32,8 @@ function submitterConsents(body) {
   return t.has(REVIEW_BOX[0]) || t.has(REVIEW_BOX[1]);
 }
 
-/* The rights holder's form: its box of consent, the sentence that rule 17 of the operator's repositories searches for, and the
- * headings by which an issue from that form is known even when its label is missing. */
-const RIGHTS_PHRASE = 'I consent to the operator giving the title and text of this issue to Claude';
-const RIGHTS_BOX = RIGHTS_PHRASE + ' (Anthropic, United States).';
-const RIGHTS_HEADS = ['### Which right', '### どの権利か'];
-function rightsNotice(issue) {
-  const labels = ((issue && issue.labels) || []).map((l) => (typeof l === 'string' ? l : l.name));
-  const body = String((issue && issue.body) || '').replace(/\r\n/g, '\n');
-  return labels.includes('rights') || RIGHTS_HEADS.some((h) => body.split('\n').includes(h));
-}
+/* The rights holder's form: its box of consent and how a notice is known, shared with tools/removal.js. */
+const { RIGHTS_PHRASE, RIGHTS_BOX, rightsNotice } = require('./rights.js');
 /* Pure: whether the box of the rights holder's form is ticked in the text of the issue, in either language. */
 const rightsConsents = (body) => I.tickedIn(body).some((b) => b === RIGHTS_BOX || b.endsWith(' / ' + RIGHTS_BOX));
 
