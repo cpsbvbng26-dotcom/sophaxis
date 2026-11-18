@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-18.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -196,6 +196,17 @@ The information that Article 28(2) of Japan's Act on the Protection of Personal 
 What the three providers' own terms say about training on what they are given is quoted in the [Moderation Policy](./moderation.md#decisions); which terms govern the operator's accounts, and whether training is turned off in them, the operator has not shown.
 
 <!-- text: APPI 28; GitHub Terms D.4; GitHub Terms J.3; Vercel Terms 3; APPI 27; APPI 25; New Zealand Privacy Act 2020 22; Swiss FADP 17 -->
+
+### Notices from rights holders and Claude
+
+Since its publication on 2026-11-18, the operator may give the title and text of an issue opened with the [rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml), to Claude, the language model of Anthropic (United States), to help handle the notice.
+This is done only when the box of consent in the form is ticked.
+Sophaxis treats it as a provision to a third party in a foreign country under Article 28 of Japan's Act on the Protection of Personal Information.
+The system of the United States, and what Anthropic says about its measures, are set out above in this section.
+The box is optional. Without it, the operator handles the notice without giving it to Claude or to any other language model.
+Comments on the issue are not given to a language model.
+A consent can be withdrawn at any time, in the issue or by email; what was given before stays as it was.
+For an issue of that form, `tools/llm.js` tells whether its title and text may be given.
 
 ## Security
 

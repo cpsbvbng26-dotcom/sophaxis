@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-18.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -152,3 +152,15 @@ Where the material sits on the service of another provider, such as GitHub, a re
 
 Sophaxis cannot remove a work from Zenodo, Figshare or any other repository.
 A request about the deposit itself goes to that repository.
+
+## For rights holders
+
+A rights holder who thinks that the name Sophaxis, or something on the site itself, infringes a right can tell the operator.
+This covers a trademark or a confusingly similar name, copyright in the text or the design of the site, a likeness, and other rights.
+The notice goes by [the rights holder's form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights.yml), or the same form [in Japanese](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=rights-ja.yml).
+A notice that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
+A problem in one record goes by a removal issue, as "How to ask" above sets out.
+The operator reads every notice.
+If the right is confirmed, the operator changes the name, or stops using the material.
+The decision is posted in the issue, or sent by email to a person who wrote by email, and the change is recorded in the public repository.
+If the right is not confirmed, the operator says why in the same way.
