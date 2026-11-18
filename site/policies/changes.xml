@@ -8,12 +8,20 @@
   <updated>2026-11-18T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
-    <id>https://sophaxis.vercel.app/policies/changes.xml#c31</id>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c32</id>
     <title>A form for rights holders, and Claude only with its box ticked</title>
     <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
     <updated>2026-11-18T00:00:00Z</updated>
     <summary>Since its publication on 2026-11-18, a rights holder who thinks that the name Sophaxis, or something on the site itself, infringes a trademark, a copyright, a likeness or another right can tell the operator by a form of its own, in English or in Japanese, or in private by email to the address on the operator's ORCID record; a problem in one record still goes by the removal form. The operator reads every notice; if the right is confirmed, the operator changes the name or stops using the material, and records the decision in the public repository. The title and text of such a notice are given to Claude only when the optional box of consent in the form is ticked. This widens what people can do and narrows nothing, so it takes effect on publication. The owner asked for this on 2026-11-18, and Claude wrote it. Policies: Takedown Policy, Privacy Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c31</id>
+    <title>The quoted Japanese articles fetched again</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <summary>On 2026-11-18 every Japanese article that the policies quote was fetched again from the e-Gov law API, by the same steps as the weekly watch, and each was the same as the text already quoted. The quotations now give that day. Articles 2, 4, 26, 32, 36, 37, 73 and 74 of the Trademark Act and Articles 3, 4, 16, 17 and 19 of the Unfair Competition Prevention Act joined the weekly watch; the Disclaimer quotes Articles 2, 73 and 74 of the Trademark Act under &quot;Names and trademarks&quot;. No rule of the Terms of Use or of the Copyright Policy changed. The owner asked for this on 2026-11-18, and Claude wrote it. Policies: Terms of Use, Copyright Policy.</summary>
   </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c30</id>
