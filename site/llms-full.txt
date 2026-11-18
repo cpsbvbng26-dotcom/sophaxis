@@ -1547,6 +1547,7 @@ In the issues:
 - GitHub keeps the logs and the list of runs for the period set for the repository; GitHub's documentation gives at most 90 days for a public repository. The list of runs names each run by the title of its issue, which for an emptied issue is the emptied title, and by the account that started it.
 - GitHub's notifications may already have carried a copy of an issue's content to the accounts set to receive them, by email too; the operator's account may be one of them. Those copies are handled under GitHub's Terms of Service and Privacy Statement. The pages of GitHub's documentation that were fetched do not say that they go away when the issue is emptied or deleted. Apart from them, the operator makes no copy of the issue.
 - A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
+- A notice from a rights holder also stays, with the decision on it, even when it names the removed record.
 
 Outside the site:
 
@@ -2194,7 +2195,7 @@ Source: https://sophaxis.vercel.app/automation.html
 
 # What runs by itself
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-18.
 
 Japanese: [自動で動く手順（日本語訳）](https://sophaxis.vercel.app/automation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2322,6 +2323,12 @@ The code of each step is public, and each section links to it.
 - What could not be checked (an answer of 429 or 5xx, a time-out, an answer that cannot be read) and every save to the Internet Archive that did not succeed are listed in the same issue, which then stays open, and the run fails. The run never reports that it found no problems while something was not checked.
 - Leaves to the operator: acting on what the issue reports, and reading the difference before recording it.
 - Code: [tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js), run by [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml), and [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js), run by [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml), which on a pull request only prints.
+
+## When the list of labels changes on main
+
+- Creates the labels that the issue forms use and that the repository does not have yet: since 2026-11-18, only `rights`, for the notices from rights holders. GitHub adds to an issue only those labels of its form that exist. The labels that existed before are left as they are.
+- Reads nothing and checks nothing out. It runs when its own file changes on main, and when the operator runs it.
+- Code: none of its own; [labels.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/labels.yml) calls `gh label create`.
 
 ## When the operator labels the watch's pull request `record`
 
@@ -4542,6 +4549,7 @@ issue では：
 - GitHub は、実行の記録と実行の一覧を、リポジトリに定めた期間だけ保ちます。GitHub の説明書によれば、公開のリポジトリでは長くて 90 日です。実行の一覧は、各実行を issue の題（中身を空にした issue では空にしたあとの題）と、実行を起こしたアカウントで示します。
 - GitHub の通知は、issue の中身の写しを、受け取る設定のアカウントに、電子メールでも届けていることがあります。運営者のアカウントもその一つであることがあります。その写しは、GitHub の利用規約とプライバシーステートメントのもとで扱われます。issue を空にしたり削除したりしたときにその写しが消えるとは、取り寄せた GitHub の説明書は書いていません。運営者は、これとは別に、issue の写しを作りません。
 - 削除の求めそのものは、それへの判断とともに残ります。削除を求めた撤回の issue は、ほかと同じように中身を空にします。
+- 権利者の知らせも、削除した記録を挙げていても、それへの判断とともに残ります。
 
 サイトの外では：
 
@@ -5399,7 +5407,7 @@ Source: https://sophaxis.vercel.app/automation.ja.html
 
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-15。
+最終更新：2026-11-18。
 
 これは英語の [What runs by itself](https://sophaxis.vercel.app/automation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5528,6 +5536,12 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 確かめられなかったもの（429 か 5xx の答え、時間切れ、読めない答え）と、Internet Archive への保存のうち成功しなかったものは、同じ issue に挙げます。その issue は開いたままになり、実行は落ちます。確かめられなかったものがあるあいだは、問題が無かったとは書きません。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
 - コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
+
+## main でラベルの一覧が変わったとき
+
+- issue の様式が使うラベルのうち、リポジトリにまだ無いものを作ります。2026-11-18 から、作るのは権利者の知らせのための `rights` だけです。GitHub は、様式のラベルのうち、あるものだけを issue に付けます。前からあるラベルには触れません。
+- 何も読まず、チェックアウトもしません。main でこのファイルが変わったときと、運営者が動かしたときに動きます。
+- コード：専用のものはありません。[labels.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/labels.yml) が `gh label create` を呼びます。
 
 ## 運営者が毎週の確認のプルリクエストに `record` のラベルを付けたとき
 
