@@ -8480,7 +8480,7 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
       'The site serves no logo of anyone else.',
       'The site never puts ®, ™, 「登録商標」 or "registered trademark" on its own names and marks, because none of them is registered.',
       '3. While deciding, the operator may add a note where the name appears, saying that Sophaxis is not connected with the rights holder.',
-      'GitHub sends links to the old name of a repository on to the new one.', '9. If the right is not confirmed, the operator says why in the same way.'],
+      '4. If the right is confirmed, the operator changes the title and the text of the site, the name of the Vercel project and the address of the site, the name of the repository, the forms and the README.\n', '9. If the right is not confirmed, the operator says why in the same way.'],
     ja: ['法的な助言ではなく、弁護士の確認も受けていません。', '2026-11-18 に利用者が求め、Claude が書きました。',
       '運営者は、これらの名としるしのどれも、日本でもほかの国でも、商標の登録を出願していません。', 'これからも出願しません。2026-11-18 に Claude が決めました。名を独り占めしないためです。',
       'Sophaxis は、投稿にも閲覧にも料金を取りません。', '広告を出さず、何も売りません。',
@@ -8492,7 +8492,7 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
       'サイトは、ほかの者のロゴを配りません。',
       'サイトは、自分の名としるしに、®・™・「登録商標」・"registered trademark" を付けません。どれも登録していないからです。',
       '3. 決めるまでのあいだ、運営者は、名が出る所に、Sophaxis がその権利者と関わりがないことの断り書きを足すことがあります。',
-      'リポジトリの古い名へのリンクは、GitHub が新しい名へ送ります。', '9. 権利が確かめられないときも、同じやり方で理由を知らせます。'],
+      '4. 権利が確かめられたときは、運営者が、サイトの題と文、Vercel のプロジェクトの名とサイトのアドレス、リポジトリの名、様式、README を変えます。\n', '9. 権利が確かめられないときも、同じやり方で理由を知らせます。'],
   };
   const NO_MARK = [SAY.en[15], SAY.ja[15]];
   const COUNT_RE = {
@@ -8534,6 +8534,8 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
       for (const w of SAY[lang]) if (!s.includes(w)) bad.push(S.file + ': ' + w.slice(0, 40));
       if (!String(x[S.built] || '').includes('<h2 id="' + S.id + '">')) bad.push(S.built + ': the section is not built with its id');
       if (/within \d+ days|\d+ 日以内|\d+ days? of|deadline/i.test(s)) bad.push(S.file + ': a deadline');
+      /* 2026-11-18：what GitHub does after a rename was not fetched, so the section does not say it. */
+      if (/redirect|links to the old name|old name of a repository on|古い名へのリンク|新しい名へ送/i.test(s)) bad.push(S.file + ': what GitHub does after a rename, which was not fetched');
       if (/@[a-z0-9-]+\.[a-z]/i.test(s)) bad.push(S.file + ': an email address');
       if (/reviewed by a lawyer|a lawyer (has )?(reviewed|checked)|弁護士が(確か|確認|見)|certainly|guarantee|no risk|cannot infringe|does not infringe|違法とはならない|侵害しません|おそれはありません/i.test(s)) bad.push(S.file + ': a lawyer or a certainty claimed');
       if (/(is not|does not use[^.]*) 「業として」|outside[^.]{0,40}「業として」|「業として」[^。]{0,20}(当たりません|に当たらない)/.test(s)) bad.push(S.file + ': a conclusion on 「業として」');
@@ -8648,6 +8650,8 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
     ['a quoted article no longer watched', Object.assign({}, real, { 'verification/statutes.json': JSON.stringify(Object.assign(JSON.parse(real['verification/statutes.json']), { statutes: JSON.parse(real['verification/statutes.json']).statutes.filter((e) => !(e.name === 'Trademark Act' && e.article === '73')) })) })],
     ['the EUIPO search changed', w('disclaimer.md', 'and it gave **0** results.', 'and it gave no result that matters.')],
     ['a conclusion on 「業として」', w('disclaimer.md', 'This page draws no conclusion on whether Sophaxis uses its name 「業として」.', 'Sophaxis is outside the meaning of 「業として」.')],
+    ['an unfetched claim on what GitHub does after a rename', w('disclaimer.md', '5. The operator also changes', 'A renamed repository: GitHub sends links to the old name of a repository on to the new one.\n5. The operator also changes')],
+    ['the step on renaming the repository taken out', w('disclaimer.ja.md', 'リポジトリの名、様式、README を変えます。', '様式、README を変えます。')],
     ['a deadline', w('disclaimer.ja.md', '2. 運営者は、それを読みます。', '2. 運営者は、それを 7 日以内に読みます。')],
     ['an email address', w('disclaimer.md', '2. The operator reads it.', '2. The operator reads it at someone' + '@' + 'example.org.')],
     ['a lawyer claimed', w('disclaimer.md', '2. The operator reads it.', '2. The operator reads it, and it is reviewed by a lawyer.')],
