@@ -104,6 +104,7 @@ In the issues:
 - GitHub keeps the logs and the list of runs for the period set for the repository; GitHub's documentation gives at most 90 days for a public repository. The list of runs names each run by the title of its issue, which for an emptied issue is the emptied title, and by the account that started it.
 - GitHub's notifications may already have carried a copy of an issue's content to the accounts set to receive them, by email too; the operator's account may be one of them. Those copies are handled under GitHub's Terms of Service and Privacy Statement. The pages of GitHub's documentation that were fetched do not say that they go away when the issue is emptied or deleted. Apart from them, the operator makes no copy of the issue.
 - A removal request itself stays, with the decision on it. A withdrawal issue that asked for removal is emptied like the others.
+- A notice from a rights holder also stays, with the decision on it, even when it names the removed record.
 
 Outside the site:
 

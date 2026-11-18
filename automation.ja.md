@@ -1,6 +1,6 @@
 # 自動で動く手順（日本語訳）
 
-最終更新：2026-11-15。
+最終更新：2026-11-18。
 
 これは英語の [What runs by itself](./automation.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -129,6 +129,12 @@ Sophaxis には、ひとりでに動く手順がいくつかあります。
 - 確かめられなかったもの（429 か 5xx の答え、時間切れ、読めない答え）と、Internet Archive への保存のうち成功しなかったものは、同じ issue に挙げます。その issue は開いたままになり、実行は落ちます。確かめられなかったものがあるあいだは、問題が無かったとは書きません。
 - 運営者に残すこと：issue が報告することに応じること。記録する前に、違いを読むこと。
 - コード：[tools/watch.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/watch.js) と [tools/statutes.js](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/tools/statutes.js)。前者は [watch.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/watch.yml) が動かします。後者は [statutes.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/statutes.yml) が動かし、プルリクエストでは表示するだけです。
+
+## main でラベルの一覧が変わったとき
+
+- issue の様式が使うラベルのうち、リポジトリにまだ無いものを作ります。2026-11-18 から、作るのは権利者の知らせのための `rights` だけです。GitHub は、様式のラベルのうち、あるものだけを issue に付けます。前からあるラベルには触れません。
+- 何も読まず、チェックアウトもしません。main でこのファイルが変わったときと、運営者が動かしたときに動きます。
+- コード：専用のものはありません。[labels.yml](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/.github/workflows/labels.yml) が `gh label create` を呼びます。
 
 ## 運営者が毎週の確認のプルリクエストに `record` のラベルを付けたとき
 
