@@ -14,10 +14,11 @@ A citation whose source could not be fetched is named there as not quoted, with 
 
 Records are not deleted.
 Every Sophaxis id stays, even when its record is removed.
-A record is removed in three cases.
+A record is removed in four cases.
 The first is removal required by law, such as copyright infringement or exposure of personal data.
 The second is when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](./withdrawal.md).
 The third is when an author of the work asks for it in a withdrawal issue, as the [Withdrawal Policy](./withdrawal.md) sets out.
+The fourth is when, from 2026-12-10, the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](./submission.md) after the listing, from an author's report or otherwise. The operator first tells the authors so in their submission issue, without naming the place, and removes the record if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.
 A removed record leaves only what the section "What a removed record leaves" below lists.
 
 ## How to ask

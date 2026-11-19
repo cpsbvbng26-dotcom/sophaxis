@@ -54,8 +54,10 @@ From 2026-12-01, Sophaxis also checks, for every author whose identity it verifi
 The section "The checked intake" below says how, and its limits.
 If it turns out that an author lived there, or stayed there, between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md), and the operator reviews the decision on a representative.
 From 2026-12-10, the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, once the operator learns that an author lives in one of these places, or stays in one, after the listing.
-From 2026-12-10, an author who moves to one of these places, or stays in one, after the listing reports it in the submission issue of the work, without naming the place.
-Before that day, the record stays listed, no such move or stay is reported, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md) or removed.
+From 2026-12-10, an author who moves to one of these places, or stays in one, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author.
+This includes a move or a stay that began before 2026-12-10 and goes on on or after that day: it is reported, and the record is removed once the operator learns of it on or after that day.
+Before that day, the record stays listed, no author is asked to report such a move or stay, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md) or removed.
+Once no author lives or stays in one of these places, the work can be submitted again under the rules then in force.
 A new version is a new submission, so it must meet this rule again.
 
 | Place | What the law requires | Law | Read at its source | From |
