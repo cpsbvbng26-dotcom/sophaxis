@@ -351,11 +351,47 @@ function earliestOf(days) {
 }
 
 /* Pure: the row of the check. The day the issue was opened must be on or after the day the months end. */
-function doiAgeCheck(first, opened, months = SITE.doiAgeMonths) {
-  if (!first) return [DOI_AGE_LABEL, false, 'no registration day could be read from the DOI metadata; the operator checks it by hand'];
+function doiAgeCheck(first, opened, months = SITE.doiAgeMonths, label = DOI_AGE_LABEL) {
+  if (!first) return [label, false, 'no registration day could be read from the DOI metadata; the operator checks it by hand'];
   const due = addMonths(first.day, months);
-  return [DOI_AGE_LABEL, opened >= due, first.doi + ' was registered on ' + first.day + '; a submission can be opened from ' + due
+  return [label, opened >= due, first.doi + ' was registered on ' + first.day + '; a submission can be opened from ' + due
     + (opened >= due ? '' : ', as a new issue')];
+}
+
+/* ------------------------------------------------------------ the higher barriers (Submission Policy) */
+
+/* Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high (the owner decided
+ * this on 2026-11-19). From SITE.barriers.from, for a new work whose issue is opened on or after that day, and never for a new
+ * version of a listed work: twelve months since the first DOI; an abstract of at least SITE.barriers.abstractChars characters in
+ * the DOI metadata; no author with a new work listed in the SITE.barriers.gapDays days before the issue was opened, or since; and
+ * two researchers who vouch, each with at least SITE.barriers.voucherWorks journal articles, book chapters or books, even for an
+ * author of a listed work. Each is checked against public records that the intake already reads (the DOI metadata, the public
+ * ORCID records and the records of Sophaxis); none asks for more personal data, and the operator's own submissions meet them too.
+ * The earlier rules stay as they were for an issue opened before that day. */
+const HB = SITE.barriers;
+const highFrom = (opened) => !!opened && String(opened).slice(0, 10) >= HB.from;
+const DOI_AGE_LABEL_HIGH = HB.doiAgeMonths + ' months have passed since the first DOI of the work was registered';
+const ABSTRACT_LABEL = 'The DOI metadata has an abstract of at least ' + HB.abstractChars + ' characters';
+const GAP_LABEL = 'No author of the work has had a new work listed in the ' + HB.gapDays + ' days before this issue was opened, or since';
+
+/* Pure: the row of the abstract. Only the abstract of the DOI metadata counts; one written in the form does not. Characters are
+ * counted as Unicode code points, so that a text in any script is counted alike. */
+function abstractCheck(abstract, min = HB.abstractChars) {
+  const n = [...String(abstract || '')].length;
+  return [ABSTRACT_LABEL, n >= min, n ? n + ' characters in the DOI metadata' : 'the DOI metadata has no abstract; an abstract in the form does not count'];
+}
+
+/* Pure: the row of the time between works. The authors are those whom the DOI metadata names by ORCID iD, and the submitter.
+ * A record counts when one of them is among its authors and it was listed on or after the day `days` days before the issue was
+ * opened; a withdrawn record counts too, since it was listed. The detail names the records and the first day a new issue can be opened. */
+const dayShift = (day, n) => new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
+function gapCheck(authors, submitter, records, opened, days = HB.gapDays) {
+  const ids = new Set((authors || []).map((a) => a.orcid).filter(Boolean).concat(submitter ? [submitter] : []));
+  const since = dayShift(opened, -days);
+  const recent = (records || []).filter((p) => p.listed && p.listed >= since && (p.authors || []).some((a) => a.orcid && ids.has(a.orcid)));
+  if (!recent.length) return [GAP_LABEL, true, 'none listed since ' + since];
+  const last = recent.map((p) => p.listed).sort().pop();
+  return [GAP_LABEL, false, 'an author of ' + recent.map((p) => p.id).sort().join(', ') + ', listed on or after ' + since + '; a new issue can be opened from ' + dayShift(last, days + 1)];
 }
 
 /* ------------------------------------------------------------ ORCID */
@@ -465,7 +501,7 @@ const BOX_LABELS = {
   residence: 'No author lives in a place where Sophaxis is not offered',
 };
 
-function check({ form, login, meta, person, works, listed, pub, today, age, notices, checked = false }) {
+function check({ form, login, meta, person, works, listed, pub, today, age, notices, checked = false, records = null }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
   const pre = repoPrefix(form.doi || '');
@@ -511,7 +547,9 @@ function check({ form, login, meta, person, works, listed, pub, today, age, noti
   }
   add('The DOI is for a work, not for a review of one', meta.type !== 'peer-review', meta.type || '');
   /* From SITE.doiAgeFrom, counted on the day the issue was opened. A new version of a listed work is not counted again. */
-  if (!form.update && age && age.opened >= SITE.doiAgeFrom) checks.push(doiAgeCheck(age.first, age.opened));
+  /* From SITE.barriers.from, twelve months in place of six (the higher barriers). */
+  const high = !form.update && !!age && highFrom(age.opened);
+  if (!form.update && age && age.opened >= SITE.doiAgeFrom) checks.push(high ? doiAgeCheck(age.first, age.opened, HB.doiAgeMonths, DOI_AGE_LABEL_HIGH) : doiAgeCheck(age.first, age.opened));
   /* From SITE.noticesFrom: no retraction, withdrawal or removal, and no expression of concern without the operator (tools/notices.js). */
   if (age && age.opened >= SITE.noticesFrom) checks.push(require('./notices.js').noticeCheck(notices));
   /* Every licence entry must be the same accepted licence: Crossref may give one per version (vor, am, tdm), and a CC BY entry
@@ -521,6 +559,9 @@ function check({ form, login, meta, person, works, listed, pub, today, age, noti
   add('The work carries an accepted licence', lic, lic ? SITE.licenses[lic] : kinds.length > 1 ? 'more than one licence in the metadata (' + kinds.join(', ') + '); the operator decides' : 'none of CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in the metadata');
   add('The DOI metadata has a title and a date', meta.title && meta.date);
   add('There is an abstract', meta.abstract || (form.abstract || '').trim(), meta.abstract ? 'from the DOI metadata' : 'from the form');
+  /* From SITE.barriers.from: the abstract of the DOI metadata, of at least the length set, and the time between works. */
+  if (high) checks.push(abstractCheck(meta.abstract));
+  if (high) checks.push(gapCheck(meta.authors, form.orcid, records || [], age.opened));
   if (!person) { add('The ORCID record could be read', false); return { ok: false, checks }; }
   add('The ORCID record links this GitHub account', linksGithub(person.urls, login), 'https://github.com/' + login);
   const m = authorOf(meta, form.doi, form.orcid, person, works, checked);
@@ -689,6 +730,8 @@ const VOUCH_LABEL = 'A researcher with a journal article, a book chapter or a bo
  * 「2026-11-14：突き合わせの受付」, on Articles 446 and 465-2 of the Civil Code). The English words are canonical. */
 const VOUCH_CHECKED = 'I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence, and does not live in, or stay in, a place where Sophaxis is not offered. I am not an author of this work, I am not from the same project as its authors, and I have no conflict of interest with them. I do not live in, or stay in, a place where Sophaxis is not offered. This states what I know; it is not a guarantee.';
 const PEER_TYPES = new Set(['journal-article', 'book-chapter', 'book']);
+/* From SITE.barriers.from, two researchers for every new work, each with at least SITE.barriers.voucherWorks such works. */
+const VOUCH_LABEL_HIGH = 'Two researchers, each with at least ' + HB.voucherWorks + ' journal articles, book chapters or books, vouch for the work';
 
 /* Pure: the comments that vouch, with the ORCID iD each gives. */
 function vouchesIn(comments, words = VOUCH) {
@@ -717,7 +760,7 @@ function peerWorks(json) {
 /* From SITE.checkedFrom (`checked`), also: the place rule; and no current organisation shared with the submitter in ORCID
  * (`placed`, `shares`). No list of researchers is kept: since 2026-11-15, a vouching found untrue is no longer relied on and
  * the listing is reviewed after the researcher is heard, and no researcher is barred or named. */
-function vouchProblem({ e, person, peer, meta, submitter, checked = false, placed = null, shares = null }) {
+function vouchProblem({ e, person, peer, meta, submitter, checked = false, placed = null, shares = null, minWorks = 1 }) {
   if (SITE.operator.github && e.login.toLowerCase() === SITE.operator.github.toLowerCase()) return 'the operator cannot vouch';
   if (e.orcid === SITE.operator.orcid) return 'the operator cannot vouch';
   if (submitter && e.orcid === submitter) return 'the submitter cannot vouch';
@@ -725,6 +768,7 @@ function vouchProblem({ e, person, peer, meta, submitter, checked = false, place
   if (!linksGithub(person.urls, e.login)) return 'the ORCID record does not link this GitHub account';
   if (meta.authors.some((a) => (a.orcid && a.orcid === e.orcid) || sameName(person, a))) return 'an author of the work cannot vouch';
   if (!peer || !peer.size) return 'the ORCID record lists no journal article, book chapter or book with a DOI';
+  if (peer.size < minWorks) return 'the ORCID record lists ' + peer.size + ' journal articles, book chapters or books with a DOI, fewer than ' + minWorks;
   if (checked && placed !== true) return 'the public records of the researcher do not place them where Sophaxis is offered';
   if (checked && shares !== false) return shares === null ? 'the ORCID records could not be compared for a conflict of interest' : 'the ORCID records show a conflict of interest with the submitter';
   return null;
@@ -740,12 +784,31 @@ function listedAuthor(orcid, records) {
   return !!orcid && records.some((p) => p.status === 'listed' && (p.authors || []).some((a) => a.orcid === orcid));
 }
 
-/* Pure: the row of the check. results holds { e, problem } for each vouching comment. */
-function vouchCheck(results, exempt) {
+/* Pure: the row of the check. results holds { e, problem } for each vouching comment. With `need` above one (the higher barriers),
+ * that many researchers must count, each a different person by ORCID iD and by GitHub account, and `apart(a, b)` must hold for
+ * each two of them: their ORCID records show no current organisation in common. */
+function vouchCheck(results, exempt, need = 1, apart = null) {
   if (exempt) return [VOUCH_LABEL, true, 'the submitter is already an author of a listed work'];
   const good = results.filter((r) => !r.problem);
-  if (good.length) return [VOUCH_LABEL, true, 'vouched for by ORCID ' + good.map((r) => r.e.orcid).join(', ')];
-  return [VOUCH_LABEL, false, results.length ? results.map((r) => 'ORCID ' + r.e.orcid + ': ' + r.problem).join('; ') : 'waiting for a researcher to vouch for it'];
+  if (need <= 1) {
+    if (good.length) return [VOUCH_LABEL, true, 'vouched for by ORCID ' + good.map((r) => r.e.orcid).join(', ')];
+    return [VOUCH_LABEL, false, results.length ? results.map((r) => 'ORCID ' + r.e.orcid + ': ' + r.problem).join('; ') : 'waiting for a researcher to vouch for it'];
+  }
+  const fits = (a, b) => a.e.orcid !== b.e.orcid && a.e.login.toLowerCase() !== b.e.login.toLowerCase() && (!apart || apart(a, b) === true);
+  const pick = (from, chosen) => {
+    if (chosen.length === need) return chosen;
+    for (let i = from; i < good.length; i++) {
+      if (!chosen.every((c) => fits(c, good[i]))) continue;
+      const found = pick(i + 1, chosen.concat([good[i]]));
+      if (found) return found;
+    }
+    return null;
+  };
+  const set = pick(0, []);
+  if (set) return [VOUCH_LABEL_HIGH, true, 'vouched for by ORCID ' + set.map((r) => r.e.orcid).join(', ')];
+  const why = results.filter((r) => r.problem).map((r) => 'ORCID ' + r.e.orcid + ': ' + r.problem);
+  const counted = good.length >= need ? 'the researchers who count are not ' + need + ' different people with no current organisation in common' : good.length + ' of ' + need + ' researchers counted';
+  return [VOUCH_LABEL_HIGH, false, why.concat([counted]).join('; ')];
 }
 
 function vouchNoteChecked() {
@@ -759,6 +822,21 @@ ${VOUCH_CHECKED} ORCID: 0000-0000-0000-0000
 
 The authors of the work and the operator cannot vouch. Vouching states facts that the researcher knows; it is not a guarantee, and Sophaxis claims no money from the researcher. If it turns out to be untrue, Sophaxis no longer relies on it and the listing is reviewed; before that is decided, the researcher is told and can answer. No researcher is named anywhere as having vouched untruly. It is not a review, and the moderator still decides.
 The check reads the researcher's public ORCID record (the name, the websites, the works, and the countries and organisations of the place rule and of the conflict check), keeps and writes none of the countries or organisations, and compares the current organisations with the submitter's. It reads nothing from their GitHub profile. The GitHub username, ORCID iD and comment of the researcher are public, as the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out.
+`;
+}
+
+/* From SITE.barriers.from: two researchers for every new work. */
+function vouchNoteHigh() {
+  return `
+This new work needs two researchers to vouch for it, as the [Submission Policy](${SITE.baseUrl}policies/submission.html#higher-barriers) asks from ${HB.from}, even when the submitter is already an author of a listed work.
+Each researcher's public ORCID record lists at least ${HB.voucherWorks} journal articles, book chapters or books with a DOI, and links their GitHub account. The two are different people, and their ORCID records show no current organisation in common with each other or with the submitter. Each comments in this issue with these words and their own ORCID iD:
+
+~~~~
+${VOUCH_CHECKED} ORCID: 0000-0000-0000-0000
+~~~~
+
+The authors of the work and the operator cannot vouch. Vouching states facts that the researcher knows; it is not a guarantee, and Sophaxis claims no money from the researcher. If it turns out to be untrue, Sophaxis no longer relies on it and the listing is reviewed; before that is decided, the researcher is told and can answer. No researcher is named anywhere as having vouched untruly. It is not a review, and the moderator still decides.
+The check reads each researcher's public ORCID record (the name, the websites, the works, and the countries and organisations of the place rule and of the conflict check), keeps and writes none of the countries or organisations, and compares the current organisations of the two researchers and of the submitter. It reads nothing from their GitHub profile. The GitHub username, ORCID iD and comment of each researcher are public, as the [Privacy Policy](${SITE.baseUrl}policies/privacy.html) sets out.
 `;
 }
 
@@ -907,10 +985,11 @@ ${JSON.stringify(d.record, null, 2).replace(/~~~~/g, '~ ~ ~ ~')}
 ` + pdfNote(d.record.versions[d.record.versions.length - 1].doi) + adviceNote(advice);
   } else if (d && d.problems && d.problems.length) {
     out += '\nThe draft record does not validate: ' + safe(d.problems.join('; ')) + '\n';
-  } else if (result.checks.some((c) => c[0] === COAUTHOR_LABEL || c[0] === VOUCH_LABEL) && result.checks.every((c) => c[1] || c[0] === COAUTHOR_LABEL || c[0] === VOUCH_LABEL)) {
+  } else if (result.checks.some((c) => [COAUTHOR_LABEL, VOUCH_LABEL, VOUCH_LABEL_HIGH].includes(c[0])) && result.checks.every((c) => c[1] || [COAUTHOR_LABEL, VOUCH_LABEL, VOUCH_LABEL_HIGH].includes(c[0]))) {
     if (result.checks.some((c) => c[0] === COAUTHOR_LABEL && !c[1])) out += checked ? coauthorNoteChecked() : coauthorNote();
     if (result.checks.some((c) => c[0] === VOUCH_LABEL && !c[1])) out += checked ? vouchNoteChecked() : vouchNote();
-  } else if (result.checks.some((c) => c[0] === PLACE_LABEL && !c[1]) && result.checks.every((c) => c[1] || [PLACE_LABEL, COAUTHOR_LABEL, VOUCH_LABEL].includes(c[0]))) {
+    if (result.checks.some((c) => c[0] === VOUCH_LABEL_HIGH && !c[1])) out += vouchNoteHigh();
+  } else if (result.checks.some((c) => c[0] === PLACE_LABEL && !c[1]) && result.checks.every((c) => c[1] || [PLACE_LABEL, COAUTHOR_LABEL, VOUCH_LABEL, VOUCH_LABEL_HIGH].includes(c[0]))) {
     out += P.PLACE_NOTE;
   } else {
     out += `
@@ -1016,7 +1095,7 @@ async function run(form, login, opened = jstDay(new Date().toISOString())) {
     pub = null;
     try { if (/^10\.\d{4,9}\/\S+$/.test(form.published)) pub = await require('./published.js').lookUpPublished(form.published); } catch (e) { console.error(e.message); }
   }
-  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices, checked: opened >= SITE.checkedFrom }), meta, raw, versions, pub };
+  return { result: check({ form, login, meta, person, works, listed: listedDois(path.join(ROOT, 'data', 'papers')), pub, age, notices, checked: opened >= SITE.checkedFrom, records: loadRecords() }), meta, raw, versions, pub };
 }
 
 /* From SITE.checkedFrom: what the place rule and the conflict check read for one person, and nothing else: the address,
@@ -1152,26 +1231,29 @@ async function checkSubmission(n, login, text) {
     result.ok = result.ok && row[1];
   }
   if (meta && result.author && !form.update && opened >= SITE.vouchFrom) {
-    const exempt = listedAuthor(form.orcid, loadRecords());
+    /* From SITE.barriers.from, no submitter is exempt, two researchers must count, and each needs SITE.barriers.voucherWorks works. */
+    const high = highFrom(opened);
+    const exempt = !high && listedAuthor(form.orcid, loadRecords());
     const results = [];
     if (!exempt) {
       for (const e of vouchesIn(all, checked ? VOUCH_CHECKED : VOUCH)) {
-        let person = null, peer = null, placed = null, shares = null;
+        let person = null, peer = null, placed = null, shares = null, rec = null;
         try {
           const p = await orcidPersonJson(e.orcid);
           const w = await getJson('https://pub.orcid.org/v3.0/' + e.orcid + '/works');
           person = p && orcidPerson(p);
           peer = w ? peerWorks(w) : new Set();
           if (checked) {
-            const rec = await placeRecords(e.orcid);
+            rec = await placeRecords(e.orcid);
             placed = placedBy(rec, opened);
             shares = rec && submitterRecords ? P.sharesOrganisation(rec, submitterRecords) : null;
           }
         } catch (err) { console.error(err.message); }
-        results.push({ e, problem: vouchProblem({ e, person, peer, meta, submitter: form.orcid, checked, placed, shares }) });
+        /* The place records are kept in memory only for the comparison of the researchers with each other, never written. */
+        results.push({ e, rec, problem: vouchProblem({ e, person, peer, meta, submitter: form.orcid, checked, placed, shares, minWorks: high ? HB.voucherWorks : 1 }) });
       }
     }
-    const row = vouchCheck(results, exempt);
+    const row = high ? vouchCheck(results, false, HB.vouchers, (a, b) => (a.rec && b.rec ? !P.sharesOrganisation(a.rec, b.rec) : null)) : vouchCheck(results, exempt);
     result.checks.push(row);
     result.ok = result.ok && row[1];
   }
@@ -1190,6 +1272,6 @@ async function checkSubmission(n, login, text) {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { neutral, allPages, unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { HB, highFrom, DOI_AGE_LABEL_HIGH, ABSTRACT_LABEL, GAP_LABEL, abstractCheck, gapCheck, dayShift, VOUCH_LABEL_HIGH, vouchNoteHigh, loadRecords, neutral, allPages, unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

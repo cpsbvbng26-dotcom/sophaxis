@@ -1,6 +1,6 @@
 # Legal review
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-19.
 
 This file records how the policies of Sophaxis were checked against the law, and the risks that remain.
 It sets out the operator's understanding; it is neither legal advice nor a guarantee, and it has not been reviewed by a lawyer.
@@ -41,7 +41,9 @@ The pages contain no code or tag that sends information about a reader to anyone
 
 ### Data protection in the European Union and the United Kingdom (GDPR and UK GDPR, Articles 3(2), 27, 30 and 49)
 
-From 2026-11-22 Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, or who stays there between the submission and the listing, and does not direct itself there, so the operator considers that Article 3(2) does not reach it. The decision not to appoint a representative is stated with its reason and its review, and so is the breach if that view is wrong. The transfer to the Internet Archive rests on explicit consent in a box of its own, which may be left empty and can be withdrawn without review. The right to object has a section of its own and is stated in every form, a request is answered within one month, and a record of processing is kept.
+From 2026-11-22 Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, or who stays there between the submission and the listing, and does not direct itself there, so the operator considers that Article 3(2) does not reach it. From 2026-12-10, a record is also removed under the Takedown Policy, after the authors are heard for 7 days, once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed. The decision not to appoint a representative is stated with its reason and its review, and so is the breach if that view is wrong. The transfer to the Internet Archive rests on explicit consent in a box of its own, which may be left empty and can be withdrawn without review. The right to object has a section of its own and is stated in every form, a request is answered within one month, and a record of processing is kept.
+
+On 2026-11-19, a review of the legal framework found that the rule of the same day under which a record stays listed when an author moves to, or stays in, a place where Sophaxis is not offered after the listing (#256) left this premise untrue for such a record, which Sophaxis would go on publishing and checking each week; the same premise stands in the Privacy Policy, the Takedown Policy, the record of processing and the README, and item 39 below reads these laws as reaching people who are there. The owner decided the same day that, from 2026-12-10, such a record is removed under the Takedown Policy once the operator learns of it, and that the authors report such a move or stay without naming the place; until then the earlier rule applies. Risk 9 below records the case.
 
 ### Reputation and privacy (Penal Code, Articles 230 and 231; Civil Code, Article 709)
 
@@ -369,9 +371,10 @@ The other places that the survey covered had no data protection law in its data;
 | 6 | A person under 18 submits without the consent of a parent or guardian | 1 | 2 | 2 | The listing is removed where the law gives that right |
 | 7 | A person or an authority in the European Union or the United Kingdom asks for a representative under the GDPR or the Digital Services Act | 1 | 2 | 2 | The decision is reviewed, as the Privacy Policy sets out |
 | 8 | An author who lives or stays in a place where Sophaxis is not offered is listed despite the box | 1 | 2 | 2 | The record is removed under the Takedown Policy, and the decision on a representative is reviewed |
-| 9 | A Russian citizen who lives outside Russia is listed, and Russia's law asks for the storage of that data in Russia | 1 | 2 | 2 | Sophaxis decides by residence and does not ask about citizenship; the operator reviews the decision if a Russian authority raises it |
-| 10 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
-| 11 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
+| 9 | An author of a listed work moves to, or stays in, a place where Sophaxis is not offered after the listing, and the record keeps being published and checked each week, so that the ground "does not list work by an author who lives there" no longer holds for that record | 1 | 2 | 2 | From 2026-12-10, the author reports it in the submission issue, and the record is removed under the Takedown Policy, leaving only its Sophaxis id, once the operator learns of it; before that day the record stays listed unless the author asks for its withdrawal or removal, as the Submission Policy sets out (the owner decided this on 2026-11-19) |
+| 10 | A Russian citizen who lives outside Russia is listed, and Russia's law asks for the storage of that data in Russia | 1 | 2 | 2 | Sophaxis decides by residence and does not ask about citizenship; the operator reviews the decision if a Russian authority raises it |
+| 11 | A repository changes the licence or the metadata after listing | 1 | 1 | 1 | The weekly check of DOIs and licences reports it |
+| 12 | A service used changes its terms and can no longer be used | 1 | 1 | 1 | The repository keeps every record public, and the work can move elsewhere under its licences |
 
 ## Duties still open
 

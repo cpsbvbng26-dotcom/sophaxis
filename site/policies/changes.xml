@@ -8,6 +8,43 @@
   <updated>2026-11-19T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c37</id>
+    <title>The line under each quoted text</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <summary>Since its publication on 2026-11-19, in the Japanese translations of the policies and on the Japanese contact page, the line under each text quoted from a source outside Japan says that it is the original text (「原文」) fetched on its day from the source, linked as 「出どころ」. It no longer repeats the name of the text, which the summary above it gives, or that the text is not translated, which each of these pages says at its head. In English, the line links the source as &quot;its source&quot;, since the summary above it names the text. No rule changed. Claude decided this on 2026-11-19, so that the Japanese Submission Policy and the Privacy Policy in both languages stay within the weight of 100,000 bytes that the accessibility statement gives. Policies: Terms of Use, Copyright Policy, Privacy Policy, Takedown Policy, Moderation Policy, Submission Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c36</id>
+    <title>A record removed when an author moves to a place not offered after the listing, and the duty to report it</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <summary>From 2026-12-10, a listed record is removed under the Takedown Policy, which leaves only its Sophaxis id, after the authors are heard for 7 days, once the operator learns that, after the listing, an author lives in, or stays in, one of the places in the table of the Submission Policy. From the same day, an author who moves to, or stays in, one of them, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author. A move or a stay that began before that day and goes on after it is reported too. Once no author lives or stays there, the work can be submitted again under the rules then in force. This replaces the rule of 2026-11-19 that such a record stays listed and that no such move is reported: a review of the legal framework on 2026-11-19, recorded in the legal review, found that the Privacy Policy, the Takedown Policy, the record of processing, the legal review and the README rest on Sophaxis not listing work by an author who lives there, which that rule no longer kept true. Until 2026-12-09, the record stays listed, no move or stay is reported, and the author can ask for its withdrawal or removal. It narrows a right and adds a duty, so it is announced on the top page at least 14 days ahead. The owner decided this on 2026-11-19, and Claude wrote it. In effect from 2026-12-10. Policies: Submission Policy, Takedown Policy, Privacy Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c35</id>
+    <title>Higher barriers to participation, because Sophaxis is run by one individual</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <summary>From 2026-12-10, for a new work whose submission issue is opened on or after that day, and not for a new version of a listed work: at least 12 months, in place of six, must have passed since the first DOI of the work was registered; the DOI metadata must carry an abstract of at least 400 characters, and an abstract written in the form no longer counts; neither the submitter nor any author whom the DOI metadata names by ORCID iD may be an author of a work that Sophaxis listed in the 180 days before the issue was opened, or since; and two researchers vouch for every new work, even when the submitter is already an author of a listed work, each with at least 5 journal articles, book chapters or books with a DOI in their public ORCID record, different people by ORCID iD and GitHub account, whose ORCID records show no current organisation in common with each other or with the submitter. The automatic check reads each from public records it already reads, and asks for no more personal data. The operator's own submissions meet them too, and Sophaxis stays free. These narrow a right and add duties, so they are announced on the top page at least 14 days ahead. The owner decided this on 2026-11-19, and Claude wrote it. In effect from 2026-12-10. Policies: Submission Policy, Privacy Policy, Moderation Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c34</id>
+    <title>Why the barriers to participation are high</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <summary>Since its publication on 2026-11-19, the top pages, in English and Japanese, the Submission Policy, the submission forms, the checklist, the policies in brief and the pages that say what a submission needs state that Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high. This narrows no right and adds no duty, so it takes effect on publication. The owner decided this on 2026-11-19, and Claude wrote it. Policies: Submission Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c33</id>
     <title>An author who moves to a place not offered after the listing</title>
     <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>

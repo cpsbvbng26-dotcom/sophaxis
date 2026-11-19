@@ -196,5 +196,5 @@ From 2026-12-01, at most 3 records are taken offline automatically on one day (J
 A request beyond that is not taken offline automatically: it gets the label `needs a person` and a fixed comment, and the operator reads it promptly.
 A removal issue that has no acknowledgement because the automatic step did not run for it is taken up by the daily step, as if it had just been opened.
 The run never reports that it found no problems while something was not checked.
-If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.
-Authors are not asked to report a move or a stay that begins after the listing.
+From 2026-12-10, the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, after the authors are heard for 7 days, once the operator learns that an author lives in one of these places, or stays in one, after the listing.
+From 2026-12-10, an author who moves to one of these places, or stays in one, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author.

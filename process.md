@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-19.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -18,6 +18,7 @@ You need four things. The [checklist](./checklist.md) gathers the rest of what a
 
 Every author of the work must agree to the listing.
 From 2026-11-23, a first submission also needs a researcher to vouch for it, with a journal article, a book chapter or a book, as the [Submission Policy](./policies/submission.md) sets out.
+Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high. From 2026-12-10, a new work needs 12 months since its first DOI, an abstract of at least 400 characters in the DOI metadata, 180 days since a work of any of its authors was listed, and two researchers who vouch, each with at least 5 journal articles, book chapters or books, as [Higher barriers](./policies/submission.md#higher-barriers) sets out.
 If you used language models or other generative models, note which tools you used and what for.
 From 2026-11-24, the form also asks for statements on funding, on competing interests, and on human participants and research ethics, and, as an option, where the data and code are.
 

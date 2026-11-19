@@ -6,6 +6,9 @@ Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a trans
 
 The Submission Policy says who can submit what to Sophaxis, and what the submitter confirms.
 
+Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high.
+From 2026-12-10 they are higher still, as [Higher barriers](#higher-barriers) below sets out.
+
 The laws, licences and terms that this page cites are quoted at the end of each section that cites them.
 Japanese statutes are quoted in full, as the e-Gov law API gives them. The other texts are quoted word for word from their official sources, as fetched on 2026-11-12, and are not translated.
 A citation whose source could not be fetched is named there as not quoted, with the reason.
@@ -49,10 +52,12 @@ Each change to the list is announced on the top page before it takes effect, as 
 Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not check where authors live or stay.
 From 2026-12-01, Sophaxis also checks, for every author whose identity it verifies, that the public records the author set at least 30 days earlier place them where Sophaxis is offered.
 The section "The checked intake" below says how, and its limits.
-If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md), and the operator reviews the decision on a representative.
-If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.
-That author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md).
-Authors are not asked to report a move or a stay that begins after the listing.
+If it turns out that an author lived there, or stayed there, between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md), and the operator reviews the decision on a representative.
+From 2026-12-10, the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, after the authors are heard for 7 days, once the operator learns that an author lives in one of these places, or stays in one, after the listing.
+From 2026-12-10, an author who moves to one of these places, or stays in one, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author.
+This includes a move or a stay that began before 2026-12-10 and goes on on or after that day: it is reported, and the record is removed in the same way, after the hearing, once the operator learns of it on or after that day.
+Before that day, the record stays listed, no author is asked to report such a move or stay, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md) or removed.
+Once no author lives or stays in one of these places, the work can be submitted again under the rules then in force.
 A new version is a new submission, so it must meet this rule again.
 
 | Place | What the law requires | Law | Read at its source | From |
@@ -122,6 +127,7 @@ Where the metadata gives no such day, as for Jxiv, the operator checks it by han
 The automatic check in the issue reads these days and counts the six months.
 A submission opened too early is not listed; a new issue can be opened once the six months have passed.
 This does not apply to a new version of a work that Sophaxis already lists, or to a submission opened before 2026-11-23.
+From 2026-12-10, the period is 12 months, as [Higher barriers](#higher-barriers) below sets out.
 
 From 2026-11-23, a work for which Crossref records a retraction, a partial retraction, a withdrawal or a removal is not listed.
 A work for which it records an expression of concern goes to the operator, who decides under the [Moderation Policy](./moderation.md).
@@ -162,6 +168,7 @@ It is not a review, and the moderator still decides.
 The automatic check in the issue reads the researcher's public ORCID record as it reads a co-author's, and counts the vouching.
 The researcher can take it back by deleting the comment before the listing.
 A submitter who is already an author of a listed work needs no one to vouch, and neither does a new version of a listed work.
+From 2026-12-10, every new work needs two researchers, even when the submitter is already an author of a listed work, as [Higher barriers](#higher-barriers) below sets out.
 
 From 2026-12-01, for a submission whose issue is opened on or after that day, the researcher comments with these words instead, and the English words are canonical: "I vouch for this submission to Sophaxis. To my own knowledge, the submitter is an author of this work, holds the right to submit it under its licence, and does not live in, or stay in, a place where Sophaxis is not offered. I am not an author of this work, I am not from the same project as its authors, and I have no conflict of interest with them. I do not live in, or stay in, a place where Sophaxis is not offered. This states what I know; it is not a guarantee."
 It is a statement of what the researcher knows, not a guarantee of what the submitter does.
@@ -191,6 +198,23 @@ The consequence of an untrue confirmation, and the removal of the record once th
 Nothing in the form asks the submitter to confirm what other people will do after the submission.
 
 The checked intake never closes a removal or withdrawal issue, a request about personal data, a notice of an infringement of rights, a request about a statement about a person, or the withdrawal of a consent; a person handles these.
+
+## Higher barriers
+
+From 2026-12-10, for a new work whose submission issue is opened on or after that day, the rules above are raised as follows.
+They do not apply to a new version of a work that Sophaxis already lists, and the operator's own submissions meet them too.
+
+- Age of the DOI: at least 12 months, in place of six, have passed since the first DOI of the work was registered, counted in the same way.
+- Abstract: the DOI metadata carries an abstract of at least 400 characters. An abstract written in the form does not count.
+- Time between works: neither the submitter nor any author whom the DOI metadata names by ORCID iD is an author of a work that Sophaxis listed in the 180 days before the issue was opened, or later.
+- Vouching: two researchers vouch for every new work, in the words of the checked intake, even when the submitter is already an author of a listed work.
+- The public ORCID record of each of the two researchers lists at least 5 journal articles, book chapters or books with a DOI.
+- The two researchers are different people, by ORCID iD and by GitHub account, and their ORCID records show no current organisation in common with each other, as with the submitter.
+
+Each barrier is checked against public records that the automatic check in the issue already reads: the DOI metadata, the public ORCID records and the records of Sophaxis.
+None of them asks for more personal data, and none depends on nationality or any other personal characteristic.
+A submission that fails one is turned away as the checked intake sets out, and a new issue can be opened once every check can pass.
+Sophaxis still charges nothing.
 
 ## What the submitter confirms
 

@@ -1,6 +1,6 @@
 # Your first preprint
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-19.
 
 Japanese: [はじめてのプレプリント（日本語訳）](./first.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -44,3 +44,4 @@ Before choosing, read each repository's own pages on these points. Sophaxis does
 - To have it listed on Sophaxis, read the [checklist](./checklist.md) and follow [From submission to listing](./process.md).
 - [A call to researchers](./call.md) says what a listed work gets, and what to expect from a first submission by someone other than the operator.
 - From 2026-11-23, Sophaxis lists a work only when six months have passed since its first DOI, and a first submission needs a researcher to vouch for it, as the [Submission Policy](./policies/submission.md) sets out.
+- Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high. From 2026-12-10, a new work needs 12 months since its first DOI, an abstract of at least 400 characters in the DOI metadata, 180 days since a work of any of its authors was listed, and two researchers who vouch, each with at least 5 journal articles, book chapters or books, as [Higher barriers](./policies/submission.md#higher-barriers) sets out.

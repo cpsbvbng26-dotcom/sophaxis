@@ -20,7 +20,7 @@ For anyone who has never made a preprint public, [Your first preprint](./first.m
 
 5. The submitter is an author, and their ORCID record links their GitHub account, as [From submission to listing](./process.md) shows.
 6. Every author agrees to the listing. From 2026-11-21, every other author confirms their own agreement in the issue or by email.
-7. No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them. If an author moves to one, or stays in one, after the listing, the record stays listed, and the move or the stay need not be reported.
+7. No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them. If an author moves to one, or stays in one, after the listing, the record stays listed until 2026-12-09; from 2026-12-10, the author reports it in the submission issue, and the record is removed under the Takedown Policy, after a 7-day hearing, once the operator learns of it.
 
 ## The statements
 
@@ -31,6 +31,15 @@ For anyone who has never made a preprint public, [Your first preprint](./first.m
 
 10. Each figure, table or long quotation from others has permission, or is used in a way the law allows, such as quotation. The [Copyright Policy](./policies/copyright.md) explains this.
 11. The work contains no personal data of third parties. A person who can be identified, for example in an interview or a case, has consented, and the work says so.
+
+## From 2026-12-10
+
+Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high. For a new work whose issue is opened on or after 2026-12-10, also:
+
+12. At least 12 months have passed since the first DOI of the work was registered.
+13. The DOI metadata carries an abstract of at least 400 characters.
+14. Neither the submitter nor any author named by ORCID iD in the DOI metadata is an author of a work listed on Sophaxis in the 180 days before the issue is opened, or later.
+15. Two researchers are ready to vouch, each with at least 5 journal articles, book chapters or books with a DOI in their public ORCID record, and with no current organisation in common with each other or with the submitter.
 
 ## Examples of a statement on generative models
 
