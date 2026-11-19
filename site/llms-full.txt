@@ -245,7 +245,7 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 
 # Submission Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-19.
 
 Japanese: [投稿の規程（日本語訳）](https://sophaxis.vercel.app/policies/submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -295,6 +295,10 @@ Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not c
 From 2026-12-01, Sophaxis also checks, for every author whose identity it verifies, that the public records the author set at least 30 days earlier place them where Sophaxis is offered.
 The section "The checked intake" below says how, and its limits.
 If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html), and the operator reviews the decision on a representative.
+If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.
+That author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html).
+Authors are not asked to report a move or a stay that begins after the listing.
+A new version is a new submission, so it must meet this rule again.
 
 | Place | What the law requires | Law | Read at its source | From |
 | --- | --- | --- | --- | --- |
@@ -3769,7 +3773,7 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-15。
+最終更新：2026-11-19。
 
 これは英語の [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3817,6 +3821,10 @@ ORCID iD を持たない著者は投稿できません。
 2026-12-01 からは、本人確認を通ったどの著者についても、その著者が 30 日以上前から置いている公開の記録が、Sophaxis を提供している場所を指すことも確かめます。
 やり方と限りは、下の「突き合わせの受付」にあります。
 著者がこれらの国と地域に住んでいる、または投稿から掲載までのあいだにそこに滞在したと分かったときは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って記録を削除し、運営者は代理人についての判断を見直します。
+掲載後に著者がそこに移るか滞在しても、掲載時に決まりを満たした記録は載ったままです。
+著者はいつでも撤回の規程で撤回を求められます。
+掲載後の移転や滞在の知らせは求めません。
+新しい版は新しい投稿で、この決まりが改めて及びます。
 2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
 インドの 2025 年デジタル個人データ保護規則の第 10 条は、2027-05-13 から、18 歳未満の人のデータを扱うときに、確認した親の同意を求めます。Sophaxis にはその確認ができません。
 
@@ -5103,7 +5111,7 @@ Source: https://sophaxis.vercel.app/rules.ja.html
 
 # 規程の要点（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-19。
 
 これは英語の [The policies in brief](https://sophaxis.vercel.app/rules.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5127,7 +5135,7 @@ Source: https://sophaxis.vercel.app/rules.ja.html
 
 - 著者は、受け付けるリポジトリに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかで預けた作品の DOI で投稿します。投稿者の GitHub のアカウントにつないだ ORCID の記録が要ります。
 - すべての著者の同意が要ります。生成モデルの使用は申告します。モデルは著者になれません。
-- 規程が挙げる場所に住む著者や、そこに滞在する著者には、Sophaxis を提供しません。
+- 規程が挙げる場所に住む著者や、そこに滞在する著者には、Sophaxis を提供しません。掲載のあとで著者がそこに移るか滞在しても、記録は載ったままです。
 - 全文：[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)
 
 ## モデレーションの規程
@@ -5156,7 +5164,7 @@ Source: https://sophaxis.vercel.app/checklist.ja.html
 
 # 投稿の前に：確かめること（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-19。
 
 これは英語の [Before you submit: a checklist](https://sophaxis.vercel.app/checklist.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5176,7 +5184,7 @@ Source: https://sophaxis.vercel.app/checklist.ja.html
 
 5. 投稿者が著者で、その ORCID の記録が GitHub のアカウントにつないである（[投稿から掲載まで](https://sophaxis.vercel.app/process.ja.html)）。
 6. すべての著者が掲載に同意している。2026-11-21 からは、ほかの著者のそれぞれが、issue かメールで自分の同意を確かめる。
-7. Sophaxis を提供しない場所（投稿の規程の一覧）に住む著者や、投稿のあとそこに滞在した著者がいない。
+7. Sophaxis を提供しない場所（投稿の規程の一覧）に住む著者や、投稿のあとそこに滞在した著者がいない。掲載のあとで著者がそこに移るか滞在しても、記録は載ったままで、そのことを知らせなくてよい。
 
 ## 申告
 
