@@ -1,6 +1,6 @@
 # Glossary
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-19.
 
 Japanese: [用語集（日本語訳）](./glossary.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -16,7 +16,8 @@ This page defines the words used on Sophaxis.
 - Moderation: the check by which a moderator decides whether a submission may be listed. It is not peer review, and it does not judge whether the work is correct or important.
 - Automatic check: the code that reads the DOI metadata and the ORCID record and posts what it found in the submission issue. It decides nothing.
 - Provisional registration: a submission that passed the automatic check and waits for a moderator, labelled `verified`. It is not on the site.
-- Vouching: from 2026-11-23, a researcher with a journal article, a book chapter or a book says that a first submission is in scope and in the form of a scholarly paper. It is not a review.
+- Vouching: from 2026-11-23, a researcher with a journal article, a book chapter or a book says that a first submission is in scope and in the form of a scholarly paper. It is not a review. From 2026-12-10, two researchers, each with at least 5 such works, vouch for every new work.
+- Higher barriers: the conditions that the Submission Policy adds from 2026-12-10, because Sophaxis is run by one individual: 12 months since the first DOI, an abstract of at least 400 characters in the DOI metadata, 180 days since a work of any author was listed, and two researchers who vouch.
 - Record: what Sophaxis keeps about a listed work: its title, authors, abstract, licence, versions and statements.
 - Sophaxis id: the number of a record, such as `2026.0001`. It is never given to another work.
 - Version: each deposit of the work in its repository, with its own DOI and date, listed in the record.

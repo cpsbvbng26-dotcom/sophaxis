@@ -22,9 +22,10 @@ This page puts each policy in a few sentences. It is a summary and binds no one;
 
 ## Submission Policy
 
+- Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high. From 2026-12-10, a new work needs 12 months since its first DOI, an abstract of at least 400 characters in the DOI metadata, 180 days since a work of any of its authors was listed, and two researchers who vouch, each with at least 5 journal articles, book chapters or books.
 - An author submits by the DOI of a work deposited in an accepted repository, under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, with an ORCID record that links the submitter's GitHub account.
 - Every author must agree. The use of generative models must be disclosed; no model can be an author.
-- Sophaxis is not offered to authors who live in, or stay in, certain places, which the policy lists. If an author moves to one of them, or stays in one, after the listing, the record stays listed.
+- Sophaxis is not offered to authors who live in, or stay in, certain places, which the policy lists. If an author moves to one of them, or stays in one, after the listing, the record stays listed until 2026-12-09; from 2026-12-10, the author reports it, and the record is removed once the operator learns of it.
 - Read in full: [Submission Policy](./policies/submission.md).
 
 ## Moderation Policy

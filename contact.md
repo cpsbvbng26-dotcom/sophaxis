@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-19.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.md). It is a translation; where the two differ, the English text applies.
 

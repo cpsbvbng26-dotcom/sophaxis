@@ -1,6 +1,6 @@
 # A call to researchers
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-19.
 
 Japanese: [研究者の方へ（日本語訳）](./call.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -37,6 +37,7 @@ A listed work can still be published in a journal, and the record page then show
 - From 2026-11-23, six months since the first DOI of the work was registered, and, for a first submission, a researcher who vouches for it.
 - From 2026-11-24, statements on funding, on competing interests, and on human participants and research ethics.
 - No author who lives in, or stays in, a place where Sophaxis is not offered, as the Submission Policy lists them.
+- From 2026-12-10, for a new work: 12 months since its first DOI, an abstract of at least 400 characters in the DOI metadata, 180 days since a work of any of its authors was listed, and two researchers who vouch, each with at least 5 journal articles, book chapters or books. Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high.
 
 ## A first submission from another researcher
 
@@ -47,6 +48,7 @@ This section is for the first researcher, other than the operator, who submits t
 - Your submission is moderated under the same rules as the operator's own, in the order it comes. The operator's own submissions get no priority.
 - The operator is at present the only moderator. As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.
 - From 2026-11-23, a first submission needs a researcher to vouch for it. The authors of the work and the operator cannot vouch.
+- From 2026-12-10, every new work needs two researchers to vouch for it, each with at least 5 journal articles, book chapters or books.
 - If a step is unclear, ask before submitting, as the next section says. A question is not a submission.
 
 ## How to submit

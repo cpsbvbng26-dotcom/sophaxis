@@ -1,6 +1,6 @@
 # Frequently asked questions
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-19.
 
 Japanese: [よくある質問（日本語訳）](./faq.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -50,7 +50,8 @@ See the [Licence Policy](./policies/licences.md).
 Only an author of the work, with an ORCID iD.
 Your ORCID record must link to your GitHub account, and an automatic check confirms that your ORCID iD belongs to an author of the work.
 Every author must agree to the listing.
-See the [Submission Policy](./policies/submission.md).
+Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high. From 2026-12-10, a new work also needs 12 months since its first DOI, an abstract of at least 400 characters in the DOI metadata, 180 days since a work of any of its authors was listed, and two researchers who vouch, each with at least 5 journal articles, book chapters or books.
+See the [Submission Policy](./policies/submission.md#higher-barriers).
 
 ## Why GitHub?
 
