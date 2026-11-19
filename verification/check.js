@@ -3043,7 +3043,9 @@ console.log('\n76. The age of the DOI: six months since the first DOI of a new w
     rows(form, { opened: '2026-11-22', first: f0 }).length === 0 && rows(form, { opened: '2026-11-23', first: f0 }).length === 1 && rows(form, { opened: '2026-11-23', first: f0 })[0][1] === false
     && I.check({ form, login: 'x', meta, person: null, works: null, listed: new Map(), today: '2026-11-23', age: { opened: '2026-11-23', first: f0 } }).ok === false
     && rows(Object.assign({}, form, { update: '2026.0001' }), { opened: '2026-11-23', first: f0 }).length === 0
-    && rows(form, { opened: '2027-01-01', first: f0 })[0][1] === true);
+    /* From site.barriers.from (2026-12-10) the period is twelve months under another label; check 143 holds that. The last day of
+     * six months alone is the day before. */
+    && rows(form, { opened: '2026-12-09', first: f0 })[0][1] === true);
   const walk = require('child_process').execFileSync(process.execPath, ['-e', `
     const I = require(${JSON.stringify(path.join(ROOT, 'tools', 'intake.js'))});
     const dc = (registered, rel) => ({ raw: { data: { attributes: { registered, relatedIdentifiers: (rel || []).map(([t, d]) => ({ relationType: t, relatedIdentifierType: 'DOI', relatedIdentifier: d })) } } } });
@@ -5811,8 +5813,8 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
   const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
   const breaks = [
-    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-18.', 'Last updated: 2026-11-14.'), facts],
-    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-18。', '最終更新：2026-11-14。'), facts],
+    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-19.', 'Last updated: 2026-11-14.'), facts],
+    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-19。', '最終更新：2026-11-14。'), facts],
     ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
     ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
@@ -8666,39 +8668,60 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
 }
 
 /* ------------------------------------------------------------ 142 */
-console.log('\n142. A move after the listing (2026-11-19): the record stays listed, the author can withdraw it, no move after the listing is reported, and a new version meets the place rule again; in the Submission Policy in both languages, its built pages, the checklist, the policies in brief, both forms, the feed and the commitments');
+console.log('\n142. A move after the listing (2026-11-19, changed the same day): from 2026-12-10 the record is removed once the operator learns of it and the author reports the move, until then it stays listed, and a new version meets the place rule again; in the Submission Policy in both languages, its built pages, the checklist, the policies in brief, both forms, the five statements of the premise, the risk table, the notice, the feed and the commitments');
 {
-  /* The owner decided on 2026-11-19 what holds when an author moves to, or stays in, a place where Sophaxis is not offered
-   * after the listing. It narrows nothing and only states what the rules already imply, so it takes effect on publication.
-   * The sentences are held in the section that states the place rule, after the sentence on removal and before the table,
-   * so that the case cannot silently disappear from either language. */
+  /* The owner decided on 2026-11-19 (#256) that a record stays listed when an author moves to, or stays in, a place where
+   * Sophaxis is not offered after the listing. A legal audit of the same day found that the Privacy Policy, the Takedown Policy,
+   * the record of processing, the legal review and the README rest on Sophaxis not listing work by an author who lives there,
+   * which that rule no longer kept true. The owner then decided that, from 2026-12-10, the record is removed under the Takedown
+   * Policy once the operator learns of such a move or stay, and that the author reports it in the submission issue. Both narrow a
+   * right or add a duty, so they take effect at least 14 days after the announcement; until then the earlier rule is stated, so
+   * that no gap is left. The sentences are held in the section that states the place rule, after the sentence on removal and
+   * before the table, so that the case cannot silently disappear from either language. */
   const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const FROM = '2026-12-10', DECIDED = '2026-11-19';
   const POL = {
-    en: { file: 'policies/submission.md', built: 'site/policies/submission.html', head: '\n## Who can submit\n', after: 'the record is removed under the [Takedown Policy](./takedown.md)', table: '\n| Place |',
-      say: ['If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.',
-        'That author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md).',
-        'Authors are not asked to report a move or a stay that begins after the listing.',
+    en: { file: 'policies/submission.md', built: 'site/policies/submission.html', head: '\n## Who can submit\n', after: 'If it turns out that an author lived there, or stayed there, between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md)', table: '\n| Place |',
+      say: ['From ' + FROM + ', the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, once the operator learns that an author lives in one of these places, or stays in one, after the listing.',
+        'From ' + FROM + ', an author who moves to one of these places, or stays in one, after the listing reports it in the submission issue of the work, without naming the place.',
+        'Before that day, the record stays listed, no such move or stay is reported, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md) or removed.',
         'A new version is a new submission, so it must meet this rule again.'] },
-    ja: { file: 'policies/submission.ja.md', built: 'site/policies/submission.ja.html', head: '\n## 投稿できる人\n', after: '[削除の規程](./takedown.ja.md)に沿って記録を削除し', table: '\n| 国と地域 |',
-      say: ['掲載後に著者がそこに移るか滞在しても、掲載時に決まりを満たした記録は載ったままです。',
-        '著者はいつでも撤回の規程で撤回を求められます。',
-        '掲載後の移転や滞在の知らせは求めません。',
+    ja: { file: 'policies/submission.ja.md', built: 'site/policies/submission.ja.html', head: '\n## 投稿できる人\n', after: '著者がこれらの国と地域に住んでいた、または投稿から掲載までのあいだにそこに滞在したと分かったときは、[削除の規程](./takedown.ja.md)に沿って記録を削除し', table: '\n| 国と地域 |',
+      say: [FROM + ' から、掲載後に著者がそこに住むか滞在していると運営者が知ったときも、記録を削除し、番号だけを残します。',
+        FROM + ' から、掲載後にそこに移るか滞在した著者は、場所を書かずに、投稿の issue で知らせます。',
+        'それまでは記録は載ったままで、知らせも求めず、著者はいつでも撤回の規程で撤回か削除を求められます。',
         '新しい版は新しい投稿で、この決まりが改めて及びます。'] },
   };
-  /* What the other pages that state the place rule for authors add, so that none of them reads as if a move after the listing mattered. */
+  /* What the other pages that state the place rule for authors say of a move after the listing. */
   const ALSO = {
-    'checklist.md': ['7. No author lives in', 'If an author moves to one, or stays in one, after the listing, the record stays listed, and the move or the stay need not be reported.'],
-    'checklist.ja.md': ['7. Sophaxis を提供しない場所', '掲載のあとで著者がそこに移るか滞在しても、記録は載ったままで、そのことを知らせなくてよい。'],
-    'rules.md': ['- Sophaxis is not offered to authors', 'If an author moves to one of them, or stays in one, after the listing, the record stays listed.'],
-    'rules.ja.md': ['- 規程が挙げる場所に住む著者', '掲載のあとで著者がそこに移るか滞在しても、記録は載ったままです。'],
-    '.github/ISSUE_TEMPLATE/submission.yml': ['      description: Required from 2026-11-22. Sophaxis does not list work', 'If an author moves to one of these places, or stays in one, after the listing, the record stays listed, and the move or the stay need not be reported.'],
-    '.github/ISSUE_TEMPLATE/submission-ja.yml': ['      description: 2026-11-22 から必須です。Sophaxis は、次の場所', '掲載のあとで著者がこれらの場所に移るか滞在しても、記録は載ったままで、そのことを知らせる必要はありません。'],
+    'checklist.md': ['7. No author lives in', 'If an author moves to one, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it in the submission issue, and the record is removed once the operator learns of it.'],
+    'checklist.ja.md': ['7. Sophaxis を提供しない場所', '掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままで、' + FROM + ' からは、著者が投稿の issue で知らせ、運営者が知ったときに記録を削除する。'],
+    'rules.md': ['- Sophaxis is not offered to authors', 'If an author moves to one of them, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it, and the record is removed once the operator learns of it.'],
+    'rules.ja.md': ['- 規程が挙げる場所に住む著者', '掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままです。' + FROM + ' からは、著者が知らせ、運営者が知ったときに記録を削除します。'],
+    '.github/ISSUE_TEMPLATE/submission.yml': ['      description: Required from 2026-11-22. Sophaxis does not list work', 'If an author moves to one of these places, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it in this issue, and the record is removed once the operator learns of it.'],
+    '.github/ISSUE_TEMPLATE/submission-ja.yml': ['      description: 2026-11-22 から必須です。Sophaxis は、次の場所', '掲載のあとで著者がこれらの場所に移るか滞在したとき、2026-12-09 までは記録は載ったままです。' + FROM + ' からは、著者がこの issue で知らせ、運営者が知ったときに記録を削除します。'],
   };
-  const COM = [POL.en.say[0], POL.en.say[2]];
-  const real = { 'data/policy-changes.json': T('data/policy-changes.json'), 'verification/commitments.txt': T('verification/commitments.txt') };
+  /* The five statements that rest on Sophaxis not listing work by an author who lives there, each followed by the case after the listing. */
+  const S_EN = 'From ' + FROM + ', a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.';
+  const S_JA = FROM + ' からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、記録を削除します。それまでは、著者が撤回か削除を求めない限り、その記録は載ったままです。';
+  const PREMISE = [
+    ['policies/privacy.md', 'It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.\n', S_EN],
+    ['policies/takedown.md', 'does not offer services there in the sense of the Act.\n', S_EN],
+    ['docs/records-of-processing.md', 'Sophaxis does not list work by an author who lives in the European Union', S_EN],
+    ['docs/legal-review.md', 'so the operator considers that Article 3(2) does not reach it. ', S_EN],
+    ['README.md', '- **Not offered in 43 places**', S_EN],
+    ['policies/privacy.ja.md', '著者のだれかがそこに住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せず、投稿の様式で投稿者にこのことを確かめます。短い滞在も含みます。\n', S_JA],
+    ['policies/takedown.ja.md', 'そこの人に向けて運営していません。', S_JA],
+    ['README.md', '- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない 43 の国と地域に住んでいるか', S_JA],
+  ];
+  const RISK = '| An author of a listed work moves to, or stays in, a place where Sophaxis is not offered after the listing';
+  const OLD = ['If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.', 'Authors are not asked to report a move or a stay that begins after the listing.'];
+  const COM = [POL.en.say[0], POL.en.say[1]];
+  const real = { 'data/policy-changes.json': T('data/policy-changes.json'), 'verification/commitments.txt': T('verification/commitments.txt'), 'verification/superseded.txt': T('verification/superseded.txt'), 'site.json': T('site.json') };
   for (const p of Object.values(POL)) { real[p.file] = T(p.file); real[p.built] = T(p.built); }
-  for (const f of Object.keys(ALSO)) real[f] = T(f);
+  for (const f of Object.keys(ALSO).concat(PREMISE.map((x) => x[0]))) real[f] = T(f);
   const plain = (h) => String(h || '').replace(/<[^>]+>/g, '');
+  const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
   function problems(x) {
     const bad = [];
     for (const [lang, p] of Object.entries(POL)) {
@@ -8706,7 +8729,7 @@ console.log('\n142. A move after the listing (2026-11-19): the record stays list
       const start = t.indexOf(p.head), end = t.indexOf(p.table, start);
       const sec = start >= 0 && end > start ? t.slice(start, end) : '';
       const at = sec.indexOf(p.after);
-      if (at < 0) { bad.push(p.file + ': the place rule or its sentence on removal is not where it was'); continue; }
+      if (at < 0) { bad.push(p.file + ': the place rule or its sentence on removal is not where it was, in the past tense'); continue; }
       let last = at;
       for (const s of p.say) {
         const i = sec.indexOf(s);
@@ -8714,56 +8737,290 @@ console.log('\n142. A move after the listing (2026-11-19): the record stays list
         else if (i < last) bad.push(p.file + ': "' + s.slice(0, 40) + '" out of its place');
         else last = i;
       }
-      if (t.split(p.say[0]).length !== 2) bad.push(p.file + ': the sentence that the record stays listed is not there exactly once');
+      for (const s of p.say.slice(0, 3)) if (t.split(s).length !== 2) bad.push(p.file + ': "' + s.slice(0, 40) + '" is not there exactly once');
+      if (lang === 'en' && (t.includes(OLD[0]) || t.includes(OLD[1]) || t.includes('If it turns out that an author lives there'))) bad.push(p.file + ': the rule that the record stays listed, or the present tense of the removal, is still there');
+      if (lang === 'ja' && (t.includes('掲載時に決まりを満たした記録は載ったままです。') || t.includes('掲載後の移転や滞在の知らせは求めません。'))) bad.push(p.file + ': the rule that the record stays listed is still there');
       const built = plain(x[p.built]);
-      if (!built.includes(plain(p.say[0])) || !built.includes(lang === 'en' ? 'Withdrawal Policy' : '撤回の規程で撤回を求められます')) bad.push(p.built + ': the built page does not carry the sentences');
+      if (!built.includes(plain(p.say[0])) || !built.includes(plain(p.say[1])) || !built.includes(lang === 'en' ? 'Withdrawal Policy' : '撤回か削除を求められます')) bad.push(p.built + ': the built page does not carry the sentences');
     }
     for (const [f, [line, s]] of Object.entries(ALSO)) {
       const l = String(x[f] || '').split('\n').find((y) => y.startsWith(line)) || '';
-      if (!l.includes(s)) bad.push(f + ': the line of the place rule does not say that the record stays listed');
+      if (!l.includes(s)) bad.push(f + ': the line of the place rule does not say what happens after the listing');
     }
+    for (const [f, near, s] of PREMISE) {
+      const t = String(x[f] || ''), i = t.indexOf(near), j = t.indexOf(s, i);
+      /* The sentence follows its premise in the same paragraph (the same line, or the next). */
+      if (i < 0 || j < 0 || t.slice(i, j).split('\n').length > 2) bad.push(f + ': the premise "' + near.slice(0, 30) + '" is not followed by the case after the listing');
+    }
+    const lr = String(x['docs/legal-review.md'] || '');
+    const row = lr.split('\n').find((l) => l.includes(RISK)) || '';
+    if (!/^\| \d+ \| /.test(row) || !row.includes('From ' + FROM + ', the author reports it in the submission issue, and the record is removed under the Takedown Policy')) bad.push('docs/legal-review.md: no risk row for a move after the listing');
+    let site = {};
+    try { site = JSON.parse(x['site.json']); } catch (e) { bad.push('site.json does not parse'); }
+    const tn = String((site.termsNotice || {}).text || '');
+    if (!tn.includes('From ' + FROM + ', a listed record is also removed under the Takedown Policy, leaving only its Sophaxis id, once the operator learns that, after the listing, an author lives in, or stays in, one of the places in the table of the Submission Policy, and an author who moves to, or stays in, one of them after the listing reports it in the submission issue, without naming the place; until then, such a record stays listed unless the author asks for its withdrawal or removal.')) bad.push('the notice on the top page does not announce the change');
     let feed = [];
     try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
-    const e = feed.find((c) => c.date === '2026-11-19' && (c.policies || []).includes('submission') && /after the listing/.test(c.title || ''));
-    if (!e || e.from || !String(e.text).includes('The record stays listed, because the listing met the rule when it was made.') || !String(e.text).includes('Authors are not asked to report a move or a stay that begins after the listing.')
-      || !String(e.text).includes('This narrows no right and adds no duty, so it takes effect on publication.') || !String(e.ja).includes('記録は載ったままです。') || !String(e.ja).includes('2026-11-19 に利用者が決め、Claude が書きました。')) bad.push('the feed entry of 2026-11-19');
+    const e = feed.find((c) => c.date === DECIDED && (c.policies || []).includes('submission') && (c.policies || []).includes('takedown') && /after the listing/.test(c.title || '') && /duty to report/.test(c.title || ''));
+    if (!e || e.from !== FROM || days(e.from, e.date) < 14 || !String(e.text).includes('removed under the Takedown Policy, which leaves only its Sophaxis id') || !String(e.text).includes('reports it in the submission issue of the work, without naming the place')
+      || !String(e.text).includes('It narrows a right and adds a duty, so it is announced on the top page at least 14 days ahead.') || !String(e.ja).includes('記録を削除し') || !String(e.ja).includes(DECIDED + ' に利用者が決め、Claude が書きました。')) bad.push('the feed entry of ' + DECIDED + ' with its day of effect');
     const com = String(x['verification/commitments.txt'] || '').split('\n');
     for (const s of COM) if (!com.includes(s)) bad.push('verification/commitments.txt: missing "' + s.slice(0, 40) + '"');
+    for (const s of OLD) if (com.includes(s)) bad.push('verification/commitments.txt: still holds "' + s.slice(0, 40) + '"');
+    const sup = String(x['verification/superseded.txt'] || '').split('\n');
+    if (!sup.includes(OLD[0] + '\t' + COM[0]) || !sup.includes(OLD[1] + '\t' + COM[1])) bad.push('verification/superseded.txt: the two replaced commitments are not named');
     return bad;
   }
   const now = problems(real);
-  ok('the Submission Policy, in English and in Japanese, says after its sentence on removal that a record stays listed when an author moves to, or stays in, a place not offered after the listing, that the author can withdraw it, that no such move is reported, and that a new version meets the rule again; the built pages, the checklist, the policies in brief and both forms say that the record stays listed; the feed carries the change as effective on publication; and the two English sentences are commitments',
+  ok('the Submission Policy, in English and in Japanese, says after its sentence on removal (in the past tense) that from ' + FROM + ' a record is removed once the operator learns that an author lives or stays in a place not offered after the listing, that the author reports such a move without naming the place, what holds until then, and that a new version meets the rule again; the built pages, the checklist, the policies in brief and both forms say the same; each of the five statements of the premise, in both languages, is followed by the case; the legal review has a risk row; the notice and the feed announce it at least 14 days ahead; and the commitments name what they replace',
     now.length === 0, now.slice(0, 6).join(' / '));
   const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f] || '').replace(a, b) });
   const en = POL.en.file, ja = POL.ja.file;
   const breaks = [
-    ['the English sentence taken out', w(en, POL.en.say[0] + '\n', '')],
-    ['the Japanese sentence taken out', w(ja, POL.ja.say[0] + '\n', '')],
-    ['the English record removed instead', w(en, 'after the listing, the record stays listed, because', 'after the listing, the record is removed, because')],
-    ['the Japanese record removed instead', w(ja, '記録は載ったままです。', '記録を削除します。')],
-    ['the English sentence moved under Withdrawal', Object.assign({}, real, { [en]: real[en].replace(POL.en.say[0] + '\n', '').replace('\n## Withdrawal\n', '\n## Withdrawal\n\n' + POL.en.say[0] + '\n') })],
-    ['the Japanese sentence moved before the sentence on removal', Object.assign({}, real, { [ja]: real[ja].replace(POL.ja.say[0] + '\n', '').replace('著者がこれらの国と地域に住んでいる、または投稿から掲載までのあいだに', POL.ja.say[0] + '\n著者がこれらの国と地域に住んでいる、または投稿から掲載までのあいだに') })],
-    ['the English withdrawal sentence taken out', w(en, POL.en.say[1] + '\n', '')],
-    ['the English sentence on reporting taken out', w(en, POL.en.say[2] + '\n', '')],
-    ['the Japanese sentence on reporting changed', w(ja, POL.ja.say[2], '掲載後の移転や滞在は、すぐに知らせます。')],
+    ['the English removal taken out', w(en, POL.en.say[0] + '\n', '')],
+    ['the Japanese removal taken out', w(ja, POL.ja.say[0] + '\n', '')],
+    ['the English record kept listed instead', w(en, 'the record is also removed under the Takedown Policy, which leaves only', 'the record stays listed, which leaves only')],
+    ['the English record withdrawn instead of removed', w(en, POL.en.say[0], POL.en.say[0].replace('removed under the Takedown Policy, which leaves only its Sophaxis id', 'withdrawn under the Withdrawal Policy'))],
+    ['the English removal from a later day', w(en, POL.en.say[0], POL.en.say[0].replace(FROM, '2026-12-24'))],
+    ['the English duty to report taken out', w(en, POL.en.say[1] + '\n', '')],
+    ['the Japanese duty to report taken out', w(ja, POL.ja.say[1] + '\n', '')],
+    ['the English report naming the place', w(en, ', without naming the place.', ', naming the place.')],
+    ['the English rule until then taken out', w(en, POL.en.say[2] + '\n', '')],
+    ['the Japanese rule until then taken out', w(ja, POL.ja.say[2] + '\n', '')],
+    ['the old English rule left in', w(en, POL.en.say[2], POL.en.say[2] + '\n' + OLD[0])],
+    ['the removal in the present tense again', w(en, 'If it turns out that an author lived there, or stayed there, between', 'If it turns out that an author lives there, or stayed there between')],
+    ['the English removal moved under Withdrawal', Object.assign({}, real, { [en]: real[en].replace(POL.en.say[0] + '\n', '').replace('\n## Withdrawal\n', '\n## Withdrawal\n\n' + POL.en.say[0] + '\n') })],
+    ['the Japanese removal moved before the sentence on removal', Object.assign({}, real, { [ja]: real[ja].replace(POL.ja.say[0] + '\n', '').replace(POL.ja.after, POL.ja.say[0] + '\n' + POL.ja.after) })],
+    ['the English duty written twice', w(en, POL.en.say[3] + '\n', POL.en.say[3] + '\n' + POL.en.say[1] + '\n')],
     ['the English sentence on a new version taken out', w(en, POL.en.say[3] + '\n', '')],
-    ['the Japanese sentence on a new version taken out', w(ja, POL.ja.say[3] + '\n', '')],
-    ['the English sentence written twice', w(en, POL.en.say[3] + '\n', POL.en.say[3] + '\n' + POL.en.say[0] + '\n')],
-    ['the built English page not rebuilt', w(POL.en.built, 'the record stays listed, because the listing', 'the record is removed, because the listing')],
-    ['the built Japanese page not rebuilt', w(POL.ja.built, '掲載時に決まりを満たした記録は載ったままです。', '')],
+    ['the built English page not rebuilt', w(POL.en.built, plain(POL.en.say[0]).slice(0, 60), 'x')],
+    ['the built Japanese page not rebuilt', w(POL.ja.built, '番号だけを残します。', '')],
     ['the checklist without it', w('checklist.md', ' ' + ALSO['checklist.md'][1], '')],
     ['the Japanese checklist without it', w('checklist.ja.md', ALSO['checklist.ja.md'][1], '')],
     ['the policies in brief without it', w('rules.md', ' ' + ALSO['rules.md'][1], '')],
     ['the Japanese policies in brief without it', w('rules.ja.md', ALSO['rules.ja.md'][1], '')],
     ['the English form without it', w('.github/ISSUE_TEMPLATE/submission.yml', ' ' + ALSO['.github/ISSUE_TEMPLATE/submission.yml'][1], '')],
     ['the Japanese form without it', w('.github/ISSUE_TEMPLATE/submission-ja.yml', ALSO['.github/ISSUE_TEMPLATE/submission-ja.yml'][1], '')],
-    ['the feed entry taken out', w('data/policy-changes.json', '"title": "An author who moves to a place not offered after the listing"', '"title": "A clarification"')],
-    ['the feed entry with a later day of effect', w('data/policy-changes.json', '"title": "An author who moves to a place not offered after the listing"', '"from": "2026-12-03",\n    "title": "An author who moves to a place not offered after the listing"')],
-    ['the feed entry without who decided', w('data/policy-changes.json', '2026-11-19 に利用者が決め、Claude が書きました。', '')],
-    ['a commitment taken out', w('verification/commitments.txt', POL.en.say[2] + '\n', '')],
+    ['the Privacy Policy premise without the case', w('policies/privacy.md', S_EN + '\n', '')],
+    ['the DSA premise without the case', w('policies/takedown.md', S_EN + '\n', '')],
+    ['the record of processing without the case', w('docs/records-of-processing.md', ' ' + S_EN, '')],
+    ['the legal review premise without the case', w('docs/legal-review.md', 'does not reach it. ' + S_EN, 'does not reach it.')],
+    ['the README premise without the case', w('README.md', ' ' + S_EN, '')],
+    ['the Japanese Privacy Policy premise without the case', w('policies/privacy.ja.md', S_JA + '\n', '')],
+    ['the Japanese DSA premise without the case', w('policies/takedown.ja.md', S_JA, '')],
+    ['the Japanese README premise without the case', w('README.md', S_JA, '')],
+    ['the risk row taken out', w('docs/legal-review.md', RISK, '| Something else')],
+    ['the notice without the change', w('site.json', ' From ' + FROM + ', a listed record is also removed under the Takedown Policy', ' From ' + FROM + ', a listed record is also kept')],
+    ['the feed entry taken out', w('data/policy-changes.json', 'and the duty to report it"', 'and nothing else"')],
+    ['the feed entry with no day of effect', w('data/policy-changes.json', '"from": "' + FROM + '",\n    "title": "A record removed', '"title": "A record removed')],
+    ['the feed entry only 7 days ahead', w('data/policy-changes.json', '"from": "' + FROM + '",\n    "title": "A record removed', '"from": "2026-11-26",\n    "title": "A record removed')],
+    ['the feed entry without who decided', w('data/policy-changes.json', '著者は撤回か削除を求められます。' + DECIDED + ' に利用者が決め、Claude が書きました。', '著者は撤回か削除を求められます。')],
+    ['a commitment taken out', w('verification/commitments.txt', COM[1] + '\n', '')],
+    ['an old commitment kept', w('verification/commitments.txt', COM[0] + '\n', COM[0] + '\n' + OLD[0] + '\n')],
+    ['the replacement not named', w('verification/superseded.txt', OLD[1] + '\t' + COM[1] + '\n', '')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
-  ok('break on purpose: each of ' + breaks.length + ' ways (a sentence taken out, changed, moved or written twice in either language, a built page not rebuilt, the checklist, the policies in brief or a form without it, the feed entry gone, given a later day or without who decided, and a commitment gone) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+  ok('break on purpose: each of ' + breaks.length + ' ways (a sentence taken out, changed, moved, left in or written twice in either language, the removal as a withdrawal, from a later day or in the present tense, a report that names the place, a built page not rebuilt, the checklist, the policies in brief or a form without it, any of the eight statements of the premise without the case, the risk row, the notice or the feed entry gone, its day of effect gone or too near, without who decided, and a commitment gone, kept or unnamed) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+console.log('\n143. High barriers to participation (2026-11-19): the note on both top pages, in the Submission Policy and wherever a submission\'s needs are listed; from site.json barriers.from, twelve months, an abstract in the DOI metadata, time between works and two researchers who vouch, announced at least 14 days ahead, checked by the intake against public records only, and for the operator too');
+{
+  /* The owner decided on 2026-11-19 that, because Sophaxis is run by one individual, its barriers to participation are set as
+   * high as they can sensibly go, and that this is said plainly. The note narrows nothing and takes effect on publication. The
+   * barriers narrow a right and add duties, so they start on site.json barriers.from, at least 14 days after the announcement.
+   * Each is checked by tools/intake.js against what it already reads (the DOI metadata, the public ORCID records and the records
+   * of Sophaxis); none reads more personal data, and none depends on nationality or any other personal characteristic. */
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const I = require('../tools/intake.js');
+  const Bd = require('../build.js');
+  const ANNOUNCED = '2026-11-19';
+  const NOTE = ['Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high.', 'Sophaxis は個人で運営しているため、参加のハードルを極端に高くしています。'];
+  /* Where the note stands: every page that states who can submit or what a submission needs, in both languages. */
+  const NOTED = { en: ['policies/submission.md', 'site/index.html', 'site/policies/submission.html', '.github/ISSUE_TEMPLATE/submission.yml', 'checklist.md', 'rules.md', 'faq.md', 'process.md', 'call.md', 'first.md', 'README.md', 'site/llms.txt'],
+    ja: ['policies/submission.ja.md', 'site/index.ja.html', 'site/policies/submission.ja.html', '.github/ISSUE_TEMPLATE/submission-ja.yml', 'checklist.ja.md', 'rules.ja.md', 'faq.ja.md', 'process.ja.md', 'call.ja.md', 'first.ja.md', 'README.md'] };
+  const files = [...new Set(Object.values(NOTED).flat().concat(['site.json', 'data/policy-changes.json', 'tools/intake.js', 'build.js', 'policies/privacy.md', 'policies/privacy.ja.md', 'policies/moderation.md', 'policies/moderation.ja.md', 'automation.md', 'automation.ja.md', 'glossary.md', 'glossary.ja.md']))];
+  const real = Object.fromEntries(files.map((f) => [f, T(f)]));
+  const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
+  const word = { 2: 'two' };
+  const plain = (h) => String(h || '').replace(/<[^>]+>/g, '').replace(/&#39;/g, "'");
+  function problems(x) {
+    const bad = [];
+    let site = {};
+    try { site = JSON.parse(x['site.json']); } catch (e) { return ['site.json does not parse']; }
+    const B = site.barriers || {};
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(B.from || '') || days(B.from, ANNOUNCED) < 14 || B.from < site.checkedFrom) bad.push('site.json: barriers.from is not at least 14 days after ' + ANNOUNCED + ' and on or after the checked intake');
+    if (!(B.doiAgeMonths > site.doiAgeMonths) || !(B.abstractChars >= 400) || !(B.gapDays >= 180) || !(B.vouchers >= 2) || !(B.voucherWorks >= 5)) bad.push('site.json: a barrier is lower than the one decided');
+    /* The note: once in the opening of each policy, before its first section, and in every page above. */
+    for (const [lang, fs_] of Object.entries(NOTED)) for (const f of fs_) {
+      const t = f.endsWith('.html') ? plain(x[f]) : String(x[f] || '');
+      if (!t.includes(NOTE[lang === 'en' ? 0 : 1])) bad.push(f + ': no note on the barriers');
+    }
+    for (const [f, head] of [['policies/submission.md', '\n## Who can submit\n'], ['policies/submission.ja.md', '\n## 投稿できる人\n']]) {
+      const t = String(x[f] || ''), n = NOTE[f.includes('.ja.') ? 1 : 0];
+      if (!(t.indexOf(n) >= 0 && t.indexOf(n) < t.indexOf(head)) || t.split(n).length !== 2) bad.push(f + ': the note does not stand once, before the first section');
+    }
+    if (!/<dt>Barriers<\/dt><dd><p>Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high\. The conditions are in the <a href="\.\/policies\/submission\.html#higher-barriers">Submission Policy<\/a>\.<\/p><\/dd>/.test(String(x['site/index.html'])) || !String(x['site/index.ja.html']).includes('<dt>参加</dt><dd><p>' + NOTE[1] + '条件は<a href="./policies/submission.ja.html#高いハードル">投稿の規程</a>にあります。</p></dd>')) bad.push('a top page lacks the row of the card');
+    /* The section of the Submission Policy, with the numbers of site.json. */
+    const SEC = {
+      'policies/submission.md': ['\n## Higher barriers\n', ['From ' + B.from + ', for a new work whose submission issue is opened on or after that day, the rules above are raised as follows.',
+        "They do not apply to a new version of a work that Sophaxis already lists, and the operator's own submissions meet them too.",
+        '- Age of the DOI: at least ' + B.doiAgeMonths + ' months, in place of six, have passed since the first DOI of the work was registered, counted in the same way.',
+        '- Abstract: the DOI metadata carries an abstract of at least ' + B.abstractChars + ' characters. An abstract written in the form does not count.',
+        '- Time between works: neither the submitter nor any author whom the DOI metadata names by ORCID iD is an author of a work that Sophaxis listed in the ' + B.gapDays + ' days before the issue was opened, or later.',
+        '- Vouching: ' + (word[B.vouchers] || B.vouchers) + ' researchers vouch for every new work, in the words of the checked intake, even when the submitter is already an author of a listed work.',
+        '- The public ORCID record of each of the ' + (word[B.vouchers] || B.vouchers) + ' researchers lists at least ' + B.voucherWorks + ' journal articles, book chapters or books with a DOI.',
+        '- The two researchers are different people, by ORCID iD and by GitHub account, and their ORCID records show no current organisation in common with each other, as with the submitter.',
+        'Each barrier is checked against public records that the automatic check in the issue already reads: the DOI metadata, the public ORCID records and the records of Sophaxis.',
+        'None of them asks for more personal data, and none depends on nationality or any other personal characteristic.',
+        'Sophaxis still charges nothing.']],
+      'policies/submission.ja.md': ['\n## 高いハードル\n', [B.from + ' から、その日以後に投稿の issue を開いた新しい作品には、上の決まりを次のとおり引き上げます。',
+        'すでに Sophaxis に載っている作品の新しい版には掛かりません。運営者自身の投稿にも、同じく掛かります。',
+        '- DOI の経過：作品の最初の DOI が登録されてから、6 か月に替えて ' + B.doiAgeMonths + ' か月以上たっている。数え方は同じ。',
+        '- 要旨：DOI のメタデータに、' + B.abstractChars + ' 字以上の要旨がある。様式に書いた要旨は数えない。',
+        '- 作品のあいだの期間：投稿者と、DOI のメタデータが ORCID iD で挙げる著者のだれも、issue を開く前の ' + B.gapDays + ' 日のうちか、それより後に Sophaxis が載せた作品の著者ではない。',
+        '- 紹介：新しい作品はどれも、突き合わせの受付の言葉で、研究者二人の紹介を得る。投稿者がすでに載っている作品の著者でも同じ。',
+        '- 二人の研究者の公開の ORCID の記録が、それぞれ DOI 付きの学術誌の論文・本の章・本を ' + B.voucherWorks + ' 件以上挙げている。',
+        'どれも、これまでより多くの個人情報を求めず、国籍などの個人の属性にもよりません。',
+        'Sophaxis は、これからも料金を取りません。']],
+    };
+    for (const [f, [head, says]] of Object.entries(SEC)) {
+      const t = String(x[f] || ''), i = t.indexOf(head), sec = i < 0 ? '' : t.slice(i, t.indexOf('\n## ', i + head.length));
+      if (i < 0 || t.indexOf(head) > t.indexOf(f.includes('.ja.') ? '\n## 投稿者が確認すること\n' : '\n## What the submitter confirms\n')) { bad.push(f + ': no section on the higher barriers before what the submitter confirms'); continue; }
+      for (const s of says) if (!sec.includes(s)) bad.push(f + ': the section lacks "' + s.slice(0, 50) + '"');
+    }
+    /* The earlier rules point to the section, so that neither reads as if it still held alone. */
+    for (const [f, s] of [['policies/submission.md', 'From ' + B.from + ', the period is ' + B.doiAgeMonths + ' months, as [Higher barriers](#higher-barriers) below sets out.'],
+      ['policies/submission.md', 'From ' + B.from + ', every new work needs two researchers, even when the submitter is already an author of a listed work, as [Higher barriers](#higher-barriers) below sets out.'],
+      ['policies/submission.ja.md', B.from + ' からは、下の[高いハードル](#高いハードル)のとおり、' + B.doiAgeMonths + ' か月になります。'],
+      ['policies/submission.ja.md', B.from + ' からは、下の[高いハードル](#高いハードル)のとおり、すでに載っている作品の著者である投稿者でも、新しい作品には研究者二人の紹介が要ります。'],
+      ['policies/privacy.md', '- from ' + B.from + ', under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least ' + B.voucherWorks + ' journal articles, book chapters or books'],
+      ['policies/privacy.ja.md', '- ' + B.from + ' から、投稿の規程の「高いハードル」のもとで、紹介する二人の研究者がそれぞれ学術誌の論文・本の章・本を ' + B.voucherWorks + ' 件以上持つこと'],
+      ['policies/moderation.md', '- From ' + B.from + ', a new work meets the higher barriers of the [Submission Policy](./submission.md#higher-barriers)'],
+      ['policies/moderation.ja.md', '- ' + B.from + ' から、新しい作品が[投稿の規程](./submission.ja.md#高いハードル)の高いハードルを満たしている。'],
+      ['automation.md', '- From ' + B.from + ', for a new work whose issue is opened on or after that day, it also checks the higher barriers'],
+      ['automation.ja.md', '- ' + B.from + ' から、その日以後に issue を開いた新しい作品には、[投稿の規程](./policies/submission.ja.md#高いハードル)の高いハードルも確かめます。'],
+      ['glossary.md', '- Higher barriers: the conditions that the Submission Policy adds from ' + B.from], ['glossary.ja.md', '- 高いハードル（たかいハードル）：']])
+      if (!String(x[f] || '').includes(s)) bad.push(f + ': lacks "' + s.slice(0, 50) + '"');
+    /* The announcement: the notice on the top page and the feed, with the day of effect. */
+    const tn = String((site.termsNotice || {}).text || '');
+    if (!tn.includes('Since its publication on ' + ANNOUNCED + ', the top pages and the Submission Policy say that ' + NOTE[0])) bad.push('the notice does not say since when the note stands');
+    if (!tn.includes(NOTE[0]) || !tn.includes('From ' + B.from + ', for a new work whose submission issue is opened on or after that day, the barriers are higher: at least ' + B.doiAgeMonths + ' months, in place of six,')
+      || !tn.includes('an abstract of at least ' + B.abstractChars + ' characters in the DOI metadata') || !tn.includes('in the ' + B.gapDays + ' days before the issue was opened, or since') || !tn.includes('each with at least ' + B.voucherWorks + ' journal articles, book chapters or books with a DOI')) bad.push('the notice on the top page does not announce the barriers');
+    if (!plain(x['site/index.html']).includes('From ' + B.from + ', for a new work whose submission issue is opened on or after that day, the barriers are higher')) bad.push('site/index.html: the notice is not built');
+    let feed = [];
+    try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
+    const hb = feed.find((c) => c.date === ANNOUNCED && /^Higher barriers to participation/.test(c.title || ''));
+    if (!hb || hb.from !== B.from || !['submission', 'privacy', 'moderation'].every((p) => (hb.policies || []).includes(p)) || !String(hb.text).includes("The operator's own submissions meet them too, and Sophaxis stays free.")
+      || !String(hb.text).includes('These narrow a right and add duties, so they are announced on the top page at least 14 days ahead.') || !String(hb.ja).includes(B.from + ' から')) bad.push('the feed entry of the barriers');
+    const nt = feed.find((c) => c.date === ANNOUNCED && c.title === 'Why the barriers to participation are high');
+    if (!nt || nt.from || !String(nt.text).includes(NOTE[0]) || !String(nt.ja).includes('参加のハードルを極端に高くしている')) bad.push('the feed entry of the note, effective on publication');
+    if (!plain(x['site/index.ja.html']).includes(hb ? hb.ja : '\u0000')) bad.push('site/index.ja.html: the Japanese notice does not list the barriers');
+    /* The intake: the barriers apply from barriers.from to a new work, the exemption of a listed author ends, and nothing more is read. */
+    const src = String(x['tools/intake.js'] || '');
+    for (const s of ['const exempt = !high && listedAuthor(form.orcid, loadRecords());', 'const row = high ? vouchCheck(results, false, HB.vouchers, ', 'minWorks: high ? HB.voucherWorks : 1',
+      'const high = !form.update && !!age && highFrom(age.opened);', 'if (high) checks.push(abstractCheck(meta.abstract));', 'if (high) checks.push(gapCheck(meta.authors, form.orcid, records || [], age.opened));',
+      "checks.push(high ? doiAgeCheck(age.first, age.opened, HB.doiAgeMonths, DOI_AGE_LABEL_HIGH) : doiAgeCheck(age.first, age.opened));", 'records: loadRecords() }'])
+      if (!src.includes(s)) bad.push('tools/intake.js lacks: ' + s.slice(0, 50));
+    const reads = [...new Set([...src.matchAll(/pub\.orcid\.org\/v3\.0\/' \+ [a-z.]+ \+ '\/([a-z-]+)'|'\/' \+ s\)|at\('([a-z-]+)'\)/g)].map((m) => m[1] || m[2]).filter(Boolean))].sort().join();
+    if (reads !== 'address,educations,employments,personal-details,researcher-urls,works') bad.push('tools/intake.js reads other sections of an ORCID record: ' + reads);
+    if (/pub\.orcid\.org\/v3\.0\/' \+ [a-z.]+ \+ '\/(record|person|emails|history)'/.test(src)) bad.push('tools/intake.js reads a whole record');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the note stands on both top pages, once at the head of the Submission Policy in both languages, in the forms, the checklist, the policies in brief, the FAQ, the steps, the call, the first-preprint page, the README and llms.txt; the section "Higher barriers" gives the numbers of site.json in both languages, and the earlier rules, the Privacy and Moderation Policies, the automation page and the glossary point to it; ' + (JSON.parse(real['site.json']).barriers || {}).from + ' is at least 14 days after the announcement in the notice and the feed; and the intake applies each barrier and reads no other part of an ORCID record',
+    now.length === 0, now.slice(0, 6).join(' / '));
+
+  /* The intake, on cases made here: the day, the age of the DOI, the abstract, the time between works and the vouching. */
+  const HB = JSON.parse(real['site.json']).barriers;
+  const meta0 = I.fromDataCite(JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', 'datacite.json'))));
+  const form = Object.assign(I.parseIssue(read(path.join(__dirname, 'fixtures', 'intake', 'issue.md'))), { update: '' });
+  const f0 = { doi: '10.5281/zenodo.1', day: '2025-06-02' };
+  const rowsOf = (over, opened, label, records) => I.check({ form: Object.assign({}, form, over.form || {}), login: 'x', meta: Object.assign({}, meta0, over.meta || {}), person: null, works: null, listed: new Map(), today: opened, age: { opened, first: over.first || f0 }, records: records || [] }).checks.filter((c) => c[0] === label);
+  const day = I.highFrom('2026-12-09') === false && I.highFrom(HB.from) === true && I.highFrom('') === false;
+  const age = rowsOf({}, '2026-12-09', I.DOI_AGE_LABEL).length === 1 && rowsOf({}, '2026-12-09', I.DOI_AGE_LABEL_HIGH).length === 0
+    && rowsOf({ first: { doi: 'a', day: '2026-06-02' } }, '2026-12-09', I.DOI_AGE_LABEL)[0][1] === true
+    && rowsOf({ first: { doi: 'a', day: '2026-06-02' } }, HB.from, I.DOI_AGE_LABEL_HIGH)[0][1] === false && rowsOf({ first: { doi: 'a', day: '2026-06-02' } }, HB.from, I.DOI_AGE_LABEL).length === 0
+    && rowsOf({ first: { doi: 'a', day: '2025-12-10' } }, HB.from, I.DOI_AGE_LABEL_HIGH)[0][1] === true && rowsOf({ first: { doi: 'a', day: '2025-12-11' } }, HB.from, I.DOI_AGE_LABEL_HIGH)[0][1] === false
+    && rowsOf({ form: { update: '2026.0001' } }, HB.from, I.DOI_AGE_LABEL_HIGH).length === 0 && I.DOI_AGE_LABEL_HIGH === HB.doiAgeMonths + ' months have passed since the first DOI of the work was registered';
+  ok('the twelve months apply to a new work opened from ' + HB.from + ' (the six months the day before), end on the same day of the month, and never to a new version', day && age);
+  const abs = (n, text) => rowsOf({ meta: { abstract: text || 'a'.repeat(n) }, form: { abstract: 'b'.repeat(2000) } }, HB.from, I.ABSTRACT_LABEL);
+  ok('the abstract counts from the DOI metadata only, in characters of any script: ' + (HB.abstractChars - 1) + ' fail, ' + HB.abstractChars + ' pass, an abstract in the form does not count, and it is not asked before ' + HB.from + ' or of a new version',
+    abs(HB.abstractChars - 1)[0][1] === false && abs(HB.abstractChars)[0][1] === true && abs(0, '要'.repeat(HB.abstractChars))[0][1] === true && abs(0, '要'.repeat(HB.abstractChars - 1))[0][1] === false
+    && rowsOf({ meta: { abstract: '' }, form: { abstract: 'b'.repeat(2000) } }, HB.from, I.ABSTRACT_LABEL)[0][1] === false
+    && rowsOf({ meta: { abstract: 'a' } }, '2026-12-09', I.ABSTRACT_LABEL).length === 0 && rowsOf({ meta: { abstract: 'a' }, form: { update: '2026.0001' } }, HB.from, I.ABSTRACT_LABEL).length === 0);
+  const sub = form.orcid, co = '0000-0001-5000-0007';
+  const rec = (id, listed, orcids, status) => ({ id, listed, status: status || 'listed', authors: orcids.map((o) => ({ name: 'n', orcid: o })) });
+  const authors = [{ name: 'A', orcid: sub }, { name: 'B', orcid: co }, { name: 'C', orcid: null }];
+  const gap = (opened, recs) => I.gapCheck(authors, sub, recs, opened);
+  ok('the time between works: a work of the submitter or of an author named by ORCID iD listed ' + HB.gapDays + ' days before the issue, or later, turns it away, withdrawn works included; the day after passes, and the detail names the first day a new issue can be opened',
+    gap('2027-05-01', [rec('2026.0005', '2026-11-02', [sub])])[1] === false && gap('2027-05-01', [rec('2026.0005', '2026-11-02', [sub])])[2].endsWith('a new issue can be opened from 2027-05-02')
+    && gap('2027-05-02', [rec('2026.0005', '2026-11-02', [sub])])[1] === true && gap('2027-01-01', [rec('2026.0009', '2027-02-01', [co])])[1] === false
+    && gap('2027-01-01', [rec('2026.0009', '2026-12-01', [co], 'withdrawn')])[1] === false && gap('2027-01-01', [rec('2026.0009', '2026-12-01', ['0000-0002-0000-0001'])])[1] === true
+    && gap('2027-01-01', [{ id: '2026.0006', status: 'removed' }])[1] === true
+    && rowsOf({ meta: { authors } }, HB.from, I.GAP_LABEL, [rec('2026.0005', '2026-11-02', [sub])])[0][1] === false && rowsOf({ meta: { authors } }, '2026-12-09', I.GAP_LABEL, [rec('2026.0005', '2026-11-02', [sub])]).length === 0);
+  const fx = (f) => JSON.parse(read(path.join(__dirname, 'fixtures', 'intake', f)));
+  const peer6 = I.peerWorks(fx('orcid-works-journal.json'));
+  const person = { name: 'Someone Else', given: 'Someone', family: 'Else', urls: ['https://github.com/vouchr'] };
+  const pr = (peer) => I.vouchProblem({ e: { login: 'vouchr', orcid: '0000-0001-0000-0002' }, person, peer, meta: meta0, submitter: sub, minWorks: HB.voucherWorks });
+  const four = new Set([...peer6].slice(0, HB.voucherWorks - 1)), five = new Set([...peer6].slice(0, HB.voucherWorks));
+  ok('a researcher counts only with at least ' + HB.voucherWorks + ' journal articles, book chapters or books with a DOI', pr(four) === 'the ORCID record lists ' + (HB.voucherWorks - 1) + ' journal articles, book chapters or books with a DOI, fewer than ' + HB.voucherWorks && pr(five) === null && pr(new Set()) === 'the ORCID record lists no journal article, book chapter or book with a DOI');
+  const v = (orcid, login, problem) => ({ e: { orcid, login }, problem: problem || null });
+  const apartYes = () => true, apartNo = () => false, apartUnknown = () => null;
+  const vc = (rs, apart) => I.vouchCheck(rs, false, HB.vouchers, apart);
+  ok('two researchers must count: one is not enough, nor the same ORCID iD or GitHub account twice, nor two whose records share a current organisation or cannot be compared; the row has its own label and its own note',
+    vc([v('0000-0001-0000-0002', 'a')], apartYes)[1] === false && vc([v('0000-0001-0000-0002', 'a')], apartYes)[2].includes('1 of 2 researchers counted')
+    && vc([v('0000-0001-0000-0002', 'a'), v('0000-0001-0000-0003', 'b')], apartYes)[1] === true && vc([v('0000-0001-0000-0002', 'a'), v('0000-0001-0000-0003', 'b')], apartYes)[0] === I.VOUCH_LABEL_HIGH
+    && vc([v('0000-0001-0000-0002', 'a'), v('0000-0001-0000-0002', 'b')], apartYes)[1] === false && vc([v('0000-0001-0000-0002', 'a'), v('0000-0001-0000-0003', 'A')], apartYes)[1] === false
+    && vc([v('0000-0001-0000-0002', 'a'), v('0000-0001-0000-0003', 'b')], apartNo)[1] === false && vc([v('0000-0001-0000-0002', 'a'), v('0000-0001-0000-0003', 'b')], apartUnknown)[1] === false
+    && vc([v('0000-0001-0000-0002', 'a'), v('0000-0001-0000-0003', 'b', 'the operator cannot vouch'), v('0000-0001-0000-0004', 'c')], apartYes)[1] === true
+    && I.vouchCheck([v('0000-0001-0000-0002', 'a')], false)[1] === true
+    && I.comment({ ok: false, checks: [['The DOI metadata could be read', true, ''], [I.VOUCH_LABEL_HIGH, false, '0 of 2 researchers counted']] }, null).includes('This new work needs two researchers to vouch for it')
+    && I.vouchNoteHigh().includes(I.VOUCH_CHECKED + ' ORCID: 0000-0000-0000-0000') && I.vouchNoteHigh().includes('at least ' + HB.voucherWorks + ' journal articles'));
+  ok('the build gives the note in both languages from one place, and llms.txt the barriers with the numbers of site.json',
+    Bd.BARRIERS_NOTE[0] === NOTE[0] && Bd.BARRIERS_NOTE[1] === NOTE[1]
+    && String(real['site/llms.txt']).includes('- Barriers: ' + NOTE[0] + ' From ' + HB.from + ', a new work needs ' + HB.doiAgeMonths + ' months since its first DOI, an abstract of at least ' + HB.abstractChars + ' characters in the DOI metadata, ' + HB.gapDays + ' days since a work of any of its authors was listed, and ' + HB.vouchers + ' researchers who vouch, each with at least ' + HB.voucherWorks + ' journal articles, book chapters or books.'));
+
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f] || '').split(a).join(b) });
+  const withSite = (fn) => { const x = JSON.parse(real['site.json']); fn(x); return Object.assign({}, real, { 'site.json': JSON.stringify(x) }); };
+  const breaks = [
+    ['the note taken from the English policy', w('policies/submission.md', NOTE[0] + '\n', '')],
+    ['the note taken from the Japanese policy', w('policies/submission.ja.md', NOTE[1] + '\n', '')],
+    ['the note written twice in the policy', w('policies/submission.md', '\n## Higher barriers\n', '\n## Higher barriers\n\n' + NOTE[0] + '\n')],
+    ['the note moved below the first section', Object.assign({}, real, { 'policies/submission.md': real['policies/submission.md'].replace(NOTE[0] + '\n', '').replace('\n## What can be submitted\n', '\n' + NOTE[0] + '\n\n## What can be submitted\n') })],
+    ['the English top page without the row', w('site/index.html', '<dt>Barriers</dt>', '<dt>Limits</dt>')],
+    ['the Japanese top page without the note', w('site/index.ja.html', NOTE[1], '')],
+    ['the English form without it', w('.github/ISSUE_TEMPLATE/submission.yml', NOTE[0], '')],
+    ['the Japanese form without it', w('.github/ISSUE_TEMPLATE/submission-ja.yml', NOTE[1], '')],
+    ['the checklist without it', w('checklist.md', NOTE[0], '')],
+    ['the Japanese policies in brief without it', w('rules.ja.md', NOTE[1], '')],
+    ['the README without it in Japanese', w('README.md', NOTE[1], '')],
+    ['llms.txt without it', w('site/llms.txt', NOTE[0], '')],
+    ['the day of effect 13 days ahead', withSite((x) => { x.barriers.from = '2026-12-02'; })],
+    ['the barriers before the checked intake', withSite((x) => { x.barriers.from = '2026-11-30'; })],
+    ['six months kept', withSite((x) => { x.barriers.doiAgeMonths = 6; })],
+    ['one researcher', withSite((x) => { x.barriers.vouchers = 1; })],
+    ['three works for a researcher', withSite((x) => { x.barriers.voucherWorks = 3; })],
+    ['a number of the English section changed', w('policies/submission.md', 'at least 400 characters. An abstract', 'at least 300 characters. An abstract')],
+    ['a number of the Japanese section changed', w('policies/submission.ja.md', '180 日のうちか', '90 日のうちか')],
+    ['the operator exempted', w('policies/submission.md', "and the operator's own submissions meet them too.", 'and the operator\'s own submissions are exempt.')],
+    ['the section renamed', w('policies/submission.md', '\n## Higher barriers\n', '\n## Further rules\n')],
+    ['the six months left alone in English', w('policies/submission.md', 'From ' + HB.from + ', the period is ' + HB.doiAgeMonths + ' months, as', 'Later, the period may change, as')],
+    ['the exemption left alone in Japanese', w('policies/submission.ja.md', 'すでに載っている作品の著者である投稿者でも、新しい作品には研究者二人の紹介が要ります。', '')],
+    ['the Privacy Policy without the purpose', w('policies/privacy.md', '- from ' + HB.from + ', under "Higher barriers"', '- under "Higher barriers"')],
+    ['the Moderation Policy without the criterion', w('policies/moderation.ja.md', '高いハードルを満たしている。', '')],
+    ['the notice without the barriers', w('site.json', 'the barriers are higher: at least', 'the barriers may be higher: at least')],
+    ['the feed entry without a day of effect', w('data/policy-changes.json', '"from": "' + HB.from + '",\n    "title": "Higher barriers', '"title": "Higher barriers')],
+    ['the note given a day of effect', w('data/policy-changes.json', '"title": "Why the barriers to participation are high"', '"from": "' + HB.from + '",\n    "title": "Why the barriers to participation are high"')],
+    ['the intake keeping the exemption', w('tools/intake.js', 'const exempt = !high && listedAuthor(form.orcid, loadRecords());', 'const exempt = listedAuthor(form.orcid, loadRecords());')],
+    ['the intake without the abstract', w('tools/intake.js', 'if (high) checks.push(abstractCheck(meta.abstract));', '')],
+    ['the intake without the time between works', w('tools/intake.js', 'if (high) checks.push(gapCheck(meta.authors, form.orcid, records || [], age.opened));', '')],
+    ['the intake with one work for a researcher', w('tools/intake.js', 'minWorks: high ? HB.voucherWorks : 1', 'minWorks: 1')],
+    ['the intake reading the whole record', w('tools/intake.js', "await at('educations')", "await at('educations'), await at('record')")],
+    ['the intake reading the emails', w('tools/intake.js', "getJson('https://pub.orcid.org/v3.0/' + orcid + '/researcher-urls')", "getJson('https://pub.orcid.org/v3.0/' + orcid + '/emails')")],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (the note taken out, doubled or moved anywhere it stands, the day of effect too near or before the checked intake, a barrier lowered in site.json or in either language, the operator exempted, the section renamed, an earlier rule left alone, the Privacy or Moderation Policy, the notice or the feed without it, the note given a day, the intake keeping the exemption, dropping a barrier or reading more of an ORCID record) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
 }
 
