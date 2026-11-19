@@ -485,12 +485,14 @@ function quoteOne(key, ja) {
         ? `${when} に <a href="${api}">e-Gov 法令 API</a> から取り寄せた現行の条文を、手を入れずに引いています。${t.watched ? '週に一度の見張りが、記した文と同じかを確かめています。' : 'まだ週に一度の見張りには入っていません。'}`
         : `The current text, fetched from the <a href="${api}">e-Gov law API</a> on ${when} and quoted without change. ${t.watched ? 'The weekly watch confirms that it is still the same.' : 'It is not yet among the texts the weekly watch confirms.'} Not translated; the Japanese text is the law.`}</p></details>`;
   }
+  /* In Japanese the line under a quotation links its source as 出どころ, since the summary above names the text, and leaves out that
+   * it is not translated, since every page that quotes says so at its head (2026-11-19, for the weight of the Submission Policy). */
   const q = PRIMARY.quotes[key];
   if (!q) throw new Error('条文の印 ' + key + ' を引くものがない');
   return `<details class="source"><summary>${ja ? '原文　' + esc(q.name_ja) : 'Text of ' + esc(q.name)}</summary>`
     + `<blockquote lang="${q.lang}"><p>${esc(q.quote)}</p></blockquote>`
     + `<p class="from">${ja
-      ? `<a href="${esc(q.url)}">${esc(q.name_ja)}</a>から、${PRIMARY.fetched} に取り寄せた文をそのまま引いています。訳は付けていません。`
+      ? `${PRIMARY.fetched} に<a href="${esc(q.url)}">出どころ</a>から取り寄せた文を、そのまま引いています。`
       : `Quoted word for word from <a href="${esc(q.url)}">${esc(q.name)}</a>, as fetched on ${PRIMARY.fetched}.`}</p></details>`;
 }
 /* The citations of a line that could not be quoted, in one note, each with why. */
@@ -1378,6 +1380,9 @@ ${pausedNotice()}<div class="emblems">
 </div>
 `;
 }
+/* The note on the barriers to participation, in English and Japanese (the owner decided it on 2026-11-19): it stands on both top
+ * pages, in the card, and in the Submission Policy, the forms and the pages that list what a submission needs (check 143). */
+const BARRIERS_NOTE = ['Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high.', 'Sophaxis は個人で運営しているため、参加のハードルを極端に高くしています。'];
 /* The card: what Sophaxis is and is not, in the sentences the top page has carried, and the two notices that follow. */
 function aboutCard(ja = false) {
   const L = SITE.notOffered || [], n = SITE.termsNotice;
@@ -1388,12 +1393,14 @@ function aboutCard(ja = false) {
   const body = ja
     ? row('であるもの', `<p>${esc(SITE.name)} は、哲学・数学・論理学・数理哲学・科学哲学のプレプリントを載せるオーバーレイ型のプレプリントサーバーです。著者が作品を公開のリポジトリに預け、${esc(SITE.name)} がその投稿をモデレーションし、作品ごとに安定した記録の頁を作ります。</p>`)
       + row('でないもの', `<p>掲載はモデレーションであり、査読ではありません。載っている作品の質は保証しません。</p><p>${esc(metaphorLine(true))}</p>`)
+      + row('参加', `<p>${esc(BARRIERS_NOTE[1])}条件は<a href="./policies/submission.ja.html#高いハードル">投稿の規程</a>にあります。</p>`)
       + row('生成モデル', '<p>言語モデルなどの生成モデルを使った作品も、その使用を申告していれば受け付けます。</p>')
       + row('料金', `<p>${esc(SITE.name)} は、著者からも読者からも料金を取りません。</p>`)
       + row('目的', `<p>${esc(SITE.name)} を運営する目的は、<a href="./mission.ja.html">運営理念・声明</a>に述べています。声明は権利や義務を生じさせず、<a href="./policy.ja.html">規程</a>が適用されます。</p>`)
       + (notes ? row('告知', notes, 'notes') : '')
     : row('Is', `<p>${esc(SITE.name)} lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science. Authors deposit their work in an open repository; ${esc(SITE.name)} moderates the submission and gives it a stable record page.</p>`)
       + row('Is not', `<p>Acceptance is moderation, not peer review. The quality of listed work is not guaranteed.</p><p>${esc(metaphorLine(false))}</p>`)
+      + row('Barriers', `<p>${esc(BARRIERS_NOTE[0])} The conditions are in the <a href="./policies/submission.html#higher-barriers">Submission Policy</a>.</p>`)
       + row('Models', '<p>Work made with language models or other generative models is accepted when the use is disclosed.</p>')
       + row('Fees', `<p>${esc(SITE.name)} charges nothing, to authors or to readers.</p>`)
       + row('Purpose', `<p>Why ${esc(SITE.name)} is run: the <a href="./mission.html">Statement of Purpose</a>. It creates no rights or obligations; the <a href="./policy.html">policies</a> apply.</p>`)
@@ -2123,6 +2130,7 @@ function llmsTxt(all) {
     + '- Records shown: ' + shown.length + ' (removed records are not counted). ' + ownShare(all) + ' The operator is at present the only moderator.\n'
     + '- Not offered in ' + L.length + ' places: ' + notOfferedPlaces(L) + '. From ' + SITE.residenceFrom + ', a work is not listed if an author lives in one of them, or stays in one between the submission and the listing, even briefly. The [Submission Policy](' + B + 'policies/submission.html) gives the law of each.\n'
     + '- Age of the DOI: from ' + SITE.doiAgeFrom + ', a new work is listed only if at least ' + SITE.doiAgeMonths + ' months have passed since its first DOI was registered, counted to the day the submission issue is opened.\n'
+    + '- Barriers: ' + BARRIERS_NOTE[0] + ' From ' + SITE.barriers.from + ', a new work needs ' + SITE.barriers.doiAgeMonths + ' months since its first DOI, an abstract of at least ' + SITE.barriers.abstractChars + ' characters in the DOI metadata, ' + SITE.barriers.gapDays + ' days since a work of any of its authors was listed, and ' + SITE.barriers.vouchers + ' researchers who vouch, each with at least ' + SITE.barriers.voucherWorks + ' journal articles, book chapters or books.\n'
     + notice
     + '\n## Policies\n\n'
     + POLICIES.map(([slug, what]) => '- [' + policyTitle(slug) + '](' + B + 'policies/' + slug + '.html): ' + what + '\n').join('')
@@ -2261,7 +2269,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { STATEMENT, metaphorLine, entranceFacts, entrance, aboutCard, CSS_TOP, pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { BARRIERS_NOTE, STATEMENT, metaphorLine, entranceFacts, entrance, aboutCard, CSS_TOP, pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */
