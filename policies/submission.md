@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-19.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -50,6 +50,10 @@ Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not c
 From 2026-12-01, Sophaxis also checks, for every author whose identity it verifies, that the public records the author set at least 30 days earlier place them where Sophaxis is offered.
 The section "The checked intake" below says how, and its limits.
 If it turns out that an author lives there, or stayed there between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md), and the operator reviews the decision on a representative.
+If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.
+That author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md).
+Authors are not asked to report a move or a stay that begins after the listing.
+A new version is a new submission, so it must meet this rule again.
 
 | Place | What the law requires | Law | Read at its source | From |
 | --- | --- | --- | --- | --- |

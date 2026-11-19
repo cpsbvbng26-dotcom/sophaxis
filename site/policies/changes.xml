@@ -5,8 +5,15 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-18T00:00:00Z</updated>
+  <updated>2026-11-19T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c33</id>
+    <title>An author who moves to a place not offered after the listing</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <summary>Since its publication on 2026-11-19, the Submission Policy states what already follows from its rules for an author who moves to, or stays in, a place where Sophaxis is not offered after the listing. The record stays listed, because the listing met the rule when it was made. That author can ask at any time for the record to be withdrawn under the Withdrawal Policy. Authors are not asked to report a move or a stay that begins after the listing. A new version is a new submission, so it must meet the rule again, as the form already requires. The checklist, the policies in brief and the submission forms say the same. This narrows no right and adds no duty, so it takes effect on publication. The owner decided this on 2026-11-19, and Claude wrote it. Policies: Submission Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c32</id>
     <title>A form for rights holders, and Claude only with its box ticked</title>

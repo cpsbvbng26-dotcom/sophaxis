@@ -8665,6 +8665,108 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
     missed.length === 0, missed.join(' / '));
 }
 
+/* ------------------------------------------------------------ 142 */
+console.log('\n142. A move after the listing (2026-11-19): the record stays listed, the author can withdraw it, no move after the listing is reported, and a new version meets the place rule again; in the Submission Policy in both languages, its built pages, the checklist, the policies in brief, both forms, the feed and the commitments');
+{
+  /* The owner decided on 2026-11-19 what holds when an author moves to, or stays in, a place where Sophaxis is not offered
+   * after the listing. It narrows nothing and only states what the rules already imply, so it takes effect on publication.
+   * The sentences are held in the section that states the place rule, after the sentence on removal and before the table,
+   * so that the case cannot silently disappear from either language. */
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const POL = {
+    en: { file: 'policies/submission.md', built: 'site/policies/submission.html', head: '\n## Who can submit\n', after: 'the record is removed under the [Takedown Policy](./takedown.md)', table: '\n| Place |',
+      say: ['If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.',
+        'That author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md).',
+        'Authors are not asked to report a move or a stay that begins after the listing.',
+        'A new version is a new submission, so it must meet this rule again.'] },
+    ja: { file: 'policies/submission.ja.md', built: 'site/policies/submission.ja.html', head: '\n## 投稿できる人\n', after: '[削除の規程](./takedown.ja.md)に沿って記録を削除し', table: '\n| 国と地域 |',
+      say: ['掲載後に著者がそこに移るか滞在しても、掲載時に決まりを満たした記録は載ったままです。',
+        '著者はいつでも撤回の規程で撤回を求められます。',
+        '掲載後の移転や滞在の知らせは求めません。',
+        '新しい版は新しい投稿で、この決まりが改めて及びます。'] },
+  };
+  /* What the other pages that state the place rule for authors add, so that none of them reads as if a move after the listing mattered. */
+  const ALSO = {
+    'checklist.md': ['7. No author lives in', 'If an author moves to one, or stays in one, after the listing, the record stays listed, and the move or the stay need not be reported.'],
+    'checklist.ja.md': ['7. Sophaxis を提供しない場所', '掲載のあとで著者がそこに移るか滞在しても、記録は載ったままで、そのことを知らせなくてよい。'],
+    'rules.md': ['- Sophaxis is not offered to authors', 'If an author moves to one of them, or stays in one, after the listing, the record stays listed.'],
+    'rules.ja.md': ['- 規程が挙げる場所に住む著者', '掲載のあとで著者がそこに移るか滞在しても、記録は載ったままです。'],
+    '.github/ISSUE_TEMPLATE/submission.yml': ['      description: Required from 2026-11-22. Sophaxis does not list work', 'If an author moves to one of these places, or stays in one, after the listing, the record stays listed, and the move or the stay need not be reported.'],
+    '.github/ISSUE_TEMPLATE/submission-ja.yml': ['      description: 2026-11-22 から必須です。Sophaxis は、次の場所', '掲載のあとで著者がこれらの場所に移るか滞在しても、記録は載ったままで、そのことを知らせる必要はありません。'],
+  };
+  const COM = [POL.en.say[0], POL.en.say[2]];
+  const real = { 'data/policy-changes.json': T('data/policy-changes.json'), 'verification/commitments.txt': T('verification/commitments.txt') };
+  for (const p of Object.values(POL)) { real[p.file] = T(p.file); real[p.built] = T(p.built); }
+  for (const f of Object.keys(ALSO)) real[f] = T(f);
+  const plain = (h) => String(h || '').replace(/<[^>]+>/g, '');
+  function problems(x) {
+    const bad = [];
+    for (const [lang, p] of Object.entries(POL)) {
+      const t = String(x[p.file] || '');
+      const start = t.indexOf(p.head), end = t.indexOf(p.table, start);
+      const sec = start >= 0 && end > start ? t.slice(start, end) : '';
+      const at = sec.indexOf(p.after);
+      if (at < 0) { bad.push(p.file + ': the place rule or its sentence on removal is not where it was'); continue; }
+      let last = at;
+      for (const s of p.say) {
+        const i = sec.indexOf(s);
+        if (i < 0) bad.push(p.file + ': missing "' + s.slice(0, 40) + '"');
+        else if (i < last) bad.push(p.file + ': "' + s.slice(0, 40) + '" out of its place');
+        else last = i;
+      }
+      if (t.split(p.say[0]).length !== 2) bad.push(p.file + ': the sentence that the record stays listed is not there exactly once');
+      const built = plain(x[p.built]);
+      if (!built.includes(plain(p.say[0])) || !built.includes(lang === 'en' ? 'Withdrawal Policy' : '撤回の規程で撤回を求められます')) bad.push(p.built + ': the built page does not carry the sentences');
+    }
+    for (const [f, [line, s]] of Object.entries(ALSO)) {
+      const l = String(x[f] || '').split('\n').find((y) => y.startsWith(line)) || '';
+      if (!l.includes(s)) bad.push(f + ': the line of the place rule does not say that the record stays listed');
+    }
+    let feed = [];
+    try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
+    const e = feed.find((c) => c.date === '2026-11-19' && (c.policies || []).includes('submission') && /after the listing/.test(c.title || ''));
+    if (!e || e.from || !String(e.text).includes('The record stays listed, because the listing met the rule when it was made.') || !String(e.text).includes('Authors are not asked to report a move or a stay that begins after the listing.')
+      || !String(e.text).includes('This narrows no right and adds no duty, so it takes effect on publication.') || !String(e.ja).includes('記録は載ったままです。') || !String(e.ja).includes('2026-11-19 に利用者が決め、Claude が書きました。')) bad.push('the feed entry of 2026-11-19');
+    const com = String(x['verification/commitments.txt'] || '').split('\n');
+    for (const s of COM) if (!com.includes(s)) bad.push('verification/commitments.txt: missing "' + s.slice(0, 40) + '"');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the Submission Policy, in English and in Japanese, says after its sentence on removal that a record stays listed when an author moves to, or stays in, a place not offered after the listing, that the author can withdraw it, that no such move is reported, and that a new version meets the rule again; the built pages, the checklist, the policies in brief and both forms say that the record stays listed; the feed carries the change as effective on publication; and the two English sentences are commitments',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f] || '').replace(a, b) });
+  const en = POL.en.file, ja = POL.ja.file;
+  const breaks = [
+    ['the English sentence taken out', w(en, POL.en.say[0] + '\n', '')],
+    ['the Japanese sentence taken out', w(ja, POL.ja.say[0] + '\n', '')],
+    ['the English record removed instead', w(en, 'after the listing, the record stays listed, because', 'after the listing, the record is removed, because')],
+    ['the Japanese record removed instead', w(ja, '記録は載ったままです。', '記録を削除します。')],
+    ['the English sentence moved under Withdrawal', Object.assign({}, real, { [en]: real[en].replace(POL.en.say[0] + '\n', '').replace('\n## Withdrawal\n', '\n## Withdrawal\n\n' + POL.en.say[0] + '\n') })],
+    ['the Japanese sentence moved before the sentence on removal', Object.assign({}, real, { [ja]: real[ja].replace(POL.ja.say[0] + '\n', '').replace('著者がこれらの国と地域に住んでいる、または投稿から掲載までのあいだに', POL.ja.say[0] + '\n著者がこれらの国と地域に住んでいる、または投稿から掲載までのあいだに') })],
+    ['the English withdrawal sentence taken out', w(en, POL.en.say[1] + '\n', '')],
+    ['the English sentence on reporting taken out', w(en, POL.en.say[2] + '\n', '')],
+    ['the Japanese sentence on reporting changed', w(ja, POL.ja.say[2], '掲載後の移転や滞在は、すぐに知らせます。')],
+    ['the English sentence on a new version taken out', w(en, POL.en.say[3] + '\n', '')],
+    ['the Japanese sentence on a new version taken out', w(ja, POL.ja.say[3] + '\n', '')],
+    ['the English sentence written twice', w(en, POL.en.say[3] + '\n', POL.en.say[3] + '\n' + POL.en.say[0] + '\n')],
+    ['the built English page not rebuilt', w(POL.en.built, 'the record stays listed, because the listing', 'the record is removed, because the listing')],
+    ['the built Japanese page not rebuilt', w(POL.ja.built, '掲載時に決まりを満たした記録は載ったままです。', '')],
+    ['the checklist without it', w('checklist.md', ' ' + ALSO['checklist.md'][1], '')],
+    ['the Japanese checklist without it', w('checklist.ja.md', ALSO['checklist.ja.md'][1], '')],
+    ['the policies in brief without it', w('rules.md', ' ' + ALSO['rules.md'][1], '')],
+    ['the Japanese policies in brief without it', w('rules.ja.md', ALSO['rules.ja.md'][1], '')],
+    ['the English form without it', w('.github/ISSUE_TEMPLATE/submission.yml', ' ' + ALSO['.github/ISSUE_TEMPLATE/submission.yml'][1], '')],
+    ['the Japanese form without it', w('.github/ISSUE_TEMPLATE/submission-ja.yml', ALSO['.github/ISSUE_TEMPLATE/submission-ja.yml'][1], '')],
+    ['the feed entry taken out', w('data/policy-changes.json', '"title": "An author who moves to a place not offered after the listing"', '"title": "A clarification"')],
+    ['the feed entry with a later day of effect', w('data/policy-changes.json', '"title": "An author who moves to a place not offered after the listing"', '"from": "2026-12-03",\n    "title": "An author who moves to a place not offered after the listing"')],
+    ['the feed entry without who decided', w('data/policy-changes.json', '2026-11-19 に利用者が決め、Claude が書きました。', '')],
+    ['a commitment taken out', w('verification/commitments.txt', POL.en.say[2] + '\n', '')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (a sentence taken out, changed, moved or written twice in either language, a built page not rebuilt, the checklist, the policies in brief or a form without it, the feed entry gone, given a later day or without who decided, and a commitment gone) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
