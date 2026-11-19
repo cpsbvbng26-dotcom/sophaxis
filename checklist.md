@@ -38,7 +38,7 @@ Sophaxis is run by one individual, so its barriers to participation are delibera
 
 12. At least 12 months have passed since the first DOI of the work was registered.
 13. The DOI metadata carries an abstract of at least 400 characters.
-14. Neither the submitter nor any author named by ORCID iD in the DOI metadata is an author of a work listed on Sophaxis in the 180 days before the issue is opened.
+14. Neither the submitter nor any author named by ORCID iD in the DOI metadata is an author of a work listed on Sophaxis in the 180 days before the issue is opened, or later.
 15. Two researchers are ready to vouch, each with at least 5 journal articles, book chapters or books with a DOI in their public ORCID record, and with no current organisation in common with each other or with the submitter.
 
 ## Examples of a statement on generative models
