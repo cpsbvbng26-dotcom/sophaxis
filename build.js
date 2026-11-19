@@ -485,15 +485,16 @@ function quoteOne(key, ja) {
         ? `${when} に <a href="${api}">e-Gov 法令 API</a> から取り寄せた現行の条文を、手を入れずに引いています。${t.watched ? '週に一度の見張りが、記した文と同じかを確かめています。' : 'まだ週に一度の見張りには入っていません。'}`
         : `The current text, fetched from the <a href="${api}">e-Gov law API</a> on ${when} and quoted without change. ${t.watched ? 'The weekly watch confirms that it is still the same.' : 'It is not yet among the texts the weekly watch confirms.'} Not translated; the Japanese text is the law.`}</p></details>`;
   }
-  /* In Japanese the line under a quotation links its source as 出どころ, since the summary above names the text, and leaves out that
-   * it is not translated, since every page that quotes says so at its head (2026-11-19, for the weight of the Submission Policy). */
+  /* The line under a quotation links its source as "its source" (出どころ in Japanese), since the summary above names the text; the
+   * Japanese leaves out that it is not translated, since every page that quotes says so at its head (2026-11-19, for the weight of
+   * the Submission Policy and the Privacy Policy). */
   const q = PRIMARY.quotes[key];
   if (!q) throw new Error('条文の印 ' + key + ' を引くものがない');
   return `<details class="source"><summary>${ja ? '原文　' + esc(q.name_ja) : 'Text of ' + esc(q.name)}</summary>`
     + `<blockquote lang="${q.lang}"><p>${esc(q.quote)}</p></blockquote>`
     + `<p class="from">${ja
       ? `${PRIMARY.fetched} に<a href="${esc(q.url)}">出どころ</a>から取り寄せた原文です。`
-      : `Quoted word for word from <a href="${esc(q.url)}">${esc(q.name)}</a>, as fetched on ${PRIMARY.fetched}.`}</p></details>`;
+      : `Quoted word for word from <a href="${esc(q.url)}">its source</a>, as fetched on ${PRIMARY.fetched}.`}</p></details>`;
 }
 /* The citations of a line that could not be quoted, in one note, each with why. */
 function notQuoted(keys, ja) {
@@ -1863,7 +1864,7 @@ function indexJaPage(papers, all = papers) {
   const jaLinks = Object.keys(JA_POLICIES).map((slug) => `<li><a href="./policies/${slug}.ja.html">${esc(jaTitle(slug))}</a></li>`)
     .concat(['<li><a href="./disclaimer.ja.html">免責事項</a></li>'], JA_PAGES.filter(hasRootJa).map((slug) => `<li><a href="./${slug}.ja.html">${esc(rootJaTitle(slug))}</a></li>`)).join('');
   const body = `
-${entrance(papers, all, true)}${aboutCard(true)}<div id="scope"><div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、場所の決まりによります。国籍は読みません。2026-12-01 からは、著者の ORCID の公開記録にもよります。公開の住所、いまの勤め先、いまの在学先の国の符号を読み、提供していない場所を指す項目があるとき、二つの国を指すとき、issue を開く 30 日以上前に足された、提供している場所を指す項目が無いときは、受け付けません。理由と法令と決まりは<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div></div>
+${entrance(papers, all, true)}${aboutCard(true)}<div id="scope"><div class="notice"><b>提供しない国と地域があります。</b>Sophaxis は、${L.length} の国と地域（${esc(notOfferedPlacesJa(L))}）に住んでいる著者、または投稿から掲載までのあいだにそこに滞在した著者の作品を載せません。国籍や人種ではなく、場所の決まりによります。国籍は読みません。2026-12-01 からは、著者の ORCID の公開記録にもよります。公開の住所、いまの勤め先、いまの在学先の国の符号を読み、提供していない場所を指す項目があるとき、二つの国を指すとき、issue を開く 30 日以上前に足された、提供している場所を指す項目が無いときは、受け付けません。2026-12-10 からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、7 日のあいだ著者に聞いたうえで記録を削除します。理由と法令と決まりは<a href="./policies/submission.ja.html">投稿の規程</a>にあります。</div></div>
 <div id="changes">${termsNoticeJa()}</div>
 <p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
