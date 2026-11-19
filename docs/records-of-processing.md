@@ -1,12 +1,12 @@
 # Record of processing
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-19.
 
 This record follows Article 30 of the General Data Protection Regulation and the items that Japan's Act on the Protection of Personal Information asks to be made known. The [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) is the public statement; this file lists the same processing in one place.
 
 ## Controller
 
-Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and the operator considers that Article 3(2) of the GDPR and of the UK GDPR does not reach it; should that view be wrong, Sophaxis does not meet Article 27, because the processing is regular and not occasional. The decision is reviewed as the Privacy Policy sets out.
+Takuya Nemoto, operator of Sophaxis, Japan. Contact: the email address on the operator's ORCID record, https://orcid.org/0009-0000-1406-0547. No representative in the European Union or the United Kingdom has been appointed. The operator has decided not to appoint one, because a representative would be a paid service or a person who takes on liability for Sophaxis, which is run unpaid within free services; the operator answers people and authorities there directly. From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, the European Economic Area or the United Kingdom, and the operator considers that Article 3(2) of the GDPR and of the UK GDPR does not reach it; should that view be wrong, Sophaxis does not meet Article 27, because the processing is regular and not occasional. The decision is reviewed as the Privacy Policy sets out. From 2026-12-10, a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
 
 ## Processing
 
