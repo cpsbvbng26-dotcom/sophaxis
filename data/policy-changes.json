@@ -1,6 +1,35 @@
 [
   {
     "date": "2026-11-19",
+    "policies": ["terms", "copyright", "privacy", "takedown", "moderation", "submission"],
+    "title": "The line under each quoted text in the Japanese translations",
+    "text": "Since its publication on 2026-11-19, in the Japanese translations of the policies and on the Japanese contact page, the line under each text quoted from a source outside Japan links that source as 「出どころ」 and gives the day it was fetched. It no longer repeats the name of the text, which the summary above it gives, or that the text is not translated, which each of these pages says at its head. No rule changed. Claude decided this on 2026-11-19, so that the Japanese Submission Policy stays within the weight of 100,000 bytes that the accessibility statement gives."
+  },
+  {
+    "date": "2026-11-19",
+    "policies": ["submission", "takedown", "privacy"],
+    "from": "2026-12-10",
+    "title": "A record removed when an author moves to a place not offered after the listing, and the duty to report it",
+    "text": "From 2026-12-10, a listed record is removed under the Takedown Policy, which leaves only its Sophaxis id, once the operator learns that, after the listing, an author lives in, or stays in, one of the places in the table of the Submission Policy. From the same day, an author who moves to, or stays in, one of them after the listing reports it in the submission issue of the work, without naming the place. This replaces the rule of 2026-11-19 that such a record stays listed and that no such move is reported: a legal audit of 2026-11-19 found that the Privacy Policy, the Takedown Policy, the record of processing, the legal review and the README rest on Sophaxis not listing work by an author who lives there, which that rule no longer kept true. Until 2026-12-09, the record stays listed, no move or stay is reported, and the author can ask for its withdrawal or removal. It narrows a right and adds a duty, so it is announced on the top page at least 14 days ahead. The owner decided this on 2026-11-19, and Claude wrote it.",
+    "ja": "2026-12-10 から、掲載のあとで著者が Sophaxis を提供しない場所に住むか滞在していると運営者が知ったときは、削除の規程に沿って記録を削除し、Sophaxis の番号だけを残します。同じ日から、掲載のあとでそうした場所に移るか滞在した著者は、場所を書かずに、作品の投稿の issue でそのことを知らせます。2026-12-09 までは、記録は載ったままで、知らせも求めず、著者は撤回か削除を求められます。2026-11-19 に利用者が決め、Claude が書きました。"
+  },
+  {
+    "date": "2026-11-19",
+    "policies": ["submission", "privacy", "moderation"],
+    "from": "2026-12-10",
+    "title": "Higher barriers to participation, because Sophaxis is run by one individual",
+    "text": "From 2026-12-10, for a new work whose submission issue is opened on or after that day, and not for a new version of a listed work: at least 12 months, in place of six, must have passed since the first DOI of the work was registered; the DOI metadata must carry an abstract of at least 400 characters, and an abstract written in the form no longer counts; neither the submitter nor any author whom the DOI metadata names by ORCID iD may be an author of a work that Sophaxis listed in the 180 days before the issue was opened, or since; and two researchers vouch for every new work, even when the submitter is already an author of a listed work, each with at least 5 journal articles, book chapters or books with a DOI in their public ORCID record, different people by ORCID iD and GitHub account, whose ORCID records show no current organisation in common with each other or with the submitter. The automatic check reads each from public records it already reads, and asks for no more personal data. The operator's own submissions meet them too, and Sophaxis stays free. These narrow a right and add duties, so they are announced on the top page at least 14 days ahead. The owner decided this on 2026-11-19, and Claude wrote it.",
+    "ja": "2026-12-10 から、その日以後に投稿の issue を開いた新しい作品には、最初の DOI から 6 か月に替えて 12 か月、DOI のメタデータにある 400 字以上の要旨（様式に書いた要旨は数えません）、投稿者と ORCID iD で挙げられた著者のだれも issue を開く前の 180 日のうちかそれより後に載った作品の著者でないこと、それぞれ学術誌の論文・本の章・本を 5 件以上持ち、互いにも投稿者ともいまの組織の重なりが無い研究者二人の紹介が要ります。すでに載っている作品の著者でも同じです。載っている作品の新しい版には掛かりません。2026-11-19 に利用者が決め、Claude が書きました。"
+  },
+  {
+    "date": "2026-11-19",
+    "policies": ["submission"],
+    "title": "Why the barriers to participation are high",
+    "text": "Since its publication on 2026-11-19, the top pages, in English and Japanese, the Submission Policy, the submission forms, the checklist, the policies in brief and the pages that say what a submission needs state that Sophaxis is run by one individual, so its barriers to participation are deliberately set extremely high. This narrows no right and adds no duty, so it takes effect on publication. The owner decided this on 2026-11-19, and Claude wrote it.",
+    "ja": "2026-11-19 の公開から、日本語と英語のトップの頁、投稿の規程、投稿の様式、確かめること、規程の要点と、投稿に要るものを述べる頁は、Sophaxis は個人で運営しているため、参加のハードルを極端に高くしていると書いています。権利を狭めず、務めも足さないので、公開のときから効力を持ちます。2026-11-19 に利用者が決め、Claude が書きました。"
+  },
+  {
+    "date": "2026-11-19",
     "policies": ["submission"],
     "title": "An author who moves to a place not offered after the listing",
     "text": "Since its publication on 2026-11-19, the Submission Policy states what already follows from its rules for an author who moves to, or stays in, a place where Sophaxis is not offered after the listing. The record stays listed, because the listing met the rule when it was made. That author can ask at any time for the record to be withdrawn under the Withdrawal Policy. Authors are not asked to report a move or a stay that begins after the listing. A new version is a new submission, so it must meet the rule again, as the form already requires. The checklist, the policies in brief and the submission forms say the same. This narrows no right and adds no duty, so it takes effect on publication. The owner decided this on 2026-11-19, and Claude wrote it.",
