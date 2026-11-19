@@ -18,7 +18,7 @@ A record is removed in four cases.
 The first is removal required by law, such as copyright infringement or exposure of personal data.
 The second is when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](./withdrawal.md).
 The third is when an author of the work asks for it in a withdrawal issue, as the [Withdrawal Policy](./withdrawal.md) sets out.
-The fourth is when, from 2026-12-10, the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](./submission.md) after the listing, from an author's report or otherwise. The operator first tells the authors so in their submission issue, without naming the place, and removes the record if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.
+The fourth is when, from 2026-12-10, the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](./submission.md) after the listing, from an author's report or otherwise. The operator first tells the authors so in their submission issue, naming neither the place nor the author, and removes the record when 7 days have passed from the day this is posted, unless something that reaches the operator within those 7 days shows that the report or what the operator learned is mistaken, that is, that no author lived in, or stayed in, such a place after the listing.
 A removed record leaves only what the section "What a removed record leaves" below lists.
 
 ## How to ask
@@ -121,7 +121,7 @@ The Sophaxis id of a removed record is never given to another work.
 ## For the European Union: the Digital Services Act
 
 From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, or who stays there between the submission and the listing, and does not direct itself to people there, so the operator considers that it has no substantial connection to the Union and does not offer services there in the sense of the Act.
-From 2026-12-10, a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
+From 2026-12-10, a record is also removed under the Takedown Policy, after the authors are heard for 7 days, once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
 Sophaxis takes the worst case here too, and follows the Digital Services Act of the European Union as far as it can apply to a service of its size.
 
 - Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12): the email address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), in English or Japanese. Sophaxis has no legal representative in the European Union (Article 13), and the operator has decided not to appoint one, for the reason the [Privacy Policy](./privacy.md) gives. Authorities write to the operator directly at that address. Should the view above be wrong, Sophaxis does not meet Article 13, because it has no legal representative in the European Union.

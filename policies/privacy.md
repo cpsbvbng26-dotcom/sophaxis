@@ -25,7 +25,7 @@ Personal data is used only for these purposes:
 - since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - from 2026-12-01, under the checked intake of the Submission Policy, to check that the public records of every author whose identity is verified, and of a researcher who vouches, place them where Sophaxis is offered, and that a researcher who vouches shares no current organisation with the submitter; only whether each check passes is used;
-- from 2026-12-10, under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least 5 journal articles, book chapters or books, that the two share no current organisation, and that no author of a new work is an author of a work that Sophaxis listed in the 180 days before; the comment shows only public facts: whether each check passes, the ids of the records concerned, counts and the length of the abstract;
+- from 2026-12-10, under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least 5 journal articles, book chapters or books, that the two share no current organisation, and that no author of a new work is an author of a work that Sophaxis listed in the 180 days before; the comment shows only public facts: whether each check passes, the ids and listing days of the records concerned, the ORCID iDs of the researchers, counts and the length of the abstract;
 - from 2026-12-10, to remove a record under the Takedown Policy when an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing, from an author's report in the submission issue, which names no place, or from what the operator learns otherwise;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
@@ -35,7 +35,7 @@ Personal data is used only for these purposes:
 - to serve the site, and to find and fix faults from Vercel's request logs;
 - to answer questions, complaints, disputes and security reports.
 
-The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day, and those of 2026-12-10 only to submissions whose issue is opened on or after 2026-12-10.
+The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day, and the purpose of the higher barriers of 2026-12-10 only to submissions whose issue is opened on or after 2026-12-10. The purpose of removal of 2026-12-10 applies to every listed record, whenever it was listed.
 
 ## The site
 
@@ -88,7 +88,7 @@ From 2026-11-21, a co-author who confirms their agreement in a comment gives the
 From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
 From 2026-12-01, the place rule reads the same sections of the record of each co-author and researcher whose identity it verifies, in the same way.
 Sophaxis keeps no list of researchers who vouched. If a vouching is said to be untrue, the researcher is told privately and heard, as the Submission Policy sets out, and this is not published.
-From 2026-12-10, a report in the submission issue that an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing is personal data. It names no place, it is public in the issue by the act of the person who writes it, and it is used only to remove the record under the Takedown Policy.
+From 2026-12-10, a report in the submission issue that an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing is personal data. It names no place, it is public in the issue by the act of the person who writes it, and it is used only to remove the record under the Takedown Policy. When the operator learns of it otherwise, the operator posts in the submission issue, for the hearing under the Takedown Policy, only that an author is in one of these places, naming neither the place nor the author; that notice is personal data that the operator publishes, from what the operator learns otherwise.
 
 Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
 Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
@@ -282,7 +282,7 @@ The operator gives those grounds in writing.
 
 From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
 It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.
-From 2026-12-10, a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
+From 2026-12-10, a record is also removed under the Takedown Policy, after the authors are heard for 7 days, once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
 This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
 Anyone can read the site, but Sophaxis does not direct itself to people there.
 The operator therefore considers that the General Data Protection Regulation and the UK GDPR do not reach Sophaxis under Article 3(2).
