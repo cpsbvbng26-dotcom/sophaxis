@@ -1,6 +1,6 @@
 # Before you submit: a checklist
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-19.
 
 Japanese: [投稿の前に：確かめること（日本語訳）](./checklist.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -20,7 +20,7 @@ For anyone who has never made a preprint public, [Your first preprint](./first.m
 
 5. The submitter is an author, and their ORCID record links their GitHub account, as [From submission to listing](./process.md) shows.
 6. Every author agrees to the listing. From 2026-11-21, every other author confirms their own agreement in the issue or by email.
-7. No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them.
+7. No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them. If an author moves to one, or stays in one, after the listing, the record stays listed, and the move or the stay need not be reported.
 
 ## The statements
 

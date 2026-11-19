@@ -1,6 +1,6 @@
 # The policies in brief
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-19.
 
 Japanese: [規程の要点（日本語訳）](./rules.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -24,7 +24,7 @@ This page puts each policy in a few sentences. It is a summary and binds no one;
 
 - An author submits by the DOI of a work deposited in an accepted repository, under CC BY 4.0, CC BY-SA 4.0 or CC0 1.0, with an ORCID record that links the submitter's GitHub account.
 - Every author must agree. The use of generative models must be disclosed; no model can be an author.
-- Sophaxis is not offered to authors who live in, or stay in, certain places, which the policy lists.
+- Sophaxis is not offered to authors who live in, or stay in, certain places, which the policy lists. If an author moves to one of them, or stays in one, after the listing, the record stays listed.
 - Read in full: [Submission Policy](./policies/submission.md).
 
 ## Moderation Policy
