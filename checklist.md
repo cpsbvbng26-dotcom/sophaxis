@@ -20,7 +20,7 @@ For anyone who has never made a preprint public, [Your first preprint](./first.m
 
 5. The submitter is an author, and their ORCID record links their GitHub account, as [From submission to listing](./process.md) shows.
 6. Every author agrees to the listing. From 2026-11-21, every other author confirms their own agreement in the issue or by email.
-7. No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them. If an author moves to one, or stays in one, after the listing, the record stays listed until 2026-12-09; from 2026-12-10, the author reports it in the submission issue, and the record is removed once the operator learns of it.
+7. No author lives in, or has stayed since the submission in, a place where Sophaxis is not offered, as the Submission Policy lists them. If an author moves to one, or stays in one, after the listing, the record stays listed until 2026-12-09; from 2026-12-10, the author reports it in the submission issue, and the record is removed under the Takedown Policy, after a 7-day hearing, once the operator learns of it.
 
 ## The statements
 
