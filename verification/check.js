@@ -8840,6 +8840,11 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
   const NOTED = { en: ['policies/submission.md', 'site/index.html', 'site/policies/submission.html', '.github/ISSUE_TEMPLATE/submission.yml', 'checklist.md', 'rules.md', 'faq.md', 'process.md', 'call.md', 'first.md', 'README.md', 'site/llms.txt'],
     ja: ['policies/submission.ja.md', 'site/index.ja.html', 'site/policies/submission.ja.html', '.github/ISSUE_TEMPLATE/submission-ja.yml', 'checklist.ja.md', 'rules.ja.md', 'faq.ja.md', 'process.ja.md', 'call.ja.md', 'first.ja.md', 'README.md'] };
   const files = [...new Set(Object.values(NOTED).flat().concat(['site.json', 'data/policy-changes.json', 'tools/intake.js', 'build.js', 'policies/privacy.md', 'policies/privacy.ja.md', 'policies/moderation.md', 'policies/moderation.ja.md', 'automation.md', 'automation.ja.md', 'glossary.md', 'glossary.ja.md']))];
+  /* Every Japanese text that gives the number of works a researcher who vouches needs ("N 件以上"), with how many times it does:
+   * each must be the number of site.json, so that rule 5 of the shared rules holds them (prose-numbers.json in cpsbvbng26-dotcom). */
+  const WORKS_JA = { '.github/ISSUE_TEMPLATE/submission-ja.yml': 1, 'automation.ja.md': 1, 'call.ja.md': 2, 'checklist.ja.md': 1, 'data/policy-changes.json': 1, 'faq.ja.md': 1,
+    'first.ja.md': 1, 'glossary.ja.md': 1, 'policies/privacy.ja.md': 1, 'policies/submission.ja.md': 1, 'process.ja.md': 1, 'rules.ja.md': 1 };
+  for (const f of Object.keys(WORKS_JA)) if (!files.includes(f)) files.push(f);
   const real = Object.fromEntries(files.map((f) => [f, T(f)]));
   const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
   const word = { 2: 'two' };
@@ -8902,6 +8907,10 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
       ['automation.ja.md', '- ' + B.from + ' から、その日以後に issue を開いた新しい作品には、[投稿の規程](./policies/submission.ja.md#高いハードル)の高いハードルも確かめます。'],
       ['glossary.md', '- Higher barriers: the conditions that the Submission Policy adds from ' + B.from], ['glossary.ja.md', '- 高いハードル（たかいハードル）：']])
       if (!String(x[f] || '').includes(s)) bad.push(f + ': lacks "' + s.slice(0, 50) + '"');
+    for (const [f, n] of Object.entries(WORKS_JA)) {
+      const got = [...String(x[f] || '').matchAll(/(?:本の章・本を|それぞれ) (\d+) 件以上/g)].map((m) => Number(m[1]));
+      if (got.length !== n || got.some((k) => k !== B.voucherWorks)) bad.push(f + ': the number of works of a researcher who vouches is not ' + B.voucherWorks + ' in each of ' + n + ' places: ' + got.join(','));
+    }
     /* The announcement: the notice on the top page and the feed, with the day of effect. */
     const tn = String((site.termsNotice || {}).text || '');
     if (!tn.includes('Since its publication on ' + ANNOUNCED + ', the top pages and the Submission Policy say that ' + NOTE[0])) bad.push('the notice does not say since when the note stands');
@@ -9001,6 +9010,9 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
     ['six months kept', withSite((x) => { x.barriers.doiAgeMonths = 6; })],
     ['one researcher', withSite((x) => { x.barriers.vouchers = 1; })],
     ['three works for a researcher', withSite((x) => { x.barriers.voucherWorks = 3; })],
+    ['six works in the Japanese call', w('call.ja.md', '本をそれぞれ 5 件以上', '本をそれぞれ 6 件以上')],
+    ['six works in the Japanese feed entry', w('data/policy-changes.json', '本の章・本を 5 件以上', '本の章・本を 6 件以上')],
+    ['six works in the Japanese glossary', w('glossary.ja.md', 'それぞれ 5 件以上', 'それぞれ 6 件以上')],
     ['a number of the English section changed', w('policies/submission.md', 'at least 400 characters. An abstract', 'at least 300 characters. An abstract')],
     ['a number of the Japanese section changed', w('policies/submission.ja.md', '180 日のうちか', '90 日のうちか')],
     ['the operator exempted', w('policies/submission.md', "and the operator's own submissions meet them too.", 'and the operator\'s own submissions are exempt.')],
