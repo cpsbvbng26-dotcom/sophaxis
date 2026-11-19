@@ -830,7 +830,7 @@ console.log('\n18. Withdrawal: the policy, the form and the check');
       'Only the Sophaxis id then stays, as the section "What a removed record leaves" in the [Takedown Policy](./takedown.md) sets out.'].every((x) => pol.includes(x)));
   const tk = read(path.join(ROOT, 'policies', 'takedown.md'));
   ok('the Takedown Policy sets out exactly what a removed record leaves, for every reason, on the site, in the records, in the issues and outside',
-    ['A record is removed in three cases.', 'The third is when an author of the work asks for it in a withdrawal issue', '## What a removed record leaves', 'This section applies to every removed record, whatever the reason.',
+    ['A record is removed in four cases.', 'The third is when an author of the work asks for it in a withdrawal issue', 'The fourth is when, from 2026-12-10, the operator learns that an author of a listed work lives in', '## What a removed record leaves', 'This section applies to every removed record, whatever the reason.',
       'The record keeps only its Sophaxis id, the word "removed" and the day of removal.', 'Deleting an issue also deletes its edit history.',
       'Until GitHub does so, earlier versions of the record stay in the history of the public repository.', 'The Sophaxis id of a removed record is never given to another work.'].every((x) => tk.includes(x))
     && tk.indexOf('## What a removed record leaves') > tk.indexOf('## What happens'));
@@ -8683,13 +8683,17 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
   const POL = {
     en: { file: 'policies/submission.md', built: 'site/policies/submission.html', head: '\n## Who can submit\n', after: 'If it turns out that an author lived there, or stayed there, between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md)', table: '\n| Place |',
       say: ['From ' + FROM + ', the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, once the operator learns that an author lives in one of these places, or stays in one, after the listing.',
-        'From ' + FROM + ', an author who moves to one of these places, or stays in one, after the listing reports it in the submission issue of the work, without naming the place.',
-        'Before that day, the record stays listed, no such move or stay is reported, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md) or removed.',
+        'From ' + FROM + ', an author who moves to one of these places, or stays in one, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author.',
+        'This includes a move or a stay that began before ' + FROM + ' and goes on on or after that day: it is reported, and the record is removed once the operator learns of it on or after that day.',
+        'Before that day, the record stays listed, no author is asked to report such a move or stay, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md) or removed.',
+        'Once no author lives or stays in one of these places, the work can be submitted again under the rules then in force.',
         'A new version is a new submission, so it must meet this rule again.'] },
     ja: { file: 'policies/submission.ja.md', built: 'site/policies/submission.ja.html', head: '\n## 投稿できる人\n', after: '著者がこれらの国と地域に住んでいた、または投稿から掲載までのあいだにそこに滞在したと分かったときは、[削除の規程](./takedown.ja.md)に沿って記録を削除し', table: '\n| 国と地域 |',
       say: [FROM + ' から、掲載後に著者がそこに住むか滞在していると運営者が知ったときも、記録を削除し、番号だけを残します。',
-        FROM + ' から、掲載後にそこに移るか滞在した著者は、場所を書かずに、投稿の issue で知らせます。',
+        FROM + ' から、掲載後にそこに移るか、短い間でも滞在した著者は、場所を書かずに、投稿の issue で知らせます。投稿者が共著者に代わって知らせることもできます。',
+        'その日より前に始まり、その日以後も続く移転や滞在も同じです。',
         'それまでは記録は載ったままで、知らせも求めず、著者はいつでも撤回の規程で撤回か削除を求められます。',
+        'どの著者もそこに住まず滞在もしなくなれば、そのときの決まりで作品を改めて投稿できます。',
         '新しい版は新しい投稿で、この決まりが改めて及びます。'] },
   };
   /* What the other pages that state the place rule for authors say of a move after the listing. */
@@ -8714,12 +8718,25 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     ['policies/takedown.ja.md', 'そこの人に向けて運営していません。', S_JA],
     ['README.md', '- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない 43 の国と地域に住んでいるか', S_JA],
   ];
+  const MORE = [
+    ['policies/takedown.md', 'The fourth is when, from ' + FROM + ', the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](./submission.md) after the listing, from an author\'s report or otherwise. The operator first tells the authors so in their submission issue, without naming the place, and removes the record if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.'],
+    ['policies/takedown.ja.md', '四つ目は、' + FROM + ' から、掲載のあとで著者が[投稿の規程](./submission.ja.md)の表にある国と地域に住むか滞在していると、著者の知らせなどで運営者が知った場合です。運営者は、まず投稿の issue で、場所を書かずにそのことを著者に知らせます。書いた日から 7 日のうちに、どの著者もそこに住まず滞在もしていないと示すものが届かなければ、記録を削除します。'],
+    ['policies/privacy.md', '- from ' + FROM + ', to remove a record under the Takedown Policy when an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing, from an author\'s report in the submission issue, which names no place, or from what the operator learns otherwise;'],
+    ['policies/privacy.md', 'From ' + FROM + ', a report in the submission issue that an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing is personal data. It names no place,'],
+    ['policies/privacy.ja.md', '- ' + FROM + ' から、掲載のあとで著者が投稿の規程の表にある国と地域に住むか滞在しているとき、削除の規程で記録を削除するため。投稿の issue での著者の知らせは場所を書かず'],
+    ['policies/privacy.ja.md', '- ' + FROM + ' から、掲載のあとで著者が投稿の規程の表にある国と地域に住むか滞在していることを、投稿の issue で知らせたもの。場所は書かず'],
+    ['docs/records-of-processing.md', '| From ' + FROM + ', remove a record under the Takedown Policy when an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing | Authors of listed works | A report in the submission issue that an author lives or stays there, which names no place;'],
+    ['docs/records-of-processing.md', 'issue comments, which show only public facts: whether each check passed, the ids and listing days of the records concerned'],
+    ['site.json', 'even briefly. From ' + FROM + ', a listed record is also removed once the operator learns that an author lives or stays there after the listing.'],
+    ['docs/opendoar.md', 'From ' + FROM + ', a listed record is also removed once the operator learns that an author lives or stays there after the listing, and the authors report such a move or stay.'],
+    ['docs/legal-review.md', 'On ' + DECIDED + ', a review of the legal framework found that the rule of the same day under which a record stays listed'],
+  ];
   const RISK = '| An author of a listed work moves to, or stays in, a place where Sophaxis is not offered after the listing';
   const OLD = ['If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.', 'Authors are not asked to report a move or a stay that begins after the listing.'];
   const COM = [POL.en.say[0], POL.en.say[1]];
   const real = { 'data/policy-changes.json': T('data/policy-changes.json'), 'verification/commitments.txt': T('verification/commitments.txt'), 'verification/superseded.txt': T('verification/superseded.txt'), 'site.json': T('site.json') };
   for (const p of Object.values(POL)) { real[p.file] = T(p.file); real[p.built] = T(p.built); }
-  for (const f of Object.keys(ALSO).concat(PREMISE.map((x) => x[0]))) real[f] = T(f);
+  for (const f of Object.keys(ALSO).concat(PREMISE.map((x) => x[0]), MORE.map((x) => x[0]), ['policies/takedown.ja.md', 'docs/opendoar.md'])) real[f] = T(f);
   const plain = (h) => String(h || '').replace(/<[^>]+>/g, '');
   const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
   function problems(x) {
@@ -8737,7 +8754,7 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
         else if (i < last) bad.push(p.file + ': "' + s.slice(0, 40) + '" out of its place');
         else last = i;
       }
-      for (const s of p.say.slice(0, 3)) if (t.split(s).length !== 2) bad.push(p.file + ': "' + s.slice(0, 40) + '" is not there exactly once');
+      for (const s of p.say.slice(0, 5)) if (t.split(s).length !== 2) bad.push(p.file + ': "' + s.slice(0, 40) + '" is not there exactly once');
       if (lang === 'en' && (t.includes(OLD[0]) || t.includes(OLD[1]) || t.includes('If it turns out that an author lives there'))) bad.push(p.file + ': the rule that the record stays listed, or the present tense of the removal, is still there');
       if (lang === 'ja' && (t.includes('掲載時に決まりを満たした記録は載ったままです。') || t.includes('掲載後の移転や滞在の知らせは求めません。'))) bad.push(p.file + ': the rule that the record stays listed is still there');
       const built = plain(x[p.built]);
@@ -8758,12 +8775,15 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     let site = {};
     try { site = JSON.parse(x['site.json']); } catch (e) { bad.push('site.json does not parse'); }
     const tn = String((site.termsNotice || {}).text || '');
-    if (!tn.includes('From ' + FROM + ', a listed record is also removed under the Takedown Policy, leaving only its Sophaxis id, once the operator learns that, after the listing, an author lives in, or stays in, one of the places in the table of the Submission Policy, and an author who moves to, or stays in, one of them after the listing reports it in the submission issue, without naming the place; until then, such a record stays listed unless the author asks for its withdrawal or removal.')) bad.push('the notice on the top page does not announce the change');
+    if (!tn.includes('From ' + FROM + ', a listed record is also removed under the Takedown Policy, leaving only its Sophaxis id, once the operator learns that, after the listing, an author lives in, or stays in, one of the places in the table of the Submission Policy, and an author who moves to, or stays in, one of them, even briefly, after the listing reports it in the submission issue, without naming the place, as does a move or stay that began before that day and goes on after it; any author, or the submitter on behalf of a co-author, may report it; until then, such a record stays listed unless the author asks for its withdrawal or removal.')) bad.push('the notice on the top page does not announce the change');
+    /* The fourth ground of removal, with how the authors are heard; the personal data of the report; the notice of places and the OpenDOAR text. */
+    for (const [f, s] of MORE) if (!String(x[f] || '').includes(s)) bad.push(f + ': lacks "' + s.slice(0, 50) + '"');
+    if (!/\nA record is removed in four cases\.\n/.test(String(x['policies/takedown.md'] || '')) || !String(x['policies/takedown.ja.md'] || '').includes('\n記録を削除するのは、四つの場合です。\n')) bad.push('the Takedown Policy does not count four cases');
     let feed = [];
     try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
     const e = feed.find((c) => c.date === DECIDED && (c.policies || []).includes('submission') && (c.policies || []).includes('takedown') && /after the listing/.test(c.title || '') && /duty to report/.test(c.title || ''));
     if (!e || e.from !== FROM || days(e.from, e.date) < 14 || !String(e.text).includes('removed under the Takedown Policy, which leaves only its Sophaxis id') || !String(e.text).includes('reports it in the submission issue of the work, without naming the place')
-      || !String(e.text).includes('It narrows a right and adds a duty, so it is announced on the top page at least 14 days ahead.') || !String(e.ja).includes('記録を削除し') || !String(e.ja).includes(DECIDED + ' に利用者が決め、Claude が書きました。')) bad.push('the feed entry of ' + DECIDED + ' with its day of effect');
+      || !String(e.text).includes('It narrows a right and adds a duty, so it is announced on the top page at least 14 days ahead.') || !String(e.text).includes('a review of the legal framework on ' + DECIDED + ', recorded in the legal review') || !String(e.text).includes('any author may report it, or the submitter on behalf of a co-author') || !String(e.ja).includes('記録を削除し') || !String(e.ja).includes(DECIDED + ' に利用者が決め、Claude が書きました。')) bad.push('the feed entry of ' + DECIDED + ' with its day of effect');
     const com = String(x['verification/commitments.txt'] || '').split('\n');
     for (const s of COM) if (!com.includes(s)) bad.push('verification/commitments.txt: missing "' + s.slice(0, 40) + '"');
     for (const s of OLD) if (com.includes(s)) bad.push('verification/commitments.txt: still holds "' + s.slice(0, 40) + '"');
@@ -8784,15 +8804,35 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     ['the English removal from a later day', w(en, POL.en.say[0], POL.en.say[0].replace(FROM, '2026-12-24'))],
     ['the English duty to report taken out', w(en, POL.en.say[1] + '\n', '')],
     ['the Japanese duty to report taken out', w(ja, POL.ja.say[1] + '\n', '')],
-    ['the English report naming the place', w(en, ', without naming the place.', ', naming the place.')],
-    ['the English rule until then taken out', w(en, POL.en.say[2] + '\n', '')],
-    ['the Japanese rule until then taken out', w(ja, POL.ja.say[2] + '\n', '')],
-    ['the old English rule left in', w(en, POL.en.say[2], POL.en.say[2] + '\n' + OLD[0])],
+    ['the English report naming the place', w(en, ', without naming the place; any author', ', naming the place; any author')],
+    ['the English boundary taken out', w(en, POL.en.say[2] + '\n', '')],
+    ['the Japanese boundary taken out', w(ja, POL.ja.say[2] + '\n', '')],
+    ['brief stays left out', w(en, 'or stays in one, even briefly, after the listing reports it', 'or stays in one, after the listing reports it')],
+    ['the submitter no longer reporting for a co-author', w(en, '; any author may report it, or the submitter on behalf of a co-author.', '.')],
+    ['the Japanese report by the submitter left out', w(ja, '投稿者が共著者に代わって知らせることもできます。', '')],
+    ['submitting again left out', w(en, POL.en.say[4] + '\n', '')],
+    ['submitting again left out in Japanese', w(ja, POL.ja.say[4] + '\n', '')],
+    ['the English "no such move is reported" back', w(en, 'no author is asked to report such a move or stay', 'no such move or stay is reported')],
+    ['the Takedown Policy with three cases', w('policies/takedown.md', 'A record is removed in four cases.', 'A record is removed in three cases.')],
+    ['the fourth ground without the hearing', w('policies/takedown.md', 'The operator first tells the authors so in their submission issue, without naming the place, and removes the record if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.', 'The operator removes the record.')],
+    ['the Japanese fourth ground taken out', w('policies/takedown.ja.md', MORE[1][1], '')],
+    ['the Privacy purpose taken out', w('policies/privacy.md', MORE[2][1] + '\n', '')],
+    ['the report naming the place', w('policies/privacy.md', 'It names no place,', 'It names the place,')],
+    ['the Japanese data item taken out', w('policies/privacy.ja.md', MORE[5][1], '- ')],
+    ['the row of processing taken out', w('docs/records-of-processing.md', MORE[6][1], '| x |')],
+    ['the comment said to show only whether each check passed', w('docs/records-of-processing.md', MORE[7][1], 'issue comments, which give only whether each check passed')],
+    ['the notice of places without it', w('site.json', MORE[8][1], 'even briefly.')],
+    ['OpenDOAR without it', w('docs/opendoar.md', ' ' + MORE[9][1], '')],
+    ['the review not recorded', w('docs/legal-review.md', 'On ' + DECIDED + ', a review of the legal framework found', 'Later, it was found')],
+    ['the feed citing an audit not in the repository', w('data/policy-changes.json', 'a review of the legal framework on ' + DECIDED + ', recorded in the legal review,', 'a legal audit of ' + DECIDED + '')],
+    ['the English rule until then taken out', w(en, POL.en.say[3] + '\n', '')],
+    ['the Japanese rule until then taken out', w(ja, POL.ja.say[3] + '\n', '')],
+    ['the old English rule left in', w(en, POL.en.say[3], POL.en.say[3] + '\n' + OLD[0])],
     ['the removal in the present tense again', w(en, 'If it turns out that an author lived there, or stayed there, between', 'If it turns out that an author lives there, or stayed there between')],
     ['the English removal moved under Withdrawal', Object.assign({}, real, { [en]: real[en].replace(POL.en.say[0] + '\n', '').replace('\n## Withdrawal\n', '\n## Withdrawal\n\n' + POL.en.say[0] + '\n') })],
     ['the Japanese removal moved before the sentence on removal', Object.assign({}, real, { [ja]: real[ja].replace(POL.ja.say[0] + '\n', '').replace(POL.ja.after, POL.ja.say[0] + '\n' + POL.ja.after) })],
-    ['the English duty written twice', w(en, POL.en.say[3] + '\n', POL.en.say[3] + '\n' + POL.en.say[1] + '\n')],
-    ['the English sentence on a new version taken out', w(en, POL.en.say[3] + '\n', '')],
+    ['the English duty written twice', w(en, POL.en.say[5] + '\n', POL.en.say[5] + '\n' + POL.en.say[1] + '\n')],
+    ['the English sentence on a new version taken out', w(en, POL.en.say[5] + '\n', '')],
     ['the built English page not rebuilt', w(POL.en.built, plain(POL.en.say[0]).slice(0, 60), 'x')],
     ['the built Japanese page not rebuilt', w(POL.ja.built, '番号だけを残します。', '')],
     ['the checklist without it', w('checklist.md', ' ' + ALSO['checklist.md'][1], '')],
@@ -8843,7 +8883,7 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
   /* Every Japanese text that gives the number of works a researcher who vouches needs ("N 件以上"), with how many times it does:
    * each must be the number of site.json, so that rule 5 of the shared rules holds them (prose-numbers.json in cpsbvbng26-dotcom). */
   const WORKS_JA = { '.github/ISSUE_TEMPLATE/submission-ja.yml': 1, 'automation.ja.md': 1, 'call.ja.md': 2, 'checklist.ja.md': 1, 'data/policy-changes.json': 1, 'faq.ja.md': 1,
-    'first.ja.md': 1, 'glossary.ja.md': 1, 'policies/privacy.ja.md': 1, 'policies/submission.ja.md': 1, 'process.ja.md': 1, 'rules.ja.md': 1 };
+    'first.ja.md': 1, 'glossary.ja.md': 1, 'policies/privacy.ja.md': 1, 'policies/submission.ja.md': 1, 'process.ja.md': 1, 'rules.ja.md': 1, 'README.md': 1 };
   for (const f of Object.keys(WORKS_JA)) if (!files.includes(f)) files.push(f);
   const real = Object.fromEntries(files.map((f) => [f, T(f)]));
   const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
@@ -8880,7 +8920,7 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
         'None of them asks for more personal data, and none depends on nationality or any other personal characteristic.',
         'Sophaxis still charges nothing.']],
       'policies/submission.ja.md': ['\n## 高いハードル\n', [B.from + ' から、その日以後に投稿の issue を開いた新しい作品には、上の決まりを次のとおり引き上げます。',
-        'すでに Sophaxis に載っている作品の新しい版には掛かりません。運営者自身の投稿にも、同じく掛かります。',
+        '載っている作品の新しい版には掛からず、運営者自身の投稿には掛かります。',
         '- DOI の経過：作品の最初の DOI が登録されてから、6 か月に替えて ' + B.doiAgeMonths + ' か月以上たっている。数え方は同じ。',
         '- 要旨：DOI のメタデータに、' + B.abstractChars + ' 字以上の要旨がある。様式に書いた要旨は数えない。',
         '- 作品のあいだの期間：投稿者と、DOI のメタデータが ORCID iD で挙げる著者のだれも、issue を開く前の ' + B.gapDays + ' 日のうちか、それより後に Sophaxis が載せた作品の著者ではない。',
@@ -8898,14 +8938,17 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
     for (const [f, s] of [['policies/submission.md', 'From ' + B.from + ', the period is ' + B.doiAgeMonths + ' months, as [Higher barriers](#higher-barriers) below sets out.'],
       ['policies/submission.md', 'From ' + B.from + ', every new work needs two researchers, even when the submitter is already an author of a listed work, as [Higher barriers](#higher-barriers) below sets out.'],
       ['policies/submission.ja.md', B.from + ' からは、下の[高いハードル](#高いハードル)のとおり、' + B.doiAgeMonths + ' か月になります。'],
-      ['policies/submission.ja.md', B.from + ' からは、下の[高いハードル](#高いハードル)のとおり、すでに載っている作品の著者である投稿者でも、新しい作品には研究者二人の紹介が要ります。'],
+      ['policies/submission.ja.md', B.from + ' からは、下の[高いハードル](#高いハードル)のとおり、この免除は無くなり、研究者二人が要ります。'],
       ['policies/privacy.md', '- from ' + B.from + ', under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least ' + B.voucherWorks + ' journal articles, book chapters or books'],
       ['policies/privacy.ja.md', '- ' + B.from + ' から、投稿の規程の「高いハードル」のもとで、紹介する二人の研究者がそれぞれ学術誌の論文・本の章・本を ' + B.voucherWorks + ' 件以上持つこと'],
       ['policies/moderation.md', '- From ' + B.from + ', a new work meets the higher barriers of the [Submission Policy](./submission.md#higher-barriers)'],
       ['policies/moderation.ja.md', '- ' + B.from + ' から、新しい作品が[投稿の規程](./submission.ja.md#高いハードル)の高いハードルを満たしている。'],
       ['automation.md', '- From ' + B.from + ', for a new work whose issue is opened on or after that day, it also checks the higher barriers'],
       ['automation.ja.md', '- ' + B.from + ' から、その日以後に issue を開いた新しい作品には、[投稿の規程](./policies/submission.ja.md#高いハードル)の高いハードルも確かめます。'],
-      ['glossary.md', '- Higher barriers: the conditions that the Submission Policy adds from ' + B.from], ['glossary.ja.md', '- 高いハードル（たかいハードル）：']])
+      ['glossary.md', '- Higher barriers: the conditions that the Submission Policy adds from ' + B.from], ['glossary.ja.md', '- 高いハードル（たかいハードル）：'],
+      ['checklist.md', '14. Neither the submitter nor any author named by ORCID iD in the DOI metadata is an author of a work listed on Sophaxis in the ' + B.gapDays + ' days before the issue is opened, or later.'],
+      ['checklist.ja.md', '14. 投稿者と、DOI のメタデータが ORCID iD で挙げる著者のだれも、issue を開く前の ' + B.gapDays + ' 日のうちか、それより後に Sophaxis に載った作品の著者ではない。'],
+      ['README.md', '二人はそれぞれ学術誌の論文・本の章・本を ' + B.voucherWorks + ' 件以上持ち、ORCID iD でも GitHub のアカウントでも別の人で、互いにも投稿者ともいまの組織の重なりが無いことが要ります。すでに載っている作品の著者にも、運営者自身の投稿にも掛かります。自動の確認は、すでに読んでいる公開の記録から確かめ、これまでより多くの個人情報を求めません。Sophaxis は無料のままです']])
       if (!String(x[f] || '').includes(s)) bad.push(f + ': lacks "' + s.slice(0, 50) + '"');
     for (const [f, n] of Object.entries(WORKS_JA)) {
       const got = [...String(x[f] || '').matchAll(/(?:本の章・本を|それぞれ) (\d+) 件以上/g)].map((m) => Number(m[1]));
@@ -8920,6 +8963,7 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
     let feed = [];
     try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
     const hb = feed.find((c) => c.date === ANNOUNCED && /^Higher barriers to participation/.test(c.title || ''));
+    if (!hb || !String(hb.ja).includes('ORCID iD でも GitHub のアカウントでも別の人で、互いにも投稿者ともいまの組織の重なりが無い研究者二人') || !String(hb.ja).includes('運営者自身の投稿にも掛かります。') || !String(hb.ja).includes('これまでより多くの個人情報を求めません。Sophaxis は無料のままです。')) bad.push('the Japanese feed entry of the barriers leaves out a detail');
     if (!hb || hb.from !== B.from || !['submission', 'privacy', 'moderation'].every((p) => (hb.policies || []).includes(p)) || !String(hb.text).includes("The operator's own submissions meet them too, and Sophaxis stays free.")
       || !String(hb.text).includes('These narrow a right and add duties, so they are announced on the top page at least 14 days ahead.') || !String(hb.ja).includes(B.from + ' から')) bad.push('the feed entry of the barriers');
     const nt = feed.find((c) => c.date === ANNOUNCED && c.title === 'Why the barriers to participation are high');
@@ -8939,6 +8983,39 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
   const now = problems(real);
   ok('the note stands on both top pages, once at the head of the Submission Policy in both languages, in the forms, the checklist, the policies in brief, the FAQ, the steps, the call, the first-preprint page, the README and llms.txt; the section "Higher barriers" gives the numbers of site.json in both languages, and the earlier rules, the Privacy and Moderation Policies, the automation page and the glossary point to it; ' + (JSON.parse(real['site.json']).barriers || {}).from + ' is at least 14 days after the announcement in the notice and the feed; and the intake applies each barrier and reads no other part of an ORCID record',
     now.length === 0, now.slice(0, 6).join(' / '));
+
+  /* The day the announcement reached main (2026-11-19, the review of #258). The texts say "Since its publication on 2026-11-19",
+   * and the feed dates its entries 2026-11-19; if the change reaches main later, they would say something untrue, and the day of
+   * effect could come less than 14 days after the announcement. Each mark is looked for on the first-parent line of HEAD, as check
+   * 130 does, in Japan time; a mark not yet in any commit counts from today. Every mark must have reached main on or before the day
+   * stated, and barriers.from must be at least 14 days after each. A late merge fails here, and the texts are dated again. */
+  const { execFileSync: ex143 } = require('child_process');
+  const today143 = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  let shallow143 = true;
+  try { shallow143 = ex143('git', ['rev-parse', '--is-shallow-repository'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() !== 'false'; } catch (e) { shallow143 = true; }
+  const B143 = JSON.parse(real['site.json']).barriers;
+  const MARKS = [['site.json', 'Since its publication on ' + ANNOUNCED + ', the top pages and the Submission Policy say that'], ['site.json', 'From ' + B143.from + ', for a new work whose submission issue is opened on or after that day, the barriers are higher'],
+    ['site.json', 'From ' + B143.from + ', a listed record is also removed under the Takedown Policy'], ['data/policy-changes.json', '"title": "Higher barriers to participation, because Sophaxis is run by one individual"'],
+    ['data/policy-changes.json', '"title": "Why the barriers to participation are high"'], ['data/policy-changes.json', '"title": "A record removed when an author moves to a place not offered after the listing, and the duty to report it"']];
+  const held = Object.fromEntries(MARKS.map(([f, m]) => { let l = null; try { l = ex143('git', ['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', m, '--', f], { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'Asia/Tokyo' }), stdio: ['ignore', 'pipe', 'ignore'] }).split('\n').filter(Boolean); } catch (e) { l = null; } return [m, l === null ? null : (l[0] || today143)]; }));
+  const timingProblems = (h, shallow, from) => {
+    const bad = [];
+    if (shallow) bad.push('the history is shallow or git cannot be read');
+    for (const [m, d] of Object.entries(h)) {
+      if (!d) bad.push('git cannot say when "' + m.slice(0, 40) + '" reached main');
+      else if (d > ANNOUNCED) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', after ' + ANNOUNCED + ', the day the texts give');
+      else if (days(from, d) < 14) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', less than 14 days before ' + from);
+    }
+    return bad;
+  };
+  const tnow = timingProblems(held, shallow143, B143.from);
+  ok('each part of the announcement (' + MARKS.length + ') reached the first-parent line of main on or before ' + ANNOUNCED + ', the day the texts give, and at least 14 days before ' + B143.from + '; a later merge fails here',
+    tnow.length === 0, tnow.slice(0, 4).join(' / '));
+  const late = (d) => Object.fromEntries(Object.keys(held).map((k, i) => [k, i === 0 ? d : held[k]]));
+  const tbreaks = [['merged a day later than the texts say', late('2026-11-20'), false, B143.from], ['merged 13 days before the day of effect', late('2026-11-27'), false, B143.from],
+    ['the day of effect moved to 13 days after', held, false, '2026-12-02'], ['a mark git cannot date', late(null), false, B143.from], ['a shallow history', held, true, B143.from]];
+  const tmissed = tbreaks.filter(([, h, sh, f]) => timingProblems(h, sh, f).length === 0).map(([k]) => k);
+  ok('break on purpose: a merge a day after the stated day, one 13 days before the day of effect, a day of effect 13 days after, an undated mark and a shallow history all fail (' + (tbreaks.length - tmissed.length) + ' / ' + tbreaks.length + ')', tmissed.length === 0, tmissed.join(' / '));
 
   /* The intake, on cases made here: the day, the age of the DOI, the abstract, the time between works and the vouching. */
   const HB = JSON.parse(real['site.json']).barriers;
@@ -9013,12 +9090,18 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
     ['six works in the Japanese call', w('call.ja.md', '本をそれぞれ 5 件以上', '本をそれぞれ 6 件以上')],
     ['six works in the Japanese feed entry', w('data/policy-changes.json', '本の章・本を 5 件以上', '本の章・本を 6 件以上')],
     ['six works in the Japanese glossary', w('glossary.ja.md', 'それぞれ 5 件以上', 'それぞれ 6 件以上')],
+    ['six works in the Japanese README', w('README.md', '本の章・本を 5 件以上持ち、ORCID iD でも', '本の章・本を 6 件以上持ち、ORCID iD でも')],
+    ['checklist item 14 without "or later"', w('checklist.md', 'in the 180 days before the issue is opened, or later.', 'in the 180 days before the issue is opened.')],
+    ['the Japanese checklist item 14 without "or later"', w('checklist.ja.md', '180 日のうちか、それより後に Sophaxis に載った', '180 日のうちに Sophaxis に載った')],
+    ['the Japanese README without the operator', w('README.md', 'すでに載っている作品の著者にも、運営者自身の投稿にも掛かります。', '')],
+    ['the Japanese feed entry without distinct accounts', w('data/policy-changes.json', 'ORCID iD でも GitHub のアカウントでも別の人で、互いにも投稿者ともいまの組織の重なりが無い研究者二人', '互いにも投稿者ともいまの組織の重なりが無い研究者二人')],
+    ['the Japanese feed entry without "free"', w('data/policy-changes.json', 'これまでより多くの個人情報を求めません。Sophaxis は無料のままです。', 'これまでより多くの個人情報を求めません。')],
     ['a number of the English section changed', w('policies/submission.md', 'at least 400 characters. An abstract', 'at least 300 characters. An abstract')],
     ['a number of the Japanese section changed', w('policies/submission.ja.md', '180 日のうちか', '90 日のうちか')],
     ['the operator exempted', w('policies/submission.md', "and the operator's own submissions meet them too.", 'and the operator\'s own submissions are exempt.')],
     ['the section renamed', w('policies/submission.md', '\n## Higher barriers\n', '\n## Further rules\n')],
     ['the six months left alone in English', w('policies/submission.md', 'From ' + HB.from + ', the period is ' + HB.doiAgeMonths + ' months, as', 'Later, the period may change, as')],
-    ['the exemption left alone in Japanese', w('policies/submission.ja.md', 'すでに載っている作品の著者である投稿者でも、新しい作品には研究者二人の紹介が要ります。', '')],
+    ['the exemption left alone in Japanese', w('policies/submission.ja.md', 'この免除は無くなり、研究者二人が要ります。', '')],
     ['the Privacy Policy without the purpose', w('policies/privacy.md', '- from ' + HB.from + ', under "Higher barriers"', '- under "Higher barriers"')],
     ['the Moderation Policy without the criterion', w('policies/moderation.ja.md', '高いハードルを満たしている。', '')],
     ['the notice without the barriers', w('site.json', 'the barriers are higher: at least', 'the barriers may be higher: at least')],
