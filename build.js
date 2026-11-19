@@ -492,7 +492,7 @@ function quoteOne(key, ja) {
   return `<details class="source"><summary>${ja ? '原文　' + esc(q.name_ja) : 'Text of ' + esc(q.name)}</summary>`
     + `<blockquote lang="${q.lang}"><p>${esc(q.quote)}</p></blockquote>`
     + `<p class="from">${ja
-      ? `${PRIMARY.fetched} に<a href="${esc(q.url)}">出どころ</a>から取り寄せた文を、そのまま引いています。`
+      ? `${PRIMARY.fetched} に<a href="${esc(q.url)}">出どころ</a>から取り寄せた原文です。`
       : `Quoted word for word from <a href="${esc(q.url)}">${esc(q.name)}</a>, as fetched on ${PRIMARY.fetched}.`}</p></details>`;
 }
 /* The citations of a line that could not be quoted, in one note, each with why. */
