@@ -298,7 +298,7 @@ Until 2026-11-30, Sophaxis relies on the submitter's confirmation and does not c
 From 2026-12-01, Sophaxis also checks, for every author whose identity it verifies, that the public records the author set at least 30 days earlier place them where Sophaxis is offered.
 The section "The checked intake" below says how, and its limits.
 If it turns out that an author lived there, or stayed there, between the submission and the listing, the record is removed under the [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html), and the operator reviews the decision on a representative.
-From 2026-12-10, the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, once the operator learns that an author lives in one of these places, or stays in one, after the listing.
+From 2026-12-10, the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, after the authors are heard for 7 days, once the operator learns that an author lives in one of these places, or stays in one, after the listing.
 From 2026-12-10, an author who moves to one of these places, or stays in one, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author.
 This includes a move or a stay that began before 2026-12-10 and goes on on or after that day: it is reported, and the record is removed once the operator learns of it on or after that day.
 Before that day, the record stays listed, no author is asked to report such a move or stay, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html) or removed.
@@ -1072,7 +1072,7 @@ Personal data is used only for these purposes:
 - since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - from 2026-12-01, under the checked intake of the Submission Policy, to check that the public records of every author whose identity is verified, and of a researcher who vouches, place them where Sophaxis is offered, and that a researcher who vouches shares no current organisation with the submitter; only whether each check passes is used;
-- from 2026-12-10, under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least 5 journal articles, book chapters or books, that the two share no current organisation, and that no author of a new work is an author of a work that Sophaxis listed in the 180 days before; the comment shows only public facts: whether each check passes, the ids of the records concerned, counts and the length of the abstract;
+- from 2026-12-10, under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least 5 journal articles, book chapters or books, that the two share no current organisation, and that no author of a new work is an author of a work that Sophaxis listed in the 180 days before; the comment shows only public facts: whether each check passes, the ids and listing days of the records concerned, the ORCID iDs of the researchers, counts and the length of the abstract;
 - from 2026-12-10, to remove a record under the Takedown Policy when an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing, from an author's report in the submission issue, which names no place, or from what the operator learns otherwise;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
@@ -1082,7 +1082,7 @@ Personal data is used only for these purposes:
 - to serve the site, and to find and fix faults from Vercel's request logs;
 - to answer questions, complaints, disputes and security reports.
 
-The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day, and those of 2026-12-10 only to submissions whose issue is opened on or after 2026-12-10.
+The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day, and the purpose of the higher barriers of 2026-12-10 only to submissions whose issue is opened on or after 2026-12-10. The purpose of removal of 2026-12-10 applies to every listed record, whenever it was listed.
 
 ## The site
 
@@ -1135,7 +1135,7 @@ From 2026-11-21, a co-author who confirms their agreement in a comment gives the
 From 2026-11-23, a researcher who vouches for a first submission in a comment gives their ORCID iD there, and the check reads the name, the websites and the works of their public ORCID record in the same way. Their GitHub username, ORCID iD and comment are public in the issue, by their own act.
 From 2026-12-01, the place rule reads the same sections of the record of each co-author and researcher whose identity it verifies, in the same way.
 Sophaxis keeps no list of researchers who vouched. If a vouching is said to be untrue, the researcher is told privately and heard, as the Submission Policy sets out, and this is not published.
-From 2026-12-10, a report in the submission issue that an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing is personal data. It names no place, it is public in the issue by the act of the person who writes it, and it is used only to remove the record under the Takedown Policy.
+From 2026-12-10, a report in the submission issue that an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing is personal data. It names no place, it is public in the issue by the act of the person who writes it, and it is used only to remove the record under the Takedown Policy. When the operator learns of it otherwise, the operator posts in the submission issue, for the hearing under the Takedown Policy, only that an author is in one of these places, naming neither the place nor the author; that notice is personal data that the operator publishes, from what the operator learns otherwise.
 
 Giving an ORCID iD, and opening the issue from a GitHub account that the ORCID record links, are needed to submit, withdraw or report a published version.
 Without them the check cannot confirm the author, and the request cannot go ahead by issue; it can still go by email, as each policy says.
@@ -1329,7 +1329,7 @@ The operator gives those grounds in writing.
 
 From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
 It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.
-From 2026-12-10, a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
+From 2026-12-10, a record is also removed under the Takedown Policy, after the authors are heard for 7 days, once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
 This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
 Anyone can read the site, but Sophaxis does not direct itself to people there.
 The operator therefore considers that the General Data Protection Regulation and the UK GDPR do not reach Sophaxis under Article 3(2).
@@ -1494,7 +1494,7 @@ A record is removed in four cases.
 The first is removal required by law, such as copyright infringement or exposure of personal data.
 The second is when an author shows that they did not agree to the listing and the work cannot be withdrawn under the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html).
 The third is when an author of the work asks for it in a withdrawal issue, as the [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html) sets out.
-The fourth is when, from 2026-12-10, the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) after the listing, from an author's report or otherwise. The operator first tells the authors so in their submission issue, without naming the place, and removes the record if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.
+The fourth is when, from 2026-12-10, the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) after the listing, from an author's report or otherwise. The operator first tells the authors so in their submission issue, naming neither the place nor the author, and removes the record when 7 days have passed from the day this is posted, unless something that reaches the operator within those 7 days shows that the report or what the operator learned is mistaken, that is, that no author lived in, or stayed in, such a place after the listing.
 A removed record leaves only what the section "What a removed record leaves" below lists.
 
 ## How to ask
@@ -1597,7 +1597,7 @@ The Sophaxis id of a removed record is never given to another work.
 ## For the European Union: the Digital Services Act
 
 From 2026-11-22, Sophaxis does not list work by an author who lives in the European Union, or who stays there between the submission and the listing, and does not direct itself to people there, so the operator considers that it has no substantial connection to the Union and does not offer services there in the sense of the Act.
-From 2026-12-10, a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
+From 2026-12-10, a record is also removed under the Takedown Policy, after the authors are heard for 7 days, once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
 Sophaxis takes the worst case here too, and follows the Digital Services Act of the European Union as far as it can apply to a service of its size.
 
 - Point of contact, for authorities, the European Commission and people who use Sophaxis (Articles 11 and 12): the email address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), in English or Japanese. Sophaxis has no legal representative in the European Union (Article 13), and the operator has decided not to appoint one, for the reason the [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) gives. Authorities write to the operator directly at that address. Should the view above be wrong, Sophaxis does not meet Article 13, because it has no legal representative in the European Union.
@@ -3279,6 +3279,7 @@ Sophaxis の運営者、根本卓哉です。住所は公開していません�
 - 2026-11-21 から、共著者が同意を確かめるコメントに書く GitHub のユーザー名と ORCID iD
 - 2026-11-23 から、初めての投稿を紹介する研究者がコメントに書く GitHub のユーザー名と ORCID iD。その ORCID の公開記録のうち、氏名・ウェブサイト・業績も同じように読みます。これらはその研究者自身の行為で issue に公開されます
 - 2026-12-10 から、掲載のあとで著者が投稿の規程の表にある国と地域に住むか滞在していることを、投稿の issue で知らせたもの。場所は書かず、書いた人の行為で issue に公開されます
+- 2026-12-10 から、運営者がほかに知ったこと。削除の規程の聞き取りのために、運営者は投稿の issue に、著者のだれかがそうした国と地域にいることだけを、場所も著者も書かずに公開します
 - 2026-12-01 から、場所の決まりのために、本人確認を通った著者と紹介する研究者の、ORCID の公開記録の住所の国、いまの勤め先と在学先の組織の国と名
 
 本人確認では、ORCID に、公開記録のうち「個人の詳細」（氏名）・「ウェブサイト」・「業績」の部分だけを問い合わせます。
@@ -3318,7 +3319,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 - 2026-11-21 から、同意を確かめる共著者が、その論文の著者本人であることを確かめるため
 - 2026-11-23 から、初めての投稿を紹介する研究者が、その論文の著者でなく、学術誌の論文・本の章・本を持つことを確かめるため
 - 2026-12-01 から、突き合わせの受付のもとで、本人確認を通った著者と紹介する研究者の公開の記録が Sophaxis を提供している場所を指すことと、紹介する研究者が投稿者といまの組織を同じくしていないことを確かめるため。使うのは、通ったかどうかだけです
-- 2026-12-10 から、投稿の規程の「高いハードル」のもとで、紹介する二人の研究者がそれぞれ学術誌の論文・本の章・本を 5 件以上持つことと、二人がいまの組織を同じくしていないことと、新しい作品の著者が、その前の 180 日のうちに Sophaxis が載せた作品の著者でないことを確かめるため。コメントが示すのは、通ったかどうか、関わる記録の番号、数、要旨の字数という公開の事実だけです
+- 2026-12-10 から、投稿の規程の「高いハードル」のもとで、紹介する二人の研究者がそれぞれ学術誌の論文・本の章・本を 5 件以上持つことと、二人がいまの組織を同じくしていないことと、新しい作品の著者が、その前の 180 日のうちに Sophaxis が載せた作品の著者でないことを確かめるため。コメントが示すのは、通ったかどうか、関わる記録の番号と載った日、紹介する研究者の ORCID iD、数、要旨の字数という公開の事実だけです
 - 2026-12-10 から、掲載のあとで著者が投稿の規程の表にある国と地域に住むか滞在しているとき、削除の規程で記録を削除するため。投稿の issue での著者の知らせは場所を書かず、運営者がほかに知ったことも同じに扱います
 - 撤回や出版版の報告をする人が、その論文の著者本人であることを確かめるため
 - 論文の記録の頁、著者ごとの頁、一覧と検索を作り、公開するため
@@ -3331,7 +3332,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 
 ほかの目的には使いません。
 
-2026-12-01 の目的は、その日以後に issue を開いた投稿にだけ当てます。2026-12-10 の目的は、2026-12-10 以後に issue を開いた投稿にだけ当てます。
+2026-12-01 の目的は、その日以後に issue を開いた投稿にだけ当てます。2026-12-10 の高いハードルの目的は、2026-12-10 以後に issue を開いた投稿にだけ当てます。2026-12-10 の削除の目的は、いつ載ったかによらず、載っているすべての記録に当てます。
 
 ## 公開と第三者への提供
 
@@ -3504,7 +3505,7 @@ OAI-PMH の口も、運営者の ORCID の記録と同じメールアドレス�
 
 2026-11-22 から、Sophaxis は、欧州連合・欧州経済領域・英国の人にサービスを提供しません。
 著者のだれかがそこに住んでいるか、投稿から掲載までのあいだにそこに滞在している作品は載せず、投稿の様式で投稿者にこのことを確かめます。短い滞在も含みます。
-2026-12-10 からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、記録を削除します。それまでは、著者が撤回か削除を求めない限り、その記録は載ったままです。
+2026-12-10 からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、7 日のあいだ著者に聞いたうえで記録を削除します。それまでは、著者が撤回か削除を求めない限り、その記録は載ったままです。
 これは国籍・人種・民族その他の個人の属性によるものではなく、国籍は読みません。
 サイトは誰でも読めますが、Sophaxis はそこの人に向けて運営していません。
 そのため運営者は、一般データ保護規則と英国の一般データ保護規則は、第 3 条第 2 項によっては Sophaxis に及ばないと考えています。
@@ -3865,10 +3866,10 @@ ORCID iD を持たない著者は投稿できません。
 2026-12-01 からは、本人確認を通ったどの著者についても、その著者が 30 日以上前から置いている公開の記録が、Sophaxis を提供している場所を指すことも確かめます。
 やり方と限りは、下の「突き合わせの受付」にあります。
 著者がこれらの国と地域に住んでいた、または投稿から掲載までのあいだにそこに滞在したと分かったときは、[削除の規程](https://sophaxis.vercel.app/policies/takedown.ja.html)に沿って記録を削除し、運営者は代理人についての判断を見直します。
-2026-12-10 から、掲載後に著者がそこに住むか滞在していると運営者が知ったときも、記録を削除し、番号だけを残します。
+2026-12-10 から、掲載後に著者がそこに住むか滞在していると運営者が知ったときも、7 日のあいだ著者に聞いたうえで記録を削除し、番号だけを残します。
 2026-12-10 から、掲載後にそこに移るか、短い間でも滞在した著者は、場所を書かずに、投稿の issue で知らせます。どの著者が知らせても、投稿者が共著者に代わって知らせてもかまいません。
 その日より前に始まり、その日以後も続く移転や滞在も同じです。
-それまでは記録は載ったままで、知らせも求めず、著者はいつでも撤回の規程で撤回か削除を求められます。
+それまでは記録は載ったままで、知らせも求めず、著者はいつでも撤回の規程で撤回か削除を求めることができます。
 どの著者もそこに住まず滞在もしなくなれば、そのときの決まりで作品を改めて投稿できます。
 新しい版は新しい投稿で、この決まりが改めて及びます。
 2026-11-22 から、著者のだれかがインドに住むか滞在している 18 歳未満の人である作品は載せません。
@@ -4640,7 +4641,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 一つ目は、著作権の侵害や個人データの露出のように、法令が削除を求める場合です。
 二つ目は、著者が掲載に同意していなかったことを示し、その作品を[撤回の規程](https://sophaxis.vercel.app/policies/withdrawal.ja.html)で撤回できない場合です。
 三つ目は、[撤回の規程](https://sophaxis.vercel.app/policies/withdrawal.ja.html)が定めるとおり、作品の著者が撤回の issue で削除を求めた場合です。
-四つ目は、2026-12-10 から、掲載のあとで著者が[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)の表にある国と地域に住むか滞在していると、著者の知らせなどで運営者が知った場合です。運営者は、まず投稿の issue で、場所を書かずにそのことを著者に知らせます。書いた日から 7 日のうちに、どの著者もそこに住まず滞在もしていないと示すものが届かなければ、記録を削除します。
+四つ目は、2026-12-10 から、掲載のあとで著者が[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)の表にある国と地域に住むか滞在していると、著者の知らせなどで運営者が知った場合です。運営者は、まず投稿の issue で、場所も著者も書かずにそのことを知らせます。書いた日から 7 日のうちに、知らせや運営者が知ったことが誤りである、つまり掲載のあとにそうした国と地域に住んだり滞在したりした著者はいないと示すものが届かなければ、7 日がたったときに記録を削除します。
 削除した記録に残るのは、下の「削除した記録に残るもの」の節に挙げるものだけです。
 
 ## 求め方
@@ -4743,7 +4744,7 @@ issue では：
 ## 欧州連合のデジタルサービス法について
 
 2026-11-22 から、Sophaxis は、著者のだれかが欧州連合に住んでいるか、投稿から掲載までのあいだにそこに滞在している作品を載せず、そこの人に向けて運営していません。そのため運営者は、Sophaxis は欧州連合と実質的なつながりを持たず、この法の意味でそこにサービスを提供していないと考えています。
-2026-12-10 からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、記録を削除します。それまでは、著者が撤回か削除を求めない限り、その記録は載ったままです。
+2026-12-10 からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、7 日のあいだ著者に聞いたうえで記録を削除します。それまでは、著者が撤回か削除を求めない限り、その記録は載ったままです。
 Sophaxis はここでも最も厳しい場合を想定し、その規模のサービスに当てはまりうる範囲で、欧州連合のデジタルサービス法に従います。
 
 - 当局・欧州委員会・Sophaxis を使う人のための連絡窓口（第 11 条・第 12 条）は、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるメールアドレスで、英語か日本語で受け付けます。Sophaxis は欧州連合に法定代理人を置いておらず（第 13 条）、運営者は、[個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html)が示す理由により、置かないと決めています。当局はそのアドレスで運営者に直接連絡します。上の考えが誤っていれば、欧州連合に法定代理人がいないので、Sophaxis は第 13 条を満たしていません。
@@ -5205,7 +5206,7 @@ Source: https://sophaxis.vercel.app/rules.ja.html
 - Sophaxis は個人で運営しているため、参加のハードルを極端に高くしています。2026-12-10 から、新しい作品には、最初の DOI から 12 か月、DOI のメタデータにある 400 字以上の要旨、著者のだれかの作品が載ってから 180 日、それぞれ学術誌の論文・本の章・本を 5 件以上持つ研究者二人の紹介が要ります。
 - 著者は、受け付けるリポジトリに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかで預けた作品の DOI で投稿します。投稿者の GitHub のアカウントにつないだ ORCID の記録が要ります。
 - すべての著者の同意が要ります。生成モデルの使用は申告します。モデルは著者になれません。
-- 規程が挙げる場所に住む著者や、そこに滞在する著者には、Sophaxis を提供しません。掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままです。2026-12-10 からは、著者が知らせ、運営者が知ったときに記録を削除します。
+- 規程が挙げる場所に住む著者や、そこに滞在する著者には、Sophaxis を提供しません。掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままです。2026-12-10 からは、著者が知らせ、運営者が知ったときに、7 日のあいだ著者に聞いたうえで記録を削除します。
 - 全文：[投稿の規程](https://sophaxis.vercel.app/policies/submission.ja.html)
 
 ## モデレーションの規程
@@ -5254,7 +5255,7 @@ Source: https://sophaxis.vercel.app/checklist.ja.html
 
 5. 投稿者が著者で、その ORCID の記録が GitHub のアカウントにつないである（[投稿から掲載まで](https://sophaxis.vercel.app/process.ja.html)）。
 6. すべての著者が掲載に同意している。2026-11-21 からは、ほかの著者のそれぞれが、issue かメールで自分の同意を確かめる。
-7. Sophaxis を提供しない場所（投稿の規程の一覧）に住む著者や、投稿のあとそこに滞在した著者がいない。掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままで、2026-12-10 からは、著者が投稿の issue で知らせ、運営者が知ったときに記録を削除する。
+7. Sophaxis を提供しない場所（投稿の規程の一覧）に住む著者や、投稿のあとそこに滞在した著者がいない。掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままで、2026-12-10 からは、著者が投稿の issue で知らせ、運営者が知ったときに、7 日のあいだ著者に聞いたうえで記録を削除する。
 
 ## 申告
 
