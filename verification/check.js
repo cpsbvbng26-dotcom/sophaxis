@@ -878,7 +878,7 @@ console.log('\n20. Operator and contact');
   ok('the postal address is not published, and is given on request without delay',
     src.includes('The operator\'s postal address is not published.') && src.includes('It is given on request, without delay, as Japan\'s Act on the Protection of Personal Information provides.'));
   ok('the contact page promises the same 7 days as the Takedown and Privacy policies', src.includes('within 7 days')
-    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('within 7 days') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('within 7 days'));
+    && read(path.join(ROOT, 'policies', 'takedown.md')).includes('The operator aims to answer each request within 7 days.') && read(path.join(ROOT, 'policies', 'privacy.md')).includes('within 7 days'));
   ok('every page links the contact page from its footer, and the sitemap lists it',
     fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => f.endsWith('.html'))
       .every((f) => /<footer>[\s\S]*href="(\.\/|\.\.\/|\/)contact\.html">Contact<\/a>[\s\S]*<\/footer>/.test(read(path.join(ROOT, 'site', f))))
@@ -8668,7 +8668,7 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
 }
 
 /* ------------------------------------------------------------ 142 */
-console.log('\n142. A move after the listing (2026-11-19, changed the same day): from 2026-12-10 the record is removed once the operator learns of it and the author reports the move, until then it stays listed, and a new version meets the place rule again; in the Submission Policy in both languages, its built pages, the checklist, the policies in brief, both forms, the five statements of the premise, the risk table, the notice, the feed and the commitments');
+console.log('\n142. A move after the listing (2026-11-19, changed the same day): from 2026-12-10 the record is removed once the operator learns of it and the author reports the move, until then it stays listed, and a new version meets the place rule again; in the Submission Policy in both languages, its built pages, the checklist, the policies in brief, both forms, the eight statements of the premise, the risk table, the notice, the feed and the commitments');
 {
   /* The owner decided on 2026-11-19 (#256) that a record stays listed when an author moves to, or stays in, a place where
    * Sophaxis is not offered after the listing. A legal audit of the same day found that the Privacy Policy, the Takedown Policy,
@@ -8682,32 +8682,32 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
   const FROM = '2026-12-10', DECIDED = '2026-11-19';
   const POL = {
     en: { file: 'policies/submission.md', built: 'site/policies/submission.html', head: '\n## Who can submit\n', after: 'If it turns out that an author lived there, or stayed there, between the submission and the listing, the record is removed under the [Takedown Policy](./takedown.md)', table: '\n| Place |',
-      say: ['From ' + FROM + ', the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, once the operator learns that an author lives in one of these places, or stays in one, after the listing.',
+      say: ['From ' + FROM + ', the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, after the authors are heard for 7 days, once the operator learns that an author lives in one of these places, or stays in one, after the listing.',
         'From ' + FROM + ', an author who moves to one of these places, or stays in one, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author.',
         'This includes a move or a stay that began before ' + FROM + ' and goes on on or after that day: it is reported, and the record is removed once the operator learns of it on or after that day.',
         'Before that day, the record stays listed, no author is asked to report such a move or stay, and the author can ask at any time for the record to be withdrawn under the [Withdrawal Policy](./withdrawal.md) or removed.',
         'Once no author lives or stays in one of these places, the work can be submitted again under the rules then in force.',
         'A new version is a new submission, so it must meet this rule again.'] },
     ja: { file: 'policies/submission.ja.md', built: 'site/policies/submission.ja.html', head: '\n## 投稿できる人\n', after: '著者がこれらの国と地域に住んでいた、または投稿から掲載までのあいだにそこに滞在したと分かったときは、[削除の規程](./takedown.ja.md)に沿って記録を削除し', table: '\n| 国と地域 |',
-      say: [FROM + ' から、掲載後に著者がそこに住むか滞在していると運営者が知ったときも、記録を削除し、番号だけを残します。',
+      say: [FROM + ' から、掲載後に著者がそこに住むか滞在していると運営者が知ったときも、7 日のあいだ著者に聞いたうえで記録を削除し、番号だけを残します。',
         FROM + ' から、掲載後にそこに移るか、短い間でも滞在した著者は、場所を書かずに、投稿の issue で知らせます。どの著者が知らせても、投稿者が共著者に代わって知らせてもかまいません。',
         'その日より前に始まり、その日以後も続く移転や滞在も同じです。',
-        'それまでは記録は載ったままで、知らせも求めず、著者はいつでも撤回の規程で撤回か削除を求められます。',
+        'それまでは記録は載ったままで、知らせも求めず、著者はいつでも撤回の規程で撤回か削除を求めることができます。',
         'どの著者もそこに住まず滞在もしなくなれば、そのときの決まりで作品を改めて投稿できます。',
         '新しい版は新しい投稿で、この決まりが改めて及びます。'] },
   };
   /* What the other pages that state the place rule for authors say of a move after the listing. */
   const ALSO = {
-    'checklist.md': ['7. No author lives in', 'If an author moves to one, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it in the submission issue, and the record is removed once the operator learns of it.'],
-    'checklist.ja.md': ['7. Sophaxis を提供しない場所', '掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままで、' + FROM + ' からは、著者が投稿の issue で知らせ、運営者が知ったときに記録を削除する。'],
-    'rules.md': ['- Sophaxis is not offered to authors', 'If an author moves to one of them, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it, and the record is removed once the operator learns of it.'],
-    'rules.ja.md': ['- 規程が挙げる場所に住む著者', '掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままです。' + FROM + ' からは、著者が知らせ、運営者が知ったときに記録を削除します。'],
-    '.github/ISSUE_TEMPLATE/submission.yml': ['      description: Required from 2026-11-22. Sophaxis does not list work', 'If an author moves to one of these places, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it in this issue, and the record is removed once the operator learns of it.'],
-    '.github/ISSUE_TEMPLATE/submission-ja.yml': ['      description: 2026-11-22 から必須です。Sophaxis は、次の場所', '掲載のあとで著者がこれらの場所に移るか滞在したとき、2026-12-09 までは記録は載ったままです。' + FROM + ' からは、著者がこの issue で知らせ、運営者が知ったときに記録を削除します。'],
+    'checklist.md': ['7. No author lives in', 'If an author moves to one, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it in the submission issue, and the record is removed under the Takedown Policy, after a 7-day hearing, once the operator learns of it.'],
+    'checklist.ja.md': ['7. Sophaxis を提供しない場所', '掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままで、' + FROM + ' からは、著者が投稿の issue で知らせ、運営者が知ったときに、7 日のあいだ著者に聞いたうえで記録を削除する。'],
+    'rules.md': ['- Sophaxis is not offered to authors', 'If an author moves to one of them, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it, and the record is removed under the Takedown Policy, after a 7-day hearing, once the operator learns of it.'],
+    'rules.ja.md': ['- 規程が挙げる場所に住む著者', '掲載のあとで著者がそこに移るか滞在したとき、2026-12-09 までは記録は載ったままです。' + FROM + ' からは、著者が知らせ、運営者が知ったときに、7 日のあいだ著者に聞いたうえで記録を削除します。'],
+    '.github/ISSUE_TEMPLATE/submission.yml': ['      description: Required from 2026-11-22. Sophaxis does not list work', 'If an author moves to one of these places, or stays in one, after the listing, the record stays listed until 2026-12-09; from ' + FROM + ', the author reports it in this issue, and the record is removed under the Takedown Policy, after a 7-day hearing, once the operator learns of it.'],
+    '.github/ISSUE_TEMPLATE/submission-ja.yml': ['      description: 2026-11-22 から必須です。Sophaxis は、次の場所', '掲載のあとで著者がこれらの場所に移るか滞在したとき、2026-12-09 までは記録は載ったままです。' + FROM + ' からは、著者がこの issue で知らせ、運営者が知ったときに、7 日のあいだ著者に聞いたうえで記録を削除します。'],
   };
-  /* The five statements that rest on Sophaxis not listing work by an author who lives there, each followed by the case after the listing. */
-  const S_EN = 'From ' + FROM + ', a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.';
-  const S_JA = FROM + ' からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、記録を削除します。それまでは、著者が撤回か削除を求めない限り、その記録は載ったままです。';
+  /* The eight statements (five in English, three in Japanese) that rest on Sophaxis not listing work by an author who lives there, each followed by the case after the listing. */
+  const S_EN = 'From ' + FROM + ', a record is also removed under the Takedown Policy, after the authors are heard for 7 days, once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.';
+  const S_JA = FROM + ' からは、掲載のあとで著者がそこに住むか滞在していると運営者が知ったときも、7 日のあいだ著者に聞いたうえで記録を削除します。それまでは、著者が撤回か削除を求めない限り、その記録は載ったままです。';
   const PREMISE = [
     ['policies/privacy.md', 'It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.\n', S_EN],
     ['policies/takedown.md', 'does not offer services there in the sense of the Act.\n', S_EN],
@@ -8719,18 +8719,26 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     ['README.md', '- 2026-11-22 から、著者のだれかが、Sophaxis を提供しない 43 の国と地域に住んでいるか', S_JA],
   ];
   const MORE = [
-    ['policies/takedown.md', 'The fourth is when, from ' + FROM + ', the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](./submission.md) after the listing, from an author\'s report or otherwise. The operator first tells the authors so in their submission issue, without naming the place, and removes the record if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.'],
-    ['policies/takedown.ja.md', '四つ目は、' + FROM + ' から、掲載のあとで著者が[投稿の規程](./submission.ja.md)の表にある国と地域に住むか滞在していると、著者の知らせなどで運営者が知った場合です。運営者は、まず投稿の issue で、場所を書かずにそのことを著者に知らせます。書いた日から 7 日のうちに、どの著者もそこに住まず滞在もしていないと示すものが届かなければ、記録を削除します。'],
+    ['policies/takedown.md', 'The fourth is when, from ' + FROM + ', the operator learns that an author of a listed work lives in, or stays in, one of the places in the table of the [Submission Policy](./submission.md) after the listing, from an author\'s report or otherwise. The operator first tells the authors so in their submission issue, naming neither the place nor the author, and removes the record when 7 days have passed from the day this is posted, unless something that reaches the operator within those 7 days shows that the report or what the operator learned is mistaken, that is, that no author lived in, or stayed in, such a place after the listing.'],
+    ['policies/takedown.ja.md', '四つ目は、' + FROM + ' から、掲載のあとで著者が[投稿の規程](./submission.ja.md)の表にある国と地域に住むか滞在していると、著者の知らせなどで運営者が知った場合です。運営者は、まず投稿の issue で、場所も著者も書かずにそのことを知らせます。書いた日から 7 日のうちに、知らせや運営者が知ったことが誤りである、つまり掲載のあとにそうした国と地域に住んだり滞在したりした著者はいないと示すものが届かなければ、7 日がたったときに記録を削除します。'],
     ['policies/privacy.md', '- from ' + FROM + ', to remove a record under the Takedown Policy when an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing, from an author\'s report in the submission issue, which names no place, or from what the operator learns otherwise;'],
     ['policies/privacy.md', 'From ' + FROM + ', a report in the submission issue that an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing is personal data. It names no place,'],
     ['policies/privacy.ja.md', '- ' + FROM + ' から、掲載のあとで著者が投稿の規程の表にある国と地域に住むか滞在しているとき、削除の規程で記録を削除するため。投稿の issue での著者の知らせは場所を書かず'],
     ['policies/privacy.ja.md', '- ' + FROM + ' から、掲載のあとで著者が投稿の規程の表にある国と地域に住むか滞在していることを、投稿の issue で知らせたもの。場所は書かず'],
     ['docs/records-of-processing.md', '| From ' + FROM + ', remove a record under the Takedown Policy when an author lives in, or stays in, one of the places in the table of the Submission Policy after the listing | Authors of listed works | A report in the submission issue that an author lives or stays there, which names no place;'],
     ['docs/records-of-processing.md', 'issue comments, which show only public facts: whether each check passed, the ids and listing days of the records concerned'],
-    ['site.json', 'even briefly. From ' + FROM + ', a listed record is also removed once the operator learns that an author lives or stays there after the listing.'],
-    ['docs/opendoar.md', 'From ' + FROM + ', a listed record is also removed once the operator learns that an author lives or stays there after the listing, and the authors report such a move or stay.'],
+    ['site.json', 'even briefly. From ' + FROM + ', a listed record is also removed under the Takedown Policy, after the authors are heard for 7 days, once the operator learns that an author lives or stays there after the listing.'],
+    ['docs/opendoar.md', 'From ' + FROM + ', a listed record is also removed under the Takedown Policy, after a 7-day hearing, once the operator learns that an author lives or stays there after the listing, and the authors report such a move or stay.'],
     ['docs/legal-review.md', 'On ' + DECIDED + ', a review of the legal framework found that the rule of the same day under which a record stays listed'],
+    ['policies/privacy.md', 'The purpose of removal of ' + FROM + ' applies to every listed record, whenever it was listed.'],
+    ['policies/privacy.ja.md', FROM + ' の削除の目的は、いつ載ったかによらず、載っているすべての記録に当てます。'],
+    ['policies/privacy.md', 'When the operator learns of it otherwise, the operator posts in the submission issue, for the hearing under the Takedown Policy, only that an author is in one of these places, naming neither the place nor the author; that notice is personal data that the operator publishes, from what the operator learns otherwise.'],
+    ['policies/privacy.ja.md', '- ' + FROM + ' から、運営者がほかに知ったこと。削除の規程の聞き取りのために、運営者は投稿の issue に、著者のだれかがそうした国と地域にいることだけを、場所も著者も書かずに公開します'],
+    ['docs/records-of-processing.md', "the operator's notice in the issue for the hearing under the Takedown Policy, which says only that an author is in one of these places, naming neither the place nor the author"],
+    ['data/policy-changes.json', 'これは、同じ日の #256 の決まり（記録は載ったまま）に替わるもので、法の検討に記した ' + DECIDED + ' の見直しによります。権利を狭め、務めを足すので、14 日以上前にトップの頁で告知します。'],
   ];
+  /* The scope of the purposes: the higher barriers apply to issues opened from FROM, the removal to every listed record. */
+  const NOT_ANY = [['policies/privacy.md', 'and those of ' + FROM + ' only to submissions'], ['policies/privacy.ja.md', FROM + ' の目的は、' + FROM + ' 以後に issue を開いた投稿にだけ当てます。']];
   const RISK = '| An author of a listed work moves to, or stays in, a place where Sophaxis is not offered after the listing';
   const OLD = ['If an author moves to one of these places, or stays in one, after the listing, the record stays listed, because the listing met this rule when it was made.', 'Authors are not asked to report a move or a stay that begins after the listing.'];
   const COM = [POL.en.say[0], POL.en.say[1]];
@@ -8758,7 +8766,7 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
       if (lang === 'en' && (t.includes(OLD[0]) || t.includes(OLD[1]) || t.includes('If it turns out that an author lives there'))) bad.push(p.file + ': the rule that the record stays listed, or the present tense of the removal, is still there');
       if (lang === 'ja' && (t.includes('掲載時に決まりを満たした記録は載ったままです。') || t.includes('掲載後の移転や滞在の知らせは求めません。'))) bad.push(p.file + ': the rule that the record stays listed is still there');
       const built = plain(x[p.built]);
-      if (!built.includes(plain(p.say[0])) || !built.includes(plain(p.say[1])) || !built.includes(lang === 'en' ? 'Withdrawal Policy' : '撤回か削除を求められます')) bad.push(p.built + ': the built page does not carry the sentences');
+      if (!built.includes(plain(p.say[0])) || !built.includes(plain(p.say[1])) || !built.includes(lang === 'en' ? 'Withdrawal Policy' : '撤回か削除を求めることができます')) bad.push(p.built + ': the built page does not carry the sentences');
     }
     for (const [f, [line, s]] of Object.entries(ALSO)) {
       const l = String(x[f] || '').split('\n').find((y) => y.startsWith(line)) || '';
@@ -8775,9 +8783,11 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     let site = {};
     try { site = JSON.parse(x['site.json']); } catch (e) { bad.push('site.json does not parse'); }
     const tn = String((site.termsNotice || {}).text || '');
-    if (!tn.includes('From ' + FROM + ', a listed record is also removed under the Takedown Policy, leaving only its Sophaxis id, once the operator learns that, after the listing, an author lives in, or stays in, one of the places in the table of the Submission Policy, and an author who moves to, or stays in, one of them, even briefly, after the listing reports it in the submission issue, without naming the place, as does a move or stay that began before that day and goes on after it; any author, or the submitter on behalf of a co-author, may report it; until then, such a record stays listed unless the author asks for its withdrawal or removal.')) bad.push('the notice on the top page does not announce the change');
+    if (!tn.includes('From ' + FROM + ', a listed record is also removed under the Takedown Policy, leaving only its Sophaxis id, after the authors are heard for 7 days, once the operator learns that, after the listing, an author lives in, or stays in, one of the places in the table of the Submission Policy, and an author who moves to, or stays in, one of them, even briefly, after the listing reports it in the submission issue, without naming the place, as does a move or stay that began before that day and goes on after it; any author, or the submitter on behalf of a co-author, may report it; until then, such a record stays listed unless the author asks for its withdrawal or removal.')) bad.push('the notice on the top page does not announce the change');
     /* The fourth ground of removal, with how the authors are heard; the personal data of the report; the notice of places and the OpenDOAR text. */
     for (const [f, s] of MORE) if (!String(x[f] || '').includes(s)) bad.push(f + ': lacks "' + s.slice(0, 50) + '"');
+    for (const [f, s] of NOT_ANY) if (String(x[f] || '').includes(s)) bad.push(f + ': the removal is limited to issues opened from ' + FROM);
+    if (String(x['policies/takedown.md'] || '').includes('shows that no author lives or stays there')) bad.push('policies/takedown.md: the hearing asks only whether an author is there now');
     if (!/\nA record is removed in four cases\.\n/.test(String(x['policies/takedown.md'] || '')) || !String(x['policies/takedown.ja.md'] || '').includes('\n記録を削除するのは、四つの場合です。\n')) bad.push('the Takedown Policy does not count four cases');
     let feed = [];
     try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
@@ -8792,7 +8802,7 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     return bad;
   }
   const now = problems(real);
-  ok('the Submission Policy, in English and in Japanese, says after its sentence on removal (in the past tense) that from ' + FROM + ' a record is removed once the operator learns that an author lives or stays in a place not offered after the listing, that the author reports such a move without naming the place, what holds until then, and that a new version meets the rule again; the built pages, the checklist, the policies in brief and both forms say the same; each of the five statements of the premise, in both languages, is followed by the case; the legal review has a risk row; the notice and the feed announce it at least 14 days ahead; and the commitments name what they replace',
+  ok('the Submission Policy, in English and in Japanese, says after its sentence on removal (in the past tense) that from ' + FROM + ' a record is removed once the operator learns that an author lives or stays in a place not offered after the listing, that the author reports such a move without naming the place, what holds until then, and that a new version meets the rule again; the built pages, the checklist, the policies in brief and both forms say the same; each of the eight statements of the premise (five in English, three in Japanese) is followed by the case; the legal review has a risk row; the notice and the feed announce it at least 14 days ahead; and the commitments name what they replace',
     now.length === 0, now.slice(0, 6).join(' / '));
   const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f] || '').replace(a, b) });
   const en = POL.en.file, ja = POL.ja.file;
@@ -8814,7 +8824,15 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     ['submitting again left out in Japanese', w(ja, POL.ja.say[4] + '\n', '')],
     ['the English "no such move is reported" back', w(en, 'no author is asked to report such a move or stay', 'no such move or stay is reported')],
     ['the Takedown Policy with three cases', w('policies/takedown.md', 'A record is removed in four cases.', 'A record is removed in three cases.')],
-    ['the fourth ground without the hearing', w('policies/takedown.md', 'The operator first tells the authors so in their submission issue, without naming the place, and removes the record if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.', 'The operator removes the record.')],
+    ['the fourth ground without the hearing', w('policies/takedown.md', MORE[0][1].slice(MORE[0][1].indexOf('The operator first tells')), 'The operator removes the record.')],
+    ['the hearing asking only about the present', w('policies/takedown.md', 'unless something that reaches the operator within those 7 days shows that the report or what the operator learned is mistaken, that is, that no author lived in, or stayed in, such a place after the listing.', 'if nothing that reaches the operator within 7 days from the day this is posted shows that no author lives or stays there.')],
+    ['the removal purpose limited to issues opened from the day', w('policies/privacy.md', 'and the purpose of the higher barriers of ' + FROM + ' only to submissions', 'and those of ' + FROM + ' only to submissions')],
+    ['the Japanese removal purpose limited', w('policies/privacy.ja.md', MORE[12][1], FROM + ' の目的は、' + FROM + ' 以後に issue を開いた投稿にだけ当てます。')],
+    ['the operator\'s notice not named', w('policies/privacy.md', ' ' + MORE[13][1], '')],
+    ['the operator\'s notice naming the author', w('policies/privacy.ja.md', '場所も著者も書かずに公開します', '場所を書かずに公開します')],
+    ['the row of processing without the notice', w('docs/records-of-processing.md', MORE[15][1], 'x')],
+    ['the Japanese feed without the replacement of #256', w('data/policy-changes.json', MORE[16][1], '')],
+    ['the Japanese "求められます" back', w('policies/submission.ja.md', '撤回か削除を求めることができます', '撤回か削除を求められます')],
     ['the Japanese fourth ground taken out', w('policies/takedown.ja.md', MORE[1][1], '')],
     ['the Privacy purpose taken out', w('policies/privacy.md', MORE[2][1] + '\n', '')],
     ['the report naming the place', w('policies/privacy.md', 'It names no place,', 'It names the place,')],
@@ -8854,7 +8872,7 @@ console.log('\n142. A move after the listing (2026-11-19, changed the same day):
     ['the feed entry taken out', w('data/policy-changes.json', 'and the duty to report it"', 'and nothing else"')],
     ['the feed entry with no day of effect', w('data/policy-changes.json', '"from": "' + FROM + '",\n    "title": "A record removed', '"title": "A record removed')],
     ['the feed entry only 7 days ahead', w('data/policy-changes.json', '"from": "' + FROM + '",\n    "title": "A record removed', '"from": "2026-11-26",\n    "title": "A record removed')],
-    ['the feed entry without who decided', w('data/policy-changes.json', '著者は撤回か削除を求められます。' + DECIDED + ' に利用者が決め、Claude が書きました。', '著者は撤回か削除を求められます。')],
+    ['the feed entry without who decided', w('data/policy-changes.json', MORE[16][1] + DECIDED + ' に利用者が決め、Claude が書きました。', MORE[16][1])],
     ['a commitment taken out', w('verification/commitments.txt', COM[1] + '\n', '')],
     ['an old commitment kept', w('verification/commitments.txt', COM[0] + '\n', COM[0] + '\n' + OLD[0] + '\n')],
     ['the replacement not named', w('verification/superseded.txt', OLD[1] + '\t' + COM[1] + '\n', '')],
@@ -8941,6 +8959,10 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
       ['policies/submission.ja.md', B.from + ' からは、下の[高いハードル](#高いハードル)のとおり、この免除は無くなり、研究者二人が要ります。'],
       ['policies/privacy.md', '- from ' + B.from + ', under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least ' + B.voucherWorks + ' journal articles, book chapters or books'],
       ['policies/privacy.ja.md', '- ' + B.from + ' から、投稿の規程の「高いハードル」のもとで、紹介する二人の研究者がそれぞれ学術誌の論文・本の章・本を ' + B.voucherWorks + ' 件以上持つこと'],
+      ['policies/privacy.md', 'the comment shows only public facts: whether each check passes, the ids and listing days of the records concerned, the ORCID iDs of the researchers, counts and the length of the abstract;'],
+      ['policies/privacy.ja.md', 'コメントが示すのは、通ったかどうか、関わる記録の番号と載った日、紹介する研究者の ORCID iD、数、要旨の字数という公開の事実だけです'],
+      ['policies/privacy.md', 'and the purpose of the higher barriers of ' + B.from + ' only to submissions whose issue is opened on or after ' + B.from + '.'],
+      ['policies/privacy.ja.md', B.from + ' の高いハードルの目的は、' + B.from + ' 以後に issue を開いた投稿にだけ当てます。'],
       ['policies/moderation.md', '- From ' + B.from + ', a new work meets the higher barriers of the [Submission Policy](./submission.md#higher-barriers)'],
       ['policies/moderation.ja.md', '- ' + B.from + ' から、新しい作品が[投稿の規程](./submission.ja.md#高いハードル)の高いハードルを満たしている。'],
       ['automation.md', '- From ' + B.from + ', for a new work whose issue is opened on or after that day, it also checks the higher barriers'],
@@ -9103,6 +9125,8 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
     ['the six months left alone in English', w('policies/submission.md', 'From ' + HB.from + ', the period is ' + HB.doiAgeMonths + ' months, as', 'Later, the period may change, as')],
     ['the exemption left alone in Japanese', w('policies/submission.ja.md', 'この免除は無くなり、研究者二人が要ります。', '')],
     ['the Privacy Policy without the purpose', w('policies/privacy.md', '- from ' + HB.from + ', under "Higher barriers"', '- under "Higher barriers"')],
+    ['the comment said to show only ids and counts', w('policies/privacy.md', 'the ids and listing days of the records concerned, the ORCID iDs of the researchers, counts', 'the ids of the records concerned, counts')],
+    ['the Japanese comment without the ORCID iDs', w('policies/privacy.ja.md', '紹介する研究者の ORCID iD、数、', '数、')],
     ['the Moderation Policy without the criterion', w('policies/moderation.ja.md', '高いハードルを満たしている。', '')],
     ['the notice without the barriers', w('site.json', 'the barriers are higher: at least', 'the barriers may be higher: at least')],
     ['the feed entry without a day of effect', w('data/policy-changes.json', '"from": "' + HB.from + '",\n    "title": "Higher barriers', '"title": "Higher barriers')],
