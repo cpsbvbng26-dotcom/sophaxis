@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-19.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -25,6 +25,7 @@ Personal data is used only for these purposes:
 - since 2026-11-14, to give the moderator advice, as counts only, on the contact details of others and the places that a submitted work or its DOI metadata shows, so that the moderator can apply the Moderation Policy;
 - from 2026-11-23, to confirm that a researcher who vouches for a first submission is not an author of the work and has a journal article, a book chapter or a book;
 - from 2026-12-01, under the checked intake of the Submission Policy, to check that the public records of every author whose identity is verified, and of a researcher who vouches, place them where Sophaxis is offered, and that a researcher who vouches shares no current organisation with the submitter; only whether each check passes is used;
+- from 2026-12-10, under "Higher barriers" in the Submission Policy, to check that each of the two researchers who vouch lists at least 5 journal articles, book chapters or books, that the two share no current organisation, and that no author of a new work is an author of a work that Sophaxis listed in the 180 days before; only whether each check passes is used;
 - to publish record pages, author pages, the lists and the search;
 - to offer the records for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`;
 - to check the listed DOIs and licences each week, and, for works whose authors consent to it, to save the pages and the PDF copies to the Internet Archive each week and when they change;
@@ -33,7 +34,7 @@ Personal data is used only for these purposes:
 - to serve the site, and to find and fix faults from Vercel's request logs;
 - to answer questions, complaints, disputes and security reports.
 
-The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day.
+The purposes of 2026-12-01 apply only to submissions whose issue is opened on or after that day, and those of 2026-12-10 only to submissions whose issue is opened on or after 2026-12-10.
 
 ## The site
 
@@ -279,6 +280,7 @@ The operator gives those grounds in writing.
 
 From 2026-11-22, Sophaxis does not offer its service to people in the European Union, the European Economic Area or the United Kingdom.
 It does not list work by an author who lives there, or who stays there between the submission and the listing, even briefly, and the submission form asks the submitter to confirm it.
+From 2026-12-10, a record is also removed once the operator learns that an author lives or stays there after the listing; before that day, such a record stays listed unless the author asks for it to be withdrawn or removed.
 This does not depend on nationality, race, ethnic origin or any other personal characteristic, and nationality is never read.
 Anyone can read the site, but Sophaxis does not direct itself to people there.
 The operator therefore considers that the General Data Protection Regulation and the UK GDPR do not reach Sophaxis under Article 3(2).

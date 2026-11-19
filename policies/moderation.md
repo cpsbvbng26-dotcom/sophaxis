@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-19.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -28,6 +28,7 @@ It does not judge whether the work is correct, original or important.
 - The submitter has confirmed that every author agrees and that the version may be shared.
 - From 2026-11-21, every other author of a work with more than one author has confirmed their own agreement, as the [Submission Policy](./submission.md) sets out.
 - From 2026-11-23, a researcher has vouched for a first submission, as the Submission Policy sets out.
+- From 2026-12-10, a new work meets the higher barriers of the [Submission Policy](./submission.md#higher-barriers): 12 months since its first DOI, an abstract in the DOI metadata, 180 days since a work of any of its authors was listed, and two researchers who vouch.
 - The work is not spam, not abusive and does not expose personal data of third parties.
 - The work shows no affiliation or address of an author in a place where Sophaxis is not offered, as the [Submission Policy](./submission.md) lists them. If it does, the moderator asks the submitter where that author lives and whether they have stayed there since the submission, and declines the submission unless the author lives elsewhere and has not stayed there.
 - The PDF carries no notice of rights that contradicts the licence in the DOI metadata, such as a publisher's "all rights reserved". If it does, the submission is declined.
