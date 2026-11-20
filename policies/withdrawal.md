@@ -56,7 +56,8 @@ The operator does so as far as is reasonably practicable, and the record stays.
 An author whose name has changed can ask for the record to show the current name, in every version.
 The request goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or, if the author prefers, in the record's correction issue.
 It comes from the author's own GitHub account or ORCID iD, confirmed as for a withdrawal; no reason and no proof of the change is asked.
-The operator aims to make the change within 7 days, and the earlier name is then no longer shown on the site.
+The operator aims to make the change within 7 days, and the record's pages then no longer show the earlier name.
+The PDF copies are kept unmodified, so they show the name that the PDF carries; the author can ask for them to be removed, and the record then links to the repository only.
 The public issues where the earlier name was written, the history of the public repository, copies at the Internet Archive and at harvesters, and the metadata at the repository are not changed by this; a request about the deposit goes to the repository.
 
 ## The work in its repository
