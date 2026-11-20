@@ -9296,16 +9296,14 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
       'From ' + FROM + ', a moderator may list a work under a category, other categories or a subfield other than those chosen in the form, where another one fits the work better.',
       'The moderator says so in the issue before the listing, with the reason, and the submitter can answer as below.',
       'From ' + FROM + ', the answer comes no later than 30 days after the decision, from the submitter or another author of the work, and gives a reason or something new, such as a corrected version in the repository.',
-      'A request by anyone else for a work to be listed is not taken up.',
-      'An answer that only repeats what was said before is not looked at again.',
+      'From the same day, a request by anyone else for a work to be listed is not taken up, and an answer that only repeats what was said before is not looked at again.',
       'A declined work can be submitted again, in a new issue, once the reason for declining no longer applies, for example after a corrected version has been deposited.']],
     'policies/moderation.ja.md': ['\n## 判断\n', [
       'どの著者の国籍、人種、民族的出身、宗教や信条、性別、性的指向、障害も、判断に入れません。',
       FROM + ' から、モデレーターは、様式で選ばれたものより作品に合う分野・ほかの分野・下位の分野があるとき、それに載せることがあります。',
       'モデレーターは、載せる前に issue でそう言い、理由を添えます。投稿者は、下のとおり答えることができます。',
       FROM + ' から、答えは、判断から 30 日以内に、投稿者か作品のほかの著者が出し、理由か新しいこと（たとえば預け先で直した版）を示します。',
-      'それ以外の人が、作品を載せるよう求めても、取り上げません。',
-      '前に言ったことを繰り返すだけの答えは、もう一度は見ません。',
+      '同じ日から、それ以外の人が作品を載せるよう求めても取り上げず、前に言ったことを繰り返すだけの答えはもう一度は見ません。',
       '断られた作品は、断った理由が当てはまらなくなったとき、たとえば直した版を預けたあとに、新しい issue でもう一度投稿できます。']],
     'policies/submission.md': ['\n## What can be submitted\n', ['From ' + FROM + ', it must also report research of its own (an argument, a proof, an analysis or a result); a research proposal, a call for papers, an announcement or news is not accepted, whatever its form.']],
     'policies/submission.ja.md': ['\n## 投稿できるもの\n', [FROM + ' から、作品は自らの研究（論証・証明・分析・結果）を報告するものに限り、研究の計画書、論文の募集、お知らせ、ニュースは形を問わず受け付けません。']],
@@ -9315,14 +9313,14 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
   const MORE = {
     'policies/submission.md': ['\n## Versions and updates\n', ["The form asks, optionally, what changed in the new version, in at most 300 characters, and the record page shows it beside the version as the authors' own statement. Sophaxis does not check it."]],
     'policies/submission.ja.md': ['\n## 版と更新\n', ['様式は、この版で変えたことを任意で 300 字まで尋ね、記録の頁がその版の横に著者の申告として示します。Sophaxis は中身を確かめません。']],
-    'policies/withdrawal.md': ["\n## An author's name\n", ['An author whose name has changed can ask for the record to show the current name, in every version.', 'no reason and no proof of the change is asked.', 'The operator aims to make the change within 7 days, and the record\'s pages then no longer show the earlier name.', 'The PDF copies are kept unmodified, so they show the name that the PDF carries;']],
-    'policies/withdrawal.ja.md': ['\n## 著者の名前\n', ['名前が変わった著者は、記録のすべての版に、いまの名前を示すよう求めることができます。', '理由も、名前が変わったことの証拠も尋ねません。', '運営者は 7 日以内に変えることを目指し、変えたあとは、記録の頁に前の名前を示しません。', 'PDF の写しは手を加えずに置くので、PDF にある名前のままです。']],
+    'policies/withdrawal.md': ["\n## An author's name\n", ['An author whose name has changed can ask for the record to show the current name, in every version.', 'because it names the author\'s current name, and the correction issue takes no personal data.', 'no reason and no proof of the change is asked.', 'The operator aims to make the change within 7 days, and the record\'s pages then no longer show the earlier name.', 'The PDF copies are kept unmodified, so they show the name that the PDF carries;']],
+    'policies/withdrawal.ja.md': ['\n## 著者の名前\n', ['名前が変わった著者は、記録のすべての版に、いまの名前を示すよう求めることができます。', '訂正の issue は個人データを受け付けないので、', '理由も、名前が変わったことの証拠も尋ねません。', '運営者は 7 日以内に変えることを目指し、変えたあとは、記録の頁に前の名前を示しません。', 'PDF の写しは手を加えずに置くので、PDF にある名前のままです。']],
   };
   const REASON = { 'policies/moderation.md': '- Not in the form of a scholarly paper: it lacks a title, an abstract or references, or, from ' + FROM + ', it reports no research of its own, as the Submission Policy sets out under "What can be submitted".',
     'policies/moderation.ja.md': '- 学術論文の形でない：題・要旨・参考文献のどれかを欠く。または、' + FROM + ' から、自らの研究を報告していない。投稿の規程の「投稿できるもの」のとおりです。' };
   const BUILT = { 'site/policies/moderation.html': 'policies/moderation.md', 'site/policies/moderation.ja.html': 'policies/moderation.ja.md', 'site/policies/submission.html': 'policies/submission.md',
     'site/policies/submission.ja.html': 'policies/submission.ja.md', 'site/policies/withdrawal.html': 'policies/withdrawal.md', 'site/policies/withdrawal.ja.html': 'policies/withdrawal.ja.md' };
-  const NOTICE = 'From ' + FROM + ', a submitter or another author who disagrees with a decision answers in the issue no later than 30 days after it, with a reason or something new;';
+  const NOTICE = 'From ' + FROM + ', a submitter or another author who disagrees with a decision answers in the issue no later than 30 days after it, with a reason or something new; a request by anyone else for a work to be listed is not taken up, and an answer that only repeats what was said before is not looked at again;';
   const COMMITS = ['It does not take into account the nationality, race, ethnic origin, religion or belief, sex or gender, sexual orientation or disability of any author.',
     'An author whose name has changed can ask for the record to show the current name, in every version.', 'A withdrawal is not needed to show a new version or a publication.'];
   const FORMS = { '.github/ISSUE_TEMPLATE/submission.yml': 'What changed in this version (optional, only for a new version)', '.github/ISSUE_TEMPLATE/submission-ja.yml': 'この版で変えたこと（任意、新しい版のときだけ）' };
@@ -9382,7 +9380,22 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
     ['the record page shows the note in a column of its own, escaped', page.includes('<th scope="col">What changed, as the authors state it</th>') && page.includes('<td>Corrected the proof of Lemma 2 &amp; added references.</td>')],
     ['a record without notes keeps its table as before', !B.recordPage(two()).includes('What changed, as the authors state it')],
     ['the intake keeps the note only for a new version, as one line', I.changesNote({ update: '2026.0001', changes: ' Fixed\n a typo. ' }) === 'Fixed a typo.' && I.changesNote({ changes: 'Fixed.' }) === null && I.changesNote({ update: '2026.0001', changes: '  ' }) === null],
+    ['the intake keeps signs that look like markup, such as a<b and c>d', I.changesNote({ update: '2026.0001', changes: 'Proved a<b when c>d.' }) === 'Proved a<b when c>d.'],
+    ['the length is counted in characters, not in UTF-16 units', I.noteLength('\u{20BB7}'.repeat(300)) === 300 && errs(two('\u{20BB7}'.repeat(300))) === 0 && errs(two('\u{20BB7}'.repeat(301))) === 1],
+    ['a Japanese note is marked Japanese on the English page, and an English one English on the Japanese page', B.recordPage(two('補題 2 の証明を直した')).includes('<td lang="ja">補題 2 の証明を直した</td>') && B.recordJaPage(two('Fixed a typo.')).includes('<td lang="en">Fixed a typo.</td>')],
   ];
+  {
+    /* The note goes with the version whose DOI the form gives, not simply with the newest one the repository lists. */
+    const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'sx145-'));
+    fs.copyFileSync(path.join(ROOT, 'data', 'papers', rec.id + '.json'), path.join(dir, rec.id + '.json'));
+    const base = rec.versions[1].doi.replace(/\.v\d+$/, '');
+    let d = null;
+    try { d = I.draft({ form: { update: rec.id, doi: base + '.v3', changes: 'Fixed a<b.' }, login: 'x', issue: 1, meta: {}, result: {}, paperDir: dir, today: '2026-11-21',
+      versions: rec.versions.map((v) => ({ doi: v.doi, date: v.date })).concat([{ doi: base + '.v3', date: '2026-11-01' }, { doi: base + '.v4', date: '2026-11-02' }]) }); } catch (e) { d = null; }
+    fs.rmSync(dir, { recursive: true, force: true });
+    const vs = d && d.record ? d.record.versions : [];
+    notes.push(['the intake puts the note on the version whose DOI the form gives', vs.length === 4 && vs[2].note === 'Fixed a<b.' && vs[3].note === undefined && /figshare/.test(base)]);
+  }
   const wrong = notes.filter(([, v]) => !v).map(([k]) => k);
   ok('a note on what changed: only on a later version, one line of at most 300 characters, shown escaped in its own column, read by the intake only for a new version (' + (notes.length - wrong.length) + ' / ' + notes.length + ')', wrong.length === 0, wrong.join(' / '));
 
@@ -9417,7 +9430,9 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
     ['personal characteristics taken into account', w('policies/moderation.md', 'sexual orientation or disability of any author.', 'sexual orientation of any author.')],
     ['the Japanese list of characteristics shortened', w('policies/moderation.ja.md', '性的指向、障害も、判断に入れません。', '性的指向も、判断に入れません。')],
     ['the period to answer lengthened', w('policies/moderation.md', 'no later than 30 days after the decision', 'no later than 60 days after the decision')],
-    ['anyone may ask for a listing', w('policies/moderation.md', 'A request by anyone else for a work to be listed is not taken up.\n', '')],
+    ['anyone may ask for a listing', w('policies/moderation.md', 'a request by anyone else for a work to be listed is not taken up, and ', '')],
+    ['the rule on others dated from publication', w('policies/moderation.md', 'From the same day, a request by anyone else', 'A request by anyone else')],
+    ['a changed name asked in a public issue', w('policies/withdrawal.md', 'and the correction issue takes no personal data.', 'or in the correction issue.')],
     ['the Japanese fresh submission taken out', w('policies/moderation.ja.md', '新しい issue でもう一度投稿できます。', '投稿できません。')],
     ['a field changed without saying so', w('policies/moderation.md', 'The moderator says so in the issue before the listing, with the reason,', 'The moderator may do so')],
     ['the reason for declining without research of one\'s own', w('policies/moderation.md', REASON['policies/moderation.md'] + '\n', '- Not in the form of a scholarly paper: it lacks a title, an abstract or references.\n')],
