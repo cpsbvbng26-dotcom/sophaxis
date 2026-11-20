@@ -42,6 +42,8 @@ const DOI = /^10\.\d{4,9}\/\S+$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 /* The longest note on what changed in a later version, in characters (Submission Policy, "Versions and updates"). */
 const VERSION_NOTE_MAX = 300;
+/* The language of a note, as far as its script tells: Japanese when it holds kana or kanji, otherwise English, the language of the form that asks for it in English. */
+const noteLang = (s) => (/[\u3040-\u30ff\u3400-\u9fff]/.test(String(s)) ? 'ja' : 'en');
 
 function orcidOk(o) {
   if (!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(o)) return false;
@@ -132,7 +134,7 @@ function validate(p, file) {
     if (!DATE.test(v.date || '')) e.push(file + ': version ' + (i + 1) + ' has an invalid date');
     if (i > 0 && v.date < p.versions[i - 1].date) e.push(file + ': versions must be in date order');
     /* What changed, in the authors' words (Submission Policy, "Versions and updates"): only on a later version, at most VERSION_NOTE_MAX characters, one line. */
-    if (v.note !== undefined && !(i > 0 && typeof v.note === 'string' && v.note.trim() && v.note === v.note.trim() && !/[\r\n]/.test(v.note) && v.note.length <= VERSION_NOTE_MAX)) e.push(file + ': version ' + (i + 1) + ' has a note that is not one line of at most ' + VERSION_NOTE_MAX + ' characters on a later version');
+    if (v.note !== undefined && !(i > 0 && typeof v.note === 'string' && v.note.trim() && v.note === v.note.trim() && !/[\u0000-\u001f\u007f]/.test(v.note) && [...v.note].length <= VERSION_NOTE_MAX)) e.push(file + ': version ' + (i + 1) + ' has a note that is not one line of at most ' + VERSION_NOTE_MAX + ' characters on a later version');
   });
   if (typeof p.llm_disclosure === 'string' && p.llm_disclosure.trim().length < 20) {
     e.push(file + ': the language-model statement is too short');
@@ -976,7 +978,7 @@ function recordPage(p, all = [p]) {
   ].map(([n, h]) => `<a href="${esc(h)}">${n}</a>`).join(' · ');
   const keywords = (p.keywords || []).length ? `<p class="meta">Keywords: ${p.keywords.map(esc).join('; ')}</p>` : '';
   const noted = p.versions.some((x) => x.note);
-  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td>${noted ? `<td>${esc(x.note || '')}</td>` : ''}</tr>`).join('');
+  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td>${noted ? `<td${x.note && noteLang(x.note) === 'ja' ? ' lang="ja"' : ''}>${esc(x.note || '')}</td>` : ''}</tr>`).join('');
   const notes = (p.notes || []).map((n) => `<li><span class="meta">${esc(n.date)}</span> ${esc(n.text)}</li>`).join('');
   const pdfs = p.pdfs || [];
   const copies = pdfs.length ? `<p>PDF on ${esc(SITE.name)}: ${pdfs.map((x) => `<a href="../pdf/${esc(x.file)}">v${x.version}</a>`).join(' · ')}</p>
@@ -1136,7 +1138,7 @@ function recordJaPage(p, all = [p]) {
   const crumbs = `<nav class="crumbs" aria-label="現在の位置"><a href="../index.ja.html">一覧</a> › <a href="../list/${esc(p.category)}.html">${esc(SITE.categoriesJa[p.category])}</a> › <span aria-current="page">${esc(p.id)}</span></nav>`;
   const coll = (p.collections || []).map(collectionOf).filter(Boolean);
   const noted = p.versions.some((x) => x.note);
-  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td>${noted ? `<td${x.note ? wl(x.note) : ''}>${esc(x.note || '')}</td>` : ''}</tr>`).join('');
+  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td>${noted ? `<td${x.note && noteLang(x.note) !== 'ja' ? ' lang="en"' : ''}>${esc(x.note || '')}</td>` : ''}</tr>`).join('');
   const copies = pdfs.length ? `<p>${esc(SITE.name)} の PDF：${pdfs.map((x) => `<a href="../pdf/${esc(x.file)}">v${x.version}</a>`).join(' · ')}</p>
 <p class="meta">${pdfs.some((x) => x.provided_by === 'authors')
     ? `著者が投稿の issue で示した PDF を、手を加えずに写したものです。${esc(repoName(v.doi))} が、スクリプトによるファイルの取得を許さないためです。`
