@@ -9268,7 +9268,7 @@ console.log('\n144. No work on the principle of ki (2026-11-20): from 2026-12-15
     ['the feed entry without who decided', w('data/policy-changes.json', 'The owner decided this on ' + ANNOUNCED + ', and Claude wrote it.', 'Claude wrote it.')],
     ['the Japanese top page without it', w('site/index.ja.html', '運営者のものも含めて、だれが投稿したものでも載せません。', '')],
     ['the commitment taken out', w('verification/commitments.txt', COMMIT + '\n', '')],
-    ['a person named', w('policies/moderation.ja.md', 'その流派の師範のもとで学びました。', 'その流派の藤平師範のもとで学びました。')],
+    ['a name of a person, tied to no one, at the end of the page', w('policies/moderation.ja.md', /$/, '\n藤平\n')],
     ['the school named', w('policies/moderation.md', 'a school of aikido that teaches the principle of ki', 'Shinshin Toitsu Aikido, which teaches the principle of ki')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
