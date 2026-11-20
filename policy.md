@@ -1,6 +1,6 @@
 # Policies
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-20.
 
 Japanese: [規程（日本語訳）](./policy.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -46,6 +46,8 @@ Sophaxis is operated by Takuya Nemoto, in Japan.
 The [Operator and contact](./contact.md) page says how to reach the operator.
 Submissions by the operator are moderated under the same rules
 and are marked on their record pages as the operator's own.
+From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it,
+because research that touches the operator's own background is too strong a conflict of interest to handle here.
 
 ## Finding work
 

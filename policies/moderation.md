@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-20.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -85,6 +85,7 @@ A moderator who declines a submission names one or more of these reasons, with a
 - Rights or personal data: the work contains material that the authors may not share, or personal data of third parties, or the PDF carries a notice of rights that contradicts its licence.
 - Plagiarism: the work presents the words, ideas, proofs or results of others as the authors' own, or presents the authors' own earlier work as new, without saying where they come from.
 - Where the authors live or stay: an author lives in a place where Sophaxis is not offered, or stayed in one between the submission and the listing.
+- Conflict of interest of the operator: from 2026-12-15, the subject of the work is the principle of ki, as set out under "Conflicts of interest" below.
 - Spam or abuse.
 
 The submitter can answer in the issue.
@@ -138,6 +139,11 @@ The operator's own submissions get no priority: they are moderated in the order 
 From 2026-11-09, a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.
 The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.
 The [Statistics](https://sophaxis.vercel.app/stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
+
+From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理, also written 気の原理), whoever submits it, the operator included.
+Research that touches the operator's own background is too strong a conflict of interest to handle on the operator's own platform: the operator trained for years in a school of aikido that teaches the principle of ki, and studied it under a teacher of that school.
+No moderator decides on such a work; a submission of it is declined, naming "Conflict of interest of the operator".
+A submission of it whose issue is opened before that day waits and is declined on that day, so that nothing on the subject is listed before it.
 
 ## Research integrity
 
