@@ -1064,9 +1064,9 @@ console.log('\n26. One operator: decisions, continuity, dependencies and statist
 {
   const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
   const reasons = (/A moderator who declines a submission names one or more of these reasons[^\n]*\n\n((?:- [^\n]+\n)+)/.exec(mod) || [, ''])[1].trim().split('\n');
-  ok('every decision is labelled and stays public, and a decline names one of nine fixed reasons',
-    mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 9
-    && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Plagiarism', 'Where the authors live', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
+  ok('every decision is labelled and stays public, and a decline names one of ten fixed reasons',
+    mod.includes('labels the issue `accepted` or `declined`.') && mod.includes('Every decision stays public in its issue.') && reasons.length === 10
+    && ['Out of scope', 'Not in the form of a scholarly paper', 'Licence', 'Authorship', 'Disclosure', 'Rights or personal data', 'Plagiarism', 'Where the authors live', 'Conflict of interest of the operator', 'Spam or abuse'].every((r, i) => reasons[i].startsWith('- ' + r)));
   ok('the policy says the operator is the only moderator for now, how others are named, and who may not decide on what',
     mod.includes('The operator is at present the only moderator.') && mod.includes('Each is named, with an ORCID iD, on the [Operator and contact](../contact.md) page before taking any decision')
     && mod.includes('While the operator is the only moderator, the operator also decides on their own submissions') && mod.includes('no moderator decides on their own submission or on one by a close collaborator.'));
@@ -3258,7 +3258,7 @@ console.log('\n81. Decisions by year, counted from the public issues and the rec
   const R = require('../tools/report.js');
   const B = require('../build.js');
   const mod = read(path.join(ROOT, 'policies', 'moderation.md'));
-  ok('the reasons counted are the ' + R.REASONS.length + ' that the Moderation Policy names, word for word', R.REASONS.length === 9 && R.REASONS.every((r) => mod.includes('\n- ' + r + ':') || mod.includes('\n- ' + r + '.')));
+  ok('the reasons counted are the ' + R.REASONS.length + ' that the Moderation Policy names, word for word', R.REASONS.length === 10 && R.REASONS.every((r) => mod.includes('\n- ' + r + ':') || mod.includes('\n- ' + r + '.')));
   const L = (...names) => names.map((name) => ({ name }));
   const op = { login: 'owner' }, other = { login: 'someone' };
   const issues = [
@@ -5817,7 +5817,7 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
     ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-19。', '最終更新：2026-11-14。'), facts],
     ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
-    ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-13。', '最終更新：2026-11-12。'), facts],
+    ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-20。', '最終更新：2026-11-19。'), facts],
     ['the entry on Figshare dated back', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
     ['the entry on the places dated back', feedWith((d) => d.map((c) => (c.title.startsWith('The day from which each place') ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
     ['a day of effect before the entry', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { text: c.text.replace('Effective on publication, 2026-11-13', 'Effective on publication, 2026-11-12') }) : c))), facts],
@@ -9141,6 +9141,140 @@ console.log('\n143. High barriers to participation (2026-11-19): the note on bot
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each of ' + breaks.length + ' ways (the note taken out, doubled or moved anywhere it stands, the day of effect too near or before the checked intake, a barrier lowered in site.json or in either language, the operator exempted, the section renamed, an earlier rule left alone, the Privacy or Moderation Policy, the notice or the feed without it, the note given a day, the intake keeping the exemption, dropping a barrier or reading more of an ORCID record) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
     missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 144 */
+console.log('\n144. No work on the principle of ki (2026-11-20): from 2026-12-15, whoever submits it, the operator included, because of the operator\'s conflict of interest; in the Moderation Policy, the Submission Policy and the policies in brief in both languages and their built pages, a reason for declining, the notice, the feed, the commitments, at least 14 days ahead, and no person named');
+{
+  /* The owner decided on 2026-11-20 that Sophaxis does not handle the principle of ki (氣の原理), because research that touches
+   * the operator's own background is too strong a conflict of interest to handle on the operator's own platform. The owner wrote
+   * 「この主題を扱うことはしません」: the scope is the subject, not only the operator's own works, so the rule says "whoever submits it,
+   * the operator included". It narrows what Sophaxis accepts, so it starts at least 14 days after the announcement (the Terms of
+   * Use). The operator's own disclosure is kept in the operator's profile repository (docs/conflicts-of-interest.md); its check
+   * across the repositories compares the day of effect there with the feed entry here. No person is named, and the school of
+   * aikido is not named either, so that the names of others listed in the Disclaimer stay as they are (check 141). */
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const ANNOUNCED = '2026-11-20', FROM = '2026-12-15';
+  const TITLE = "No work on the principle of ki, because of the operator's conflict of interest";
+  const plain = (h) => String(h || '').replace(/<[^>]+>/g, '').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+  const SAYS = {
+    'policies/moderation.md': ['\n## Conflicts of interest\n', ['From ' + FROM + ', Sophaxis lists no work whose subject is the principle of ki (氣の原理, also written 気の原理), whoever submits it, the operator included.',
+      "Research that touches the operator's own background is too strong a conflict of interest to handle on the operator's own platform",
+      'No moderator decides on such a work; a submission of it is declined, naming "Conflict of interest of the operator".',
+      'A submission of it whose issue is opened before that day waits and is declined on that day, so that nothing on the subject is listed before it.']],
+    'policies/moderation.ja.md': ['\n## 利益相反\n', [FROM + ' から、Sophaxis は、氣の原理（気の原理とも書きます）を主題とする作品を、運営者のものも含めて、だれが投稿したものでも載せません。',
+      '運営者自身の出自に関わる研究を、運営者自身の基盤で扱うのは、利益相反が濃すぎるためです。',
+      'どのモデレーターもそうした作品を判断せず、投稿は「運営者の利益相反」を挙げて断ります。',
+      'その日より前に issue を開いた投稿は、その日まで待ち、その日に断ります。この主題の作品を、その日より前に載せることもありません。']],
+    'policies/submission.md': ['\n## What can be submitted\n', ['From ' + FROM + ", Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it, because of the operator's conflict of interest, as the [Moderation Policy](./moderation.md#conflicts-of-interest) sets out."]],
+    'policies/submission.ja.md': ['\n## 投稿できるもの\n', [FROM + ' から、Sophaxis は、運営者の利益相反のため、氣の原理を主題とする作品を、だれが投稿したものでも載せません。[モデレーションの規程](./moderation.ja.md#利益相反)のとおりです。']],
+    'policy.md': ['\n## Operator and conflicts of interest\n', ['From ' + FROM + ', Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it,']],
+    'policy.ja.md': ['\n## 運営者と利益相反\n', [FROM + ' から、氣の原理を主題とする作品は、だれが投稿したものでも載せません。', '運営者自身の出自に関わる研究を、ここで扱うのは、利益相反が濃すぎるためです。']],
+  };
+  const REASON = { 'policies/moderation.md': '- Conflict of interest of the operator: from ' + FROM + ', the subject of the work is the principle of ki, as set out under "Conflicts of interest" below.',
+    'policies/moderation.ja.md': '- 運営者の利益相反：' + FROM + ' から、作品の主題が氣の原理である。下の「利益相反」のとおりです。' };
+  const BUILT = { 'site/policies/moderation.html': 'policies/moderation.md', 'site/policies/moderation.ja.html': 'policies/moderation.ja.md', 'site/policies/submission.html': 'policies/submission.md',
+    'site/policies/submission.ja.html': 'policies/submission.ja.md', 'site/policy.html': 'policy.md', 'site/policy.ja.html': 'policy.ja.md' };
+  const NOTICE = 'From ' + FROM + ', Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it, the operator included,';
+  const COMMIT = 'From ' + FROM + ', Sophaxis lists no work whose subject is the principle of ki (氣の原理, also written 気の原理), whoever submits it, the operator included.';
+  /* Words that must not appear in what Sophaxis says of this: the names of persons, and the name of the school or its body. */
+  const NAMES = ['藤平', '植芝', 'Tohei', 'Ueshiba', '心身統一', 'Shinshin Toitsu', '氣の研究会', 'Ki Society'];
+  const files = [...new Set(Object.keys(SAYS).concat(Object.keys(BUILT), ['site.json', 'data/policy-changes.json', 'verification/commitments.txt', 'tools/report.js', 'site/index.html', 'site/index.ja.html', 'site/llms-full.txt', 'CHANGELOG.md']))];
+  const real = Object.fromEntries(files.map((f) => [f, T(f)]));
+  const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
+  function problems(x, from = FROM) {
+    const bad = [];
+    if (days(from, ANNOUNCED) < 14) bad.push('the day of effect ' + from + ' is less than 14 days after ' + ANNOUNCED);
+    for (const [f, [head, says]] of Object.entries(SAYS)) {
+      const t = String(x[f] || ''), i = t.indexOf(head), j = i < 0 ? -1 : t.indexOf('\n## ', i + head.length), sec = i < 0 ? '' : t.slice(i, j < 0 ? undefined : j);
+      if (!sec) { bad.push(f + ': no section ' + head.trim()); continue; }
+      for (const s of says) if (!sec.includes(s.split(FROM).join(from))) bad.push(f + ': the section lacks "' + s.slice(0, 50) + '"');
+    }
+    for (const [f, r] of Object.entries(REASON)) if (!String(x[f] || '').includes('\n' + r.split(FROM).join(from) + '\n')) bad.push(f + ': no reason for declining on the subject');
+    if (!/'Conflict of interest of the operator'/.test(String(x['tools/report.js'] || ''))) bad.push('tools/report.js does not count the reason');
+    for (const [b, src] of Object.entries(BUILT)) {
+      const p = plain(x[b]);
+      for (const s of SAYS[src][1]) { const want = plain(s.split(FROM).join(from).replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')); if (!p.includes(want)) bad.push(b + ': not built from ' + src + ' ("' + want.slice(0, 40) + '")'); }
+    }
+    let site = {};
+    try { site = JSON.parse(x['site.json']); } catch (e) { return bad.concat(['site.json does not parse']); }
+    const tn = String((site.termsNotice || {}).text || '');
+    if (!tn.includes(NOTICE.split(FROM).join(from)) || !tn.includes("because research that touches the operator's own background is too strong a conflict of interest")) bad.push('the notice on the top page does not announce it');
+    if (!plain(x['site/index.html']).includes(NOTICE.split(FROM).join(from))) bad.push('site/index.html: the notice is not built');
+    let feed = [];
+    try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
+    const e = feed.find((c) => c.title === TITLE);
+    if (!e || e.date !== ANNOUNCED || e.from !== from || !['moderation', 'submission'].every((p) => (e.policies || []).includes(p))
+      || !String(e.text).includes('whoever submits it, the operator included') || !String(e.text).includes('It narrows what Sophaxis accepts, so it is announced on the top page at least 14 days ahead.')
+      || !String(e.text).includes('The owner decided this on ' + ANNOUNCED + ', and Claude wrote it.')) bad.push('the feed entry');
+    if (!e || !String(e.ja).includes(from + ' から、Sophaxis は、氣の原理') || !String(e.ja).includes('運営者のものも含めて、だれが投稿したものでも載せません。')
+      || !String(e.ja).includes('受け入れる範囲を狭めるので、14 日以上前にトップの頁で告知します。') || !String(e.ja).includes(ANNOUNCED + ' に利用者が決め、Claude が書きました。')) bad.push('the Japanese feed entry');
+    if (!plain(x['site/index.ja.html']).includes(e ? e.ja : '\u0000')) bad.push('site/index.ja.html: the Japanese notice does not list it');
+    if (!String(x['verification/commitments.txt'] || '').split('\n').includes(COMMIT.split(FROM).join(from))) bad.push('the commitment');
+    for (const f of files) for (const n of NAMES) {
+      const t = String(x[f] || '');
+      if (f === 'CHANGELOG.md' || f === 'site/llms-full.txt' || f.startsWith('site/')) { /* Only the lines that speak of ki. */
+        if (t.split('\n').some((l) => /principle of ki|氣の原理/.test(l) && l.includes(n))) bad.push(f + ': names "' + n + '" beside the principle of ki');
+      } else if (t.includes(n)) bad.push(f + ': names "' + n + '"');
+    }
+    return bad;
+  }
+  const now = problems(real);
+  ok('from ' + FROM + ', no work on the principle of ki, whoever submits it, in the Moderation and Submission Policies and the policies in brief in both languages and their built pages, a reason for declining in both languages and in the yearly count, the notice on both top pages, the feed and the commitments, ' + days(FROM, ANNOUNCED) + ' days after ' + ANNOUNCED + ', with no person, school or body named',
+    now.length === 0, now.slice(0, 6).join(' / '));
+
+  /* The day the announcement reached main. As in check 143: each mark is looked for on the first-parent line of HEAD in Japan time;
+   * a mark not yet in any commit counts from today. A merge after ANNOUNCED fails here, and the texts are dated again. */
+  const { execFileSync: ex144 } = require('child_process');
+  const today144 = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  let shallow144 = true;
+  try { shallow144 = ex144('git', ['rev-parse', '--is-shallow-repository'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() !== 'false'; } catch (e) { shallow144 = true; }
+  const MARKS = [['site.json', NOTICE], ['data/policy-changes.json', '"title": "' + TITLE + '"'], ['policies/moderation.md', COMMIT]];
+  const held = Object.fromEntries(MARKS.map(([f, m]) => { let l = null; try { l = ex144('git', ['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', m, '--', f], { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'Asia/Tokyo' }), stdio: ['ignore', 'pipe', 'ignore'] }).split('\n').filter(Boolean); } catch (e) { l = null; } return [m, l === null ? null : (l[0] || today144)]; }));
+  const timingProblems = (h, shallow, from) => {
+    const bad = [];
+    if (shallow) bad.push('the history is shallow or git cannot be read');
+    for (const [m, d] of Object.entries(h)) {
+      if (!d) bad.push('git cannot say when "' + m.slice(0, 40) + '" reached main');
+      else if (d > ANNOUNCED) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', after ' + ANNOUNCED + ', the day the texts give');
+      else if (days(from, d) < 14) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', less than 14 days before ' + from);
+    }
+    return bad;
+  };
+  const tnow = timingProblems(held, shallow144, FROM);
+  ok('each part of the announcement (' + MARKS.length + ') reached the first-parent line of main on or before ' + ANNOUNCED + ', the day the texts give, and at least 14 days before ' + FROM + '; a later merge fails here',
+    tnow.length === 0, tnow.slice(0, 4).join(' / '));
+  const late = (d) => Object.fromEntries(Object.keys(held).map((k, i) => [k, i === 0 ? d : held[k]]));
+  const tbreaks = [['merged a day later than the texts say', late('2026-11-21'), false, FROM], ['merged 13 days before the day of effect', late('2026-12-02'), false, FROM],
+    ['the day of effect moved to 13 days after', held, false, '2026-12-03'], ['a mark git cannot date', late(null), false, FROM], ['a shallow history', held, true, FROM]];
+  const tmissed = tbreaks.filter(([, h, sh, f]) => timingProblems(h, sh, f).length === 0).map(([k]) => k);
+  ok('break on purpose: a merge a day after the stated day, one 13 days before the day of effect, a day of effect 13 days after, an undated mark and a shallow history all fail (' + (tbreaks.length - tmissed.length) + ' / ' + tbreaks.length + ')', tmissed.length === 0, tmissed.join(' / '));
+
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f]).replace(a, b) });
+  const breaks = [
+    ['the scope narrowed to the operator\'s own works', w('policies/moderation.md', 'whoever submits it, the operator included.', 'when the operator submits it.')],
+    ['the Japanese scope narrowed to the operator\'s own works', w('policies/moderation.ja.md', '運営者のものも含めて、だれが投稿したものでも載せません。', '運営者が投稿したものは載せません。')],
+    ['the reason of the conflict taken out', w('policies/moderation.md', "Research that touches the operator's own background is too strong a conflict of interest to handle on the operator's own platform", 'Sophaxis prefers not to')],
+    ['a submission before the day decided early', w('policies/moderation.ja.md', 'その日まで待ち、その日に断ります。', 'これまでの決まりで判断します。')],
+    ['the rule moved out of the section on conflicts of interest', w('policies/moderation.md', "The [Statistics](https://sophaxis.vercel.app/stats.html) page and `llms.txt` say how many of the records shown are the operator's own.\n", "The [Statistics](https://sophaxis.vercel.app/stats.html) page and `llms.txt` say how many of the records shown are the operator's own.\n\n## Elsewhere\n")],
+    ['the English reason for declining taken out', w('policies/moderation.md', REASON['policies/moderation.md'] + '\n', '')],
+    ['the Japanese reason for declining taken out', w('policies/moderation.ja.md', REASON['policies/moderation.ja.md'] + '\n', '')],
+    ['the yearly count without the reason', w('tools/report.js', "'Conflict of interest of the operator', ", '')],
+    ['the Submission Policy without it', w('policies/submission.md', "Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it, because of the operator's conflict of interest", 'Sophaxis lists most work')],
+    ['the Japanese policies in brief without it', w('policy.ja.md', '氣の原理を主題とする作品は、だれが投稿したものでも載せません。', '')],
+    ['a built page left stale', w('site/policies/moderation.ja.html', '運営者のものも含めて、だれが投稿したものでも載せません。', '')],
+    ['the notice without it', w('site.json', NOTICE, 'From ' + FROM + ', something,')],
+    ['the feed entry without its day of effect', w('data/policy-changes.json', '"from": "' + FROM + '",\n    "title": "' + TITLE + '"', '"title": "' + TITLE + '"')],
+    ['the feed entry without who decided', w('data/policy-changes.json', 'The owner decided this on ' + ANNOUNCED + ', and Claude wrote it.', 'Claude wrote it.')],
+    ['the Japanese top page without it', w('site/index.ja.html', '運営者のものも含めて、だれが投稿したものでも載せません。', '')],
+    ['the commitment taken out', w('verification/commitments.txt', COMMIT + '\n', '')],
+    ['a person named', w('policies/moderation.ja.md', 'その流派の師範のもとで学びました。', 'その流派の藤平師範のもとで学びました。')],
+    ['the school named', w('policies/moderation.md', 'a school of aikido that teaches the principle of ki', 'Shinshin Toitsu Aikido, which teaches the principle of ki')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  const near = problems(real, '2026-12-03');
+  ok('break on purpose: each of ' + (breaks.length + 1) + ' ways (the scope narrowed to the operator\'s own works in either language, the reason, an early decision, the rule out of its section, the reason for declining in either language or in the yearly count, the Submission Policy, the policies in brief, a stale built page, the notice, the feed\'s day and who decided, the Japanese top page, the commitment, a person or the school named, a day of effect 13 days after) fails (' + (breaks.length - missed.length + (near.length ? 1 : 0)) + ' / ' + (breaks.length + 1) + ')',
+    missed.length === 0 && near.length > 0, missed.concat(near.length ? [] : ['a day of effect 13 days after']).join(' / '));
 }
 
 console.log('\n' + '-'.repeat(60));

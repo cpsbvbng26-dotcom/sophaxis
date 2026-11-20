@@ -198,3 +198,4 @@ A removal issue that has no acknowledgement because the automatic step did not r
 The run never reports that it found no problems while something was not checked.
 From 2026-12-10, the record is also removed under the Takedown Policy, which leaves only its Sophaxis id, after the authors are heard for 7 days, once the operator learns that an author lives in one of these places, or stays in one, after the listing.
 From 2026-12-10, an author who moves to one of these places, or stays in one, even briefly, after the listing reports it in the submission issue of the work, without naming the place; any author may report it, or the submitter on behalf of a co-author.
+From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理, also written 気の原理), whoever submits it, the operator included.
