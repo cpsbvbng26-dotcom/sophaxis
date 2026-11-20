@@ -53,6 +53,11 @@ body:
     attributes:
       label: すでにある Sophaxis の番号（新しい版のときだけ）
       placeholder: 2026.0001
+  - type: textarea
+    id: changes
+    attributes:
+      label: この版で変えたこと（任意、新しい版のときだけ）
+      description: 300 字まで、一行で書きます。たとえば「補題 2 の証明を直し、参考文献を足した」。記録の頁で、その版の横に著者の申告として示します。Sophaxis は中身を確かめません。
   - type: dropdown
     id: category
     attributes:
