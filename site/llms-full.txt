@@ -245,7 +245,7 @@ Source: https://sophaxis.vercel.app/policies/submission.html
 
 # Submission Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-20.
 
 Japanese: [投稿の規程（日本語訳）](https://sophaxis.vercel.app/policies/submission.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -357,6 +357,7 @@ A new version is a new submission, so it must meet this rule again.
 
 Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 Work that belongs mainly to another field is out of scope, even if it uses mathematics.
+From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it, because of the operator's conflict of interest, as the [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html#conflicts-of-interest) sets out.
 
 The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
 It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](https://sophaxis.vercel.app/policies/licences.html).
@@ -692,7 +693,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.html
 
 # Moderation Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-20.
 
 Japanese: [モデレーションの規程（日本語訳）](https://sophaxis.vercel.app/policies/moderation.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -777,6 +778,7 @@ A moderator who declines a submission names one or more of these reasons, with a
 - Rights or personal data: the work contains material that the authors may not share, or personal data of third parties, or the PDF carries a notice of rights that contradicts its licence.
 - Plagiarism: the work presents the words, ideas, proofs or results of others as the authors' own, or presents the authors' own earlier work as new, without saying where they come from.
 - Where the authors live or stay: an author lives in a place where Sophaxis is not offered, or stayed in one between the submission and the listing.
+- Conflict of interest of the operator: from 2026-12-15, the subject of the work is the principle of ki, as set out under "Conflicts of interest" below.
 - Spam or abuse.
 
 The submitter can answer in the issue.
@@ -830,6 +832,11 @@ The operator's own submissions get no priority: they are moderated in the order 
 From 2026-11-09, a submission by the operator is listed no sooner than seven days after its submission issue is opened, so that anyone can object in the issue first.
 The record keeps the day the issue was opened, and the build of the site refuses a record listed sooner.
 The [Statistics](https://sophaxis.vercel.app/stats.html) page and `llms.txt` say how many of the records shown are the operator's own.
+
+From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理, also written 気の原理), whoever submits it, the operator included.
+Research that touches the operator's own background is too strong a conflict of interest to handle on the operator's own platform: the operator trained for years in a school of aikido that teaches the principle of ki, and studied it under a teacher of that school.
+No moderator decides on such a work; a submission of it is declined, naming "Conflict of interest of the operator".
+A submission of it whose issue is opened before that day waits and is declined on that day, so that nothing on the subject is listed before it.
 
 ## Research integrity
 
@@ -1651,7 +1658,7 @@ Source: https://sophaxis.vercel.app/policy.html
 
 # Policies
 
-Last updated: 2026-11-13.
+Last updated: 2026-11-20.
 
 Japanese: [規程（日本語訳）](https://sophaxis.vercel.app/policy.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1697,6 +1704,8 @@ Sophaxis is operated by Takuya Nemoto, in Japan.
 The [Operator and contact](https://sophaxis.vercel.app/contact.html) page says how to reach the operator.
 Submissions by the operator are moderated under the same rules
 and are marked on their record pages as the operator's own.
+From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it,
+because research that touches the operator's own background is too strong a conflict of interest to handle here.
 
 ## Finding work
 
@@ -3815,7 +3824,7 @@ Source: https://sophaxis.vercel.app/policies/submission.ja.html
 
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-20。
 
 これは英語の [Submission Policy](https://sophaxis.vercel.app/policies/submission.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -3927,6 +3936,7 @@ ORCID iD を持たない著者は投稿できません。
 
 Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作品を受け付けます。
 主に別の分野に属する作品は、数学を使っていても対象外です。
+2026-12-15 から、Sophaxis は、運営者の利益相反のため、氣の原理を主題とする作品を、だれが投稿したものでも載せません。[モデレーションの規程](https://sophaxis.vercel.app/policies/moderation.ja.html#利益相反)のとおりです。
 
 作品は、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けてある必要があります。
 [ライセンスの規程](https://sophaxis.vercel.app/policies/licences.ja.html)が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。
@@ -4261,7 +4271,7 @@ Source: https://sophaxis.vercel.app/policies/moderation.ja.html
 
 # モデレーションの規程（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-20。
 
 これは英語の [Moderation Policy](https://sophaxis.vercel.app/policies/moderation.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4354,6 +4364,7 @@ I consent to what I have written in this issue being given, for help with the re
 - 権利と個人データ：作品に、著者が共有してはいけない素材や第三者の個人データが含まれている。または、PDF にライセンスと食い違う権利の表示がある。
 - 剽窃：作品が、他人の言葉・考え・証明・結果を著者自身のものとして示している。または、著者自身の前の作品を、出どころを言わずに新しいものとして示している。
 - 住んでいる場所と滞在した場所：著者のだれかが、Sophaxis を提供しない国と地域に住んでいるか、投稿から掲載までのあいだにそこに滞在した。
+- 運営者の利益相反：2026-12-15 から、作品の主題が氣の原理である。下の「利益相反」のとおりです。
 - スパムまたは嫌がらせ。
 
 投稿者は issue で答えることができます。
@@ -4407,6 +4418,11 @@ issue に鍵を掛けても、法令が認める求めの道は無くなりま�
 2026-11-09 から、運営者の投稿は、投稿の issue を開いてから 7 日がたつまで載せません。そのあいだに、だれでも issue で異議を述べられます。
 記録は issue を開いた日を持ち、それより早く載せようとすると、サイトの生成が止まります。
 [統計](https://sophaxis.vercel.app/stats.html)の頁と `llms.txt` が、表示している記録のうち何件が運営者の投稿かを示します。
+
+2026-12-15 から、Sophaxis は、氣の原理（気の原理とも書きます）を主題とする作品を、運営者のものも含めて、だれが投稿したものでも載せません。
+運営者自身の出自に関わる研究を、運営者自身の基盤で扱うのは、利益相反が濃すぎるためです。運営者は、氣の原理を教える合氣道の流派で何年も稽古し、その流派の師範のもとで学びました。
+どのモデレーターもそうした作品を判断せず、投稿は「運営者の利益相反」を挙げて断ります。
+その日より前に issue を開いた投稿は、その日まで待ち、その日に断ります。この主題の作品を、その日より前に載せることもありません。
 
 ## 研究の公正
 
@@ -6046,7 +6062,7 @@ Source: https://sophaxis.vercel.app/policy.ja.html
 
 # 規程（日本語訳）
 
-最終更新：2026-11-13。
+最終更新：2026-11-20。
 
 これは英語の [Policies](https://sophaxis.vercel.app/policy.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -6091,6 +6107,8 @@ Sophaxis は、日本にいる根本卓哉（Takuya Nemoto）が運営してい�
 運営者への連絡の仕方は、[運営者と連絡先](https://sophaxis.vercel.app/contact.ja.html)の頁にあります。
 運営者の投稿も同じ決まりでモデレーションを受けます。
 その記録の頁には、運営者自身のものである印を付けます。
+2026-12-15 から、氣の原理を主題とする作品は、だれが投稿したものでも載せません。
+運営者自身の出自に関わる研究を、ここで扱うのは、利益相反が濃すぎるためです。
 
 ## 作品を見つける
 

@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-20.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -112,6 +112,7 @@ A new version is a new submission, so it must meet this rule again.
 
 Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 Work that belongs mainly to another field is out of scope, even if it uses mathematics.
+From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it, because of the operator's conflict of interest, as the [Moderation Policy](./moderation.md#conflicts-of-interest) sets out.
 
 The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
 It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.md).

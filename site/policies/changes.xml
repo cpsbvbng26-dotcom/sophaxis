@@ -5,8 +5,16 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-19T00:00:00Z</updated>
+  <updated>2026-11-20T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c38</id>
+    <title>No work on the principle of ki, because of the operator's conflict of interest</title>
+    <link href="https://sophaxis.vercel.app/policies/moderation.html" title="Moderation Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <updated>2026-11-20T00:00:00Z</updated>
+    <summary>From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理, also written 気の原理), whoever submits it, the operator included. Research that touches the operator's own background is too strong a conflict of interest to handle on the operator's own platform: the operator trained for years in a school of aikido that teaches the principle of ki, and studied it under a teacher of that school. No moderator decides on such a work, and a submission of it is declined, naming &quot;Conflict of interest of the operator&quot;, a new reason in the Moderation Policy. A submission of it whose issue is opened before that day waits and is declined on that day, so that nothing on the subject is listed before it. The Moderation Policy says this under &quot;Conflicts of interest&quot;, the Submission Policy under &quot;What can be submitted&quot;, and the policies in brief under &quot;Operator and conflicts of interest&quot;. It narrows what Sophaxis accepts, so it is announced on the top page at least 14 days ahead. The owner decided this on 2026-11-20, and Claude wrote it. In effect from 2026-12-15. Policies: Moderation Policy, Submission Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c37</id>
     <title>The line under each quoted text</title>

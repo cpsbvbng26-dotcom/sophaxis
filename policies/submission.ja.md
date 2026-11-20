@@ -1,6 +1,6 @@
 # 投稿の規程（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-20。
 
 これは英語の [Submission Policy](./submission.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./terms.ja.md)の「日本国外の方へ」の節に定めています。
 
@@ -112,6 +112,7 @@ ORCID iD を持たない著者は投稿できません。
 
 Sophaxis は、哲学・数学・論理学・数理哲学・科学哲学の作品を受け付けます。
 主に別の分野に属する作品は、数学を使っていても対象外です。
+2026-12-15 から、Sophaxis は、運営者の利益相反のため、氣の原理を主題とする作品を、だれが投稿したものでも載せません。[モデレーションの規程](./moderation.ja.md#利益相反)のとおりです。
 
 作品は、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv のどれかに、DOI 付きで預けてある必要があります。
 [ライセンスの規程](./licences.ja.md)が定めるとおり、DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが記されている必要があります。
