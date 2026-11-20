@@ -792,9 +792,8 @@ The moderator says so in the issue before the listing, with the reason, and the 
 
 The submitter can answer in the issue.
 From 2026-12-06, the answer comes no later than 30 days after the decision, from the submitter or another author of the work, and gives a reason or something new, such as a corrected version in the repository.
-A request by anyone else for a work to be listed is not taken up.
+From the same day, a request by anyone else for a work to be listed is not taken up, and an answer that only repeats what was said before is not looked at again.
 The operator then looks at the submission once more, and that decision is final.
-An answer that only repeats what was said before is not looked at again.
 A declined work can be submitted again, in a new issue, once the reason for declining no longer applies, for example after a corrected version has been deposited.
 The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
 
@@ -1475,8 +1474,8 @@ As the Creative Commons licences provide, an author can ask for their name to be
 The operator does so as far as is reasonably practicable, and the record stays.
 
 An author whose name has changed can ask for the record to show the current name, in every version.
-The request goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or, if the author prefers, in the record's correction issue.
-It comes from the author's own GitHub account or ORCID iD, confirmed as for a withdrawal; no reason and no proof of the change is asked.
+The request goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), because it names the author's current name, and the correction issue takes no personal data.
+The operator confirms through the author's ORCID record that the request comes from that author; no reason and no proof of the change is asked.
 The operator aims to make the change within 7 days, and the record's pages then no longer show the earlier name.
 The PDF copies are kept unmodified, so they show the name that the PDF carries; the author can ask for them to be removed, and the record then links to the repository only.
 The public issues where the earlier name was written, the history of the public repository, copies at the Internet Archive and at harvesters, and the metadata at the repository are not changed by this; a request about the deposit goes to the repository.
@@ -2247,7 +2246,7 @@ Source: https://sophaxis.vercel.app/process.html
 
 # From submission to listing
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-21.
 
 Japanese: [投稿から掲載まで（日本語訳）](https://sophaxis.vercel.app/process.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2338,7 +2337,7 @@ If the submission is accepted, its record page is published with a Sophaxis id, 
 Where the repository allows, an unmodified copy of the PDF is added afterwards.
 
 If it is declined, the moderator gives a short reason in the issue.
-You can answer there.
+You can answer there; from 2026-12-06, within 30 days of the decision, with a reason or something new.
 The operator then looks at the submission once more, and that decision is final.
 
 ## After listing
@@ -4401,9 +4400,8 @@ I consent to what I have written in this issue being given, for help with the re
 
 投稿者は issue で答えることができます。
 2026-12-06 から、答えは、判断から 30 日以内に、投稿者か作品のほかの著者が出し、理由か新しいこと（たとえば預け先で直した版）を示します。
-それ以外の人が、作品を載せるよう求めても、取り上げません。
+同じ日から、それ以外の人が作品を載せるよう求めても取り上げず、前に言ったことを繰り返すだけの答えはもう一度は見ません。
 その後、運営者が投稿をもう一度見直し、その判断が最終のものになります。
-前に言ったことを繰り返すだけの答えは、もう一度は見ません。
 断られた作品は、断った理由が当てはまらなくなったとき、たとえば直した版を預けたあとに、新しい issue でもう一度投稿できます。
 投稿者は、裁判所に訴えることも、デジタルサービス法第 21 条で認証された裁判外の紛争解決機関を使うこともできます。
 
@@ -4904,8 +4902,8 @@ PDF の写しはサイトから外し、記録は預け先へのリンクだけ�
 運営者は、合理的に可能な範囲でそれに応じ、記録は残します。
 
 名前が変わった著者は、記録のすべての版に、いまの名前を示すよう求めることができます。
-求めは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで出します。著者が望むなら、その記録の訂正の issue でも出せます。
-求めは、その著者自身の GitHub のアカウントか ORCID iD から出し、撤回と同じように確かめます。理由も、名前が変わったことの証拠も尋ねません。
+求めは、いまの名前を含み、訂正の issue は個人データを受け付けないので、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで出します。
+運営者は、著者の ORCID の記録で、求めがその著者からのものだと確かめます。理由も、名前が変わったことの証拠も尋ねません。
 運営者は 7 日以内に変えることを目指し、変えたあとは、記録の頁に前の名前を示しません。
 PDF の写しは手を加えずに置くので、PDF にある名前のままです。著者は写しを外すよう求めることができ、そのあと記録は預け先だけにつなぎます。
 前の名前が書かれた公開の issue、公開のリポジトリの履歴、Internet Archive と収集する側にある写し、預け先のメタデータは、これでは変わりません。預け先の記録についての求めは、預け先に出します。
@@ -5472,7 +5470,7 @@ Source: https://sophaxis.vercel.app/process.ja.html
 
 # 投稿から掲載まで（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-21。
 
 これは英語の [From submission to listing](https://sophaxis.vercel.app/process.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5563,7 +5561,7 @@ GitHub と ORCID のボタンの名は、変わることがあります。手順
 預け先が許す場合は、そのあとで、手を加えていない PDF の写しを加えます。
 
 断る場合は、モデレーターが issue に短い理由を書きます。
-投稿者は、そこで答えることができます。
+投稿者は、そこで答えることができます。2026-12-06 から、判断から 30 日以内に、理由か新しいことを添えて答えます。
 その後、運営者が投稿をもう一度見直し、その判断が最終のものになります。
 
 ## 掲載のあと
