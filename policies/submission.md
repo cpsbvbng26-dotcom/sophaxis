@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-20.
+Last updated: 2026-11-21.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -117,6 +117,7 @@ From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (�
 The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
 It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.md).
 It must have a title, an abstract and references, in the ordinary form of a scholarly paper.
+From 2026-12-06, it must also report research of its own (an argument, a proof, an analysis or a result); a research proposal, a call for papers, an announcement or news is not accepted, whatever its form.
 
 From 2026-11-23, a new work is listed only if at least six months have passed since its first DOI was registered.
 The six months are counted to the day the submission issue is opened, in Japan time.
@@ -329,6 +330,7 @@ A new version is a new version in the repository.
 Most repositories give each version its own DOI.
 arXiv keeps one DOI for all versions, and that DOI leads to the latest one; the record then lists the same DOI with the date of each version.
 Submit it as an update to the existing record; earlier versions stay listed.
+The form asks, optionally, what changed in the new version, in at most 300 characters, and the record page shows it beside the version as the authors' own statement. Sophaxis does not check it.
 
 ## When the work is published
 

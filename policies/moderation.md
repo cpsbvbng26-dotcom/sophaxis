@@ -1,6 +1,6 @@
 # Moderation Policy
 
-Last updated: 2026-11-20.
+Last updated: 2026-11-21.
 
 Japanese: [モデレーションの規程（日本語訳）](./moderation.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -78,7 +78,7 @@ The counts of the current year can be recorded before it ends, marked with the d
 A moderator who declines a submission names one or more of these reasons, with a short explanation:
 
 - Out of scope: the work belongs mainly to a field outside philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
-- Not in the form of a scholarly paper: it lacks a title, an abstract or references.
+- Not in the form of a scholarly paper: it lacks a title, an abstract or references, or, from 2026-12-06, it reports no research of its own, as the Submission Policy sets out under "What can be submitted".
 - Licence: the DOI metadata does not carry an accepted licence.
 - Authorship: the submitter could not be confirmed as an author, or not every author agrees.
 - Disclosure: the statement on generative models is missing or does not say how they were used, or, from 2026-11-24, a statement on funding, competing interests, or human participants and research ethics is missing or incomplete.
@@ -88,8 +88,19 @@ A moderator who declines a submission names one or more of these reasons, with a
 - Conflict of interest of the operator: from 2026-12-15, the subject of the work is the principle of ki, as set out under "Conflicts of interest" below.
 - Spam or abuse.
 
+A decision rests on the work and on these policies.
+It does not take into account the nationality, race, ethnic origin, religion or belief, sex or gender, sexual orientation or disability of any author.
+Where the authors live or stay counts only as the [Submission Policy](./submission.md#where-the-authors-live) sets out, and never by nationality.
+
+From 2026-12-06, a moderator may list a work under a category, other categories or a subfield other than those chosen in the form, where another one fits the work better.
+The moderator says so in the issue before the listing, with the reason, and the submitter can answer as below.
+
 The submitter can answer in the issue.
+From 2026-12-06, the answer comes no later than 30 days after the decision, from the submitter or another author of the work, and gives a reason or something new, such as a corrected version in the repository.
+A request by anyone else for a work to be listed is not taken up.
 The operator then looks at the submission once more, and that decision is final.
+An answer that only repeats what was said before is not looked at again.
+A declined work can be submitted again, in a new issue, once the reason for declining no longer applies, for example after a corrected version has been deposited.
 The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
 
 <!-- text: DSA 21 -->

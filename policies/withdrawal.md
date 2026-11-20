@@ -1,6 +1,6 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-21.
 
 Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -20,6 +20,9 @@ An automatic check confirms both and posts the result in the issue.
 Open a withdrawal issue and give the Sophaxis id, your ORCID iD and a short reason.
 The reason is shown on the record page, so it must not contain personal data.
 The issue is public.
+
+A withdrawal is not needed to show a new version or a publication.
+A new version is submitted as an update, under the [Submission Policy](./submission.md#versions-and-updates), and a published version is reported with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml); the record stays listed with both.
 
 A request that cannot be made in public goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547).
 The operator then confirms the author through the ORCID record, as the check does in the issue.
@@ -49,6 +52,12 @@ The logs of the automatic steps keep no text of the issue, as the same section o
 
 As the Creative Commons licences provide, an author can ask for their name to be taken off a record.
 The operator does so as far as is reasonably practicable, and the record stays.
+
+An author whose name has changed can ask for the record to show the current name, in every version.
+The request goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or, if the author prefers, in the record's correction issue.
+It comes from the author's own GitHub account or ORCID iD, confirmed as for a withdrawal; no reason and no proof of the change is asked.
+The operator aims to make the change within 7 days, and the earlier name is then no longer shown on the site.
+The public issues where the earlier name was written, the history of the public repository, copies at the Internet Archive and at harvesters, and the metadata at the repository are not changed by this; a request about the deposit goes to the repository.
 
 ## The work in its repository
 
