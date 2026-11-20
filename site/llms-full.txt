@@ -1477,7 +1477,8 @@ The operator does so as far as is reasonably practicable, and the record stays.
 An author whose name has changed can ask for the record to show the current name, in every version.
 The request goes by email to the address on the operator's [ORCID record](https://orcid.org/0009-0000-1406-0547), or, if the author prefers, in the record's correction issue.
 It comes from the author's own GitHub account or ORCID iD, confirmed as for a withdrawal; no reason and no proof of the change is asked.
-The operator aims to make the change within 7 days, and the earlier name is then no longer shown on the site.
+The operator aims to make the change within 7 days, and the record's pages then no longer show the earlier name.
+The PDF copies are kept unmodified, so they show the name that the PDF carries; the author can ask for them to be removed, and the record then links to the repository only.
 The public issues where the earlier name was written, the history of the public repository, copies at the Internet Archive and at harvesters, and the metadata at the repository are not changed by this; a request about the deposit goes to the repository.
 
 ## The work in its repository
@@ -4905,7 +4906,8 @@ PDF の写しはサイトから外し、記録は預け先へのリンクだけ�
 名前が変わった著者は、記録のすべての版に、いまの名前を示すよう求めることができます。
 求めは、運営者の [ORCID の記録](https://orcid.org/0009-0000-1406-0547)にあるアドレスへのメールで出します。著者が望むなら、その記録の訂正の issue でも出せます。
 求めは、その著者自身の GitHub のアカウントか ORCID iD から出し、撤回と同じように確かめます。理由も、名前が変わったことの証拠も尋ねません。
-運営者は 7 日以内に変えることを目指し、変えたあとは、前の名前をサイトに示しません。
+運営者は 7 日以内に変えることを目指し、変えたあとは、記録の頁に前の名前を示しません。
+PDF の写しは手を加えずに置くので、PDF にある名前のままです。著者は写しを外すよう求めることができ、そのあと記録は預け先だけにつなぎます。
 前の名前が書かれた公開の issue、公開のリポジトリの履歴、Internet Archive と収集する側にある写し、預け先のメタデータは、これでは変わりません。預け先の記録についての求めは、預け先に出します。
 
 ## 預け先にある作品
