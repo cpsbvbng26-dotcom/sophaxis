@@ -97,9 +97,8 @@ The moderator says so in the issue before the listing, with the reason, and the 
 
 The submitter can answer in the issue.
 From 2026-12-06, the answer comes no later than 30 days after the decision, from the submitter or another author of the work, and gives a reason or something new, such as a corrected version in the repository.
-A request by anyone else for a work to be listed is not taken up.
+From the same day, a request by anyone else for a work to be listed is not taken up, and an answer that only repeats what was said before is not looked at again.
 The operator then looks at the submission once more, and that decision is final.
-An answer that only repeats what was said before is not looked at again.
 A declined work can be submitted again, in a new issue, once the reason for declining no longer applies, for example after a corrected version has been deposited.
 The submitter can also go to a court, or to an out-of-court dispute settlement body certified under Article 21 of the Digital Services Act.
 
