@@ -57,6 +57,7 @@ const FIELDS = {
   'DOI of the deposited preprint': 'doi',
   'Your ORCID iD': 'orcid',
   'Existing Sophaxis id (only for a new version)': 'update',
+  'What changed in this version (optional, only for a new version)': 'changes',
   'DOI of the published version (only if a journal has published the work)': 'published',
   'Was the published version peer-reviewed?': 'peer',
   'Category': 'category',
@@ -80,6 +81,7 @@ const FIELDS = {
   '預けたプレプリントの DOI': 'doi',
   'あなたの ORCID iD': 'orcid',
   'すでにある Sophaxis の番号（新しい版のときだけ）': 'update',
+  'この版で変えたこと（任意、新しい版のときだけ）': 'changes',
   '出版された版の DOI（学術誌が出版した場合だけ）': 'published',
   '出版された版は査読を受けましたか？': 'peer',
   '分野': 'category',
@@ -102,6 +104,13 @@ const FIELDS = {
 };
 /* The longest summary in plain words, in characters. */
 const LAY_MAX = 600;
+/* The longest note on what changed in a new version, in characters: the same number that build.js holds a record to. */
+const CHANGES_MAX = require('../build.js').VERSION_NOTE_MAX;
+/* Pure: the note on what changed, as one line, when the form gives one for a new version; otherwise null. It is kept as written,
+ * not passed through plain(), which would take "a<b … c>d" for markup: the record page escapes it. Control characters become spaces. */
+const changesNote = (form) => (form.update && String(form.changes || '').trim() ? String(form.changes).replace(/[\u0000-\u001f\u007f\s]+/g, ' ').trim() : null);
+/* Its length in characters (code points), as the form and the policy count them. */
+const noteLength = (s) => [...String(s)].length;
 
 /* The statements asked from SITE.statementsFrom (Submission Policy), each with the label of its row in the check. Data and code are optional. */
 const STATEMENTS = [
@@ -509,6 +518,7 @@ function check({ form, login, meta, person, works, listed, pub, today, age, noti
   add('The ORCID iD is valid', form.orcid && orcidOk(form.orcid));
   add('A category is chosen', form.category);
   if (String(form.subfield || '').trim()) add('The subfield belongs to the chosen category', subfieldOf(form), form.subfield);
+  if (changesNote(form) !== null) add('The note on what changed has at most ' + CHANGES_MAX + ' characters', noteLength(changesNote(form)) <= CHANGES_MAX, noteLength(changesNote(form)) + ' characters');
   if (String(form.lay_summary || '').trim()) add('The summary in plain words has at most ' + LAY_MAX + ' characters', plain(form.lay_summary).length <= LAY_MAX, plain(form.lay_summary).length + ' characters');
   const already = listedAs(form.doi, listed);
   if (form.update) add('The record to update exists and lists this work', already === form.update || (already === null && listed && [...listed.values()].includes(form.update)), form.update);
@@ -870,7 +880,12 @@ function draft({ form, login, issue, meta, versions, result, paperDir, today, pu
     const p = JSON.parse(fs.readFileSync(file, 'utf8'));
     if (p.status !== 'listed') return { problems: ['the record ' + form.update + ' is ' + p.status + ' and takes no new versions'] };
     const known = new Set(p.versions.map((v) => v.doi.toLowerCase() + ' ' + v.date));
-    versions.filter((v) => !known.has(v.doi.toLowerCase() + ' ' + v.date)).forEach((v) => p.versions.push({ version: p.versions.length + 1, doi: v.doi, date: v.date }));
+    const fresh = versions.filter((v) => !known.has(v.doi.toLowerCase() + ' ' + v.date));
+    /* The authors' note on what changed goes with the version whose DOI the form gives, or, where that DOI names every version
+     * (as arXiv's does), with the newest of the versions added; only when it is within the limit. */
+    const note = changesNote(form), given = String(form.doi || '').trim().toLowerCase();
+    const at = fresh.some((v) => v.doi.toLowerCase() === given) ? fresh.map((v) => v.doi.toLowerCase()).lastIndexOf(given) : fresh.length - 1;
+    fresh.forEach((v, i) => p.versions.push(Object.assign({ version: p.versions.length + 1, doi: v.doi, date: v.date }, note && noteLength(note) <= CHANGES_MAX && i === at ? { note } : {})));
     return { record: p, problems: validate(p, form.update + '.json') };
   }
   const id = nextId(dir, (today || new Date().toISOString()).slice(0, 4));
@@ -1272,6 +1287,6 @@ async function checkSubmission(n, login, text) {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { HB, highFrom, DOI_AGE_LABEL_HIGH, ABSTRACT_LABEL, GAP_LABEL, abstractCheck, gapCheck, dayShift, VOUCH_LABEL_HIGH, vouchNoteHigh, loadRecords, neutral, allPages, unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { CHANGES_MAX, changesNote, noteLength, HB, highFrom, DOI_AGE_LABEL_HIGH, ABSTRACT_LABEL, GAP_LABEL, abstractCheck, gapCheck, dayShift, VOUCH_LABEL_HIGH, vouchNoteHigh, loadRecords, neutral, allPages, unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

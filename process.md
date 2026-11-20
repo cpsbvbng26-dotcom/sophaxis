@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-21.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -91,7 +91,7 @@ If the submission is accepted, its record page is published with a Sophaxis id, 
 Where the repository allows, an unmodified copy of the PDF is added afterwards.
 
 If it is declined, the moderator gives a short reason in the issue.
-You can answer there.
+You can answer there; from 2026-12-06, within 30 days of the decision, with a reason or something new.
 The operator then looks at the submission once more, and that decision is final.
 
 ## After listing

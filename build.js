@@ -40,6 +40,10 @@ const PAPER_DIR = path.join(ROOT, 'data', 'papers');
 const ID = /^\d{4}\.\d{4}$/;
 const DOI = /^10\.\d{4,9}\/\S+$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+/* The longest note on what changed in a later version, in characters (Submission Policy, "Versions and updates"). */
+const VERSION_NOTE_MAX = 300;
+/* The language of a note, as far as its script tells: Japanese when it holds kana or kanji, otherwise English, the language of the form that asks for it in English. */
+const noteLang = (s) => (/[\u3040-\u30ff\u3400-\u9fff]/.test(String(s)) ? 'ja' : 'en');
 
 function orcidOk(o) {
   if (!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(o)) return false;
@@ -129,6 +133,8 @@ function validate(p, file) {
     }
     if (!DATE.test(v.date || '')) e.push(file + ': version ' + (i + 1) + ' has an invalid date');
     if (i > 0 && v.date < p.versions[i - 1].date) e.push(file + ': versions must be in date order');
+    /* What changed, in the authors' words (Submission Policy, "Versions and updates"): only on a later version, at most VERSION_NOTE_MAX characters, one line. */
+    if (v.note !== undefined && !(i > 0 && typeof v.note === 'string' && v.note.trim() && v.note === v.note.trim() && !/[\u0000-\u001f\u007f]/.test(v.note) && [...v.note].length <= VERSION_NOTE_MAX)) e.push(file + ': version ' + (i + 1) + ' has a note that is not one line of at most ' + VERSION_NOTE_MAX + ' characters on a later version');
   });
   if (typeof p.llm_disclosure === 'string' && p.llm_disclosure.trim().length < 20) {
     e.push(file + ': the language-model statement is too short');
@@ -971,7 +977,8 @@ function recordPage(p, all = [p]) {
     ['Email', `mailto:?subject=${q(p.title)}&body=${q(url)}`],
   ].map(([n, h]) => `<a href="${esc(h)}">${n}</a>`).join(' · ');
   const keywords = (p.keywords || []).length ? `<p class="meta">Keywords: ${p.keywords.map(esc).join('; ')}</p>` : '';
-  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td></tr>`).join('');
+  const noted = p.versions.some((x) => x.note);
+  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td>${noted ? `<td${x.note && noteLang(x.note) === 'ja' ? ' lang="ja"' : ''}>${esc(x.note || '')}</td>` : ''}</tr>`).join('');
   const notes = (p.notes || []).map((n) => `<li><span class="meta">${esc(n.date)}</span> ${esc(n.text)}</li>`).join('');
   const pdfs = p.pdfs || [];
   const copies = pdfs.length ? `<p>PDF on ${esc(SITE.name)}: ${pdfs.map((x) => `<a href="../pdf/${esc(x.file)}">v${x.version}</a>`).join(' · ')}</p>
@@ -1038,7 +1045,7 @@ ${keywords}
 ${copies}
 ${catalogueCard(p)}${cite}
 <h2>Versions</h2>
-<div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th></tr>${versions}</table></div>
+<div class="table"><table><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">DOI</th><th scope="col">Repository</th>${noted ? '<th scope="col">What changed, as the authors state it</th>' : ''}</tr>${versions}</table></div>
 <h2>Use of language models and other generative models</h2>
 ${p.llm_extent ? `<p class="meta">Extent, as the authors state it: ${esc(SITE.llmExtents[p.llm_extent])}</p>
 ` : ''}<p>${esc(p.llm_disclosure)}</p>
@@ -1130,7 +1137,8 @@ function recordJaPage(p, all = [p]) {
   const notices = (p.notices || []).length ? `<div class="notice"><b>通知。</b>Crossref は、この作品について、${p.notices.map((n) => `${esc(n.date)} の${esc(noticeTypeJa(n.type))}（<a href="https://doi.org/${esc(n.doi)}">${esc(n.doi)}</a>）`).join('、')}を記録しています。引用の前に、通知を読むよう勧めます。</div>` : '';
   const crumbs = `<nav class="crumbs" aria-label="現在の位置"><a href="../index.ja.html">一覧</a> › <a href="../list/${esc(p.category)}.html">${esc(SITE.categoriesJa[p.category])}</a> › <span aria-current="page">${esc(p.id)}</span></nav>`;
   const coll = (p.collections || []).map(collectionOf).filter(Boolean);
-  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td></tr>`).join('');
+  const noted = p.versions.some((x) => x.note);
+  const versions = p.versions.map((x) => `<tr><td>v${x.version}</td><td>${esc(x.date)}</td><td><a href="https://doi.org/${esc(x.doi)}">${esc(x.doi)}</a></td><td>${esc(repoName(x.doi))}</td>${noted ? `<td${x.note && noteLang(x.note) !== 'ja' ? ' lang="en"' : ''}>${esc(x.note || '')}</td>` : ''}</tr>`).join('');
   const copies = pdfs.length ? `<p>${esc(SITE.name)} の PDF：${pdfs.map((x) => `<a href="../pdf/${esc(x.file)}">v${x.version}</a>`).join(' · ')}</p>
 <p class="meta">${pdfs.some((x) => x.provided_by === 'authors')
     ? `著者が投稿の issue で示した PDF を、手を加えずに写したものです。${esc(repoName(v.doi))} が、スクリプトによるファイルの取得を許さないためです。`
@@ -1194,7 +1202,7 @@ ${p.published ? `<p class="meta">出版された版</p>
 <pre lang="en">${esc(bibtex(p))}</pre>
 <p class="meta">ダウンロード：<a href="../cite/${esc(p.id)}.bib">BibTeX</a> · <a href="../cite/${esc(p.id)}.ris">RIS</a> · <a href="../cite/${esc(p.id)}.json">CSL-JSON</a></p>
 <h2>版</h2>
-<div class="table"><table><tr><th scope="col">版</th><th scope="col">日付</th><th scope="col">DOI</th><th scope="col">預け先</th></tr>${versions}</table></div>
+<div class="table"><table><tr><th scope="col">版</th><th scope="col">日付</th><th scope="col">DOI</th><th scope="col">預け先</th>${noted ? '<th scope="col">変えたこと（著者の申告）</th>' : ''}</tr>${versions}</table></div>
 <h2>言語モデルなどの生成モデルの使用</h2>
 ${p.llm_extent ? `<p class="meta">程度（著者の申告）：<span lang="en">${esc(SITE.llmExtents[p.llm_extent])}</span>（${esc(LLM_EXTENTS_JA[p.llm_extent])}）</p>
 ` : ''}<p${wl(p.llm_disclosure)}>${esc(p.llm_disclosure)}</p>
@@ -2270,7 +2278,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { BARRIERS_NOTE, STATEMENT, metaphorLine, entranceFacts, entrance, aboutCard, CSS_TOP, pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { VERSION_NOTE_MAX, BARRIERS_NOTE, STATEMENT, metaphorLine, entranceFacts, entrance, aboutCard, CSS_TOP, pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

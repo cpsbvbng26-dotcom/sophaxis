@@ -9277,6 +9277,186 @@ console.log('\n144. No work on the principle of ki (2026-11-20): from 2026-12-15
     missed.length === 0 && near.length > 0, missed.concat(near.length ? [] : ['a day of effect 13 days after']).join(' / '));
 }
 
+/* ------------------------------------------------------------ 145 */
+console.log('\n145. A comparison with the policies of arXiv (2026-11-21): reconsideration, fields and research of one\'s own from 2026-12-06, announced 14 days ahead; no account taken of personal characteristics, a note on what changed in a new version, no withdrawal needed for a version or a publication, and changed names, since publication; in both languages, the built pages, the notice, the feed, the forms, the intake, the build and the commitments');
+{
+  /* The owner asked on 2026-11-21 for the policies to be compared with arXiv, SSRN and other services and improved. arXiv's help pages
+   * are kept in a public repository (arXiv/arxiv-docs) and were read there on 2026-11-21: its moderation page (appeals by authors only,
+   * with a rationale; reclassification; content types not accepted, such as proposals, calls for papers and news), its code of conduct
+   * (no regard to personal characteristics), its replacement page (indicate the nature of the changes), its withdrawal page (no
+   * withdrawal for an update or a publication) and its page on identity (name changes). Three of the changes narrow what Sophaxis
+   * accepts or add a duty, so they take effect 14 days after the announcement or later (the Terms of Use, check 143's rule). */
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const ANNOUNCED = '2026-11-21', FROM = '2026-12-06';
+  const TITLE = "Reconsideration, fields, research of one's own, notes on new versions and changed names";
+  const plain = (h) => String(h || '').replace(/<[^>]+>/g, '').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+  const SAYS = {
+    'policies/moderation.md': ['\n## Decisions\n', [
+      'It does not take into account the nationality, race, ethnic origin, religion or belief, sex or gender, sexual orientation or disability of any author.',
+      'From ' + FROM + ', a moderator may list a work under a category, other categories or a subfield other than those chosen in the form, where another one fits the work better.',
+      'The moderator says so in the issue before the listing, with the reason, and the submitter can answer as below.',
+      'From ' + FROM + ', the answer comes no later than 30 days after the decision, from the submitter or another author of the work, and gives a reason or something new, such as a corrected version in the repository.',
+      'From the same day, a request by anyone else for a work to be listed is not taken up, and an answer that only repeats what was said before is not looked at again.',
+      'A declined work can be submitted again, in a new issue, once the reason for declining no longer applies, for example after a corrected version has been deposited.']],
+    'policies/moderation.ja.md': ['\n## 判断\n', [
+      'どの著者の国籍、人種、民族的出身、宗教や信条、性別、性的指向、障害も、判断に入れません。',
+      FROM + ' から、モデレーターは、様式で選ばれたものより作品に合う分野・ほかの分野・下位の分野があるとき、それに載せることがあります。',
+      'モデレーターは、載せる前に issue でそう言い、理由を添えます。投稿者は、下のとおり答えることができます。',
+      FROM + ' から、答えは、判断から 30 日以内に、投稿者か作品のほかの著者が出し、理由か新しいこと（たとえば預け先で直した版）を示します。',
+      '同じ日から、それ以外の人が作品を載せるよう求めても取り上げず、前に言ったことを繰り返すだけの答えはもう一度は見ません。',
+      '断られた作品は、断った理由が当てはまらなくなったとき、たとえば直した版を預けたあとに、新しい issue でもう一度投稿できます。']],
+    'policies/submission.md': ['\n## What can be submitted\n', ['From ' + FROM + ', it must also report research of its own (an argument, a proof, an analysis or a result); a research proposal, a call for papers, an announcement or news is not accepted, whatever its form.']],
+    'policies/submission.ja.md': ['\n## 投稿できるもの\n', [FROM + ' から、作品は自らの研究（論証・証明・分析・結果）を報告するものに限り、研究の計画書、論文の募集、お知らせ、ニュースは形を問わず受け付けません。']],
+    'policies/withdrawal.md': ['\n## How to ask\n', ['A withdrawal is not needed to show a new version or a publication.']],
+    'policies/withdrawal.ja.md': ['\n## 求め方\n', ['新しい版や出版を示すために、撤回は要りません。']],
+  };
+  const MORE = {
+    'policies/submission.md': ['\n## Versions and updates\n', ["The form asks, optionally, what changed in the new version, in at most 300 characters, and the record page shows it beside the version as the authors' own statement. Sophaxis does not check it."]],
+    'policies/submission.ja.md': ['\n## 版と更新\n', ['様式は、この版で変えたことを任意で 300 字まで尋ね、記録の頁がその版の横に著者の申告として示します。Sophaxis は中身を確かめません。']],
+    'policies/withdrawal.md': ["\n## An author's name\n", ['An author whose name has changed can ask for the record to show the current name, in every version.', 'because it names the author\'s current name, and the correction issue takes no personal data.', 'no reason and no proof of the change is asked.', 'The operator aims to make the change within 7 days, and the record\'s pages then no longer show the earlier name.', 'The PDF copies are kept unmodified, so they show the name that the PDF carries;']],
+    'policies/withdrawal.ja.md': ['\n## 著者の名前\n', ['名前が変わった著者は、記録のすべての版に、いまの名前を示すよう求めることができます。', '訂正の issue は個人データを受け付けないので、', '理由も、名前が変わったことの証拠も尋ねません。', '運営者は 7 日以内に変えることを目指し、変えたあとは、記録の頁に前の名前を示しません。', 'PDF の写しは手を加えずに置くので、PDF にある名前のままです。']],
+  };
+  const REASON = { 'policies/moderation.md': '- Not in the form of a scholarly paper: it lacks a title, an abstract or references, or, from ' + FROM + ', it reports no research of its own, as the Submission Policy sets out under "What can be submitted".',
+    'policies/moderation.ja.md': '- 学術論文の形でない：題・要旨・参考文献のどれかを欠く。または、' + FROM + ' から、自らの研究を報告していない。投稿の規程の「投稿できるもの」のとおりです。' };
+  const BUILT = { 'site/policies/moderation.html': 'policies/moderation.md', 'site/policies/moderation.ja.html': 'policies/moderation.ja.md', 'site/policies/submission.html': 'policies/submission.md',
+    'site/policies/submission.ja.html': 'policies/submission.ja.md', 'site/policies/withdrawal.html': 'policies/withdrawal.md', 'site/policies/withdrawal.ja.html': 'policies/withdrawal.ja.md' };
+  const NOTICE = 'From ' + FROM + ', a submitter or another author who disagrees with a decision answers in the issue no later than 30 days after it, with a reason or something new; a request by anyone else for a work to be listed is not taken up, and an answer that only repeats what was said before is not looked at again;';
+  const COMMITS = ['It does not take into account the nationality, race, ethnic origin, religion or belief, sex or gender, sexual orientation or disability of any author.',
+    'An author whose name has changed can ask for the record to show the current name, in every version.', 'A withdrawal is not needed to show a new version or a publication.'];
+  const FORMS = { '.github/ISSUE_TEMPLATE/submission.yml': 'What changed in this version (optional, only for a new version)', '.github/ISSUE_TEMPLATE/submission-ja.yml': 'この版で変えたこと（任意、新しい版のときだけ）' };
+  const files = [...new Set(Object.keys(SAYS).concat(Object.keys(MORE), Object.keys(BUILT), Object.keys(FORMS), ['site.json', 'data/policy-changes.json', 'verification/commitments.txt', 'tools/intake.js', 'site/index.html', 'site/index.ja.html']))];
+  const real = Object.fromEntries(files.map((f) => [f, T(f)]));
+  const days = (a, b) => (Date.parse(a) - Date.parse(b)) / 86400000;
+  const section = (t, head) => { const i = t.indexOf(head), j = i < 0 ? -1 : t.indexOf('\n## ', i + head.length); return i < 0 ? '' : t.slice(i, j < 0 ? undefined : j); };
+  function problems(x, from = FROM) {
+    const bad = [];
+    if (days(from, ANNOUNCED) < 14) bad.push('the day of effect ' + from + ' is less than 14 days after ' + ANNOUNCED);
+    for (const table of [SAYS, MORE]) for (const [f, [head, says]] of Object.entries(table)) {
+      const sec = section(String(x[f] || ''), head);
+      if (!sec) { bad.push(f + ': no section ' + head.trim()); continue; }
+      for (const s of says) if (!sec.includes(s.split(FROM).join(from))) bad.push(f + ': the section lacks "' + s.slice(0, 50) + '"');
+    }
+    for (const [f, r] of Object.entries(REASON)) if (!String(x[f] || '').includes('\n' + r.split(FROM).join(from) + '\n')) bad.push(f + ': the reason for declining does not name research of one\'s own');
+    for (const [b, src] of Object.entries(BUILT)) {
+      const p = plain(x[b]);
+      for (const s of SAYS[src][1].concat(MORE[src] ? MORE[src][1] : [])) { const want = plain(s.split(FROM).join(from).replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')); if (!p.includes(want)) bad.push(b + ': not built from ' + src + ' ("' + want.slice(0, 40) + '")'); }
+    }
+    let site = {};
+    try { site = JSON.parse(x['site.json']); } catch (e) { return bad.concat(['site.json does not parse']); }
+    const tn = String((site.termsNotice || {}).text || '');
+    if (!tn.includes(NOTICE.split(FROM).join(from)) || !tn.includes('a work must report research of its own')) bad.push('the notice on the top page does not announce it');
+    if (!plain(x['site/index.html']).includes(NOTICE.split(FROM).join(from))) bad.push('site/index.html: the notice is not built');
+    let feed = [];
+    try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
+    const e = feed.find((c) => c.title === TITLE);
+    if (!e || e.date !== ANNOUNCED || e.from !== from || !['moderation', 'submission', 'withdrawal'].every((p) => (e.policies || []).includes(p))
+      || !String(e.text).includes('The changes follow a comparison with the published policies of arXiv') || !String(e.text).includes('so they are announced on the top page at least 14 days ahead.')) bad.push('the feed entry');
+    if (!e || !String(e.ja).startsWith(from + ' から、判断に異を唱える') || !String(e.ja).includes('14 日以上前にトップの頁で告知します。')) bad.push('the Japanese feed entry');
+    if (!plain(x['site/index.ja.html']).includes(e ? e.ja : '\u0000')) bad.push('site/index.ja.html: the Japanese notice does not list it');
+    const com = String(x['verification/commitments.txt'] || '').split('\n');
+    for (const c of COMMITS) if (!com.includes(c)) bad.push('the commitment "' + c.slice(0, 40) + '"');
+    for (const [f, label] of Object.entries(FORMS)) {
+      const y = String(x[f] || '');
+      if (!/\n  - type: textarea\n    id: changes\n    attributes:\n      label: /.test(y) || !y.includes('label: ' + label + '\n')) bad.push(f + ': no optional field on what changed');
+      if (!String(x['tools/intake.js'] || '').includes("'" + label + "': 'changes',")) bad.push('tools/intake.js does not read "' + label + '"');
+    }
+    return bad;
+  }
+  const now = problems(real);
+  ok('the six changes in the Moderation, Submission and Withdrawal Policies in both languages and their built pages, the reason for declining, the notice on both top pages, the feed, the commitments and both forms, from ' + FROM + ', ' + days(FROM, ANNOUNCED) + ' days after ' + ANNOUNCED,
+    now.length === 0, now.slice(0, 6).join(' / '));
+
+  /* The note on a new version, in the build and in the intake. */
+  const B = require('../build.js'), I = require('../tools/intake.js');
+  const rec = JSON.parse(read(path.join(ROOT, 'data', 'papers', '2026.0001.json')));
+  const two = (note) => Object.assign({}, rec, { versions: [rec.versions[0], Object.assign({}, rec.versions[1], note === undefined ? {} : { note })] });
+  const errs = (p) => B.validate(p, rec.id + '.json').length;
+  const page = B.recordPage(two('Corrected the proof of Lemma 2 & added references.'));
+  const notes = [
+    ['a note of 300 characters on a later version is valid', errs(two('x'.repeat(B.VERSION_NOTE_MAX))) === 0 && B.VERSION_NOTE_MAX === 300 && I.CHANGES_MAX === 300],
+    ['a note of 301 characters is not', errs(two('x'.repeat(301))) === 1],
+    ['a note on the first version is not', errs(Object.assign({}, rec, { versions: [Object.assign({}, rec.versions[0], { note: 'First.' }), rec.versions[1]] })) === 1],
+    ['a note of two lines or with spaces around it is not', errs(two('a\nb')) === 1 && errs(two(' a')) === 1 && errs(two('')) === 1],
+    ['the record page shows the note in a column of its own, escaped', page.includes('<th scope="col">What changed, as the authors state it</th>') && page.includes('<td>Corrected the proof of Lemma 2 &amp; added references.</td>')],
+    ['a record without notes keeps its table as before', !B.recordPage(two()).includes('What changed, as the authors state it')],
+    ['the intake keeps the note only for a new version, as one line', I.changesNote({ update: '2026.0001', changes: ' Fixed\n a typo. ' }) === 'Fixed a typo.' && I.changesNote({ changes: 'Fixed.' }) === null && I.changesNote({ update: '2026.0001', changes: '  ' }) === null],
+    ['the intake keeps signs that look like markup, such as a<b and c>d', I.changesNote({ update: '2026.0001', changes: 'Proved a<b when c>d.' }) === 'Proved a<b when c>d.'],
+    ['the length is counted in characters, not in UTF-16 units', I.noteLength('\u{20BB7}'.repeat(300)) === 300 && errs(two('\u{20BB7}'.repeat(300))) === 0 && errs(two('\u{20BB7}'.repeat(301))) === 1],
+    ['a Japanese note is marked Japanese on the English page, and an English one English on the Japanese page', B.recordPage(two('補題 2 の証明を直した')).includes('<td lang="ja">補題 2 の証明を直した</td>') && B.recordJaPage(two('Fixed a typo.')).includes('<td lang="en">Fixed a typo.</td>')],
+  ];
+  {
+    /* The note goes with the version whose DOI the form gives, not simply with the newest one the repository lists. */
+    const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'sx145-'));
+    fs.copyFileSync(path.join(ROOT, 'data', 'papers', rec.id + '.json'), path.join(dir, rec.id + '.json'));
+    const base = rec.versions[1].doi.replace(/\.v\d+$/, '');
+    let d = null;
+    try { d = I.draft({ form: { update: rec.id, doi: base + '.v3', changes: 'Fixed a<b.' }, login: 'x', issue: 1, meta: {}, result: {}, paperDir: dir, today: '2026-11-21',
+      versions: rec.versions.map((v) => ({ doi: v.doi, date: v.date })).concat([{ doi: base + '.v3', date: '2026-11-01' }, { doi: base + '.v4', date: '2026-11-02' }]) }); } catch (e) { d = null; }
+    fs.rmSync(dir, { recursive: true, force: true });
+    const vs = d && d.record ? d.record.versions : [];
+    notes.push(['the intake puts the note on the version whose DOI the form gives', vs.length === 4 && vs[2].note === 'Fixed a<b.' && vs[3].note === undefined && /figshare/.test(base)]);
+  }
+  const wrong = notes.filter(([, v]) => !v).map(([k]) => k);
+  ok('a note on what changed: only on a later version, one line of at most 300 characters, shown escaped in its own column, read by the intake only for a new version (' + (notes.length - wrong.length) + ' / ' + notes.length + ')', wrong.length === 0, wrong.join(' / '));
+
+  /* The day the announcement reached main, as in checks 143 and 144. */
+  const { execFileSync: ex145 } = require('child_process');
+  const today145 = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  let shallow145 = true;
+  try { shallow145 = ex145('git', ['rev-parse', '--is-shallow-repository'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() !== 'false'; } catch (e) { shallow145 = true; }
+  const MARKS = [['site.json', NOTICE], ['data/policy-changes.json', '"title": "' + TITLE + '"'], ['policies/moderation.md', SAYS['policies/moderation.md'][1][3]]];
+  const held = Object.fromEntries(MARKS.map(([f, m]) => { let l = null; try { l = ex145('git', ['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', m, '--', f], { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'Asia/Tokyo' }), stdio: ['ignore', 'pipe', 'ignore'] }).split('\n').filter(Boolean); } catch (e) { l = null; } return [m, l === null ? null : (l[0] || today145)]; }));
+  const timingProblems = (h, shallow, from) => {
+    const bad = [];
+    if (shallow) bad.push('the history is shallow or git cannot be read');
+    for (const [m, d] of Object.entries(h)) {
+      if (!d) bad.push('git cannot say when "' + m.slice(0, 40) + '" reached main');
+      else if (d > ANNOUNCED) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', after ' + ANNOUNCED + ', the day the texts give');
+      else if (days(from, d) < 14) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', less than 14 days before ' + from);
+    }
+    return bad;
+  };
+  const tnow = timingProblems(held, shallow145, FROM);
+  ok('each part of the announcement (' + MARKS.length + ') reached the first-parent line of main on or before ' + ANNOUNCED + ', the day the texts give, and at least 14 days before ' + FROM + '; a later merge fails here',
+    tnow.length === 0, tnow.slice(0, 4).join(' / '));
+  const late = (d) => Object.fromEntries(Object.keys(held).map((k, i) => [k, i === 0 ? d : held[k]]));
+  const tbreaks = [['merged a day later than the texts say', late('2026-11-22'), false, FROM], ['merged 13 days before the day of effect', late('2026-11-23'), false, FROM],
+    ['the day of effect moved to 13 days after', held, false, '2026-12-04'], ['a mark git cannot date', late(null), false, FROM], ['a shallow history', held, true, FROM]];
+  const tmissed = tbreaks.filter(([, h, sh, f]) => timingProblems(h, sh, f).length === 0).map(([k]) => k);
+  ok('break on purpose: a merge a day after the stated day, one 13 days before the day of effect, a day of effect 13 days after, an undated mark and a shallow history all fail (' + (tbreaks.length - tmissed.length) + ' / ' + tbreaks.length + ')', tmissed.length === 0, tmissed.join(' / '));
+
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f]).replace(a, b) });
+  const breaks = [
+    ['personal characteristics taken into account', w('policies/moderation.md', 'sexual orientation or disability of any author.', 'sexual orientation of any author.')],
+    ['the Japanese list of characteristics shortened', w('policies/moderation.ja.md', '性的指向、障害も、判断に入れません。', '性的指向も、判断に入れません。')],
+    ['the period to answer lengthened', w('policies/moderation.md', 'no later than 30 days after the decision', 'no later than 60 days after the decision')],
+    ['anyone may ask for a listing', w('policies/moderation.md', 'a request by anyone else for a work to be listed is not taken up, and ', '')],
+    ['the rule on others dated from publication', w('policies/moderation.md', 'From the same day, a request by anyone else', 'A request by anyone else')],
+    ['a changed name asked in a public issue', w('policies/withdrawal.md', 'and the correction issue takes no personal data.', 'or in the correction issue.')],
+    ['the Japanese fresh submission taken out', w('policies/moderation.ja.md', '新しい issue でもう一度投稿できます。', '投稿できません。')],
+    ['a field changed without saying so', w('policies/moderation.md', 'The moderator says so in the issue before the listing, with the reason,', 'The moderator may do so')],
+    ['the reason for declining without research of one\'s own', w('policies/moderation.md', REASON['policies/moderation.md'] + '\n', '- Not in the form of a scholarly paper: it lacks a title, an abstract or references.\n')],
+    ['proposals accepted again', w('policies/submission.md', 'a research proposal, a call for papers, an announcement or news is not accepted', 'a call for papers is not accepted')],
+    ['the Japanese rule on research taken out', w('policies/submission.ja.md', SAYS['policies/submission.ja.md'][1][0] + '\n', '')],
+    ['the note on a version taken out of the policy', w('policies/submission.md', MORE['policies/submission.md'][1][0] + '\n', '')],
+    ['a proof of the changed name asked', w('policies/withdrawal.md', 'no reason and no proof of the change is asked.', 'a proof of the change is asked.')],
+    ['the Japanese changed name taken out', w('policies/withdrawal.ja.md', MORE['policies/withdrawal.ja.md'][1][0] + '\n', '')],
+    ['withdrawal asked for a new version', w('policies/withdrawal.ja.md', '新しい版や出版を示すために、撤回は要りません。', '新しい版を示すには撤回します。')],
+    ['a built page left stale', w('site/policies/withdrawal.html', 'A withdrawal is not needed to show a new version or a publication.', '')],
+    ['the notice without it', w('site.json', NOTICE, 'From ' + FROM + ', something;')],
+    ['the feed entry without its day of effect', w('data/policy-changes.json', '"from": "' + FROM + '",\n    "title": "' + TITLE + '"', '"title": "' + TITLE + '"')],
+    ['the feed entry without its source', w('data/policy-changes.json', 'The changes follow a comparison with the published policies of arXiv', 'The changes follow')],
+    ['the Japanese top page without it', w('site/index.ja.html', '判断に異を唱える', '')],
+    ['a commitment taken out', w('verification/commitments.txt', COMMITS[1] + '\n', '')],
+    ['the Japanese form without the field', w('.github/ISSUE_TEMPLATE/submission-ja.yml', '\n    id: changes\n', '\n    id: change\n')],
+    ['the intake not reading the English field', w('tools/intake.js', "'" + FORMS['.github/ISSUE_TEMPLATE/submission.yml'] + "': 'changes',", '')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  const near = problems(real, '2026-12-04');
+  ok('break on purpose: each of ' + (breaks.length + 1) + ' ways (characteristics in either language, the period, who may ask, a fresh submission, a silent change of field, the reason for declining, proposals, the rule in Japanese, the note on a version, a proof of a changed name, the changed name in Japanese, withdrawal for a version, a stale page, the notice, the feed\'s day and source, the Japanese top page, a commitment, either form, and a day of effect 13 days after) is caught (' + (breaks.length + 1 - missed.length - (near.length ? 0 : 1)) + ' / ' + (breaks.length + 1) + ')',
+    missed.length === 0 && near.length > 0, missed.concat(near.length ? [] : ['a day of effect 13 days after']).join(' / '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');

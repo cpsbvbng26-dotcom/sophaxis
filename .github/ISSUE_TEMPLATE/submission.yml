@@ -51,6 +51,11 @@ body:
     attributes:
       label: Existing Sophaxis id (only for a new version)
       placeholder: 2026.0001
+  - type: textarea
+    id: changes
+    attributes:
+      label: What changed in this version (optional, only for a new version)
+      description: At most 300 characters, in one line, such as "Corrected the proof of Lemma 2; added references." It is shown beside the version on the record page as the authors' own statement. Sophaxis does not check it.
   - type: dropdown
     id: category
     attributes:
