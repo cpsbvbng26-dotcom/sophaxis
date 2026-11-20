@@ -9315,8 +9315,8 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
   const MORE = {
     'policies/submission.md': ['\n## Versions and updates\n', ["The form asks, optionally, what changed in the new version, in at most 300 characters, and the record page shows it beside the version as the authors' own statement. Sophaxis does not check it."]],
     'policies/submission.ja.md': ['\n## 版と更新\n', ['様式は、この版で変えたことを任意で 300 字まで尋ね、記録の頁がその版の横に著者の申告として示します。Sophaxis は中身を確かめません。']],
-    'policies/withdrawal.md': ["\n## An author's name\n", ['An author whose name has changed can ask for the record to show the current name, in every version.', 'no reason and no proof of the change is asked.', 'The operator aims to make the change within 7 days, and the earlier name is then no longer shown on the site.']],
-    'policies/withdrawal.ja.md': ['\n## 著者の名前\n', ['名前が変わった著者は、記録のすべての版に、いまの名前を示すよう求めることができます。', '理由も、名前が変わったことの証拠も尋ねません。', '運営者は 7 日以内に変えることを目指し、変えたあとは、前の名前をサイトに示しません。']],
+    'policies/withdrawal.md': ["\n## An author's name\n", ['An author whose name has changed can ask for the record to show the current name, in every version.', 'no reason and no proof of the change is asked.', 'The operator aims to make the change within 7 days, and the record\'s pages then no longer show the earlier name.', 'The PDF copies are kept unmodified, so they show the name that the PDF carries;']],
+    'policies/withdrawal.ja.md': ['\n## 著者の名前\n', ['名前が変わった著者は、記録のすべての版に、いまの名前を示すよう求めることができます。', '理由も、名前が変わったことの証拠も尋ねません。', '運営者は 7 日以内に変えることを目指し、変えたあとは、記録の頁に前の名前を示しません。', 'PDF の写しは手を加えずに置くので、PDF にある名前のままです。']],
   };
   const REASON = { 'policies/moderation.md': '- Not in the form of a scholarly paper: it lacks a title, an abstract or references, or, from ' + FROM + ', it reports no research of its own, as the Submission Policy sets out under "What can be submitted".',
     'policies/moderation.ja.md': '- 学術論文の形でない：題・要旨・参考文献のどれかを欠く。または、' + FROM + ' から、自らの研究を報告していない。投稿の規程の「投稿できるもの」のとおりです。' };
