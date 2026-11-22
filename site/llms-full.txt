@@ -8,7 +8,7 @@ Source: https://sophaxis.vercel.app/policies/terms.html
 
 # Terms of Use
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [利用規約（日本語訳）](https://sophaxis.vercel.app/policies/terms.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -906,7 +906,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.html
 
 # Copyright Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [著作権の規程（日本語訳）](https://sophaxis.vercel.app/policies/copyright.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1066,7 +1066,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.html
 
 # Privacy Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -1505,7 +1505,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.html
 
 # Takedown Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1758,7 +1758,7 @@ Source: https://sophaxis.vercel.app/disclaimer.html
 
 # Disclaimer
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-23.
 
 Japanese: [免責事項（日本語訳）](https://sophaxis.vercel.app/disclaimer.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1839,7 +1839,7 @@ A search shows only what a database held on that day.
 
 ### Others' names
 
-Apart from the page [Making a listed work easy to find](https://sophaxis.vercel.app/findable.html), the site names these **75** services, products and organisations: Academia.edu, Adilet, Advance, Anthropic, Apple, arXiv, BBB National Programs, Bing, Bluesky, ChatGPT, Claude, Claude Code, CLOCKSS, COPE, Creative Commons, Crossref, DataCite, DOAJ, DOI, Dropbox, e-Gov, edX, eGazette, Facebook, Fedlex, Figshare, GitHub, GitHub Actions, Google Drive, Google Scholar, Grok, HAL, iCloud, IndexNow, Internet Archive, iTunes, J-PlatPat, JaLC, Jxiv, KC Works, Keepers Registry, Legal Information Institute, LinkedIn, MetaArXiv, OASPA, Open Access Directory, OpenAI, OpenAIRE, OpenAlex, ORCID, OSF, OSF Preprints, PhilArchive, PhilSci-Archive, Portico, Preprints.org, Qeios, Registry of Open Access Repositories, Research Square, ResearchGate, Retraction Watch, SciELO Preprints, ScienceOpen, SocArXiv, SpaceX, SSRN, Vercel, WAME, Wayback Machine, Windows, WIPO Global Brand Database, X, xAI, Zenodo, ZimLII.
+Apart from the pages [Making a listed work easy to find](https://sophaxis.vercel.app/findable.html) and [Legal handling of the design](https://sophaxis.vercel.app/design.html), the site names these **75** services, products and organisations: Academia.edu, Adilet, Advance, Anthropic, Apple, arXiv, BBB National Programs, Bing, Bluesky, ChatGPT, Claude, Claude Code, CLOCKSS, COPE, Creative Commons, Crossref, DataCite, DOAJ, DOI, Dropbox, e-Gov, edX, eGazette, Facebook, Fedlex, Figshare, GitHub, GitHub Actions, Google Drive, Google Scholar, Grok, HAL, iCloud, IndexNow, Internet Archive, iTunes, J-PlatPat, JaLC, Jxiv, KC Works, Keepers Registry, Legal Information Institute, LinkedIn, MetaArXiv, OASPA, Open Access Directory, OpenAI, OpenAIRE, OpenAlex, ORCID, OSF, OSF Preprints, PhilArchive, PhilSci-Archive, Portico, Preprints.org, Qeios, Registry of Open Access Repositories, Research Square, ResearchGate, Retraction Watch, SciELO Preprints, ScienceOpen, SocArXiv, SpaceX, SSRN, Vercel, WAME, Wayback Machine, Windows, WIPO Global Brand Database, X, xAI, Zenodo, ZimLII.
 That page also names services where authors can add a listed work themselves, and gives their names only so that authors can find them.
 These names belong to their owners, and some of them are trade marks.
 Sophaxis uses each of them only to name the service, the product or the organisation itself.
@@ -2929,7 +2929,7 @@ Source: https://sophaxis.vercel.app/brand.html
 
 # Name, logo and badge
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-23.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](https://sophaxis.vercel.app/brand.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2984,6 +2984,7 @@ The shelf is a metaphor. Sophaxis is not a library, and it does not keep the wor
 
 The [construction of the logo](https://sophaxis.vercel.app/construction.html) shows its grid and measurements, the field glyphs and the band, drawn from the same numbers as the logo.
 The site loads no font: it uses the reader's own serif, sans-serif and monospaced fonts.
+Who made each part of the look, its licence and the articles of Japanese law it touches are on the page [Legal handling of the design](https://sophaxis.vercel.app/design.html).
 
 ## Badge for a listed work
 
@@ -3288,7 +3289,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.ja.html
 
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-19。
+最終更新：2026-11-23。
 
 Sophaxis の個人情報の取り扱いを書いた、英語の [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) の訳です。項目は日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
@@ -3609,7 +3610,7 @@ Source: https://sophaxis.vercel.app/policies/terms.ja.html
 
 # 利用規約（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-23。
 
 これは英語の [Terms of Use](https://sophaxis.vercel.app/policies/terms.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、下の「日本国外の方へ」の節に定めています。
 
@@ -4514,7 +4515,7 @@ Source: https://sophaxis.vercel.app/policies/copyright.ja.html
 
 # 著作権の規程（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-23。
 
 これは英語の [Copyright Policy](https://sophaxis.vercel.app/policies/copyright.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4673,7 +4674,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 
 # 削除の規程（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-23。
 
 これは英語の [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4933,7 +4934,7 @@ Source: https://sophaxis.vercel.app/disclaimer.ja.html
 
 # 免責事項（日本語訳）
 
-最終更新：2026-11-18。
+最終更新：2026-11-23。
 
 これは英語の [Disclaimer](https://sophaxis.vercel.app/disclaimer.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -5014,7 +5015,7 @@ USPTO 自身のデータベースと、ほかの国の官庁のデータベー�
 
 ### ほかの者の名
 
-[載っている作品を見つけやすくする](https://sophaxis.vercel.app/findable.ja.html)の頁のほかに、サイトは、次の **75** のサービス・製品・組織の名を挙げています：Academia.edu、Adilet、Advance、Anthropic、Apple、arXiv、BBB National Programs、Bing、Bluesky、ChatGPT、Claude、Claude Code、CLOCKSS、COPE、Creative Commons、Crossref、DataCite、DOAJ、DOI、Dropbox、e-Gov、edX、eGazette、Facebook、Fedlex、Figshare、GitHub、GitHub Actions、Google Drive、Google Scholar、Grok、HAL、iCloud、IndexNow、Internet Archive、iTunes、J-PlatPat、JaLC、Jxiv、KC Works、Keepers Registry、Legal Information Institute、LinkedIn、MetaArXiv、OASPA、Open Access Directory、OpenAI、OpenAIRE、OpenAlex、ORCID、OSF、OSF Preprints、PhilArchive、PhilSci-Archive、Portico、Preprints.org、Qeios、Registry of Open Access Repositories、Research Square、ResearchGate、Retraction Watch、SciELO Preprints、ScienceOpen、SocArXiv、SpaceX、SSRN、Vercel、WAME、Wayback Machine、Windows、WIPO Global Brand Database、X、xAI、Zenodo、ZimLII。
+[載っている作品を見つけやすくする](https://sophaxis.vercel.app/findable.ja.html)と[デザインに関する法的な扱い](https://sophaxis.vercel.app/design.ja.html)の頁のほかに、サイトは、次の **75** のサービス・製品・組織の名を挙げています：Academia.edu、Adilet、Advance、Anthropic、Apple、arXiv、BBB National Programs、Bing、Bluesky、ChatGPT、Claude、Claude Code、CLOCKSS、COPE、Creative Commons、Crossref、DataCite、DOAJ、DOI、Dropbox、e-Gov、edX、eGazette、Facebook、Fedlex、Figshare、GitHub、GitHub Actions、Google Drive、Google Scholar、Grok、HAL、iCloud、IndexNow、Internet Archive、iTunes、J-PlatPat、JaLC、Jxiv、KC Works、Keepers Registry、Legal Information Institute、LinkedIn、MetaArXiv、OASPA、Open Access Directory、OpenAI、OpenAIRE、OpenAlex、ORCID、OSF、OSF Preprints、PhilArchive、PhilSci-Archive、Portico、Preprints.org、Qeios、Registry of Open Access Repositories、Research Square、ResearchGate、Retraction Watch、SciELO Preprints、ScienceOpen、SocArXiv、SpaceX、SSRN、Vercel、WAME、Wayback Machine、Windows、WIPO Global Brand Database、X、xAI、Zenodo、ZimLII。
 その頁は、著者が自分で作品を足せるサービスの名も挙げています。著者がそれを見つけられるように挙げるだけです。
 これらの名は、それぞれの持ち主に属します。その中には商標もあります。
 Sophaxis は、どの名も、そのサービス・製品・組織そのものを指すためだけに使います。
@@ -6427,7 +6428,7 @@ Source: https://sophaxis.vercel.app/brand.ja.html
 
 # 名前・ロゴ・バッジ（日本語訳）
 
-最終更新：2026-11-18。
+最終更新：2026-11-23。
 
 これは英語の [Name, logo and badge](https://sophaxis.vercel.app/brand.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -6482,6 +6483,7 @@ Sophaxis が実際にはしていない審査・推奨・関わりを思わせ�
 
 [ロゴの作図](https://sophaxis.vercel.app/construction.ja.html)の頁は、ロゴの格子と寸法、分野の印、帯を、ロゴと同じ数から描いて示します。
 サイトは書体を読み込みません。読む人の端末の明朝体、ゴシック体、等幅の書体を使います。
+見た目の部品ごとの作り手、ライセンス、関わる日本の法令の条は、[デザインに関する法的な扱い](https://sophaxis.vercel.app/design.ja.html)の頁にあります。
 
 ## 載っている作品のバッジ
 
@@ -6949,4 +6951,110 @@ Source: https://sophaxis.vercel.app/construction.ja.html
 ## 書体
 
 サイトは書体を読み込みません。題と本文は読む人の端末の明朝体、案内と札はゴシック体、番号と書架記号は等幅の書体で出ます。
+
+---
+
+Source: https://sophaxis.vercel.app/design.ja.html
+
+# デザインに関する法的な扱い（日本語訳）
+
+最終更新：2026-11-23。
+
+これは英語の [Legal handling of the design](https://sophaxis.vercel.app/design.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
+
+この頁は、Sophaxis の見た目の部品を挙げます。ロゴとアイコン、バッジ、共有カード、頁の中の図、色、書体、配置です。部品ごとに、誰が作ったか、どこから来たか、どのライセンスで出しているか、日本の法令のどの条に関わるかを書きます。
+Sophaxis 自身の理解を書いたものです。法的な助言ではなく、弁護士の確認も受けていません。
+2026-11-22 に利用者が求め、Claude が書きました。
+引く日本の法令の条は、e-Gov 法令 API が返すとおりの全文を、引いた部分の終わりに置いています。条について書いた日本語の文は要約で、条文そのものではありません。法令は条文のほうです。
+
+## 部品
+
+サイトは、自分の意匠の画像のファイルを **6** つと、示している記録ごとに一枚ずつ、共有カードを **5** 枚配っています。
+どれも、運営者の求めで、Claude Code が Sophaxis のために作りました。これらのファイルと、それを描く `design.js` と `tools/cards.js` を足したり変えたりしたコミットは、すべて Claude Code が作ったものです。
+見た目に関わるもので、ほかにファイルとして配るものはありません。書体も、スタイルシートも、よそからの画像も配りません。
+
+| 部品 | ファイル | 作り方 | ライセンス | 確かめ方 |
+| --- | --- | --- | --- | --- |
+| ロゴ | `favicon.svg` | 長方形だけで手で描いたもの。数は `design.js` にあります | 定めていません | 検査が `design.js` から描き直して突き合わせます |
+| 正方形の画像のロゴ | `og.png` | 600 × 600 画素のロゴ | 定めていません | 検査が大きさを読みます |
+| アイコンのロゴ | `favicon.ico`、`favicon-192.png`、`apple-touch-icon.png` | ブラウザで 960 画素に描いたロゴを、半分ずつ縮めたもの | 定めていません | 検査が大きさを読みます |
+| 載っている作品のバッジ | `badge.svg` | `build.js` が書くもの | 定めていません | 検査が組み直します |
+| 共有カード | `card/<id>.png` | `tools/cards.js` がブラウザで描くもの。ロゴと、記録の題・著者・分野を載せます | 定めていません | 検査が各カードを記録と突き合わせます |
+| 頁の中の図 | なし | 分野の印、帯、書架、作図。`build.js` が `design.js` の数から頁に書き込みます | 見た目については定めていません。コードは MIT です | 検査が描き直して突き合わせます |
+| 色 | なし | `brand.md` の色と、`site.json` の分野の色 | 見た目については定めていません。コードは MIT です | 検査がコントラストを測ります |
+| 書体 | なし | 配りません。スタイルは読む人の端末の書体を名指すだけです | 当てはまりません | 検査が、書体のファイルも `@font-face` も無いことを確かめます |
+| 配置 | なし | `build.js` と `design.js` に書いたスタイル | 見た目については定めていません。コードは MIT です | 検査が、よそからのスタイルが無いことを確かめます |
+
+[ライセンスの規程](https://sophaxis.vercel.app/policies/licences.ja.html)は、このサイトのライセンスを二つ挙げています。文は CC BY 4.0、コードは MIT です。
+ロゴ、アイコン、バッジ、共有カードのライセンスは挙げておらず、この頁も足しません。
+ロゴの使い方は、[名前・ロゴ・バッジ](https://sophaxis.vercel.app/brand.ja.html)の頁にあります。
+
+## 書体
+
+書体のファイルは配らず、どのスタイルも `@font-face` を使いません。
+スタイルは、`design.js` の `--serif`、`--sans`、`--mono` の三つの並びで書体を名指します。どの並びも一般的な書体の系統で終わり、読む人の端末が、持っている書体を選びます。
+並びに名がある書体を、読む人へ送ることはありません。
+バッジも、同じやり方で書体を名指します。
+
+共有カードは画像なので、文字はカードを作るときに描かれます。
+`tools/cards.js` は、DejaVu Serif と DejaVu Sans を最初に名指します。
+2026-11-22 に、Claude が自分の環境で `tools/cards.js` を使って **5** 枚のカードを描き直し、どれも配っているカードとバイトまで同じになりました。
+そこでブラウザが文字を描いた書体は、DejaVu Serif とその太字、DejaVu Sans で、パッケージ fonts-dejavu-core 2.37-8 のものでした。
+そのパッケージの著作権のファイルは、書体のライセンスを bitstream-vera と名指し、"DejaVu changes are in public domain." と書いています。
+条件は "The above copyright and trademark notices and this permission notice shall be included in all copies of one or more of the Font Software typefaces." です。
+カードが持つのは文字の画像で、書体のファイルの複製ではありません。サイトは書体のファイルを配りません。
+
+## 著作権
+
+著作権法第2条第1項第1号は、著作物を、思想や感情を創作的に表現したもので、文芸・学術・美術・音楽の範囲に属するものと定めています。
+著作権法第10条第1項第4号は、著作物の例として、絵画、版画、彫刻その他の美術の著作物を挙げています。
+ロゴ、アイコン、バッジ、カード、図、配置のどれかが著作物に当たるかどうかについて、この頁は結論を出しません。
+著作権法第19条と第20条は、著作物の著作者に、名を示すか示さないかを決める権利と、著作物と題を意に反する改変から守る権利を与えています。
+どの頁も、下の欄で運営者の名を示しています。
+サイトは、ほかの者が作った画像、図、書体のファイルを使っていません。
+
+<!-- text: Copyright Act 2; Copyright Act 10; Copyright Act 19; Copyright Act 20 -->
+
+## 商標・意匠・不正競争
+
+運営者は、名もロゴも、商標の登録を出願していません。[免責事項](https://sophaxis.vercel.app/disclaimer.ja.html#名称と商標)の「名称と商標」が、このことと、名を調べた記録を記しています。
+意匠の登録を出願した記録は、リポジトリにありません。
+商標法第25条は、登録商標の商標権者に、指定した商品や役務について、その登録商標を使う権利を専有させています。
+意匠法第2条第1項は、意匠を、物品の形状・模様・色彩、建築物の形状、機器の操作に使う画像や機器の働きの結果として表示される画像で、視覚を通じて美感を起こさせるものと定めています。
+意匠法第23条は、登録意匠の意匠権者に、業として登録意匠とそれに類似する意匠を実施する権利を専有させています。
+不正競争防止法第2条第1項第1号と第2号は、他人の広く知られた商品等表示と同じか似た表示を使って混同を生じさせることと、他人の著名な商品等表示を自分の表示として使うことを、不正競争としています。
+ロゴは長方形だけで、分野の印は長方形・多角形・円で描いてあります。
+サイトは、ほかの者のロゴ、しるし、画像を配りません。
+ロゴ、アイコン、図について、登録商標、登録意匠、ほかの者の表示を調べた記録はありません。ロゴを調べていないことは、免責事項に書いてあります。
+これらの条が Sophaxis に当てはまるかどうかについて、この頁は結論を出しません。
+
+<!-- text: Trademark Act 25; Design Act 2; Design Act 23; Unfair Competition Prevention Act 2 -->
+
+## アクセシビリティ
+
+この頁は、障害を理由とする差別の解消の推進に関する法律を、障害者差別解消法と呼びます。
+障害者差別解消法第2条第7号は、事業者を、商業その他の事業を行う者で、国、独立行政法人等、地方公共団体、地方独立行政法人を除くものと定めています。
+障害者差別解消法第8条第1項は、事業者が、障害を理由とする不当な差別的取扱いによって障害者の権利利益を侵害することを禁じています。第8条第2項は、事業者に、障害者から社会的障壁を除いてほしいという意思の表明があり、その負担が過重でないときは、合理的な配慮をすることを求めています。
+Sophaxis の運営者が障害者差別解消法第2条の事業者に当たるかどうかは、条文からは決まりません。この頁は結論を出しません。
+
+サイトの検査が変更のたびに確かめていることは、[アクセシビリティ](https://sophaxis.vercel.app/accessibility.ja.html)の頁にあります。見た目については、次のことを確かめています。
+
+- 文字の色は、明るい表示でも暗い表示でも、コントラストが 4.5:1 以上です。システムがより強いコントラストを求めるときは 7:1 以上です。
+- 分野の色は、コントラストが 4.5:1 以上です。どの分野も、色のほかに印と符号を持っています。
+- どの頁も動きません。スタイルに、アニメーションも遷移もありません。
+- 意味を持つ画像には代替の文があります。飾るだけの図は、読み上げから隠し、題を持っています。
+- どの頁も、キーボードだけで使え、フォーカスの枠が見え、360 画素までの幅でも、200 パーセントの拡大でも、文字だけを二倍にしても、横に流れません。
+
+<!-- text: Disability Discrimination Act 2; Disability Discrimination Act 8 -->
+
+## 人と団体
+
+見た目のどの部品も、実在の人の肖像や写真を示していません。
+どの部品も、実在の団体のロゴ、印、しるしを示していません。
+サイトが使うほかの者の名は、[免責事項](https://sophaxis.vercel.app/disclaimer.ja.html#名称と商標)に挙げてあります。
+
+## 部品を変えたとき
+
+見た目の部品を変えるときは、同じプルリクエストで、この頁とその検査も変えます。
+画像を足したり外したりして表が追いつかないとき、書体のファイルや `@font-face` が現れたとき、スタイルが動くとき、引いた条が週に一度の見張りの確かめる文でなくなったときに、この頁の検査は落ちます。
 
