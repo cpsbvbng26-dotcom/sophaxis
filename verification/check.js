@@ -2377,7 +2377,7 @@ console.log('\n57. The Japanese translations of the policies and the Disclaimer 
 {
   const sitemap = read(path.join(ROOT, 'site', 'sitemap.xml'));
   const pages = ['terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'].map((slug) => ({ slug, dir: 'policies/' }))
-    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission'].map((slug) => ({ slug, dir: '' })));
+    .concat([{ slug: 'disclaimer', dir: '' }], ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission', 'design'].map((slug) => ({ slug, dir: '' })));
   for (const { slug, dir } of pages) {
     const en = read(path.join(ROOT, dir, slug + '.md'));
     const ja = read(path.join(ROOT, dir, slug + '.ja.md'));
@@ -2606,11 +2606,11 @@ console.log('\n64. The statutes and GitHub terms the legal review relies on are 
     for (const n of nums) if (!mine.some((e) => e.article === n)) gaps.push(h + ': Article ' + n.replace('_', '-') + ' not watched');
   }
   ok('every Japanese law of docs/legal-review.md, and every article its heading names, is watched (' + S.statutes.length + ' articles)', gaps.length === 0, gaps.join(' / '));
-  // An article that no law of the review names, but a section of a policy cites, names that section as "<file>: <heading>";
+  // An article that no law of the review names, but a section of a policy or of the page on the design (design.md) cites, names that section as "<file>: <heading>";
   // the section's line <!-- text: ... --> must quote that very article.
   const REG = JSON.parse(read(at('verification/citations.json')));
   const inSection = (e) => {
-    const m = /^(policies\/[a-z]+\.md): (.+)$/.exec(e.law || '');
+    const m = /^(policies\/[a-z]+\.md|design\.md): (.+)$/.exec(e.law || '');
     if (!m || !fs.existsSync(at(m[1]))) return false;
     const md = read(at(m[1]));
     const i = md.indexOf('\n## ' + m[2] + '\n');
@@ -3375,7 +3375,7 @@ console.log('\n84. The site in Japanese: the top page and every prose page');
   ok('it says that acceptance is moderation, not peer review, that nothing is charged, and where Sophaxis is not offered, with all ' + site.notOffered.length + ' places by their Japanese names',
     ja.includes('掲載はモデレーションであり、査読ではありません。') && ja.includes('著者からも読者からも料金を取りません。')
     && ja.includes('Sophaxis は、' + site.notOffered.length + ' の国と地域（' + require('../build.js').notOfferedPlacesJa() + '）に住んでいる著者') && site.notOffered.every((p) => ja.includes(p.ja)) && ja.includes('国籍や人種ではなく'));
-  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary'];
+  const jaPages = ['process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'design'];
   const jaPolicies = ['privacy', 'terms', 'submission', 'moderation', 'copyright', 'licences', 'takedown', 'withdrawal'];
   ok('it links every Japanese page, every policy in Japanese and the Disclaimer, each field and collection by its Japanese name, and says that the lists stay in English and the records have Japanese pages',
     jaPages.every((s) => ja.includes('href="./' + s + '.ja.html"')) && jaPolicies.every((s) => ja.includes('href="./policies/' + s + '.ja.html"')) && ja.includes('href="./disclaimer.ja.html"')
@@ -5813,8 +5813,8 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const mut = (f, a, b) => Object.assign({}, real, { [f]: real[f].replace(a, b) });
   const feedWith = (fn) => Object.assign({}, real, { [CH]: JSON.stringify(fn(JSON.parse(real[CH]))) });
   const breaks = [
-    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-19.', 'Last updated: 2026-11-14.'), facts],
-    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-19。', '最終更新：2026-11-14。'), facts],
+    ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-23.', 'Last updated: 2026-11-14.'), facts],
+    ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-23。', '最終更新：2026-11-14。'), facts],
     ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
     ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
     ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-20。', '最終更新：2026-11-19。'), facts],
@@ -6359,8 +6359,9 @@ console.log('\n127. The public pages state positions: no page that the site serv
     const nPages = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[1]), nOther = Number((/規程の (\d+) の頁と、ほかの (\d+) の頁/.exec(sec) || [])[2]);
     /* The section counts the pages it read. The Statement of Purpose (mission.md, mission.ja.md) came later the same day; it is read
      * here like every other page, and its own section of the record says so (check 131). The accession register and the
-     * construction of the logo came on 2026-11-14, with the shelf; they are read here too, and their section says so (check 133). */
-    const LATER = ['mission.md', 'mission.ja.md', 'register.md', 'register.ja.md', 'construction.md', 'construction.ja.md'];
+     * construction of the logo came on 2026-11-14, with the shelf; they are read here too, and their section says so (check 133).
+     * The page on the legal handling of the design came on 2026-11-23; it is read here too, and check 146 holds it. */
+    const LATER = ['mission.md', 'mission.ja.md', 'register.md', 'register.ja.md', 'construction.md', 'construction.ja.md', 'design.md', 'design.ja.md'];
     if (nPages !== md.filter((f) => f.startsWith('policies/')).length || nOther !== md.filter((f) => !f.startsWith('policies/') && !LATER.includes(f)).length) bad.push('the number of pages read');
     if ((sec.match(/2026-11-13 に Claude が決めました。/g) || []).length < 2 || !sec.includes('見つけたことと直したことを記録が示し、頁が立場を示せば、頁は確かさを言い過ぎず、理由は記録で確かめられるためです。')
       || !sec.includes('注は、提供しない国と地域を決めた根拠の所在を示すもので、続けている行いの疑いを並べるものではないためです。')) bad.push('who decided, and why');
@@ -6638,7 +6639,9 @@ console.log('\n130. The top pages show the later of the day the records last cha
    * the same day; check 121 compares them like every other page, and their own section of the record says so (check 131). */
   const facts = { shallow, others: dated.filter((f) => !['site/index.html', 'site/index.ja.html', 'site/mission.html', 'site/mission.ja.html',
     /* Built on 2026-11-14 with the shelf, after this section was written; they are dated and compared like the others (check 121). */
-    'site/register.html', 'site/register.ja.html', 'site/construction.html', 'site/construction.ja.html'].includes(f)).length,
+    'site/register.html', 'site/register.ja.html', 'site/construction.html', 'site/construction.ja.html',
+    /* Built on 2026-11-23, the page on the legal handling of the design; dated and compared like the others (check 121), and held by check 146. */
+    'site/design.html', 'site/design.ja.html'].includes(f)).length,
     first: Object.fromEntries(effectDays(JSON.parse(real['site.json'])).map((d) => [d, lines(['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', 'From ' + d, '--', 'site.json'])[0] || today])) };
   function problems(c, h) {
     const bad = [];
@@ -9455,6 +9458,214 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
   const near = problems(real, '2026-12-04');
   ok('break on purpose: each of ' + (breaks.length + 1) + ' ways (characteristics in either language, the period, who may ask, a fresh submission, a silent change of field, the reason for declining, proposals, the rule in Japanese, the note on a version, a proof of a changed name, the changed name in Japanese, withdrawal for a version, a stale page, the notice, the feed\'s day and source, the Japanese top page, a commitment, either form, and a day of effect 13 days after) is caught (' + (breaks.length + 1 - missed.length - (near.length ? 0 : 1)) + ' / ' + (breaks.length + 1) + ')',
     missed.length === 0 && near.length > 0, missed.concat(near.length ? [] : ['a day of effect 13 days after']).join(' / '));
+}
+
+console.log('\n146. The legal handling of the design (2026-11-23): the page in both languages, its table and counts against the files served, no font served, the share cards and their fonts, the licences, the quoted articles watched and quoted as recorded, the citations, no motion, the contrast, the links, and the record');
+{
+  /* The owner asked on 2026-11-22 for a page on the legal handling of the design; Claude wrote it and this check. Every fact of the
+   * page that a file of the repository holds is read again here: the served images and their sizes, the fonts, the licences, the
+   * authors of the commits, the articles it quotes and the sentences that keep its position. */
+  const { execFileSync } = require('child_process');
+  const Cit = require('../tools/citations.js');
+  const B146 = require('../build.js'), D146 = require('../design.js');
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const walk = (d) => fs.readdirSync(path.join(ROOT, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(d + '/' + e.name) : [d + '/' + e.name]));
+  const IMG = /\.(svg|png|ico|jpe?g|gif|webp|avif|bmp|tiff?)$/i, FONT = /\.(woff2?|ttf|otf|eot)$/i;
+  const served = walk('site');
+  const HTML = served.filter((f) => f.endsWith('.html'));
+  const FILES = ['design.md', 'design.ja.md', 'site/design.html', 'site/design.ja.html', 'verification/statutes.json', 'verification/statutes-texts.json', 'verification/citations.json',
+    'verification/legal-matrix.json', 'tools/cards.js', 'design.js', 'build.js', 'site/badge.svg', 'policies/licences.md', 'policies/licences.ja.md', 'accessibility.md', 'accessibility.ja.md',
+    'disclaimer.md', 'disclaimer.ja.md', 'brand.md', 'brand.ja.md', 'site/sitemap.xml', 'site/index.ja.html', 'CHANGELOG.md', 'site.json', 'assets/cards/cards.json'];
+  const real = Object.fromEntries(FILES.concat(HTML).map((f) => [f, T(f)]));
+  /* The served images (the cards as one pattern), the font files, and the sizes of the PNG and ICO files. */
+  real.__images = served.filter((f) => IMG.test(f)).map((f) => f.slice(5)).map((f) => (/^card\/\d{4}\.\d{4}\.png$/.test(f) ? 'card/<id>.png' : f)).filter((f, i, a) => a.indexOf(f) === i).sort();
+  real.__cards = served.filter((f) => /^site\/card\/\d{4}\.\d{4}\.png$/.test(f)).length;
+  real.__fonts = served.filter((f) => FONT.test(f));
+  const png = (f) => { const b = fs.readFileSync(path.join(ROOT, 'site', f)); return b.readUInt32BE(16) + 'x' + b.readUInt32BE(20); };
+  const ico = (f) => { const b = fs.readFileSync(path.join(ROOT, 'site', f)); return Array.from({ length: b.readUInt16LE(4) }, (_, i) => b[6 + 16 * i] || 256).sort((p, q) => p - q).join(','); };
+  real.__sizes = { 'og.png': png('og.png'), 'favicon-192.png': png('favicon-192.png'), 'apple-touch-icon.png': png('apple-touch-icon.png'), 'favicon.ico': ico('favicon.ico') };
+  /* The authors of every commit that added or changed the files of the look and the code that draws them. */
+  const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 26 });
+  try { real.__authors = [...new Set(git(['log', '--format=%an <%ae>', '--', 'assets/favicon.svg', 'assets/og.png', 'assets/favicon.ico', 'assets/favicon-192.png', 'assets/apple-touch-icon.png', 'assets/cards', 'site/badge.svg', 'site/card', 'design.js', 'tools/cards.js']).split('\n').filter(Boolean))]; } catch (e) { real.__authors = []; }
+  /* Files that might record an application for a design registration: the tracked Markdown and JSON, apart from this page and the texts of the law. */
+  const tracked = git(['ls-files']).split('\n').filter((f) => /\.(md|json|yml)$/.test(f) && !/^(design(\.ja)?\.md|verification\/statutes-texts\.json|verification\/sources-raw\.json|CHANGELOG\.md|data\/policy-changes\.json)$/.test(f) && fs.existsSync(path.join(ROOT, f)));
+  real.__applied = tracked.filter((f) => /意匠登録(を|の)?出願|design registration|register(ed)? (a|the|its) design/i.test(read(path.join(ROOT, f))));
+  const HEADS = {
+    en: ['## The parts', '## Fonts', '## Copyright', '## Trade marks, designs and unfair competition', '## Accessibility', '## People and organisations', '## When a part changes'],
+    ja: ['## 部品', '## 書体', '## 著作権', '## 商標・意匠・不正競争', '## アクセシビリティ', '## 人と団体', '## 部品を変えたとき'],
+  };
+  const SAY = {
+    en: ['It describes Sophaxis\'s own understanding. It is not legal advice, and no lawyer has reviewed it.', 'The owner asked for it on 2026-11-22, and Claude wrote it.',
+      'The English sentences about an article are a summary, not a translation; the Japanese text is the law.',
+      'The site serves nothing else of its look as a file: no font, no stylesheet and no picture from anywhere else.',
+      'It names no licence for the logo, the icons, the badge or the share cards, and this page adds none.', 'No font file is served, and no style uses `@font-face`.',
+      'A card holds pictures of letters, not a copy of a font file. The site serves no font file.',
+      'This page draws no conclusion on whether the logo, the icons, the badge, the cards, the drawings or the layout is a work.',
+      'No application to register a design is recorded in the repository.', 'The Disclaimer says that the logo was not searched.',
+      'This page draws no conclusion on whether any of these articles applies to Sophaxis.',
+      'The English name is a label of this page, not an official title.',
+      'is not settled by the text, and this page draws no conclusion on it.', 'No part of the look shows a portrait or a photograph of a real person.',
+      'No part shows the logo, the seal or the mark of a real organisation.', 'A change to a part of the look changes this page and its check in the same pull request.'],
+    ja: ['Sophaxis 自身の理解を書いたものです。法的な助言ではなく、弁護士の確認も受けていません。', '2026-11-22 に利用者が求め、Claude が書きました。',
+      '条について書いた日本語の文は要約で、条文そのものではありません。法令は条文のほうです。',
+      '見た目に関わるもので、ほかにファイルとして配るものはありません。書体も、スタイルシートも、よそからの画像も配りません。',
+      'ロゴ、アイコン、バッジ、共有カードのライセンスは挙げておらず、この頁も足しません。', '書体のファイルは配らず、どのスタイルも `@font-face` を使いません。',
+      'カードが持つのは文字の画像で、書体のファイルの複製ではありません。サイトは書体のファイルを配りません。',
+      'ロゴ、アイコン、バッジ、カード、図、配置のどれかが著作物に当たるかどうかについて、この頁は結論を出しません。',
+      '意匠の登録を出願した記録は、リポジトリにありません。', 'ロゴを調べていないことは、免責事項に書いてあります。',
+      'これらの条が Sophaxis に当てはまるかどうかについて、この頁は結論を出しません。',
+      'Sophaxis の運営者が障害者差別解消法第2条の事業者に当たるかどうかは、条文からは決まりません。この頁は結論を出しません。',
+      '見た目のどの部品も、実在の人の肖像や写真を示していません。', 'どの部品も、実在の団体のロゴ、印、しるしを示していません。',
+      '見た目の部品を変えるときは、同じプルリクエストで、この頁とその検査も変えます。'],
+  };
+  const COUNT = {
+    en: { images: /^The site serves \*\*(\d+)\*\* image files of its own design, and \*\*(\d+)\*\* share cards, one for each record shown\.$/m, redraw: /Claude drew the \*\*(\d+)\*\* cards again/ },
+    ja: { images: /^サイトは、自分の意匠の画像のファイルを \*\*(\d+)\*\* つと、示している記録ごとに一枚ずつ、共有カードを \*\*(\d+)\*\* 枚配っています。$/m, redraw: /\*\*(\d+)\*\* 枚のカードを描き直し/ },
+  };
+  const SIZE_SAID = { en: ['The logo, 600 by 600 pixels'], ja: ['600 × 600 画素のロゴ'] };
+  const sha = (s) => crypto.createHash('sha256').update(s, 'utf8').digest('hex');
+  const unhtml = (s) => s.replace(/<br>\n?/g, ' ').replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  function problems(x) {
+    const bad = [];
+    let ST, TX, REG, M, SITE146;
+    try { ST = JSON.parse(x['verification/statutes.json']); TX = JSON.parse(x['verification/statutes-texts.json']); REG = JSON.parse(x['verification/citations.json']); M = JSON.parse(x['verification/legal-matrix.json']); SITE146 = JSON.parse(x['site.json']); }
+    catch (e) { return ['a JSON file does not parse']; }
+    const RAW = JSON.parse(read(path.join(ROOT, 'verification', 'sources-raw.json')));
+    const C = Cit.compile(REG);
+    const marks = {};
+    for (const lang of ['en', 'ja']) {
+      const f = lang === 'en' ? 'design.md' : 'design.ja.md', t = String(x[f] || '');
+      /* The sections, in order, and the sentences that hold the position. */
+      let at = 0;
+      for (const h of HEADS[lang]) { const i = t.indexOf('\n' + h + '\n'); if (i < at) bad.push(f + ': ' + h + ' missing or out of order'); at = Math.max(at, i); }
+      for (const s of SAY[lang]) if (!t.includes(s)) bad.push(f + ': lacks ' + s.slice(0, 40));
+      for (const s of SIZE_SAID[lang]) if (!t.includes(s)) bad.push(f + ': lacks ' + s);
+      if (/reviewed by a lawyer|a lawyer (has )?(reviewed|checked)|弁護士が(確か|確認|見)|cannot infringe|does not infringe|侵害しません|当たりません|に当たらない|is not a work|著作物ではありません/i.test(t)) bad.push(f + ': a lawyer or a conclusion claimed');
+      if (/[\w.+-]+@[\w-]+\.[a-z]/i.test(t)) bad.push(f + ': an email address');
+      /* The counts: the image files of its own design (the cards apart), the cards, and the cards drawn again. */
+      const m = COUNT[lang].images.exec(t), r = COUNT[lang].redraw.exec(t);
+      const own = x.__images.filter((y) => y !== 'card/<id>.png').length;
+      if (!m || Number(m[1]) !== own || Number(m[2]) !== x.__cards) bad.push(f + ': the counts of images (' + own + ') and cards (' + x.__cards + ')');
+      if (!r || Number(r[1]) !== x.__cards) bad.push(f + ': the count of the cards drawn again');
+      /* The table: its files are the images served, no more and no fewer. */
+      const sec = t.split('\n## ')[1] || '';
+      const rows = sec.split('\n').filter((l) => /^\| (?!---)/.test(l)).slice(1).map((l) => l.slice(2, -2).split(' | '));
+      if (rows.length !== 9 || !rows.every((y) => y.length === 5)) bad.push(f + ': the table has ' + rows.length + ' rows');
+      const files = rows.flatMap((y) => [...(y[1] || '').matchAll(/`([^`]+)`/g)].map((k) => k[1])).sort();
+      if (JSON.stringify(files) !== JSON.stringify(x.__images)) bad.push(f + ': the table names ' + files.join(', ') + ', the site serves ' + x.__images.join(', '));
+      /* The quoted articles of each section, and the citations in it. */
+      marks[lang] = [];
+      for (const s of t.split(/\n(?=## )/)) {
+        const keys = [...s.matchAll(/^<!-- text: (.+) -->$/gm)].flatMap((k) => k[1].split('; '));
+        marks[lang].push(...keys);
+        const head = (/^## (.+)$/m.exec(s) || [])[1] || '';
+        for (const k of keys) {
+          const km = /^(.+) (\S+)$/.exec(k), L = km && REG.laws[km[1]];
+          const e = L && L.egov && ST.statutes.find((y) => y.law_id === L.egov && y.article === km[2].replace(/-/g, '_'));
+          if (!e) { bad.push(f + ': ' + k + ' is not watched'); continue; }
+          if (!/^[0-9a-f]{64}$/.test(e.sha256 || '') || TX[e.name + ' ' + e.label] === undefined || sha(TX[e.name + ' ' + e.label]) !== e.sha256) bad.push(f + ': ' + k + ' has no recorded text and SHA-256');
+          if (lang === 'en' && !(e.law in M.laws) && e.law !== 'design.md: ' + head) bad.push(f + ': ' + k + ' is watched for ' + e.law + ', not for this section');
+        }
+        const r2 = Cit.cites(s, lang, C, f);
+        for (const u of r2.unattributed) bad.push(f + ': a citation without its law: ' + u.text);
+        for (const c of r2.found) if (!keys.includes(c.law + ' ' + c.article)) bad.push(f + ' (' + head + '): ' + c.law + ' ' + c.article + ' is cited and not quoted');
+        const tr = Cit.trace(r2.found, REG, ST, TX, RAW);
+        for (const c of tr.missing.concat(tr.badSub)) bad.push(f + ': ' + c.law + ' ' + c.article + '(' + c.sub.join(')(') + ') is not in a fetched text');
+      }
+      if (!marks[lang].length) bad.push(f + ': quotes nothing');
+      /* The built page quotes each named article as recorded, with the day of the watch. */
+      const html = String(x[lang === 'en' ? 'site/design.html' : 'site/design.ja.html'] || '');
+      const qs = [...html.matchAll(/<blockquote lang="ja"><p>([\s\S]*?)<\/p><\/blockquote>/g)].map((k) => unhtml(k[1]));
+      const tx = new Set(Object.values(TX));
+      if (qs.length !== marks[lang].length || !qs.every((q) => tx.has(q))) bad.push(f + ': the built page quotes ' + qs.length + ' texts for ' + marks[lang].length + ' names, or one not as recorded');
+      if (!html.includes(lang === 'en' ? 'on ' + ST.recorded + ' and quoted without change. The weekly watch confirms that it is still the same.' : ST.recorded + ' に <a') || /not yet among the texts the weekly watch confirms|まだ週に一度の見張りには入っていません/.test(html)) bad.push(f + ': the built page does not give the day of the watch');
+    }
+    if (JSON.stringify(marks.en) !== JSON.stringify(marks.ja)) bad.push('the two languages quote different articles');
+    /* Fonts: none served and no @font-face; the three lists end with a generic family; the cards name DejaVu first. */
+    if (x.__fonts.length) bad.push('a font file is served: ' + x.__fonts.join(', '));
+    for (const f of HTML) if (/@font-face/i.test((String(x[f] || '').match(/<style>[\s\S]*?<\/style>/g) || []).join(''))) bad.push(f + ': @font-face');
+    const F = D146.FONTS;
+    if (JSON.stringify(Object.keys(F)) !== JSON.stringify(['--serif', '--sans', '--mono']) || !/,serif$/.test(F['--serif']) || !/,sans-serif$/.test(F['--sans']) || !/,monospace$/.test(F['--mono'])) bad.push('design.js: the three lists of fonts');
+    const cj = String(x['tools/cards.js'] || '');
+    if (!cj.includes('font-family: "DejaVu Serif", Georgia, serif;') || !cj.includes('font-family: "DejaVu Sans", sans-serif;')) bad.push('tools/cards.js: the fonts it names first');
+    if (!/font-family="[^"]*,sans-serif"/.test(String(x['site/badge.svg'] || '')) || x['site/badge.svg'] !== B146.badgeSvg()) bad.push('badge.svg: not as build.js writes it, or its fonts');
+    /* The sizes the table gives, and the cards against the records. */
+    if (x.__sizes['og.png'] !== '600x600' || x.__sizes['favicon-192.png'] !== '192x192' || x.__sizes['apple-touch-icon.png'] !== '180x180' || x.__sizes['favicon.ico'] !== '16,32,48') bad.push('the sizes of the icons: ' + JSON.stringify(x.__sizes));
+    let cards = {};
+    try { cards = JSON.parse(x['assets/cards/cards.json']); } catch (e) { bad.push('cards.json does not parse'); }
+    if (Object.keys(cards).length !== x.__cards) bad.push('the cards served are not those of cards.json');
+    /* Who made them. */
+    if (JSON.stringify(x.__authors) !== JSON.stringify(['Claude <noreply@anthropic.com>'])) bad.push('a commit to the files of the look by someone else: ' + x.__authors.join(', '));
+    if (x.__applied.length) bad.push('a file speaks of a design registration: ' + x.__applied.join(', '));
+    /* The licences, as the Licence Policy names them, and none for the images. */
+    const lic = String(x['policies/licences.md'] || ''), licSec = lic.slice(lic.indexOf('\n## Licences of this site\n'), lic.indexOf('\n## ', lic.indexOf('\n## Licences of this site\n') + 5));
+    if (!licSec.includes('The text of this site is licensed under CC BY 4.0.') || !licSec.includes('The code is licensed under MIT.') || /logo|icon|badge|image|card/i.test(licSec)) bad.push('policies/licences.md: the licences of this site');
+    /* No motion, and the contrast of the text and of the fields. */
+    for (const f of HTML) { const st = (String(x[f] || '').match(/<style>[\s\S]*?<\/style>/g) || []).join(''); if (/animation|transition|@keyframes/i.test(st)) { bad.push(f + ': a style that moves'); break; } }
+    /* No style from elsewhere: every page forbids what it does not name, and links no stylesheet. Every drawing has a title, and is
+     * either an image with a role or decoration hidden from screen readers. */
+    for (const f of HTML) {
+      const h = String(x[f] || '');
+      if (!/<meta http-equiv="Content-Security-Policy" content="default-src 'none';/.test(h) || /<link[^>]+rel="stylesheet"/.test(h)) bad.push(f + ': a style from elsewhere may load');
+      for (const m of h.matchAll(/<svg\b[^>]*>(?:\s*<title[^>]*>[^<]*<\/title>)?/g)) if (!/<title/.test(m[0]) || !/aria-hidden="true"|role="img"/.test(m[0])) { bad.push(f + ': a drawing without a title, or neither an image nor hidden'); break; }
+    }
+    const css = String(x['build.js'] || '');
+    const vars = (re) => { const m = re.exec(css); return m ? Object.fromEntries([...m[1].matchAll(/--([a-z]+): (#[0-9a-f]{6})/g)].map((k) => [k[1], k[2]])) : {}; };
+    const L0 = vars(/\n:root \{([^}]*)\}/), D0 = vars(/prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/), LM = vars(/prefers-contrast: more\) \{ :root \{([^}]*)\}/), DM = vars(/prefers-contrast: more\) and \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/);
+    const low = (v) => Math.min(...['fg', 'muted', 'accent'].flatMap((k) => ['bg', 'card'].map((b) => D146.ratio(v[k], v[b]))));
+    if (!(low(L0) >= 4.5 && low(D0) >= 4.5 && low(Object.assign({}, L0, LM)) >= 7 && low(Object.assign({}, D0, DM)) >= 7)) bad.push('a text colour below 4.5:1, or below 7:1 with more contrast');
+    for (const [k, fl] of Object.entries(SITE146.fields || {})) if (D146.fieldRatio(fl.light, 'light') < 4.5 || D146.fieldRatio(fl.dark, 'dark') < 4.5 || !D146.GLYPHS[fl.code]) bad.push('the field ' + k + ': its contrast or its glyph');
+    for (const [f, s] of [['accessibility.md', 'at widths from 1440 down to 360 pixels'], ['accessibility.md', 'every image has an alt text'], ['accessibility.md', 'doubles the size of the text alone'], ['accessibility.md', 'Every text colour then has a contrast of at least 7:1']])
+      if (!String(x[f] || '').includes(s)) bad.push(f + ': no longer says ' + s);
+    /* The links to the page, and the Disclaimer that leaves it out of its list of names, as it does the page on finding a work. */
+    const LINK = { 'disclaimer.md': 'Apart from the pages [Making a listed work easy to find](./findable.md) and [Legal handling of the design](./design.md), the site names these',
+      'disclaimer.ja.md': '[載っている作品を見つけやすくする](./findable.ja.md)と[デザインに関する法的な扱い](./design.ja.md)の頁のほかに、サイトは',
+      'brand.md': '](./design.md).', 'brand.ja.md': '](./design.ja.md)の頁にあります。', 'site/index.ja.html': 'href="./design.ja.html"',
+      'site/sitemap.xml': 'https://sophaxis.vercel.app/design.ja.html</loc>', 'site/design.html': '<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/design.ja.html">' };
+    for (const [f, s] of Object.entries(LINK)) if (!String(x[f] || '').includes(s)) bad.push(f + ': the link to the page');
+    if (!String(x['site/sitemap.xml'] || '').includes('https://sophaxis.vercel.app/design.html</loc>')) bad.push('site/sitemap.xml: the page');
+    /* The record. */
+    const ch = String(x['CHANGELOG.md'] || '');
+    if (!/\n## 2026-11-23\n\n- Legal handling of the design\.[^\n]*A new check \(146\)[^\n]*\n/.test(ch)) bad.push('CHANGELOG.md: the entry');
+    return bad;
+  }
+  const now = problems(real);
+  ok('the page on the legal handling of the design, in both languages: its sections, its position, the ' + real.__images.length + ' kinds of image served and the ' + real.__cards + ' cards counted and listed, no font served, the fonts of the cards, the sizes of the icons, the authors of the commits, the licences, the ' + [...(real['design.md'] || '').matchAll(/^<!-- text: (.+) -->$/gm)].flatMap((k) => k[1].split('; ')).length + ' quoted articles watched and quoted as recorded, every citation quoted, no motion, the contrast, the links and the record',
+    now.length === 0, now.slice(0, 8).join(' / '));
+  const w = (f, a, b) => { const s = String(real[f] || ''); if (!s.includes(a)) throw new Error('146: the break does not apply: ' + f + ': ' + a.slice(0, 40)); return Object.assign({}, real, { [f]: s.replace(a, b) }); };
+  const v = (k, val) => Object.assign({}, real, { [k]: val });
+  const breaks = [
+    ['a lawyer said to have reviewed it', w('design.md', 'It is not legal advice, and no lawyer has reviewed it.', 'It is not legal advice, but a lawyer has reviewed it.')],
+    ['a conclusion drawn in Japanese', w('design.ja.md', 'これらの条が Sophaxis に当てはまるかどうかについて、この頁は結論を出しません。', 'これらの条は Sophaxis に当たりません。')],
+    ['a section taken out', w('design.md', '\n## People and organisations\n', '\n## People\n')],
+    ['the count of images changed', w('design.md', 'The site serves **6** image files', 'The site serves **7** image files')],
+    ['the count of cards changed in Japanese', w('design.ja.md', '共有カードを **5** 枚', '共有カードを **4** 枚')],
+    ['a served image the table does not list', v('__images', real.__images.concat(['photo.jpg']).sort())],
+    ['a row of the table taken out', w('design.ja.md', '| 載っている作品のバッジ | `badge.svg` | `build.js` が書くもの | 定めていません | 検査が組み直します |\n', '')],
+    ['a font file served', v('__fonts', ['site/font.woff2'])],
+    ['@font-face in a style', w('site/design.html', '</style>', '@font-face{font-family:x}</style>')],
+    ['a style that moves', w('site/brand.html', '</style>', '.band{transition:opacity 1s}</style>')],
+    ['the cards naming another font first', w('tools/cards.js', 'font-family: "DejaVu Serif", Georgia, serif;', 'font-family: Georgia, serif;')],
+    ['an icon of another size', v('__sizes', Object.assign({}, real.__sizes, { 'apple-touch-icon.png': '192x192' }))],
+    ['a commit by someone else', v('__authors', real.__authors.concat(['Someone else']))],
+    ['a licence named for the logo', w('policies/licences.md', 'The code is licensed under MIT.\n', 'The code is licensed under MIT.\nThe logo is licensed under CC0 1.0.\n')],
+    ['a quoted article not watched', w('design.md', '<!-- text: Copyright Act 2; Copyright Act 10;', '<!-- text: Copyright Act 2; Copyright Act 13;')],
+    ['the two languages quoting different articles', w('design.ja.md', '<!-- text: Trademark Act 25; Design Act 2; Design Act 23; Unfair Competition Prevention Act 2 -->', '<!-- text: Trademark Act 25; Design Act 2; Unfair Competition Prevention Act 2 -->')],
+    ['an article cited and not quoted', w('design.md', 'Every page names the operator in its footer.', 'Article 21 of the Copyright Act is cited here. Every page names the operator in its footer.')],
+    ['a quoted text changed on the built page', w('site/design.ja.html', '意匠権者は、業として', '意匠権者は、')],
+    ['a recorded text that no longer matches its SHA-256', w('verification/statutes-texts.json', '"Design Act Article 23": "（意匠権の効力）', '"Design Act Article 23": "（意匠権）')],
+    ['a watched article moved to another section', w('verification/statutes.json', '"law": "design.md: Accessibility",\n      "name": "Disability Discrimination Act",\n      "label": "Article 8"', '"law": "design.md: Copyright",\n      "name": "Disability Discrimination Act",\n      "label": "Article 8"')],
+    ['a stylesheet from elsewhere', w('site/design.ja.html', '</head>', '<link rel="stylesheet" href="https://example.org/a.css">\n</head>')],
+    ['a drawing neither an image nor hidden', w('site/index.html', 'aria-hidden="true"', 'data-x="1"')],
+    ['a text colour below 4.5:1', w('build.js', '--muted: #5a6170;', '--muted: #9aa1b0;')],
+    ['the link from the Disclaimer taken out', w('disclaimer.md', ' and [Legal handling of the design](./design.md)', '')],
+    ['the page left out of the sitemap', w('site/sitemap.xml', 'https://sophaxis.vercel.app/design.html</loc>', 'https://sophaxis.vercel.app/design-x.html</loc>')],
+    ['a registration of a design spoken of', v('__applied', ['docs/legal-review.md'])],
+    ['the record taken out', v('CHANGELOG.md', String(real['CHANGELOG.md']).replace('A new check (146)', 'A new check'))],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + breaks.length + ' ways (a lawyer, a conclusion, a section, the counts, an image or a row, a font file, @font-face, motion, the fonts of the cards, the size of an icon, an author, a licence for the logo, an article not watched or not quoted, the twins, a quotation or a recorded text changed, the section of a watched article, a stylesheet from elsewhere, a drawing neither an image nor hidden, the contrast, the links, the sitemap, a registration, the record) fails',
+    missed.length === 0, missed.join(' / '));
 }
 
 console.log('\n' + '-'.repeat(60));

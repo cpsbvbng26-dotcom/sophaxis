@@ -5,8 +5,18 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-21T00:00:00Z</updated>
+  <updated>2026-11-23T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c40</id>
+    <title>The quoted Japanese articles fetched again</title>
+    <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-23T00:00:00Z</updated>
+    <summary>On 2026-11-22 every Japanese article that the policies quote was fetched again from the e-Gov law API, by the same steps as the weekly watch, and each was the same as the text already quoted. The quotations now give that day. Article 2(1)(i) and Article 10 of the Copyright Act, Articles 2 and 23 of the Design Act and Articles 2 and 8 of the Disability Discrimination Act joined the weekly watch; the new page Legal handling of the design quotes them. No rule of the Terms of Use, the Copyright Policy, the Privacy Policy or the Takedown Policy changed. The owner asked for the page on 2026-11-22, and Claude wrote it. Policies: Terms of Use, Copyright Policy, Privacy Policy, Takedown Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c39</id>
     <title>Reconsideration, fields, research of one's own, notes on new versions and changed names</title>

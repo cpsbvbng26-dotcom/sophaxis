@@ -1,6 +1,6 @@
 # Name, logo and badge
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-23.
 
 Japanese: [名前・ロゴ・バッジ（日本語訳）](./brand.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -55,6 +55,7 @@ The shelf is a metaphor. Sophaxis is not a library, and it does not keep the wor
 
 The [construction of the logo](./construction.md) shows its grid and measurements, the field glyphs and the band, drawn from the same numbers as the logo.
 The site loads no font: it uses the reader's own serif, sans-serif and monospaced fonts.
+Who made each part of the look, its licence and the articles of Japanese law it touches are on the page [Legal handling of the design](./design.md).
 
 ## Badge for a listed work
 

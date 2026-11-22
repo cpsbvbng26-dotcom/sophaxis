@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gHVNHMhtrk3NzegK7y4APAtPk5nDUi7hd9q364vRfJ8='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Legal handling of the design | Sophaxis</title>
+<meta name="description" content="The parts of the look of Sophaxis: who made each, where it comes from, its licence, and the articles of Japanese law it touches.">
+<link rel="canonical" href="https://sophaxis.vercel.app/design.html">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Sophaxis: new preprints" href="./feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sophaxis">
+<meta property="og:title" content="Legal handling of the design | Sophaxis">
+<meta property="og:description" content="The parts of the look of Sophaxis: who made each, where it comes from, its licence, and the articles of Japanese law it touches.">
+<meta property="og:url" content="https://sophaxis.vercel.app/design.html">
+<meta property="og:image" content="https://sophaxis.vercel.app/og.png">
+<link rel="alternate" hreflang="en" href="https://sophaxis.vercel.app/design.html">
+<link rel="alternate" hreflang="ja" href="https://sophaxis.vercel.app/design.ja.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@SophaxisX">
+<style>
+:root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
+/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
+@media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
+@media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+a { color: var(--accent); }
+/* Keyboard users see where they are, and can jump past the header. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
+.brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav a { margin-left: 1rem; font-size: .95rem; }
+nav a:first-child { margin-left: 0; }
+header.top .lang { margin: 0; font-size: .95rem; }
+.notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .25rem; }
+ol.list { list-style: none; padding: 0; margin: 0; }
+ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.meta { color: var(--muted); font-size: .9rem; }
+.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
+.abstract p { margin: 0; }
+pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+details.source { margin: .6rem 0 1.4rem; }
+details.source summary { cursor: pointer; color: var(--muted); }
+details.source blockquote { margin: .6rem 0; padding: .25rem 1rem; border-left: 3px solid var(--rule); }
+details.source .from { font-size: .9rem; color: var(--muted); }
+.table { overflow-x: auto; }
+td a, p code, li code { overflow-wrap: anywhere; }
+td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
+/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
+.flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
+.notice.own { border-left-width: 6px; }
+.jump { font-size: .95rem; }
+.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
+.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share a { white-space: nowrap; }
+.access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
+.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
+.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
+.search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
+.search input[type=search] { width: min(24rem, 80vw); }
+.search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
+/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
+@media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
+/* The sections of a prose or policy page, linked near its top. */
+.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc p { margin: 0 0 .25rem; color: var(--muted); }
+.toc ul { margin: 0; padding-left: 1.2rem; }
+.toc a { margin-left: 0; overflow-wrap: anywhere; }
+/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+@media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
+/* design.js */
+:root{--t1:.78rem;--t2:.88rem;--t3:1rem;--t4:1.18rem;--t5:1.75rem;--s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.5rem;--s6:2rem;--serif:Georgia,"Times New Roman","Hiragino Mincho ProN","Yu Mincho",serif;--sans:system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace;--ink:#f7f5f0}.f-phi{--f-c:#2f4a7a}.f-mat{--f-c:#1d5c52}.f-phm{--f-c:#5a3a78}.f-phs{--f-c:#6a4c10}.f-log{--f-c:#7c2b38}
+@media (prefers-color-scheme:dark){:root{--ink:#14171f}.f-phi{--f-c:#9fb6e0}.f-mat{--f-c:#8fcfc2}.f-phm{--f-c:#c6addf}.f-phs{--f-c:#dcc07a}.f-log{--f-c:#eba6b0}}
+h1{font-size:var(--t5)}h2{font-size:var(--t4)}
+nav,.meta,.crumbs,.flag,.fields,.toc,footer,.search,.mark,.shelf,.card dt,.lang{font-family:var(--sans)}.mark .code,.sm,.no{font-family:var(--mono)}
+.band{display:block;width:100%}.band .board{fill:var(--rule)}.band [class^=f-]{fill:var(--f-c)}
+.mark{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--f-c,var(--rule));color:var(--f-c,var(--fg));padding:0 .45rem;margin-left:.4rem;font-size:var(--t1);white-space:nowrap}
+.glyph{width:.85em;height:.85em;fill:none;stroke:currentColor;stroke-width:1.5;flex:none}.glyph .dot{fill:currentColor;stroke:none}
+.glyphs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}@media print{.band{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><svg class="band" height="12.5" aria-hidden="true"><title>Five spines</title><pattern id="band" width="30" height="12.5" patternUnits="userSpaceOnUse"><rect x="1" y="2" width="4" height="9" class="f-phi"/><rect x="7" y="4.5" width="4" height="6.5" class="f-mat"/><rect x="13" y="0" width="4" height="11" class="f-phm"/><rect x="19" y="4.5" width="4" height="6.5" class="f-phs"/><rect x="25" y="2" width="4" height="9" class="f-log"/></pattern><rect width="100%" height="11" fill="url(#band)"/><rect y="11" width="100%" height="1.5" class="board"/></svg><div class="wrap">
+<a class="brand" href="./index.html">Sophaxis<small>Preprints in Philosophy and Mathematics</small></a>
+<nav><a href="./index.html">Listing</a><a href="./search.html">Search</a><a href="./submit.html">Submit</a><a href="./policy.html">Policies</a><a href="./faq.html">FAQ</a></nav>
+<p class="lang"><a href="./design.ja.html" hreflang="ja" lang="ja">日本語</a></p>
+</div></header>
+<main class="wrap" id="main">
+<h1>Legal handling of the design</h1>
+<p>Last updated: 2026-11-23.</p>
+<p>Japanese: <a href="./design.ja.html">デザインに関する法的な扱い（日本語訳）</a>. It is a translation; where the two differ, the English text applies.</p>
+<p>This page sets out the parts of the look of Sophaxis: its logo and icons, the badge, the share cards, the drawings in the pages, the colours, the fonts and the layout. For each part it says who made it, where it comes from, under what licence it is offered, and which articles of Japanese law it touches. It describes Sophaxis's own understanding. It is not legal advice, and no lawyer has reviewed it. The owner asked for it on 2026-11-22, and Claude wrote it. The articles of Japanese law that it cites are quoted in full, as the e-Gov law API gives them, at the end of each part that cites them. The English sentences about an article are a summary, not a translation; the Japanese text is the law.</p>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-parts">The parts</a></li><li><a href="#fonts">Fonts</a></li><li><a href="#copyright">Copyright</a></li><li><a href="#trade-marks-designs-and-unfair-competition">Trade marks, designs and unfair competition</a></li><li><a href="#accessibility">Accessibility</a></li><li><a href="#people-and-organisations">People and organisations</a></li><li><a href="#when-a-part-changes">When a part changes</a></li></ul></nav>
+<h2 id="the-parts">The parts</h2>
+<p>The site serves <b>6</b> image files of its own design, and <b>5</b> share cards, one for each record shown. Each was made for Sophaxis with Claude Code, at the operator's request. Every commit that added or changed one of these files, or <code>design.js</code> and <code>tools/cards.js</code>, which draw them, was made by Claude Code. The site serves nothing else of its look as a file: no font, no stylesheet and no picture from anywhere else.</p>
+<div class="table"><table><tr><th scope="col">Part</th><th scope="col">File</th><th scope="col">How it is made</th><th scope="col">Licence</th><th scope="col">How it is checked</th></tr><tr><td>The logo</td><td><code>favicon.svg</code></td><td>Drawn by hand from rectangles; <code>design.js</code> holds its numbers</td><td>None named</td><td>The check draws it again from <code>design.js</code> and compares the two</td></tr><tr><td>The logo as a square picture</td><td><code>og.png</code></td><td>The logo, 600 by 600 pixels</td><td>None named</td><td>The check reads its size</td></tr><tr><td>The logo as icons</td><td><code>favicon.ico</code>, <code>favicon-192.png</code>, <code>apple-touch-icon.png</code></td><td>The logo drawn in a browser at 960 pixels, then halved step by step</td><td>None named</td><td>The check reads their sizes</td></tr><tr><td>The badge for a listed work</td><td><code>badge.svg</code></td><td>Written by <code>build.js</code></td><td>None named</td><td>The check builds it again</td></tr><tr><td>The share cards</td><td><code>card/&lt;id&gt;.png</code></td><td>Drawn in a browser by <code>tools/cards.js</code>, with the logo, the title, the authors and the fields of the record</td><td>None named</td><td>The check compares each card with its record</td></tr><tr><td>The drawings in the pages</td><td>none</td><td>The field glyphs, the band, the shelf and the construction drawing, written into the pages by <code>build.js</code> from the numbers in <code>design.js</code></td><td>None named for the look; its code is MIT</td><td>The check draws them again and compares them</td></tr><tr><td>The colours</td><td>none</td><td>The colours of <code>brand.md</code> and of the fields in <code>site.json</code></td><td>None named for the look; its code is MIT</td><td>The check measures their contrast</td></tr><tr><td>The fonts</td><td>none</td><td>None served. The style names the reader's own fonts</td><td>Not applicable</td><td>The check finds no font file and no <code>@font-face</code></td></tr><tr><td>The layout</td><td>none</td><td>The style written in <code>build.js</code> and <code>design.js</code></td><td>None named for the look; its code is MIT</td><td>The check finds no style from elsewhere</td></tr></table></div>
+<p>The <a href="./policies/licences.html">Licence Policy</a> names two licences of this site: CC BY 4.0 for its text and MIT for its code. It names no licence for the logo, the icons, the badge or the share cards, and this page adds none. How the logo may be used is on the page <a href="./brand.html">Name, logo and badge</a>.</p>
+<h2 id="fonts">Fonts</h2>
+<p>No font file is served, and no style uses <code>@font-face</code>. The style names fonts in three lists, <code>--serif</code>, <code>--sans</code> and <code>--mono</code> in <code>design.js</code>. Each list ends with a generic family, so that the reader's device chooses a font it has. A font named in a list is not sent to the reader. The badge names fonts in the same way.</p>
+<p>The share cards are pictures, so their letters are drawn when a card is made. <code>tools/cards.js</code> names DejaVu Serif and DejaVu Sans first. On 2026-11-22, Claude drew the <b>5</b> cards again with <code>tools/cards.js</code> in its own environment, and each came out byte for byte the same as the card served. There the browser drew the letters with DejaVu Serif, its bold, and DejaVu Sans, from the package fonts-dejavu-core 2.37-8. The copyright file of that package names the licence of the fonts bitstream-vera, and says: &quot;DejaVu changes are in public domain.&quot; Its condition is: &quot;The above copyright and trademark notices and this permission notice shall be included in all copies of one or more of the Font Software typefaces.&quot; A card holds pictures of letters, not a copy of a font file. The site serves no font file.</p>
+<h2 id="copyright">Copyright</h2>
+<p>Article 2(1)(i) of the Copyright Act defines a work as a creative expression of thoughts or sentiments that falls within the literary, scientific, artistic or musical domain. Article 10(1)(iv) of the Copyright Act names paintings, engravings, sculptures and other artistic works among the examples of works. This page draws no conclusion on whether the logo, the icons, the badge, the cards, the drawings or the layout is a work. Articles 19 and 20 of the Copyright Act give the author of a work the right to have the name shown or not shown, and the right to keep the work and its title from changes against the author's will. Every page names the operator in its footer. The site uses no picture, drawing or font file made by anyone else.</p>
+<details class="source"><summary>Text of Copyright Act, Article 2, paragraph 1, item 1 (Japanese original)</summary><blockquote lang="ja"><p>一 著作物 思想又は感情を創作的に表現したものであつて、文芸、学術、美術又は音楽の範囲に属するものをいう。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/345AC0000000048">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<details class="source"><summary>Text of Copyright Act, Article 10 (Japanese original)</summary><blockquote lang="ja"><p>（著作物の例示） 第十条 この法律にいう著作物を例示すると、おおむね次のとおりである。<br>
+一 小説、脚本、論文、講演その他の言語の著作物<br>
+二 音楽の著作物<br>
+三 舞踊又は無言劇の著作物<br>
+四 絵画、版画、彫刻その他の美術の著作物<br>
+五 建築の著作物<br>
+六 地図又は学術的な性質を有する図面、図表、模型その他の図形の著作物<br>
+七 映画の著作物<br>
+八 写真の著作物<br>
+九 プログラムの著作物<br>
+２ 事実の伝達にすぎない雑報及び時事の報道は、前項第一号に掲げる著作物に該当しない。<br>
+３ 第一項第九号に掲げる著作物に対するこの法律による保護は、その著作物を作成するために用いるプログラム言語、規約及び解法に及ばない。 この場合において、これらの用語の意義は、次の各号に定めるところによる。<br>
+一 プログラム言語 プログラムを表現する手段としての文字その他の記号及びその体系をいう。<br>
+二 規約 特定のプログラムにおける前号のプログラム言語の用法についての特別の約束をいう。<br>
+三 解法 プログラムにおける電子計算機に対する指令の組合せの方法をいう。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/345AC0000000048">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<details class="source"><summary>Text of Copyright Act, Article 19 (Japanese original)</summary><blockquote lang="ja"><p>（氏名表示権） 第十九条 著作者は、その著作物の原作品に、又はその著作物の公衆への提供若しくは提示に際し、その実名若しくは変名を著作者名として表示し、又は著作者名を表示しないこととする権利を有する。 その著作物を原著作物とする二次的著作物の公衆への提供又は提示に際しての原著作物の著作者名の表示についても、同様とする。<br>
+２ 著作物を利用する者は、その著作者の別段の意思表示がない限り、その著作物につきすでに著作者が表示しているところに従つて著作者名を表示することができる。<br>
+３ 著作者名の表示は、著作物の利用の目的及び態様に照らし著作者が創作者であることを主張する利益を害するおそれがないと認められるときは、公正な慣行に反しない限り、省略することができる。<br>
+４ 第一項の規定は、次の各号のいずれかに該当するときは、適用しない。<br>
+一 行政機関情報公開法、独立行政法人等情報公開法又は情報公開条例の規定により行政機関の長、独立行政法人等又は地方公共団体の機関若しくは地方独立行政法人が著作物を公衆に提供し、又は提示する場合において、当該著作物につき既にその著作者が表示しているところに従つて著作者名を表示するとき。<br>
+二 行政機関情報公開法第六条第二項の規定、独立行政法人等情報公開法第六条第二項の規定又は情報公開条例の規定で行政機関情報公開法第六条第二項の規定に相当するものにより行政機関の長、独立行政法人等又は地方公共団体の機関若しくは地方独立行政法人が著作物を公衆に提供し、又は提示する場合において、当該著作物の著作者名の表示を省略することとなるとき。<br>
+三 公文書管理法第十六条第一項の規定又は公文書管理条例の規定（同項の規定に相当する規定に限る。）により国立公文書館等の長又は地方公文書館等の長が著作物を公衆に提供し、又は提示する場合において、当該著作物につき既にその著作者が表示しているところに従つて著作者名を表示するとき。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/345AC0000000048">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<details class="source"><summary>Text of Copyright Act, Article 20 (Japanese original)</summary><blockquote lang="ja"><p>（同一性保持権） 第二十条 著作者は、その著作物及びその題号の同一性を保持する権利を有し、その意に反してこれらの変更、切除その他の改変を受けないものとする。<br>
+２ 前項の規定は、次の各号のいずれかに該当する改変については、適用しない。<br>
+一 第三十三条第一項（同条第四項において準用する場合を含む。）、第三十三条の二第一項、第三十三条の三第一項又は第三十四条第一項の規定により著作物を利用する場合における用字又は用語の変更その他の改変で、学校教育の目的上やむを得ないと認められるもの<br>
+二 建築物の増築、改築、修繕又は模様替えによる改変<br>
+三 特定の電子計算機においては実行し得ないプログラムの著作物を当該電子計算機において実行し得るようにするため、又はプログラムの著作物を電子計算機においてより効果的に実行し得るようにするために必要な改変<br>
+四 前三号に掲げるもののほか、著作物の性質並びにその利用の目的及び態様に照らしやむを得ないと認められる改変</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/345AC0000000048">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<h2 id="trade-marks-designs-and-unfair-competition">Trade marks, designs and unfair competition</h2>
+<p>The operator has not applied to register the name or the logo as a trade mark. The <a href="./disclaimer.html#names-and-trademarks">Disclaimer</a>, under &quot;Names and trademarks&quot;, records this and the searches of the name. No application to register a design is recorded in the repository. Article 25 of the Trademark Act gives the owner of a registered trade mark the exclusive right to use it on the goods or services it is registered for. Article 2(1) of the Design Act defines a design as the shape, pattern or colour of an article, the shape of a building, or an image used to operate a device or shown as the result of its function, that is aesthetically pleasing through the eye. Article 23 of the Design Act gives the owner of a registered design the exclusive right to work it, and designs similar to it, as a business. Article 2(1)(i) and 2(1)(ii) of the Unfair Competition Prevention Act name, as unfair competition, using an indication that is the same as or similar to another's well-known indication so as to cause confusion, and using another's famous indication as one's own. The logo is made from rectangles only, and the field glyphs from rectangles, polygons and circles. The site serves no logo, mark or picture of anyone else. No search of registered trade marks, registered designs or the indications of others for the logo, the icons or the drawings is recorded. The Disclaimer says that the logo was not searched. This page draws no conclusion on whether any of these articles applies to Sophaxis.</p>
+<details class="source"><summary>Text of Trademark Act, Article 25 (Japanese original)</summary><blockquote lang="ja"><p>（商標権の効力） 第二十五条 商標権者は、指定商品又は指定役務について登録商標の使用をする権利を専有する。 ただし、その商標権について専用使用権を設定したときは、専用使用権者がその登録商標の使用をする権利を専有する範囲については、この限りでない。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/334AC0000000127">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<details class="source"><summary>Text of Design Act, Article 2 (Japanese original)</summary><blockquote lang="ja"><p>（定義等） 第二条 この法律で「意匠」とは、物品（物品の部分を含む。以下同じ。）の形状、模様若しくは色彩若しくはこれらの結合（以下「形状等」という。）、建築物（建築物の部分を含む。以下同じ。）の形状等又は画像（機器の操作の用に供されるもの又は機器がその機能を発揮した結果として表示されるものに限り、画像の部分を含む。次条第二項、第三十七条第二項、第三十八条第七号及び第八号、第四十四条の三第二項第六号並びに第五十五条第二項第六号を除き、以下同じ。）であつて、視覚を通じて美感を起こさせるものをいう。<br>
+２ この法律で意匠について「実施」とは、次に掲げる行為をいう。<br>
+一 意匠に係る物品の製造、使用、譲渡、貸渡し、輸出若しくは輸入（外国にある者が外国から日本国内に他人をして持ち込ませる行為を含む。以下同じ。）又は譲渡若しくは貸渡しの申出（譲渡又は貸渡しのための展示を含む。以下同じ。）をする行為<br>
+二 意匠に係る建築物の建築、使用、譲渡若しくは貸渡し又は譲渡若しくは貸渡しの申出をする行為<br>
+三 意匠に係る画像（その画像を表示する機能を有するプログラム等（特許法（昭和三十四年法律第百二十一号）第二条第四項に規定するプログラム等をいう。以下同じ。）を含む。以下この号において同じ。）について行う次のいずれかに該当する行為<br>
+イ 意匠に係る画像の作成、使用又は電気通信回線を通じた提供若しくはその申出（提供のための展示を含む。以下同じ。）をする行為<br>
+ロ 意匠に係る画像を記録した記録媒体又は内蔵する機器（以下「画像記録媒体等」という。）の譲渡、貸渡し、輸出若しくは輸入又は譲渡若しくは貸渡しの申出をする行為<br>
+３ この法律で「登録意匠」とは、意匠登録を受けている意匠をいう。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/334AC0000000125">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<details class="source"><summary>Text of Design Act, Article 23 (Japanese original)</summary><blockquote lang="ja"><p>（意匠権の効力） 第二十三条 意匠権者は、業として登録意匠及びこれに類似する意匠の実施をする権利を専有する。 ただし、その意匠権について専用実施権を設定したときは、専用実施権者がその登録意匠及びこれに類似する意匠の実施をする権利を専有する範囲については、この限りでない。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/334AC0000000125">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<details class="source"><summary>Text of Unfair Competition Prevention Act, Article 2, paragraph 1, items 1 and 2 (Japanese original)</summary><blockquote lang="ja"><p>一 他人の商品等表示（人の業務に係る氏名、商号、商標、標章、商品の容器若しくは包装その他の商品又は営業を表示するものをいう。以下同じ。）として需要者の間に広く認識されているものと同一若しくは類似の商品等表示を使用し、又はその商品等表示を使用した商品を譲渡し、引き渡し、譲渡若しくは引渡しのために展示し、輸出し、輸入し、若しくは電気通信回線を通じて提供して、他人の商品又は営業と混同を生じさせる行為
+二 自己の商品等表示として他人の著名な商品等表示と同一若しくは類似のものを使用し、又はその商品等表示を使用した商品を譲渡し、引き渡し、譲渡若しくは引渡しのために展示し、輸出し、輸入し、若しくは電気通信回線を通じて提供する行為</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/405AC0000000047">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<h2 id="accessibility">Accessibility</h2>
+<p>This page calls 障害を理由とする差別の解消の推進に関する法律 the Disability Discrimination Act. The English name is a label of this page, not an official title. Article 2 of the Disability Discrimination Act defines, in its item 7, a business operator as a person who carries on commerce or other business, apart from the state and public bodies. Article 8(1) of the Disability Discrimination Act forbids a business operator to infringe the rights of persons with disabilities by unfair discriminatory treatment on the basis of disability. Article 8(2) asks a business operator, when a person with a disability asks for a social barrier to be removed, to make reasonable accommodation, unless the burden is excessive. Whether the operator of Sophaxis is a business operator under Article 2 of the Disability Discrimination Act is not settled by the text, and this page draws no conclusion on it.</p>
+<p>What the checks of the site confirm on every change is set out on the page <a href="./accessibility.html">Accessibility</a>. For the look of the site, they confirm these:</p>
+<ul><li>every text colour has a contrast of at least 4.5:1 in the light and the dark scheme, and at least 7:1 when the system asks for more contrast;</li><li>the field colours have a contrast of at least 4.5:1, and each field has a glyph and a code as well as a colour;</li><li>no page moves: the style has no animation and no transition;</li><li>every image that carries meaning has an alt text, and every drawing that only decorates is hidden from screen readers and has a title;</li><li>every page can be used with the keyboard alone, shows a focus ring, and does not scroll sideways at widths down to 360 pixels, at a zoom of 200 percent, or with the text alone doubled.</li></ul>
+<details class="source"><summary>Text of Disability Discrimination Act, Article 2 (Japanese original)</summary><blockquote lang="ja"><p>（定義） 第二条 この法律において、次の各号に掲げる用語の意義は、それぞれ当該各号に定めるところによる。<br>
+一 障害者 身体障害、知的障害、精神障害（発達障害を含む。）その他の心身の機能の障害（以下「障害」と総称する。）がある者であって、障害及び社会的障壁により継続的に日常生活又は社会生活に相当な制限を受ける状態にあるものをいう。<br>
+二 社会的障壁 障害がある者にとって日常生活又は社会生活を営む上で障壁となるような社会における事物、制度、慣行、観念その他一切のものをいう。<br>
+三 行政機関等 国の行政機関、独立行政法人等、地方公共団体（地方公営企業法（昭和二十七年法律第二百九十二号）第三章の規定の適用を受ける地方公共団体の経営する企業を除く。第七号、第十条及び附則第四条第一項において同じ。）及び地方独立行政法人をいう。<br>
+四 国の行政機関 次に掲げる機関をいう。<br>
+イ 法律の規定に基づき内閣に置かれる機関（内閣府及び防災庁を除く。）及び内閣の所轄の下に置かれる機関<br>
+ロ 内閣府、宮内庁並びに内閣府設置法（平成十一年法律第八十九号）第四十九条第一項及び第二項に規定する機関（これらの機関のうちホの政令で定める機関が置かれる機関にあっては、当該政令で定める機関を除く。）<br>
+ハ 防災庁（ヘの政令で定める施設等機関を除く。）<br>
+ニ 国家行政組織法（昭和二十三年法律第百二十号）第三条第二項に規定する機関（トの政令で定める機関が置かれる機関にあっては、当該政令で定める機関を除く。）<br>
+ホ 内閣府設置法第三十九条及び第五十五条並びに宮内庁法（昭和二十二年法律第七十号）第十六条第二項の機関並びに内閣府設置法第四十条及び第五十六条（宮内庁法第十八条第一項において準用する場合を含む。）の特別の機関で、政令で定めるもの<br>
+ヘ 防災庁設置法（令和八年法律第六十一号）第十五条の施設等機関で、政令で定めるもの<br>
+ト 国家行政組織法第八条の二の施設等機関及び同法第八条の三の特別の機関で、政令で定めるもの<br>
+チ 会計検査院<br>
+五 独立行政法人等 次に掲げる法人をいう。<br>
+イ 独立行政法人（独立行政法人通則法（平成十一年法律第百三号）第二条第一項に規定する独立行政法人をいう。ロにおいて同じ。）<br>
+ロ 法律により直接に設立された法人、特別の法律により特別の設立行為をもって設立された法人（独立行政法人を除く。）又は特別の法律により設立され、かつ、その設立に関し行政庁の認可を要する法人のうち、政令で定めるもの<br>
+六 地方独立行政法人 地方独立行政法人法（平成十五年法律第百十八号）第二条第一項に規定する地方独立行政法人（同法第二十一条第三号に掲げる業務を行うものを除く。）をいう。<br>
+七 事業者 商業その他の事業を行う者（国、独立行政法人等、地方公共団体及び地方独立行政法人を除く。）をいう。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/425AC0000000065">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<details class="source"><summary>Text of Disability Discrimination Act, Article 8 (Japanese original)</summary><blockquote lang="ja"><p>（事業者における障害を理由とする差別の禁止） 第八条 事業者は、その事業を行うに当たり、障害を理由として障害者でない者と不当な差別的取扱いをすることにより、障害者の権利利益を侵害してはならない。<br>
+２ 事業者は、その事業を行うに当たり、障害者から現に社会的障壁の除去を必要としている旨の意思の表明があった場合において、その実施に伴う負担が過重でないときは、障害者の権利利益を侵害することとならないよう、当該障害者の性別、年齢及び障害の状態に応じて、社会的障壁の除去の実施について必要かつ合理的な配慮をしなければならない。</p></blockquote><p class="from">The current text, fetched from the <a href="https://laws.e-gov.go.jp/api/1/lawdata/425AC0000000065">e-Gov law API</a> on 2026-11-22 and quoted without change. The weekly watch confirms that it is still the same. Not translated; the Japanese text is the law.</p></details>
+<h2 id="people-and-organisations">People and organisations</h2>
+<p>No part of the look shows a portrait or a photograph of a real person. No part shows the logo, the seal or the mark of a real organisation. The names of others that the site uses are listed in the <a href="./disclaimer.html#names-and-trademarks">Disclaimer</a>.</p>
+<h2 id="when-a-part-changes">When a part changes</h2>
+<p>A change to a part of the look changes this page and its check in the same pull request. The check of this page fails when a served image is added or removed and the table does not follow, when a font file or <code>@font-face</code> appears, when a style moves, or when a quoted article is no longer the text the weekly watch confirms.</p>
+</main>
+<footer><div class="wrap">
+<p>Sophaxis is an overlay preprint server. It charges nothing, to authors or to readers. Acceptance is moderation, not peer review, and the quality of listed work is not guaranteed.</p>
+<p>Operated by Takuya Nemoto. Written with Claude Code (Anthropic), named as a disclosure, not an endorsement; the operator is responsible for the site, and Claude is not an author. Hosted on Vercel. No cookies, no analytics and nothing loaded from other servers (<a href="./policies/privacy.html">Privacy</a>). Text CC BY 4.0, code MIT. <a href="https://github.com/cpsbvbng26-dotcom/sophaxis">Source</a>.</p>
+<p><a href="./policies/terms.html">Terms of Use</a> · <a href="./policies/privacy.html">Privacy</a> · <a href="./policies/takedown.html">Takedown</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./repositories.html">For repositories</a> · <a href="./automation.html">What runs by itself</a> · <a href="./stats.html">Statistics</a> · <a href="./transparency.html">Transparency</a> · <a href="./news.html">News</a> · <a href="./press.html">Press</a> · <a href="./history.html">History</a> · <a href="./accessibility.html">Accessibility</a> · <a href="./easy.html">In plain words</a> · <a href="./contact.html">Contact</a></p>
+</div></footer>
+</body>
+</html>

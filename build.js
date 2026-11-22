@@ -1655,7 +1655,8 @@ const PROSE = { checklist: 'Before submitting to ' + SITE.name + ': what the pol
   glossary: 'The words used on ' + SITE.name + ', defined: overlay, moderation, record, version, withdrawal, removal and others.',
   mission: 'Why ' + SITE.name + ' is run: its Statement of Purpose. It creates no rights or obligations; the Terms of Use and the other policies apply.',
   register: 'The accession register of ' + SITE.name + ': every record listed, in order, and every withdrawal, by month.',
-  construction: 'How the logo of ' + SITE.name + ' is built: its grid and measurements, the field glyphs and the band, drawn from the same numbers.' };
+  construction: 'How the logo of ' + SITE.name + ' is built: its grid and measurements, the field glyphs and the band, drawn from the same numbers.',
+  design: 'The parts of the look of ' + SITE.name + ': who made each, where it comes from, its licence, and the articles of Japanese law it touches.' };
 const proseSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.md'), 'utf8');
 const proseDate = (slug) => (/Last updated: (\d{4}-\d{2}-\d{2})\./.exec(proseSource(slug)) || [])[1];
 /* The day a prose page shows. The register changes with the records, so it shows the later of its text's day and theirs. */
@@ -1845,7 +1846,7 @@ function contactPage() {
  * The site is in English; each Japanese page is reached from its English page, not from every footer.
  * The two point at each other so that search engines show each to readers of its language. */
 /* Japanese versions of the prose pages at the root: <slug>.md has <slug>.ja.md, built as <slug>.ja.html. */
-const JA_PAGES = ['first', 'libraries', 'rules', 'checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission', 'register', 'construction'];
+const JA_PAGES = ['first', 'libraries', 'rules', 'checklist', 'history', 'leaflet', 'easy', 'process', 'faq', 'automation', 'contact', 'repositories', 'policy', 'transparency', 'advisory', 'brand', 'press', 'call', 'findable', 'accessibility', 'compare', 'glossary', 'mission', 'register', 'construction', 'design'];
 const rootJaSource = (slug) => fs.readFileSync(path.join(ROOT, slug + '.ja.md'), 'utf8');
 const hasRootJa = (slug) => JA_PAGES.includes(slug) && fs.existsSync(path.join(ROOT, slug + '.ja.md'));
 const rootJaTitle = (slug) => rootJaSource(slug).split('\n')[0].replace(/^# /, '');
@@ -2218,6 +2219,7 @@ function build(out, paperDir) {
     'rules.html': prosePage('rules'),
     'register.html': prosePage('register'),
     'construction.html': prosePage('construction'),
+    'design.html': prosePage('design'),
     'news.xml': newsFeed(loadNews()),
     'policies/changes.xml': policyChangesFeed(loadPolicyChanges()),
     'badge.svg': badgeSvg(),

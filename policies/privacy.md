@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
 

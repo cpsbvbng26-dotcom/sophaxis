@@ -1,6 +1,6 @@
 # Disclaimer
 
-Last updated: 2026-11-18.
+Last updated: 2026-11-23.
 
 Japanese: [免責事項（日本語訳）](./disclaimer.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -81,7 +81,7 @@ A search shows only what a database held on that day.
 
 ### Others' names
 
-Apart from the page [Making a listed work easy to find](./findable.md), the site names these **75** services, products and organisations: Academia.edu, Adilet, Advance, Anthropic, Apple, arXiv, BBB National Programs, Bing, Bluesky, ChatGPT, Claude, Claude Code, CLOCKSS, COPE, Creative Commons, Crossref, DataCite, DOAJ, DOI, Dropbox, e-Gov, edX, eGazette, Facebook, Fedlex, Figshare, GitHub, GitHub Actions, Google Drive, Google Scholar, Grok, HAL, iCloud, IndexNow, Internet Archive, iTunes, J-PlatPat, JaLC, Jxiv, KC Works, Keepers Registry, Legal Information Institute, LinkedIn, MetaArXiv, OASPA, Open Access Directory, OpenAI, OpenAIRE, OpenAlex, ORCID, OSF, OSF Preprints, PhilArchive, PhilSci-Archive, Portico, Preprints.org, Qeios, Registry of Open Access Repositories, Research Square, ResearchGate, Retraction Watch, SciELO Preprints, ScienceOpen, SocArXiv, SpaceX, SSRN, Vercel, WAME, Wayback Machine, Windows, WIPO Global Brand Database, X, xAI, Zenodo, ZimLII.
+Apart from the pages [Making a listed work easy to find](./findable.md) and [Legal handling of the design](./design.md), the site names these **75** services, products and organisations: Academia.edu, Adilet, Advance, Anthropic, Apple, arXiv, BBB National Programs, Bing, Bluesky, ChatGPT, Claude, Claude Code, CLOCKSS, COPE, Creative Commons, Crossref, DataCite, DOAJ, DOI, Dropbox, e-Gov, edX, eGazette, Facebook, Fedlex, Figshare, GitHub, GitHub Actions, Google Drive, Google Scholar, Grok, HAL, iCloud, IndexNow, Internet Archive, iTunes, J-PlatPat, JaLC, Jxiv, KC Works, Keepers Registry, Legal Information Institute, LinkedIn, MetaArXiv, OASPA, Open Access Directory, OpenAI, OpenAIRE, OpenAlex, ORCID, OSF, OSF Preprints, PhilArchive, PhilSci-Archive, Portico, Preprints.org, Qeios, Registry of Open Access Repositories, Research Square, ResearchGate, Retraction Watch, SciELO Preprints, ScienceOpen, SocArXiv, SpaceX, SSRN, Vercel, WAME, Wayback Machine, Windows, WIPO Global Brand Database, X, xAI, Zenodo, ZimLII.
 That page also names services where authors can add a listed work themselves, and gives their names only so that authors can find them.
 These names belong to their owners, and some of them are trade marks.
 Sophaxis uses each of them only to name the service, the product or the organisation itself.

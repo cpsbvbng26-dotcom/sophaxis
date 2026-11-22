@@ -190,6 +190,25 @@
       ],
       "egov": "405AC0000000047"
     },
+    "Design Act": {
+      "en": [
+        "Design Act"
+      ],
+      "ja": [
+        "意匠法"
+      ],
+      "egov": "334AC0000000125"
+    },
+    "Disability Discrimination Act": {
+      "en": [
+        "Disability Discrimination Act"
+      ],
+      "ja": [
+        "障害者差別解消法",
+        "障害を理由とする差別の解消の推進に関する法律"
+      ],
+      "egov": "425AC0000000065"
+    },
     "GDPR": {
       "en": [
         "GDPR",

@@ -1,6 +1,6 @@
 # 免責事項（日本語訳）
 
-最終更新：2026-11-18。
+最終更新：2026-11-23。
 
 これは英語の [Disclaimer](./disclaimer.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](./policies/terms.ja.md)の「日本国外の方へ」の節に定めています。
 
@@ -81,7 +81,7 @@ USPTO 自身のデータベースと、ほかの国の官庁のデータベー�
 
 ### ほかの者の名
 
-[載っている作品を見つけやすくする](./findable.ja.md)の頁のほかに、サイトは、次の **75** のサービス・製品・組織の名を挙げています：Academia.edu、Adilet、Advance、Anthropic、Apple、arXiv、BBB National Programs、Bing、Bluesky、ChatGPT、Claude、Claude Code、CLOCKSS、COPE、Creative Commons、Crossref、DataCite、DOAJ、DOI、Dropbox、e-Gov、edX、eGazette、Facebook、Fedlex、Figshare、GitHub、GitHub Actions、Google Drive、Google Scholar、Grok、HAL、iCloud、IndexNow、Internet Archive、iTunes、J-PlatPat、JaLC、Jxiv、KC Works、Keepers Registry、Legal Information Institute、LinkedIn、MetaArXiv、OASPA、Open Access Directory、OpenAI、OpenAIRE、OpenAlex、ORCID、OSF、OSF Preprints、PhilArchive、PhilSci-Archive、Portico、Preprints.org、Qeios、Registry of Open Access Repositories、Research Square、ResearchGate、Retraction Watch、SciELO Preprints、ScienceOpen、SocArXiv、SpaceX、SSRN、Vercel、WAME、Wayback Machine、Windows、WIPO Global Brand Database、X、xAI、Zenodo、ZimLII。
+[載っている作品を見つけやすくする](./findable.ja.md)と[デザインに関する法的な扱い](./design.ja.md)の頁のほかに、サイトは、次の **75** のサービス・製品・組織の名を挙げています：Academia.edu、Adilet、Advance、Anthropic、Apple、arXiv、BBB National Programs、Bing、Bluesky、ChatGPT、Claude、Claude Code、CLOCKSS、COPE、Creative Commons、Crossref、DataCite、DOAJ、DOI、Dropbox、e-Gov、edX、eGazette、Facebook、Fedlex、Figshare、GitHub、GitHub Actions、Google Drive、Google Scholar、Grok、HAL、iCloud、IndexNow、Internet Archive、iTunes、J-PlatPat、JaLC、Jxiv、KC Works、Keepers Registry、Legal Information Institute、LinkedIn、MetaArXiv、OASPA、Open Access Directory、OpenAI、OpenAIRE、OpenAlex、ORCID、OSF、OSF Preprints、PhilArchive、PhilSci-Archive、Portico、Preprints.org、Qeios、Registry of Open Access Repositories、Research Square、ResearchGate、Retraction Watch、SciELO Preprints、ScienceOpen、SocArXiv、SpaceX、SSRN、Vercel、WAME、Wayback Machine、Windows、WIPO Global Brand Database、X、xAI、Zenodo、ZimLII。
 その頁は、著者が自分で作品を足せるサービスの名も挙げています。著者がそれを見つけられるように挙げるだけです。
 これらの名は、それぞれの持ち主に属します。その中には商標もあります。
 Sophaxis は、どの名も、そのサービス・製品・組織そのものを指すためだけに使います。

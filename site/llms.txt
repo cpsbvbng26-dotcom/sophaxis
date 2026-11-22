@@ -84,6 +84,7 @@ The policies below are the rules. Where this file and a policy differ, the polic
 - [運営理念・声明（日本語訳）](https://sophaxis.vercel.app/mission.ja.html)
 - [受入簿（日本語訳）](https://sophaxis.vercel.app/register.ja.html)
 - [ロゴの作図（日本語訳）](https://sophaxis.vercel.app/construction.ja.html)
+- [デザインに関する法的な扱い（日本語訳）](https://sophaxis.vercel.app/design.ja.html)
 
 ## Data
 

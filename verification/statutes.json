@@ -745,6 +745,63 @@
       "article": "6",
       "sha256": "8bc57df7029da0ff418f53d1280749c1f3075b593d10042e7d8942edb7c98c7c",
       "title": "特定電気通信による情報の流通によって発生する権利侵害等への対処に関する法律"
+    },
+    {
+      "law": "design.md: Copyright",
+      "name": "Copyright Act",
+      "label": "Article 2, paragraph 1, item 1",
+      "law_id": "345AC0000000048",
+      "article": "2",
+      "items": [
+        "1"
+      ],
+      "title": "著作権法",
+      "sha256": "0f88f7f03918f732cfd781dbb99e4866384cea43aa62ca7e592ba493fe25cdf9"
+    },
+    {
+      "law": "design.md: Copyright",
+      "name": "Copyright Act",
+      "label": "Article 10",
+      "law_id": "345AC0000000048",
+      "article": "10",
+      "title": "著作権法",
+      "sha256": "f0b9deab5f8adfa54d0fb32e26d1405e4818bea14c1d46045d3fbff9e4ead084"
+    },
+    {
+      "law": "design.md: Trade marks, designs and unfair competition",
+      "name": "Design Act",
+      "label": "Article 2",
+      "law_id": "334AC0000000125",
+      "article": "2",
+      "title": "意匠法",
+      "sha256": "1269a8ef67318251bacfa8d8e3e21c068c595c209bcf8b75a44b30c155dfcc0a"
+    },
+    {
+      "law": "design.md: Trade marks, designs and unfair competition",
+      "name": "Design Act",
+      "label": "Article 23",
+      "law_id": "334AC0000000125",
+      "article": "23",
+      "title": "意匠法",
+      "sha256": "9b5f05ea19a53e1d43811f6be3cf4d311e1e97e59667fdfad36e4ab19917bc3e"
+    },
+    {
+      "law": "design.md: Accessibility",
+      "name": "Disability Discrimination Act",
+      "label": "Article 2",
+      "law_id": "425AC0000000065",
+      "article": "2",
+      "title": "障害を理由とする差別の解消の推進に関する法律",
+      "sha256": "3c5f4837cb368517ec9d236bc43ea08bfdb8b190f228e0f27800623c6a23522f"
+    },
+    {
+      "law": "design.md: Accessibility",
+      "name": "Disability Discrimination Act",
+      "label": "Article 8",
+      "law_id": "425AC0000000065",
+      "article": "8",
+      "title": "障害を理由とする差別の解消の推進に関する法律",
+      "sha256": "0a058f1f4e2e5968d50afd70576a381409a1e62d19e629036114dea9139934f2"
     }
   ],
   "policies": [
@@ -767,7 +824,7 @@
       "commit": "166eb97e485b7de3cd5dbaf8c8d16e4310fda46c"
     }
   ],
-  "recorded": "2026-11-18",
+  "recorded": "2026-11-22",
   "pages": [
     {
       "name": "Vercel Privacy Notice",

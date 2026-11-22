@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-23",
+    "policies": ["terms", "copyright", "privacy", "takedown"],
+    "title": "The quoted Japanese articles fetched again",
+    "text": "On 2026-11-22 every Japanese article that the policies quote was fetched again from the e-Gov law API, by the same steps as the weekly watch, and each was the same as the text already quoted. The quotations now give that day. Article 2(1)(i) and Article 10 of the Copyright Act, Articles 2 and 23 of the Design Act and Articles 2 and 8 of the Disability Discrimination Act joined the weekly watch; the new page Legal handling of the design quotes them. No rule of the Terms of Use, the Copyright Policy, the Privacy Policy or the Takedown Policy changed. The owner asked for the page on 2026-11-22, and Claude wrote it.",
+    "ja": "2026-11-22 に、規程が引く日本の法令の条を、週ごとの見張りと同じ手順で、e-Gov 法令 API からすべて取り寄せ直しました。どの条も、すでに引いていた文と同じでした。引用に示す日は、その日になりました。著作権法第 2 条第 1 項第 1 号・第 10 条、意匠法第 2 条・第 23 条、障害を理由とする差別の解消の推進に関する法律第 2 条・第 8 条を、週ごとの見張りに加えました。新しい頁「デザインに関する法的な扱い」が、これらを引きます。利用規約・著作権の規程・個人情報の取り扱い・削除の規程の決まりは、どれも変わっていません。2026-11-22 に利用者がこの頁を求め、Claude が書きました。"
+  },
+  {
     "date": "2026-11-21",
     "policies": ["moderation", "submission", "withdrawal"],
     "from": "2026-12-06",
