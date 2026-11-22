@@ -1,6 +1,6 @@
 # Terms of Use
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [利用規約（日本語訳）](./terms.ja.md). It is a translation; where the two differ, the English text applies.
 

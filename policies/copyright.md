@@ -1,6 +1,6 @@
 # Copyright Policy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [著作権の規程（日本語訳）](./copyright.ja.md). It is a translation; where the two differ, the English text applies.
 
