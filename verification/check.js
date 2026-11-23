@@ -9927,6 +9927,9 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
     const ch = String(x['CHANGELOG.md'] || '');
     const chDay = ch.slice(ch.indexOf('\n## ' + ANNOUNCED + '\n'), (ch.indexOf('\n## ', ch.indexOf('\n## ' + ANNOUNCED + '\n') + 5) + 1 || ch.length + 1) - 1);
     if (ch.indexOf('\n## ' + ANNOUNCED + '\n') < 0 || !/\n- New works only from SSRN, arXiv or Jxiv \(pull request #\d+\)\.[^\n]*A new check \(147\)[^\n]*Figshare[^\n]*\n/.test(chDay)) bad.push('CHANGELOG.md: the entry');
+    if (!chDay.includes('; the other ' + NO + ' repositories are no longer accepted for a new work, an issue opened before that day is judged under the ' + NA + ', ')) bad.push('CHANGELOG.md: the counts of the entry');
+    const nNames = (/the site names these \*\*(\d+)\*\* services/.exec(String(x['disclaimer.md'] || '')) || [])[1];
+    if (!nNames || !chDay.includes('The Disclaimer names Elsevier among the names the site uses (' + nNames + ').')) bad.push('CHANGELOG.md: the count of the names');
     return bad;
   }
   const now = problems(real);
@@ -10045,9 +10048,17 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
     ['the Open Access Directory line said to be confirmed', w('README.md', "so this is the operator's report, not something Claude confirmed.", 'and Claude confirmed it.')],
     ['the Japanese Open Access Directory line without the 403', w('README.md', 'この頁は、ここからは HTTP 403 で読めませんでした。', '')],
     ['the changelog without the check', w('CHANGELOG.md', 'A new check (147)', 'A new check')],
+    ['the Disclaimer with another count of names than the changelog', w('disclaimer.md', 'the site names these **76** services', 'the site names these **77** services')],
+    ['the changelog with another count', w('CHANGELOG.md', '; the other 12 repositories are no longer accepted for a new work', '; the other 11 repositories are no longer accepted for a new work')],
   ];
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   const near = problems(real, '2026-12-06');
+  /* The changelog gives the counts of this check: the made-up cases and every break test (the texts, the intake, the timing). */
+  const nBreaks147 = breaks.length + 1 + VARIANTS.length + tbreaks.length;
+  const chOf = (t) => { const c = String(t || ''), i = c.indexOf('\n## ' + ANNOUNCED + '\n'), j = c.indexOf('\n## ', i + 5); return i < 0 ? '' : c.slice(i, j < 0 ? undefined : j); };
+  const countsSaid = (t) => chOf(t).includes('the intake on ' + CASES.length + ' made-up cases and the rest, with ' + nBreaks147 + ' break tests;');
+  ok('the changelog gives the ' + CASES.length + ' made-up cases and the ' + nBreaks147 + ' break tests of this check, and another count fails',
+    countsSaid(real['CHANGELOG.md']) && !countsSaid(String(real['CHANGELOG.md']).replace('with ' + nBreaks147 + ' break tests', 'with ' + (nBreaks147 - 1) + ' break tests')));
   ok('break on purpose: each of ' + (breaks.length + 1) + ' ways (the entrance in site.json, the days, the intake\'s own list, the policy\'s rule, counts, kept works and Figshare record, examples, the Japanese policy and its built page, both forms, the notice, the feed, the Japanese top page, a commitment, the FAQ, the README, the page for repositories, llms.txt, the drafts, .zenodo.json, a stray count, Figshare undated, a kept sentence, ROAR and the Open Access Directory, the changelog, a day of effect 13 days after) fails (' + (breaks.length - missed.length + (near.length ? 1 : 0)) + ' / ' + (breaks.length + 1) + ')',
     missed.length === 0 && near.length > 0, missed.concat(near.length ? [] : ['a day of effect 13 days after']).join(' / '));
 }
