@@ -1,6 +1,21 @@
 [
   {
     "date": "2026-11-23",
+    "policies": ["submission"],
+    "from": "2026-12-07",
+    "title": "New works only from SSRN, arXiv or Jxiv",
+    "text": "From 2026-12-07, for a new work whose submission issue is opened on or after that day, Sophaxis accepts the work only if it is deposited in SSRN, arXiv or Jxiv, with a DOI from that repository. The operator defines Elsevier, Cornell University and JST (the Japan Science and Technology Agency) as trusted institutions and publishers, and Sophaxis accepts SSRN, arXiv and Jxiv, the repositories that the operator connects with them; this is the operator's own definition, which rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it. The other 12 repositories, Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, Preprints.org, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance and KC Works, are no longer accepted for a new work; a work deposited only in one of them becomes eligible when it is deposited also in SSRN, arXiv or Jxiv. A submission whose issue is opened before that day is judged under the list of 15. A work already listed stays listed, and a new version of it is accepted from the repository where it is listed, so that narrowing the entrance breaks no record and penalises no author who followed the earlier rules. For Figshare, nothing else changes for authors: Sophaxis has copied no PDF from it by script since 2026-11-13. It narrows what Sophaxis accepts, so it is announced on the top page at least 14 days ahead. The owner asked for this on 2026-11-23, and Claude decided the details.",
+    "ja": "2026-12-07 から、その日以後に投稿の issue を開いた新しい作品は、SSRN・arXiv・Jxiv のどれかに預け、その預け先の DOI を得ているときに限り受け付けます。運営者は、エルゼビア・コーネル大学・JST（科学技術振興機構）を信頼できる機関・出版社と定め、Sophaxis は、運営者がそれらに結び付ける SSRN・arXiv・Jxiv を受け付けます。運営者の定めで、ほかの預け先の評価でも、三つの組織の推薦でもなく、三つの組織は Sophaxis と提携していません。ほかの 12 の預け先、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、Preprints.org、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works は、新しい作品には受け付けません。そのどれかにだけ預けた作品も、SSRN・arXiv・Jxiv のどれかにも預ければ、受け付けの対象になります。その日より前に issue を開いた投稿は、15 の預け先の一覧で判断します。すでに載っている作品は載ったままで、その新しい版は、作品が載っている預け先から受け付けます。入り口を狭めても、すでに載っている記録を壊さず、これまでの決まりに従った著者を不利にしないためです。Figshare については、著者にとってほかに変わることはありません。Sophaxis は 2026-11-13 から、Figshare の PDF をスクリプトで写していません。受け入れる範囲を狭めるので、14 日以上前にトップの頁で告知します。2026-11-23 に利用者が求め、細かいところは Claude が決めました。"
+  },
+  {
+    "date": "2026-11-23",
+    "policies": ["copyright", "takedown", "withdrawal"],
+    "title": "The PDF copies from Figshare taken off with their record",
+    "text": "Since its publication on 2026-11-23, the Copyright Policy says that the PDF copies taken from Figshare were taken off the site on 2026-11-23, when their record was removed, and the Takedown Policy and the Withdrawal Policy give Zenodo and SSRN, not Figshare, as examples of repositories from which Sophaxis cannot remove or withdraw a work. No rule changed. No record shown is a deposit at Figshare any more. Claude wrote it on 2026-11-23.",
+    "ja": "2026-11-23 の公開から、著作権の規程は、Figshare から写した PDF は、その記録を削除した 2026-11-23 に、サイトから外したと書きます。削除の規程と撤回の規程は、Sophaxis が作品を削除も撤回もできない預け先の例として、Figshare に替えて Zenodo と SSRN を挙げます。決まりは変わっていません。示している記録に、Figshare に預けたものはもうありません。2026-11-23 に Claude が書きました。"
+  },
+  {
+    "date": "2026-11-23",
     "policies": ["terms", "copyright", "privacy", "takedown"],
     "title": "The quoted Japanese articles fetched again",
     "text": "On 2026-11-22 every Japanese article that the policies quote was fetched again from the e-Gov law API, by the same steps as the weekly watch, and each was the same as the text already quoted. The quotations now give that day. Article 2(1)(i) and Article 10 of the Copyright Act, Articles 2 and 23 of the Design Act and Articles 2 and 8 of the Disability Discrimination Act joined the weekly watch; the new page Legal handling of the design quotes them. No rule of the Terms of Use, the Copyright Policy, the Privacy Policy or the Takedown Policy changed. The owner asked for the page on 2026-11-22, and Claude wrote it.",

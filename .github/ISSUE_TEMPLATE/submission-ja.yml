@@ -1,5 +1,5 @@
 name: プレプリントを投稿する（日本語の様式）
-description: Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv に預けたプレプリントを載せるための、日本語の様式です。
+description: SSRN・arXiv・Jxiv（2026-12-06 までは、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、Preprints.org、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works も）に預けたプレプリントを載せるための、日本語の様式です。
 title: "[Submission] "
 labels: ["submission"]
 body:
@@ -21,8 +21,8 @@ body:
     id: doi
     attributes:
       label: 預けたプレプリントの DOI
-      description: Zenodo（10.5281/zenodo.…）、Figshare（10.6084/m9.figshare.…）、OSF Preprints（10.31219/osf.io/…）、SocArXiv（10.31235/osf.io/…）、MetaArXiv（10.31222/osf.io/…）、arXiv（10.48550/arXiv.…）、Preprints.org（10.20944/preprints…）、SSRN（10.2139/ssrn.…）、Research Square（10.21203/rs.3.rs-…）、SciELO Preprints（10.1590/SciELOPreprints.…）、Qeios（10.32388/…）、ScienceOpen Preprints（10.14293/PR2199.…）、Advance（10.31124/advance.…）、KC Works（10.17613/…）、Jxiv（10.51094/jxiv.…）の DOI。DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが必要です。2026-11-23 からは、作品の最初の DOI が登録されてから六か月以上たっている必要があります。同じ日から、はじめての投稿には紹介する研究者が要ります（投稿の規程を見てください）。2026-12-10 からは 12 か月以上で、新しい作品にはどれも紹介する研究者二人が要ります。
-      placeholder: 10.5281/zenodo.0000000
+      description: 2026-12-07 からは、新しい作品には SSRN（10.2139/ssrn.…）、arXiv（10.48550/arXiv.…）、Jxiv（10.51094/jxiv.…）の DOI が、載っている作品の新しい版には、作品が載っている預け先の DOI が要ります。2026-12-06 までは、Zenodo（10.5281/zenodo.…）、Figshare（10.6084/m9.figshare.…）、OSF Preprints（10.31219/osf.io/…）、SocArXiv（10.31235/osf.io/…）、MetaArXiv（10.31222/osf.io/…）、Preprints.org（10.20944/preprints…）、Research Square（10.21203/rs.3.rs-…）、SciELO Preprints（10.1590/SciELOPreprints.…）、Qeios（10.32388/…）、ScienceOpen Preprints（10.14293/PR2199.…）、Advance（10.31124/advance.…）、KC Works（10.17613/…）の DOI も受け付けます。DOI のメタデータに CC BY 4.0、CC BY-SA 4.0、CC0 1.0 のどれかが必要です。2026-11-23 からは、作品の最初の DOI が登録されてから六か月以上たっている必要があります。同じ日から、はじめての投稿には紹介する研究者が要ります（投稿の規程を見てください）。2026-12-10 からは 12 か月以上で、新しい作品にはどれも紹介する研究者二人が要ります。
+      placeholder: 10.2139/ssrn.0000000
     validations:
       required: true
   - type: input

@@ -202,3 +202,5 @@ From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (æ°
 It does not take into account the nationality, race, ethnic origin, religion or belief, sex or gender, sexual orientation or disability of any author.
 An author whose name has changed can ask for the record to show the current name, in every version.
 A withdrawal is not needed to show a new version or a publication.
+A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.
+A submission whose issue is opened before 2026-12-07 is judged under the list of 15 repositories, even when it is decided on or after that day.

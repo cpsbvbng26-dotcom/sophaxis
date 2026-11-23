@@ -33,7 +33,7 @@ bibliography: paper.bib
 
 Sophaxis is an overlay preprint server for philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
 It holds no manuscripts of its own.
-An author deposits a preprint in an open repository, such as Zenodo, Figshare, OSF Preprints, arXiv or SSRN, and submits it to Sophaxis by its DOI and the author's ORCID iD.
+An author deposits a preprint in SSRN, arXiv or Jxiv, and submits it to Sophaxis by its DOI and the author's ORCID iD.
 After moderation, the work is listed with a stable record page, a copy of its PDF where the repository allows it, citation files and metadata for scholarly search engines.
 
 The software is a static site generator with no dependencies, written in JavaScript for Node.js.
@@ -59,7 +59,7 @@ Preprint repositories hold the files and register DOIs; Sophaxis relies on them 
 Overlay journal platforms run peer review on top of open archives [@episciences], and preprint review services attach evaluations to existing preprints [@sciety].
 Sophaxis does neither.
 It moderates, lists and links.
-Disciplinary archives in philosophy accept direct deposits [@philarchive; @philscience], while Sophaxis lists work that is already deposited elsewhere, in any of fifteen repositories.
+Disciplinary archives in philosophy accept direct deposits [@philarchive; @philscience], while Sophaxis lists work that is already deposited elsewhere: from 2026-12-07, a new work in SSRN, arXiv or Jxiv.
 
 # Software design
 

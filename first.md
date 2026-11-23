@@ -1,6 +1,6 @@
 # Your first preprint
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [はじめてのプレプリント（日本語訳）](./first.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -21,7 +21,7 @@ It is not peer-reviewed. Readers can still read it, cite it and answer it.
 
 ## Choosing a repository
 
-Sophaxis lists a work deposited, with a DOI, in one of these repositories:
+Sophaxis lists a new work deposited, with a DOI, in one of these repositories:
 
 <!-- repositories -->
 

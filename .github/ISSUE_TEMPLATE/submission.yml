@@ -1,5 +1,5 @@
 name: Submit a preprint
-description: List a preprint that you have deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv.
+description: List a preprint that you have deposited in SSRN, arXiv or Jxiv (until 2026-12-06, also in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, Preprints.org, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance or KC Works).
 title: "[Submission] "
 labels: ["submission"]
 body:
@@ -19,8 +19,8 @@ body:
     id: doi
     attributes:
       label: DOI of the deposited preprint
-      description: A DOI from Zenodo (10.5281/zenodo.…), Figshare (10.6084/m9.figshare.…), OSF Preprints (10.31219/osf.io/…), SocArXiv (10.31235/osf.io/…), MetaArXiv (10.31222/osf.io/…), arXiv (10.48550/arXiv.…), Preprints.org (10.20944/preprints…), SSRN (10.2139/ssrn.…), Research Square (10.21203/rs.3.rs-…), SciELO Preprints (10.1590/SciELOPreprints.…), Qeios (10.32388/…), ScienceOpen Preprints (10.14293/PR2199.…), Advance (10.31124/advance.…), KC Works (10.17613/…) or Jxiv (10.51094/jxiv.…). The work must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered. From the same day, a first submission needs a researcher to vouch for it (see the Submission Policy). From 2026-12-10, at least 12 months, and two researchers vouch for every new work.
-      placeholder: 10.5281/zenodo.0000000
+      description: From 2026-12-07, a new work needs a DOI from SSRN (10.2139/ssrn.…), arXiv (10.48550/arXiv.…) or Jxiv (10.51094/jxiv.…), and a new version of a listed work a DOI from the repository where the work is listed. Until 2026-12-06, a DOI from Zenodo (10.5281/zenodo.…), Figshare (10.6084/m9.figshare.…), OSF Preprints (10.31219/osf.io/…), SocArXiv (10.31235/osf.io/…), MetaArXiv (10.31222/osf.io/…), Preprints.org (10.20944/preprints…), Research Square (10.21203/rs.3.rs-…), SciELO Preprints (10.1590/SciELOPreprints.…), Qeios (10.32388/…), ScienceOpen Preprints (10.14293/PR2199.…), Advance (10.31124/advance.…) or KC Works (10.17613/…) is also accepted. The work must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered. From the same day, a first submission needs a researcher to vouch for it (see the Submission Policy). From 2026-12-10, at least 12 months, and two researchers vouch for every new work.
+      placeholder: 10.2139/ssrn.0000000
     validations:
       required: true
   - type: input

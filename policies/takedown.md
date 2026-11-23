@@ -153,7 +153,7 @@ Where the material sits on the service of another provider, such as GitHub, a re
 
 ## The work in its repository
 
-Sophaxis cannot remove a work from Zenodo, Figshare or any other repository.
+Sophaxis cannot remove a work from Zenodo, SSRN or any other repository.
 A request about the deposit itself goes to that repository.
 
 ## For rights holders

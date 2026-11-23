@@ -678,7 +678,8 @@ console.log('\n14. The weekly check and the Internet Archive');
   ok('a DOI that could not be checked this week is not reported as broken', Wt.compare(p, {}).length === 0);
   const fig = { id: '2026.0005', status: 'listed', versions: [{ version: 1, doi: '10.6084/m9.figshare.34419198.v1' }, { version: 2, doi: '10.6084/m9.figshare.34419198.v2' }] };
   const arx = { id: '2026.0006', status: 'listed', versions: [{ version: 1, doi: '10.48550/arXiv.2508.15126' }] };
-  ok('new versions are looked for at Figshare and arXiv only, and only for listed records', Wt.followed(fig) === '10.6084/m9.figshare.34419198'
+  /* Figshare was followed for 2026.0001 until that record was removed on 2026-11-23; since then only arXiv. */
+  ok('new versions are looked for at arXiv only, Figshare no longer, and only for listed records', Wt.followed(fig) === null
     && Wt.followed(arx) === '10.48550/arXiv.2508.15126' && Wt.followed(p) === null && Wt.followed(Object.assign({}, fig, { status: 'withdrawn' })) === null);
   ok('a version at the repository that the record lacks is reported, and nothing else', Wt.newVersions(fig, 3).join().includes('2026.0005: the repository has 3 versions and the record lists 2')
     && Wt.newVersions(fig, 2).length === 0 && Wt.newVersions(fig, null).length === 0);
@@ -891,8 +892,12 @@ console.log('\n21. The FAQ agrees with the policies');
   const faq = read(path.join(ROOT, 'faq.md'));
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
   const list = (xs, conj) => xs.slice(0, -1).join(', ') + ' ' + conj + ' ' + xs[xs.length - 1];
-  ok('the FAQ names the repositories and the licences of site.json, in the same order',
-    faq.includes(list(Object.values(site.repositories), 'and') + '.') && faq.includes(list(Object.values(site.licenses), 'and') + ', as given in the DOI metadata.'));
+  /* From site.json entrance.from (2026-12-07), the repositories of the entrance; until the day before, also the others, 15 in all. */
+  const E21 = site.entrance, before21 = new Date(Date.parse(E21.from + 'T00:00:00Z') - 86400000).toISOString().slice(0, 10);
+  const others21 = Object.values(site.repositories).filter((n) => !E21.repositories.includes(n));
+  ok('the FAQ names the repositories of site.json, from ' + E21.from + ' those of the entrance and until ' + before21 + ' also the others (' + Object.keys(site.repositories).length + ' in all), and the licences, in the same order',
+    faq.includes('From ' + E21.from + ', for a new work, ' + list(E21.repositories, 'and') + '.\nUntil ' + before21 + ', also ' + list(others21, 'and') + ', ' + Object.keys(site.repositories).length + ' in all.\n')
+    && faq.includes('A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.') && faq.includes(list(Object.values(site.licenses), 'and') + ', as given in the DOI metadata.'));
   const scope = /Sophaxis accepts work in ([^.]+)\./.exec(read(path.join(ROOT, 'policies', 'submission.md')))[1];
   ok('the FAQ gives the scope in the words of the Submission Policy', faq.includes('An overlay preprint server for ' + scope + '.'));
   const time = (/^(As a guide, a decision can come [^\n]+)$/m.exec(read(path.join(ROOT, 'policies', 'moderation.md'))) || [, '(none)'])[1];
@@ -916,8 +921,9 @@ console.log('\n22. From submission to listing: the page agrees with the form, th
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
   const list = (xs, conj) => xs.slice(0, -1).join(', ') + ' ' + conj + ' ' + xs[xs.length - 1];
   const time = (/^(As a guide, a decision can come [^\n]+)$/m.exec(read(path.join(ROOT, 'policies', 'moderation.md'))) || [, '(none)'])[1];
-  ok('the page names the repositories and licences of site.json, the moderation time and the PDF limit',
-    pr.includes(list(Object.values(site.repositories), 'or') + ', with a DOI.') && pr.includes(list(Object.values(site.licenses), 'or') + ' on the deposit')
+  const E22 = site.entrance, before22 = new Date(Date.parse(E22.from + 'T00:00:00Z') - 86400000).toISOString().slice(0, 10);
+  ok('the page names the repositories and licences of site.json (from ' + E22.from + ' those of the entrance, until ' + before22 + ' also the others), the moderation time and the PDF limit',
+    pr.includes('1. A preprint deposited, with a DOI, in ' + list(E22.repositories, 'or') + ' from ' + E22.from + ', or, until ' + before22 + ', also in ' + list(Object.values(site.repositories).filter((n) => !E22.repositories.includes(n)), 'or') + '.') && pr.includes(list(Object.values(site.licenses), 'or') + ' on the deposit')
     && pr.includes(time) && pr.includes('at most ' + site.pdfLimits.fileMB + ' MB.'));
   ok('the moderation time is a guide from the same day to a few months, with no fixed number of days',
     time === 'As a guide, a decision can come on the day of submission, but it can also take several weeks or a few months.'
@@ -960,6 +966,7 @@ console.log('\n24. Disclaimer, the page for repositories, and GitHub');
     ['## Listed work', '## Metadata', '## The identity check', '## No affiliation', '## GitHub and other services', '## Links', '## Availability', '## Not advice', '## Liability'].every((h) => dis.includes(h))
     && dis.includes('The [Terms of Use](./policies/terms.md) are binding; where this page differs, they apply.')
     && dis.includes('It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.')
+    && dis.includes('It is not affiliated with, endorsed by or a partner of Elsevier, Cornell University or JST (the Japan Science and Technology Agency), which the operator defines as trusted institutions and publishers')
     && dis.includes('Sophaxis does not use GitHub or ORCID sign-in')
     && dis.includes('through the public APIs of DataCite, Crossref, JaLC, OpenAlex, ORCID and the repositories.'));
   ok('who runs Sophaxis and why: an unpaid volunteer who is the only moderator, served within free services, Claude Code paid by the operator, duties unchanged, a reason that judges no other archive',
@@ -1198,8 +1205,12 @@ console.log('\n29. Lawful use: licences, liability, takedown, and the services S
     rp.includes('They are not responsible for Sophaxis, for its records, for its moderation, or for any error that Sophaxis introduces when it shows their metadata.')
     && rp.includes('Sophaxis shows none of their logos') && rp.includes('where a service says otherwise, Sophaxis follows the service.')
     && dis.includes('They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces'));
-  ok('the acknowledgements thank every repository of site.json and every agency and service Sophaxis uses, with the thanks arXiv asks for',
-    Object.values(site.repositories).every((n) => page.includes('>' + n + '</a>, for keeping the deposits and their DOIs</li>'))
+  /* From 2026-11-23: the repositories of the entrance (site.json entrance), and those that keep the deposit of a record shown, and no other. */
+  const shown14 = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status !== 'removed');
+  const repoOf14 = (doi) => site.repositories[Object.keys(site.repositories).find((pre) => String(doi).toLowerCase().startsWith(pre.toLowerCase()))];
+  const thanked14 = Object.values(site.repositories).filter((n) => site.entrance.repositories.includes(n) || shown14.some((p) => (p.versions || []).some((v) => repoOf14(v.doi) === n)));
+  ok('the acknowledgements thank the repositories of the entrance and those that keep a record shown (' + thanked14.join(', ') + '), no other repository, and every agency and service Sophaxis uses, with the thanks arXiv asks for',
+    Object.values(site.repositories).every((n) => page.includes('>' + n + '</a>, for keeping the deposits and their DOIs</li>') === thanked14.includes(n)) && thanked14.length > 0
     && ['DataCite', 'Crossref', 'Japan Link Center (JaLC)', 'ORCID', 'the Internet Archive', 'GitHub', 'Vercel'].every((n) => page.includes('>' + n + '</a>, for '))
     && page.includes('Thank you to arXiv for use of its open access interoperability.'));
   /* Until 2026-11-15 the scripts fetched arXiv files from export.arxiv.org, as arXiv asks; since then nothing reads arXiv by
@@ -1619,7 +1630,11 @@ console.log('\n41. The draft JOSS paper');
     'cited ' + cited.join(',') + ' / bib ' + keys.join(','));
   const n = Object.keys(site.repositories).length;
   const words10 = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
-  ok('the number of repositories in the paper is the number in site.json (' + n + ')', body.includes('in any of ' + words10[n] + ' repositories'));
+  /* Since 2026-11-23 the paper names the repositories of the entrance (site.json entrance), not a number of them. */
+  const E10 = site.entrance.repositories;
+  ok('the repositories in the paper are those of the entrance of site.json from ' + site.entrance.from + ' (' + E10.join(', ') + '), and the paper names no number of repositories (' + n + ' in site.json)',
+    body.includes('from ' + site.entrance.from + ', a new work in ' + E10.slice(0, -1).join(', ') + ' or ' + E10[E10.length - 1] + '.') && body.includes('An author deposits a preprint in ' + E10.slice(0, -1).join(', ') + ' or ' + E10[E10.length - 1] + ',')
+    && !words10.some((w) => body.includes('any of ' + w + ' repositories')));
   ok('no DOI in paper.bib until one is checked at its source', !/\bdoi\s*=/i.test(bib));
   ok('the paper says the research impact as it is: no use by other authors yet', body.includes('There is no record yet of use by other authors.'));
 }
@@ -2333,13 +2348,14 @@ console.log('\n55. The extent of use of generative models, at one of the levels 
     B.validate(Object.assign({}, good, { llm_extent: 'heavy' }), '2026.0001.json').some((x) => x.includes('llm_extent must be one of'))
     && B.validate(Object.assign({}, good, { listed: site.llmExtentFrom, llm_extent: undefined }), '2026.0001.json').some((x) => x.includes('llm_extent is required'))
     && B.validate(Object.assign({}, good, { llm_extent: 'editing' }), '2026.0001.json').length === 0);
-  const page = read(path.join(ROOT, 'site', 'abs', '2026.0001.html'));
+  /* 2026.0001 was removed on 2026-11-23; 2026.0002 states the same level. */
+  const page = read(path.join(ROOT, 'site', 'abs', '2026.0002.html'));
   const stats = read(path.join(ROOT, 'site', 'stats.html'));
   const pj = JSON.parse(read(path.join(ROOT, 'site', 'papers.json')));
   ok('the record page shows the level above the statement, and papers.json and the statistics carry it',
     page.includes('<p class="meta">Extent, as the authors state it: ' + L.drafting.replace(/'/g, '&#39;') + '</p>')
     && page.indexOf('Extent, as the authors state it') < page.indexOf('The author used Claude Code')
-    && pj.find((x) => x.id === '2026.0001').llm_extent === 'drafting'
+    && pj.find((x) => x.id === '2026.0002').llm_extent === 'drafting'
     && stats.includes('<h2>Use of generative models</h2>') && Object.values(L).every((v) => stats.includes(v.replace(/'/g, '&#39;'))));
 }
 
@@ -2515,7 +2531,7 @@ console.log('\n61. OAI-PMH also gives oai_openaire, the profile of the OpenAIRE 
   }).map((r) => r.identifier);
   ok('every shown record (' + shown.length + ') carries the mandatory fields: title, creator, the record page as identifier, open access, preprint, the issued date, the deposited DOI and its repository; a full text only on this site',
     shown.length > 0 && bad.length === 0, bad.join(', '));
-  ok('an author with an ORCID iD is given it as a name identifier', ask([['verb', 'GetRecord'], ['identifier', 'oai:sophaxis.vercel.app:2026.0001'], ['metadataPrefix', 'oai_openaire']])
+  ok('an author with an ORCID iD is given it as a name identifier', ask([['verb', 'GetRecord'], ['identifier', 'oai:sophaxis.vercel.app:2026.0002'], ['metadataPrefix', 'oai_openaire']])
     .includes('<datacite:nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://orcid.org">0009-0000-1406-0547</datacite:nameIdentifier>'));
   const del = data.records.find((r) => r.deleted);
   ok('a removed record is a header marked deleted, with no metadata, in oai_openaire too', !del
@@ -2779,8 +2795,10 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
     && R.followUpBody({ id: '2026.0009', issues: [3], today: '2026-11-20', done: { issues: true, archive: true } }).includes('- [x] The emptied issues are deleted')
     && R.archived('2026.0009').map(R.cdxUrl).join() === 'https://web.archive.org/cdx/search/cdx?output=json&limit=1&url=sophaxis.vercel.app%2Fabs%2F2026.0009.html,https://web.archive.org/cdx/search/cdx?output=json&limit=1&url=sophaxis.vercel.app%2Fpdf%2F2026.0009v&matchType=prefix');
   const rm = read(path.join(ROOT, 'tools', 'removal.js'));
-  ok('every way of removing a record opens the follow-up, and the daily step works through them',
-    (rm.match(/await openFollowUp\(/g) || []).length === 3 && rm.includes('  await followUps();'));
+  /* Four ways: a removal request upheld, a withdrawal issue that asks for removal, a request by email, and (2026-11-23) a request by
+   * email whose removal a commit of the operator's already made, which the manual run resumes. */
+  ok('every way of removing a record (4) opens the follow-up, and the daily step works through them',
+    (rm.match(/await openFollowUp\(/g) || []).length === 4 && rm.includes('  await followUps();'));
 }
 
 console.log('\n68. Who Sophaxis is not offered to, and why, at the top: by residence, not nationality or race, because of the representative');
@@ -2937,7 +2955,7 @@ console.log('\n74. llms.txt and llms-full.txt: the facts and every policy, for l
   ok('every page and policy it links is built, and it links every policy, every Japanese page and llms-full.txt', missing.length === 0 && links.length >= 20
     && B.llmsSources().every(([, url]) => links.includes(url)) && links.includes('llms-full.txt'), missing.join(', '));
   ok('its counts are the counts of the records and of site.json (' + shown + ' shown, ' + SITEJ.notOffered.length + ' places, ' + new Set(Object.values(SITEJ.repositories)).size + ' repositories)',
-    lt.includes('- Records shown: ' + shown + ' ') && lt.includes('- Not offered in ' + SITEJ.notOffered.length + ' places: ') && lt.includes('- Accepted repositories (' + new Set(Object.values(SITEJ.repositories)).size + '): ')
+    lt.includes('- Records shown: ' + shown + ' ') && lt.includes('- Not offered in ' + SITEJ.notOffered.length + ' places: ') && lt.includes('- Accepted repositories for a new work, from ' + SITEJ.entrance.from + ' (' + SITEJ.entrance.repositories.length + '): ' + SITEJ.entrance.repositories.join(', ') + '. Until ' + new Date(Date.parse(SITEJ.entrance.from + 'T00:00:00Z') - 86400000).toISOString().slice(0, 10) + ', also (' + (new Set(Object.values(SITEJ.repositories)).size - SITEJ.entrance.repositories.length) + '): ' + [...new Set(Object.values(SITEJ.repositories))].filter((n) => !SITEJ.entrance.repositories.includes(n)).join(', ') + '.')
     && lt.includes('or stays in one between the submission and the listing, even briefly') && (!SITEJ.termsNotice || lt.includes(SITEJ.termsNotice.text)));
   ok('it gives no email address: requests go through the ORCID record', !/[\w.+-]+@[\w-]+\.[\w.]+/.test(lt) && !/[\w.+-]+@[\w-]+\.[\w.]+/.test(lf.replace(/noreply@[\w.]+/g, '')) && lt.includes('the address on that ORCID record'));
   ok('llms-full.txt holds each policy and page word for word, with the address it is built into (' + B.llmsSources().length + ' parts)',
@@ -3695,8 +3713,11 @@ console.log('\n93. A first preprint, libraries, the policies in brief, advisers\
 {
   const site = JSON.parse(read(path.join(ROOT, 'site.json')));
   const first = read(path.join(ROOT, 'site', 'first.html'));
-  ok('the page on a first preprint lists every accepted repository of site.json (' + Object.keys(site.repositories).length + '), linked to its own page, and compares none of them, in both languages',
-    Object.values(site.repositories).every((n) => first.includes(`<li><a href="${site.repositoryHomes[n]}">${n}</a></li>`) && read(path.join(ROOT, 'site', 'first.ja.html')).includes(`<a href="${site.repositoryHomes[n]}">${n}</a>`))
+  /* From 2026-11-23: the repositories of the entrance as the list, and the others, with the last day on which they count, after it. */
+  const firstJa = read(path.join(ROOT, 'site', 'first.ja.html')), E35 = site.entrance.repositories;
+  ok('the page on a first preprint lists the repositories of the entrance of site.json (' + E35.length + ') and names the other ' + (Object.keys(site.repositories).length - E35.length) + ' until the day before ' + site.entrance.from + ', each linked to its own page, and compares none of them, in both languages',
+    Object.values(site.repositories).every((n) => first.includes(`<li><a href="${site.repositoryHomes[n]}">${n}</a></li>`) === E35.includes(n) && first.includes(`<a href="${site.repositoryHomes[n]}">${n}</a>`) && firstJa.includes(`<a href="${site.repositoryHomes[n]}">${n}</a>`) && firstJa.includes(`<li><a href="${site.repositoryHomes[n]}">${n}</a></li>`) === E35.includes(n))
+    && first.includes('From ' + site.entrance.from + ', a new work is accepted only from these ' + E35.length + '.') && firstJa.includes(site.entrance.from + ' から、新しい作品は、この ' + E35.length + ' つからだけ受け付けます。')
     && read(path.join(ROOT, 'first.md')).includes('Sophaxis does not compare them, and their pages are what count.') && read(path.join(ROOT, 'first.md')).includes('From ' + site.doiAgeFrom + ', Sophaxis lists a work only when six months have passed since its first DOI'));
   const lib = read(path.join(ROOT, 'libraries.md'));
   ok('the page for libraries gives the OAI-PMH address of the site and the formats the interface serves, and the reuse of record data as the Licence Policy words it',
@@ -4395,8 +4416,12 @@ console.log('\n101. Counts in the prose that no other check held, and the abstra
     && read(path.join(ROOT, 'site', 'index.html')).includes('lists preprints in ' + FIELDS + '.')
     && [readme, z.description, flat(cff)].every((t) => t.includes('Acceptance is moderation, not peer review.')) && readme.includes('受理はモデレーションであり、査読ではありません。'));
   const reps = [...new Set(Object.values(site101.repositories))];
-  ok('the README names the same repositories as site.json, in the same order, in both languages (' + reps.length + ')',
-    typeof reps[0] === 'string' && readme.includes('Authors deposit their preprint in ' + reps.slice(0, -1).join(', ') + ' or ' + reps[reps.length - 1] + ';') && readme.includes('著者が ' + reps.join('・') + ' のどれかに置いた稿'));
+  /* From 2026-11-23: the repositories of the entrance first, then, until the day before it, the others, in the order of site.json. */
+  const E101 = site101.entrance.repositories, others101 = reps.filter((n) => !E101.includes(n)), until101 = new Date(Date.parse(site101.entrance.from + 'T00:00:00Z') - 86400000).toISOString().slice(0, 10);
+  ok('the README names the same repositories as site.json, the ' + E101.length + ' of the entrance and, until ' + until101 + ', the other ' + others101.length + ', in the same order, in both languages (' + reps.length + ')',
+    typeof reps[0] === 'string' && E101.length + others101.length === reps.length
+    && readme.includes('Authors deposit their preprint in ' + E101.slice(0, -1).join(', ') + ' or ' + E101[E101.length - 1] + ' (until ' + until101 + ', also in ' + others101.slice(0, -1).join(', ') + ' or ' + others101[others101.length - 1] + ');')
+    && readme.includes('著者が ' + E101.join('・') + ' のどれか（' + until101 + ' までは ' + others101.join('・') + ' も）に置いた稿'));
   /* The keywords: one list in .zenodo.json, CITATION.cff and the tags of the JOSS draft, and never "journal", which Sophaxis is not. */
   const cffKw = [...(/keywords:\n((?:  - .*\n)+)/.exec(cff) || ['', ''])[1].matchAll(/  - (.*)/g)].map((m) => m[1]);
   const tags = [...(/tags:\n((?:  - .*\n)+)/.exec(paper) || ['', ''])[1].matchAll(/  - (.*)/g)].map((m) => m[1]);
@@ -4979,7 +5004,11 @@ console.log('\n115. The laws of 195 countries applied: fifteen more places from 
   const PLACES = { Argentina: 'ar-25326', Colombia: 'co-1581', Ghana: 'gh-dpa', Korea: 'korea-pipa', Mexico: 'mx-lfpdppp', 'the Philippines': 'ph-dpa', 'Saudi Arabia': 'saudi-pdpl', Uruguay: 'uy-18331',
     Zimbabwe: 'zw-dpa', Kenya: 'ke-dpa', Tanzania: null, 'South Africa': 'za-popia', Singapore: 'sg-pdpa', 'the United Arab Emirates': 'ae-pdpl', Qatar: 'qa-pdpl' };
   const W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
-  const listedNow = loadPapers(path.join(ROOT, 'data', 'papers')).papers.filter((p) => p.status === 'listed');
+  const allNow = loadPapers(path.join(ROOT, 'data', 'papers')).papers;
+  const listedNow = allNow.filter((p) => p.status === 'listed');
+  /* The section was written on 2026-11-12 and counts the records listed that day: those listed now since that day or earlier, and
+   * those removed after it (2026.0001, removed on 2026-11-23, among them), which a removed record no longer shows. */
+  const listedThen = listedNow.filter((p) => p.listed <= '2026-11-12').length + allNow.filter((p) => p.status === 'removed' && !p.reason && p.removal_date > '2026-11-12').length;
   const problems = (c) => {
     const bad = [];
     const later = c.site.notOffered.filter((p) => p.from);
@@ -5028,14 +5057,14 @@ console.log('\n115. The laws of 195 countries applied: fifteen more places from 
     if (!arows.filter((r) => r.includes('提供しない国に足しました')).every((r) => r.includes('2026-11-12 に Claude が決めました。'))) bad.push('a narrowing without its maker');
     const nf = asec.split('\n### 取り寄せられなかった文\n')[1] || '';
     if (!later.filter((p) => p.read === 'not fetched' || (p.read === false && p.place !== 'Tanzania' && p.place !== 'Kenya') || p.place === 'Kenya' || p.place === 'Tanzania').every((p) => nf.split('\n### ')[0].includes(p.ja))) bad.push('a text not fetched that is not listed');
-    if (!asec.includes('いま載っている ' + c.listed.length + ' 件の記録は、どれも日本に住む運営者だけが著者で') || !c.listed.every((p) => (p.authors || []).every((a) => a.orcid === c.site.operator.orcid))) bad.push('the listed records');
+    if (!asec.includes('いま載っている ' + c.then + ' 件の記録は、どれも日本に住む運営者だけが著者で') || !c.listed.every((p) => (p.authors || []).every((a) => a.orcid === c.site.operator.orcid))) bad.push('the listed records');
     if (!asec.includes('選び方は、2026-11-12 に Claude が決めました。') || !asec.includes('### 下げられずに残る危険')) bad.push('the rule of choice, or the risks that remain');
     return bad;
   };
   const ctx = { site: J('site.json'), changes: J('data/policy-changes.json'), news: J('data/news.json'), sub: read(path.join(ROOT, 'policies', 'submission.md')), subj: read(path.join(ROOT, 'policies', 'submission.ja.md')),
     pv: read(path.join(ROOT, 'policies', 'privacy.md')), pvj: read(path.join(ROOT, 'policies', 'privacy.ja.md')), form: read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission.yml')),
     formj: read(path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'submission-ja.yml')), rv: read(path.join(ROOT, 'docs', 'legal-review.md')), audit: read(path.join(ROOT, 'docs', 'legal-audit-2026-11-12.md')),
-    RAW: J('verification/sources-raw.json'), listed: listedNow };
+    RAW: J('verification/sources-raw.json'), listed: listedNow, then: listedThen };
   const pr = problems(ctx);
   ok('the ' + ctx.site.notOffered.filter((p) => p.from).length + ' places of 2026-11-26 are in site.json, the Submission Policy, the legal review and the audit, each read at its source or marked as not fetched as the fetched texts show, and announced on the top page, in the feed and in the news 14 days ahead',
     pr.length === 0, pr.join(' / '));
@@ -5561,7 +5590,7 @@ console.log('\n119. What a fifth, read-only pass of 2026-11-12 found: PDFs copie
     && pageProblems({ ...S.PAGES, 'arxiv-bulk-data': { url: 'https://info.arxiv.org/help/bulk_data.html' } }, RAW).length > 0
     && pageProblems(S.PAGES, (() => { const r = clone(RAW); delete r.pages['arxiv-bulk-data']; return r; })()).length > 0
     && pageProblems(S.PAGES, r1).length > 0 && pageProblems(S.PAGES, r2).length > 0 && pageProblems(S.PAGES, r3).length > 0
-    && policyProblems(sh('process.md', 'every repository except Zenodo:', 'every repository except Zenodo, Figshare, arXiv and Research Square:'), pool, site.termsNotice || {}, changes).length > 0
+    && policyProblems(sh('process.md', 'every repository except Zenodo, and so', 'every repository except Zenodo, Figshare, arXiv and Research Square, and so'), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(sh('policies/copyright.md', 'Since then, it does not, because their terms forbid it.', ''), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(sh('policies/copyright.ja.md', 'or manual process to monitor or copy any content', 'or manual process to copy any content'), pool, site.termsNotice || {}, changes).length > 0
     && policyProblems(SHOWN, pool, { text: '' }, changes).length > 0
@@ -5815,8 +5844,8 @@ console.log('\n121. Dates are Japan time, and never earlier than the day the cha
   const breaks = [
     ['the Copyright Policy dated back to the clock of the work', mut('policies/copyright.md', 'Last updated: 2026-11-23.', 'Last updated: 2026-11-14.'), facts],
     ['its translation dated back', mut('policies/copyright.ja.md', '最終更新：2026-11-23。', '最終更新：2026-11-14。'), facts],
-    ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-15.', 'Last updated: 2026-11-14.'), facts],
-    ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-12。', '最終更新：2026-11-11。'), facts],
+    ['the page for repositories dated back', mut('repositories.md', 'Last updated: 2026-11-23.', 'Last updated: 2026-11-22.'), facts],
+    ['the translation of the page in plain words dated back', mut('easy.ja.md', '最終更新：2026-11-23。', '最終更新：2026-11-22。'), facts],
     ['the page of policies dated back to the day before its English text', mut('policy.ja.md', '最終更新：2026-11-20。', '最終更新：2026-11-19。'), facts],
     ['the entry on Figshare dated back', feedWith((d) => d.map((c) => (/Figshare and Research Square/.test(c.text) ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
     ['the entry on the places dated back', feedWith((d) => d.map((c) => (c.title.startsWith('The day from which each place') ? Object.assign({}, c, { date: '2026-11-12' }) : c))), facts],
@@ -7271,7 +7300,7 @@ console.log('\n133. The shelf (2026-11-14): field codes and colours, shelf marks
     ['a record withdrawn but not marked', recs((p) => Object.assign(p, { status: 'withdrawn', withdrawal_date: '2026-11-20', withdrawal_note: 'x' }))],
     ['a spine missing from the top page', pg('index.html', /<li class="[^"]+"><a href="\.\/abs\/[^"]+">[\s\S]*?<\/a><\/li>\n/, '')],
     ['a spine twice on the Japanese top page', pg('index.ja.html', /(<li class="[^"]+"><a href="\.\/abs\/[^"]+">[\s\S]*?<\/a><\/li>\n)/, '$1$1')],
-    ['a register entry out of order', pg('register.html', /(<tr><td class="no">1<\/td>[\s\S]*?<\/tr>)(<tr><td class="no">2<\/td>[\s\S]*?<\/tr>)/, '$2$1')],
+    ['a register entry out of order', pg('register.html', /(<tr><td class="no">\d+<\/td>[\s\S]*?<\/tr>)(<tr><td class="no">\d+<\/td>[\s\S]*?<\/tr>)/, '$2$1')],
     ['a register entry with a wrong day', pg('register.ja.html', '<time datetime="' + firstListed.listed + '">' + firstListed.listed + '</time>', '<time datetime="2026-10-30">2026-10-30</time>')],
     ['ids not in the order of listing', w('records', real.records.concat([{ id: '2099.9999', status: 'removed', removal_date: '2099-01-02', listed: firstListed.listed.replace(/^\d{4}/, '2000') }]))],
     ['a removed record in the register', pg('register.html', '</table>', '<tr><td>' + removed.id + '</td></tr></table>')],
@@ -8527,6 +8556,7 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
   const textOf = (h) => String(h || '').replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
   const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const sectionOf = (t, head, stop) => { const s = String(t || ''); const i = s.indexOf('\n' + head + '\n'); if (i < 0) return ''; const j = s.indexOf(stop, i + head.length + 2); return s.slice(i, j < 0 ? undefined : j); };
+  const addedLater = (t) => ((/, and added (.+?) on 2026-11-23\./.exec(String(t || '')) || [])[1] || '').split(/, | and /).filter(Boolean);
   function verdict(x) {
     const bad = [];
     const parts = {};
@@ -8608,12 +8638,15 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
     }
     const watched = ST ? ST.statutes.filter((e) => e.law === L && /^(Trademark Act|Unfair Competition Prevention Act)$/.test(e.name)) : [];
     for (const q of QUOTED) if (!watched.some((e) => e.name + ' ' + e.article === q && /^[0-9a-f]{64}$/.test(e.sha256 || ''))) bad.push(q + ' is not watched');
-    /* The record: the changelog and the audit, with their numbers. */
+    /* The record: the changelog and the audit, with their numbers. The changelog of 2026-11-18 counts the names of that day; a name
+     * added later is named, with its day, in the sentence on how the list was found (Elsevier on 2026-11-23), in both languages. */
     const ch = sectionOf(x['CHANGELOG.md'], '## 2026-11-18', '\n## ');
+    const enAdded = addedLater(x['disclaimer.md']), jaAdded = ((/2026-11-23 に (.+?) を足しました。/.exec(String(x['disclaimer.ja.md'] || '')) || [])[1] || '').split('、').filter(Boolean);
+    if (JSON.stringify(enAdded) !== JSON.stringify(jaAdded) || !enAdded.every((n) => (C.ennames || []).includes(n))) bad.push('the names added after 2026-11-18 differ between the languages or are not in the list');
     const line = ch.split('\n').find((l) => l.startsWith('- Names and trademarks.')) || '';
     const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
     if (!line.includes('(2026-11-18 に利用者が求め、Claude が書きました)') || !line.includes('A new check (141)') || !line.includes('It lists the ' + C.en + ' names and marks of Sophaxis')
-      || !line.includes('It lists the ' + (C.ennames || []).length + ' names of others') || !line.includes('EUIPO on 2026-11-17 with 0 results')
+      || !line.includes('It lists the ' + ((C.ennames || []).length - addedLater(x['disclaimer.md']).length) + ' names of others') || !line.includes('EUIPO on 2026-11-17 with 0 results')
       || !line.includes(WORDS[watched.length - 2] + ' articles of the Trademark Act and of the Unfair Competition Prevention Act joined the weekly watch')) bad.push('CHANGELOG.md: the entry, who asked and who wrote, or its numbers');
     const a = String(x[AUD] || ''), i = a.indexOf(AHEAD), sec = i < 0 ? '' : a.slice(i, a.indexOf('\n## ', i + 5));
     const rows = sec.split('\n').filter((l) => /^\| (?!---|箇所 \|)/.test(l)).map((l) => l.slice(2, -2).split(' | '));
@@ -8640,7 +8673,8 @@ console.log('\n141. Names and trademarks (2026-11-18): the section of the Discla
     ['the number of names and marks changed', w('disclaimer.md', 'Sophaxis uses these **7** names and marks.', 'Sophaxis uses these **8** names and marks.')],
     ['a name or mark taken out of one list', w('disclaimer.ja.md', '- 載っている作品のバッジ `badge.svg`：2026-11-10。\n', '')],
     ['a first day moved', w('disclaimer.md', '- The logo as a square PNG, `og.png`: 2026-10-30.', '- The logo as a square PNG, `og.png`: 2026-10-29.')],
-    ['the number of names of others changed', w('disclaimer.ja.md', '次の **75** の', '次の **76** の')],
+    ['the number of names of others changed', w('disclaimer.ja.md', '次の **76** の', '次の **77** の')],
+    ['a name added later in one language only', w('disclaimer.ja.md', '2026-11-23 に Elsevier を足しました。', '')],
     ['a name the site does not use', Object.assign({}, real, { 'disclaimer.md': real['disclaimer.md'].replace(', ZimLII.', ', ZimLII, Mendeley.').replace('these **75** services', 'these **76** services'), 'disclaimer.ja.md': real['disclaimer.ja.md'].replace('、ZimLII。', '、ZimLII、Mendeley。').replace('次の **75** の', '次の **76** の') })],
     ['a name found only on the page for finding a work', Object.assign({}, real, { 'disclaimer.md': real['disclaimer.md'].replace(', ZimLII.', ', ZimLII, researchmap.').replace('these **75** services', 'these **76** services'), 'disclaimer.ja.md': real['disclaimer.ja.md'].replace('、ZimLII。', '、ZimLII、researchmap。').replace('次の **75** の', '次の **76** の') })],
     ['the two lists different', w('disclaimer.ja.md', '、Bing、Bluesky、', '、Bluesky、Bing、')],
@@ -9371,7 +9405,8 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
 
   /* The note on a new version, in the build and in the intake. */
   const B = require('../build.js'), I = require('../tools/intake.js');
-  const rec = JSON.parse(read(path.join(ROOT, 'data', 'papers', '2026.0001.json')));
+  /* A record with two versions: the fixture, since 2026.0001 of data/papers was removed on 2026-11-23. */
+  const rec = JSON.parse(read(path.join(__dirname, 'fixtures', 'papers', '2026.0001.json')));
   const two = (note) => Object.assign({}, rec, { versions: [rec.versions[0], Object.assign({}, rec.versions[1], note === undefined ? {} : { note })] });
   const errs = (p) => B.validate(p, rec.id + '.json').length;
   const page = B.recordPage(two('Corrected the proof of Lemma 2 & added references.'));
@@ -9390,11 +9425,13 @@ console.log('\n145. A comparison with the policies of arXiv (2026-11-21): recons
   {
     /* The note goes with the version whose DOI the form gives, not simply with the newest one the repository lists. */
     const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'sx145-'));
-    fs.copyFileSync(path.join(ROOT, 'data', 'papers', rec.id + '.json'), path.join(dir, rec.id + '.json'));
-    const base = rec.versions[1].doi.replace(/\.v\d+$/, '');
+    /* The fixture with versions numbered as Figshare numbers them, the case this guards (2026.0001 of data/papers was one until its removal). */
+    const recV = Object.assign({}, rec, { versions: rec.versions.map((v, i) => Object.assign({}, v, { doi: '10.6084/m9.figshare.7654321.v' + (i + 1) })) });
+    fs.writeFileSync(path.join(dir, rec.id + '.json'), JSON.stringify(recV, null, 2) + '\n');
+    const base = recV.versions[1].doi.replace(/\.v\d+$/, '');
     let d = null;
     try { d = I.draft({ form: { update: rec.id, doi: base + '.v3', changes: 'Fixed a<b.' }, login: 'x', issue: 1, meta: {}, result: {}, paperDir: dir, today: '2026-11-21',
-      versions: rec.versions.map((v) => ({ doi: v.doi, date: v.date })).concat([{ doi: base + '.v3', date: '2026-11-01' }, { doi: base + '.v4', date: '2026-11-02' }]) }); } catch (e) { d = null; }
+      versions: recV.versions.map((v) => ({ doi: v.doi, date: v.date })).concat([{ doi: base + '.v3', date: '2026-11-01' }, { doi: base + '.v4', date: '2026-11-02' }]) }); } catch (e) { d = null; }
     fs.rmSync(dir, { recursive: true, force: true });
     const vs = d && d.record ? d.record.versions : [];
     notes.push(['the intake puts the note on the version whose DOI the form gives', vs.length === 4 && vs[2].note === 'Fixed a<b.' && vs[3].note === undefined && /figshare/.test(base)]);
@@ -9480,6 +9517,8 @@ console.log('\n146. The legal handling of the design (2026-11-23): the page in b
   /* The served images (the cards as one pattern), the font files, and the sizes of the PNG and ICO files. */
   real.__images = served.filter((f) => IMG.test(f)).map((f) => f.slice(5)).map((f) => (/^card\/\d{4}\.\d{4}\.png$/.test(f) ? 'card/<id>.png' : f)).filter((f, i, a) => a.indexOf(f) === i).sort();
   real.__cards = served.filter((f) => /^site\/card\/\d{4}\.\d{4}\.png$/.test(f)).length;
+  /* The cards drawn again on 2026-11-22: those served now, and those of records removed since (2026.0001 on 2026-11-23). */
+  real.__cardsThen = real.__cards + fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status === 'removed' && !p.reason && p.removal_date > '2026-11-22').length;
   real.__fonts = served.filter((f) => FONT.test(f));
   const png = (f) => { const b = fs.readFileSync(path.join(ROOT, 'site', f)); return b.readUInt32BE(16) + 'x' + b.readUInt32BE(20); };
   const ico = (f) => { const b = fs.readFileSync(path.join(ROOT, 'site', f)); return Array.from({ length: b.readUInt16LE(4) }, (_, i) => b[6 + 16 * i] || 256).sort((p, q) => p - q).join(','); };
@@ -9546,7 +9585,7 @@ console.log('\n146. The legal handling of the design (2026-11-23): the page in b
       const m = COUNT[lang].images.exec(t), r = COUNT[lang].redraw.exec(t);
       const own = x.__images.filter((y) => y !== 'card/<id>.png').length;
       if (!m || Number(m[1]) !== own || Number(m[2]) !== x.__cards) bad.push(f + ': the counts of images (' + own + ') and cards (' + x.__cards + ')');
-      if (!r || Number(r[1]) !== x.__cards) bad.push(f + ': the count of the cards drawn again');
+      if (!r || Number(r[1]) !== x.__cardsThen) bad.push(f + ': the count of the cards drawn again');
       /* The table: its files are the images served, no more and no fewer. */
       const sec = t.split('\n## ')[1] || '';
       const rows = sec.split('\n').filter((l) => /^\| (?!---)/.test(l)).slice(1).map((l) => l.slice(2, -2).split(' | '));
@@ -9639,7 +9678,8 @@ console.log('\n146. The legal handling of the design (2026-11-23): the page in b
     ['a conclusion drawn in Japanese', w('design.ja.md', 'これらの条が Sophaxis に当てはまるかどうかについて、この頁は結論を出しません。', 'これらの条は Sophaxis に当たりません。')],
     ['a section taken out', w('design.md', '\n## People and organisations\n', '\n## People\n')],
     ['the count of images changed', w('design.md', 'The site serves **6** image files', 'The site serves **7** image files')],
-    ['the count of cards changed in Japanese', w('design.ja.md', '共有カードを **5** 枚', '共有カードを **4** 枚')],
+    ['the count of cards changed in Japanese', w('design.ja.md', '共有カードを **4** 枚', '共有カードを **5** 枚')],
+    ['the cards drawn again counted as those served now', w('design.md', 'Claude drew the **5** cards again', 'Claude drew the **4** cards again')],
     ['a served image the table does not list', v('__images', real.__images.concat(['photo.jpg']).sort())],
     ['a row of the table taken out', w('design.ja.md', '| 載っている作品のバッジ | `badge.svg` | `build.js` が書くもの | 定めていません | 検査が組み直します |\n', '')],
     ['a font file served', v('__fonts', ['site/font.woff2'])],
@@ -9666,6 +9706,361 @@ console.log('\n146. The legal handling of the design (2026-11-23): the page in b
   const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
   ok('break on purpose: each of ' + breaks.length + ' ways (a lawyer, a conclusion, a section, the counts, an image or a row, a font file, @font-face, motion, the fonts of the cards, the size of an icon, an author, a licence for the logo, an article not watched or not quoted, the twins, a quotation or a recorded text changed, the section of a watched article, a stylesheet from elsewhere, a drawing neither an image nor hidden, the contrast, the links, the sitemap, a registration, the record) fails',
     missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 147 */
+console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only from SSRN, arXiv or Jxiv, an issue opened before that day under the 15, a listed work kept with its new versions from its own repository; the same lists in the policy in both languages, the forms, the intake, site.json, the notice and the feed; at least 14 days ahead; the intake on made-up cases; every count in prose computed; Figshare named only where dated, kept or for the one listed record; the ROAR and Open Access Directory lines of the README');
+{
+  /* The owner wrote on 2026-11-23 「ソファクシスの入り口締めるぞ SSRNかarXivかJxivのみにする」 and Claude decided the details: from
+   * site.json entrance.from (2026-12-07, Japan time) a new work whose submission issue is opened on or after that day is accepted only
+   * from the repositories of entrance.repositories; an issue opened before that day is judged under every repository of
+   * site.json "repositories"; a listed work stays listed, and a new version of it comes from the repository where it is listed. The
+   * same day the owner asked for Figshare to be taken out of what Sophaxis says of its handling today ("figshareのやつは削除して"): the one
+   * listed record at Figshare stays, under the rule above, and the history is not rewritten. Every list here is computed from
+   * site.json and every count from the lists and the records, so that no number is typed twice. */
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const B = require('../build.js'), I = require('../tools/intake.js');
+  const ANNOUNCED = '2026-11-23', TITLE = 'New works only from SSRN, arXiv or Jxiv';
+  const plain = (h) => String(h || '').replace(/<[^>]+>/g, '').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+  const dayNo = (d) => Date.parse(d + 'T00:00:00Z') / 86400000;
+  const dayBefore = (d) => new Date((dayNo(d) - 1) * 86400000).toISOString().slice(0, 10);
+  const orList = (xs) => xs.slice(0, -1).join(', ') + ' or ' + xs[xs.length - 1];
+  const andList = (xs) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1]);
+  const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  const FILES = ['site.json', 'data/policy-changes.json', 'policies/submission.md', 'policies/submission.ja.md', '.github/ISSUE_TEMPLATE/submission.yml', '.github/ISSUE_TEMPLATE/submission-ja.yml',
+    'tools/intake.js', 'build.js', 'faq.md', 'faq.ja.md', 'process.md', 'process.ja.md', 'README.md', 'repositories.md', 'repositories.ja.md', 'docs/opendoar.md', 'paper/paper.md', '.zenodo.json',
+    'easy.md', 'easy.ja.md', 'site/index.html', 'site/index.ja.html', 'site/submit.html', 'site/repositories.html', 'site/repositories.ja.html', 'site/policies/submission.html', 'site/policies/submission.ja.html',
+    'site/llms.txt', 'site/policies/changes.xml', 'verification/commitments.txt', 'CHANGELOG.md'];
+  /* The prose read for Figshare: every page and policy that says what Sophaxis does today, in both languages, and the forms. The history
+   * (the changelog, the feed and the news, the audits and reviews, the records of processing and provision, the reports) is not read. */
+  let tracked = [];
+  try { tracked = require('child_process').execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8' }).split('\n').filter(Boolean); } catch (e) { tracked = []; }
+  const HISTORY = /^(CHANGELOG\.md|docs\/(legal-audit-[\d-]+|legal-review|policy-comparison|records-of-processing|records-of-provision|outside-assessments|impact-assessment)\.md|data\/reports\/)/;
+  const PROSE = tracked.filter((f) => (/\.md$/.test(f) && !HISTORY.test(f) && !f.startsWith('templates/')) || /^\.github\/ISSUE_TEMPLATE\/.+\.yml$/.test(f));
+  const real = Object.fromEntries([...new Set(FILES.concat(PROSE))].map((f) => [f, T(f)]));
+  real.__papers = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  /* What the site serves for the removed record 2026.0001 (2026-11-23), and every file of site/ that names its Figshare DOI. */
+  const siteFiles147 = fs.readdirSync(path.join(ROOT, 'site'), { recursive: true }).filter((f) => fs.statSync(path.join(ROOT, 'site', f)).isFile() && /\.(html|json|xml|txt|bib|ris)$/.test(f));
+  real.__figshareDoi = siteFiles147.filter((f) => read(path.join(ROOT, 'site', f)).includes('10.6084/m9.figshare.34419198')).sort();
+  real.__removedFiles = ['data/pdf/2026.0001v1.pdf', 'data/pdf/2026.0001v2.pdf', 'assets/cards/2026.0001.png', 'site/pdf/2026.0001v1.pdf', 'site/pdf/2026.0001v2.pdf'].filter((f) => fs.existsSync(path.join(ROOT, f)));
+  real.__notice0001 = T('site/abs/2026.0001.html');
+  /* The sentences that still name Figshare without a day of the entrance or the listed record, and why each stays. */
+  const KEPT = {
+    'policies/copyright.md': ['Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script.', /* the history of 2026-11-13 */
+      "Figshare's terms list, among what a user shall not do,", 'The only exception is for means "expressly authorized for you by Figshare in advance in writing".', /* the terms that history rests on */
+      'The copies already taken from Figshare were taken off the site on 2026-11-23, when their record was removed.', /* the copies of the removed record */
+      "These pages were read on 2026-11-12: Zenodo's directly, and Figshare's and Research Square's from the Internet Archive's copies.", 'Since the change was published on 2026-11-13, this includes Figshare and Research Square.'],
+    'policies/copyright.ja.md': ['この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。', 'Figshare の規約は、利用者がしてはならないことに', '例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。',
+      'Figshare からすでに写したものは、その記録を削除した 2026-11-23 に、サイトから外しました。', 'Zenodo の頁は直に読み、Figshare と Research Square の頁は Internet Archive の写しから読みました。', 'Figshare・Research Square・arXiv を含むほかの預け先については、著者が、預けた PDF を投稿の issue に添付できます。'],
+    'repositories.md': ['Until this change was published on 2026-11-13, Sophaxis also fetched PDFs from Figshare and Research Square;'], 'repositories.ja.md': ['この変更を公開した 2026-11-13 までは、Figshare と Research Square からも取っていました。'],
+    /* The names the site uses (check 141), and the history of ROAR's description. */
+    'disclaimer.md': ['Fedlex, Figshare, GitHub'], 'disclaimer.ja.md': ['Fedlex、Figshare、GitHub'],
+    'README.md': ['The earlier description named three repositories, Figshare among them, and said that every record had a PDF copy.', '前の説明は、Figshare を含む三つの預け先の名を挙げ、どの記録にも PDF の写しがあると書いていました。'],
+  };
+  const sentences = (t) => String(t || '').split('\n').flatMap((l) => l.split(/(?<=[.。!?])\s+|(?<=。)/));
+  function problems(x, from = null) {
+    const bad = [];
+    const papers = x.__papers || [];
+    let site = {}, feed = [];
+    try { site = JSON.parse(x['site.json']); } catch (e) { return ['site.json does not parse']; }
+    try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { return ['the feed does not parse']; }
+    const E = Object.assign({}, site.entrance || {}, from ? { from } : {});
+    const FROM = E.from, UNTIL = FROM ? dayBefore(FROM) : '';
+    const all = [...new Set(Object.values(site.repositories || {}))], now = E.repositories || [], others = all.filter((n) => !now.includes(n));
+    const prefix = Object.fromEntries(Object.entries(site.repositories || {}).map(([p, n]) => [n, p]));
+    const NA = all.length, NE = now.length, NO = others.length;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(FROM || '') || E.announced !== ANNOUNCED) bad.push('site.json: entrance needs the day of effect and the day announced (' + ANNOUNCED + ')');
+    if (dayNo(FROM) - dayNo(ANNOUNCED) < 14) bad.push('the day of effect ' + FROM + ' is less than 14 days after ' + ANNOUNCED);
+    if (JSON.stringify(now) !== JSON.stringify(['SSRN', 'arXiv', 'Jxiv']) || NE + NO !== NA || NO < 1) bad.push('site.json: the entrance is not SSRN, arXiv and Jxiv, each a repository of site.json');
+    if (B.entranceProblems(E, site.repositories).length) bad.push('build.js refuses the entrance: ' + B.entranceProblems(E, site.repositories).join('; '));
+    /* The intake reads site.json, never a list of its own. */
+    const ix = String(x['tools/intake.js'] || '');
+    if (!ix.includes('const ENTRANCE = SITE.entrance;') || !ix.includes('checks.push(repositoryCheck(form.doi, opened, form.update, listed));') || /'(Zenodo|SSRN|arXiv|Jxiv)'/.test(ix.slice(ix.indexOf('function repositoryCheck'), ix.indexOf('function check(')))) bad.push('tools/intake.js: the row of the repository does not come from site.json');
+    /* The Submission Policy, in both languages. */
+    const sub = String(x['policies/submission.md'] || ''), subJa = String(x['policies/submission.ja.md'] || '');
+    const sec = (t, head) => { const i = t.indexOf(head), j = i < 0 ? -1 : t.indexOf('\n## ', i + head.length); return i < 0 ? '' : t.slice(i, j < 0 ? undefined : j); };
+    const ent = sec(sub, '\n## The entrance from ' + FROM + '\n'), entJa = sec(subJa, '\n## ' + FROM + ' からの入り口\n');
+    /* 2026.0001, the one record at Figshare, removed on 2026-11-23 at its author's request as the Withdrawal Policy and the Takedown
+     * Policy set out: only its id, the word and the day stay; its PDF copies and its card are gone; its page is the notice; no file
+     * served names its DOI; and no record shown is at Figshare. */
+    const r1 = papers.find((p) => p.id === '2026.0001');
+    if (!r1 || JSON.stringify(r1) !== JSON.stringify({ id: '2026.0001', status: 'removed', removal_date: ANNOUNCED })) bad.push('2026.0001 is not removed, keeping only its id, the word and ' + ANNOUNCED);
+    if ((x.__removedFiles || []).length) bad.push('files of 2026.0001 left: ' + x.__removedFiles.join(', '));
+    if ((x.__figshareDoi || []).length) bad.push('site/ names the DOI of 2026.0001: ' + x.__figshareDoi.join(', '));
+    if (!/This record has been removed|has been removed/.test(String(x.__notice0001 || '')) || /Repeated Games|Cyclic Operator/.test(String(x.__notice0001 || ''))) bad.push('site/abs/2026.0001.html is not the notice of a removed record');
+    if (papers.some((p) => p.status !== 'removed' && (p.versions || []).some((v) => B.repoName(v.doi) === 'Figshare'))) bad.push('a record shown is at Figshare');
+    const RE_EN = 'The operator defines Elsevier, Cornell University and JST (the Japan Science and Technology Agency) as trusted institutions and publishers, and Sophaxis accepts SSRN, arXiv and Jxiv, the repositories that the operator connects with them';
+    const RE_JA = '運営者は、エルゼビア・コーネル大学・JST（科学技術振興機構）を信頼できる機関・出版社と定め、Sophaxis は、運営者がそれらに結び付ける SSRN・arXiv・Jxiv を受け付けます。';
+    const SAYS = [
+      [ent, 'From ' + FROM + ', a new work whose submission issue is opened on or after that day is accepted only if it is deposited in ' + orList(now) + ', with a DOI from there.'],
+      [ent, 'The other ' + NO + ' repositories, which the examples below name, are no longer accepted for a new work.'],
+      [ent, 'A submission whose issue is opened before ' + FROM + ' is judged under the list of ' + NA + ' repositories, even when it is decided on or after that day.'],
+      [ent, 'A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.'],
+      [ent, RE_EN + '.'],
+      [ent, "This is the operator's own definition: it rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it."],
+      [ent, 'Listed records and authors who followed the earlier rules lose nothing.'],
+      [ent, 'The automatic check tells the repository by the beginning of the DOI (' + now.map((n) => '`' + prefix[n] + '`').join(', ') + ').'],
+      [ent, 'The owner decided this on ' + ANNOUNCED + ', and Claude decided the details.'],
+      [sub, 'Until ' + UNTIL + ', the work must already be deposited, with a DOI, in ' + now.join(', ') + ' or one of the ' + NO + ' other repositories that the examples below name, ' + NA + ' in all.'],
+      [sub, 'From ' + FROM + ', a new work must be deposited in ' + orList(now) + ', as "The entrance from ' + FROM + '" below sets out.'],
+      [sub, '- From ' + FROM + ', a new work whose DOI is only from ' + orList(others) + '. Depositing it also in ' + orList(now) + ' makes it eligible.'],
+      [sub, 'It must not be in any of the ' + NA + ' repositories, and it must share an author with the record.'],
+      [sub, 'For an issue opened before ' + FROM + ', this is, in Zenodo, the DOI of all versions, and in Figshare the DOI of the first version.'],
+      [sub, 'Last updated: ' + ANNOUNCED + '.'],
+      [entJa, FROM + ' から、その日以後に issue を開いた新しい作品は、' + now.join('・') + ' のどれかに預け、そこの DOI を得ているときに限り受け付けます。'],
+      [entJa, 'ほかの ' + NO + ' の預け先（下の例が挙げます）は、新しい作品には受け付けません。'],
+      [entJa, FROM + ' より前に開いた issue は、その後も、' + NA + ' の預け先の一覧で判断します。'],
+      [entJa, 'すでに載っている作品は載ったままで、その新しい版は、作品が載っている預け先から受け付けます。'],
+      [entJa, RE_JA + '運営者の定めで、ほかの預け先の評価でも、三つの組織の推薦でもありません。'],
+      [entJa, '自動の確認は、DOI の始まり（' + now.map((n) => '`' + prefix[n] + '`').join('、') + '）で預け先を見分けます。'],
+      [entJa, ANNOUNCED + ' に利用者が決め、細かいところは Claude が決めました。'],
+      [subJa, UNTIL + ' までは、作品は、' + now.join('・') + ' と、下の例が挙げるほかの ' + NO + '、合わせて ' + NA + ' の預け先のどれかに、DOI 付きで預けてある必要があります。'],
+      [subJa, FROM + ' からの新しい作品は、下の「' + FROM + ' からの入り口」のとおり、' + now.join('・') + ' に限ります。'],
+      [subJa, '- ' + FROM + ' から、DOI が ' + others.join('、') + ' のどれかのものだけである新しい作品。' + now.join('・') + ' のどれかにも預ければ、対象になります。'],
+      [subJa, NA + ' の預け先のどれかにあるものであってはならず、'],
+      [subJa, FROM + ' より前に開いた issue では、Zenodo ではすべての版の DOI、Figshare では最初の版の DOI がこれに当たります。'],
+      [subJa, '最終更新：' + ANNOUNCED + '。'],
+    ];
+    SAYS.forEach(([t, s], i) => { if (!String(t).includes(s)) bad.push('the Submission Policy (' + (i + 1) + '): "' + s.slice(0, 60) + '"'); });
+    if (/is at Figshare|件は Figshare に|2026\.0001/.test(ent + entJa)) bad.push('the policy still names the removed record at Figshare');
+    for (const [f, t] of [['repositories.md', 'nor of Elsevier, Cornell University or JST (the Japan Science and Technology Agency), which the operator defines as trusted institutions and publishers'],
+      ['repositories.ja.md', 'エルゼビア、コーネル大学、JST（科学技術振興機構）とも同じです。'], ['disclaimer.md', 'It is not affiliated with, endorsed by or a partner of Elsevier, Cornell University or JST'], ['disclaimer.ja.md', 'エルゼビア、コーネル大学、JST（科学技術振興機構）とも、提携しておらず、推薦も受けておらず、協力関係にもありません。']])
+      if (!String(x[f] || '').includes(t)) bad.push(f + ': no disclaimer toward Elsevier, Cornell University and JST');
+    /* The definition is the operator's: no page calls the three, or their repositories, trusted by anyone else, or the others untrusted. */
+    for (const f of PROSE.concat(['site.json', 'data/policy-changes.json'])) if (/(?:Sophaxis|independent|objective)[^.\n]{0,40}(?:rates?|certif\w*|endors\w*) (?:SSRN|arXiv|Jxiv|Elsevier)|untrust\w*|信頼できない/.test(String(x[f] || ''))) bad.push(f + ': speaks of trust as more than the operator\'s definition');
+    /* The built policies. */
+    for (const [b, src] of [['site/policies/submission.html', sub], ['site/policies/submission.ja.html', subJa]]) {
+      const p = plain(x[b]);
+      for (const [t, s] of SAYS) if ((t === ent || t === sub) === (src === sub) && src.includes(s) && !p.includes(plain(s.replace(/`/g, '').replace(/^- /, '')))) { bad.push(b + ': not built ("' + s.slice(0, 40) + '")'); break; }
+    }
+    /* The forms: the same lists with their prefixes, in the order of site.json. */
+    const fe = String(x['.github/ISSUE_TEMPLATE/submission.yml'] || ''), fj = String(x['.github/ISSUE_TEMPLATE/submission-ja.yml'] || '');
+    if (!fe.includes('description: List a preprint that you have deposited in ' + orList(now) + ' (until ' + UNTIL + ', also in ' + orList(others) + ').')
+      || !fe.includes('description: From ' + FROM + ', a new work needs a DOI from ' + orList(now.map((n) => n + ' (' + prefix[n] + '…)')) + ', and a new version of a listed work a DOI from the repository where the work is listed. Until ' + UNTIL + ', a DOI from ' + orList(others.map((n) => n + ' (' + prefix[n] + '…)')) + ' is also accepted.')) bad.push('the English form');
+    if (!fj.includes('description: ' + now.join('・') + '（' + UNTIL + ' までは、' + others.join('、') + ' も）に預けたプレプリント')
+      || !fj.includes('description: ' + FROM + ' からは、新しい作品には ' + now.map((n) => n + '（' + prefix[n] + '…）').join('、') + 'の DOI が、載っている作品の新しい版には、作品が載っている預け先の DOI が要ります。' + UNTIL + ' までは、' + others.map((n) => n + '（' + prefix[n] + '…）').join('、') + 'の DOI も受け付けます。')) bad.push('the Japanese form');
+    if (/placeholder: 10\.5281\/zenodo/.test(fe + fj)) bad.push('a form shows a Zenodo DOI as its example');
+    /* The notice on the top page, the feed, both top pages and the commitments. */
+    const NOTICE = 'From ' + FROM + ', for a new work whose submission issue is opened on or after that day, Sophaxis accepts only a work deposited in ' + orList(now) + ', with a DOI from that repository; the other ' + NO + ' repositories, ' + andList(others) + ', are no longer accepted for a new work, and a work deposited only in one of them becomes eligible when it is deposited also in ' + orList(now) + '; a submission whose issue is opened before that day is judged under the list of ' + NA + '; and a work already listed stays listed, and a new version of it is accepted from the repository where it is listed.';
+    if (!String((site.termsNotice || {}).text || '').includes(NOTICE + ' ' + RE_EN + "; this is the operator's own definition, which rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it.")) bad.push('the notice on the top page');
+    if (!plain(x['site/index.html']).includes(NOTICE)) bad.push('site/index.html: the notice is not built');
+    const e = feed.find((c) => c.title === TITLE);
+    if (!e || e.date !== ANNOUNCED || e.from !== FROM || JSON.stringify(e.policies) !== '["submission"]' || feed.indexOf(e) !== 0
+      || !String(e.text).startsWith('From ' + FROM + ', for a new work whose submission issue is opened on or after that day, Sophaxis accepts the work only if it is deposited in ' + orList(now) + ', with a DOI from that repository. ')
+      || !String(e.text).includes(' The other ' + NO + ' repositories, ' + andList(others) + ', are no longer accepted for a new work;')
+      || !String(e.text).includes(RE_EN + "; this is the operator's own definition, which rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it.")
+      || !String(e.text).includes('A submission whose issue is opened before that day is judged under the list of ' + NA + '.') || !String(e.text).includes('so that narrowing the entrance breaks no record and penalises no author who followed the earlier rules')
+      || !String(e.text).includes('For Figshare, nothing else changes for authors: Sophaxis has copied no PDF from it by script since 2026-11-13.')
+      || !String(e.text).includes('It narrows what Sophaxis accepts, so it is announced on the top page at least 14 days ahead.') || !String(e.text).endsWith('The owner asked for this on ' + ANNOUNCED + ', and Claude decided the details.')) bad.push('the feed entry');
+    if (!e || !String(e.ja).startsWith(FROM + ' から、その日以後に投稿の issue を開いた新しい作品は、' + now.join('・') + ' のどれかに預け、その預け先の DOI を得ているときに限り受け付けます。')
+      || !String(e.ja).includes('ほかの ' + NO + ' の預け先、' + others.join('、') + ' は、新しい作品には受け付けません。')
+      || !String(e.ja).includes(RE_JA + '運営者の定めで、ほかの預け先の評価でも、三つの組織の推薦でもなく、三つの組織は Sophaxis と提携していません。')
+      || !String(e.ja).includes('その日より前に issue を開いた投稿は、' + NA + ' の預け先の一覧で判断します。') || !String(e.ja).includes('受け入れる範囲を狭めるので、14 日以上前にトップの頁で告知します。')
+      || !String(e.ja).endsWith(ANNOUNCED + ' に利用者が求め、細かいところは Claude が決めました。')) bad.push('the Japanese feed entry');
+    if (!plain(x['site/index.ja.html']).includes(e ? e.ja : '\u0000')) bad.push('site/index.ja.html: the Japanese notice does not list it');
+    if (!plain(x['site/policies/changes.xml']).includes(TITLE)) bad.push('the feed of policy changes is not built');
+    if ((site.topUpdated || {}).en !== ANNOUNCED || (site.topUpdated || {}).ja !== ANNOUNCED) bad.push('site.json: topUpdated is not ' + ANNOUNCED + ' in both languages');
+    const cm = String(x['verification/commitments.txt'] || '').split('\n');
+    for (const c of ['A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.', 'A submission whose issue is opened before ' + FROM + ' is judged under the list of ' + NA + ' repositories, even when it is decided on or after that day.'])
+      if (!cm.includes(c)) bad.push('the commitment "' + c.slice(0, 40) + '"');
+    /* The other pages and docs: the same lists, and every count computed. */
+    const PAGES = [
+      ['faq.md', 'From ' + FROM + ', for a new work, ' + andList(now) + '.\nUntil ' + UNTIL + ', also ' + andList(others) + ', ' + NA + ' in all.\n'],
+      ['faq.ja.md', FROM + ' からは、新しい作品には ' + now.join('・') + ' です。\n' + UNTIL + ' までは、' + others.join('、') + ' も受け付け、合わせて ' + NA + ' です。\n'],
+      ['process.md', '1. A preprint deposited, with a DOI, in ' + orList(now) + ' from ' + FROM + ', or, until ' + UNTIL + ', also in ' + orList(others) + '.'],
+      ['process.ja.md', '1. ' + FROM + ' からは ' + now.join('・') + ' のどれかに、' + UNTIL + ' までは ' + others.join('、') + ' のどれかにも、DOI 付きで預けたプレプリント。'],
+      ['README.md', 'Authors deposit their preprint in ' + orList(now) + ' (until ' + UNTIL + ', also in ' + orList(others) + ');'],
+      ['README.md', 'an issue opened before that day is judged under the ' + NA + ' repositories of `site.json`'],
+      ['README.md', RE_EN + "; this is the operator's own definition, which rates no other repository"],
+      ['README.md', 'Of the three connections, only arXiv\'s is read in a recorded source: arXiv\'s help pages (`arXiv/arxiv-docs` on GitHub, commit `a536f556`, read on 2026-11-23) say that on July 1, 2026 arXiv became an independent nonprofit, and that "arXiv, Inc. was legally established by two founding Members: the Simons Foundation and Cornell University".'],
+      ['README.md', "no recorded source says who runs SSRN or Jxiv, so those two connections are the operator's, not facts that Sophaxis has checked."],
+      ['README.md', RE_JA],
+      ['README.md', '- ' + FROM + ' から、その日以後に issue を開いた新しい作品は、' + now.join('・') + ' に預けたものだけを受け付けます。その日より前に開いた issue は、' + NA + ' の預け先の一覧で判断します。'],
+      ['README.md', ' From ' + FROM + ', a new work deposited only at Zenodo is not accepted on Sophaxis, so a request to add its record is declined; the records of works already listed, and of their new versions at Zenodo, can still be added.'],
+      ['repositories.md', ' From ' + FROM + ', a new work deposited only at Zenodo is not accepted on Sophaxis, so a request to add its record is declined;'],
+      ['repositories.ja.md', FROM + ' からは、Zenodo にだけ預けた新しい作品は Sophaxis が受け付けないので、その記録を足す依頼は断ります。'],
+      ['docs/opendoar.md', 'From ' + FROM + ', a new work is accepted only from ' + orList(now) + '; a listed work stays listed, and a new version of it is accepted from the repository where it is listed.'],
+      ['paper/paper.md', 'An author deposits a preprint in ' + orList(now) + ', and submits it'],
+      ['easy.md', '1. Put your paper in ' + orList(now) + '. You get a DOI. Until ' + UNTIL + ', some other places, such as Zenodo, also count.'],
+      ['easy.ja.md', '1. 論文を、' + now.join('・') + ' のどれかに置きます。DOI という番号がもらえます。' + UNTIL + ' までは、Zenodo などほかの場所でもかまいません。'],
+    ];
+    for (const [f, s] of PAGES) if (!String(x[f] || '').includes(s)) bad.push(f + ': "' + s.slice(0, 50) + '"');
+    let z = {};
+    try { z = JSON.parse(x['.zenodo.json']); } catch (e2) { bad.push('.zenodo.json does not parse'); }
+    if (!String(z.description || '').includes('(from ' + FROM + ', ' + orList(now) + ')')) bad.push('.zenodo.json: the description');
+    /* The built pages. */
+    if (!plain(x['site/submit.html']).includes('Deposit your preprint in ' + orList(now) + ' under ') || !plain(x['site/submit.html']).includes('From ' + FROM + ', a new work is accepted only from these ' + NE + '. Until ' + UNTIL + ', a new work deposited in ' + orList(others) + ' is also accepted.')) bad.push('site/submit.html');
+    const rp = plain(x['site/repositories.html']), rpj = plain(x['site/repositories.ja.html']);
+    const keptBy = (lang) => others.map((n) => [n, papers.filter((p) => p.status === 'listed' && (p.versions || []).length && B.repoName(p.versions[p.versions.length - 1].doi) === n).length]).filter(([, k]) => k > 0);
+    if (!rp.includes('From ' + FROM + ', a new work is accepted only from these ' + NE + ':') || !rp.includes('Until ' + UNTIL + ', a new work is also accepted from these ' + NO + '; a submission whose issue is opened before ' + FROM + ' is judged under all ' + NA + ':')
+      || !rp.includes('Of the records listed now, these are deposits there: ' + andList(keptBy().map(([n, k]) => k + ' at ' + n)) + '.')) bad.push('site/repositories.html');
+    if (!rpj.includes(FROM + ' から、新しい作品は、次の ' + NE + ' つの預け先からだけ受け付けます。') || !rpj.includes(UNTIL + ' までは、次の ' + NO + ' の預け先の新しい作品も受け付けます。' + FROM + ' より前に issue を開いた投稿は、合わせて ' + NA + ' の預け先で判断します。')
+      || !rpj.includes('いま載っている記録のうち、これらの預け先にあるのは、' + keptBy().map(([n, k]) => n + ' に ' + k + ' 件').join('、') + 'です。')) bad.push('site/repositories.ja.html');
+    if (!String(x['site/llms.txt'] || '').includes('- Accepted repositories for a new work, from ' + FROM + ' (' + NE + '): ' + now.join(', ') + '. Until ' + UNTIL + ', also (' + NO + '): ' + others.join(', ') + '.')) bad.push('site/llms.txt');
+    /* Every count of repositories written in these texts is one of the counts of site.json. */
+    const COUNTS = [NE, NO, NA];
+    for (const f of ['policies/submission.md', 'policies/submission.ja.md', 'faq.md', 'faq.ja.md', 'README.md', 'data/policy-changes.json', 'site.json', 'site/repositories.html', 'site/repositories.ja.html', 'site/first.html', 'site/first.ja.html', 'site/submit.html', 'site/llms.txt']) {
+      const t = f.startsWith('site/') && f.endsWith('.html') ? plain(x[f] || T(f)) : String(x[f] || T(f) || '');
+      for (const m of t.matchAll(/\b(\d+) (?:other )?repositories\b|\bother (\d+) repositories\b|\blist of (\d+)\b|\b(\d+) in all\b|\bthese (\d+)\b|\ball (\d+):|ほかの (\d+)|合わせて (\d+)|(\d+) の預け先|この (\d+) つ|次の (\d+) つ/g)) {
+        const n = Number(m.slice(1).find((v) => v !== undefined));
+        if (!COUNTS.includes(n) && !/^(43|15 places|15 of them)/.test(m[0])) bad.push(f + ': "' + m[0] + '" is not a count of the repositories (' + COUNTS.join(', ') + ')');
+      }
+    }
+    /* Figshare: named in the prose only where the sentence gives a day of the entrance, or the listed record, or where KEPT says why. */
+    for (const f of PROSE) {
+      for (const s of sentences(x[f])) if (/Figshare/.test(s) && !/2026-12-0[67]|2026\.0001/.test(s) && !(KEPT[f] || []).some((k) => s.includes(k))) bad.push(f + ': names Figshare undated: "' + s.trim().slice(0, 60) + '"');
+      for (const k of KEPT[f] || []) if (!String(x[f] || '').includes(k)) bad.push(f + ': a sentence kept is gone: "' + k.slice(0, 40) + '"');
+    }
+    const tn = sentences(String((site.termsNotice || {}).text || ''));
+    if (tn.some((s) => /Figshare/.test(s) && !/2026-12-07|2026-11-13/.test(s))) bad.push('the notice names Figshare undated');
+    /* Figshare stays in site.json for the issues opened before the day of the entrance, which are judged under the 15. */
+    if (site.repositories['10.6084/m9.figshare.'] !== 'Figshare') bad.push('site.json: Figshare is gone from the repositories, which the issues opened before ' + FROM + ' still need');
+    /* The README: the ROAR record as Claude read it, and the Open Access Directory as the operator reported it. */
+    const rd = String(x['README.md'] || '');
+    const ROAR = 'Sophaxis is an overlay preprint server for philosophy and mathematics, run by one individual. Each record points to a deposit with a DOI and is listed after moderation, not peer review. From ' + FROM + ', new works are accepted only from ' + orList(now) + '; works listed before then stay listed. It charges nothing to authors or readers. The records are exposed through OAI-PMH 2.0 (oai_dc and oai_openaire).';
+    const OAD = '* [https://sophaxis.vercel.app/ Sophaxis]. An overlay preprint server for philosophy and mathematics, run by one individual. From ' + FROM + ', new works are accepted only from ' + orList(now) + '; works listed before then stay listed. Free to authors and readers.';
+    if (!rd.includes('On ' + ANNOUNCED + ' the operator changed the description of the ROAR record, and Claude read it on the record page the same day (Last Modified: 23 Nov 2026 07:40): "' + ROAR + '"')
+      || !rd.includes(ANNOUNCED + ' に、運営者が ROAR の記録の説明を書き換えました。Claude は同じ日に、記録の頁でその文を読みました（Last Modified: 23 Nov 2026 07:40）：「' + ROAR + '」')) bad.push('README.md: the ROAR description');
+    if (!rd.includes('On ' + ANNOUNCED + ' the operator reported changing the entry in both sections to this line: `' + OAD + "` Claude could not read the page from here (HTTP 403), so this is the operator's report, not something Claude confirmed.")
+      || !rd.includes(ANNOUNCED + ' に、運営者は、二つの節の項目を次の行に書き換えたと伝えています：`' + OAD + '` この頁は、ここからは HTTP 403 で読めませんでした。Claude が確かめたものではなく、運営者の知らせです。')
+      || /Claude (?:read|confirmed|checked)[^.\n]{0,80}Open Access Directory|Open Access Directory[^.\n]{0,200}Claude (?:read|confirmed|checked) (?:it|the)/.test(rd)) bad.push('README.md: the Open Access Directory line, as the operator\'s report');
+    const ch = String(x['CHANGELOG.md'] || '');
+    const chDay = ch.slice(ch.indexOf('\n## ' + ANNOUNCED + '\n'), (ch.indexOf('\n## ', ch.indexOf('\n## ' + ANNOUNCED + '\n') + 5) + 1 || ch.length + 1) - 1);
+    if (ch.indexOf('\n## ' + ANNOUNCED + '\n') < 0 || !/\n- New works only from SSRN, arXiv or Jxiv \(pull request #\d+\)\.[^\n]*A new check \(147\)[^\n]*Figshare[^\n]*\n/.test(chDay)) bad.push('CHANGELOG.md: the entry');
+    if (!chDay.includes('; the other ' + NO + ' repositories are no longer accepted for a new work, an issue opened before that day is judged under the ' + NA + ', ')) bad.push('CHANGELOG.md: the counts of the entry');
+    const nNames = (/the site names these \*\*(\d+)\*\* services/.exec(String(x['disclaimer.md'] || '')) || [])[1];
+    if (!nNames || !chDay.includes('The Disclaimer names Elsevier among the names the site uses (' + nNames + ').')) bad.push('CHANGELOG.md: the count of the names');
+    return bad;
+  }
+  const now = problems(real);
+  const site147 = JSON.parse(real['site.json']);
+  ok('from ' + site147.entrance.from + ' (' + (dayNo(site147.entrance.from) - dayNo(ANNOUNCED)) + ' days after ' + ANNOUNCED + ') a new work only from ' + site147.entrance.repositories.join(', ') + ', before it the ' + Object.keys(site147.repositories).length + ', in the policy in both languages and its built pages, the forms, the intake, the notice, the feed, both top pages, the commitments, the FAQ, the process, the README, the page for repositories, the OpenDOAR draft, the JOSS draft, .zenodo.json, the plain-words page, the submit page and llms.txt; every count computed; 2026.0001 removed; Figshare named only where dated or kept; the reason as the operator\'s definition, with the disclaimers; the ROAR and Open Access Directory lines',
+    now.length === 0, now.slice(0, 6).join(' / '));
+
+  /* The intake on made-up cases: the row of the repository, alone and through check(), by the day the issue was opened in Japan time. */
+  const listed = I.listedDois(path.join(ROOT, 'data', 'papers'));
+  const row = (doi, opened, update) => I.check({ form: { doi, update, orcid: '0000-0002-1825-0097', category: 'philosophy', llm: 'No generative model was used in this work.' }, login: 'x', meta: null, person: null, works: null, listed, today: opened, age: { opened, first: null } }).checks.find((c) => c[0] === I.REPOSITORY_LABEL);
+  const zenodoListed = [...listed].find(([d]) => d.startsWith('10.5281/zenodo.'));
+  const CASES = [
+    ['a new work from Zenodo opened on 2026-12-07 is declined', () => row('10.5281/zenodo.9999999', '2026-12-07')[1] === false && /a new work is accepted only from SSRN, arXiv or Jxiv/.test(row('10.5281/zenodo.9999999', '2026-12-07')[2])],
+    ['the same work opened on 2026-12-06 goes through under the earlier rules', () => row('10.5281/zenodo.9999999', '2026-12-06')[1] === true],
+    ['an issue opened at 00:00 on 2026-12-07 in Japan time (15:00 UTC the day before) counts as opened on 2026-12-07', () => I.jstDay('2026-12-06T15:00:00Z') === '2026-12-07' && I.jstDay('2026-12-06T14:59:59Z') === '2026-12-06' && row('10.5281/zenodo.9999999', I.jstDay('2026-12-06T15:00:00Z'))[1] === false],
+    ['SSRN, arXiv and Jxiv works are accepted from 2026-12-07', () => ['10.2139/ssrn.9999999', '10.48550/arXiv.2612.99999', '10.51094/jxiv.9999'].every((d) => row(d, '2026-12-07')[1] === true && row(d, '2027-06-01')[1] === true)],
+    ['each of the other 12 is declined for a new work from 2026-12-07, and accepted before', () => Object.keys(site147.repositories).filter((p) => !site147.entrance.repositories.includes(site147.repositories[p])).every((p) => row(p + 'x1', '2026-12-07')[1] === false && row(p + 'x1', '2026-12-06')[1] === true)],
+    ['a new version of a listed Zenodo work is accepted from Zenodo after the day', () => !!zenodoListed && row('10.5281/zenodo.9999998', '2026-12-08', zenodoListed[1])[1] === true],
+    ['a new version of the removed record 2026.0001 is declined, before and after the day', () => row('10.6084/m9.figshare.34419198.v3', '2026-12-08', '2026.0001')[1] === false && I.listedAs('10.6084/m9.figshare.34419198.v2', listed) === null],
+    ['a new version from another repository than the listed work\'s is declined after the day', () => !!zenodoListed && row('10.48550/arXiv.2612.99999', '2026-12-08', zenodoListed[1])[1] === false],
+    ['a DOI from no repository of site.json is declined before and after', () => row('10.1101/2026.12.07.000001', '2026-12-06')[1] === false && row('10.1101/2026.12.07.000001', '2026-12-07')[1] === false],
+  ];
+  const failed = CASES.filter(([, f]) => { try { return !f(); } catch (e) { return true; } }).map(([k]) => k);
+  ok('the intake on made-up cases (' + CASES.length + '): ' + CASES.map(([k]) => k).join('; '), failed.length === 0, failed.join(' / '));
+  /* The same cases against an intake that forgot the entrance, or the day, or the listed work's repository: each must be caught. */
+  const src = read(path.join(ROOT, 'tools', 'intake.js'));
+  const variant = (a, b) => { const v = src.replace(a, b); if (v === src) return null; const m = new module.constructor(); m.paths = module.paths; m._compile(v.split("require('../build.js')").join('require(' + JSON.stringify(path.join(ROOT, 'build.js')) + ')').replace(/require\('\.\/([a-z_]+)\.js'\)/g, (x, n) => 'require(' + JSON.stringify(path.join(ROOT, 'tools', n + '.js')) + ')').split("require('../.github/checked-intake/verify.js')").join( 'require(' + JSON.stringify(path.join(ROOT, '.github', 'checked-intake', 'verify.js')) + ')'), path.join(ROOT, 'tools', 'intake-variant.js')); return m.exports; };
+  const runCases = (J) => CASES.filter(([k, f]) => { const rowJ = (doi, opened, update) => J.check({ form: { doi, update, orcid: '0000-0002-1825-0097', category: 'philosophy', llm: 'No generative model was used in this work.' }, login: 'x', meta: null, person: null, works: null, listed, today: opened, age: { opened, first: null } }).checks.find((c) => c[0] === J.REPOSITORY_LABEL);
+    const g = new Function('row', 'I', 'zenodoListed', 'site147', 'return (' + f.toString() + ')();'); try { return !g(rowJ, J, zenodoListed, site147); } catch (e) { return true; } }).map(([k]) => k);
+  const VARIANTS = [
+    ['the entrance forgotten: every repository of site.json for a new work', ['    : [REPOSITORY_LABEL, false, name + \'; from \' + ENTRANCE.from + \', a new work is accepted only from \'', '    : [REPOSITORY_LABEL, true, name + \'; from \' + ENTRANCE.from + \', a new work is accepted only from \'']],
+    ['the day forgotten: the entrance applied to every issue', ['const after = !!opened && String(opened).slice(0, 10) >= ENTRANCE.from;', 'const after = true;']],
+    ['the day counted one day late', ['String(opened).slice(0, 10) >= ENTRANCE.from', 'String(opened).slice(0, 10) > ENTRANCE.from']],
+    ['a new version from any repository', ['return home.includes(name) ? [REPOSITORY_LABEL, true', 'return true ? [REPOSITORY_LABEL, true']],
+    ['a new version only from the entrance', ['return home.includes(name) ? [REPOSITORY_LABEL, true', 'return ENTRANCE.repositories.includes(name) ? [REPOSITORY_LABEL, true']],
+    ['the row left out of check()', ['  checks.push(repositoryCheck(form.doi, opened, form.update, listed));\n', '']],
+    ['the day of the issue ignored', ["const opened = (age && age.opened) || String(today || new Date(Date.now() + JST).toISOString()).slice(0, 10);", "const opened = '2026-12-06';"]],
+  ];
+  const vmissed = VARIANTS.filter(([, [a, b]]) => { const J = variant(a, b); return !J || runCases(J).length === 0; }).map(([k]) => k);
+  ok('break on purpose: the intake made wrong in ' + VARIANTS.length + ' ways (the entrance forgotten, the day forgotten or counted a day late, a new version from any repository or only from the entrance, the row left out, the day of the issue ignored) fails the made-up cases (' + (VARIANTS.length - vmissed.length) + ' / ' + VARIANTS.length + ')', vmissed.length === 0, vmissed.join(' / '));
+
+  /* The day the announcement reached main, as in checks 143 to 145. */
+  const { execFileSync: ex147 } = require('child_process');
+  const today147 = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  let shallow147 = true;
+  try { shallow147 = ex147('git', ['rev-parse', '--is-shallow-repository'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() !== 'false'; } catch (e) { shallow147 = true; }
+  const FROM147 = site147.entrance.from;
+  const MARKS = [['site.json', '"entrance": { "announced": "' + ANNOUNCED + '", "from": "' + FROM147 + '"'], ['data/policy-changes.json', '"title": "' + TITLE + '"'], ['policies/submission.md', '\n## The entrance from ' + FROM147 + '\n']];
+  const held = Object.fromEntries(MARKS.map(([f, m]) => { let l = null; try { l = ex147('git', ['log', '--first-parent', '--reverse', '--format=%cd', '--date=format-local:%Y-%m-%d', '-S', m, '--', f], { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'Asia/Tokyo' }), stdio: ['ignore', 'pipe', 'ignore'] }).split('\n').filter(Boolean); } catch (e) { l = null; } return [m, l === null ? null : (l[0] || today147)]; }));
+  const timingProblems = (h, shallow, from) => {
+    const bad = [];
+    if (shallow) bad.push('the history is shallow or git cannot be read');
+    for (const [m, d] of Object.entries(h)) {
+      if (!d) bad.push('git cannot say when "' + m.slice(0, 40) + '" reached main');
+      else if (d > ANNOUNCED) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', after ' + ANNOUNCED + ', the day the texts give');
+      else if (dayNo(from) - dayNo(d) < 14) bad.push('"' + m.slice(0, 40) + '" reached main on ' + d + ', less than 14 days before ' + from);
+    }
+    return bad;
+  };
+  const tnow = timingProblems(held, shallow147, FROM147);
+  ok('each part of the announcement (' + MARKS.length + ') reached the first-parent line of main on or before ' + ANNOUNCED + ', the day the texts give, and at least 14 days before ' + FROM147 + '; a later merge fails here', tnow.length === 0, tnow.slice(0, 4).join(' / '));
+  const late = (d) => Object.fromEntries(Object.keys(held).map((k, i) => [k, i === 0 ? d : held[k]]));
+  const tbreaks = [['merged a day later than the texts say', late('2026-11-24'), false, FROM147], ['merged 13 days before the day of effect', late('2026-11-24'), false, '2026-12-07'],
+    ['the day of effect moved to 13 days after', held, false, '2026-12-06'], ['a mark git cannot date', late(null), false, FROM147], ['a shallow history', held, true, FROM147]];
+  const tmissed = tbreaks.filter(([, h, sh, f]) => timingProblems(h, sh, f).length === 0).map(([k]) => k);
+  ok('break on purpose: a merge a day after the stated day, one 13 days before the day of effect, a day of effect 13 days after, an undated mark and a shallow history all fail (' + (tbreaks.length - tmissed.length) + ' / ' + tbreaks.length + ')', tmissed.length === 0, tmissed.join(' / '));
+
+  /* Breaking the texts on purpose. */
+  const w = (f, a, b) => Object.assign({}, real, { [f]: String(real[f]).replace(a, b) });
+  const ws = (fn) => { const s = JSON.parse(real['site.json']); fn(s); return Object.assign({}, real, { 'site.json': JSON.stringify(s, null, 2) }); };
+  const breaks = [
+    ['the entrance in site.json with a fourth repository', ws((s) => { s.entrance.repositories.push('Zenodo'); })],
+    ['the entrance in site.json naming a repository it does not have', ws((s) => { s.entrance.repositories[2] = 'JxivX'; })],
+    ['the day announced moved', ws((s) => { s.entrance.announced = '2026-11-24'; })],
+    ['topUpdated left on an earlier day', ws((s) => { s.topUpdated.en = '2026-11-21'; })],
+    ['the intake with a list of its own', w('tools/intake.js', "function repositoryCheck(doi, opened, update, listed) {\n", "function repositoryCheck(doi, opened, update, listed) {\n  const OWN = ['SSRN', 'arXiv'];\n")],
+    ['the policy without the day for issues opened before', w('policies/submission.md', 'is judged under the list of 15 repositories, even when it is decided on or after that day.', 'is judged under the new list.')],
+    ['the policy with a wrong count of the others', w('policies/submission.md', 'The other 12 repositories, which the examples below name,', 'The other 11 repositories, which the examples below name,')],
+    ['the policy with a wrong count of all', w('policies/submission.md', ' or one of the 12 other repositories that the examples below name, 15 in all.', ' or one of the 12 other repositories that the examples below name, 16 in all.')],
+    ['the removed record named in the entrance again', w('policies/submission.md', '\n## Higher barriers\n', '\nOne listed work, 2026.0001, is at Figshare.\n\n## Higher barriers\n')],
+    ['2026.0001 put back as listed', Object.assign({}, real, { __papers: real.__papers.map((p) => (p.id === '2026.0001' ? { id: '2026.0001', status: 'listed', versions: [{ version: 1, doi: '10.6084/m9.figshare.34419198.v1' }] } : p)) })],
+    ['2026.0001 removed with its title kept', Object.assign({}, real, { __papers: real.__papers.map((p) => (p.id === '2026.0001' ? Object.assign({}, p, { title: 'Repeated Games' }) : p)) })],
+    ['a PDF copy of 2026.0001 left', Object.assign({}, real, { __removedFiles: ['data/pdf/2026.0001v1.pdf'] })],
+    ['a page that still names the DOI of 2026.0001', Object.assign({}, real, { __figshareDoi: ['papers.json'] })],
+    ['the notice page with the title', Object.assign({}, real, { __notice0001: String(real.__notice0001) + 'Repeated Games' })],
+    ['the reason without the operator\'s definition', w('policies/submission.md', 'The operator defines Elsevier, Cornell University and JST', 'Sophaxis trusts Elsevier, Cornell University and JST')],
+    ['the reason said to rate the others', w('policies/submission.md', 'it rates no other repository,', 'the other repositories are untrusted,')],
+    ['the Japanese reason without the definition', w('policies/submission.ja.md', 'を信頼できる機関・出版社と定め、', 'を信頼し、')],
+    ['the disclaimer without the three', w('disclaimer.md', 'It is not affiliated with, endorsed by or a partner of Elsevier, Cornell University or JST', 'It is affiliated with Elsevier, Cornell University or JST')],
+    ['the README with SSRN\'s operator as a fact', w('README.md', "no recorded source says who runs SSRN or Jxiv, so those two connections are the operator's, not facts that Sophaxis has checked.", 'SSRN is run by Elsevier and Jxiv by JST.')],
+    ['the notice without the reason', w('site.json', ' The operator defines Elsevier, Cornell University and JST (the Japan Science and Technology Agency) as trusted', ' The operator likes Elsevier, Cornell University and JST (the Japan Science and Technology Agency) as trusted')],
+    ['the examples without one of the 12', w('policies/submission.md', 'Advance or KC Works. Depositing it also in', 'or Advance. Depositing it also in')],
+    ['listed works no longer kept with their new versions', w('policies/submission.ja.md', 'すでに載っている作品は載ったままで、その新しい版は、作品が載っている預け先から受け付けます。', 'すでに載っている作品は載ったままです。')],
+    ['the Japanese policy with another day', w('policies/submission.ja.md', '2026-12-07 から、その日以後に issue を開いた新しい作品は、', '2026-12-08 から、その日以後に issue を開いた新しい作品は、')],
+    ['the Japanese policy without the prefixes', w('policies/submission.ja.md', '（`10.2139/ssrn.`、`10.48550/arXiv.`、`10.51094/jxiv.`）', '')],
+    ['a built policy left stale', w('site/policies/submission.ja.html', 'ほかの 12 の預け先（下の例が挙げます）は、新しい作品には受け付けません。', '')],
+    ['the English form with Figshare among the three', w('.github/ISSUE_TEMPLATE/submission.yml', 'deposited in SSRN, arXiv or Jxiv (until', 'deposited in SSRN, arXiv, Jxiv or Figshare (until')],
+    ['the Japanese form without the day', w('.github/ISSUE_TEMPLATE/submission-ja.yml', '2026-12-06 までは、Zenodo（', 'ほかに、Zenodo（')],
+    ['a form with a Zenodo example', w('.github/ISSUE_TEMPLATE/submission.yml', 'placeholder: 10.2139/ssrn.0000000', 'placeholder: 10.5281/zenodo.0000000')],
+    ['the notice without the issues opened before', w('site.json', '; a submission whose issue is opened before that day is judged under the list of 15;', ';')],
+    ['the feed entry without its day of effect', w('data/policy-changes.json', '"from": "2026-12-07",\n    "title": "' + TITLE + '"', '"title": "' + TITLE + '"')],
+    ['the feed entry without why listed works stay', w('data/policy-changes.json', ', so that narrowing the entrance breaks no record and penalises no author who followed the earlier rules', '')],
+    ['the Japanese top page left stale', w('site/index.ja.html', 'その日より前に issue を開いた投稿は、15 の預け先の一覧で判断します。', '')],
+    ['a commitment taken out', w('verification/commitments.txt', 'A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.\n', '')],
+    ['the FAQ with the old list as today\'s', w('faq.md', 'From 2026-12-07, for a new work, SSRN, arXiv and Jxiv.\nUntil 2026-12-06, also ', '')],
+    ['the README with the count of the earlier list wrong', w('README.md', 'is judged under the 15 repositories of `site.json`', 'is judged under the 14 repositories of `site.json`')],
+    ['the page for repositories left stale', w('site/repositories.ja.html', 'いま載っている記録のうち', '載っている記録のうち')],
+    ['llms.txt left stale', w('site/llms.txt', '- Accepted repositories for a new work', '- Accepted repositories')],
+    ['the OpenDOAR draft without the entrance', w('docs/opendoar.md', ' From 2026-12-07, a new work is accepted only from SSRN, arXiv or Jxiv;', '')],
+    ['.zenodo.json naming Figshare again', w('.zenodo.json', '(from 2026-12-07, SSRN, arXiv or Jxiv)', '(Zenodo, Figshare, arXiv, SSRN and others)')],
+    ['a count of repositories that is none of the three', w('faq.md', 'The work must have a DOI from one of them.', 'The work must have a DOI from one of these 14 repositories.')],
+    ['Figshare named undated in the transparency page', w('transparency.md', 'in their repositories, such as SSRN or Zenodo.', 'in their repositories, such as SSRN, Figshare or Zenodo.')],
+    ['Figshare named undated in the glossary', w('glossary.md', 'such as SSRN, arXiv or Jxiv.', 'such as SSRN, arXiv or Figshare.')],
+    ['a sentence kept for history taken out', w('policies/copyright.md', 'The copies already taken from Figshare were taken off the site on 2026-11-23, when their record was removed.', '')],
+    ['the ROAR description changed', w('README.md', 'works listed before then stay listed. It charges nothing to authors or readers. The records', 'works listed before then stay listed. It charges nothing. The records')],
+    ['the Open Access Directory line said to be confirmed', w('README.md', "so this is the operator's report, not something Claude confirmed.", 'and Claude confirmed it.')],
+    ['the Japanese Open Access Directory line without the 403', w('README.md', 'この頁は、ここからは HTTP 403 で読めませんでした。', '')],
+    ['the changelog without the check', w('CHANGELOG.md', 'A new check (147)', 'A new check')],
+    ['the Disclaimer with another count of names than the changelog', w('disclaimer.md', 'the site names these **76** services', 'the site names these **77** services')],
+    ['the changelog with another count', w('CHANGELOG.md', '; the other 12 repositories are no longer accepted for a new work', '; the other 11 repositories are no longer accepted for a new work')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  const near = problems(real, '2026-12-06');
+  /* The changelog gives the counts of this check: the made-up cases and every break test (the texts, the intake, the timing). */
+  const nBreaks147 = breaks.length + 1 + VARIANTS.length + tbreaks.length;
+  const chOf = (t) => { const c = String(t || ''), i = c.indexOf('\n## ' + ANNOUNCED + '\n'), j = c.indexOf('\n## ', i + 5); return i < 0 ? '' : c.slice(i, j < 0 ? undefined : j); };
+  const countsSaid = (t) => chOf(t).includes('the intake on ' + CASES.length + ' made-up cases and the rest, with ' + nBreaks147 + ' break tests;');
+  ok('the changelog gives the ' + CASES.length + ' made-up cases and the ' + nBreaks147 + ' break tests of this check, and another count fails',
+    countsSaid(real['CHANGELOG.md']) && !countsSaid(String(real['CHANGELOG.md']).replace('with ' + nBreaks147 + ' break tests', 'with ' + (nBreaks147 - 1) + ' break tests')));
+  ok('break on purpose: each of ' + (breaks.length + 1) + ' ways (the entrance in site.json, the days, the intake\'s own list, the policy\'s rule, counts, kept works and Figshare record, examples, the Japanese policy and its built page, both forms, the notice, the feed, the Japanese top page, a commitment, the FAQ, the README, the page for repositories, llms.txt, the drafts, .zenodo.json, a stray count, Figshare undated, a kept sentence, ROAR and the Open Access Directory, the changelog, a day of effect 13 days after) fails (' + (breaks.length - missed.length + (near.length ? 1 : 0)) + ' / ' + (breaks.length + 1) + ')',
+    missed.length === 0 && near.length > 0, missed.concat(near.length ? [] : ['a day of effect 13 days after']).join(' / '));
 }
 
 console.log('\n' + '-'.repeat(60));

@@ -1,6 +1,6 @@
 # In plain words
 
-Last updated: 2026-11-11.
+Last updated: 2026-11-23.
 
 Japanese: [やさしいことばで（日本語訳）](./easy.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -22,7 +22,7 @@ Sophaxis does not take money.
 
 ## How to send a paper
 
-1. Put your paper in a repository, such as Zenodo. You get a DOI.
+1. Put your paper in SSRN, arXiv or Jxiv. You get a DOI. Until 2026-12-06, some other places, such as Zenodo, also count.
 2. Make an account on ORCID and on GitHub. Join them together.
 3. On GitHub, fill in the form and write the DOI.
 4. A program checks the form. Then a person decides.

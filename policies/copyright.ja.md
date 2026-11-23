@@ -30,7 +30,7 @@ Zenodo の開発者向けの文書は、REST API でできることに「Files �
 この変更を公開した 2026-11-13 までは、Figshare と Research Square からもスクリプトで写していました。公開してからは写しません。どちらの規約も、これを禁じているためです。
 Figshare の規約は、利用者がしてはならないことに「use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine」を挙げます。例外は「expressly authorized for you by Figshare in advance in writing」の手段だけです。
 Research Square の規約は「You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites」と書きます。
-Figshare からすでに写したものは、作品のライセンスのもとで残します。
+Figshare からすでに写したものは、その記録を削除した 2026-11-23 に、サイトから外しました。
 これらの頁は 2026-11-12 に読みました。Zenodo の頁は直に読み、Figshare と Research Square の頁は Internet Archive の写しから読みました。
 預け先がチェックサムを公開している場合、写しはそれと一致しなければなりません。
 預けたものに PDF が複数ある場合、Sophaxis はどれが論文かを推測せず、写しを作りません。

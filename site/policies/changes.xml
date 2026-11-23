@@ -8,6 +8,22 @@
   <updated>2026-11-23T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c42</id>
+    <title>New works only from SSRN, arXiv or Jxiv</title>
+    <link href="https://sophaxis.vercel.app/policies/submission.html" title="Submission Policy"/>
+    <updated>2026-11-23T00:00:00Z</updated>
+    <summary>From 2026-12-07, for a new work whose submission issue is opened on or after that day, Sophaxis accepts the work only if it is deposited in SSRN, arXiv or Jxiv, with a DOI from that repository. The operator defines Elsevier, Cornell University and JST (the Japan Science and Technology Agency) as trusted institutions and publishers, and Sophaxis accepts SSRN, arXiv and Jxiv, the repositories that the operator connects with them; this is the operator's own definition, which rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it. The other 12 repositories, Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, Preprints.org, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance and KC Works, are no longer accepted for a new work; a work deposited only in one of them becomes eligible when it is deposited also in SSRN, arXiv or Jxiv. A submission whose issue is opened before that day is judged under the list of 15. A work already listed stays listed, and a new version of it is accepted from the repository where it is listed, so that narrowing the entrance breaks no record and penalises no author who followed the earlier rules. For Figshare, nothing else changes for authors: Sophaxis has copied no PDF from it by script since 2026-11-13. It narrows what Sophaxis accepts, so it is announced on the top page at least 14 days ahead. The owner asked for this on 2026-11-23, and Claude decided the details. In effect from 2026-12-07. Policies: Submission Policy.</summary>
+  </entry>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c41</id>
+    <title>The PDF copies from Figshare taken off with their record</title>
+    <link href="https://sophaxis.vercel.app/policies/copyright.html" title="Copyright Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/withdrawal.html" title="Withdrawal Policy"/>
+    <updated>2026-11-23T00:00:00Z</updated>
+    <summary>Since its publication on 2026-11-23, the Copyright Policy says that the PDF copies taken from Figshare were taken off the site on 2026-11-23, when their record was removed, and the Takedown Policy and the Withdrawal Policy give Zenodo and SSRN, not Figshare, as examples of repositories from which Sophaxis cannot remove or withdraw a work. No rule changed. No record shown is a deposit at Figshare any more. Claude wrote it on 2026-11-23. Policies: Copyright Policy, Takedown Policy, Withdrawal Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c40</id>
     <title>The quoted Japanese articles fetched again</title>
     <link href="https://sophaxis.vercel.app/policies/terms.html" title="Terms of Use"/>

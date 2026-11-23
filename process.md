@@ -1,6 +1,6 @@
 # From submission to listing
 
-Last updated: 2026-11-21.
+Last updated: 2026-11-23.
 
 Japanese: [投稿から掲載まで（日本語訳）](./process.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -11,7 +11,7 @@ The rules themselves are in the [Submission Policy](./policies/submission.md) an
 
 You need four things. The [checklist](./checklist.md) gathers the rest of what a submission needs.
 
-1. A preprint deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered, as the [Submission Policy](./policies/submission.md) sets out.
+1. A preprint deposited, with a DOI, in SSRN, arXiv or Jxiv from 2026-12-07, or, until 2026-12-06, also in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, Preprints.org, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance or KC Works. From 2026-11-23, at least six months must have passed since the first DOI of the work was registered, as the [Submission Policy](./policies/submission.md) sets out.
 2. CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 on the deposit, so that it appears in the DOI metadata.
 3. An [ORCID](https://orcid.org) iD. Registration is free.
 4. A [GitHub](https://github.com) account. Registration is free.
@@ -64,7 +64,7 @@ Fix the cause, for example the link in your ORCID record, then edit the issue; t
 To edit the issue, open the menu (⋯) at the top right of your first post, choose "Edit", change what is needed and save.
 An edit that changes nothing does not start the check.
 
-If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo: since 2026-11-13, Figshare and Research Square among them, and since 2026-11-15, arXiv), the comment asks you to attach the deposited PDF to the issue.
+If the repository does not let Sophaxis fetch the PDF (every repository except Zenodo, and so SSRN, arXiv and Jxiv, from which a new work is accepted from 2026-12-07), the comment asks you to attach the deposited PDF to the issue.
 This is optional, and the file must be at most 20 MB.
 To attach it, drag the file into the comment box at the bottom of the issue, wait until its link appears, and post the comment.
 

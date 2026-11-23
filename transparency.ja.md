@@ -1,6 +1,6 @@
 # 透明性の自己評価（日本語訳）
 
-最終更新：2026-11-12。
+最終更新：2026-11-23。
 
 これは英語の [Transparency: a self-assessment](./transparency.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -69,7 +69,7 @@ Sophaxis は ISSN を持たないので、ISSN は示していません。
 ### 保存
 
 一部。
-作品そのものは、Zenodo、arXiv、Figshare などの預け先に預けられ、そこで保存されています。
+作品そのものは、SSRN、Zenodo などの預け先に預けられ、そこで保存されています。
 記録とサイトは、公開の git のリポジトリに保管しています。版 1.0.0 は Zenodo に保存しています（10.5281/zenodo.24033372）。
 記録の頁と PDF の写しは、著者全員が同意している場合に、毎週 Internet Archive に保存します。
 Sophaxis は、CLOCKSS や Portico のような、Keepers Registry のどのアーカイブにも入っていません。

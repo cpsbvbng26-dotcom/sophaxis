@@ -9,7 +9,7 @@
  * (Claude decided on 2026-11-13; docs/legal-audit-2026-11-12.md, 「2026-11-13：十五度目の見落とし」).
  *
  * By hand, without writing to GitHub:
- *   node tools/intake.js --dry-run --doi 10.6084/m9.figshare.1 --orcid 0000-0002-1825-0097 --login alice [--opened 2026-12-01]
+ *   node tools/intake.js --dry-run --doi 10.48550/arXiv.2508.15126 --orcid 0000-0002-1825-0097 --login alice [--opened 2026-12-01]
  *
  * What it reads, and nothing else:
  *   - the public metadata of the DOI, from DataCite or Crossref, or from JaLC for Jxiv, and the day each DOI that it names
@@ -33,7 +33,7 @@ const { request } = require('./ua.js');
 
 const fs = require('fs');
 const path = require('path');
-const { validate, orcidOk, repoPrefix } = require('../build.js');
+const { validate, orcidOk, repoPrefix, repoName } = require('../build.js');
 const { sourceFor, LIMITS, download, accept } = require('./fetch_pdf.js');
 const { shapeOfFile, shapeNote } = require('./pdf_shape.js');
 const A = require('./pdf_advice.js');
@@ -336,7 +336,9 @@ function earlierDois(raw) {
 
 /* The first DOI of the work: the one registered earliest among the DOI given and the DOIs that the metadata names as
  * earlier, followed through at most ten DOIs. Figshare numbers its versions, so its first version is always looked at.
- * Null when no registration day can be read. */
+ * The age is counted only for a new work, and from SITE.entrance.from a new work from Figshare is not accepted; the Figshare
+ * step stays for an issue opened before that day, which is judged under the rules it was opened under (Submission Policy),
+ * until the last such issue reaches the end of its SITE.checkedDays days. Null when no registration day can be read. */
 async function firstDoi(doi, raw, look = lookUp) {
   const days = new Map();
   const queue = [[bareDoi(doi), raw]];
@@ -510,11 +512,35 @@ const BOX_LABELS = {
   residence: 'No author lives in a place where Sophaxis is not offered',
 };
 
+/* The entrance (Submission Policy, "The entrance from 2026-12-07"). From SITE.entrance.from, counted on the day the issue was opened
+ * in Japan time, a new work is accepted only from SITE.entrance.repositories, and a new version of a listed work only from the
+ * repository where that work is listed (the repository of any of its listed versions). An issue opened before that day is judged
+ * under every repository of SITE.repositories, as before. The owner asked on 2026-11-23; Claude decided the details. */
+const REPOSITORY_LABEL = 'The DOI is in an accepted repository';
+const ENTRANCE = SITE.entrance;
+const or = (xs) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' or ' + xs[xs.length - 1]);
+/* Pure: the row of the check. `listed` maps each listed DOI to its Sophaxis id (listedDois). */
+function repositoryCheck(doi, opened, update, listed) {
+  const pre = repoPrefix(doi || '');
+  const name = pre ? SITE.repositories[pre] : null;
+  const after = !!opened && String(opened).slice(0, 10) >= ENTRANCE.from;
+  if (!name) return [REPOSITORY_LABEL, false, 'accepted: ' + (after ? or(ENTRANCE.repositories) + ' for a new work' : [...new Set(Object.values(SITE.repositories))].join(', '))];
+  if (!after) return [REPOSITORY_LABEL, true, name];
+  if (update) {
+    const home = [...new Set([...(listed || new Map())].filter(([, id]) => id === update).map(([d]) => repoName(d)).filter(Boolean))];
+    return home.includes(name) ? [REPOSITORY_LABEL, true, name + ', where the listed work is']
+      : [REPOSITORY_LABEL, false, name + '; from ' + ENTRANCE.from + ', a new version comes from the repository where the work is listed' + (home.length ? ' (' + home.join(', ') + ')' : '')];
+  }
+  return ENTRANCE.repositories.includes(name) ? [REPOSITORY_LABEL, true, name]
+    : [REPOSITORY_LABEL, false, name + '; from ' + ENTRANCE.from + ', a new work is accepted only from ' + or(ENTRANCE.repositories) + '; deposit it there too, and give the DOI from there'];
+}
+
 function check({ form, login, meta, person, works, listed, pub, today, age, notices, checked = false, records = null }) {
   const checks = [];
   const add = (label, pass, detail) => checks.push([label, !!pass, detail || '']);
-  const pre = repoPrefix(form.doi || '');
-  add('The DOI is in an accepted repository', pre, pre ? SITE.repositories[pre] : 'accepted: ' + Object.values(SITE.repositories).join(', '));
+  /* The day the issue was opened, in Japan time; without one, today in Japan time. */
+  const opened = (age && age.opened) || String(today || new Date(Date.now() + JST).toISOString()).slice(0, 10);
+  checks.push(repositoryCheck(form.doi, opened, form.update, listed));
   add('The ORCID iD is valid', form.orcid && orcidOk(form.orcid));
   add('A category is chosen', form.category);
   if (String(form.subfield || '').trim()) add('The subfield belongs to the chosen category', subfieldOf(form), form.subfield);
@@ -1287,6 +1313,6 @@ async function checkSubmission(n, login, text) {
   console.log(verified ? 'verified' : 'not verified');
 }
 
-module.exports = { CHANGES_MAX, changesNote, noteLength, HB, highFrom, DOI_AGE_LABEL_HIGH, ABSTRACT_LABEL, GAP_LABEL, abstractCheck, gapCheck, dayShift, VOUCH_LABEL_HIGH, vouchNoteHigh, loadRecords, neutral, allPages, unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
+module.exports = { REPOSITORY_LABEL, repositoryCheck, CHANGES_MAX, changesNote, noteLength, HB, highFrom, DOI_AGE_LABEL_HIGH, ABSTRACT_LABEL, GAP_LABEL, abstractCheck, gapCheck, dayShift, VOUCH_LABEL_HIGH, vouchNoteHigh, loadRecords, neutral, allPages, unchecked, checkSubmission, VOUCH_CHECKED, vouchNoteChecked, coauthorNoteChecked, PLACE_LABEL, placeCheck, DEADLINE_NOTE, NOT_LISTED, readsAsRequest, deadlineRun, pastDeadline, placedBy, issueEvent, LAY_MAX, subfieldOf, otherAbstract, STATEMENTS, STATEMENT_MIN, VOUCH, VOUCH_LABEL, PEER_TYPES, vouchesIn, peerWorks, vouchProblem, listedAuthor, vouchCheck, vouchNote, pdfShape, DOI_AGE_LABEL, jstDay, addMonths, registeredOf, earlierDois, firstDoi, earliestOf, doiAgeCheck, CONSENTS, FORMS, formBoxes, BOXES, BOXES_FROM, BOX_LABELS, tickedIn, unticked, allTicked, extentKey, MODEL_NAMES, authorOf, confirmationsIn, confirmedAuthor, coauthorCheck, coauthorNote, COAUTHORS_FROM, AGREE, AGREE_CHECKED, BY_EMAIL, COAUTHOR_LABEL, iso3, lookUp, versionsOf, getJson, github, listedAs, listedDois, parseIssue, plain, licenceOf, fromDataCite, fromCrossref, fromJaLC, orcidPerson, orcidPersonJson, orcidDois, linksGithub, sameName, check, nextId, draft, comment, pdfNote, adviceFrom, adviceNote, metadataAdvice, ADVICE_SKIP, MARK };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

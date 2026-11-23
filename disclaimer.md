@@ -28,6 +28,7 @@ It is not an official identity check.
 
 Sophaxis is an independent, personal project.
 It is not affiliated with, endorsed by or a partner of any repository it lists, nor of DataCite, Crossref, JaLC, OpenAlex, ORCID, GitHub, Vercel or the Internet Archive.
+It is not affiliated with, endorsed by or a partner of Elsevier, Cornell University or JST (the Japan Science and Technology Agency), which the operator defines as trusted institutions and publishers in the [Submission Policy](./policies/submission.md); that definition is the operator's own.
 Their names are used only to identify their services, and belong to their owners. Some of them are trade marks.
 They are not responsible for Sophaxis, for its records, or for any error that Sophaxis introduces; see the page [for repositories and DOI registration agencies](./repositories.md).
 
@@ -81,13 +82,13 @@ A search shows only what a database held on that day.
 
 ### Others' names
 
-Apart from the pages [Making a listed work easy to find](./findable.md) and [Legal handling of the design](./design.md), the site names these **75** services, products and organisations: Academia.edu, Adilet, Advance, Anthropic, Apple, arXiv, BBB National Programs, Bing, Bluesky, ChatGPT, Claude, Claude Code, CLOCKSS, COPE, Creative Commons, Crossref, DataCite, DOAJ, DOI, Dropbox, e-Gov, edX, eGazette, Facebook, Fedlex, Figshare, GitHub, GitHub Actions, Google Drive, Google Scholar, Grok, HAL, iCloud, IndexNow, Internet Archive, iTunes, J-PlatPat, JaLC, Jxiv, KC Works, Keepers Registry, Legal Information Institute, LinkedIn, MetaArXiv, OASPA, Open Access Directory, OpenAI, OpenAIRE, OpenAlex, ORCID, OSF, OSF Preprints, PhilArchive, PhilSci-Archive, Portico, Preprints.org, Qeios, Registry of Open Access Repositories, Research Square, ResearchGate, Retraction Watch, SciELO Preprints, ScienceOpen, SocArXiv, SpaceX, SSRN, Vercel, WAME, Wayback Machine, Windows, WIPO Global Brand Database, X, xAI, Zenodo, ZimLII.
+Apart from the pages [Making a listed work easy to find](./findable.md) and [Legal handling of the design](./design.md), the site names these **76** services, products and organisations: Academia.edu, Adilet, Advance, Anthropic, Apple, arXiv, BBB National Programs, Bing, Bluesky, ChatGPT, Claude, Claude Code, CLOCKSS, COPE, Creative Commons, Crossref, DataCite, DOAJ, DOI, Dropbox, e-Gov, edX, eGazette, Elsevier, Facebook, Fedlex, Figshare, GitHub, GitHub Actions, Google Drive, Google Scholar, Grok, HAL, iCloud, IndexNow, Internet Archive, iTunes, J-PlatPat, JaLC, Jxiv, KC Works, Keepers Registry, Legal Information Institute, LinkedIn, MetaArXiv, OASPA, Open Access Directory, OpenAI, OpenAIRE, OpenAlex, ORCID, OSF, OSF Preprints, PhilArchive, PhilSci-Archive, Portico, Preprints.org, Qeios, Registry of Open Access Repositories, Research Square, ResearchGate, Retraction Watch, SciELO Preprints, ScienceOpen, SocArXiv, SpaceX, SSRN, Vercel, WAME, Wayback Machine, Windows, WIPO Global Brand Database, X, xAI, Zenodo, ZimLII.
 That page also names services where authors can add a listed work themselves, and gives their names only so that authors can find them.
 These names belong to their owners, and some of them are trade marks.
 Sophaxis uses each of them only to name the service, the product or the organisation itself.
 Their use implies no affiliation, sponsorship or endorsement, as "No affiliation" above says.
 The names of states, public bodies, universities, laws, persons, places and works, and of formats and standards, are not in the list; they are used in the same way.
-Claude found the list by reading every page of the site on 2026-11-18, apart from the pages built from the records of listed works.
+Claude found the list by reading every page of the site on 2026-11-18, apart from the pages built from the records of listed works, and added Elsevier on 2026-11-23.
 
 The site serves no logo of anyone else.
 It serves only these image files, all of them made for Sophaxis:

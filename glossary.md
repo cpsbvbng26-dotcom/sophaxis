@@ -1,6 +1,6 @@
 # Glossary
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [用語集（日本語訳）](./glossary.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -10,7 +10,7 @@ This page defines the words used on Sophaxis.
 
 - Overlay: a service that lists works kept elsewhere. Sophaxis keeps no work of its own; each work stays in its repository.
 - Preprint: a version of a work made public by its authors, before or apart from publication in a journal.
-- Repository: the place where the authors deposit the work and which gives it a DOI, such as Zenodo, arXiv or SSRN. The [Submission Policy](./policies/submission.md) names those that Sophaxis accepts.
+- Repository: the place where the authors deposit the work and which gives it a DOI, such as SSRN, arXiv or Jxiv. The [Submission Policy](./policies/submission.md) names those that Sophaxis accepts.
 - DOI: the persistent identifier that the repository registers for the work. Sophaxis gives no DOI.
 - First DOI: the earliest DOI of a work among the DOI given and the earlier ones that its metadata names. From 2026-11-23, a new work is listed only if six months have passed since it was registered.
 - Moderation: the check by which a moderator decides whether a submission may be listed. It is not peer review, and it does not judge whether the work is correct or important.

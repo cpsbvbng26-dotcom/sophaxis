@@ -1,6 +1,6 @@
 # For anyone introducing Sophaxis
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-23.
 
 Japanese: [紹介する人のために（日本語訳）](./press.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -17,7 +17,7 @@ Sophaxis is a free overlay preprint server for philosophy and mathematics: it mo
 ## In one paragraph
 
 Sophaxis lists preprints in philosophy, mathematics, logic, the philosophy of mathematics and the philosophy of science.
-Authors deposit their work in an open repository, such as Zenodo, arXiv or SSRN, and submit the DOI in a public GitHub issue.
+Authors deposit their work in SSRN, arXiv or Jxiv (until 2026-12-06, also in other repositories, such as Zenodo), and submit the DOI in a public GitHub issue.
 An automatic check confirms through ORCID that the submitter is an author and that the work carries an open licence; a moderator then decides in public.
 Each record page shows the abstract, the versions, an unmodified PDF copy and the authors' statement on the use of generative models.
 Sophaxis charges nothing, to authors or to readers, and is run unpaid by one person in Japan.

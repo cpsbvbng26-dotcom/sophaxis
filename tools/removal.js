@@ -393,18 +393,27 @@ function restore(id, today = new Date(Date.now() + 9 * 3600 * 1000).toISOString(
   fs.writeFileSync(paperFile(id), JSON.stringify(restored(JSON.parse(git('show', sha + '^:data/papers/' + id + '.json')), today), null, 2) + '\n');
   git('ls-tree', '--name-only', sha + '^', 'data/pdf/').split('\n').filter((f) => path.basename(f).startsWith(id + 'v'))
     .forEach((f) => fs.writeFileSync(path.join(ROOT, f), execFileSync('git', ['show', sha + '^:' + f], { cwd: ROOT })));
+  /* Its share card too, with its entry in cards.json, as they were before the hold (2026-11-23). */
+  const card = 'assets/cards/' + id + '.png';
+  if (git('ls-tree', '--name-only', sha + '^', card).trim()) {
+    fs.writeFileSync(path.join(ROOT, card), execFileSync('git', ['show', sha + '^:' + card], { cwd: ROOT }));
+    const was = JSON.parse(git('show', sha + '^:assets/cards/cards.json')), now = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/cards/cards.json'), 'utf8'));
+    if (was[id]) { now[id] = was[id]; fs.writeFileSync(path.join(ROOT, 'assets/cards/cards.json'), JSON.stringify(Object.fromEntries(Object.keys(now).sort().map((k) => [k, now[k]])), null, 2) + '\n'); }
+  }
   return true;
 }
 
 /* Build, check, and commit the data and the generated site separately, then push to main. Throws on any failure. */
 function commit(action, id, summary, extra = []) {
+  /* The share card of a record no longer shown goes with it (2026-11-23); a card put back by restore() stays. */
+  require('./cards.js').pruneCards();
   execFileSync('node', ['build.js'], { cwd: ROOT, stdio: 'inherit', env: CLEAN_ENV });
   execFileSync('node', ['verification/check.js'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'], env: CLEAN_ENV });
   git('config', 'user.name', 'github-actions[bot]');
   git('config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com');
   /* Commits made by the workflow carry only the action: no model wrote them, so they name no model as co-author. */
   const trailer = ['-m', ['Sophaxis-Action: ' + action + ' ' + id].concat(extra).join('\n')];
-  git('add', '-A', 'data');
+  git('add', '-A', 'data', 'assets/cards');
   git('commit', '-q', '-m', summary, ...trailer);
   git('add', '-A', 'site');
   if (git('diff', '--cached', '--name-only').trim()) git('commit', '-q', '-m', 'サイトを生成し直す（生成物、' + id + '）', ...trailer);
@@ -673,6 +682,19 @@ async function manual() {
   const grounds = String(process.env.GROUNDS || '').trim();
   if (['remove', 'remove-pdf', 'no-archive'].includes(action) && !grounds) throw new Error('give the grounds of the decision, without personal data');
   const record = readRecord(id);
+  /* A removal already made by a commit that names it (Sophaxis-Action: remove <id>), such as a pull request of the operator's, is
+   * resumed as decide() resumes one (2026-11-23): the grounds go to the submission issue of the record as it was, the issues that
+   * name it are emptied and closed, and the follow-up is opened, if it is not open yet. Nothing is written to the records again. */
+  if (action === 'remove' && record && record.status === 'removed' && !isHeld(record)) {
+    const left = removalLeft(record, await followUpOpen(id));
+    const before = recordBefore(id);
+    if (!before) throw new Error(id + ' is removed, but the record before its removal is not in the history');
+    if (before.issue) await I.github('POST', '/issues/' + before.issue + '/comments', { body: emailDecision({ id, action, grounds, today: today() }) });
+    const emptied = await erase(before);
+    if (left.followUp) await openFollowUp(id, emptied, today());
+    console.log('emptied: ' + emptied.map((x) => '#' + x).join(', '));
+    return;
+  }
   if (action === 'release') {
     if (!isHeld(record) || !restore(id)) throw new Error(id + ' is not offline under review');
     commit('release', id, SUMMARY.release(id));

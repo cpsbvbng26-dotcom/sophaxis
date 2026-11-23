@@ -79,13 +79,11 @@ function compare(p, found) {
   return out;
 }
 
-/* Pure: where a new version would show. Figshare gives each version its own DOI (.v1, .v2, …),
- * and arXiv keeps one DOI for all; other repositories are not followed. */
+/* Pure: where a new version would show. arXiv keeps one DOI for all versions; other repositories are not followed. Figshare,
+ * which gives each version its own DOI (.v1, .v2, …), was followed for 2026.0001 until that record was removed on 2026-11-23. */
 function followed(p) {
   if (p.status !== 'listed') return null;
   const last = p.versions[p.versions.length - 1].doi;
-  const m = /^(10\.6084\/m9\.figshare\.\d+)\.v\d+$/i.exec(last);
-  if (m) return m[1];
   if (/^10\.48550\/arxiv\./i.test(last)) return last;
   return null;
 }
