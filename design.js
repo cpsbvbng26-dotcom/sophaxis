@@ -155,6 +155,11 @@ const DEPTH = {
     '--e3': 'var(--hi),2px 3px 5px -1px var(--sh),5px 10px 24px -8px var(--sh)',
     '--in': 'inset 1px 2px 3px -1px var(--sh)',
   },
+  /* The edges of a spine: light on the left, shade on the right, each reaching at most `edge` pixels in (offset, spread and
+   * blur together). The narrowest spine is 2.6rem wide and its letters stand in the middle, so no letter is lit or shaded. */
+  bevel: { light: 'inset 3px 0 3px -2px #fff6', shade: 'inset -3px 0 3px -2px #0006', edge: 4 },
+  /* The longest line of running text, in em: one em is one character of Japanese. */
+  measure: 36,
 };
 const decl = (o) => Object.entries(o).map(([k, v]) => `${k}:${v}`).join(';');
 
@@ -181,7 +186,7 @@ function css(fields, part = 'core') {
      * paragraph or a list with no class of its own) keeps a line of 36em: 36 characters of Japanese, about 75 of English. */
     'body{background:radial-gradient(64rem 36rem at 0 0,var(--card),#0000),var(--bg)}header.top{background:linear-gradient(var(--card),var(--bg));box-shadow:var(--e2)}',
     '.notice,.fields a,.search button{box-shadow:var(--e1)}.fields a{background:var(--card)}.search input,.search select,.fields a[aria-current]{box-shadow:var(--in)}',
-    ':is(.fields a,.search button):is(:hover,:focus-visible),.skip:focus{box-shadow:var(--e3)}h1,h2,h3{text-wrap:balance}main>:is(p,ul):not([class]){max-width:36em}',
+    ':is(.fields a,.search button):is(:hover,:focus-visible),.skip:focus{box-shadow:var(--e3)}h1,h2,h3{text-wrap:balance}main>:is(p,ul):not([class]){max-width:' + DEPTH.measure + 'em}',
     '@media print{.band{display:none}*{box-shadow:none!important}body,header.top{background:none}}',
   ].join('\n') + '\n';
   /* The entrance of the two top pages. It names only the site's tokens and the field colours: no colour of its own. */
@@ -224,7 +229,7 @@ function css(fields, part = 'core') {
     /* Depth on the shelf: each spine is lit along its left edge and shaded along its right, within 4px of the edges, where
      * no letter stands, and rises when the pointer or the focus is on it. A withdrawn spine is a gap, sunk into the shelf. The
      * shelf with its board casts one shadow; the card is raised, and its hole is punched into it. */
-    '.shelf{filter:drop-shadow(1px 2px 2px var(--sh))}.shelf a{box-shadow:inset 3px 0 3px -2px #fff6,inset -3px 0 3px -2px #0006}.shelf a:is(:hover,:focus-visible){box-shadow:inset 3px 0 3px -2px #fff6,inset -3px 0 3px -2px #0006,var(--e3)}',
+    `.shelf{filter:drop-shadow(1px 2px 2px var(--sh))}.shelf a{box-shadow:${DEPTH.bevel.light},${DEPTH.bevel.shade}}.shelf a:is(:hover,:focus-visible){box-shadow:${DEPTH.bevel.light},${DEPTH.bevel.shade},var(--e3)}`,
     '.shelf .withdrawn a{box-shadow:var(--in)}.card{box-shadow:var(--e2)}.hole{box-shadow:var(--in)}.abstract,pre,.access{box-shadow:var(--e1)}',
     '@media (max-width:40rem){.card{padding:var(--s3) var(--s4) var(--s6)}.card dl{grid-template-columns:minmax(0,1fr)}}',
     '@media print{.shelf{display:none}.card{background:none;border:1px solid #000;border-top:3px solid #000;break-inside:avoid}}',
@@ -316,4 +321,4 @@ function cardEmblem(entries) {
     + `<circle cx="${C.x + C.w / 2}" cy="${C.y + C.h - 2 * C.hole}" r="${C.hole}" fill="none" stroke="currentColor" class="hl"/></svg>`;
 }
 
-module.exports = { ENTRANCE, spineSize, ruleSvg, shelfEmblem, fieldsEmblem, cardEmblem, LOGO, logoSvg, logoMeasures, GLYPH, GLYPHS, GLYPH_SHAPES, GLYPH_SHAPES_JA, glyphSvg, BAND, bandSvg, CONSTRUCTION, constructionSvg, BASE, lum, ratio, fieldRatio, r2, TYPE, SPACE, FONTS, css };
+module.exports = { DEPTH, ENTRANCE, spineSize, ruleSvg, shelfEmblem, fieldsEmblem, cardEmblem, LOGO, logoSvg, logoMeasures, GLYPH, GLYPHS, GLYPH_SHAPES, GLYPH_SHAPES_JA, glyphSvg, BAND, bandSvg, CONSTRUCTION, constructionSvg, BASE, lum, ratio, fieldRatio, r2, TYPE, SPACE, FONTS, css };

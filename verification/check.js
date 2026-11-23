@@ -10063,6 +10063,135 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
     missed.length === 0 && near.length > 0, missed.concat(near.length ? [] : ['a day of effect 13 days after']).join(' / '));
 }
 
+/* ------------------------------------------------------------ 148 */
+console.log('\n148. Depth (2026-11-23): four heights and one depth from design.js, lit from the upper left, nothing that moves, gradients only between the background and the card, flat on paper, a spine shaded only at its edges, a line of running text at most 36em, and the construction page and the page on the design in both languages');
+{
+  const Dz = require('../design.js');
+  const F = JSON.parse(read(path.join(ROOT, 'site.json'))).fields;
+  const S = path.join(ROOT, 'site');
+  const htmlFiles = fs.readdirSync(S, { recursive: true }).map(String).filter((f) => f.endsWith('.html'));
+  /* Every style the site serves, once each (a page carries the core, the shelf or the entrance as well). */
+  const styles = [...new Set(htmlFiles.flatMap((f) => [...read(path.join(S, f)).matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1])))];
+  const real = {
+    depth: JSON.parse(JSON.stringify(Dz.DEPTH)),
+    core: Dz.css(F), shelf: Dz.css(F, 'shelf'), entrance: Dz.css(F, 'entrance'), styles,
+    md: Object.fromEntries(['construction.md', 'construction.ja.md', 'design.md', 'design.ja.md', 'CHANGELOG.md'].map((f) => [f, read(path.join(ROOT, f))])),
+  };
+  const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6 };
+  /* The parts of a shadow list, split at the commas outside brackets. */
+  const parts = (v) => { const out = []; let d = 0, cur = ''; for (const ch of v) { if (ch === '(') d++; if (ch === ')') d--; if (ch === ',' && d === 0) { out.push(cur.trim()); cur = ''; } else cur += ch; } if (cur.trim()) out.push(cur.trim()); return out; };
+  const lengths = (p) => (p.match(/-?\d*\.?\d+px|(?<![\w#.-])0(?![\w.])/g) || []).map((x) => parseFloat(x));
+  /* Every declaration of a style outside @media print, and inside it. */
+  const printPart = (css) => [...css.matchAll(/@media print\{((?:[^{}]*\{[^{}]*\})*)\}/g)].map((m) => m[1]).join('');
+  const screenPart = (css) => css.replace(/@media print\{(?:[^{}]*\{[^{}]*\})*\}/g, '');
+  function problems(x) {
+    const bad = [];
+    const D = x.depth, L = D.levels || {};
+    /* The heights: the ground and every e-level; one depth below. */
+    const ups = Object.keys(L).filter((k) => /^--e\d$/.test(k)).sort(), downs = Object.keys(L).filter((k) => k === '--in');
+    if (ups.join() !== ['--e1', '--e2', '--e3'].slice(0, ups.length).join() || ups.length < 3) bad.push('the levels are not --e1, --e2, --e3 in order: ' + ups.join());
+    const heights = 1 + ups.length, depths = downs.length;
+    for (const k of ups.concat(downs)) if (!x.core.includes(k + ':' + L[k] + ';')) bad.push('the core of every page lacks ' + k);
+    for (const s of ['light', 'dark']) for (const k of ['--sh', '--hi']) if (!(D[s] || {})[k]) bad.push('the ' + s + ' scheme has no ' + k);
+    if (!/^:root\{[^}]*--sh:[^;]+;--hi:/.test(x.core.split('\n')[1] || '') || !new RegExp('@media \\(prefers-color-scheme:dark\\)\\{[^\\n]*:root\\{--sh:' + String((D.dark || {})['--sh']).replace(/[#()]/g, '\\$&') + ';--hi:' + String((D.dark || {})['--hi']).replace(/[#()]/g, '\\$&') + '\\}\\}').test(x.core)) bad.push('the core does not set the shadow and the highlight of each scheme');
+    /* In the dark scheme a raised surface has a line of light along its upper edge: an inset at 0 across and 1px or more down. */
+    const hi = lengths(String((D.dark || {})['--hi']));
+    if (!/^inset /.test(String((D.dark || {})['--hi'])) || hi[0] !== 0 || !(hi[1] > 0)) bad.push('the dark scheme has no line of light along the upper edge');
+    for (const k of ups) if (!L[k].startsWith('var(--hi),')) bad.push(k + ' does not carry the line of light');
+    /* One light, from the upper left: every shadow outside falls right and down; every shadow inside is darker at the upper left. */
+    const outer = [];
+    for (const k of ups) parts(L[k]).filter((p) => p !== 'var(--hi)').forEach((p) => outer.push([k, p]));
+    for (const css of x.styles) for (const m of css.matchAll(/drop-shadow\(([^()]*(?:\([^()]*\))?[^()]*)\)/g)) outer.push(['drop-shadow', m[1]]);
+    for (const [k, p] of outer) { const n = lengths(p); if (/^inset/.test(p) || !(n[0] >= 0) || !(n[1] > 0)) bad.push(k + ': a shadow that does not fall to the lower right: ' + p); }
+    const sunk = lengths(String(L['--in'])); if (!/^inset /.test(String(L['--in'])) || !(sunk[0] > 0) || !(sunk[1] > 0)) bad.push('the depth is not lit from the upper left');
+    /* The edges of a spine: light on the left, shade on the right, at most `edge` pixels in. */
+    const B = D.bevel || {}, bl = lengths(String(B.light)), bs = lengths(String(B.shade));
+    if (!/^inset .*#fff/.test(String(B.light)) || !(bl[0] > 0) || !/^inset .*#000/.test(String(B.shade)) || !(bs[0] < 0)) bad.push('the spine is not lit on the left and shaded on the right');
+    for (const n of [bl, bs]) if (Math.abs(n[0]) + n[3] + n[2] > B.edge || n[1] !== 0) bad.push('a bevel reaches more than ' + B.edge + 'px into a spine');
+    if (!x.shelf.includes('.shelf a{box-shadow:' + B.light + ',' + B.shade + '}')) bad.push('the spines do not carry the bevel of design.js');
+    /* Every box-shadow of every style is a level, the depth or the bevel; on paper, none. */
+    const allowed = new Set(ups.concat(downs).map((k) => 'var(' + k + ')').concat([B.light, B.shade]));
+    for (const css of x.styles) {
+      for (const m of screenPart(css).matchAll(/box-shadow:([^;}]+)/g)) for (const p of parts(m[1])) if (!allowed.has(p)) bad.push('a shadow of its own: ' + p);
+      /* Nothing moves. */
+      if (/(?<![-\w])transform\s*:|translate|rotate\(|scale\(|@keyframes|\b(?:animation|transition)\s*:/.test(css)) bad.push('a style that moves or shifts something');
+      /* The gradients name the background, the card and nothing (transparent) only. */
+      for (const m of css.matchAll(/gradient\(([^()]*(?:\([^()]*\)[^()]*)*)\)/g)) {
+        const named = (m[1].match(/var\(--[a-z0-9-]+\)|#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color-mix|color)\(|\b(?:white|black|red|transparent|currentcolor)\b/gi) || []);
+        if (named.some((c) => !['var(--card)', 'var(--bg)', '#0000'].includes(c.toLowerCase()))) bad.push('a gradient with a colour other than the background and the card: ' + m[1]);
+      }
+      /* On paper: no shadow, no gradient on the ground or the header, and every filter taken off or its element hidden. */
+      const pr = printPart(css), scr = screenPart(css);
+      if (!pr.includes('*{box-shadow:none!important}') || (/gradient\(/.test(scr) && !pr.includes('body,header.top{background:none}'))) bad.push('a style that is not flat on paper');
+      for (const m of scr.matchAll(/([^{}]+)\{[^{}]*filter:drop-shadow/g)) { const sel = m[1].trim(); if (!new RegExp('(?:^|\\})' + sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\{[^}]*(?:filter:none|display:none)').test(pr)) bad.push(sel + ' keeps its shadow on paper'); }
+    }
+    for (const part of ['core', 'shelf', 'entrance']) if (!x.styles.some((css) => css.includes(x[part]))) bad.push('no page carries the ' + part + ' of design.js as it is');
+    /* The surfaces of a gradient carry every text colour: 4.5:1 in both schemes, 7:1 with more contrast. */
+    const idx = x.styles.find((css) => css.includes(x.core)) || '';
+    const pal = (re) => Object.fromEntries([...((re.exec(idx) || [])[1] || '').matchAll(/--([a-z]+): (#[0-9a-f]{6})/g)].map((m) => [m[1], m[2]]));
+    const light = pal(/\n:root \{([^}]*)\}/), dark = pal(/@media \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/);
+    const sets = [['light', light, 4.5], ['dark', dark, 4.5], ['light, more contrast', Object.assign({}, light, pal(/@media \(prefers-contrast: more\) \{ :root \{([^}]*)\}/)), 7],
+      ['dark, more contrast', Object.assign({}, dark, pal(/@media \(prefers-contrast: more\) and \(prefers-color-scheme: dark\) \{ :root \{([^}]*)\}/)), 7]];
+    for (const [n, t, need] of sets) for (const f of ['fg', 'muted', 'accent']) for (const b of ['bg', 'card']) { const r = t[f] && t[b] ? Dz.ratio(t[f], t[b]) : 0; if (r < need) bad.push(n + ': ' + f + ' on ' + b + ' at ' + r.toFixed(2)); }
+    /* Headings break evenly; running text keeps at most the measure. */
+    if (!x.core.includes('h1,h2,h3{text-wrap:balance}') || !x.core.includes('main>:is(p,ul):not([class]){max-width:' + D.measure + 'em}')) bad.push('the headings or the measure');
+    /* The construction page says the numbers that design.js gives, in both languages. */
+    const en = x.md['construction.md'], ja = x.md['construction.ja.md'];
+    const secEn = en.slice(en.indexOf('\n## Depth\n')), secJa = ja.slice(ja.indexOf('\n## 奥行き\n'));
+    if (en.indexOf('\n## Depth\n') < 0 || ja.indexOf('\n## 奥行き\n') < 0) bad.push('the construction page has no section on depth');
+    const said = [
+      [WORDS[(/There are (\w+) heights: the ground, a surface, a raised surface and the front\./.exec(secEn) || [])[1]], heights, 'heights (en)'],
+      [WORDS[(/Below the ground there is (\w+) depth\./.exec(secEn) || [])[1]], depths, 'depths (en)'],
+      [Number((/within (\d+)px of the edges/.exec(secEn) || [])[1]), B.edge, 'the edge (en)'],
+      [Number((/a line of at most (\d+)em, which is (\d+) characters of Japanese\./.exec(secEn) || [])[1]), D.measure, 'the measure (en)'],
+      [Number((/a line of at most \d+em, which is (\d+) characters of Japanese\./.exec(secEn) || [])[1]), D.measure, 'the characters (en)'],
+      [WORDS[(/高さは(.)段です。地、面、浮いた面、最前面です。/.exec(secJa) || [])[1]], heights, 'heights (ja)'],
+      [WORDS[(/地の下に、くぼみが(.)段あります。/.exec(secJa) || [])[1]], depths, 'depths (ja)'],
+      [Number((/明暗は縁から (\d+)px までで/.exec(secJa) || [])[1]), B.edge, 'the edge (ja)'],
+      [Number((/本文の一行は (\d+)em までです。/.exec(secJa) || [])[1]), D.measure, 'the measure (ja)'],
+      [Number((/日本語で (\d+) 字です。/.exec(secJa) || [])[1]), D.measure, 'the characters (ja)'],
+    ];
+    for (const [got, want, what] of said) if (got !== want) bad.push('the construction page: ' + what + ' says ' + got + ', design.js gives ' + want);
+    for (const [s, t] of [['Nothing moves.', secEn], ['no transform, no animation and no transition', secEn], ['On paper the shadows and the gradients are dropped.', secEn], ['lit from one side, the upper left, so every shadow falls to the lower right', secEn],
+      ['どれも動きません。', secJa], ['変形もアニメーションも遷移もありません。', secJa], ['印刷では、影もグラデーションも外します。', secJa], ['光は左上の一方向から当て、影はどれも右下に落とします。', secJa]]) if (!t.includes(s)) bad.push('the construction page lacks: ' + s);
+    if (!x.md['design.md'].includes('- the depth is drawn with shadows, and with gradients between the background colour and the card colour only, so that every text colour is measured on both ends; what the pointer or the focus is on rises by its shadow and does not move; on paper the shadows and the gradients are dropped;')
+      || !x.md['design.ja.md'].includes('- 奥行きは、影と、背景の色とカードの色のあいだのグラデーションだけで描きます。文字の色は、その両端で測っています。ポインターやフォーカスの当たったものは、動かずに影で浮きます。印刷では、影もグラデーションも外します。')) bad.push('the page on the design lacks the line on depth');
+    return bad;
+  }
+  const now = problems(real);
+  ok('depth: ' + (1 + Object.keys(real.depth.levels).filter((k) => /^--e\d$/.test(k)).length) + ' heights and 1 depth, every shadow to the lower right, a line of light in the dark scheme, the spines shaded within ' + real.depth.bevel.edge + 'px of their edges, no shadow of its own, nothing that moves, gradients only between the background and the card (every text colour measured on both, in four schemes), flat on paper, headings balanced and a line of at most ' + real.depth.measure + 'em, in ' + styles.length + ' styles served; the construction page and the page on the design say so in both languages',
+    now.length === 0, now.slice(0, 6).join(' / '));
+  const w = (k, v) => Object.assign({}, real, { [k]: v });
+  const dep = (fn) => w('depth', fn(JSON.parse(JSON.stringify(real.depth))));
+  const st = (a, b) => w('styles', real.styles.map((css) => css.replace(a, b)));
+  const md = (f, a, b) => w('md', Object.assign({}, real.md, { [f]: real.md[f].replace(a, b) }));
+  const breaks = [
+    ['a chip moved on hover', st('h1,h2,h3{text-wrap:balance}', '.fields a:hover{transform:translateY(-1px)}h1,h2,h3{text-wrap:balance}')],
+    ['a gradient with a colour of its own', st('radial-gradient(64rem 36rem at 0 0,var(--card),#0000)', 'radial-gradient(64rem 36rem at 0 0,#ffffff,#0000)')],
+    ['a gradient with the accent', st('linear-gradient(var(--card),var(--bg))', 'linear-gradient(var(--accent),var(--bg))')],
+    ['a shadow falling to the upper left', dep((d) => { d.levels['--e2'] = d.levels['--e2'].replace('3px 6px 16px', '-3px -6px 16px'); return d; })],
+    ['a drop shadow falling up', st('drop-shadow(1px 2px 1px var(--sh))', 'drop-shadow(1px -2px 1px var(--sh))')],
+    ['shadows kept on paper', st('*{box-shadow:none!important}', '')],
+    ['a filter kept on paper', st('.em{border-bottom-color:#000;filter:none}', '.em{border-bottom-color:#000}')],
+    ['the dark scheme without its line of light', dep((d) => { d.dark['--hi'] = '0 0 #0000'; return d; })],
+    ['a level without the line of light', dep((d) => { d.levels['--e3'] = d.levels['--e3'].replace('var(--hi),', ''); return d; })],
+    ['a bevel 6px deep', dep((d) => { d.bevel.light = 'inset 5px 0 3px -2px #fff6'; return d; })],
+    ['a shadow of its own', st('h1,h2,h3{text-wrap:balance}', '.notice{box-shadow:2px 2px 4px #f00}h1,h2,h3{text-wrap:balance}')],
+    ['a level missing from the core', w('core', real.core.replace(/--e3:[^;]+;/, ''))],
+    ['the measure changed in the core only', w('core', real.core.replace('max-width:' + real.depth.measure + 'em', 'max-width:40em'))],
+    ['five heights said', md('construction.md', 'There are four heights', 'There are five heights')],
+    ['another measure said in Japanese', md('construction.ja.md', '日本語で ' + real.depth.measure + ' 字です。', '日本語で 40 字です。')],
+    ['the edge said as 6px', md('construction.ja.md', '明暗は縁から ' + real.depth.bevel.edge + 'px までで', '明暗は縁から 6px までで')],
+    ['the line on depth taken off the page on the design', md('design.ja.md', '印刷では、影もグラデーションも外します。\n', '\n')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  /* The changelog gives the number of break tests of this check. */
+  const ch = real.md['CHANGELOG.md'], said = (/check \(148\) with (\d+) break tests/.exec(ch) || [])[1];
+  ok('the changelog gives the ' + breaks.length + ' break tests of this check', Number(said) === breaks.length, 'the changelog says ' + said);
+  ok('break on purpose: each of ' + breaks.length + ' ways (a move, a colour in a gradient, the accent in a gradient, a shadow up and to the left, a drop shadow up, shadows or a filter on paper, the dark scheme or a level without its light, a deep bevel, a shadow of its own, a level or the measure missing, wrong counts in either language, the page on the design) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
