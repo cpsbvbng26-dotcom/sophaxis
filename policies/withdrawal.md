@@ -1,6 +1,6 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-21.
+Last updated: 2026-11-23.
 
 Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -63,7 +63,7 @@ The public issues where the earlier name was written, the history of the public 
 ## The work in its repository
 
 Withdrawal on Sophaxis does not touch the deposit.
-Sophaxis cannot withdraw or delete a work at Zenodo, Figshare or any other repository; a request about the deposit goes to that repository.
+Sophaxis cannot withdraw or delete a work at Zenodo, SSRN or any other repository; a request about the deposit goes to that repository.
 If the repository withdraws or deletes the deposit, the weekly check finds that the DOI no longer resolves, and the operator withdraws the record with a note that says so.
 
 ## Withdrawal on publication

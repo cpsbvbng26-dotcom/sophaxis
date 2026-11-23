@@ -1,6 +1,6 @@
 # よくある質問（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-23。
 
 これは英語の [Frequently asked questions](./faq.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -36,8 +36,10 @@ Sophaxis は、それぞれの記録に 2026.0001 のような番号を与えま
 
 ## どの預け先を受け付けますか？
 
-Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、arXiv、Preprints.org、SSRN、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works、Jxiv です。
+2026-12-07 からは、新しい作品には SSRN・arXiv・Jxiv です。
+2026-12-06 までは、Zenodo、Figshare、OSF Preprints、SocArXiv、MetaArXiv、Preprints.org、Research Square、SciELO Preprints、Qeios、ScienceOpen Preprints、Advance、KC Works も受け付け、合わせて 15 です。
 作品は、そのどれかから DOI を得ている必要があります。
+すでに載っている作品は載ったままで、その新しい版は、作品が載っている預け先から受け付けます。
 
 ## どのライセンスを受け付けますか？
 

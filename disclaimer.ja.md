@@ -28,6 +28,7 @@ Sophaxis は証明・論証・データを確かめず、載っている作品�
 
 Sophaxis は、独立した個人のプロジェクトです。
 載せている作品の預け先のどれとも、DataCite、Crossref、JaLC、OpenAlex、ORCID、GitHub、Vercel、Internet Archive のどれとも、提携しておらず、推薦も受けておらず、協力関係にもありません。
+エルゼビア、コーネル大学、JST（科学技術振興機構）とも、提携しておらず、推薦も受けておらず、協力関係にもありません。運営者は、[投稿の規程](./policies/submission.ja.md)で、この三つを信頼できる機関・出版社と定めていますが、それは運営者自身の定めです。
 それらの名は、それぞれのサービスを示すためだけに使っており、それぞれの持ち主に属します。その中には商標もあります。
 それらは、Sophaxis にも、その記録にも、Sophaxis が持ち込んだ誤りにも、責任を負いません。[預け先と DOI 登録機関へ](./repositories.ja.md)の頁も見てください。
 
@@ -81,13 +82,13 @@ USPTO 自身のデータベースと、ほかの国の官庁のデータベー�
 
 ### ほかの者の名
 
-[載っている作品を見つけやすくする](./findable.ja.md)と[デザインに関する法的な扱い](./design.ja.md)の頁のほかに、サイトは、次の **75** のサービス・製品・組織の名を挙げています：Academia.edu、Adilet、Advance、Anthropic、Apple、arXiv、BBB National Programs、Bing、Bluesky、ChatGPT、Claude、Claude Code、CLOCKSS、COPE、Creative Commons、Crossref、DataCite、DOAJ、DOI、Dropbox、e-Gov、edX、eGazette、Facebook、Fedlex、Figshare、GitHub、GitHub Actions、Google Drive、Google Scholar、Grok、HAL、iCloud、IndexNow、Internet Archive、iTunes、J-PlatPat、JaLC、Jxiv、KC Works、Keepers Registry、Legal Information Institute、LinkedIn、MetaArXiv、OASPA、Open Access Directory、OpenAI、OpenAIRE、OpenAlex、ORCID、OSF、OSF Preprints、PhilArchive、PhilSci-Archive、Portico、Preprints.org、Qeios、Registry of Open Access Repositories、Research Square、ResearchGate、Retraction Watch、SciELO Preprints、ScienceOpen、SocArXiv、SpaceX、SSRN、Vercel、WAME、Wayback Machine、Windows、WIPO Global Brand Database、X、xAI、Zenodo、ZimLII。
+[載っている作品を見つけやすくする](./findable.ja.md)と[デザインに関する法的な扱い](./design.ja.md)の頁のほかに、サイトは、次の **76** のサービス・製品・組織の名を挙げています：Academia.edu、Adilet、Advance、Anthropic、Apple、arXiv、BBB National Programs、Bing、Bluesky、ChatGPT、Claude、Claude Code、CLOCKSS、COPE、Creative Commons、Crossref、DataCite、DOAJ、DOI、Dropbox、e-Gov、edX、eGazette、Elsevier、Facebook、Fedlex、Figshare、GitHub、GitHub Actions、Google Drive、Google Scholar、Grok、HAL、iCloud、IndexNow、Internet Archive、iTunes、J-PlatPat、JaLC、Jxiv、KC Works、Keepers Registry、Legal Information Institute、LinkedIn、MetaArXiv、OASPA、Open Access Directory、OpenAI、OpenAIRE、OpenAlex、ORCID、OSF、OSF Preprints、PhilArchive、PhilSci-Archive、Portico、Preprints.org、Qeios、Registry of Open Access Repositories、Research Square、ResearchGate、Retraction Watch、SciELO Preprints、ScienceOpen、SocArXiv、SpaceX、SSRN、Vercel、WAME、Wayback Machine、Windows、WIPO Global Brand Database、X、xAI、Zenodo、ZimLII。
 その頁は、著者が自分で作品を足せるサービスの名も挙げています。著者がそれを見つけられるように挙げるだけです。
 これらの名は、それぞれの持ち主に属します。その中には商標もあります。
 Sophaxis は、どの名も、そのサービス・製品・組織そのものを指すためだけに使います。
 上の「提携していないこと」のとおり、提携・後援・推薦の関係を示すものではありません。
 国・公の機関・大学・法令・人・地名・作品の名と、形式や規格の名は、一覧に入れていません。同じように、それを指すためだけに使います。
-一覧は、2026-11-18 に Claude がサイトのすべての頁を読んで作りました。載っている作品の記録から作る頁は除きました。
+一覧は、2026-11-18 に Claude がサイトのすべての頁を読んで作りました。載っている作品の記録から作る頁は除きました。2026-11-23 に Elsevier を足しました。
 
 サイトは、ほかの者のロゴを配りません。
 配る画像は、次のファイルだけです。どれも Sophaxis のために作ったものです。

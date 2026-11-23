@@ -1,6 +1,6 @@
 # Transparency: a self-assessment
 
-Last updated: 2026-11-12.
+Last updated: 2026-11-23.
 
 Japanese: [透明性の自己評価（日本語訳）](./transparency.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -66,7 +66,7 @@ Records are listed continuously, when a submission is accepted; there are no iss
 ### Preservation
 
 In part.
-The works themselves are deposited, and preserved, in their repositories, such as Zenodo, arXiv or Figshare.
+The works themselves are deposited, and preserved, in their repositories, such as SSRN or Zenodo.
 The records and the site are kept in a public git repository, and version 1.0.0 is archived at Zenodo (10.5281/zenodo.24033372).
 Record pages and PDF copies are saved to the Internet Archive each week, where every author consents to it.
 Sophaxis is in no archive of the Keepers Registry, such as CLOCKSS or Portico.

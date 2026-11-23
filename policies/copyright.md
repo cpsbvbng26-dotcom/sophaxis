@@ -30,7 +30,7 @@ Since this change was published on 2026-11-15, Sophaxis reads nothing from arXiv
 Until this change was published on 2026-11-13, Sophaxis also copied files from Figshare and Research Square by script. Since then, it does not, because their terms forbid it.
 Figshare's terms list, among what a user shall not do, "use any manual or automated means, including robots, scripts, or spiders to access, monitor, crawl, scrape, spider or mine". The only exception is for means "expressly authorized for you by Figshare in advance in writing".
 Research Square's terms say "You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Web Sites".
-The copies already taken from Figshare stay, under the work's own licence.
+The copies already taken from Figshare were taken off the site on 2026-11-23, when their record was removed.
 These pages were read on 2026-11-12: Zenodo's directly, and Figshare's and Research Square's from the Internet Archive's copies.
 Where the repository publishes a checksum, the copy must match it.
 When a deposit holds more than one PDF, Sophaxis does not guess which one is the paper, and makes no copy.

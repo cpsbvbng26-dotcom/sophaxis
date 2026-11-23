@@ -1,6 +1,6 @@
 # For repositories and DOI registration agencies
 
-Last updated: 2026-11-15.
+Last updated: 2026-11-23.
 
 Japanese: [預け先と DOI 登録機関へ（日本語訳）](./repositories.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -39,8 +39,8 @@ Reach the operator through an [issue](https://github.com/cpsbvbng26-dotcom/sopha
 
 ## Disclaimer toward repositories and registration agencies
 
-Sophaxis is independent, and is not affiliated with, endorsed by or a partner of any repository or registration agency.
-Sophaxis keeps a community at Zenodo (<https://zenodo.org/communities/sophaxis>) for the Zenodo records of works it lists. Any Zenodo user can open one; it does not make Sophaxis part of Zenodo.
+Sophaxis is independent, and is not affiliated with, endorsed by or a partner of any repository or registration agency, nor of Elsevier, Cornell University or JST (the Japan Science and Technology Agency), which the operator defines as trusted institutions and publishers in the [Submission Policy](./policies/submission.md); that definition is the operator's own, and rates no other repository.
+Sophaxis keeps a community at Zenodo (<https://zenodo.org/communities/sophaxis>) for the Zenodo records of works it lists. From 2026-12-07, a new work deposited only at Zenodo is not accepted on Sophaxis, so a request to add its record is declined; the records of works already listed, and of their new versions at Zenodo, can still be added. Any Zenodo user can open one; it does not make Sophaxis part of Zenodo.
 A record on Sophaxis is Sophaxis's own description of a deposit; it is not a statement by the repository or the agency.
 They are not responsible for Sophaxis, for its records, for its moderation, or for any error that Sophaxis introduces when it shows their metadata.
 Their names identify their services only, and their trademarks belong to them; Sophaxis shows none of their logos.

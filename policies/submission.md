@@ -1,6 +1,6 @@
 # Submission Policy
 
-Last updated: 2026-11-21.
+Last updated: 2026-11-23.
 
 Japanese: [投稿の規程（日本語訳）](./submission.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -114,7 +114,8 @@ Sophaxis accepts work in philosophy, mathematics, logic, the philosophy of mathe
 Work that belongs mainly to another field is out of scope, even if it uses mathematics.
 From 2026-12-15, Sophaxis lists no work whose subject is the principle of ki (氣の原理), whoever submits it, because of the operator's conflict of interest, as the [Moderation Policy](./moderation.md#conflicts-of-interest) sets out.
 
-The work must already be deposited in Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works or Jxiv, with a DOI.
+Until 2026-12-06, the work must already be deposited, with a DOI, in SSRN, arXiv, Jxiv or one of the 12 other repositories that the examples below name, 15 in all.
+From 2026-12-07, a new work must be deposited in SSRN, arXiv or Jxiv, as "The entrance from 2026-12-07" below sets out.
 It must carry CC BY 4.0, CC BY-SA 4.0 or CC0 1.0 in its DOI metadata, as set out in the [Licence Policy](./licences.md).
 It must have a title, an abstract and references, in the ordinary form of a scholarly paper.
 From 2026-12-06, it must also report research of its own (an argument, a proof, an analysis or a result); a research proposal, a call for papers, an announcement or news is not accepted, whatever its form.
@@ -123,7 +124,7 @@ From 2026-11-23, a new work is listed only if at least six months have passed si
 The six months are counted to the day the submission issue is opened, in Japan time.
 They end on the same day of the month, or on the last day of a shorter month.
 The first DOI is the DOI registered earliest among the DOI given and the DOIs that its metadata names as earlier versions of the work, or as the DOI of all its versions.
-In Zenodo this is the DOI of all versions, and in Figshare the DOI of the first version.
+For an issue opened before 2026-12-07, this is, in Zenodo, the DOI of all versions, and in Figshare the DOI of the first version.
 The day of registration is the one that DataCite or Crossref records.
 Where the metadata gives no such day, as for Jxiv, the operator checks it by hand.
 The automatic check in the issue reads these days and counts the six months.
@@ -200,6 +201,18 @@ The consequence of an untrue confirmation, and the removal of the record once th
 Nothing in the form asks the submitter to confirm what other people will do after the submission.
 
 The checked intake never closes a removal or withdrawal issue, a request about personal data, a notice of an infringement of rights, a request about a statement about a person, or the withdrawal of a consent; a person handles these.
+
+## The entrance from 2026-12-07
+
+From 2026-12-07, a new work whose submission issue is opened on or after that day is accepted only if it is deposited in SSRN, arXiv or Jxiv, with a DOI from there.
+The other 12 repositories, which the examples below name, are no longer accepted for a new work.
+A submission whose issue is opened before 2026-12-07 is judged under the list of 15 repositories, even when it is decided on or after that day.
+A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.
+The automatic check tells the repository by the beginning of the DOI (`10.2139/ssrn.`, `10.48550/arXiv.`, `10.51094/jxiv.`).
+The owner decided this on 2026-11-23, and Claude decided the details.
+The operator defines Elsevier, Cornell University and JST (the Japan Science and Technology Agency) as trusted institutions and publishers, and Sophaxis accepts SSRN, arXiv and Jxiv, the repositories that the operator connects with them.
+This is the operator's own definition: it rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it.
+Listed records and authors who followed the earlier rules lose nothing.
 
 ## Higher barriers
 
@@ -341,7 +354,7 @@ It asks readers to cite the published version, and it names the listed version a
 Any one author reports the published version with the [published-version form](https://github.com/cpsbvbng26-dotcom/sophaxis/issues/new?template=published.yml), from the GitHub account that the author's ORCID record links.
 An automatic check confirms that the report comes from an author, and reads the metadata of the published DOI.
 The published version must be a journal article, a conference paper, a book chapter or a book.
-It must not be in one of the accepted repositories, and it must share an author with the record.
+It must not be in any of the 15 repositories, and it must share an author with the record.
 A moderator then records it, and the decision is public in the issue.
 A published version can also be given at submission, and the same checks run on it.
 
@@ -376,6 +389,7 @@ Authorship: the submitter must be an author, and every author must agree.
 Repository and DOI: the work must have its own DOI from an accepted repository.
 
 - A PDF on a personal website, a university page, Google Drive, Dropbox, Academia.edu or ResearchGate.
+- From 2026-12-07, a new work whose DOI is only from Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, Preprints.org, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance or KC Works. Depositing it also in SSRN, arXiv or Jxiv makes it eligible.
 - A work on PhilArchive, PhilSci-Archive or HAL alone, which give no DOI of their own. Deposit it also in an accepted repository.
 - The DOI of the version a journal published, given as the DOI of the deposit.
 - A different work given as the published version of a listed preprint.

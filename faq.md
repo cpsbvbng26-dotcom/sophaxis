@@ -1,6 +1,6 @@
 # Frequently asked questions
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-23.
 
 Japanese: [よくある質問（日本語訳）](./faq.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -36,8 +36,10 @@ Sophaxis gives each record an id, such as 2026.0001, which never changes and is 
 
 ## Which repositories are accepted?
 
-Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, arXiv, Preprints.org, SSRN, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance, KC Works and Jxiv.
+From 2026-12-07, for a new work, SSRN, arXiv and Jxiv.
+Until 2026-12-06, also Zenodo, Figshare, OSF Preprints, SocArXiv, MetaArXiv, Preprints.org, Research Square, SciELO Preprints, Qeios, ScienceOpen Preprints, Advance and KC Works, 15 in all.
 The work must have a DOI from one of them.
+A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.
 
 ## Which licences are accepted?
 

@@ -11,7 +11,7 @@ The articles of Japanese law that it cites are quoted in full, as the e-Gov law 
 
 ## The parts
 
-The site serves **6** image files of its own design, and **5** share cards, one for each record shown.
+The site serves **6** image files of its own design, and **4** share cards, one for each record shown.
 Each was made for Sophaxis with Claude Code, at the operator's request. Every commit that added or changed one of these files, or `design.js` and `tools/cards.js`, which draw them, was made by Claude Code.
 The site serves nothing else of its look as a file: no font, no stylesheet and no picture from anywhere else.
 
@@ -41,6 +41,7 @@ The badge names fonts in the same way.
 The share cards are pictures, so their letters are drawn when a card is made.
 `tools/cards.js` names DejaVu Serif and DejaVu Sans first.
 On 2026-11-22, Claude drew the **5** cards again with `tools/cards.js` in its own environment, and each came out byte for byte the same as the card served.
+On 2026-11-23 the card of 2026.0001 was taken off with its record.
 There the browser drew the letters with DejaVu Serif, its bold, and DejaVu Sans, from the package fonts-dejavu-core 2.37-8.
 The copyright file of that package names the licence of the fonts bitstream-vera, and says: "DejaVu changes are in public domain."
 Its condition is: "The above copyright and trademark notices and this permission notice shall be included in all copies of one or more of the Font Software typefaces."
