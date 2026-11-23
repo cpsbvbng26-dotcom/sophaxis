@@ -69,11 +69,6 @@
       "permanent": true
     },
     {
-      "source": "/abs/2026.0005",
-      "destination": "/abs/2026.0005.html",
-      "permanent": true
-    },
-    {
       "source": "/pdf/2026.0002",
       "destination": "/pdf/2026.0002v1.pdf",
       "permanent": false
@@ -89,11 +84,6 @@
       "permanent": false
     },
     {
-      "source": "/pdf/2026.0005",
-      "destination": "/pdf/2026.0005v1.pdf",
-      "permanent": false
-    },
-    {
       "source": "/pdf/2026.0002v1",
       "destination": "/pdf/2026.0002v1.pdf",
       "permanent": true
@@ -106,11 +96,6 @@
     {
       "source": "/pdf/2026.0004v1",
       "destination": "/pdf/2026.0004v1.pdf",
-      "permanent": true
-    },
-    {
-      "source": "/pdf/2026.0005v1",
-      "destination": "/pdf/2026.0005v1.pdf",
       "permanent": true
     }
   ],
@@ -130,10 +115,6 @@
     {
       "source": "/abs/2026.0004v1.pdf",
       "destination": "/pdf/2026.0004v1.pdf"
-    },
-    {
-      "source": "/abs/2026.0005v1.pdf",
-      "destination": "/pdf/2026.0005v1.pdf"
     }
   ],
   "git": {

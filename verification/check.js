@@ -9517,7 +9517,7 @@ console.log('\n146. The legal handling of the design (2026-11-23): the page in b
   /* The served images (the cards as one pattern), the font files, and the sizes of the PNG and ICO files. */
   real.__images = served.filter((f) => IMG.test(f)).map((f) => f.slice(5)).map((f) => (/^card\/\d{4}\.\d{4}\.png$/.test(f) ? 'card/<id>.png' : f)).filter((f, i, a) => a.indexOf(f) === i).sort();
   real.__cards = served.filter((f) => /^site\/card\/\d{4}\.\d{4}\.png$/.test(f)).length;
-  /* The cards drawn again on 2026-11-22: those served now, and those of records removed since (2026.0001 on 2026-11-23). */
+  /* The cards drawn again on 2026-11-22: those served now, and those of records removed since (2026.0001 and 2026.0005 on 2026-11-23). */
   real.__cardsThen = real.__cards + fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status === 'removed' && !p.reason && p.removal_date > '2026-11-22').length;
   real.__fonts = served.filter((f) => FONT.test(f));
   const png = (f) => { const b = fs.readFileSync(path.join(ROOT, 'site', f)); return b.readUInt32BE(16) + 'x' + b.readUInt32BE(20); };
@@ -9678,8 +9678,8 @@ console.log('\n146. The legal handling of the design (2026-11-23): the page in b
     ['a conclusion drawn in Japanese', w('design.ja.md', 'これらの条が Sophaxis に当てはまるかどうかについて、この頁は結論を出しません。', 'これらの条は Sophaxis に当たりません。')],
     ['a section taken out', w('design.md', '\n## People and organisations\n', '\n## People\n')],
     ['the count of images changed', w('design.md', 'The site serves **6** image files', 'The site serves **7** image files')],
-    ['the count of cards changed in Japanese', w('design.ja.md', '共有カードを **4** 枚', '共有カードを **5** 枚')],
-    ['the cards drawn again counted as those served now', w('design.md', 'Claude drew the **5** cards again', 'Claude drew the **4** cards again')],
+    ['the count of cards changed in Japanese', w('design.ja.md', '共有カードを **3** 枚', '共有カードを **4** 枚')],
+    ['the cards drawn again counted as those served now', w('design.md', 'Claude drew the **5** cards again', 'Claude drew the **3** cards again')],
     ['a served image the table does not list', v('__images', real.__images.concat(['photo.jpg']).sort())],
     ['a row of the table taken out', w('design.ja.md', '| 載っている作品のバッジ | `badge.svg` | `build.js` が書くもの | 定めていません | 検査が組み直します |\n', '')],
     ['a font file served', v('__fonts', ['site/font.woff2'])],
@@ -10189,6 +10189,90 @@ console.log('\n148. Depth (2026-11-23): four heights and one depth from design.j
   const ch = real.md['CHANGELOG.md'], said = (/check \(148\) with (\d+) break tests/.exec(ch) || [])[1];
   ok('the changelog gives the ' + breaks.length + ' break tests of this check', Number(said) === breaks.length, 'the changelog says ' + said);
   ok('break on purpose: each of ' + breaks.length + ' ways (a move, a colour in a gradient, the accent in a gradient, a shadow up and to the left, a drop shadow up, shadows or a filter on paper, the dark scheme or a level without its light, a deep bevel, a shadow of its own, a level or the measure missing, wrong counts in either language, the page on the design) fails (' + (breaks.length - missed.length) + ' / ' + breaks.length + ')',
+    missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 149 */
+console.log('\n149. The removal of 2026.0005 (2026-11-23): at its author\'s request, only its id, the word and the day kept, its PDF copy and its card gone, its pages the notice in both languages, no file served naming the work, the commit of the removal named for tools/removal.js, the cards taken off said in both languages, and the changelog with the records shown that day');
+{
+  /* The author asked on 2026-11-23 (Japan time) for 2026.0005 to be taken off Sophaxis. It was removed as 2026.0001 was the same day
+   * (3f27d63), with the functions of tools/removal.js (plan('remove') and pruneCards()): only the id, "removed" and the day stay. No
+   * reason is written beyond the author's request. Every count here is computed from the records, so that no number is typed twice. */
+  const ID = '2026.0005', DAY = '2026-11-23', DOI = '10.5281/zenodo.22064241', TITLE = 'Fragmentarian';
+  const T = (f) => { try { return read(path.join(ROOT, f)); } catch (e) { return null; } };
+  const S = path.join(ROOT, 'site');
+  const servedText = fs.readdirSync(S, { recursive: true }).map(String).filter((f) => fs.statSync(path.join(S, f)).isFile() && /\.(html|json|xml|txt|bib|ris|js)$/.test(f));
+  const papers = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f))));
+  /* The record just before the commit that removed it, as tools/removal.js finds it (recordBefore). */
+  let before = null;
+  try {
+    const sha = require('child_process').execFileSync('git', ['log', '-1', '--format=%H', '--grep=^Sophaxis-Action: remove ' + ID.replace('.', '\\.') + '$', '--', 'data/papers/' + ID + '.json'], { cwd: ROOT, encoding: 'utf8' }).trim();
+    before = sha ? JSON.parse(require('child_process').execFileSync('git', ['show', sha + '^:data/papers/' + ID + '.json'], { cwd: ROOT, encoding: 'utf8' })) : null;
+  } catch (e) { before = null; }
+  const real = {
+    papers, before,
+    left: ['data/pdf/' + ID + 'v1.pdf', 'assets/cards/' + ID + '.png', 'site/pdf/' + ID + 'v1.pdf', 'site/card/' + ID + '.png', 'site/cite/' + ID + '.bib', 'site/cite/' + ID + '.ris', 'site/cite/' + ID + '.json'].filter((f) => fs.existsSync(path.join(ROOT, f))),
+    cards: JSON.parse(read(path.join(ROOT, 'assets', 'cards', 'cards.json'))),
+    naming: servedText.filter((f) => { const t = read(path.join(S, f)); return t.includes(DOI) || t.includes(TITLE); }).sort(),
+    notice: T('site/abs/' + ID + '.html'), noticeJa: T('site/abs/' + ID + '.ja.html'),
+    md: Object.fromEntries(['design.md', 'design.ja.md', 'CHANGELOG.md'].map((f) => [f, T(f)])),
+  };
+  const andList = (xs) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1]);
+  function problems(x) {
+    const bad = [];
+    const ps = x.papers || [];
+    const r = ps.find((p) => p.id === ID);
+    if (!r || JSON.stringify(r) !== JSON.stringify({ id: ID, status: 'removed', removal_date: DAY })) bad.push(ID + ' is not removed, keeping only its id, the word and ' + DAY);
+    if (!x.before || x.before.id !== ID || !(x.before.versions || []).some((v) => v.doi === DOI) || !String(x.before.title || '').startsWith(TITLE)) bad.push('no commit with "Sophaxis-Action: remove ' + ID + '" removed the work at ' + DOI);
+    if ((x.left || []).length) bad.push('files of ' + ID + ' left: ' + x.left.join(', '));
+    if (ID in (x.cards || {})) bad.push('assets/cards/cards.json keeps ' + ID);
+    if ((x.naming || []).length) bad.push('site/ names the work: ' + x.naming.join(', '));
+    if (!String(x.notice || '').includes('<div class="notice">This record (Sophaxis:' + ID + ') has been removed.</div>') || String(x.notice || '').includes(TITLE)) bad.push('site/abs/' + ID + '.html is not the notice of a removed record');
+    if (!String(x.noticeJa || '').includes('<div class="notice">この記録（Sophaxis:' + ID + '）は削除しました。</div>') || String(x.noticeJa || '').includes(TITLE)) bad.push('site/abs/' + ID + '.ja.html is not the notice of a removed record');
+    /* The page on the design: the cards taken off that day, with their records, in both languages. */
+    const gone = ps.filter((p) => p.status === 'removed' && !p.removal_reason && p.removal_date === DAY).map((p) => p.id).sort();
+    if (!gone.includes(ID)) bad.push('the records removed on ' + DAY + ' do not include ' + ID);
+    if (!String(x.md['design.md'] || '').includes('\nOn ' + DAY + ' the cards of ' + andList(gone) + ' were taken off with their records.\n')) bad.push('design.md: the cards taken off on ' + DAY + ' (' + gone.join(', ') + ')');
+    if (!String(x.md['design.ja.md'] || '').includes('\n' + DAY + ' に、' + gone.join(' と ') + ' のカードを、それぞれの記録とともに外しました。\n')) bad.push('design.ja.md: the cards taken off on ' + DAY + ' (' + gone.join('、') + ')');
+    /* The changelog: the records shown that day before and after the removal. Ids are given in order of listing, so a record with an
+     * id up to 2026.0005 that was removed after that day was shown on it. */
+    const shownThen = ps.filter((p) => p.status !== 'removed' && p.listed <= DAY).length + ps.filter((p) => p.status === 'removed' && p.removal_date > DAY && p.id <= ID).length;
+    const ch = String(x.md['CHANGELOG.md'] || '');
+    const item = (ch.split('\n').find((l) => l.startsWith('- Record ' + ID + ' removed')) || '');
+    if (!item.includes('Record ' + ID + ' (a deposit at Zenodo) is removed at its author\'s request, which the author made on ' + DAY + ' (Japan time)')) bad.push('the changelog does not record the removal at the author\'s request');
+    if (!item.includes('the records shown went from ' + (shownThen + 1) + ' to ' + shownThen + '.')) bad.push('the changelog: the records shown went from ' + (shownThen + 1) + ' to ' + shownThen);
+    if (/\bbecause\b|SSRN|reject|declin/i.test(item)) bad.push('the changelog gives a reason beyond the author\'s request');
+    return bad;
+  }
+  const now = problems(real);
+  const shown = real.papers.filter((p) => p.status !== 'removed').length;
+  ok('the removal of ' + ID + ' on ' + DAY + ': the record keeps only its id, the word and the day, its PDF copy and its card are gone, its pages are the notice in both languages, no file of site/ (' + servedText.length + ') names the work, the commit of the removal is named for tools/removal.js, and the ' + shown + ' records shown are counted in the page on the design and the changelog',
+    now.length === 0, now.join(' / '));
+  const w = (k, v) => Object.assign({}, real, { [k]: v });
+  const md = (f, a, b) => { const s = String(real.md[f] || ''); if (!s.includes(a)) throw new Error('149: the break does not apply: ' + f + ': ' + a.slice(0, 40)); return w('md', Object.assign({}, real.md, { [f]: s.replace(a, b) })); };
+  const rec = (patch) => w('papers', real.papers.map((p) => (p.id === ID ? patch(p) : p)));
+  const breaks = [
+    ['the title kept in the record', rec((p) => Object.assign({}, p, { title: 'Fragmentarian Spiritual Individualism' }))],
+    ['a reason written in the record', rec((p) => Object.assign({}, p, { removal_reason: 'other' }))],
+    ['the record put back as listed', rec(() => ({ id: ID, status: 'listed', versions: [{ version: 1, doi: DOI }] }))],
+    ['another day of removal', rec((p) => Object.assign({}, p, { removal_date: '2026-11-22' }))],
+    ['no commit names the removal', w('before', null)],
+    ['the commit names another work', w('before', Object.assign({}, real.before, { title: 'Another Work', versions: [{ version: 1, doi: '10.5281/zenodo.1' }] }))],
+    ['the PDF copy left', w('left', ['data/pdf/' + ID + 'v1.pdf'])],
+    ['the card left in cards.json', w('cards', Object.assign({}, real.cards, { [ID]: '0'.repeat(64) }))],
+    ['a file served that names the DOI', w('naming', ['papers.json'])],
+    ['the notice with the title', w('notice', String(real.notice).replace('has been removed.', 'has been removed. Fragmentarian Spiritual Individualism'))],
+    ['the Japanese page not the notice', w('noticeJa', String(real.noticeJa).replace('は削除しました。', 'は載っています。'))],
+    ['the page on the design names only 2026.0001', md('design.md', 'the cards of 2026.0001 and 2026.0005 were taken off with their records.', 'the card of 2026.0001 was taken off with its record.')],
+    ['the Japanese page on the design without 2026.0005', md('design.ja.md', '2026.0001 と 2026.0005 のカードを', '2026.0001 のカードを')],
+    ['the changelog without the item', md('CHANGELOG.md', '- Record ' + ID + ' removed', '- Record removed')],
+    ['the changelog with another count', md('CHANGELOG.md', 'the records shown went from ', 'the records shown went from 1')],
+    ['the changelog with a reason of its own', md('CHANGELOG.md', 'is removed at its author\'s request,', 'is removed at its author\'s request, because SSRN declined it,')],
+  ];
+  const missed = breaks.filter(([, b]) => problems(b).length === 0).map(([k]) => k);
+  const said = (/check \(149\) with (\d+) break tests/.exec(String(real.md['CHANGELOG.md'] || '')) || [])[1];
+  ok('the changelog gives the ' + breaks.length + ' break tests of this check', Number(said) === breaks.length, 'the changelog says ' + said);
+  ok('break on purpose: each of ' + breaks.length + ' ways (the title or a reason in the record, the record put back, another day, no commit or another work, the PDF copy or the card left, a file naming the DOI, the notice with the title, the Japanese page not the notice, the page on the design in either language, the changelog without the item, with another count or with a reason of its own) fails',
     missed.length === 0, missed.join(' / '));
 }
 
