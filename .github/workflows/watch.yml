@@ -1,5 +1,5 @@
 name: watch
-# Once a week: every listed DOI still resolves and keeps its licence, every PDF copy keeps its recorded SHA-256 and is read for advice, new versions at Figshare and arXiv are noted, and the pages are saved to the Internet Archive.
+# Once a week: every listed DOI still resolves and keeps its licence, every PDF copy keeps its recorded SHA-256 and is read for advice, new versions at arXiv are noted, and the pages are saved to the Internet Archive.
 on:
   schedule:
     - cron: '37 4 * * 1'

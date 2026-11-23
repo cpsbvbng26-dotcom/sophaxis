@@ -56,6 +56,26 @@ function orcidOk(o) {
 
 /* The accepted repository a DOI belongs to, or undefined. DOIs are not case-sensitive. */
 const repoPrefix = (doi) => Object.keys(SITE.repositories).find((pre) => String(doi).toLowerCase().startsWith(pre.toLowerCase()));
+/* The entrance (Submission Policy, "The entrance from 2026-12-07"). The owner asked on 2026-11-23 for the entrance to be narrowed to
+ * SSRN, arXiv and Jxiv, and Claude decided the details: from SITE.entrance.from, in Japan time, a new work whose submission issue is
+ * opened on or after that day is accepted only from the repositories of SITE.entrance.repositories, each a name of SITE.repositories.
+ * SITE.repositories keeps every repository from which a work was accepted, for the records listed from them, for a new version of
+ * such a record, which comes from the repository where the work is listed, and for an issue opened before that day, which is judged
+ * under the earlier list. The pages take both lists from here, so that none can fall behind. */
+const ENTRANCE = SITE.entrance;
+const entranceNames = () => ENTRANCE.repositories.slice();
+const formerNames = () => [...new Set(Object.values(SITE.repositories))].filter((n) => !ENTRANCE.repositories.includes(n));
+const dayBefore = (d) => new Date(Date.parse(d + 'T00:00:00Z') - 86400000).toISOString().slice(0, 10);
+const entranceUntil = () => dayBefore(ENTRANCE.from);
+/* Problems with the entrance itself: its day, its announcement at least 14 days before it (Terms of Use), and its names. */
+function entranceProblems(E = ENTRANCE, repos = SITE.repositories) {
+  const bad = [];
+  if (!E || !DATE.test(E.from || '') || !DATE.test(E.announced || '')) return ['site.json: entrance needs "announced" and "from" (YYYY-MM-DD, Japan time) and "repositories"'];
+  if ((Date.parse(E.from) - Date.parse(E.announced)) / 86400000 < 14) bad.push('site.json: entrance.from is less than 14 days after entrance.announced');
+  const names = new Set(Object.values(repos));
+  if (!Array.isArray(E.repositories) || !E.repositories.length || E.repositories.some((n) => !names.has(n)) || new Set(E.repositories).size !== E.repositories.length) bad.push('site.json: entrance.repositories must name repositories of site.json "repositories", each once');
+  return bad;
+}
 
 /* Returns a list of problems. An empty list means the record is valid. */
 /* A removed record keeps its id, the fact and the day, and no reason (Takedown Policy).
@@ -512,10 +532,14 @@ function notQuoted(keys, ja) {
     if (!by.has(law)) by.set(law, []);
     by.get(law).push(article);
   }
-  const items = [...by].map(([law, arts]) => {
+  /* Citations that share a reason are named together, before it, in one item: the reason is given once (2026-11-23, for the weight
+   * of the Submission Policy, whose Japanese translation was within 20 bytes of the limit when the entrance of 2026-12-07 was added). */
+  const named = [...by].map(([law, arts]) => {
     const L = CITATIONS.laws[law], u = CITATIONS.untraced[law];
-    return ja ? `<li>${esc((L.ja || L.en)[0])} ${arts.map((a) => '第 ' + a + ' 条').join('・')}：${esc(u.why_ja)}</li>` : `<li>${esc(L.en[0])}, ${arts.length > 1 ? 'Articles or sections' : 'Article or section'} ${esc(arts.join(', '))}: ${esc(u.why)}</li>`;
+    return ja ? [`${esc((L.ja || L.en)[0])} ${arts.map((a) => '第 ' + a + ' 条').join('・')}`, esc(u.why_ja)] : [`${esc(L.en[0])}, ${arts.length > 1 ? 'Articles or sections' : 'Article or section'} ${esc(arts.join(', '))}`, esc(u.why)];
   });
+  const reasons = [...new Set(named.map(([, w]) => w))];
+  const items = reasons.map((w) => { const ns = named.filter(([, x]) => x === w).map(([n]) => n); return ja ? `<li>${ns.join('、')}：${w}</li>` : `<li>${ns.join('; ')}: ${w}</li>`; });
   return `<details class="source"><summary>${ja ? '引いていない条（原文を取り寄せられなかったもの）' : 'Not quoted: the texts that could not be fetched'}</summary><ul>${items.join('')}</ul></details>`;
 }
 function quoteBlock(keys, ja) {
@@ -1502,7 +1526,7 @@ function submitPage() {
 <h1>Submit a preprint</h1>
 ${pausedNotice()}${scopeNotice()}<p>New to ${esc(SITE.name)}? <a href="./process.html">From submission to listing</a> follows one submission step by step, through the automatic check and moderation. The <a href="./checklist.html">checklist</a> gathers what a submission needs, with two paper templates. The form is also <a href="${esc(SITE.repo)}/issues/new?template=submission-ja.yml">in Japanese</a>.</p>
 <ol>
-<li>Deposit your preprint in ${andOr(Object.values(SITE.repositories).map((n) => `<a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>`), 'or')} under ${andOr(Object.values(SITE.licenses).map(esc), 'or')}, and note its DOI.</li>
+<li>Deposit your preprint in ${andOr(entranceNames().map((n) => `<a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>`), 'or')} under ${andOr(Object.values(SITE.licenses).map(esc), 'or')}, and note its DOI. From ${esc(ENTRANCE.from)}, a new work is accepted only from these ${entranceNames().length}. Until ${esc(entranceUntil())}, a new work deposited in ${andOr(formerNames().map(esc), 'or')} is also accepted. A listed work stays listed, and a new version of it is accepted from the repository where it is listed.</li>
 <li>Add <code>https://github.com/&lt;your username&gt;</code> under “Websites &amp; social links” in your <a href="https://orcid.org">ORCID</a> record. This is how ${esc(SITE.name)} confirms that you are an author.</li>
 <li>Open a <a href="${esc(SITE.repo)}/issues/new?template=submission.yml">submission issue</a> and give the DOI, your ORCID iD, the category and the statement on generative models. You need a GitHub account. The title, the authors, the abstract and the licence are taken from the DOI metadata.</li>
 <li>An automatic check posts its result in the issue. A moderator checks the submission under the <a href="./policies/moderation.html">Moderation Policy</a>. If it passes, a record page is published here.</li>
@@ -1608,17 +1632,36 @@ const SERVICES = [
   ['GitHub', 'https://github.com', 'the repository, the submissions and the automatic checks'],
   ['Vercel', 'https://vercel.com', 'serving the site'],
 ];
-function acknowledgements() {
-  const repos = Object.values(SITE.repositories).map((n) => `<li><a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>, for keeping the deposits and their DOIs</li>`);
+/* The repositories thanked: those from which a new work is accepted from SITE.entrance.from, then those that keep the deposit of a
+ * record shown (listed or withdrawn), in the order of site.json. A repository from which a new work is no longer accepted, and which
+ * keeps no deposit of a record shown, is not thanked as if Sophaxis still relied on it. */
+const keepingNames = (all = pressRecords || []) => [...new Set(Object.values(SITE.repositories))].filter((n) => all.some((p) => p.status !== 'removed' && (p.versions || []).some((v) => repoName(v.doi) === n)));
+function acknowledgements(all = pressRecords || []) {
+  const keep = keepingNames(all);
+  const names = entranceNames().concat([...new Set(Object.values(SITE.repositories))].filter((n) => !ENTRANCE.repositories.includes(n) && keep.includes(n)));
+  const repos = names.map((n) => `<li><a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>, for keeping the deposits and their DOIs</li>`);
   const others = SERVICES.map(([n, u, what]) => `<li><a href="${esc(u)}">${esc(n)}</a>, for ${esc(what)}</li>`);
   return '<ul>' + repos.concat(others).join('') + '</ul>';
 }
 
 const repositoriesSource = () => fs.readFileSync(path.join(ROOT, 'repositories.md'), 'utf8');
 /* The two lists of the page for repositories, filled in the English page and in its translation alike. */
-function repositoriesFill(html) {
-  const list = '<ul>' + Object.entries(SITE.repositories).map(([prefix, name]) => `<li>${esc(name)}: DOIs beginning <code>${esc(prefix)}</code></li>`).join('') + '</ul>';
-  return html.replace('<p>{{repositories}}</p>', list).replace('<p>{{acknowledgements}}</p>', acknowledgements());
+/* Each repository with its DOI prefix: first those from which a new work is accepted from SITE.entrance.from, then the others, from
+ * which a new work was accepted until the day before, with the number of records shown whose deposit each keeps. */
+function repositoriesFill(html, ja = false, all = pressRecords || []) {
+  const item = ([prefix, name]) => ja ? `<li>${esc(name)}：<code>${esc(prefix)}</code> で始まる DOI</li>` : `<li>${esc(name)}: DOIs beginning <code>${esc(prefix)}</code></li>`;
+  const entries = Object.entries(SITE.repositories);
+  const now = entries.filter(([, n]) => ENTRANCE.repositories.includes(n)).sort((a, b) => ENTRANCE.repositories.indexOf(a[1]) - ENTRANCE.repositories.indexOf(b[1]));
+  const before = entries.filter(([, n]) => !ENTRANCE.repositories.includes(n));
+  const kept = before.map(([, n]) => [n, all.filter((p) => p.status === 'listed' && (p.versions || []).length && repoName(latest(p).doi) === n).length]).filter(([, k]) => k > 0);
+  const keptText = ja ? kept.map(([n, k]) => `${esc(n)} に ${k} 件`).join('、') : andOr(kept.map(([n, k]) => `${k} at ${esc(n)}`), 'and');
+  const list = (ja ? `<p>${esc(ENTRANCE.from)} から、新しい作品は、次の ${now.length} つの預け先からだけ受け付けます。</p>` : `<p>From ${esc(ENTRANCE.from)}, a new work is accepted only from these ${now.length}:</p>`)
+    + '<ul>' + now.map(item).join('') + '</ul>'
+    + (ja ? `<p>${esc(entranceUntil())} までは、次の ${before.length} の預け先の新しい作品も受け付けます。${esc(ENTRANCE.from)} より前に issue を開いた投稿は、合わせて ${entries.length} の預け先で判断します。</p>` : `<p>Until ${esc(entranceUntil())}, a new work is also accepted from these ${before.length}; a submission whose issue is opened before ${esc(ENTRANCE.from)} is judged under all ${entries.length}:</p>`)
+    + '<ul>' + before.map(item).join('') + '</ul>'
+    + (ja ? `<p>すでに載っている作品は載ったままで、その新しい版は、作品が載っている預け先から受け付けます。いま載っている記録のうち、これらの預け先にあるのは、${keptText}です。</p>`
+      : `<p>A listed work stays listed, and a new version of it is accepted from the repository where it is listed. Of the records listed now, these are deposits there: ${keptText}.</p>`);
+  return html.replace('<p>{{repositories}}</p>', list).replace('<p>{{acknowledgements}}</p>', acknowledgements(all));
 }
 function repositoriesPage() {
   return page({ title: 'For repositories and DOI registration agencies | ' + SITE.name, description: 'What ' + SITE.name + ' reads from repositories and DOI registration agencies, how often, and what it shows.', rel: false, canonical: 'repositories.html', head: rootAlternates('repositories'),
@@ -1679,9 +1722,14 @@ function pressFacts(html, ja = false) {
   return html.replace('<p>&lt;!-- facts --&gt;</p>', table);
 }
 /* The page on a first preprint lists the accepted repositories from site.json, linked to their own pages. */
-function repositoriesFillList(html) {
+/* From SITE.entrance.from, the repositories of the entrance; the others follow with the last day on which they count. */
+function repositoriesFillList(html, ja = false) {
   if (!html.includes('<p>&lt;!-- repositories --&gt;</p>')) throw new Error('first: the place for the repositories is missing');
-  return html.replace('<p>&lt;!-- repositories --&gt;</p>', '<ul>' + Object.values(SITE.repositories).map((n) => `<li><a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a></li>`).join('') + '</ul>');
+  const link = (n) => `<a href="${esc(SITE.repositoryHomes[n])}">${esc(n)}</a>`;
+  const others = formerNames();
+  return html.replace('<p>&lt;!-- repositories --&gt;</p>', '<ul>' + entranceNames().map((n) => `<li>${link(n)}</li>`).join('') + '</ul>'
+    + (ja ? `<p>${esc(ENTRANCE.from)} から、新しい作品は、この ${entranceNames().length} つからだけ受け付けます。${esc(entranceUntil())} までは、${others.map(link).join('、')} の ${others.length} の預け先の新しい作品も受け付けます。</p>`
+      : `<p>From ${esc(ENTRANCE.from)}, a new work is accepted only from these ${entranceNames().length}. Until ${esc(entranceUntil())}, a new work deposited in ${andOr(others.map(link), 'or')}, ${others.length} other repositories, is also accepted.</p>`));
 }
 /* The history page lists every news item, oldest first, from data/news.json, so that no date is typed twice. */
 function historyFill(html, ja = false) {
@@ -1854,10 +1902,10 @@ const rootAlternates = (slug) => (hasRootJa(slug) || slug === 'index'
   ? `<link rel="alternate" hreflang="en" href="${esc(SITE.baseUrl)}${slug === 'index' ? '' : slug + '.html'}">\n<link rel="alternate" hreflang="ja" href="${esc(SITE.baseUrl)}${slug}.ja.html">\n` : '');
 function rootJaPage(slug) {
   const title = rootJaTitle(slug);
-  return page({ title: title + ' | ' + SITE.name, description: SITE.name + ' の「' + title + '」の頁。英語の頁の訳です。', rel: false, canonical: slug + '.ja.html', lang: 'ja', head: rootAlternates(slug), body: slug === 'repositories' ? repositoriesFill(markdown(rootJaSource(slug)))
+  return page({ title: title + ' | ' + SITE.name, description: SITE.name + ' の「' + title + '」の頁。英語の頁の訳です。', rel: false, canonical: slug + '.ja.html', lang: 'ja', head: rootAlternates(slug), body: slug === 'repositories' ? repositoriesFill(markdown(rootJaSource(slug)), true)
     : slug === 'press' ? pressFacts(markdown(rootJaSource(slug)), true)
     : slug === 'history' ? historyFill(markdown(rootJaSource(slug)), true)
-    : slug === 'first' ? repositoriesFillList(markdown(rootJaSource(slug)))
+    : slug === 'first' ? repositoriesFillList(markdown(rootJaSource(slug)), true)
     : slug === 'register' ? registerFill(markdown(rootJaSource(slug)), pressRecords, true)
     : slug === 'construction' ? constructionFill(markdown(rootJaSource(slug)), true)
     : slug === 'brand' ? fieldsFill(markdown(rootJaSource(slug)), true)
@@ -2127,7 +2175,6 @@ function llmsSources() {
 function llmsTxt(all) {
   const B = SITE.baseUrl, L = SITE.notOffered || [];
   const shown = all.filter((p) => p.status !== 'removed');
-  const repos = [...new Set(Object.values(SITE.repositories))];
   const notice = SITE.termsNotice && SITE.termsNotice.text ? (SITE.termsNotice.since ? '- Changes announced on the top page, in effect since ' + SITE.termsNotice.since + ' where the text says so, and otherwise from ' + SITE.termsNotice.from : '- Change announced on the top page, from ' + SITE.termsNotice.from) + ' (where the text names a later day, that day): ' + SITE.termsNotice.text + '\n' : '';
   return '# ' + SITE.name + '\n\n> ' + SITE.name + ' is an overlay preprint server for ' + Object.values(SITE.categories).map((c) => c.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' and $1')
     + '. It lists preprints that authors have already deposited in an open repository with a DOI, and gives each a stable record page. Acceptance is moderation, not peer review. Sophaxis charges nothing, to authors or to readers.\n\n'
@@ -2135,7 +2182,7 @@ function llmsTxt(all) {
     + '## Facts\n\n'
     + '- Operator: ' + SITE.operator.name + ' (ORCID https://orcid.org/' + SITE.operator.orcid + '), one person in Japan, unpaid. Requests by email go to the address on that ORCID record; see the [contact page](' + B + 'contact.html).\n'
     + '- Fields: ' + Object.values(SITE.categories).join(', ') + '.\n'
-    + '- Accepted repositories (' + repos.length + '): ' + repos.join(', ') + '.\n'
+    + '- Accepted repositories for a new work, from ' + ENTRANCE.from + ' (' + entranceNames().length + '): ' + entranceNames().join(', ') + '. Until ' + entranceUntil() + ', also (' + formerNames().length + '): ' + formerNames().join(', ') + '. A submission whose issue is opened before ' + ENTRANCE.from + ' is judged under the earlier list. A listed work stays listed, and a new version of it is accepted from the repository where it is listed.\n'
     + '- Accepted licences: ' + Object.values(SITE.licenses).join(', ') + '.\n'
     + '- Records shown: ' + shown.length + ' (removed records are not counted). ' + ownShare(all) + ' The operator is at present the only moderator.\n'
     + '- Not offered in ' + L.length + ' places: ' + notOfferedPlaces(L) + '. From ' + SITE.residenceFrom + ', a work is not listed if an author lives in one of them, or stays in one between the submission and the listing, even briefly. The [Submission Policy](' + B + 'policies/submission.html) gives the law of each.\n'
@@ -2168,6 +2215,7 @@ function build(out, paperDir) {
   (SITE.directoryEntries || []).forEach((x, i) => {
     if (!x || !x.name || !x.page || !/^https:\/\//.test(x.url || '') || !Array.isArray(x.sections) || !x.sections.length || !DATE.test(x.since || '') || !DATE.test(x.asOf || '') || x.asOf < x.since) problems.push('site.json: directoryEntries[' + i + '] needs a name, a page, an https url, sections, a since date and an asOf date not before it (YYYY-MM-DD)');
   });
+  problems.push(...entranceProblems());
   for (const l of ['en', 'ja']) if (!DATE.test(topUpdated(l) || '')) problems.push('site.json: topUpdated needs "' + l + '", the day the text of that top page last changed (YYYY-MM-DD, Japan time)');
   if (SITE.issn !== null && SITE.issn !== undefined && !issnOk(SITE.issn)) problems.push('site.json: issn ' + SITE.issn + ' is not an ISSN (NNNN-NNNC, with a matching check digit)');
   for (const r of loadReports()) problems.push(...reportProblems(r, r.year + '.json'));
@@ -2280,7 +2328,7 @@ function build(out, paperDir) {
   return { problems: [], files: Object.keys(files), papers };
 }
 
-module.exports = { VERSION_NOTE_MAX, BARRIERS_NOTE, STATEMENT, metaphorLine, entranceFacts, entrance, aboutCard, CSS_TOP, pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
+module.exports = { ENTRANCE, entranceNames, formerNames, entranceUntil, entranceProblems, keepingNames, acknowledgements, repositoriesFill, repositoriesFillList, VERSION_NOTE_MAX, BARRIERS_NOTE, STATEMENT, metaphorLine, entranceFacts, entrance, aboutCard, CSS_TOP, pendingChanges, termsNoticeJa, fieldProblems, shelfMark, registerEvents, accession, catalogueCard, shelf, noticeHeading, noticeDaysJa, topUpdated, notOfferedPlacesJa, recordJaPage, removedJaPage, statusTableJa, publishedSaidJa, ownWorkNotice, fieldFacts, listing, LLM_EXTENTS_JA, ownNotice, operatingCounts, sections, slugger, sitePath, sourceLinks, absoluteLinks, SOURCE_PAGES, recordPage, readingTime, WORDS_PER_MINUTE, authorBib, historyFill, TEMPLATES, monthsPage, hasCard, yearInReview, badgeSvg, badgeSnippet, newsPage, newsFeed, newsProblems, loadNews, policyChangesFeed, policyChangeProblems, loadPolicyChanges, prosePage, pressFacts, PROSE, markdown, STATEMENT_KEYS, statements, collectionPage, collectionsPage, collectionLinks, loadReports, reportProblems, decisionsPage, crossrefNotices, SECURITY_HEADERS, robots, llmsTxt, llmsFull, llmsSources, UNDER_REVIEW, removedPage, lastUpdated, issnOk, build, validate, orcidOk, repoPrefix, loadPapers, pdfLimits, ris, cslJson, bibtex, related, pausedNotice, termsNotice, scopeNotice, notOfferedPlaces, recordDoi, dataciteRecord, vercelConfig, oaiData, publishedNotice, statusTable, repoName, PUBLISHED_KINDS, STYLE_HASH };
 
 /* Short addresses as arXiv has them: /abs/2026.0001 for the record and /pdf/2026.0001 for its latest PDF copy.
  * They redirect to the files; the record page keeps its .html address as the canonical one. */

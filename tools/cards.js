@@ -50,6 +50,20 @@ h1 { font-size: ${size}px; line-height: 1.22; margin: 44px 0 0; font-weight: 700
 </body></html>`;
 }
 
+/* The cards of records no longer shown (removed, or offline while a removal request is reviewed) are dropped, with their entries in
+ * cards.json. It needs no browser, so that tools/removal.js runs it in GitHub Actions before it builds and checks (2026-11-23: the
+ * removal of 2026.0001 found that a removal left the card of the record, which check 88 refuses). Returns the ids dropped. */
+function pruneCards(dir = path.join(ROOT, 'data', 'papers'), cardsDir = DIR) {
+  const manifestFile = path.join(cardsDir, 'cards.json');
+  if (!fs.existsSync(manifestFile)) return [];
+  const shown = new Set(fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'))).filter((p) => p.status !== 'removed').map((p) => p.id));
+  const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+  const gone = Object.keys(manifest).filter((id) => !shown.has(id));
+  for (const id of gone) { delete manifest[id]; fs.rmSync(path.join(cardsDir, id + '.png'), { force: true }); }
+  if (gone.length) fs.writeFileSync(manifestFile, JSON.stringify(Object.fromEntries(Object.keys(manifest).sort().map((k) => [k, manifest[k]])), null, 2) + '\n');
+  return gone;
+}
+
 async function main() {
   const all = process.argv.includes('--all');
   const dir = path.join(ROOT, 'data', 'papers');
@@ -78,6 +92,6 @@ async function main() {
   console.log(todo.length + ' drawn, ' + Object.keys(sorted).length + ' cards');
 }
 
-module.exports = { cardText, cardHash, cardHtml };
+module.exports = { cardText, cardHash, cardHtml, pruneCards };
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
