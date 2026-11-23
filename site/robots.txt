@@ -3,6 +3,8 @@ Allow: /
 
 User-agent: ia_archiver
 User-agent: archive.org_bot
+Disallow: /abs/2026.0001
+Disallow: /pdf/2026.0001
 Disallow: /abs/2026.0006
 Disallow: /pdf/2026.0006
 Disallow: /abs/2026.0007

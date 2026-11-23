@@ -54,11 +54,6 @@
   ],
   "redirects": [
     {
-      "source": "/abs/2026.0001",
-      "destination": "/abs/2026.0001.html",
-      "permanent": true
-    },
-    {
       "source": "/abs/2026.0002",
       "destination": "/abs/2026.0002.html",
       "permanent": true
@@ -79,11 +74,6 @@
       "permanent": true
     },
     {
-      "source": "/pdf/2026.0001",
-      "destination": "/pdf/2026.0001v2.pdf",
-      "permanent": false
-    },
-    {
       "source": "/pdf/2026.0002",
       "destination": "/pdf/2026.0002v1.pdf",
       "permanent": false
@@ -102,16 +92,6 @@
       "source": "/pdf/2026.0005",
       "destination": "/pdf/2026.0005v1.pdf",
       "permanent": false
-    },
-    {
-      "source": "/pdf/2026.0001v1",
-      "destination": "/pdf/2026.0001v1.pdf",
-      "permanent": true
-    },
-    {
-      "source": "/pdf/2026.0001v2",
-      "destination": "/pdf/2026.0001v2.pdf",
-      "permanent": true
     },
     {
       "source": "/pdf/2026.0002v1",
@@ -138,14 +118,6 @@
     {
       "source": "/oai",
       "destination": "/api/oai"
-    },
-    {
-      "source": "/abs/2026.0001v1.pdf",
-      "destination": "/pdf/2026.0001v1.pdf"
-    },
-    {
-      "source": "/abs/2026.0001v2.pdf",
-      "destination": "/pdf/2026.0001v2.pdf"
     },
     {
       "source": "/abs/2026.0002v1.pdf",
