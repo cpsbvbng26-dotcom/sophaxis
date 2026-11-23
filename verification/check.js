@@ -9925,7 +9925,8 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
       || !rd.includes(ANNOUNCED + ' に、運営者は、二つの節の項目を次の行に書き換えたと伝えています：`' + OAD + '` この頁は、ここからは HTTP 403 で読めませんでした。Claude が確かめたものではなく、運営者の知らせです。')
       || /Claude (?:read|confirmed|checked)[^.\n]{0,80}Open Access Directory|Open Access Directory[^.\n]{0,200}Claude (?:read|confirmed|checked) (?:it|the)/.test(rd)) bad.push('README.md: the Open Access Directory line, as the operator\'s report');
     const ch = String(x['CHANGELOG.md'] || '');
-    if (!new RegExp('\\n## ' + ANNOUNCED + '\\n\\n- New works only from SSRN, arXiv or Jxiv \\(#\\d+\\)\\.[^\\n]*A new check \\(147\\)[^\\n]*Figshare[^\\n]*\\n').test(ch)) bad.push('CHANGELOG.md: the entry');
+    const chDay = ch.slice(ch.indexOf('\n## ' + ANNOUNCED + '\n'), (ch.indexOf('\n## ', ch.indexOf('\n## ' + ANNOUNCED + '\n') + 5) + 1 || ch.length + 1) - 1);
+    if (ch.indexOf('\n## ' + ANNOUNCED + '\n') < 0 || !/\n- New works only from SSRN, arXiv or Jxiv \(pull request #\d+\)\.[^\n]*A new check \(147\)[^\n]*Figshare[^\n]*\n/.test(chDay)) bad.push('CHANGELOG.md: the entry');
     return bad;
   }
   const now = problems(real);
@@ -10001,7 +10002,7 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
     ['the entrance in site.json naming a repository it does not have', ws((s) => { s.entrance.repositories[2] = 'JxivX'; })],
     ['the day announced moved', ws((s) => { s.entrance.announced = '2026-11-24'; })],
     ['topUpdated left on an earlier day', ws((s) => { s.topUpdated.en = '2026-11-21'; })],
-    ['the intake with a list of its own', w('tools/intake.js', "const or = (xs) =>", "const OWN = ['SSRN', 'arXiv'];\nconst or = (xs) =>")],
+    ['the intake with a list of its own', w('tools/intake.js', "function repositoryCheck(doi, opened, update, listed) {\n", "function repositoryCheck(doi, opened, update, listed) {\n  const OWN = ['SSRN', 'arXiv'];\n")],
     ['the policy without the day for issues opened before', w('policies/submission.md', 'is judged under the list of 15 repositories, even when it is decided on or after that day.', 'is judged under the new list.')],
     ['the policy with a wrong count of the others', w('policies/submission.md', 'The other 12 repositories, which the examples below name,', 'The other 11 repositories, which the examples below name,')],
     ['the policy with a wrong count of all', w('policies/submission.md', ' or one of the 12 other repositories that the examples below name, 15 in all.', ' or one of the 12 other repositories that the examples below name, 16 in all.')],
@@ -10037,7 +10038,7 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
     ['the OpenDOAR draft without the entrance', w('docs/opendoar.md', ' From 2026-12-07, a new work is accepted only from SSRN, arXiv or Jxiv;', '')],
     ['.zenodo.json naming Figshare again', w('.zenodo.json', '(from 2026-12-07, SSRN, arXiv or Jxiv)', '(Zenodo, Figshare, arXiv, SSRN and others)')],
     ['a count of repositories that is none of the three', w('faq.md', 'The work must have a DOI from one of them.', 'The work must have a DOI from one of these 14 repositories.')],
-    ['Figshare named undated in the process page', w('process.md', '(every repository except Zenodo, and so SSRN', '(every repository except Zenodo, Figshare among them, and so SSRN')],
+    ['Figshare named undated in the transparency page', w('transparency.md', 'in their repositories, such as SSRN or Zenodo.', 'in their repositories, such as SSRN, Figshare or Zenodo.')],
     ['Figshare named undated in the glossary', w('glossary.md', 'such as SSRN, arXiv or Jxiv.', 'such as SSRN, arXiv or Figshare.')],
     ['a sentence kept for history taken out', w('policies/copyright.md', 'The copies already taken from Figshare were taken off the site on 2026-11-23, when their record was removed.', '')],
     ['the ROAR description changed', w('README.md', 'works listed before then stay listed. It charges nothing to authors or readers. The records', 'works listed before then stay listed. It charges nothing. The records')],
