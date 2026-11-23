@@ -1,6 +1,6 @@
 # Construction of the logo
 
-Last updated: 2026-11-14.
+Last updated: 2026-11-23.
 
 Japanese: [ロゴの作図（日本語訳）](./construction.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -27,3 +27,17 @@ The band over each page is the five bars of the S stood on end, side by side, li
 ## Fonts
 
 The site loads no font. Titles and the text use the reader's serif font, the navigation and labels the reader's sans-serif font, and ids and shelf marks the reader's monospaced font.
+
+## Depth
+
+The pages are drawn in layers, lit from one side, the upper left, so every shadow falls to the lower right.
+There are four heights: the ground, a surface, a raised surface and the front. Below the ground there is one depth.
+The ground is the page itself. A notice, a chip of a field, a spine and an abstract are surfaces. The header and a catalogue card are raised. What the pointer or the focus is on comes to the front.
+A field to type in, the chip of the field shown, a withdrawn spine and the hole of a card are sunk.
+Each scheme has one colour for its shadows. A shadow shows little in the dark scheme, so a surface there takes its height from a line of light along its upper edge and from the card colour, which is lighter than the ground.
+A spine is lit along its left edge and shaded along its right, within 4px of the edges, where no letter stands.
+Nothing moves. What the pointer or the focus is on rises by its shadow alone, and the style has no transform, no animation and no transition.
+The gradients run only between the background colour and the card colour, and the check measures the contrast of every text colour on both.
+Running text keeps a line of at most 36em, which is 36 characters of Japanese.
+On paper the shadows and the gradients are dropped.
+The numbers are in `design.js`, and the check of the site reads them from there.

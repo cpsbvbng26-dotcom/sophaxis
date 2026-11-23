@@ -85,6 +85,7 @@ What the checks of the site confirm on every change is set out on the page [Acce
 - every text colour has a contrast of at least 4.5:1 in the light and the dark scheme, and at least 7:1 when the system asks for more contrast;
 - the field colours have a contrast of at least 4.5:1, and each field has a glyph and a code as well as a colour;
 - no page moves: the style has no animation and no transition;
+- the depth is drawn with shadows, and with gradients between the background colour and the card colour only, so that every text colour is measured on both ends; what the pointer or the focus is on rises by its shadow and does not move; on paper the shadows and the gradients are dropped;
 - every image that carries meaning has an alt text, and every drawing that only decorates is hidden from screen readers and has a title;
 - every page can be used with the keyboard alone, shows a focus ring, and does not scroll sideways at widths down to 360 pixels, at a zoom of 200 percent, or with the text alone doubled.
 
