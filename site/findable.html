@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-gHVNHMhtrk3NzegK7y4APAtPk5nDUi7hd9q364vRfJ8='; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-2wg6kkWRZE1pohWIwEzLVkXEHJfLHeedXBEwFv/kxZA='; img-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Making a listed work easy to find | Sophaxis</title>
 <meta name="description" content="How the authors of a work listed on Sophaxis can help readers find it: ORCID, Google Scholar, PhilPapers and researchmap.">
 <link rel="canonical" href="https://sophaxis.vercel.app/findable.html">
@@ -25,80 +25,78 @@
 <style>
 :root { --bg: #f7f5f0; --fg: #1d2330; --muted: #5a6170; --rule: #d9d4c7; --accent: #2f4a7a; --card: #fffdf8; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root { --bg: #14171f; --fg: #e6e2d8; --muted: #a3a8b4; --rule: #2e3442; --accent: #9fb6e0; --card: #1a1e28; color-scheme: dark; } }
-/* When the system asks for more contrast: every text colour at 7:1 or more, and stronger rules. */
 @media (prefers-contrast: more) { :root { --muted: #3d4350; --accent: #24395f; --rule: #8a8578; } }
 @media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --muted: #c9ccd4; --accent: #b8cbec; --rule: #6b7386; } }
 @media (forced-colors: active) { a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline-color: Highlight; } }
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 Georgia, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 a { color: var(--accent); }
-/* Keyboard users see where they are, and can jump past the header. */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .skip { position: absolute; left: -9999px; top: 0; padding: .5rem 1rem; background: var(--card); color: var(--fg); }
 .skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); z-index: 10; }
-.wrap { max-width: 46rem; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 4rem max(16px, env(safe-area-inset-right, 0px)); }
-header.top { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
-header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; padding-bottom: 1rem; }
+.wrap{max-width:46rem;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 4rem max(16px,env(safe-area-inset-right,0px))}
+header.top{border-bottom:1px solid var(--rule);margin-bottom:2rem}
+header.top .wrap{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 1.5rem;padding-top:1.25rem;padding-bottom:1rem}
 .brand { font-size: 1.6rem; letter-spacing: .04em; text-decoration: none; color: var(--fg); }
 .brand small { display: block; font-size: .8rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
-nav a { margin-left: 1rem; font-size: .95rem; }
-nav a:first-child { margin-left: 0; }
-header.top .lang { margin: 0; font-size: .95rem; }
+nav a{margin-left:1rem;font-size:.95rem}
+nav a:first-child{margin-left:0}
+header.top .lang{margin:0;font-size:.95rem}
 .notice { border-left: 3px solid var(--accent); background: var(--card); padding: .75rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
-h1 { font-size: 1.7rem; line-height: 1.3; margin: .5rem 0 1rem; }
-h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .25rem; }
-ol.list { list-style: none; padding: 0; margin: 0; }
-ol.list li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+h1{font-size:1.7rem;line-height:1.3;margin:.5rem 0 1rem}
+h2{font-size:1.2rem;margin:2rem 0 .5rem}
+h3{font-size:1.05rem;margin:1.5rem 0 .25rem}
+ol.list{list-style:none;padding:0;margin:0}
+ol.list li{border-top:1px solid var(--rule);padding:1rem 0}
 .meta { color: var(--muted); font-size: .9rem; }
-.id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.id{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem}
 .abstract { background: var(--card); border: 1px solid var(--rule); padding: 1rem 1.25rem; }
-.abstract p { margin: 0; }
+.abstract p{margin:0}
 pre { background: var(--card); border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.5; }
-table { border-collapse: collapse; width: 100%; font-size: .95rem; }
-details.source { margin: .6rem 0 1.4rem; }
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+details.source{margin:.6rem 0 1.4rem}
 details.source summary { cursor: pointer; color: var(--muted); }
-details.source blockquote { margin: .6rem 0; padding: .25rem 1rem; border-left: 3px solid var(--rule); }
+details.source blockquote{margin:.6rem 0;padding:.25rem 1rem;border-left:3px solid var(--rule)}
 details.source .from { font-size: .9rem; color: var(--muted); }
-.table { overflow-x: auto; }
-td a, p code, li code { overflow-wrap: anywhere; }
-td, th { border-top: 1px solid var(--rule); padding: .4rem .5rem .4rem 0; text-align: left; vertical-align: top; }
+.table{overflow-x:auto}
+td a,p code,li code{overflow-wrap:anywhere}
+td,th{border-top:1px solid var(--rule);padding:.4rem .5rem .4rem 0;text-align:left;vertical-align:top}
 .flag { display: inline-block; font-size: .8rem; border: 1px solid var(--rule); padding: 0 .4rem; margin-left: .4rem; color: var(--muted); }
-/* The operator's own work is marked more strongly than the other flags: a border and text in the main colours, in bold. */
 .flag.own { border: 2px solid var(--accent); color: var(--fg); font-weight: bold; }
-.notice.own { border-left-width: 6px; }
-.jump { font-size: .95rem; }
-.fields { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .95rem; }
-.fields a { display: inline-block; border: 1px solid var(--rule); padding: .15rem .7rem; text-decoration: none; }
+.notice.own{border-left-width:6px}
+.jump{font-size:.95rem}
+.fields{list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-wrap:wrap;gap:.5rem;font-size:.95rem}
+.fields a{display:inline-block;border:1px solid var(--rule);padding:.15rem .7rem;text-decoration:none}
 .fields a[aria-current] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-.share a { white-space: nowrap; }
+.share a{white-space:nowrap}
 .access { background: var(--card); border: 1px solid var(--rule); padding: .5rem .75rem; }
-.cite { padding-left: 1.5rem; text-indent: -1.5rem; overflow-wrap: anywhere; }
-.search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin-bottom: 1rem; }
+.cite{padding-left:1.5rem;text-indent:-1.5rem;overflow-wrap:anywhere}
+.search{display:flex;flex-wrap:wrap;gap:.5rem;align-items:end;margin-bottom:1rem}
 .search label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .2rem; }
 .search input, .search select, .search button { font: inherit; font-size: 1rem; padding: .3rem .5rem; border: 1px solid var(--rule); background: var(--card); color: var(--fg); }
-.search input[type=search] { width: min(24rem, 80vw); }
+.search input[type=search]{width:min(24rem,80vw)}
 .search button { background: var(--accent); color: var(--bg); border-color: var(--accent); cursor: pointer; }
-/* On a narrow screen the words take the whole width, the field and the year share a line, and the button is easy to tap. */
 @media (max-width: 40rem) { .search label:first-child { flex: 1 1 100%; } .search input[type=search] { width: 100%; } .search label { flex: 1 1 8rem; } .search select, .search input { min-height: 2.75rem; width: 100%; } .search button { flex: 1 1 100%; min-height: 2.75rem; } }
 .crumbs { font-size: .85rem; color: var(--muted); margin: .5rem 0; }
-/* The sections of a prose or policy page, linked near its top. */
-.toc { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-size: .95rem; }
+.toc{border-left:3px solid var(--rule);padding:.1rem 0 .1rem 1rem;margin:1.5rem 0;font-size:.95rem}
 .toc p { margin: 0 0 .25rem; color: var(--muted); }
-.toc ul { margin: 0; padding-left: 1.2rem; }
-.toc a { margin-left: 0; overflow-wrap: anywhere; }
-/* On paper: no navigation and no footer, and the text a little smaller, so that the one-page leaflet fits one sheet. */
+.toc ul{margin:0;padding-left:1.2rem}
+.toc a{margin-left:0;overflow-wrap:anywhere}
 @media print { header.top nav, .toc, footer, .skip { display: none; } body { font-size: 11pt; } .wrap { max-width: none; padding-bottom: 0; } header.top { margin-bottom: 1rem; } }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem; color: var(--muted); font-size: .85rem; }
 /* design.js */
-:root{--t1:.78rem;--t2:.88rem;--t3:1rem;--t4:1.18rem;--t5:1.75rem;--s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.5rem;--s6:2rem;--serif:Georgia,"Times New Roman","Hiragino Mincho ProN","Yu Mincho",serif;--sans:system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace;--ink:#f7f5f0}.f-phi{--f-c:#2f4a7a}.f-mat{--f-c:#1d5c52}.f-phm{--f-c:#5a3a78}.f-phs{--f-c:#6a4c10}.f-log{--f-c:#7c2b38}
-@media (prefers-color-scheme:dark){:root{--ink:#14171f}.f-phi{--f-c:#9fb6e0}.f-mat{--f-c:#8fcfc2}.f-phm{--f-c:#c6addf}.f-phs{--f-c:#dcc07a}.f-log{--f-c:#eba6b0}}
+:root{--t1:.78rem;--t2:.88rem;--t3:1rem;--t4:1.18rem;--t5:1.75rem;--s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.5rem;--s6:2rem;--serif:Georgia,"Times New Roman","Hiragino Mincho ProN","Yu Mincho",serif;--sans:system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace;--sh:#1d23303d;--hi:0 0 #0000;--e1:var(--hi),1px 2px 3px -1px var(--sh);--e2:var(--hi),1px 2px 3px -1px var(--sh),3px 6px 16px -6px var(--sh);--e3:var(--hi),2px 3px 5px -1px var(--sh),5px 10px 24px -8px var(--sh);--in:inset 1px 2px 3px -1px var(--sh);--ink:#f7f5f0}.f-phi{--f-c:#2f4a7a}.f-mat{--f-c:#1d5c52}.f-phm{--f-c:#5a3a78}.f-phs{--f-c:#6a4c10}.f-log{--f-c:#7c2b38}
+@media (prefers-color-scheme:dark){:root{--ink:#14171f}.f-phi{--f-c:#9fb6e0}.f-mat{--f-c:#8fcfc2}.f-phm{--f-c:#c6addf}.f-phs{--f-c:#dcc07a}.f-log{--f-c:#eba6b0}:root{--sh:#000a;--hi:inset 0 1px #ffffff17}}
 h1{font-size:var(--t5)}h2{font-size:var(--t4)}
 nav,.meta,.crumbs,.flag,.fields,.toc,footer,.search,.mark,.shelf,.card dt,.lang{font-family:var(--sans)}.mark .code,.sm,.no{font-family:var(--mono)}
 .band{display:block;width:100%}.band .board{fill:var(--rule)}.band [class^=f-]{fill:var(--f-c)}
 .mark{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--f-c,var(--rule));color:var(--f-c,var(--fg));padding:0 .45rem;margin-left:.4rem;font-size:var(--t1);white-space:nowrap}
 .glyph{width:.85em;height:.85em;fill:none;stroke:currentColor;stroke-width:1.5;flex:none}.glyph .dot{fill:currentColor;stroke:none}
-.glyphs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}@media print{.band{display:none}}
+.glyphs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}
+body{background:radial-gradient(64rem 36rem at 0 0,var(--card),#0000),var(--bg)}header.top{background:linear-gradient(var(--card),var(--bg));box-shadow:var(--e2)}
+.notice,.fields a,.search button{box-shadow:var(--e1)}.fields a{background:var(--card)}.search input,.search select,.fields a[aria-current]{box-shadow:var(--in)}
+:is(.fields a,.search button):is(:hover,:focus-visible),.skip:focus{box-shadow:var(--e3)}h1,h2,h3{text-wrap:balance}main>:is(p,ul):not([class]){max-width:36em}
+@media print{.band{display:none}*{box-shadow:none!important}body,header.top{background:none}}
 </style>
 </head>
 <body>
