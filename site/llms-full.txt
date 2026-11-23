@@ -7015,7 +7015,7 @@ Sophaxis 自身の理解を書いたものです。法的な助言ではなく�
 
 ## 部品
 
-サイトは、自分の意匠の画像のファイルを **6** つと、示している記録ごとに一枚ずつ、共有カードを **4** 枚配っています。
+サイトは、自分の意匠の画像のファイルを **6** つと、示している記録ごとに一枚ずつ、共有カードを **3** 枚配っています。
 どれも、運営者の求めで、Claude Code が Sophaxis のために作りました。これらのファイルと、それを描く `design.js` と `tools/cards.js` を足したり変えたりしたコミットは、すべて Claude Code が作ったものです。
 見た目に関わるもので、ほかにファイルとして配るものはありません。書体も、スタイルシートも、よそからの画像も配りません。
 
@@ -7045,7 +7045,7 @@ Sophaxis 自身の理解を書いたものです。法的な助言ではなく�
 共有カードは画像なので、文字はカードを作るときに描かれます。
 `tools/cards.js` は、DejaVu Serif と DejaVu Sans を最初に名指します。
 2026-11-22 に、Claude が自分の環境で `tools/cards.js` を使って **5** 枚のカードを描き直し、どれも配っているカードとバイトまで同じになりました。
-2026-11-23 に、2026.0001 のカードを、その記録とともに外しました。
+2026-11-23 に、2026.0001 と 2026.0005 のカードを、それぞれの記録とともに外しました。
 そこでブラウザが文字を描いた書体は、DejaVu Serif とその太字、DejaVu Sans で、パッケージ fonts-dejavu-core 2.37-8 のものでした。
 そのパッケージの著作権のファイルは、書体のライセンスを bitstream-vera と名指し、"DejaVu changes are in public domain." と書いています。
 条件は "The above copyright and trademark notices and this permission notice shall be included in all copies of one or more of the Font Software typefaces." です。
