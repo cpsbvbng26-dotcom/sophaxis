@@ -136,6 +136,33 @@ const FONTS = {
   '--mono': 'ui-monospace,Menlo,Consolas,monospace',
 };
 
+/* Depth (2026-11-23): the flat page is parted into layers, all lit from one side, the upper left, so every shadow falls to
+ * the lower right. There are four heights: the ground (the page, no shadow), a surface (e1: a notice, a chip, a spine, an
+ * abstract), a raised surface (e2: the header, a catalogue card) and the front (e3: what the pointer or the focus is on),
+ * and one depth below the ground (in: a field to type in, the chip of the page shown, the hole of a card). The shadows are one
+ * colour of each scheme (--sh). The dark scheme has darker shadows that show less on its dark ground, so a surface there
+ * takes its height mostly from a line of light along its upper edge (--hi) and from the card colour being lighter than the
+ * ground. Nothing moves: what the pointer or the focus is on rises by its shadow alone, in every setting, since the site's
+ * style has no animation, no transition and no transform. The gradients run only between the background and the card colour,
+ * whose contrast with every text colour the check measures, so no text stands on a colour that is not measured. On paper
+ * the page is flat again. */
+const DEPTH = {
+  light: { '--sh': '#1d23303d', '--hi': '0 0 #0000' },
+  dark: { '--sh': '#000a', '--hi': 'inset 0 1px #ffffff17' },
+  levels: {
+    '--e1': 'var(--hi),1px 2px 3px -1px var(--sh)',
+    '--e2': 'var(--hi),1px 2px 3px -1px var(--sh),3px 6px 16px -6px var(--sh)',
+    '--e3': 'var(--hi),2px 3px 5px -1px var(--sh),5px 10px 24px -8px var(--sh)',
+    '--in': 'inset 1px 2px 3px -1px var(--sh)',
+  },
+  /* The edges of a spine: light on the left, shade on the right, each reaching at most `edge` pixels in (offset, spread and
+   * blur together). The narrowest spine is 2.6rem wide and its letters stand in the middle, so no letter is lit or shaded. */
+  bevel: { light: 'inset 3px 0 3px -2px #fff6', shade: 'inset -3px 0 3px -2px #0006', edge: 4 },
+  /* The longest line of running text, in em: one em is one character of Japanese. */
+  measure: 36,
+};
+const decl = (o) => Object.entries(o).map(([k, v]) => `${k}:${v}`).join(';');
+
 /* The CSS of the design, added after the site's own, without spaces it does not need. The core goes on every page; the
  * shelf part (part 'shelf') only on the pages that use it, each page's CSP naming the hash of the style it carries. Field colours are variables named
  * --f-<code>, set for both schemes; an element of a field (class f-<code>) takes its colour as --f-c. --ink is the text on a
@@ -143,17 +170,24 @@ const FONTS = {
 function css(fields, part = 'core') {
   const F = Object.values(fields);
   const vars = (scheme) => F.map((f) => `.f-${f.code.toLowerCase()}{--f-c:${f[scheme]}}`).join('');
-  const tokens = Object.entries(Object.assign({}, TYPE, SPACE, FONTS)).map(([k, v]) => `${k}:${v};`).join('');
+  const tokens = Object.entries(Object.assign({}, TYPE, SPACE, FONTS, DEPTH.light, DEPTH.levels)).map(([k, v]) => `${k}:${v};`).join('');
   if (part === 'core') return [
     '/* design.js */',
     `:root{${tokens}--ink:${BASE.light.bg}}${vars('light')}`,
-    `@media (prefers-color-scheme:dark){:root{--ink:${BASE.dark.bg}}${vars('dark')}}`,
+    `@media (prefers-color-scheme:dark){:root{--ink:${BASE.dark.bg}}${vars('dark')}:root{${decl(DEPTH.dark)}}}`,
     'h1{font-size:var(--t5)}h2{font-size:var(--t4)}',
     'nav,.meta,.crumbs,.flag,.fields,.toc,footer,.search,.mark,.shelf,.card dt,.lang{font-family:var(--sans)}.mark .code,.sm,.no{font-family:var(--mono)}',
     '.band{display:block;width:100%}.band .board{fill:var(--rule)}.band [class^=f-]{fill:var(--f-c)}',
     '.mark{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--f-c,var(--rule));color:var(--f-c,var(--fg));padding:0 .45rem;margin-left:.4rem;font-size:var(--t1);white-space:nowrap}',
     '.glyph{width:.85em;height:.85em;fill:none;stroke:currentColor;stroke-width:1.5;flex:none}.glyph .dot{fill:currentColor;stroke:none}',
-    '.glyphs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}@media print{.band{display:none}}',
+    '.glyphs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}',
+    /* Depth on every page: the ground lit from the upper left, the header raised over it, the notices on it, the chips and the
+     * button raised and the fields sunk, the chip of the page shown pressed in. Headings break evenly, and running text (a
+     * paragraph or a list with no class of its own) keeps a line of 36em: 36 characters of Japanese, about 75 of English. */
+    'body{background:radial-gradient(64rem 36rem at 0 0,var(--card),#0000),var(--bg)}header.top{background:linear-gradient(var(--card),var(--bg));box-shadow:var(--e2)}',
+    '.notice,.fields a,.search button{box-shadow:var(--e1)}.fields a{background:var(--card)}.search input,.search select,.fields a[aria-current]{box-shadow:var(--in)}',
+    ':is(.fields a,.search button):is(:hover,:focus-visible),.skip:focus{box-shadow:var(--e3)}h1,h2,h3{text-wrap:balance}main>:is(p,ul):not([class]){max-width:' + DEPTH.measure + 'em}',
+    '@media print{.band{display:none}*{box-shadow:none!important}body,header.top{background:none}}',
   ].join('\n') + '\n';
   /* The entrance of the two top pages. It names only the site's tokens and the field colours: no colour of its own. */
   if (part === 'entrance') return [
@@ -171,7 +205,9 @@ function css(fields, part = 'core') {
     '.emblems figcaption{font:var(--t1)/1.45 var(--sans);color:var(--muted);padding:var(--s2) var(--s3) 0 0;overflow-wrap:anywhere}.emblems figcaption b{display:block;color:var(--fg)}',
     '.about h2 a{color:inherit}.about dd p{margin:0 0 var(--s1)}.about dd p:last-child{margin:0}.about .notes a{display:block}',
     'main>h2{border-bottom:1px solid var(--rule);padding-bottom:var(--s1)}.jalinks{columns:2 15rem;column-gap:var(--s6);padding-left:1.2rem}',
-    '@media (min-width:40rem){.emblems figcaption{font-size:var(--t2)}}@media print{.em{border-bottom-color:#000}}',
+    /* Depth: the emblems and the board under them cast one shadow to the lower right, as the rest of the page. */
+    '.em{filter:drop-shadow(1px 2px 1px var(--sh))}',
+    '@media (min-width:40rem){.emblems figcaption{font-size:var(--t2)}}@media print{.em{border-bottom-color:#000;filter:none}}',
   ].join('\n') + '\n';
   /* The rest is needed only by the pages that show a shelf, a catalogue card, the register or the construction drawing. */
   return [
@@ -190,6 +226,11 @@ function css(fields, part = 'core') {
     '.hole{position:absolute;left:50%;bottom:var(--s2);width:.9rem;height:.9rem;margin-left:-.45rem;border:1px solid var(--rule);border-radius:50%;background:var(--bg)}',
     '.register th,.register td:not(:nth-child(4)){white-space:nowrap}',
     '.construction{display:block;width:100%;max-width:24rem;height:auto;margin:var(--s4) 0}.c-grid{stroke:var(--muted);stroke-width:.75;stroke-opacity:.5}.c-ink{stroke:var(--rule)}.c-dim{stroke:var(--fg)}.c-num{fill:var(--fg);font:13px var(--mono)}',
+    /* Depth on the shelf: each spine is lit along its left edge and shaded along its right, within 4px of the edges, where
+     * no letter stands, and rises when the pointer or the focus is on it. A withdrawn spine is a gap, sunk into the shelf. The
+     * shelf with its board casts one shadow; the card is raised, and its hole is punched into it. */
+    `.shelf{filter:drop-shadow(1px 2px 2px var(--sh))}.shelf a{box-shadow:${DEPTH.bevel.light},${DEPTH.bevel.shade}}.shelf a:is(:hover,:focus-visible){box-shadow:${DEPTH.bevel.light},${DEPTH.bevel.shade},var(--e3)}`,
+    '.shelf .withdrawn a{box-shadow:var(--in)}.card{box-shadow:var(--e2)}.hole{box-shadow:var(--in)}.abstract,pre,.access{box-shadow:var(--e1)}',
     '@media (max-width:40rem){.card{padding:var(--s3) var(--s4) var(--s6)}.card dl{grid-template-columns:minmax(0,1fr)}}',
     '@media print{.shelf{display:none}.card{background:none;border:1px solid #000;border-top:3px solid #000;break-inside:avoid}}',
   ].join('\n') + '\n';
@@ -280,4 +321,4 @@ function cardEmblem(entries) {
     + `<circle cx="${C.x + C.w / 2}" cy="${C.y + C.h - 2 * C.hole}" r="${C.hole}" fill="none" stroke="currentColor" class="hl"/></svg>`;
 }
 
-module.exports = { ENTRANCE, spineSize, ruleSvg, shelfEmblem, fieldsEmblem, cardEmblem, LOGO, logoSvg, logoMeasures, GLYPH, GLYPHS, GLYPH_SHAPES, GLYPH_SHAPES_JA, glyphSvg, BAND, bandSvg, CONSTRUCTION, constructionSvg, BASE, lum, ratio, fieldRatio, r2, TYPE, SPACE, FONTS, css };
+module.exports = { DEPTH, ENTRANCE, spineSize, ruleSvg, shelfEmblem, fieldsEmblem, cardEmblem, LOGO, logoSvg, logoMeasures, GLYPH, GLYPHS, GLYPH_SHAPES, GLYPH_SHAPES_JA, glyphSvg, BAND, bandSvg, CONSTRUCTION, constructionSvg, BASE, lum, ratio, fieldRatio, r2, TYPE, SPACE, FONTS, css };
