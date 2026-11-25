@@ -7,8 +7,8 @@
  *
  * Measured: the deployments, counted from the commit status "Vercel" of the commits of main, on the busiest day of the last 30 days (the free plan allows 100 a
  * day); the PDF copies, in all and the largest (site.json pdfLimits); the size of the repository, against the 1 GB that GitHub
- * recommends. Not measured: Vercel's bandwidth and function use, which only the operator's Vercel account shows; the yearly
- * audit asks the operator to read them there. Run by .github/workflows/monthly.yml. */
+ * recommends. Not measured: Vercel's bandwidth and function use, which only the operator's Vercel account shows and this run
+ * cannot read. Run by .github/workflows/monthly.yml. */
 'use strict';
 const { request } = require('./ua.js');
 const fs = require('fs');
@@ -35,6 +35,10 @@ const fmt = (n, unit) => (unit === 'bytes' ? (n / 1024 ** 2).toFixed(1) + ' MB' 
 function table(r) {
   return '| Measure | Used | Limit | Share |\n| --- | --- | --- | --- |\n'
     + r.map(([w, u, l, s, warn, unit]) => `| ${w} | ${fmt(u, unit)} | ${fmt(l, unit)} | ${(s * 100).toFixed(1)} %${warn ? ' (at or over 80 %)' : ''} |`).join('\n') + '\n';
+}
+/* Pure: the body of the issue, given the table. It states facts only (2026-11-25): what is not measured, and that this workflow cannot read it. */
+function issueBody(t) {
+  return MARK + '\nA measure has reached 80 percent of its free limit. Nothing has been changed.\n\n' + t + '\nVercel\'s bandwidth and function use are not measured here: only the Vercel account shows them, and this workflow cannot read them.\n';
 }
 /* Pure: the most deployments on one day (Japan time), from the created_at of each deployment. */
 function busiest(dates) {
@@ -89,9 +93,9 @@ async function main() {
   const every = async (p) => { const out = []; for (let page = 1; ; page++) { const r = await api(p + '&per_page=100&page=' + page); if (!r.ok) throw new Error('GET /issues: HTTP ' + r.status); const l = await r.json(); if (!Array.isArray(l)) throw new Error('GET /issues: not a list'); out.push(...l); if (l.length < 100) return out; } };
   const open = await every('/issues?state=open');
   if (open.some((x) => !x.pull_request && x.title === title)) return;
-  const res = await api('/issues', { method: 'POST', body: JSON.stringify({ title, body: MARK + '\nA measure has reached 80 percent of its free limit. Nothing has been changed.\n\n' + t + '\nVercel\'s bandwidth and function use are not measured here; read them in the Vercel account.\n' }) });
+  const res = await api('/issues', { method: 'POST', body: JSON.stringify({ title, body: issueBody(t) }) });
   if (!res.ok) throw new Error('POST /issues: HTTP ' + res.status);
 }
 
-module.exports = { vercelDay, rows, table, busiest, WARN, DEPLOYS_PER_DAY, REPO_BYTES };
+module.exports = { vercelDay, rows, table, busiest, issueBody, WARN, DEPLOYS_PER_DAY, REPO_BYTES };
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

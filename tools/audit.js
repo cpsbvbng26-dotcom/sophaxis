@@ -23,7 +23,7 @@ const title = (year) => 'Yearly audit, ' + year;
 function body(year) {
   return 'The yearly audit of ' + year + ', on the day Sophaxis began. The list is the section "Yearly audit" of '
     + '[docs/operations.md](https://github.com/cpsbvbng26-dotcom/sophaxis/blob/main/docs/operations.md), as it stands.\n\n'
-    + items().join('\n') + '\n\nClose the issue with one line on what was found and what was changed.\n';
+    + items().join('\n') + '\n\nThe issue is closed with one line on what was found and what was changed.\n';
 }
 
 async function main() {

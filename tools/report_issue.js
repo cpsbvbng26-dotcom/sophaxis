@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* Run by .github/workflows/report.yml: counts the decisions of a year with tools/report.js and posts them in an issue,
- * for the operator to record in data/reports/ by pull request. YEAR defaults to the year before, in Japan time. */
+ * and they are recorded in data/reports/ by pull request. YEAR defaults to the year before, in Japan time. */
 'use strict';
 const { request } = require('./ua.js');
 const { execFileSync } = require('child_process');
@@ -19,11 +19,12 @@ async function github(method, p, body) {
   return r.json();
 }
 
-async function main() {
-  if (!/^\d{4}$/.test(year)) { console.error('YEAR must be four digits'); process.exit(2); }
-  const json = execFileSync(process.execPath, [path.join(__dirname, 'report.js'), year, '--print'], { encoding: 'utf8', env: process.env });
-  const body = `${MARK}
-The decisions of ${year}, counted from the public issues and the records by \`tools/report.js\`. To record them, put this in \`data/reports/${year}.json\` by pull request; \`decisions.html\` then shows them.
+/* Pure: the title and the body of the issue of a year. They state facts only (2026-11-25): the title names the year, and the body
+ * says when the counts are recorded. The title had ": record them" after the year until then. */
+const title = (year) => 'Decisions of ' + year;
+function issueBody(year, json) {
+  return `${MARK}
+The decisions of ${year}, counted from the public issues and the records by \`tools/report.js\`. They are recorded when this is put in \`data/reports/${year}.json\` by pull request; \`decisions.html\` then shows them.
 
 ~~~~json
 ${json.trim()}
@@ -37,6 +38,12 @@ The year in review goes beside the counts, in \`data/reports/${year}.md\`, by th
 - \`## Advisers and moderators\`: who joined or left.
 - \`## Next year\`: what the operator intends, as an intention and not a promise.
 `;
+}
+
+async function main() {
+  if (!/^\d{4}$/.test(year)) { console.error('YEAR must be four digits'); process.exit(2); }
+  const json = execFileSync(process.execPath, [path.join(__dirname, 'report.js'), year, '--print'], { encoding: 'utf8', env: process.env });
+  const body = issueBody(year, json);
   /* One issue a year: an issue of this script (its MARK) for the year, open or closed, is not opened again (2026-11-15). */
   const seen = [];
   for (let page = 1; ; page++) {
@@ -46,8 +53,9 @@ The year in review goes beside the counts, in \`data/reports/${year}.md\`, by th
     if (list.length < 100) break;
   }
   if (seen.some((i) => !i.pull_request && String(i.body || '').startsWith(MARK) && String(i.body).includes('The decisions of ' + year + ','))) { console.log('already opened'); return; }
-  await github('POST', '/issues', { title: 'Decisions of ' + year + ': record them', body });
+  await github('POST', '/issues', { title: title(year), body });
   console.log(json);
 }
 
-main().catch((e) => { console.error(e.message); process.exit(1); });
+module.exports = { title, issueBody, MARK };
+if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

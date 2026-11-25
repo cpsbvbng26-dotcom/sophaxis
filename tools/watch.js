@@ -109,7 +109,7 @@ function publishedProblems(p, desc) {
   if (!desc) return [`${p.id}: the published version ${p.published.doi} no longer resolves in Crossref or DataCite`];
   const known = new Set((p.published.updates || []).map((u) => u.doi.toLowerCase()));
   return desc.updates.filter((u) => !known.has(u.doi.toLowerCase()))
-    .map((u) => `${p.id}: the published version ${p.published.doi} has a new ${u.type.replace(/_/g, ' ')} notice of ${u.date}, https://doi.org/${u.doi}; add it to the record`);
+    .map((u) => `${p.id}: the published version ${p.published.doi} has a new ${u.type.replace(/_/g, ' ')} notice of ${u.date}, https://doi.org/${u.doi}, which the record does not list yet`);
 }
 
 /* Pure: the addresses to save, without removed records. */
