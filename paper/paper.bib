@@ -1,37 +1,142 @@
-% Draft. No DOI is given: add one only after checking it at its source.
+% Draft. Every DOI below was read at api.crossref.org or api.datacite.org, and verification/paper-dois.json keeps what the
+% registry answered; check 41 fails if an entry differs from it. An entry with no DOI is a service or its code, cited by its address.
 
-@misc{arxiv,
-  title        = {arXiv},
-  author       = {{Cornell University}},
-  howpublished = {\url{https://arxiv.org/}},
-  note         = {Open-access repository of preprints}
+@article{ginsparg2011,
+  author    = {Ginsparg, Paul},
+  title     = {ArXiv at 20},
+  journal   = {Nature},
+  volume    = {476},
+  number    = {7359},
+  pages     = {145--147},
+  year      = {2011},
+  publisher = {Springer Science and Business Media LLC},
+  doi       = {10.1038/476145a}
+}
+
+@article{rousi2022,
+  author    = {Rousi, Antti Mikael and Laakso, Mikael},
+  title     = {Overlay journals: A study of the current landscape},
+  journal   = {Journal of Librarianship and Information Science},
+  volume    = {56},
+  number    = {1},
+  pages     = {15--28},
+  year      = {2024},
+  publisher = {SAGE Publications},
+  doi       = {10.1177/09610006221125208}
+}
+
+@article{berthaud2014,
+  author    = {Berthaud, Christine and Capelli, Laurent and Gustedt, Jens and Kirchner, Claude and Loiseau, Kevin and Magron, Agnès and Medves, Maud and Monteil, Alain and Rivrieux, Gaëlle and Romary, Laurent},
+  title     = {EPISCIENCES – An overlay publication platform},
+  journal   = {Information Services and Use},
+  volume    = {34},
+  number    = {3-4},
+  pages     = {269--277},
+  year      = {2014},
+  publisher = {SAGE Publications},
+  doi       = {10.3233/isu-140749}
+}
+
+@article{willinsky2005,
+  author    = {Willinsky, John},
+  title     = {Open Journal Systems: An example of open source software for journal management and publishing},
+  journal   = {Library Hi Tech},
+  volume    = {23},
+  number    = {4},
+  pages     = {504--519},
+  year      = {2005},
+  publisher = {Emerald},
+  doi       = {10.1108/07378830510636300}
+}
+
+@article{foster2017,
+  author    = {Foster, Erin D. and Deardorff, Ariel},
+  title     = {Open Science Framework (OSF)},
+  journal   = {Journal of the Medical Library Association},
+  volume    = {105},
+  number    = {2},
+  year      = {2017},
+  publisher = {University Library System, University of Pittsburgh},
+  doi       = {10.5195/jmla.2017.88}
+}
+
+@article{haak2012,
+  author    = {Haak, Laurel L. and Fenner, Martin and Paglione, Laura and Pentz, Ed and Ratner, Howard},
+  title     = {ORCID: a system to uniquely identify researchers},
+  journal   = {Learned Publishing},
+  volume    = {25},
+  number    = {4},
+  pages     = {259--264},
+  year      = {2012},
+  publisher = {Wiley},
+  doi       = {10.1087/20120404}
+}
+
+@article{hendricks2020,
+  author    = {Hendricks, Ginny and Tkaczyk, Dominika and Lin, Jennifer and Feeney, Patricia},
+  title     = {Crossref: The sustainable source of community-owned scholarly metadata},
+  journal   = {Quantitative Science Studies},
+  volume    = {1},
+  number    = {1},
+  pages     = {414--427},
+  year      = {2020},
+  publisher = {MIT Press},
+  doi       = {10.1162/qss_a_00022}
+}
+
+@inproceedings{brase2009,
+  author    = {Brase, Jan},
+  title     = {DataCite - A Global Registration Agency for Research Data},
+  booktitle = {2009 Fourth International Conference on Cooperation and Promotion of Information Resources in Science and Technology},
+  pages     = {257--261},
+  year      = {2009},
+  publisher = {IEEE},
+  doi       = {10.1109/coinfo.2009.66}
+}
+
+@inproceedings{lagoze2001,
+  author    = {Lagoze, Carl and Van de Sompel, Herbert},
+  title     = {The open archives initiative: building a low-barrier interoperability framework},
+  booktitle = {Proceedings of the 1st ACM/IEEE-CS joint conference on Digital libraries},
+  pages     = {54--62},
+  year      = {2001},
+  publisher = {ACM},
+  doi       = {10.1145/379437.379449}
+}
+
+@software{sophaxis,
+  author    = {Nemoto, Takuya},
+  title     = {Sophaxis: an overlay preprint server for philosophy and mathematics},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.24033371}
+}
+
+@misc{ops,
+  title        = {Open Preprint Systems},
+  author       = {{Public Knowledge Project}},
+  howpublished = {\url{https://github.com/pkp/ops}},
+  note         = {Source code; README and .gitmodules read at commit a80a5decc1b4dfa31ced0fa637a021a5e40bdcdb}
+}
+
+@misc{janeway,
+  title        = {Janeway},
+  author       = {{Open Library of Humanities}},
+  howpublished = {\url{https://github.com/openlibhums/janeway}},
+  note         = {Source code; README read at commit 7492522712f8447b1592721f07eee401b237bae8}
+}
+
+@misc{osf,
+  title        = {OSF},
+  author       = {{Center for Open Science}},
+  howpublished = {\url{https://github.com/CenterForOpenScience/osf.io}},
+  note         = {Source code; docker-compose.yml read at commit 84dbb4344e84e006984224c734c155dbebc86f70}
 }
 
 @misc{philarchive,
   title        = {PhilArchive},
-  author       = {{PhilPapers Foundation}},
   howpublished = {\url{https://philarchive.org/}},
   note         = {Open-access archive for philosophy}
-}
-
-@misc{philscience,
-  title        = {PhilSci-Archive},
-  author       = {{University of Pittsburgh}},
-  howpublished = {\url{https://philsci-archive.pitt.edu/}},
-  note         = {Preprint archive for the philosophy of science}
-}
-
-@misc{episciences,
-  title        = {Episciences},
-  author       = {{Centre pour la Communication Scientifique Directe}},
-  howpublished = {\url{https://www.episciences.org/}},
-  note         = {Platform for overlay journals}
-}
-
-@misc{sciety,
-  title        = {Sciety},
-  howpublished = {\url{https://sciety.org/}},
-  note         = {Preprint evaluations from groups}
 }
 
 @misc{scholar,
@@ -40,28 +145,10 @@
   howpublished = {\url{https://scholar.google.com/intl/en/scholar/inclusion.html}}
 }
 
-@misc{datacite,
-  title        = {DataCite REST API},
-  author       = {{DataCite}},
-  howpublished = {\url{https://api.datacite.org/}}
-}
-
-@misc{crossref,
-  title        = {Crossref REST API},
-  author       = {{Crossref}},
-  howpublished = {\url{https://api.crossref.org/}}
-}
-
 @misc{jalc,
   title        = {Japan Link Center},
   author       = {{Japan Link Center}},
   howpublished = {\url{https://japanlinkcenter.org/}}
-}
-
-@misc{orcid,
-  title        = {ORCID Public API},
-  author       = {{ORCID}},
-  howpublished = {\url{https://pub.orcid.org/}}
 }
 
 @misc{wayback,

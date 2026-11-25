@@ -116,6 +116,17 @@ The design is drawn by `design.js` from one set of numbers: the logo's measureme
 `site/vercel.json` is generated with the rest of `site/`, because the Vercel project's root directory is `site/`. It gives the short addresses that arXiv also has: `/abs/<id>` leads to the record page, `/pdf/<id>` to its latest PDF copy, and `/pdf/<id>v<n>` to the copy of version n.
 When a policy changes, change its "Last updated" date too.
 
+What the build and the checks need: Node.js 22, the version the checks run on in continuous integration, and a clone with its whole history, because the checks read it with git. The checks of the PDF copies run `pdfinfo` and `pdftotext` from poppler-utils. Only the keyboard check needs more: playwright 1.56.1 and its Chromium, installed as the step "Install playwright and Chromium" of `.github/workflows/check.yml` installs them. Nothing is installed from a package registry for the rest. `package.json` has no dependencies; `npm run build` and `npm test` run `node build.js` and `node verification/check.js`.
+
+To try it without touching `site/`, build into another directory, or build the made-up records that the checks use:
+
+```
+node build.js /tmp/sophaxis-site
+node -e "const r = require('./build.js').build('/tmp/sophaxis-fixtures', 'verification/fixtures/papers'); console.log(r.problems.length + ' problems, ' + r.papers.length + ' records')"
+```
+
+A record is one JSON file in `data/papers/`; `verification/fixtures/papers/` holds made-up ones, a withdrawn and a removed record among them. `node verification/check.js` prints each check with OK or FAIL and exits with a non-zero status if any fails. The checks run in continuous integration on every push and pull request, and once a week (`.github/workflows/check.yml`).
+
 ### Moderating
 
 When a verified submission passes moderation, add the draft record from the issue as `data/papers/<id>.json`, set `listed` to the day it is merged,

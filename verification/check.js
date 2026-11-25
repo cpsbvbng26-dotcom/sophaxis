@@ -1614,29 +1614,152 @@ console.log('\n40. CONTRIBUTING.md and CHANGELOG.md (the JOSS gate on open devel
 /* ------------------------------------------------------------ 41 */
 console.log('\n41. The draft JOSS paper');
 {
+  /* 2026-11-25: brought to JOSS's paper guide as read that day (openjournals/joss, docs/paper.md, commit 50d7440b4016aea5bfaa014c8e4d9b342a8dc62e).
+   * Until then this check held "250 to 1000 words", which the guide had replaced on 2026-01-15, did not hold the order of the sections or
+   * Acknowledgements, read only citation keys of lower-case letters, and refused every DOI. The guide says:
+   *   "The paper should be between 750-1750 words."
+   *   "sections for Summary, Statement of need, State of the field, Software design, Research impact statement, AI usage disclosure,
+   *    Acknowledgements, and References"
+   *   "The date must be specified using the following format: `%e %B %Y`"
+   *   "Use software names as plain text in the YAML `title` field."
+   * A DOI is allowed only as its registry answered it (verification/paper-dois.json, read at api.crossref.org or api.datacite.org),
+   * field by field. The models named in the AI usage disclosure are those of the Co-Authored-By trailers of the history. */
+  const JOSS_WORDS = [750, 1750];
+  const JOSS_SECTIONS = ['Summary', 'Statement of need', 'State of the field', 'Software design', 'Research impact statement', 'AI usage disclosure', 'Acknowledgements', 'References'];
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const AFFIRM = 'The affirmation that JOSS asks of the authors, that they reviewed, edited and validated all AI-assisted output and made the core design decisions, is the author\'s own statement, and Claude does not make it on the author\'s behalf.';
+  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
+  const readme = read(path.join(ROOT, 'README.md'));
+  const shownRecords = fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))).filter((p) => p.status !== 'removed');
+  /* The models of the trailers, sorted (both appear from the first day), and the share of commits made by Claude. */
+  let trailers = [], authors = [];
+  try {
+    trailers = require('child_process').execFileSync('git', ['log', '--reverse', '--format=%(trailers:key=Co-Authored-By,valueonly)'], { cwd: ROOT, encoding: 'utf8' }).split('\n');
+    authors = require('child_process').execFileSync('git', ['log', '--format=%an'], { cwd: ROOT, encoding: 'utf8' }).split('\n').filter(Boolean);
+  } catch (e) { trailers = []; authors = []; }
+  const MODELS = [...new Set(trailers.map((l) => (/^(Claude [^<]+?) <noreply@anthropic\.com>$/.exec(l.trim()) || [])[1]).filter(Boolean))].sort();
+  const byClaude = authors.filter((a) => a === 'Claude').length;
+  const andList41 = (xs) => (xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1]);
+  const flat = (s) => String(s || '').replace(/[{}]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+  function bibEntries(bib) {
+    const out = [];
+    for (const m of bib.matchAll(/^@(\w+)\{([^,\s]+),\n([\s\S]*?)\n\}/gm)) {
+      const fields = {};
+      for (const f of m[3].matchAll(/^\s*([a-z]+)\s*=\s*\{(.*)\},?\s*$/gm)) fields[f[1]] = f[2];
+      out.push({ type: m[1], key: m[2], fields });
+    }
+    return out;
+  }
+  const families = (a) => String(a || '').split(/\s+and\s+/).map((x) => x.trim()).filter(Boolean).map((x) => (x.startsWith('{') ? x.replace(/[{}]/g, '') : x.split(',')[0].trim()));
+  function problems41(md, bib, snap, models, claudeShare) {
+    const bad = [];
+    const head = (/^---\n([\s\S]*?)\n---\n/.exec(md) || [])[1] || '';
+    const body = md.replace(/^---[\s\S]*?\n---\n/, '').replace(/<!--[\s\S]*?-->/g, '');
+    const words = (body.match(/[A-Za-z0-9][A-Za-z0-9'’.-]*/g) || []).length;
+    if (!(words >= JOSS_WORDS[0] && words <= JOSS_WORDS[1])) bad.push('length: ' + words + ' words');
+    const heads = [...body.matchAll(/^(#+) (.+)$/gm)].filter((m) => m[1] === '#').map((m) => m[2]);
+    if (heads.join('|') !== JOSS_SECTIONS.join('|')) bad.push('sections: ' + heads.join(', '));
+    const date = (/^date: (.+)$/m.exec(head) || [])[1] || '';
+    const dm = /^([1-9]|[12]\d|3[01]) ([A-Z][a-z]+) (\d{4})$/.exec(date);
+    if (!dm || !MONTHS.includes(dm[2])) bad.push('date: ' + (date || 'none'));
+    const title = (/^title: '(.+)'$/m.exec(head) || [])[1] || '';
+    if (!title || /`/.test(title)) bad.push('title: ' + title);
+    if (!/authors:\n  - name: Takuya Nemoto\n    orcid: 0009-0000-1406-0547\n/.test(head) || (head.match(/^  - name:/gm) || []).length !== 2 || /Claude/.test(head)) bad.push('authors');
+    /* Citations: [@a; @b] and @a in the text. Every key is in paper.bib, every entry is cited, and no key is given twice. */
+    const cited = [...new Set([...body.matchAll(/(?:^|[\s\[;(])@([A-Za-z][\w:-]*\w)/gm)].map((m) => m[1]))];
+    const E = bibEntries(bib), keys = E.map((e) => e.key);
+    const strayCite = cited.filter((k) => !keys.includes(k)), uncited = keys.filter((k) => !cited.includes(k)), twice = keys.filter((k, i) => keys.indexOf(k) !== i);
+    if (!cited.length || strayCite.length || uncited.length || twice.length) bad.push('citations: not in paper.bib ' + strayCite.join(',') + '; not cited ' + uncited.join(',') + '; twice ' + twice.join(','));
+    /* DOIs: as the registry answered, field by field; a paper or a proceedings entry always has one. */
+    const byDoi = new Map(snap.map((s) => [String(s.doi).toLowerCase(), s]));
+    for (const e of E) {
+      const doi = e.fields.doi;
+      if (!doi) { if (['article', 'inproceedings', 'software'].includes(e.type)) bad.push('doi: ' + e.key + ' has none'); if (e.type === 'misc' && !/^\\url\{https:\/\/[^}]+\}$/.test(e.fields.howpublished || '')) bad.push('url: ' + e.key); continue; }
+      const s = byDoi.get(doi.toLowerCase());
+      if (!/^10\.\d{4,9}\/\S+$/.test(doi) || !s) { bad.push('doi: ' + e.key + ' ' + doi + ' was not read at its registry'); continue; }
+      if (s.key !== e.key || !['api.crossref.org', 'api.datacite.org'].includes(s.registry) || s.url.toLowerCase() !== ('https://' + s.registry + (s.registry === 'api.crossref.org' ? '/works/' : '/dois/') + doi).toLowerCase() || !/^\d{4}-\d{2}-\d{2}$/.test(s.read)) bad.push('doi: ' + e.key + ' record');
+      const want = { title: s.title, journal: e.type === 'article' ? s.container : undefined, booktitle: e.type === 'inproceedings' ? s.container : undefined, volume: s.volume, number: s.issue, pages: s.pages, year: String(s.year), publisher: s.publisher };
+      for (const [f, v] of Object.entries(want)) {
+        if (v === undefined) continue;
+        const got = e.fields[f] === undefined ? null : flat(e.fields[f]).replace(/--/g, '-');
+        if ((v === null ? null : flat(v)) !== got) bad.push('doi: ' + e.key + ' ' + f + ' is ' + got + ', the registry gives ' + v);
+      }
+      if (families(e.fields.author).map((x) => x.toLowerCase()).join('|') !== s.authors.map((x) => String(x).toLowerCase()).join('|')) bad.push('doi: ' + e.key + ' authors');
+    }
+    const bibDois = E.map((e) => String(e.fields.doi || '').toLowerCase()).filter(Boolean);
+    snap.filter((s) => !bibDois.includes(String(s.doi).toLowerCase())).forEach((s) => bad.push('doi: ' + s.doi + ' is kept but not in paper.bib'));
+    /* The entrance, as site.json gives it (since 2026-11-23 the paper names its repositories, not a number of them). */
+    const E10 = site.entrance.repositories, names = E10.slice(0, -1).join(', ') + ' or ' + E10[E10.length - 1];
+    const words10 = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+    if (!body.includes('from ' + site.entrance.from + ', a new work in ' + names + '.') || !body.includes('An author deposits a preprint in ' + names + ',') || words10.some((w) => body.includes('any of ' + w + ' repositories'))) bad.push('entrance');
+    /* The research impact as it is: no use by other authors while every record shown is the operator's own, and the registries as the README gives them. */
+    const impact = (body.split('\n# Research impact statement\n')[1] || '').split('\n# ')[0];
+    if (!impact.includes('There is no record yet of use by other authors.') || !impact.includes('every listed record is a submission by the operator') || !shownRecords.every((p) => p.operator_own === true)) bad.push('impact: use');
+    if (!impact.includes('Sophaxis is listed in ROAR, the Registry of Open Access Repositories, and on the page of disciplinary repositories of the Open Access Directory, and its application to the Directory of Open Access Preprint Repositories (DOAPR) is under review.')
+      || !readme.includes('Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since') || !readme.includes('Sophaxis has been listed under Philosophy and under Mathematics on the [Disciplinary repositories]')
+      || !readme.includes('| DOAPR (COAR) | Directory of Open Access Preprint Repositories | 2026-11-01 | Under review |')) bad.push('impact: registries');
+    /* The disclosure: Claude Code, every model of the trailers and no other, most commits by Claude, the checks, and no affirmation made for the author. */
+    const ai = (body.split('\n# AI usage disclosure\n')[1] || '').split('\n# ')[0];
+    const named = [...ai.matchAll(/Claude (?:Opus|Sonnet|Haiku)[\w .]*?(?=,| and |;| as )/g)].map((m) => m[0].trim());
+    if (!models.length || !ai.includes('Sophaxis was built with Claude Code, Anthropic\'s coding tool, at the author\'s request.')
+      || !ai.includes('The models were ' + andList41(models) + ', as the `Co-Authored-By` trailers of the commits name them; the history records no other model and no finer version.')
+      || named.some((x) => !models.includes(x))) bad.push('disclosure: models ' + named.join(', ') + ' / trailers ' + models.join(', '));
+    if (!(claudeShare > 0.5) || !ai.includes('Claude Code made most of the commits')) bad.push('disclosure: most of the commits');
+    if (!ai.includes('Claude is not an author.') || !ai.includes('This draft was written by Claude Code.') || !ai.includes(AFFIRM) || /the author (?:decided|reviewed|validated|affirms)|I (?:affirm|confirm)/i.test(ai)) bad.push('disclosure: affirmation');
+    const ack = (body.split('\n# Acknowledgements\n')[1] || '').split('\n# ')[0];
+    if (!ack.includes('The operator runs Sophaxis as an unpaid volunteer, within the free services of GitHub and Vercel, and pays personally for Claude Code.')
+      || !readme.includes('runs Sophaxis as an unpaid volunteer. It is served only within the free services of GitHub and Vercel; the operator pays personally for Claude Code')) bad.push('acknowledgements: support');
+    return { bad, words, heads };
+  }
   const md = read(path.join(ROOT, 'paper', 'paper.md'));
   const bib = read(path.join(ROOT, 'paper', 'paper.bib'));
-  const site = JSON.parse(read(path.join(ROOT, 'site.json')));
-  const body = md.replace(/^---[\s\S]*?\n---\n/, '').replace(/<!--[\s\S]*?-->/g, '');
-  const words = (body.match(/[A-Za-z0-9][A-Za-z0-9'’.-]*/g) || []).length;
-  ok('the body is within the JOSS length of 250 to 1000 words (' + words + ')', words >= 250 && words <= 1000);
-  ok('the sections JOSS asks for are there, with the AI usage disclosure, and Claude is not an author',
-    ['# Summary', '# Statement of need', '# State of the field', '# Software design', '# Research impact statement', '# AI usage disclosure', '# References'].every((h) => body.includes('\n' + h + '\n'))
-    && body.includes('Claude is not an author.') && !/name: .*Claude/.test(md));
-  ok('the one author is the operator, with the ORCID iD', /authors:\n  - name: Takuya Nemoto\n    orcid: 0009-0000-1406-0547\n/.test(md) && (md.match(/^  - name:/gm) || []).length === 2);
-  const keys = [...bib.matchAll(/^@\w+\{([^,]+),/gm)].map((m) => m[1]);
-  const cited = [...new Set([...body.matchAll(/@([a-z]+)/g)].map((m) => m[1]))];
-  ok('every citation is in paper.bib, and every entry is cited', cited.length > 0 && cited.every((k) => keys.includes(k)) && keys.every((k) => cited.includes(k)),
-    'cited ' + cited.join(',') + ' / bib ' + keys.join(','));
-  const n = Object.keys(site.repositories).length;
-  const words10 = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
-  /* Since 2026-11-23 the paper names the repositories of the entrance (site.json entrance), not a number of them. */
-  const E10 = site.entrance.repositories;
-  ok('the repositories in the paper are those of the entrance of site.json from ' + site.entrance.from + ' (' + E10.join(', ') + '), and the paper names no number of repositories (' + n + ' in site.json)',
-    body.includes('from ' + site.entrance.from + ', a new work in ' + E10.slice(0, -1).join(', ') + ' or ' + E10[E10.length - 1] + '.') && body.includes('An author deposits a preprint in ' + E10.slice(0, -1).join(', ') + ' or ' + E10[E10.length - 1] + ',')
-    && !words10.some((w) => body.includes('any of ' + w + ' repositories')));
-  ok('no DOI in paper.bib until one is checked at its source', !/\bdoi\s*=/i.test(bib));
-  ok('the paper says the research impact as it is: no use by other authors yet', body.includes('There is no record yet of use by other authors.'));
+  const snap = JSON.parse(read(path.join(__dirname, 'paper-dois.json'))).dois;
+  const share = authors.length ? byClaude / authors.length : 0;
+  const real = problems41(md, bib, snap, MODELS, share);
+  const of = (p) => real.bad.filter((x) => x.startsWith(p)).join(' / ');
+  ok('the body is within the JOSS length of ' + JOSS_WORDS.join(' to ') + ' words (' + real.words + ')', !of('length'), of('length'));
+  ok('the sections are those of JOSS, in its order (' + JOSS_SECTIONS.join(', ') + '), the date is in the form JOSS gives, and the title is plain text', !of('sections') && !of('date') && !of('title'), [of('sections'), of('date'), of('title')].filter(Boolean).join(' / '));
+  ok('the one author is the operator, with the ORCID iD, and Claude is not an author', !of('authors'));
+  ok('every citation is in paper.bib, every entry is cited, and no key is given twice', !of('citations'), of('citations'));
+  ok('every DOI in paper.bib (' + snap.length + ') is as Crossref or DataCite answered it, field by field, every paper has one, and every other entry has an address', !of('doi') && !of('url'), [of('doi'), of('url')].filter(Boolean).join(' / '));
+  ok('the repositories in the paper are those of the entrance of site.json from ' + site.entrance.from + ' (' + site.entrance.repositories.join(', ') + '), and the paper names no number of repositories', !of('entrance'));
+  ok('the paper says the research impact as it is: every record shown (' + shownRecords.length + ') is the operator\'s own, no use by other authors yet, and the registries as the README gives them', !of('impact'), of('impact'));
+  ok('the AI usage disclosure names Claude Code and the models of the commit trailers (' + MODELS.join(', ') + '), says that Claude made most of the commits (' + byClaude + ' of ' + authors.length + '), and makes no affirmation for the author', !of('disclosure'), of('disclosure'));
+  ok('the acknowledgements give the support as the README does', !of('acknowledgements'));
+  /* The paper says "one serverless function for OAI-PMH" and that the OAI-PMH endpoint "is the only part that runs on the server". */
+  const fns = fs.existsSync(path.join(ROOT, 'site', 'api')) ? fs.readdirSync(path.join(ROOT, 'site', 'api'), { recursive: true }).filter((f) => /\.(js|mjs|cjs|ts)$/.test(f)) : [];
+  ok('the site has the one serverless function that the paper names, for OAI-PMH (' + fns.join(', ') + ')', fns.join() === 'oai.js' && md.includes('with one serverless function for OAI-PMH') && md.includes('it is the only part that runs on the server'));
+  /* Break on purpose: each way must fail. */
+  const sec = (t, a, b) => t.replace('\n# ' + a + '\n', '\n# @@\n').replace('\n# ' + b + '\n', '\n# ' + a + '\n').replace('\n# @@\n', '\n# ' + b + '\n');
+  const firstDoi = snap[0].doi;
+  const BREAK = [
+    ['too short', md.replace(/\n# State of the field\n[\s\S]*?\n# References\n/, '\n# State of the field\n\nx\n\n# Software design\n\nx\n\n# Research impact statement\n\nThere is no record yet of use by other authors.\n\n# AI usage disclosure\n\nx\n\n# Acknowledgements\n\nx\n\n# References\n'), bib, snap],
+    ['too long', md.replace('\n# References\n', '\n' + (md.split('\n# Software design\n')[1] || '').split('\n# ')[0].repeat(4) + '\n# References\n'), bib, snap],
+    ['two sections swapped', sec(md, 'Software design', 'State of the field'), bib, snap],
+    ['Acknowledgements gone', md.replace('\n# Acknowledgements\n', '\n'), bib, snap],
+    ['a section of its own', md.replace('\n# References\n', '\n# Availability\n\nx\n\n# References\n'), bib, snap],
+    ['the date in another form', md.replace(/^date: .+$/m, 'date: 2026-11-25'), bib, snap],
+    ['backticks in the title', md.replace("title: 'Sophaxis:", "title: '`Sophaxis`:"), bib, snap],
+    ['Claude as an author', md.replace('affiliations:\n', '  - name: Claude\n    affiliation: 1\naffiliations:\n'), bib, snap],
+    ['a citation not in paper.bib', md.replace('[@ginsparg2011]', '[@ginsparg2011; @arxiv2011]'), bib, snap],
+    ['an entry not cited', md.replace('[@ginsparg2011]', ''), bib, snap],
+    ['a key given twice', md, bib + '\n@misc{jalc,\n  title        = {x},\n  howpublished = {\\url{https://example.org/}}\n}\n', snap],
+    ['a DOI not read at its registry', md, bib.replace('doi       = {10.1038/476145a}', 'doi       = {10.1038/476145b}'), snap],
+    ['a title other than the registry\'s', md, bib.replace('title     = {ArXiv at 20}', 'title     = {arXiv at twenty}'), snap],
+    ['a year other than the registry\'s', md, bib.replace(/(rousi2022,[\s\S]*?year\s+= \{)2024/, '$12022'), snap],
+    ['an author other than the registry\'s', md, bib.replace('Ginsparg, Paul', 'Ginsberg, Paul'), snap],
+    ['pages other than the registry\'s', md, bib.replace('145--147', '145--148'), snap],
+    ['a paper with no DOI', md, bib.replace('  doi       = {10.1162/qss_a_00022}\n', ''), snap.filter((s) => s.doi !== '10.1162/qss_a_00022')],
+    ['a DOI kept but not in paper.bib', md, bib, snap.concat([Object.assign({}, snap[0], { doi: '10.1000/kept' })])],
+    ['a model of the trailers not named', md.replace('Claude Opus 5 and Claude Opus 5.5', 'Claude Opus 5.5'), bib, snap],
+    ['a model the trailers do not name', md.replace('Claude Opus 5 and Claude Opus 5.5', 'Claude Opus 5, Claude Opus 5.5 and Claude Sonnet 5'), bib, snap],
+    ['the affirmation made for the author', md.replace(AFFIRM, 'The author reviewed, edited and validated all AI-assisted output and made the core design decisions.'), bib, snap],
+    ['use by others claimed', md.replace('There is no record yet of use by other authors.', 'Other authors use it.'), bib, snap],
+    ['a registry not as the README gives it', md.replace('is under review.', 'is listed.'), bib, snap],
+  ];
+  const missed = BREAK.filter(([, m, b, s]) => problems41(m, b, s, MODELS, share).bad.length === 0).map(([n]) => n);
+  ok('break on purpose: each of ' + BREAK.length + ' ways (' + BREAK.map(([n]) => n).join(', ') + ') fails', firstDoi && missed.length === 0, missed.join(', '));
+  ok('the changelog gives the ' + BREAK.length + ' break tests of this check', read(path.join(ROOT, 'CHANGELOG.md')).includes('Check 41 now holds the draft to the paper guide of JOSS as read on 2026-11-25') && read(path.join(ROOT, 'CHANGELOG.md')).includes('fails in each of ' + BREAK.length + ' ways it is broken on purpose'));
 }
 
 /* ------------------------------------------------------------ 42 */
@@ -3752,7 +3875,7 @@ console.log('\n93. A first preprint, libraries, the policies in brief, advisers\
     rooted.length === 0 && read(path.join(ROOT, 'docs', 'operations.md')).includes('## If Vercel cannot serve the site') && read(path.join(ROOT, 'docs', 'operations.md')).includes('The OAI-PMH interface at `/oai`'), rooted.slice(0, 5).join(', '));
   const joss = read(path.join(ROOT, 'paper', 'paper.md'));
   ok('the JOSS draft is marked not submitted, names the day its criteria were read, the earliest day, the need for use by others, and the AI usage disclosure it carries',
-    joss.includes('Draft. Not submitted.') && joss.includes('read on 2026-11-11') && joss.includes('2027-05-01 at the earliest') && joss.includes('Aspirational statements do not count.') && joss.includes('# AI usage disclosure') && joss.includes('Claude is not an author.'));
+    joss.includes('Draft. Not submitted.') && joss.includes('read on 2026-11-25') && joss.includes('2027-05-01 at the earliest') && joss.includes('Aspirational statements do not count.') && joss.includes('# AI usage disclosure') && joss.includes('Claude is not an author.'));
 }
 
 console.log('\n94. The form in Japanese, subfields, a summary in plain words, and the reading time');
@@ -4363,7 +4486,7 @@ console.log('\n100. Closing, questions actually asked, the criteria for listing,
   const rows = joss.split('\n').filter((l) => /^\| /.test(l) && !/^\| (Criterion|---)/.test(l)).map((l) => l.split('|').map((c) => c.trim()));
   const STATES = ['met', 'partly met', 'not yet', 'at submission', 'for JOSS'];
   const named = [...joss.matchAll(/Check (\d+)/g)].map((m) => Number(m[1]));
-  const TOPIC = { 38: 'The JOSS plan', 39: 'Metadata for a release DOI', 40: 'CONTRIBUTING.md and CHANGELOG.md', 41: 'The draft JOSS paper' };
+  const TOPIC = { 17: 'The fields of papers.json, as the README describes them', 38: 'The JOSS plan', 39: 'Metadata for a release DOI', 40: 'CONTRIBUTING.md and CHANGELOG.md', 41: 'The draft JOSS paper', 150: 'What a reviewer needs' };
   const src = read(__filename);
   ok('docs/joss.md is marked not submitted, gives the first commit and the earliest day from git (' + earliest + '), and a state from the list for every row (' + rows.length + ')',
     joss.startsWith('# Readiness for the Journal of Open Source Software (JOSS)\n\nNot submitted.') && first !== '' && joss.includes('The first commit here is from ' + first + ', so the earliest possible submission is ' + earliest + '.')
@@ -10274,6 +10397,78 @@ console.log('\n149. The removal of 2026.0005 (2026-11-23): at its author\'s requ
   ok('the changelog gives the ' + breaks.length + ' break tests of this check', Number(said) === breaks.length, 'the changelog says ' + said);
   ok('break on purpose: each of ' + breaks.length + ' ways (the title or a reason in the record, the record put back, another day, no commit or another work, the PDF copy or the card left, a file naming the DOI, the notice with the title, the Japanese page not the notice, the page on the design in either language, the changelog without the item, with another count or with a reason of its own) fails',
     missed.length === 0, missed.join(' / '));
+}
+
+/* ------------------------------------------------------------ 150 */
+console.log('\n150. What a reviewer needs (2026-11-25): the requirements in the README as the workflow installs them, package.json with no dependencies, the examples that build, and the history as docs/joss.md gives it');
+{
+  /* JOSS asks for "a clearly-stated list of dependencies" and for software "packaged appropriately according to common community
+   * standards for the programming language being used" (docs/review_checklist.md and docs/submitting.md, openjournals/joss at
+   * 50d7440b4016aea5bfaa014c8e4d9b342a8dc62e). Claude decided on 2026-11-25 to add a package.json with no dependencies, in place of
+   * the decision of 2026-11-12 to add none: it is the standard of the language, and it installs nothing. */
+  const cpx = require('child_process');
+  const git150 = (args) => { try { return cpx.execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }); } catch (e) { return ''; } };
+  function problems150(x) {
+    const bad = [];
+    const node = (/node-version: (\d+)\n/.exec(x.wf) || [])[1], pw = (/npm install -g playwright@(\d+\.\d+\.\d+)\n/.exec(x.wf) || [])[1];
+    if (!node || !pw || !/apt-get install -y -q poppler-utils/.test(x.wf) || !/- name: Install playwright and Chromium\n/.test(x.wf)) bad.push('the workflow');
+    if (!x.readme.includes('What the build and the checks need: Node.js ' + node + ', the version the checks run on in continuous integration, and a clone with its whole history, because the checks read it with git.')
+      || !x.readme.includes('The checks of the PDF copies run `pdfinfo` and `pdftotext` from poppler-utils.')
+      || !x.readme.includes('Only the keyboard check needs more: playwright ' + pw + ' and its Chromium, installed as the step "Install playwright and Chromium" of `.github/workflows/check.yml` installs them.')
+      || !x.contrib.includes('Node.js ' + node + ' is enough.')) bad.push('the README or CONTRIBUTING.md and the workflow differ');
+    let pkg = null;
+    try { pkg = JSON.parse(x.pkg); } catch (e) { pkg = null; }
+    const cffVersion = (/^version: "([^"]+)"$/m.exec(x.cff) || [])[1];
+    if (!pkg || pkg.name !== 'sophaxis' || pkg.private !== true || pkg.license !== 'MIT' || pkg.version !== cffVersion || !pkg.engines || pkg.engines.node !== node + '.x'
+      || JSON.stringify(pkg.scripts) !== JSON.stringify({ build: 'node build.js', test: 'node verification/check.js' })
+      || ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies', 'bundleDependencies', 'bin', 'main', 'files'].some((k) => k in pkg)
+      || !x.readme.includes('`package.json` has no dependencies; `npm run build` and `npm test` run `node build.js` and `node verification/check.js`.')) bad.push('package.json');
+    const EX = ['node build.js /tmp/sophaxis-site', 'node -e "const r = require(\'./build.js\').build(\'/tmp/sophaxis-fixtures\', \'verification/fixtures/papers\'); console.log(r.problems.length + \' problems, \' + r.papers.length + \' records\')"'];
+    if (!x.readme.includes('```\n' + EX.join('\n') + '\n```') || !x.exampleOk) bad.push('the examples');
+    /* The history as docs/joss.md gives it: no commit by anyone but the operator, Claude and GitHub's bot, and nothing pushed straight
+     * to main after 2026-11-07. */
+    const people = [...new Set(x.authors)].sort();
+    if (!people.length || people.some((a) => !['Claude', 'Takuya Nemoto', 'github-actions[bot]'].includes(a))
+      || !x.joss.includes('The history holds no commit by anyone but the operator, Claude and GitHub\'s bot (Check 150).')) bad.push('the authors of the history: ' + people.join(', '));
+    if (!x.direct.length || x.direct.some((d) => d > '2026-11-07') || !x.joss.includes('Every change after 2026-11-07 is a merged pull request, and the history is public; some changes of the first days were pushed straight to main (Check 150).')) bad.push('the changes pushed straight to main');
+    if (!x.joss.includes('`openjournals/joss` at commit `50d7440b4016aea5bfaa014c8e4d9b342a8dc62e`') || !x.check41.includes('commit 50d7440b4016aea5bfaa014c8e4d9b342a8dc62e') || !x.joss.includes('| "The paper should be between 750-1750 words." | met |')) bad.push('the read of JOSS');
+    return bad;
+  }
+  const out150 = tmp();
+  let exampleOk = false;
+  try { const r = build(out150, path.join(__dirname, 'fixtures', 'papers')); exampleOk = r.problems.length === 0 && r.papers.length > 0; } catch (e) { exampleOk = false; }
+  const real150 = {
+    wf: read(path.join(ROOT, '.github', 'workflows', 'check.yml')), readme: read(path.join(ROOT, 'README.md')), contrib: read(path.join(ROOT, 'CONTRIBUTING.md')),
+    pkg: fs.existsSync(path.join(ROOT, 'package.json')) ? read(path.join(ROOT, 'package.json')) : '', cff: read(path.join(ROOT, 'CITATION.cff')), joss: read(path.join(ROOT, 'docs', 'joss.md')),
+    check41: read(__filename).split("console.log('\\n41. ")[1].split("console.log('\\n42. ")[0], exampleOk,
+    authors: git150(['log', '--format=%an']).split('\n').filter(Boolean),
+    /* The line of main: origin/main where it is fetched (a working branch has commits of its own on its first-parent line), else HEAD. */
+    direct: git150(['log', '--first-parent', '--no-merges', '--format=%as', git150(['rev-parse', '--verify', '-q', 'refs/remotes/origin/main']).trim() ? 'refs/remotes/origin/main' : 'HEAD']).split('\n').filter(Boolean),
+  };
+  const bad150 = problems150(real150);
+  const of150 = (p) => bad150.filter((x) => x.startsWith(p)).join(' / ');
+  ok('the README and CONTRIBUTING.md give what the build and the checks need as check.yml installs it (Node.js, git with the history, poppler-utils, playwright and Chromium for the keyboard check)', !of150('the workflow') && !of150('the README'), of150('the'));
+  ok('package.json has no dependencies, the version of CITATION.cff, the MIT licence, the Node.js of the workflow, and the scripts build and test as the README gives them', !of150('package.json'));
+  ok('the examples in the README are there, and the build of the made-up records has no problem', !of150('the examples'));
+  ok('the history is as docs/joss.md gives it: no commit by anyone but the operator, Claude and GitHub\'s bot, and nothing pushed straight to main after 2026-11-07 (' + real150.direct.length + ' such commits, the last on ' + real150.direct[0] + ')', !of150('the authors') && !of150('the changes'), of150('the authors') + of150('the changes'));
+  ok('docs/joss.md and check 41 name the same read of JOSS, and the length that check 41 holds', !of150('the read'));
+  const B150 = [
+    ['another Node.js in the workflow', { wf: real150.wf.replace(/node-version: 22\n/g, 'node-version: 24\n') }],
+    ['another playwright in the workflow', { wf: real150.wf.replace('playwright@1.56.1', 'playwright@1.57.0') }],
+    ['no poppler-utils in the README', { readme: real150.readme.replace('from poppler-utils.', 'from poppler.') }],
+    ['a dependency in package.json', { pkg: real150.pkg.replace('"scripts": {', '"dependencies": { "marked": "1.0.0" },\n  "scripts": {') }],
+    ['another version in package.json', { pkg: real150.pkg.replace('"version": "1.1.0"', '"version": "1.2.0"') }],
+    ['another test script', { pkg: real150.pkg.replace('"test": "node verification/check.js"', '"test": "true"') }],
+    ['no package.json', { pkg: '' }],
+    ['an example gone', { readme: real150.readme.replace('node build.js /tmp/sophaxis-site\n', '') }],
+    ['an example that does not build', { exampleOk: false }],
+    ['a commit by someone else', { authors: real150.authors.concat(['Someone Else']) }],
+    ['a change pushed straight to main later', { direct: ['2026-11-25'].concat(real150.direct) }],
+    ['another read of JOSS in docs/joss.md', { joss: real150.joss.replace('50d7440b4016aea5bfaa014c8e4d9b342a8dc62e', '675126ebed33f1b00a385f0241b0818f4b0599e6') }],
+  ];
+  const missed150 = B150.filter(([, o]) => problems150(Object.assign({}, real150, o)).length === 0).map(([n]) => n);
+  ok('break on purpose: each of ' + B150.length + ' ways (' + B150.map(([n]) => n).join(', ') + ') fails', bad150.length === 0 && missed150.length === 0, missed150.join(', '));
+  ok('the changelog gives the ' + B150.length + ' break tests of this check', read(path.join(ROOT, 'CHANGELOG.md')).includes('A new check (150) holds what a reviewer needs') && read(path.join(ROOT, 'CHANGELOG.md')).includes('fails in each of ' + B150.length + ' ways it is broken on purpose.'));
 }
 
 console.log('\n' + '-'.repeat(60));
