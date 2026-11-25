@@ -3006,6 +3006,103 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
     stBroken.every((b) => b.length > 0));
   ok('the changelog gives the ' + stBroken.length + ' break tests of the facts of the watch on the laws', read(path.join(ROOT, 'CHANGELOG.md')).includes('The texts of the watch on the laws state facts only (pull request #')
     && read(path.join(ROOT, 'CHANGELOG.md')).includes('and fail in each of ' + stBroken.length + ' ways they are broken on purpose.'));
+  /* The texts that the generators of the operator's issues write, and the operator's routine, state facts only (2026-11-25; rule 13).
+   * They said "read them in the Vercel account" (tools/limits.js), "Decisions of <year>: record them" and "To record them, put this in"
+   * (tools/report_issue.js), "add it to the record" (tools/watch.js), "Close the issue with one line" (tools/audit.js), "Copy each post"
+   * (tools/monthly.js), "Record the changed texts" as the title of the watch on the laws, and docs/operations.md gave its routine as
+   * orders: "Read the difference, check the legal review, and add the label `record` only then", and 26 more. They now say what
+   * holds. The title of the yearly counts is the one that tools/heartbeat.json of cpsbvbng26-dotcom looks for; the issue of a year is
+   * still found by its mark and "The decisions of <year>,", as check 138 holds; check_ecosystem.js there compares the two titles. The labels, the marks and the conditions are unchanged. */
+  const Lm67 = require('../tools/limits.js'), Ri67 = require('../tools/report_issue.js'), Wt67 = require('../tools/watch.js'), Au67 = require('../tools/audit.js'), Mo67 = require('../tools/monthly.js');
+  const VERBS67 = 'open|click|send|ask|tick|delete|remove|contact|email|write|go|visit|add|fill|label|run|please|read|check|review|look|see|use|make|follow|change|merge|wait|reply|answer|confirm|verify|note|decide|record|announce|set|keep|turn|tell|comment|do|take|draw|rebuild|leave|close|put|copy|fix|edit|update';
+  const instructions = (text) => {
+    const bare = String(text).replace(/```[\s\S]*?```/g, '').replace(/~~~~[\s\S]*?~~~~/g, '').replace(/<!--[\s\S]*?-->/g, '');
+    const bad = [];
+    for (const m of bare.matchAll(new RegExp('(?:^|[.!?;:]\\s+|^\\s*(?:-|\\d+\\.) (?:\\[[ xX]\\] )?)(' + VERBS67 + ')\\b', 'gim'))) bad.push('an instruction: "' + bare.slice(m.index, m.index + 40).trim() + '"');
+    for (const m of bare.matchAll(new RegExp('(?:^|[.!?;:]\\s+)to [a-z]+[^.!?;:,]*, (' + VERBS67 + ')\\b', 'gim'))) bad.push('an instruction after "To": "' + bare.slice(m.index, m.index + 40).trim() + '"');
+    /* An order joined to another by a comma, "and", "then" or "otherwise": "..., and add the DOI", "Otherwise do them". */
+    for (const m of bare.matchAll(new RegExp('(?:, (?:and |then )?|\\band then |\\botherwise,? )(' + VERBS67 + ')\\b', 'gi'))) bad.push('a joined instruction: "' + bare.slice(m.index, m.index + 40).trim() + '"');
+    if (/\byou(?:r|rs|rself)?\b/i.test(bare)) bad.push('the second person');
+    if (/\bonly the (?:repository )?owner (?:of the repository )?can\b/i.test(bare)) bad.push('a task left to the owner');
+    return bad;
+  };
+  const pubRec = { id: '2026.0009', status: 'listed', published: { doi: '10.1/x', updates: [] } };
+  const real67 = {
+    limits: Lm67.issueBody('| Measure | Used | Limit | Share |\n'),
+    reportTitle: Ri67.title('2026'), report: Ri67.issueBody('2026', '{}'),
+    watch: Wt67.publishedProblems(pubRec, { updates: [{ doi: '10.1/y', type: 'retraction', date: '2027-06-01' }] }).join('\n'),
+    audit: Au67.body('2027'), monthly: Mo67.body({ month: '2026-11', en: 'a', ja: 'b' }),
+    statutesTitles: S.text.prTitle + '\n' + S.text.seedTitle,
+    ops: read(path.join(ROOT, 'docs', 'operations.md')),
+  };
+  const opsFacts = (x) => {
+    const bad = [];
+    const need = [
+      ['limits', 'Vercel\'s bandwidth and function use are not measured here: only the Vercel account shows them, and this workflow cannot read them.'],
+      ['report', 'They are recorded when this is put in `data/reports/2026.json` by pull request; `decisions.html` then shows them.'],
+      ['report', '<!-- sophaxis-report -->\nThe decisions of 2026,'],
+      ['watch', 'has a new retraction notice of 2027-06-01, https://doi.org/10.1/y, which the record does not list yet'],
+      ['audit', 'The issue is closed with one line on what was found and what was changed.'],
+      ['monthly', 'The posts are written to be posted as they are. X\'s API is paid, so nothing is posted automatically.'],
+      ['ops', 'A change is recorded only after the difference has been read and the legal review checked. The recording starts when the repository owner adds the label `record` to the pull request.'],
+      ['ops', 'Vercel\'s bandwidth and function use are shown only in the Vercel account, and the run cannot read them.'],
+      ['ops', 'They are recorded in `data/reports/` by pull request.'],
+    ];
+    need.filter(([k, w]) => !String(x[k]).includes(w)).forEach(([k, w]) => bad.push(k + ': the fact "' + w.slice(0, 50) + '"'));
+    if (x.reportTitle !== 'Decisions of 2026') bad.push('the title of the yearly counts: ' + x.reportTitle);
+    for (const [k, v] of Object.entries(x)) instructions(v).forEach((b) => bad.push(k + ': ' + b));
+    return bad;
+  };
+  const of67 = opsFacts(real67);
+  ok('the issues of the free limits, the yearly counts, the weekly watch, the yearly audit and the summary for X, the titles of the watch on the laws, and the operator\'s routine state facts and give no instruction',
+    of67.length === 0, of67.join('; '));
+  const opsBack = (a, b) => Object.assign({}, real67, { ops: real67.ops.replace(a, b) });
+  const set67 = (k, a, b) => Object.assign({}, real67, { [k]: String(real67[k]).replace(a, b) });
+  const OPS_OLD = [
+    ['The new issues are read: submissions', 'Read the new issues: submissions'],
+    ['Each submission is decided under the Moderation Policy, with the reasons given in the issue.', 'Decide each submission under the Moderation Policy, and give the reasons in the issue.'],
+    ['the same pull request adds the DOI of each of its versions', 'add the DOI of each of its versions'],
+    ['and it is merged only when every check passes.', 'Merge only when every check passes.'],
+    ['A removal request is answered by the day', 'Answer a removal request by the day'],
+    ['A change is recorded only after the difference has been read and the legal review checked. The recording starts when the repository owner adds the label `record` to the pull request.', 'Read the difference, check the legal review, and add the label `record` only then.'],
+    ['Vercel\'s bandwidth and function use are shown only in the Vercel account, and the run cannot read them.', 'Read Vercel\'s bandwidth and function use in the Vercel account, which the run cannot see.'],
+    ['They are recorded in `data/reports/` by pull request.', 'Record them in `data/reports/`.'],
+    ['- An entry is added to `data/policy-changes.json`', '- Add an entry to `data/policy-changes.json`'],
+    ['- The entries are added to `CHANGELOG.md`, and the version and the date in `CITATION.cff` change.', '- Add the entries to `CHANGELOG.md` and change the version and the date in `CITATION.cff`.'],
+    ['the `isDerivedFrom` DOIs of works removed since the last release are taken out.', 'take out the `isDerivedFrom` DOIs of works removed since the last release.'],
+    ['The move is announced in the news and in the README, and the registries that hold the old address are told.', 'Announce the move in the news and in the README, and tell the registries that hold the old address.'],
+    ['Closing follows "Continuity" in the Terms of Use.', 'Follow "Continuity" in the Terms of Use.'],
+    ['1. The closure is announced on the top page', '1. Announce the closure on the top page'],
+    ['2. Every open submission, withdrawal and published-version issue is decided, or closed with the reason.', '2. Decide every open submission, withdrawal and published-version issue, or close it with the reason.'],
+    ['3. The last release is made:', '3. Make the last release:'],
+    ['4. The site stays served from `site/`', '4. Keep the site served from `site/`'],
+    ['It is not archived on GitHub:', 'Do not archive it on GitHub:'],
+    ['Every scheduled workflow is turned off except `removal.yml`.', 'Turn off every scheduled workflow except `removal.yml`.'],
+    ['7. The registries that list Sophaxis (`listedIn` in `site.json`) and those it applied to are told, and the Zenodo community is closed to new requests.', '7. Tell the registries that list Sophaxis (`listedIn` in `site.json`) and those it applied to, and close the Zenodo community to new requests.'],
+    ['A pause follows "Continuity" in the Terms of Use, under', 'Follow "Continuity" in the Terms of Use, under'],
+    ['1. `"submissionsPaused": true` is set in `site.json`, `node build.js` and `node verification/check.js` run, and the change is merged.', '1. Set `"submissionsPaused": true` in `site.json`, run `node build.js` and `node verification/check.js`, and merge.'],
+    ['2. A news item in `data/news.json` says the same, in the same pull request.', '2. Add a news item to `data/news.json` that says the same, in the same pull request.'],
+    ['3. Each open submission, withdrawal and published-version issue gets a comment that its decision waits until the pause ends.', '3. Comment in each open submission, withdrawal and published-version issue that its decision waits until the pause ends.'],
+    ['4. Where the pause can be foreseen, these steps are done before it begins. Otherwise they are done as soon as', '4. Where the pause can be foreseen, do these steps before it begins. Otherwise do them as soon as'],
+    ['1. `"submissionsPaused": false` is set, the site is built again, and a news item says that submissions are open again.', '1. Set `"submissionsPaused": false`, rebuild, and add a news item that submissions are open again.'],
+    ['2. The waiting issues are decided in the order they came, removal requests first.', '2. Decide the waiting issues in the order they came. Answer removal requests first.'],
+  ];
+  const opsBroken = [
+    opsFacts(set67('limits', 'not measured here: only the Vercel account shows them, and this workflow cannot read them.', 'not measured here; read them in the Vercel account.')),
+    opsFacts(Object.assign({}, real67, { reportTitle: 'Decisions of 2026: record them' })),
+    opsFacts(set67('report', 'They are recorded when this is put in', 'To record them, put this in')),
+    opsFacts(set67('watch', ', which the record does not list yet', '; add it to the record')),
+    opsFacts(set67('audit', 'The issue is closed with one line', 'Close the issue with one line')),
+    opsFacts(set67('monthly', 'The posts are written to be posted as they are. X\'s API is paid', 'Copy each post as it is; X\'s API is paid')),
+    opsFacts(set67('statutesTitles', S.text.prTitle, 'Record the changed texts the legal review relies on')),
+    opsFacts(set67('statutesTitles', S.text.seedTitle, 'Record the texts the legal review relies on')),
+    opsFacts(set67('report', 'by pull request;', 'by pull request. Please')),
+    opsFacts(set67('limits', 'this workflow cannot read them.', 'you can read them there.')),
+  ].concat(OPS_OLD.map(([a, b]) => opsFacts(opsBack(a, b))));
+  ok('break on purpose: each old text back in the issues of the free limits (1), the yearly counts (2, the title and the body), the weekly watch (1), the yearly audit (1) and the summary for X (1), in the titles of the watch on the laws (2), "Please", "you", and each of ' + OPS_OLD.length + ' old orders back in the operator\'s routine (' + opsBroken.filter((b) => b.length).length + ' / ' + opsBroken.length + ')',
+    opsBroken.every((b) => b.length > 0) && OPS_OLD.every(([a]) => real67.ops.includes(a)), opsBroken.map((b, i) => (b.length ? '' : String(i))).filter(Boolean).join(', '));
+  ok('the changelog gives the ' + opsBroken.length + ' break tests of the facts of the operator\'s issues and routine', read(path.join(ROOT, 'CHANGELOG.md')).includes('The operator\'s issues and routine state facts only (pull request #')
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('fail in each of the ' + opsBroken.length + ' ways they are broken on purpose'));
   ok('a box ticked by hand counts, the ticks are written back, and the Wayback Machine is asked for the page and every PDF copy',
     R.tickedByHand(fb.replace('- [ ] GitHub has been asked', '- [x] GitHub has been asked')).github && !R.tickedByHand(fb).github
     && R.followUpBody({ id: '2026.0009', issues: [3], today: '2026-11-20', done: { issues: true, archive: true } }).includes('- [x] The emptied issues are deleted')
@@ -4254,7 +4351,7 @@ console.log('\n97. The type and status of Sophaxis, the links of its archive, th
     lacking.length ? 'add to .zenodo.json: ' + lacking.join(', ') : '');
   ok('the README, in both languages, and the routine say that the archive is derived from the listed works from the next release, and how the list is kept',
     readme.includes('(`isDerivedFrom` in `.zenodo.json`)') && readme.includes('（`.zenodo.json` の `isDerivedFrom`）')
-    && read(path.join(ROOT, 'docs', 'operations.md')).includes('add the DOI of each of its versions to `related_identifiers` in `.zenodo.json` with the relation `isDerivedFrom`')
+    && read(path.join(ROOT, 'docs', 'operations.md')).includes('the same pull request adds the DOI of each of its versions to `related_identifiers` in `.zenodo.json` with the relation `isDerivedFrom`')
     && read(path.join(ROOT, 'docs', 'operations.md')).includes('A removal does not change the file, so that nothing delays it.'));
   // The operating counts on the top page, counted again here from data/reports and the records.
   const reps = fs.readdirSync(path.join(ROOT, 'data', 'reports')).filter((f) => /^\d{4}\.json$/.test(f)).sort().map((f) => JSON.parse(read(path.join(ROOT, 'data', 'reports', f))));
@@ -4511,7 +4608,7 @@ console.log('\n100. Closing, questions actually asked, the criteria for listing,
   const ahead = (/a closure is announced on the top page at least (\d+) days ahead/.exec(terms) || [])[1];
   ok('the routine says how to close Sophaxis in numbered steps (' + steps.length + '): the notice as many days ahead as the Terms (' + ahead + '), and where the records, the PDF copies and the record pages go',
     steps.length >= 5 && steps.every((n, i) => n === i + 1) && ahead && close.includes('at least ' + ahead + ' days ahead') && termsJa.includes('閉鎖は少なくとも ' + ahead + ' 日前に')
-    && ['`data/papers/` (the records)', '`data/pdf/` (the PDF copies', '`site/` (every record page', 'Do not archive it on GitHub', 'except `removal.yml`', '`"submissionsPaused": true`', '`listedIn`'].every((x) => close.includes(x))
+    && ['`data/papers/` (the records)', '`data/pdf/` (the PDF copies', '`site/` (every record page', 'It is not archived on GitHub', 'except `removal.yml`', '`"submissionsPaused": true`', '`listedIn`'].every((x) => close.includes(x))
     && fs.existsSync(path.join(ROOT, '.github', 'workflows', 'removal.yml')) && Array.isArray(site100.listedIn));
   /* 366: a question is added to the FAQ only when it was asked; the questions of 2026-11-11 are those at the commit below. */
   const BASE = '52bf5512cb1c827014f51fe0077eb2ec5c3a4442';
