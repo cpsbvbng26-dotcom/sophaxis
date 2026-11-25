@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* The monthly summary for the official account on X: on the 1st of each month, what was listed and announced in the month
- * before, as a post in English and one in Japanese, each within the 280 weighted characters that X counts, posted in an issue
- * for the operator to copy. X's API is paid, so nothing is posted automatically.
+ * before, as a post in English and one in Japanese, each within the 280 weighted characters that X counts, posted in an issue,
+ * each written to be posted as it is. X's API is paid, so nothing is posted automatically.
  *
  *   node tools/monthly.js --print [2026-11]     print the posts for a month (default: the month before, in Japan time)
  *
@@ -60,7 +60,7 @@ function posts(month, records, news) {
 
 function body(p) {
   return `${MARK}
-The summary of ${p.month} for the official account on X (@${SITE.x}). Copy each post as it is; X's API is paid, so nothing is posted automatically.
+The summary of ${p.month} for the official account on X (@${SITE.x}). The posts are written to be posted as they are. X's API is paid, so nothing is posted automatically.
 
 English (${weighted(p.en)} / ${LIMIT}):
 
