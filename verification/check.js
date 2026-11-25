@@ -2883,7 +2883,7 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
   const pr = St.proposal(res, conf, { 'X 1': '甲。', 'X 2': '丙。' }, '2026-11-20');
   ok('the proposal records the new values and texts, dates them, and shows each change; nothing new proposes nothing',
     pr.changed === 2 && pr.conf.statutes[0].sha256 === 'h2' && pr.conf.policies[0].commit === 'c2' && pr.conf.recorded === '2026-11-20' && pr.texts['X 1'] === '甲。乙。'
-    && pr.body.includes('```diff\n  甲。\n+ 乙。\n```') && pr.body.includes('compare/c1...c2') && pr.body.includes('add the label `record`') && conf.statutes[0].sha256 === 'h1'
+    && pr.body.includes('```diff\n  甲。\n+ 乙。\n```') && pr.body.includes('compare/c1...c2') && pr.body.includes('\n\n' + S.text.prFoot) && conf.statutes[0].sha256 === 'h1'
     && St.proposal(res.map((r) => Object.assign({}, r, { state: 'same' })), conf, { 'X 1': '甲。乙。', 'X 2': '丙。' }, '2026-11-20') === null);
   const seed = St.proposal([res[1]], conf, {}, '2026-11-20');
   ok('texts that match but are not stored yet are stored without changing any value', seed && seed.changed === 0 && seed.texts['X 2'] === '丙。' && seed.conf.recorded === '2026-11-08');
@@ -2898,7 +2898,7 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
     && read(path.join(ROOT, 'tools', 'record.js')).includes("Co-authored-by: ' + BOT") && read(path.join(ROOT, 'tools', 'record.js')).indexOf("['node', 'verification/check.js']") < read(path.join(ROOT, 'tools', 'record.js')).indexOf("git('push', '-q', 'origin', 'HEAD:main')"));
   const sj = read(path.join(ROOT, 'tools', 'statutes.js'));
   ok('where workflows may not open pull requests, the proposal is an issue with a link that opens it, and recording closes that issue',
-    sj.includes("if (!/HTTP 403/.test(e.message)) throw e;") && sj.includes("'/compare/main...' + BRANCH + '?expand=1'") && S.text.openPr.includes('{link}') && S.text.openPr.includes('add the label `record`')
+    sj.includes("if (!/HTTP 403/.test(e.message)) throw e;") && sj.includes("'/compare/main...' + BRANCH + '?expand=1'") && S.text.openPr.includes('{link}') && S.text.openPr.includes('when the repository owner adds the label `record` to that pull request')
     && St.PROPOSAL === '<!-- statutes-proposal -->' && read(path.join(ROOT, 'tools', 'record.js')).includes("startsWith('<!-- statutes-proposal -->')"));
   const rw = read(path.join(ROOT, '.github', 'workflows', 'record.yml'));
   ok('the record workflow acts only on the owner\'s label on the watch\'s own branch, one change to main at a time',
@@ -2963,6 +2963,49 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
     fuBroken.every((b) => b.length > 0));
   ok('the changelog gives the ' + fuBroken.length + ' break tests of the follow-up\'s facts', read(path.join(ROOT, 'CHANGELOG.md')).includes('The follow-up of a removal states facts only (pull request #268)')
     && read(path.join(ROOT, 'CHANGELOG.md')).includes('and fail in each of ' + fuBroken.length + ' ways they are broken on purpose.'));
+  /* The texts of the watch on the laws state facts only (2026-11-25; rule 13): the proposal said "Only the repository owner can
+   * add the label `record`". They now say when a proposal is recorded and what the workflow then does, as tools/record.js and
+   * record.yml do it: the owner's label on the pull request, the merge of the commit the label was put on, the checks on the
+   * merged result, nothing pushed otherwise, and a label on the issue recording nothing. No text of the watch gives an
+   * instruction, addresses anyone, or leaves a task to the owner. */
+  const statutesFacts = (t) => {
+    const bad = [];
+    const need = [
+      [t.prFoot, 'This is recorded when the repository owner adds the label `record` to this pull request: the workflow `record.yml` then merges the commit the label was put on into main, runs the checks on the merged result, and pushes only if they pass.'],
+      [t.prFoot, 'A label added by anyone else records nothing.'],
+      [t.prFoot, 'nothing is pushed, and the workflow says so in a comment.'],
+      [t.openPr, 'The proposal is recorded when the repository owner adds the label `record` to that pull request; the label on this issue records nothing, and recording closes this issue. {link}'],
+    ];
+    need.filter(([x, w]) => !String(x || '').includes(w)).forEach(([, w]) => bad.push('the fact "' + w.slice(0, 50) + '"'));
+    for (const [k, v] of Object.entries(t)) {
+      if (typeof v !== 'string') continue;
+      ownerTasks(v).forEach((b) => bad.push(k + ': ' + b));
+      if (/\bonly the (?:repository )?owner (?:of the repository )?can\b/i.test(v)) bad.push(k + ': a task left to the owner');
+      /* Verbs that ownerTasks does not list and that an instruction about a changed text would begin with. */
+      for (const m of v.replace(/```[\s\S]*?```/g, '').matchAll(/(?:^|[.!?;:]\s+)(read|check|review|look|see|use|make|follow|change|merge|wait|reply|answer|confirm|verify|note)\b/gim)) bad.push(k + ': an instruction: "' + v.slice(m.index, m.index + 40).trim() + '"');
+    }
+    return bad;
+  };
+  const sf = statutesFacts(S.text).concat(ownerTasks(pr.body).map((b) => 'the proposal: ' + b));
+  ok('the texts of the watch on the laws, and the proposal it writes, say when a proposal is recorded and what the workflow does, and give no instruction', sf.length === 0, sf.join('; '));
+  const tWith = (k, v) => Object.assign({}, S.text, { [k]: v });
+  const oldFoot = 'Only the repository owner can add the label `record`, which records this: a workflow merges this into main, runs the checks on the result first, and merges only if they pass.';
+  const stBroken = [
+    statutesFacts(tWith('prFoot', S.text.prFoot.replace(/^This is recorded when[^.]*\./, oldFoot))),
+    statutesFacts(tWith('openPr', S.text.openPr.replace(/The proposal is recorded when[^{]*/, 'Only the repository owner can add the label `record` that records it. '))),
+    statutesFacts(tWith('prFoot', S.text.prFoot + ' Please add the label after reading the difference.')),
+    statutesFacts(tWith('openPr', S.text.openPr.replace('The proposal is recorded when the repository owner adds the label `record` to that pull request; ', 'Add the label `record` to that pull request; '))),
+    statutesFacts(tWith('prFoot', S.text.prFoot.replace('when the repository owner adds the label', 'when you add the label'))),
+    statutesFacts(tWith('prFoot', S.text.prFoot.replace(' A label added by anyone else records nothing.', ''))),
+    statutesFacts(tWith('openPr', S.text.openPr.replace('the label on this issue records nothing, and ', ''))),
+    statutesFacts(tWith('issueFoot', S.text.issueFoot + ' Read the changed text, then record it.')),
+    statutesFacts(tWith('prHead', S.text.prHead + ' Open the run to see the log.')),
+    ownerTasks(pr.body.replace(S.text.prFoot, oldFoot.replace('Only the repository owner can add', 'Add'))),
+  ];
+  ok('break on purpose: the old sentence of the proposal and of the issue, "Please", "Add the label", "you", a fact of the workflow dropped from either, an instruction in the issue of a failed fetch and in the head of the proposal, and an instruction in the proposal written (' + stBroken.filter((b) => b.length).length + ' / ' + stBroken.length + ')',
+    stBroken.every((b) => b.length > 0));
+  ok('the changelog gives the ' + stBroken.length + ' break tests of the facts of the watch on the laws', read(path.join(ROOT, 'CHANGELOG.md')).includes('The texts of the watch on the laws state facts only (pull request #')
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('and fail in each of ' + stBroken.length + ' ways they are broken on purpose.'));
   ok('a box ticked by hand counts, the ticks are written back, and the Wayback Machine is asked for the page and every PDF copy',
     R.tickedByHand(fb.replace('- [ ] GitHub has been asked', '- [x] GitHub has been asked')).github && !R.tickedByHand(fb).github
     && R.followUpBody({ id: '2026.0009', issues: [3], today: '2026-11-20', done: { issues: true, archive: true } }).includes('- [x] The emptied issues are deleted')

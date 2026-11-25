@@ -27,8 +27,8 @@
     "noOld": "No earlier text is recorded, so the whole text is shown.",
     "seedOnly": "No value changed.",
     "seeded": "{n} texts that match their recorded values are stored for the first time, so that a later change can be shown as a difference.",
-    "prFoot": "Only the repository owner can add the label `record`, which records this: a workflow merges this into main, runs the checks on the result first, and merges only if they pass. The merge button would leave the merge without the disclosure line that the checks across the repositories count, so it is not used. If a policy must change too, it changes first in a pull request of its own.",
-    "openPr": "This repository does not let workflows open pull requests, so the proposal is here. The branch `statutes/record` holds it, and the link below opens the pull request. Only the repository owner can add the label `record` that records it. {link}"
+    "prFoot": "This is recorded when the repository owner adds the label `record` to this pull request: the workflow `record.yml` then merges the commit the label was put on into main, runs the checks on the merged result, and pushes only if they pass. A label added by anyone else records nothing. When the branch has moved since the label was added, changes files that the watch does not write, does not merge cleanly or fails a check, or when main moves while the checks run, nothing is pushed, and the workflow says so in a comment. The merge button would leave the merge without the disclosure line that the checks across the repositories count, so it is not used. If a policy must change too, it changes first in a pull request of its own.",
+    "openPr": "This repository does not let workflows open pull requests, so the proposal is here. The branch `statutes/record` holds it, and the link below leads to GitHub's form that opens the pull request from it. The proposal is recorded when the repository owner adds the label `record` to that pull request; the label on this issue records nothing, and recording closes this issue. {link}"
   },
   "statutes": [
     {
