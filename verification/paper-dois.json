@@ -1,0 +1,204 @@
+{
+ "_": "The DOIs that paper/paper.bib cites, each as its registry answered on the day given (read), from the URL given. Only the fields that the entry in paper.bib gives are kept: title (with the subtitle after a colon), the family names of the authors, the journal or proceedings, volume, issue, pages, the year of print (else of issue) and the publisher. verification/check.js (check 41) fails if paper.bib gives a DOI that is not here, if a DOI here is not in paper.bib, or if a field of the entry differs from the registry's. A DOI is added only after it is read at api.crossref.org or api.datacite.org.",
+ "dois": [
+  {
+   "key": "ginsparg2011",
+   "doi": "10.1038/476145a",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.1038/476145a",
+   "read": "2026-11-25",
+   "type": "journal-article",
+   "title": "ArXiv at 20",
+   "authors": [
+    "Ginsparg"
+   ],
+   "container": "Nature",
+   "volume": "476",
+   "issue": "7359",
+   "pages": "145-147",
+   "year": 2011,
+   "publisher": "Springer Science and Business Media LLC"
+  },
+  {
+   "key": "rousi2022",
+   "doi": "10.1177/09610006221125208",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.1177/09610006221125208",
+   "read": "2026-11-25",
+   "type": "journal-article",
+   "title": "Overlay journals: A study of the current landscape",
+   "authors": [
+    "Rousi",
+    "Laakso"
+   ],
+   "container": "Journal of Librarianship and Information Science",
+   "volume": "56",
+   "issue": "1",
+   "pages": "15-28",
+   "year": 2024,
+   "publisher": "SAGE Publications"
+  },
+  {
+   "key": "berthaud2014",
+   "doi": "10.3233/isu-140749",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.3233/isu-140749",
+   "read": "2026-11-25",
+   "type": "journal-article",
+   "title": "EPISCIENCES – An overlay publication platform",
+   "authors": [
+    "Berthaud",
+    "Capelli",
+    "Gustedt",
+    "Kirchner",
+    "Loiseau",
+    "Magron",
+    "Medves",
+    "Monteil",
+    "Rivrieux",
+    "Romary"
+   ],
+   "container": "Information Services and Use",
+   "volume": "34",
+   "issue": "3-4",
+   "pages": "269-277",
+   "year": 2014,
+   "publisher": "SAGE Publications"
+  },
+  {
+   "key": "willinsky2005",
+   "doi": "10.1108/07378830510636300",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.1108/07378830510636300",
+   "read": "2026-11-25",
+   "type": "journal-article",
+   "title": "Open Journal Systems: An example of open source software for journal management and publishing",
+   "authors": [
+    "Willinsky"
+   ],
+   "container": "Library Hi Tech",
+   "volume": "23",
+   "issue": "4",
+   "pages": "504-519",
+   "year": 2005,
+   "publisher": "Emerald"
+  },
+  {
+   "key": "foster2017",
+   "doi": "10.5195/jmla.2017.88",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.5195/jmla.2017.88",
+   "read": "2026-11-25",
+   "type": "journal-article",
+   "title": "Open Science Framework (OSF)",
+   "authors": [
+    "Foster",
+    "Deardorff"
+   ],
+   "container": "Journal of the Medical Library Association",
+   "volume": "105",
+   "issue": "2",
+   "pages": null,
+   "year": 2017,
+   "publisher": "University Library System, University of Pittsburgh"
+  },
+  {
+   "key": "haak2012",
+   "doi": "10.1087/20120404",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.1087/20120404",
+   "read": "2026-11-25",
+   "type": "journal-article",
+   "title": "ORCID: a system to uniquely identify researchers",
+   "authors": [
+    "HAAK",
+    "FENNER",
+    "PAGLIONE",
+    "PENTZ",
+    "RATNER"
+   ],
+   "container": "Learned Publishing",
+   "volume": "25",
+   "issue": "4",
+   "pages": "259-264",
+   "year": 2012,
+   "publisher": "Wiley"
+  },
+  {
+   "key": "hendricks2020",
+   "doi": "10.1162/qss_a_00022",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.1162/qss_a_00022",
+   "read": "2026-11-25",
+   "type": "journal-article",
+   "title": "Crossref: The sustainable source of community-owned scholarly metadata",
+   "authors": [
+    "Hendricks",
+    "Tkaczyk",
+    "Lin",
+    "Feeney"
+   ],
+   "container": "Quantitative Science Studies",
+   "volume": "1",
+   "issue": "1",
+   "pages": "414-427",
+   "year": 2020,
+   "publisher": "MIT Press"
+  },
+  {
+   "key": "brase2009",
+   "doi": "10.1109/coinfo.2009.66",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.1109/COINFO.2009.66",
+   "read": "2026-11-25",
+   "type": "proceedings-article",
+   "title": "DataCite - A Global Registration Agency for Research Data",
+   "authors": [
+    "Brase"
+   ],
+   "container": "2009 Fourth International Conference on Cooperation and Promotion of Information Resources in Science and Technology",
+   "volume": null,
+   "issue": null,
+   "pages": "257-261",
+   "year": 2009,
+   "publisher": "IEEE"
+  },
+  {
+   "key": "lagoze2001",
+   "doi": "10.1145/379437.379449",
+   "registry": "api.crossref.org",
+   "url": "https://api.crossref.org/works/10.1145/379437.379449",
+   "read": "2026-11-25",
+   "type": "proceedings-article",
+   "title": "The open archives initiative: building a low-barrier interoperability framework",
+   "authors": [
+    "Lagoze",
+    "Van de Sompel"
+   ],
+   "container": "Proceedings of the 1st ACM/IEEE-CS joint conference on Digital libraries",
+   "volume": null,
+   "issue": null,
+   "pages": "54-62",
+   "year": 2001,
+   "publisher": "ACM"
+  },
+  {
+   "key": "sophaxis",
+   "doi": "10.5281/zenodo.24033371",
+   "registry": "api.datacite.org",
+   "url": "https://api.datacite.org/dois/10.5281/zenodo.24033371",
+   "read": "2026-11-25",
+   "type": "Software",
+   "title": "Sophaxis: an overlay preprint server for philosophy and mathematics",
+   "authors": [
+    "Nemoto"
+   ],
+   "container": null,
+   "volume": null,
+   "issue": null,
+   "pages": null,
+   "year": 2026,
+   "publisher": "Zenodo"
+  }
+ ]
+}
