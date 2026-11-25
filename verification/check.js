@@ -1726,6 +1726,9 @@ console.log('\n41. The draft JOSS paper');
   ok('the paper says the research impact as it is: every record shown (' + shownRecords.length + ') is the operator\'s own, no use by other authors yet, and the registries as the README gives them', !of('impact'), of('impact'));
   ok('the AI usage disclosure names Claude Code and the models of the commit trailers (' + MODELS.join(', ') + '), says that Claude made most of the commits (' + byClaude + ' of ' + authors.length + '), and makes no affirmation for the author', !of('disclosure'), of('disclosure'));
   ok('the acknowledgements give the support as the README does', !of('acknowledgements'));
+  /* The paper says "one serverless function for OAI-PMH" and that the OAI-PMH endpoint "is the only part that runs on the server". */
+  const fns = fs.existsSync(path.join(ROOT, 'site', 'api')) ? fs.readdirSync(path.join(ROOT, 'site', 'api'), { recursive: true }).filter((f) => /\.(js|mjs|cjs|ts)$/.test(f)) : [];
+  ok('the site has the one serverless function that the paper names, for OAI-PMH (' + fns.join(', ') + ')', fns.join() === 'oai.js' && md.includes('with one serverless function for OAI-PMH') && md.includes('it is the only part that runs on the server'));
   /* Break on purpose: each way must fail. */
   const sec = (t, a, b) => t.replace('\n# ' + a + '\n', '\n# @@\n').replace('\n# ' + b + '\n', '\n# ' + a + '\n').replace('\n# @@\n', '\n# ' + b + '\n');
   const firstDoi = snap[0].doi;
