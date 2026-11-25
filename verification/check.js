@@ -2231,8 +2231,9 @@ console.log('\n49. Removal requests, handled at once and decided by the operator
     && said[1].includes('the operator does it by hand') && said[2].includes('stays online while the request is reviewed') && said.slice(0, 3).every((t) => t.includes('It decides nothing; the operator decides.')));
   ok('the authors are told and can respond; the operator\'s decision lists what is done and what is left by hand; a request not upheld puts material back',
     said[3].includes('in #9') && said[3].includes('If the request is not upheld, it is put back.') && said[3].includes('The record page (its title, authors, abstract and PDF copy) is offline while it is reviewed.') && said[3].includes('can respond')
-    && said[4].includes('- [ ] ask the Internet Archive to exclude its earlier copies (by hand)') && said[4].includes('- [x] every automatic comment about the record is deleted')
-    && said[4].includes('- [x] the lines of consent in them are copied into the record of provision, and the issues that name it are emptied and closed: #3, #12') && said[4].includes('- [ ] delete those issues, so that their edit history goes too')
+    && said[4].includes('- [ ] the Internet Archive has been asked to exclude its earlier copies (it takes such requests by email; the workflow sends no email)') && said[4].includes('- [x] every automatic comment about the record is deleted')
+    && said[4].includes('- [x] the lines of consent in them are copied into the record of provision, and the issues that name it are emptied and closed: #3, #12') && said[4].includes('- [ ] those issues are deleted, so that their edit history goes too (only the owner\'s account can delete an issue; the workflow cannot)')
+    && said[4].includes('- [ ] GitHub has been asked to remove the material from the repository history (no automatic step can ask it)')
     && said[5].includes('put back') && said[6] === 'Removed.'
     && R.emptiedTitle('[Submission] A Title Naming the Work') === '[Submission] removed' && R.emptiedTitle('[Withdrawal] 2026.0001') === '[Withdrawal] removed' && R.emptiedTitle('Some title') === '[Removed] removed'
     && R.decisionNote({ id: '2026.0001', decision: 'upheld', kind: R.KINDS['A request about my personal data (access, correction, restriction, objection, deletion, stopping its provision to others, a copy)'], today: '2026-11-12', done: false }).includes('The operator carries it out by hand.'));
@@ -2910,9 +2911,58 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
     && files.find((x) => x.file === 'index.html').url === 'https://sophaxis.vercel.app/' && read(path.join(ROOT, '.github', 'workflows', 'live.yml')).includes("WAIT: ${{ github.event_name == 'push' && '600' || '0' }}"));
   const fb = R.followUpBody({ id: '2026.0009', issues: [3, 12], today: '2026-11-20' });
   const st = R.followUpState(fb);
-  ok('a removal opens a follow-up that carries its state, the three things left by hand, and the request to the Internet Archive',
-    st.id === '2026.0009' && st.issues.join() === '3,12' && fb.includes('info@archive.org') && fb.includes('https://sophaxis.vercel.app/abs/2026.0009.html') && fb.includes('pdf/2026.0009v')
-    && fb.includes('"Delete issue"') && fb.includes('GitHub Support helps only with sensitive data') && R.followUpState('no') === null);
+  /* The follow-up states facts only (2026-11-25; the operator's rule 13: Claude assigns no task to the owner): what is left,
+   * that only the owner's account can delete an issue and the workflow cannot, and that the Internet Archive takes requests by
+   * email to info@archive.org, with the request kept as a quoted block. The address, the addresses of the record and the three
+   * boxes stay. Outside the quoted block, no sentence or box begins with an instruction, and none addresses anyone as "you". */
+  const followUpFacts = (body) => {
+    const bad = [];
+    const quoted = (/```\n([\s\S]*?)\n```/.exec(body) || [])[1] || '';
+    const page = 'https://sophaxis.vercel.app/abs/2026.0009.html';
+    if (!quoted.startsWith('To: info@archive.org\nSubject: Exclusion request: ' + page + '\n') || !quoted.includes('- ' + page) || !quoted.includes('every address beginning with https://sophaxis.vercel.app/pdf/2026.0009v')) bad.push('the quoted request to the Internet Archive');
+    ['- [ ] The emptied issues are deleted: #3, #12.', '- [ ] The Wayback Machine of the Internet Archive lists no capture', '- [ ] GitHub has been asked about the repository history']
+      .filter((x) => !body.includes(x)).forEach((x) => bad.push('the box "' + x.slice(6, 40) + '"'));
+    ['only that account can delete an issue', 'the workflow cannot delete them', 'The Internet Archive takes requests to exclude pages by email to info@archive.org', 'GitHub Support helps only with sensitive data']
+      .filter((x) => !body.includes(x)).forEach((x) => bad.push('the fact "' + x + '"'));
+    return bad.concat(ownerTasks(body));
+  };
+  const ownerTasks = (text) => {
+    const bare = String(text).replace(/```[\s\S]*?```/g, '').replace(/<!--[\s\S]*?-->/g, '');
+    const bad = [];
+    const VERB = /(?:^|[.!?;:]\s+|^- (?:\[[ xX]\] )?)(open|click|send|ask|tick|delete|remove|contact|email|write|go|visit|add|fill|label|run|please)\b/gim;
+    for (const m of bare.matchAll(VERB)) bad.push('an instruction: "' + bare.slice(m.index, m.index + 40).trim() + '"');
+    if (/\byou(?:r|rs|rself)?\b/i.test(bare)) bad.push('the second person');
+    if (/\bonly the owner (?:of the repository )?can\b/i.test(bare)) bad.push('a task left to the owner');
+    return bad;
+  };
+  const fbDone = R.followUpBody({ id: '2026.0009', issues: [3, 12], today: '2026-11-20', done: { issues: true, archive: true, github: true } });
+  const upheld = (slug) => R.decisionNote({ id: '2026.0009', decision: 'upheld', kind: Object.values(R.KINDS).find((k) => k.slug === slug), today: '2026-11-20', done: true, emptied: [3, 12] });
+  const steps = (t) => t.split('\n').filter((l) => /^- \[[ x]\] /.test(l)).join('\n');
+  const told = [fb, fbDone, R.followUpReminder(), steps(upheld('personal-data')), steps(upheld('archive-consent')), steps(upheld('pdf-copy'))];
+  const ff = followUpFacts(fb), tasks = told.flatMap(ownerTasks);
+  ok('a removal opens a follow-up that carries its state, the three things left, the facts of who can do each, and the request to the Internet Archive as a quoted block; neither it nor the steps of a decision give an instruction or address anyone',
+    st.id === '2026.0009' && st.issues.join() === '3,12' && R.followUpState('no') === null && ff.length === 0 && tasks.length === 0 && steps(upheld('personal-data')).split('\n').length === 8,
+    ff.concat(tasks).join('; '));
+  const fuBroken = [
+    followUpFacts(fb.replace(/\. In a repository owned by a personal account[^\n]*/, '. Only the owner of the repository can: open each issue, and on the right side bar, under "Notifications", click "Delete issue", then "Delete this issue".')),
+    followUpFacts(fb.replace('The Internet Archive takes requests to exclude pages by email to info@archive.org, as its help page says, and promises no outcome.', 'Send the request below to info@archive.org, as its help page asks; it promises no outcome.')),
+    followUpFacts(fb.replace('No automatic step can see whether it has been, so this box is ticked only in this issue.', 'Tick this by hand.')),
+    followUpFacts(fb.replace('The workflow sends no email.', 'Please send it from your own address.')),
+    followUpFacts(fb.replace('The workflow sends no email.', 'The workflow sends no email; you can.')),
+    followUpFacts(fb.replace('info@archive.org', 'the Internet Archive')),
+    followUpFacts(fb.replace('```\nTo: info@archive.org', 'To: info@archive.org')),
+    followUpFacts(fb.replace('- every address beginning with https://sophaxis.vercel.app/pdf/2026.0009v', '- the PDF copies')),
+    followUpFacts(fb.replace('- [ ] GitHub has been asked about the repository history', '- GitHub has been asked about the repository history')),
+    followUpFacts(fb.replace(': #3, #12.', '.')),
+    ownerTasks(steps(upheld('personal-data')).replace('- [ ] those issues are deleted, so that', '- [ ] delete those issues, so that')),
+    ownerTasks(steps(upheld('archive-consent')).replace('- [ ] the Internet Archive has been asked to exclude', '- [ ] ask the Internet Archive to exclude')),
+    ownerTasks(steps(upheld('personal-data')).replace('(no automatic step can ask it)', '(by hand; only the owner can)')),
+    ownerTasks(R.followUpReminder() + ' Tick the boxes once they are done.'),
+  ];
+  ok('break on purpose: the steps in the side bar, "Send the request", "Tick this by hand", "Please", "you", the address, the quoted block, the addresses of the PDF copies, a box, the issue numbers, and an instruction back in three steps of a decision and in the reminder (' + fuBroken.filter((b) => b.length).length + ' / ' + fuBroken.length + ')',
+    fuBroken.every((b) => b.length > 0));
+  ok('the changelog gives the ' + fuBroken.length + ' break tests of the follow-up\'s facts', read(path.join(ROOT, 'CHANGELOG.md')).includes('The follow-up of a removal states facts only (pull request #268)')
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('and fail in each of ' + fuBroken.length + ' ways they are broken on purpose.'));
   ok('a box ticked by hand counts, the ticks are written back, and the Wayback Machine is asked for the page and every PDF copy',
     R.tickedByHand(fb.replace('- [ ] GitHub has been asked', '- [x] GitHub has been asked')).github && !R.tickedByHand(fb).github
     && R.followUpBody({ id: '2026.0009', issues: [3], today: '2026-11-20', done: { issues: true, archive: true } }).includes('- [x] The emptied issues are deleted')
