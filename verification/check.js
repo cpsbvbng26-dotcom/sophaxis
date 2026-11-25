@@ -2961,6 +2961,8 @@ console.log('\n67. The watch proposes a pull request; the label `record` merges 
   ];
   ok('break on purpose: the steps in the side bar, "Send the request", "Tick this by hand", "Please", "you", the address, the quoted block, the addresses of the PDF copies, a box, the issue numbers, and an instruction back in three steps of a decision and in the reminder (' + fuBroken.filter((b) => b.length).length + ' / ' + fuBroken.length + ')',
     fuBroken.every((b) => b.length > 0));
+  ok('the changelog gives the ' + fuBroken.length + ' break tests of the follow-up\'s facts', read(path.join(ROOT, 'CHANGELOG.md')).includes('The follow-up of a removal states facts only (pull request #268)')
+    && read(path.join(ROOT, 'CHANGELOG.md')).includes('and fail in each of ' + fuBroken.length + ' ways they are broken on purpose.'));
   ok('a box ticked by hand counts, the ticks are written back, and the Wayback Machine is asked for the page and every PDF copy',
     R.tickedByHand(fb.replace('- [ ] GitHub has been asked', '- [x] GitHub has been asked')).github && !R.tickedByHand(fb).github
     && R.followUpBody({ id: '2026.0009', issues: [3], today: '2026-11-20', done: { issues: true, archive: true } }).includes('- [x] The emptied issues are deleted')
