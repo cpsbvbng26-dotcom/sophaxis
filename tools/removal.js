@@ -259,12 +259,12 @@ function decisionNote({ id, decision, kind, today, done, restored, emptied }) {
       '- [x] every automatic comment about the record is deleted',
       '- [x] the lines of consent in them are copied into the record of provision, and the issues that name it are emptied and closed' + (emptied && emptied.length ? ': ' + emptied.map((x) => '#' + x).join(', ') : ''),
       '- [x] the OAI-PMH interface marks the record as deleted',
-      '- [ ] delete those issues, so that their edit history goes too (by hand; only the owner can)',
-      '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)',
-      '- [ ] ask GitHub to remove the material from the repository history (by hand)',
+      '- [ ] those issues are deleted, so that their edit history goes too (only the owner\'s account can delete an issue; the workflow cannot)',
+      '- [ ] the Internet Archive has been asked to exclude its earlier copies (it takes such requests by email; the workflow sends no email)',
+      '- [ ] GitHub has been asked to remove the material from the repository history (no automatic step can ask it)',
       '- [ ] a follow-up issue lists what is left by hand, with a draft to the Internet Archive, and ticks it as it becomes true',
       'The removal applies wherever the site is read, and it is permanent.'];
-  const archive = ['- [x] the record of ' + id + ' is no longer saved to the Internet Archive', '- [ ] ask the Internet Archive to exclude its earlier copies (by hand)'];
+  const archive = ['- [x] the record of ' + id + ' is no longer saved to the Internet Archive', '- [ ] the Internet Archive has been asked to exclude its earlier copies (it takes such requests by email; the workflow sends no email)'];
   const changes = kind && (kind.removes || ['pdf-copy', 'archive-consent'].includes(kind.slug));
   return [MARK, '**Upheld** (' + today + '). The operator gives the grounds in this issue, and where the request names a law, the grounds name the law relied on.', auto, CHALLENGE, ...data, '', ...(done ? (kind.slug === 'archive-consent' ? archive : steps) : [changes ? 'The record could not be changed automatically. The operator does it by hand.' : 'This kind of request changes nothing automatically. The operator carries it out by hand.'])].join('\n');
 }
@@ -297,9 +297,11 @@ const reminder = (due) => REMIND + '\nThe operator aims to answer this request b
 
 /* ------------------------------------------------------------ the follow-up of a removal (pure) */
 
-/* After a removal, three things are left to the operator (Takedown Policy, "What a removed record leaves"):
+/* After a removal, three things are left that no automatic step can do (Takedown Policy, "What a removed record leaves"):
  * deleting the emptied issues, asking the Internet Archive to exclude its copies, and asking GitHub about the history.
- * A follow-up issue lists them with drafts. The daily step ticks the first two by itself once they are true
+ * A follow-up issue states them as facts, with the request to the Internet Archive kept as a quoted block. It gives no
+ * instruction and addresses no one: the operator's rule 13 (Claude assigns no task to the owner, 2026-11-12; reworded
+ * 2026-11-25, check 67). The daily step ticks the first two by itself once they are true
  * (a deleted issue answers 410 or 404; the Wayback Machine lists no capture), and closes the issue when all are ticked. */
 const FOLLOW = '<!-- sophaxis-follow-up -->';
 const FOLLOW_DAYS = 7;
@@ -313,9 +315,9 @@ function followUpBody({ id, issues, today, done = {} }) {
   return [FOLLOW, '<!-- ' + JSON.stringify(state) + ' -->',
     'The record ' + id + ' was removed on ' + today + '. What is left by hand is listed here. The daily step ticks the first two by itself once they are true, and closes this issue when all three are ticked.',
     '',
-    '- ' + box('issues') + ' The emptied issues are deleted' + (issues.length ? ': ' + issues.map((n) => '#' + n).join(', ') : ' (there are none)') + '. Only the owner of the repository can: open each issue, and on the right side bar, under "Notifications", click "Delete issue", then "Delete this issue".',
-    '- ' + box('archive') + ' The Wayback Machine of the Internet Archive lists no capture of the record page or its PDF copies. Send the request below to info@archive.org, as its help page asks; it promises no outcome.',
-    '- ' + box('github') + ' GitHub has been asked about the repository history, where that applies. Tick this by hand. GitHub\'s own procedure is to rewrite the history first and then contact GitHub Support, and GitHub Support helps only with sensitive data whose risk cannot be removed otherwise; other earlier versions stay in the history, as the Takedown Policy says.',
+    '- ' + box('issues') + ' The emptied issues are deleted' + (issues.length ? ': ' + issues.map((n) => '#' + n).join(', ') : ' (there are none)') + '. In a repository owned by a personal account, only that account can delete an issue, as GitHub\'s documentation ("Deleting an issue") says. The token of the workflow is not that account, so the workflow cannot delete them. A deleted issue answers 410 or 404.',
+    '- ' + box('archive') + ' The Wayback Machine of the Internet Archive lists no capture of the record page or its PDF copies. The Internet Archive takes requests to exclude pages by email to info@archive.org, as its help page says, and promises no outcome. The workflow sends no email. The request prepared for it is below.',
+    '- ' + box('github') + ' GitHub has been asked about the repository history, where that applies. No automatic step can see whether it has been, so this box is ticked only in this issue. GitHub\'s own procedure is to rewrite the history first and then contact GitHub Support, and GitHub Support helps only with sensitive data whose risk cannot be removed otherwise; other earlier versions stay in the history, as the Takedown Policy says.',
     '',
     '<details><summary>Request to the Internet Archive</summary>',
     '',
@@ -781,7 +783,7 @@ async function remind() {
   await followUps();
 }
 
-module.exports = { ackedId, sameAsAcked, CHANGED, noted, removalLeft, withRetry, TRIES, HOLD_FAILED, ACKED, namingIssues, overCap, holdsOn, unacknowledged, dayStart, AUTO_HOLD, PERSON, CLEAN_ENV, write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, followUpBody, followUpState, tickedByHand, archived, cdxUrl, FOLLOW, FOLLOW_DAYS, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS, groundlessHolds, holdExcluded, holdNoticeDue, holdNotice, HOLD_NOTICE, GROUNDLESS_LIMIT, ANSWERS_FROM, consentLines, withConsentLines, KEPT_HEAD };
+module.exports = { ackedId, sameAsAcked, CHANGED, noted, removalLeft, withRetry, TRIES, HOLD_FAILED, ACKED, namingIssues, overCap, holdsOn, unacknowledged, dayStart, AUTO_HOLD, PERSON, CLEAN_ENV, write, restore, restored, commit, parse, plan, ack, authorNotice, decisionNote, emptiedTitle, EMPTIED, CHALLENGE, CHALLENGE_EMAIL, emailDecision, DATA_REMEDY, withoutArchive, followUpBody, followUpState, followUpReminder, tickedByHand, archived, cdxUrl, FOLLOW, FOLLOW_DAYS, toHeld, toRemoved, dueReminders, reminder, dueDay, jstDay, addDays, isHeld, tellsAuthors, KINDS, MARK, REMIND, NOTICE, FIELDS, DAYS, groundlessHolds, holdExcluded, holdNoticeDue, holdNotice, HOLD_NOTICE, GROUNDLESS_LIMIT, ANSWERS_FROM, consentLines, withConsentLines, KEPT_HEAD };
 
 if (require.main === module) {
   const run = { intake, decide, manual, remind }[process.env.MODE];
