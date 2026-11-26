@@ -1,6 +1,13 @@
 [
   {
     "date": "2026-11-26",
+    "policies": ["takedown"],
+    "title": "The Zenodo community and the identical relation named among what a removal leaves",
+    "text": "The Takedown Policy names, among what a removed record leaves outside the site, the Sophaxis community at Zenodo, where the Zenodo record of a removed work can stay, and the metadata of the deposit, which can still give the record page as identical (IsIdenticalTo) at Zenodo and at DataCite. The community is changed only from the operator's account at Zenodo, the metadata of a deposit only from the account that holds it, and no automatic step of Sophaxis reaches either. On 2026-11-26 both were so for record 2026.0005, removed on 2026-11-23. These are facts, not new rules: no right or duty changes.",
+    "ja": "削除の規程は、削除した記録がサイトの外に残すものとして、Zenodo にある Sophaxis のコミュニティと、預けたもののメタデータを挙げます。削除した作品の Zenodo の記録はコミュニティに残ることがあり、預けたもののメタデータは、Zenodo と DataCite で、記録の頁を同一のもの（IsIdenticalTo）として挙げたままのことがあります。コミュニティは運営者の Zenodo のアカウントからしか変えられず、預けたもののメタデータは、それを持つアカウントからしか変えられません。Sophaxis の自動の手順は、どちらにも届きません。2026-11-26 には、2026-11-23 に削除した記録 2026.0005 が、その両方に当たっていました。事実を記したもので、新しい決まりではありません。権利も義務も変わりません。"
+  },
+  {
+    "date": "2026-11-26",
     "policies": ["privacy", "takedown", "withdrawal"],
     "title": "CORE named among the harvesters",
     "text": "CORE, the aggregator of open access research at the Open University, harvests the OAI-PMH interface: it has registered Sophaxis as a data provider, and on 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in. The Privacy Policy and the Withdrawal Policy name CORE among the harvesters, and the Takedown Policy says that whether and when a harvester removes a removed record is the harvester's decision, and that on 2026-11-26 CORE still showed works whose records Sophaxis had removed. These are facts, not new rules: no right or duty changes."
