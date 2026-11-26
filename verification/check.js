@@ -10749,6 +10749,92 @@ console.log('\n150. What a reviewer needs (2026-11-25): the requirements in the 
   ok('the changelog gives the ' + B150.length + ' break tests of this check', read(path.join(ROOT, 'CHANGELOG.md')).includes('A new check (150) holds what a reviewer needs') && read(path.join(ROOT, 'CHANGELOG.md')).includes('fails in each of ' + B150.length + ' ways it is broken on purpose.'));
 }
 
+console.log('\n151. What stays at Zenodo after a removal (2026-11-26): the Sophaxis community and the identical relation in the metadata of a deposit, as read on 2026-11-26 for record 2026.0005; the README in both languages, the Takedown Policy in both languages and its built pages, the feed of changes, no DOI or title of the removed work, and nothing left to the owner');
+{
+  /* On 2026-11-26 Claude read Zenodo's API and DataCite's API. The Sophaxis community at Zenodo still held the record of the version
+   * that record 2026.0005 listed until its removal on 2026-11-23, and the metadata of that version and of the DOI of every version of
+   * its work still gave the page of 2026.0005 as IsIdenticalTo. Only the operator's account at Zenodo can change them, and Claude
+   * cannot reach it; the texts say only that (the owner's rule that Claude assigns no task to the owner). They name the removed record
+   * by its id, never by the DOI or the title of its work, as the removal keeps only the id. The ids of the records whose versions are
+   * still in the community, the day of the removal and the time of its commit are read from the records and from git, not typed. */
+  const cpx = require('child_process');
+  const git151 = (args) => { try { return cpx.execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', env: Object.assign({}, process.env, { TZ: 'UTC' }) }); } catch (e) { return ''; } };
+  const ID = '2026.0005', KEPT = ['2026.0003', '2026.0004'], SEEN = '2026-11-26', API = 'https://zenodo.org/api/communities/sophaxis/records';
+  const sha = git151(['log', '-1', '--format=%H', '--grep=^Sophaxis-Action: remove ' + ID.replace('.', '\\.') + '$', '--', 'data/papers/' + ID + '.json']).trim();
+  const at = sha ? git151(['show', '-s', '--format=%cd', '--date=format-local:%Y-%m-%d %H:%M', sha]).trim() : '';
+  let before = null;
+  try { before = sha ? JSON.parse(git151(['show', sha + '^:data/papers/' + ID + '.json'])) : null; } catch (e) { before = null; }
+  const F = ['README.md', 'policies/takedown.md', 'policies/takedown.ja.md', 'site/policies/takedown.html', 'site/policies/takedown.ja.html', 'data/policy-changes.json', 'CHANGELOG.md'];
+  const real151 = {
+    papers: fs.readdirSync(path.join(ROOT, 'data', 'papers')).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(read(path.join(ROOT, 'data', 'papers', f)))),
+    at, before, ...Object.fromEntries(F.map((f) => [f, read(path.join(ROOT, f))])),
+  };
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  function problems151(x) {
+    const bad = [];
+    const r = (x.papers || []).find((p) => p.id === ID);
+    const day = r && r.status === 'removed' ? r.removal_date : null;
+    if (!day) bad.push(ID + ' is not a removed record');
+    if (!KEPT.every((k) => (x.papers || []).some((p) => p.id === k && p.status !== 'removed' && (p.versions || []).length))) bad.push('records ' + KEPT.join(' and ') + ' are not both listed');
+    const m = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})$/.exec(x.at || '');
+    if (!m || m[1] !== day) bad.push('no commit of the removal of ' + ID + ' on its day');
+    const [d, hm] = m ? [m[1], m[2]] : ['?', '?'];
+    const EN = 'On ' + SEEN + " Claude read the community through Zenodo's API, <" + API + '>. Besides the records of the versions that records ' + KEPT.join(' and ') + ' list, it still held the record of the version that record ' + ID + ' listed until Sophaxis removed that record on ' + day + ". The community's set in Zenodo's OAI-PMH interface, `user-sophaxis`, also gave earlier versions of the same works, which Sophaxis has never listed. At Zenodo and at DataCite, the metadata of that version, and of the DOI that stands for every version of its work, still give the page of record " + ID + ', <https://sophaxis.vercel.app/abs/' + ID + '.html>, as identical (`IsIdenticalTo`); the page is now the notice of the removal. Zenodo gives 13:12 (UTC) on ' + d + " as the last change of that version's record, before the commit of the removal at " + hm + " (UTC) the same day. The community and the metadata of that record can be changed only from the operator's account at Zenodo, which Claude cannot reach.\n";
+    const JA = SEEN + ' に、Claude が Zenodo の API（<' + API + '>）でコミュニティを読みました。記録 ' + KEPT.join(' と ') + ' が載せている版の記録のほかに、記録 ' + ID + ' が載せていた版の記録が、まだ入っていました。記録 ' + ID + ' は、Sophaxis が ' + day + ' に削除しています。Zenodo の OAI-PMH の口にあるコミュニティの集合（`user-sophaxis`）は、同じ作品の前の版も返しました。Sophaxis が載せたことのない版です。その版のメタデータと、その作品のすべての版を指す DOI のメタデータは、Zenodo でも DataCite でも、記録 ' + ID + ' の頁（<https://sophaxis.vercel.app/abs/' + ID + '.html>）を同一のもの（`IsIdenticalTo`）として挙げたままでした。この頁は、いまは削除の告知です。Zenodo は、その版の記録を最後に変えた時を ' + d + ' の 13:12（UTC）としています。同じ日の ' + hm + '（UTC）の削除のコミットより前です。コミュニティとその記録のメタデータは、運営者の Zenodo のアカウントからしか変えられません。Claude は、そのアカウントに触れられません。\n';
+    const rd = String(x['README.md'] || '');
+    if (!rd.includes('Zenodo does not endorse Sophaxis.\n\n' + EN + '\n')) bad.push('README.md: the paragraph in English after the community');
+    if (!rd.includes('Zenodo が Sophaxis を推薦しているわけでもありません。\n\n' + JA + '\n')) bad.push('README.md: the paragraph in Japanese after the community');
+    const TEN = '- The Zenodo record of a removed work can stay in the Sophaxis community at Zenodo, and the metadata of the deposit can still give the record page as identical (`IsIdenticalTo`), at Zenodo and at DataCite. The community is changed only from the operator\'s account at Zenodo, and the metadata of a deposit only from the account that holds it; no automatic step of Sophaxis reaches either. On ' + SEEN + ' both were so for record ' + ID + ', removed on ' + day + '.';
+    const TJA = '- 削除した作品の Zenodo の記録は、Zenodo にある Sophaxis のコミュニティに残ることがあります。預けたもののメタデータも、Zenodo と DataCite で、記録の頁を同一のもの（`IsIdenticalTo`）として挙げたままのことがあります。コミュニティは運営者の Zenodo のアカウントからしか変えられず、預けたもののメタデータは、それを持つアカウントからしか変えられません。Sophaxis の自動の手順は、どちらにも届きません。' + SEEN + ' には、' + day + ' に削除した記録 ' + ID + ' が、その両方に当たっていました。';
+    const sec = (t, h) => { const i = t.indexOf(h); const j = i < 0 ? -1 : t.indexOf('\n## ', i + 1); return i < 0 ? '' : t.slice(i, j < 0 ? t.length : j); };
+    if (!sec(String(x['policies/takedown.md'] || ''), '## What a removed record leaves').includes('\nOutside the site:\n') || !sec(String(x['policies/takedown.md'] || ''), '## What a removed record leaves').split('\nOutside the site:\n')[1].includes('\n' + TEN + '\n')) bad.push('policies/takedown.md: the item outside the site');
+    if (!sec(String(x['policies/takedown.ja.md'] || ''), '## 削除した記録に残るもの').includes('\nサイトの外では：\n') || !sec(String(x['policies/takedown.ja.md'] || ''), '## 削除した記録に残るもの').split('\nサイトの外では：\n')[1].includes('\n' + TJA + '\n')) bad.push('policies/takedown.ja.md: the item outside the site');
+    const li = (s) => esc(s.slice(2)).replace(/`([^`]+)`/g, '<code>$1</code>');
+    if (!String(x['site/policies/takedown.html'] || '').includes('<li>' + li(TEN) + '</li>')) bad.push('site/policies/takedown.html: the item');
+    if (!String(x['site/policies/takedown.ja.html'] || '').includes('<li>' + li(TJA) + '</li>')) bad.push('site/policies/takedown.ja.html: the item');
+    let feed = [];
+    try { feed = JSON.parse(x['data/policy-changes.json']); } catch (e) { bad.push('the feed does not parse'); }
+    const e = feed.find((c) => c.title === 'The Zenodo community and the identical relation named among what a removal leaves');
+    if (!e || e.date !== SEEN || e.from || JSON.stringify(e.policies) !== '["takedown"]' || !String(e.text).endsWith('These are facts, not new rules: no right or duty changes.') || !String(e.ja || '').endsWith('権利も義務も変わりません。')) bad.push('the feed entry of ' + SEEN);
+    for (const f of ['policies/takedown.md', 'policies/takedown.ja.md']) if (!String(x[f] || '').includes(f.endsWith('.ja.md') ? '最終更新：' + SEEN + '。' : 'Last updated: ' + SEEN + '.')) bad.push(f + ': not dated ' + SEEN);
+    /* The removed work by its id only: no DOI of a version it listed, no DOI of all its versions, no title. */
+    const dois = ((x.before || {}).versions || []).map((v) => v.doi);
+    const title = String((x.before || {}).title || '');
+    if (!dois.length || !title) bad.push('the record before the removal of ' + ID + ' is not read from git');
+    for (const f of F.filter((f2) => f2 !== 'CHANGELOG.md')) {
+      const t = String(x[f] || '');
+      if (dois.some((v) => t.includes(v)) || t.includes('10.5281/zenodo.18262622') || (title && t.includes(title.split(':')[0]))) bad.push(f + ' names the removed work');
+    }
+    /* Nothing is left to the owner: no instruction, no "the operator should", no task. */
+    const said = [EN, JA, TEN, TJA, (e || {}).text || '', (e || {}).ja || ''].join('\n');
+    if (/\b(?:please|should|must|needs? to|has to|the owner will)\b|してください|必要があります|べきです|お願い/i.test(said)) bad.push('a task left to the owner');
+    const ch = String(x['CHANGELOG.md'] || '').split('\n').find((l) => l.startsWith('- What stays at Zenodo after a removal')) || '';
+    if (!ch.includes('A new check (151)') || !/fails in each of \d+ ways it is broken on purpose\.$/.test(ch)) bad.push('the changelog');
+    return bad;
+  }
+  const now151 = problems151(real151);
+  ok('what stays at Zenodo after the removal of ' + ID + ': the README in both languages, the Takedown Policy in both languages and its built pages, the feed entry of ' + SEEN + ', the record by its id only, the day of the removal and the time of its commit (' + real151.at + ' UTC) from the records and git, and no task left to the owner',
+    now151.length === 0, now151.join(' / '));
+  const w151 = (f, a, b) => Object.assign({}, real151, { [f]: String(real151[f]).replace(a, b) });
+  const B151 = [
+    ['the English paragraph dropped', w151('README.md', "On 2026-11-26 Claude read the community through Zenodo's API", 'On 2026-11-26 Claude read the community')],
+    ['the Japanese paragraph without the last sentence', w151('README.md', 'Claude は、そのアカウントに触れられません。\n', '\n')],
+    ['another time of the commit', Object.assign({}, real151, { at: String(real151.at).replace(/\d\d$/, (s) => String((Number(s) + 1) % 60).padStart(2, '0')) })],
+    ['a record kept in the community taken off', Object.assign({}, real151, { papers: real151.papers.map((p) => (p.id === KEPT[0] ? { id: p.id, status: 'removed', removal_date: '2026-11-24' } : p)) })],
+    ['the README names the DOI of the removed version', w151('README.md', 'it still held the record of the version that record', 'it still held 10.5281/zenodo.22064241, the version that record')],
+    ['the policy names the title', w151('policies/takedown.md', 'On 2026-11-26 both were so for record 2026.0005', 'On 2026-11-26 both were so for Fragmentarian Spiritual Individualism, record 2026.0005')],
+    ['the Japanese policy without the item', w151('policies/takedown.ja.md', '- 削除した作品の Zenodo の記録は', '- 削除した作品の記録は')],
+    ['the built page without the item', w151('site/policies/takedown.html', 'The Zenodo record of a removed work can stay', 'The record of a removed work can stay')],
+    ['the feed entry under another policy', w151('data/policy-changes.json', '"policies": ["takedown"],\n    "title": "The Zenodo community', '"policies": ["privacy"],\n    "title": "The Zenodo community')],
+    ['a task left to the owner', w151('README.md', 'which Claude cannot reach.\n', 'which Claude cannot reach. The operator should remove it.\n')],
+    ['the policy dated earlier', w151('policies/takedown.md', 'Last updated: 2026-11-26.', 'Last updated: 2026-11-25.')],
+    ['the changelog without the check', w151('CHANGELOG.md', 'A new check (151)', 'A check')],
+  ];
+  const missed151 = B151.filter(([, b]) => problems151(b).length === 0).map(([k]) => k);
+  ok('break on purpose: each of ' + B151.length + ' ways (' + B151.map(([k]) => k).join(', ') + ') fails', missed151.length === 0, missed151.join(' / '));
+  ok('the changelog gives the ' + B151.length + ' break tests of this check', real151['CHANGELOG.md'].includes('fails in each of ' + B151.length + ' ways it is broken on purpose.'));
+}
+
 console.log('\n' + '-'.repeat(60));
 if (fails.length) {
   console.log(pass + ' passed, ' + fails.length + ' failed.');
