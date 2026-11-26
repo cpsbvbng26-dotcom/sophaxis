@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-26",
+    "policies": ["privacy", "takedown", "withdrawal"],
+    "title": "CORE named among the harvesters",
+    "text": "CORE, the aggregator of open access research at the Open University, harvests the OAI-PMH interface: it has registered Sophaxis as a data provider, and on 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in. The Privacy Policy and the Withdrawal Policy name CORE among the harvesters, and the Takedown Policy says that whether and when a harvester removes a removed record is the harvester's decision, and that on 2026-11-26 CORE still showed works whose records Sophaxis had removed. These are facts, not new rules: no right or duty changes."
+  },
+  {
     "date": "2026-11-23",
     "policies": ["submission"],
     "from": "2026-12-07",
