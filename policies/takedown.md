@@ -1,6 +1,6 @@
 # Takedown Policy
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [削除の規程（日本語訳）](./takedown.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -94,7 +94,7 @@ On the site:
 In the records and the OAI-PMH interface:
 
 - The record keeps only its Sophaxis id, the word "removed" and the day of removal. The day is kept because the OAI-PMH interface needs it.
-- The OAI-PMH interface marks the record as deleted, with that day and no metadata, so that harvesters can remove it when they next visit.
+- The OAI-PMH interface marks the record as deleted, with that day and no metadata, so that harvesters can remove it when they next visit. Whether and when a harvester removes it is the harvester's decision: on 2026-11-26 the operator saw that CORE, which harvests the interface, still showed works whose records Sophaxis had removed.
 
 In the issues:
 

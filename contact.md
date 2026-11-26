@@ -1,6 +1,6 @@
 # Operator and contact
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-26.
 
 Japanese: [運営者と連絡先（日本語訳）](./contact.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -72,6 +72,7 @@ The names and marks of Sophaxis, what was searched, and the steps when a notice 
 - Zenodo: the code and the records, archived with each release. Version 1.0.0 has the DOI [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372); [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) stands for every version. The community <https://zenodo.org/communities/sophaxis> gathers the Zenodo records of works listed on Sophaxis; it is not an affiliation with Zenodo.
 - GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
 - ROAR: Sophaxis has been listed in the Registry of Open Access Repositories at the University of Southampton since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).
+- CORE: Sophaxis is registered with CORE, the aggregator of open access research at the Open University, as a data provider: [provider 27777](https://core.ac.uk/data-providers/27777), whose record CORE created on 2026-11-10. On 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in.
 - Open Access Directory: Sophaxis has been listed under Philosophy and under Mathematics on its [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) page since 2026-11-09 (Japan time). The operator added the entry, and the listing is not a review of Sophaxis.
 - X: the official account [@SophaxisX](https://x.com/SophaxisX), with new records and news. The handle ends in X because @Sophaxis was already taken; that account is not Sophaxis.
 

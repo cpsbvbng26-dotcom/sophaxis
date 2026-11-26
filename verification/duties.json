@@ -455,7 +455,7 @@
       "by": [
         {
           "file": "policies/privacy.md",
-          "text": "Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there."
+          "text": "Harvesters, such as OpenAIRE and CORE, copy the title, the authors, the abstract and the licence from there."
         }
       ]
     },

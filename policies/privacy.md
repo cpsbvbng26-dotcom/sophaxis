@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [個人情報の取り扱いについて](./privacy.ja.md), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -112,7 +112,7 @@ Earlier versions stay in the history of the public repository and in the saves o
 ## Reuse and copies elsewhere
 
 The records are offered for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`.
-Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there.
+Harvesters, such as OpenAIRE and CORE, copy the title, the authors, the abstract and the licence from there.
 The OAI-PMH interface gives the same email address as the operator's ORCID record, because the protocol requires one.
 Requests about personal data go to the address on the operator's ORCID record, as below.
 The pages and the PDF copies of a work whose authors consent to it are saved to the Internet Archive.

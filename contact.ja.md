@@ -1,6 +1,6 @@
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-26。
 
 これは英語の [Operator and contact](./contact.md) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -76,6 +76,7 @@ Sophaxis の名としるし、調べた記録、知らせが来たときの手�
 - Zenodo：コードと記録を、版を出すたびに保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。[10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) はすべての版を表します。コミュニティ <https://zenodo.org/communities/sophaxis> は、Sophaxis に載っている作品の Zenodo の記録を集めています。これは、Sophaxis が Zenodo と組織のうえでつながっていることを意味するものではありません。
 - GitHub：コード、記録、投稿を収めた[公開のリポジトリ](https://github.com/cpsbvbng26-dotcom/sophaxis)です。
 - ROAR：Sophaxis は、2026-11-06（日本時間）から、サウサンプトン大学の Registry of Open Access Repositories に載っています。[記録 27422](https://roar.eprints.org/27422/) です。
+- CORE：Sophaxis は、英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、データ提供元として登録されています（[提供元 27777](https://core.ac.uk/data-providers/27777)）。CORE の記録は 2026-11-10 に作られています。2026-11-26 に、運営者が CORE をブラウザで確かめ、Sophaxis の記録が取り込まれていました。
 - Open Access Directory：2026-11-09（日本時間）から、その [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) の頁の Philosophy と Mathematics の二つの節に、Sophaxis が載っています。項目は運営者が足したもので、この掲載は Sophaxis の審査ではありません。
 - X：公式のアカウント [@SophaxisX](https://x.com/SophaxisX) で、新しい記録とお知らせを流します。@Sophaxis はすでに使われていたので、名の末尾に X を付けました。@Sophaxis のアカウントは Sophaxis ではありません。
 

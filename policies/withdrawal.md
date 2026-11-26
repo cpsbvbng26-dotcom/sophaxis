@@ -1,6 +1,6 @@
 # Withdrawal Policy
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [撤回の規程（日本語訳）](./withdrawal.ja.md). It is a translation; where the two differ, the English text applies.
 
@@ -35,7 +35,7 @@ A notice at the top gives the date of withdrawal and the reason.
 The record stays in the lists, the search, the feed and `papers.json`, marked as withdrawn.
 The PDF copies are taken off the site, and the record links to the repository only.
 A withdrawn record takes no new versions.
-Earlier copies stay in the history of the public repository and in the Internet Archive, and harvesters of the OAI-PMH interface keep what they took.
+Earlier copies stay in the history of the public repository and in the Internet Archive, and harvesters of the OAI-PMH interface, such as CORE, keep what they took.
 
 ## Removal at an author's request
 

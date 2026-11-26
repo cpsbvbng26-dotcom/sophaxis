@@ -4,8 +4,15 @@
   <id>https://sophaxis.vercel.app/news.html</id>
   <link rel="self" href="https://sophaxis.vercel.app/news.xml"/>
   <link href="https://sophaxis.vercel.app/news.html"/>
-  <updated>2026-11-15T00:00:00Z</updated>
+  <updated>2026-11-26T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/news.html#n18</id>
+    <title>Records taken in by CORE, as a data provider</title>
+    <link href="https://core.ac.uk/data-providers/27777"/>
+    <updated>2026-11-26T00:00:00Z</updated>
+    <summary>CORE, the aggregator of open access research at the Open University, has registered Sophaxis as a data provider: provider 27777, whose record CORE created on 2026-11-10. On 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/news.html#n17</id>
     <title>From 2026-12-01: authors from 16, and the co-author's consent to the review</title>

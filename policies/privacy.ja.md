@@ -1,6 +1,6 @@
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-23。
+最終更新：2026-11-26。
 
 Sophaxis の個人情報の取り扱いを書いた、英語の [Privacy Policy](./privacy.md) の訳です。項目は日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
@@ -80,7 +80,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 ## 公開と第三者への提供
 
 著者の氏名と ORCID iD は、記録の頁で公開します。
-記録は、`feed.xml`・`papers.json`・OAI-PMH でも公開します。OpenAIRE などの収集者は、そこから題・著者・要旨・ライセンスを写します。
+記録は、`feed.xml`・`papers.json`・OAI-PMH でも公開します。OpenAIRE や CORE などの収集者は、そこから題・著者・要旨・ライセンスを写します。
 著者が同意した作品の頁と PDF の写しは、Internet Archive（米国）に保存します。
 Zenodo に置かれた作品は、Zenodo にある Sophaxis のコミュニティ（https://zenodo.org/communities/sophaxis）にも集めることがあります。
 コミュニティに記録を出すのは著者です。記録を持つのは Zenodo で、運営はスイスの CERN です。

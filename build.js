@@ -1333,6 +1333,14 @@ function issnOk(s) {
 function listedIn() {
   return (SITE.listedIn || []).map((x) => `<p class="meta">Listed in <a href="${esc(x.url)}">${esc(x.name)}</a>, ${esc(x.description)}, since ${esc(x.since)} (Japan time).</p>\n`).join('');
 }
+/* Aggregators that registered Sophaxis as a data provider and harvest it through OAI-PMH (site.json dataProviderIn): CORE.
+ * Not part of listedIn, which holds registries of repositories. Each is shown with its provider number, the day of its record
+ * and the day the operator saw the records taken in; nothing more is claimed of what the aggregator holds. */
+function dataProviderIn(ja = false) {
+  return (SITE.dataProviderIn || []).map((x) => ja
+    ? `<p class="meta"><a href="${esc(x.url)}">${esc(x.name)}</a>（${esc(x.descriptionJa)}）に、データ提供元として登録されています（${esc(x.since)}、提供元 ${esc(String(x.provider))}）。${esc(x.seen)} に、運営者が ${esc(x.name)} をブラウザで確かめ、${esc(SITE.name)} の記録が取り込まれていました。</p>\n`
+    : `<p class="meta">Registered with <a href="${esc(x.url)}">${esc(x.name)}</a>, ${esc(x.description)}, as a data provider (provider ${esc(String(x.provider))}, created ${esc(x.since)}). On ${esc(x.seen)} the operator checked ${esc(x.name)} in a browser and found ${esc(SITE.name)}'s records taken in.</p>\n`).join('');
+}
 /* Directories where the operator added the entry (site.json directoryEntries). Shown with the page, the sections and the day
  * the entry was last confirmed, and said plainly to be no review of Sophaxis; they are not part of listedIn. */
 function directoryEntries(ja = false) {
@@ -1456,7 +1464,7 @@ function indexPage(papers, all = papers) {
 ${entrance(papers, all)}${aboutCard()}<div id="scope">${scopeNotice()}</div>
 <div id="changes">${termsNotice()}</div>
 <p class="meta">Last updated: <time datetime="${last}">${last}</time>. Records are added as they are accepted, and every record is checked once a week.${SITE.issn ? ' ISSN ' + esc(SITE.issn) + ' (online).' : ''}</p>
-${operatingCounts(all)}${listedIn()}${directoryEntries()}${ownIdentifiers()}<h2 id="listing">Listing</h2>
+${operatingCounts(all)}${listedIn()}${dataProviderIn()}${directoryEntries()}${ownIdentifiers()}<h2 id="listing">Listing</h2>
 ${ownNotice(all)}
 ${fields(papers, '', './')}
 ${shelf(papers, './')}<p class="meta">By topic: <a href="./collections.html">Collections</a>. By month: <a href="./months.html">New by month</a>. Researchers: <a href="./call.html">a call to submit</a>.</p>
@@ -1712,12 +1720,13 @@ let pressRecords = [];
 function pressFacts(html, ja = false) {
   const shown = pressRecords.filter((p) => p.status !== 'removed');
   const listed = (SITE.listedIn || []).map((x) => `<a href="${esc(x.url)}">${esc(x.name)}</a>${ja ? '（' + esc(x.since) + ' から）' : ' (since ' + esc(x.since) + ')'}`).join(', ');
+  const provider = (SITE.dataProviderIn || []).map((x) => `<a href="${esc(x.url)}">${esc(x.name)}</a>${ja ? '（提供元 ' + esc(String(x.provider)) + '、' + esc(x.since) + ' から）' : ' (provider ' + esc(String(x.provider)) + ', since ' + esc(x.since) + ')'}`).join(', ');
   const rows = ja ? [['始まった日', esc(SITE.since)], ['載っている記録', String(shown.length)], ['分野', Object.keys(SITE.categories).map((k) => esc(SITE.categoriesJa[k])).join('・')],
-    ['掲載先', listed], ['受け付けるライセンス', Object.values(SITE.licenses).map(esc).join('、')], ['料金', 'なし（著者からも読者からも）'],
+    ['掲載先', listed], ['データ提供元として登録', provider], ['受け付けるライセンス', Object.values(SITE.licenses).map(esc).join('、')], ['料金', 'なし（著者からも読者からも）'],
     ['運営者', `${esc(SITE.operator.name)}（<a href="https://orcid.org/${esc(SITE.operator.orcid)}">ORCID ${esc(SITE.operator.orcid)}</a>）`],
     ['ソースコード', `<a href="${esc(SITE.repo)}">GitHub</a>`], ['保存版', `<a href="https://doi.org/${esc(SITE.zenodo.doi)}">${esc(SITE.zenodo.doi)}</a>（Zenodo）`]]
     : [['Started', esc(SITE.since)], ['Records shown', String(shown.length)], ['Fields', Object.values(SITE.categories).map(esc).join(', ')],
-      ['Listed in', listed], ['Licences accepted', Object.values(SITE.licenses).map(esc).join(', ')], ['Fees', 'None, to authors or to readers'],
+      ['Listed in', listed], ['Data provider to', provider], ['Licences accepted', Object.values(SITE.licenses).map(esc).join(', ')], ['Fees', 'None, to authors or to readers'],
       ['Operator', `${esc(SITE.operator.name)} (<a href="https://orcid.org/${esc(SITE.operator.orcid)}">ORCID ${esc(SITE.operator.orcid)}</a>)`],
       ['Source code', `<a href="${esc(SITE.repo)}">GitHub</a>`], ['Archived version', `<a href="https://doi.org/${esc(SITE.zenodo.doi)}">${esc(SITE.zenodo.doi)}</a> (Zenodo)`]];
   const table = `<div class="table"><table><tr><th scope="col">${ja ? '項目' : 'Fact'}</th><th scope="col">${ja ? '内容' : 'Value'}</th></tr>${rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</table></div>`;
@@ -1928,7 +1937,7 @@ ${entrance(papers, all, true)}${aboutCard(true)}<div id="scope"><div class="noti
 <div id="changes">${termsNoticeJa()}</div>
 <p class="meta">最終更新：<time datetime="${last}">${last}</time>。記録は受け付けたときに加わり、すべての記録を毎週確かめています。</p>
 <p class="meta">一覧と統計は英語です。記録の頁には日本語の頁もあり、下の一覧からつないでいます。作品の題と要旨は、DOI の登録情報のとおり、著者の言語で載せています。</p>
-${operatingCounts(all, loadReports(), true)}${directoryEntries(true)}
+${operatingCounts(all, loadReports(), true)}${dataProviderIn(true)}${directoryEntries(true)}
 <h2>日本語の頁</h2>
 <ul class="jalinks">${jaLinks}</ul>
 <h2>分野と集め</h2>
@@ -2214,6 +2223,9 @@ function build(out, paperDir) {
   if (SITE.zenodo && (!/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.doi || '') || !/^10\.5281\/zenodo\.\d+$/.test(SITE.zenodo.version || '') || !/^https:\/\/zenodo\.org\/communities\//.test(SITE.zenodo.community || ''))) problems.push('site.json: zenodo needs a concept DOI, a version DOI and the community URL');
   (SITE.listedIn || []).forEach((x, i) => {
     if (!x || !x.name || !x.description || !/^https:\/\//.test(x.url || '') || !DATE.test(x.since || '')) problems.push('site.json: listedIn[' + i + '] needs a name, a description, an https url and a since date (YYYY-MM-DD)');
+  });
+  (SITE.dataProviderIn || []).forEach((x, i) => {
+    if (!x || !x.name || !x.description || !x.descriptionJa || !Number.isInteger(x.provider) || !/^https:\/\//.test(x.url || '') || !DATE.test(x.since || '') || !DATE.test(x.seen || '') || x.seen < x.since) problems.push('site.json: dataProviderIn[' + i + '] needs a name, a description in both languages, the provider number, an https url, the day of the record and the day the records were seen taken in (YYYY-MM-DD, not before it)');
   });
   (SITE.directoryEntries || []).forEach((x, i) => {
     if (!x || !x.name || !x.page || !/^https:\/\//.test(x.url || '') || !Array.isArray(x.sections) || !x.sections.length || !DATE.test(x.since || '') || !DATE.test(x.asOf || '') || x.asOf < x.since) problems.push('site.json: directoryEntries[' + i + '] needs a name, a page, an https url, sections, a since date and an asOf date not before it (YYYY-MM-DD)');

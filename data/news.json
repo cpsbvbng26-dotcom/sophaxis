@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-26",
+    "title": "Records taken in by CORE, as a data provider",
+    "text": "CORE, the aggregator of open access research at the Open University, has registered Sophaxis as a data provider: provider 27777, whose record CORE created on 2026-11-10. On 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in.",
+    "url": "https://core.ac.uk/data-providers/27777"
+  },
+  {
     "date": "2026-11-15",
     "title": "From 2026-12-01: authors from 16, and the co-author's consent to the review",
     "text": "From 2026-12-01, Sophaxis does not accept a work if any of its authors is under 16, and a co-author confirms their agreement with fixed words that also consent to the review by language models, after the information that Japan's law asks. Since 2026-11-15, the operator gives a submission to a language model only when everyone who wrote in its issue has consented. The Terms of Use and the Submission Policy give the details.",
