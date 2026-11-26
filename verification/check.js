@@ -5414,7 +5414,9 @@ const ELEVENTH_PASS_PAGES = ['ia-terms-archived-2024', 'ia-robots', 'wayback-rob
 const VERCEL_PASS_PAGES = ['vercel-fair-use-archived'];
 /* The pages fetched on 2026-11-15 for the owner's answers to the audit of 2026-11-14 (check 136). */
 const ANSWERS_PAGES = ['anthropic-consumer-terms', 'anthropic-commercial-terms', 'openai-terms-archived', 'openai-services-agreement-archived', 'xai-enterprise-terms', 'datacite-rest-api', 'datacite-data-file-use', 'indexnow-terms', 'x-terms-archived'];
-const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES, ELEVENTH_PASS_PAGES, VERCEL_PASS_PAGES, ANSWERS_PAGES);
+/* The pages fetched on 2026-11-26: CORE's record of Sophaxis as a data provider, and CORE's page of contacts (check 36). */
+const CORE_PAGES = ['core-provider', 'core-about'];
+const LATER_PAGES = SECOND_PASS_PAGES.concat(THIRD_PASS_PAGES, FIFTH_PASS_PAGES, EIGHTH_PASS_PAGES, ELEVENTH_PASS_PAGES, VERCEL_PASS_PAGES, ANSWERS_PAGES, CORE_PAGES);
 /* The translations of laws by foreign governments and agencies, kept whole on 2026-11-12 and in parts from 2026-11-13 (check 126).
  * The counts of 2026-11-12 (texts kept whole that were not laws) do not hold them. */
 const LATER_PARTS = ['fadp', 'pipl', 'thai-pdpa', 'saudi-pdpl', 'ae-pdpl', 'qa-pdpl'];

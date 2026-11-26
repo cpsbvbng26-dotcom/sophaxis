@@ -268,6 +268,11 @@ const PAGES = {
   'roar-information': PAGE('https://roar.eprints.org/information.html'),
   'roar-help': PAGE('https://roar.eprints.org/help/'),
   'roar-record': PAGE('https://roar.eprints.org/27422/'),
+  /* Added on 2026-11-26: CORE's record of Sophaxis as a data provider, from CORE's own API (JSON, kept as it is sent), so
+   * that what the README and the site say of the registration is read against CORE's words. */
+  'core-provider': PAGE('https://api.core.ac.uk/v3/data-providers/27777', { markdown: true }),
+  // CORE's page of contacts, where it says how a request to update or remove an article is made.
+  'core-about': PAGE('https://core.ac.uk/about'),
   'orcid-terms': PAGE('https://info.orcid.org/terms-of-use/', { links: /terms|api|public|licen/i }),
   'orcid-public-api-terms': PAGE('https://info.orcid.org/public-client-terms-of-service/'),
   'edx-terms': PAGE(IA('https://www.edx.org/edx-terms-service')),
