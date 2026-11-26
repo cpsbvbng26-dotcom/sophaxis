@@ -8,6 +8,13 @@
   <updated>2026-11-26T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
   <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c44</id>
+    <title>The Zenodo community and the identical relation named among what a removal leaves</title>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <updated>2026-11-26T00:00:00Z</updated>
+    <summary>The Takedown Policy names, among what a removed record leaves outside the site, the Sophaxis community at Zenodo, where the Zenodo record of a removed work can stay, and the metadata of the deposit, which can still give the record page as identical (IsIdenticalTo) at Zenodo and at DataCite. The community is changed only from the operator's account at Zenodo, the metadata of a deposit only from the account that holds it, and no automatic step of Sophaxis reaches either. On 2026-11-26 both were so for record 2026.0005, removed on 2026-11-23. These are facts, not new rules: no right or duty changes. Policies: Takedown Policy.</summary>
+  </entry>
+  <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c43</id>
     <title>CORE named among the harvesters</title>
     <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
