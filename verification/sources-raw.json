@@ -18106,6 +18106,60 @@
      "text": "User-agent: * Disallow: /"
     }
    ]
+  },
+  "core-provider": {
+   "url": "https://api.core.ac.uk/v3/data-providers/27777",
+   "status": 200,
+   "fetched": "2026-11-26",
+   "length": 470,
+   "sha256": "cf193cc06a169ea9dc40712f24e2c3e4c1b85586d8067bd3a5046a8c7b7c66f5",
+   "spans": [
+    {
+     "at": 1,
+     "text": "\"id\":27777,\"openDoarId\":0,\"name\":\"Sophaxis\""
+    },
+    {
+     "at": 229,
+     "text": "\"metadataFormat\":\"oai_dc\",\"createdDate\":\"2026-11-10T00:00:00+00:00\""
+    },
+    {
+     "at": 366,
+     "text": "\"type\":\"REPOSITORY\""
+    },
+    {
+     "at": 424,
+     "text": "Name"
+    }
+   ]
+  },
+  "core-about": {
+   "url": "https://core.ac.uk/about",
+   "status": 200,
+   "fetched": "2026-11-26",
+   "length": 10813,
+   "sha256": "57c23fddc5ee0a3302afffe5886218d385cd2bde306ec91f50d7837f063c243a",
+   "spans": [
+    {
+     "at": 52,
+     "text": "Service"
+    },
+    {
+     "at": 6917,
+     "text": "the author"
+    },
+    {
+     "at": 7874,
+     "text": "Person"
+    },
+    {
+     "at": 9123,
+     "text": "English"
+    },
+    {
+     "at": 9349,
+     "text": "Please submit your request on the article update page"
+    }
+   ]
   }
  },
  "laws": {
