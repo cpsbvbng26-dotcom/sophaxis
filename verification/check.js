@@ -1406,7 +1406,8 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     const rows = (head) => { const i = rd.indexOf(head); return i < 0 ? [] : rd.slice(i).split('\n\n').find((b) => b.startsWith('| ')).split('\n').slice(2); };
     const en = rows('## Sophaxis itself: DOI, listings and registrations under review');
     const ja = rows('### Sophaxis 自体の DOI、掲載先と、審査中の登録');
-    const names = ['DOAPR', 'OpenDOAR', 'ASAPbio', 'CORE'];
+    /* CORE left the table on 2026-11-26, registered as a data provider with its records taken in; the check after this one holds it. */
+    const names = ['DOAPR', 'OpenDOAR', 'ASAPbio'];
     ok('the README opens with the OSF DOI of Sophaxis, its listing in ROAR with the record, and a table of the registrations under review, the same ' + names.length + ' in both languages, none of them shown as listed',
       rd.indexOf('## Sophaxis itself: DOI, listings and registrations under review') < rd.indexOf('## Submitting') && rd.indexOf('### Sophaxis 自体の DOI、掲載先と、審査中の登録') < rd.indexOf('貢献の窓口')
       && rd.includes('Sophaxis has been listed in ROAR, the Registry of Open Access Repositories at the University of Southampton, since 2026-11-06 (Japan time): <https://roar.eprints.org/27422/>.')
@@ -1423,7 +1424,7 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
       && rd.includes('None of them has listed it yet, and each decides for itself.') && rd.includes('こちらはまだ載っていません。載せるかどうかは、それぞれが決めます。'));
     /* 2026-11-17. The table names the day its state is from, the same in both languages. A row read on another day gives that
      * day, earlier than the table's and not before its application, the same in both languages. The table's day is the day
-     * DOAPR's list was read, and the rows' days are the days the ASAPbio list and the CORE search were read, as the paragraphs
+     * DOAPR's list was read, and the row's day is the day the ASAPbio list was read, as the paragraphs
      * under "Operator and contact" say; so the old day put back, or one day changed in one place, fails. */
     const asOfEn = /the state is as of (2026-\d\d-\d\d), or as of the day a row gives\./.exec(rd);
     const asOfJa = /状態は (2026-\d\d-\d\d) の時点のものです。行に日付を書いたものは、その日の時点のものです。/.exec(rd);
@@ -1431,20 +1432,103 @@ console.log('\n36. Sophaxis elsewhere: the OSF project');
     const appliedOn = (r) => r.split(' | ')[2];
     const dayEn = en.map((r) => (/; not (?:yet )?listed as of (2026-\d\d-\d\d) \|$/.exec(r) || [])[1] || null);
     const dayJa = ja.map((r) => (/。(2026-\d\d-\d\d) の時点で(?:まだ)?載っていない \|$/.exec(r) || [])[1] || null);
-    const iA = names.indexOf('ASAPbio'), iC = names.indexOf('CORE');
+    const iA = names.indexOf('ASAPbio');
     ok('the table of registrations under review gives the day its state is from (' + asOf + '), the same in both languages and the day DOAPR\'s list was read; a row read on an earlier day gives that day in both languages, not before its application, as the paragraph on it says',
       asOf !== null && asOfJa !== null && asOfJa[1] === asOf
       && en.length === names.length && ja.length === names.length
       && JSON.stringify(dayEn) === JSON.stringify(dayJa)
       && dayEn.every((d, i) => appliedOn(en[i]) <= asOf && appliedOn(ja[i]) === appliedOn(en[i]) && (d === null || (d >= appliedOn(en[i]) && d < asOf)))
-      && dayEn[iA] !== null && dayEn[iC] !== null
+      && dayEn[iA] !== null
       && rd.includes('On ' + asOf + " (Japan time) Claude read DOAPR's list of repositories, <https://doapr.coar-repositories.org/repositories/>, and Sophaxis was not on it; the application is still under review.")
       && rd.includes(asOf + '（日本時間）に、Claude が DOAPR のリポジトリの一覧（<https://doapr.coar-repositories.org/repositories/>）を読みました。Sophaxis は載っていませんでした。申請は審査中のままです。')
       && rd.includes('A copy of the directory, <https://asapbio.org/preprint-servers>, that Claude read on ' + dayEn[iA] + ' at 07:40 (Japan time) did not include Sophaxis. Later reads were stopped by the site\'s Cloudflare check, which Claude did not bypass.')
-      && rd.includes(dayEn[iA] + ' の 07:40（日本時間）に Claude が読んだ一覧（<https://asapbio.org/preprint-servers>）には、Sophaxis は載っていませんでした。そのあとの読み取りは、サイトの Cloudflare の確認で止まりました。Claude は、この確認を迂回していません。')
-      && rd.includes('On ' + dayEn[iC] + ' at 21:16 (Japan time) the operator searched CORE\'s data providers for "Sophaxis" in a browser, and found no match.')
-      && rd.includes(dayEn[iC] + ' の 21:16（日本時間）に、運営者がブラウザで CORE のデータ提供者を「Sophaxis」で検索しました。一致するものはありませんでした。'),
+      && rd.includes(dayEn[iA] + ' の 07:40（日本時間）に Claude が読んだ一覧（<https://asapbio.org/preprint-servers>）には、Sophaxis は載っていませんでした。そのあとの読み取りは、サイトの Cloudflare の確認で止まりました。Claude は、この確認を迂回していません。'),
       asOf + ' / rows ' + dayEn.join(', ') + ' / ' + dayJa.join(', '));
+  }
+  /* 2026-11-26. CORE, the aggregator at the Open University, registered Sophaxis as a data provider (provider 27777, its record
+   * created on 2026-11-10), and on 2026-11-26 the operator checked CORE in a browser and found the records taken in. CORE is not a
+   * registry of repositories, so it is kept out of listedIn, in site.json "dataProviderIn". What CORE's API gave, and what CORE's
+   * page of contacts says, are the parts kept by the fetch (verification/sources-raw.json: core-provider, core-about), and the
+   * README quotes only those parts. Every line that says Sophaxis is registered with, listed in or taken in by CORE names the
+   * operator's observation of that day, and the numbers of the README are counted from the records. */
+  {
+    const SEEN = '2026-11-26';
+    const FILES = ['site.json', 'README.md', 'verification/sources-raw.json', 'contact.md', 'contact.ja.md', 'data/news.json', 'docs/operations.md', 'docs/outside-assessments.md',
+      'policies/takedown.md', 'policies/takedown.ja.md', 'site/index.html', 'site/index.ja.html', 'site/contact.html', 'site/contact.ja.html', 'site/news.html', 'site/history.html', 'site/history.ja.html', 'site/press.html', 'site/press.ja.html'];
+    const real36 = Object.fromEntries(FILES.map((f) => [f, read(path.join(ROOT, f))]));
+    const recs = loadPapers(path.join(ROOT, 'data', 'papers')).papers;
+    const coreProblems = (x) => {
+      const bad = [];
+      const site = JSON.parse(x['site.json']);
+      const dp = site.dataProviderIn || [];
+      const c = dp[0] || {};
+      if (dp.length !== 1 || c.name !== 'CORE' || c.provider !== 27777 || c.url !== 'https://core.ac.uk/data-providers/' + c.provider || c.api !== 'https://api.core.ac.uk/v3/data-providers/' + c.provider || c.since !== '2026-11-10' || c.seen !== SEEN) bad.push('site.json: dataProviderIn');
+      if ((site.listedIn || []).some((e) => /\bCORE\b/.test(e.name + ' ' + e.description))) bad.push('site.json: CORE among the registries of listedIn');
+      /* What the fetch kept, and the README's quotations of it. */
+      const raw = JSON.parse(x['verification/sources-raw.json']);
+      const flat = (t) => String(t).replace(/\s+/g, '');
+      const kept = (o) => ((o && o.spans) || []).map((s) => flat(s.text)).join('\n');
+      const pg = raw.pages['core-provider'], ab = raw.pages['core-about'];
+      const FR = ['"id":' + c.provider + ',"openDoarId":0,"name":"Sophaxis"', '"metadataFormat":"oai_dc","createdDate":"' + c.since + 'T00:00:00+00:00"', '"type":"REPOSITORY"'];
+      const AB = ['Please submit your request on the article update page', 'Such requests will not be answered through this route.'];
+      if (!pg || pg.url !== c.api || pg.status !== 200 || !/^[0-9a-f]{64}$/.test(pg.sha256 || '') || pg.fetched !== SEEN || !FR.every((f) => kept(pg).includes(flat(f)))) bad.push('sources-raw.json: the record of CORE\'s API, or a part the README quotes');
+      if (!ab || ab.url !== 'https://core.ac.uk/about' || ab.status !== 200 || !/^[0-9a-f]{64}$/.test(ab.sha256 || '') || !AB.every((f) => kept(ab).includes(flat(f)))) bad.push('sources-raw.json: CORE\'s page of contacts, or a part the README quotes');
+      const rd = x['README.md'];
+      if (!rd.includes('`sources.yml` fetched it and kept its SHA-256 and the parts quoted here: ' + FR.map((f) => '“' + f + '”').join(', ').replace(/, (?=[^,]*$)/, ' and ') + '.')
+        || !rd.includes((pg || {}).fetched + ' に `sources.yml` がそれを取り寄せ、SHA-256 と、ここに引く部分を残しました：' + FR.map((f) => '「' + f + '」').join('') + '。')
+        || !rd.includes('On ' + (pg || {}).fetched + ' `sources.yml` fetched it')) bad.push('README.md: the quotation of CORE\'s API');
+      if (!rd.includes('“' + AB[0] + '”') || !rd.includes('“' + AB[1] + '”') || !rd.includes('「' + AB[0] + '」') || !rd.includes('「' + AB[1] + '」')) bad.push('README.md: the quotation of CORE\'s page of contacts');
+      /* The registration and the observation, in both languages, with the numbers counted from the records. */
+      const ids = recs.map((p) => p.id).filter((i) => i <= '2026.0008').sort();
+      const gone = ids.filter((i) => (recs.find((p) => p.id === i) || {}).status === 'removed');
+      const seenListed = ['2026.0002', '2026.0003', '2026.0004'], seenGone = ['2026.0001', '2026.0005'];
+      if (!seenListed.every((i) => ids.includes(i) && !gone.includes(i)) || !seenGone.every((i) => gone.includes(i))) bad.push('the records the operator saw in CORE are not in the state the README gives');
+      const EN = ['Sophaxis is registered with CORE, the aggregator of open access research at the Open University, as a data provider: provider ' + c.provider + ', whose record CORE created on ' + c.since + '.',
+        'On ' + SEEN + ' at 20:24 (Japan time) the operator checked CORE\'s page for the provider, <' + c.url + '>, in a browser, and found Sophaxis\'s records taken in: the page showed 8 research outputs.',
+        'Of the 8, the operator saw 5 titles: those of the listed records ' + seenListed.join(', ').replace(/, (?=[^,]*$)/, ' and ') + ', and of the removed records ' + seenGone.join(' and ') + '.',
+        'Sophaxis has given ' + ids.length + ' ids, ' + ids[0] + ' to ' + ids[ids.length - 1] + ', and ' + gone.length + ' of them are removed.',
+        "Whether and when CORE drops a removed record is CORE's decision.",
+        'On 2026-11-16 at 21:16 (Japan time) the operator searched CORE\'s data providers for "Sophaxis" in a browser, and found no match.'];
+      const JA = ['英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、データ提供元として登録されています（提供元 ' + c.provider + '）。CORE の記録は ' + c.since + ' に作られています。',
+        SEEN + ' の 20:24（日本時間）に、運営者が CORE のこの提供元の頁（<' + c.url + '>）をブラウザで確かめ、Sophaxis の記録が取り込まれていました。頁には 8 件の研究成果が出ていました。',
+        '運営者が題を見たのは、そのうちの 5 件です。載っている記録 ' + seenListed.join('・') + ' と、削除した記録 ' + seenGone.join('・') + ' の題でした。',
+        'Sophaxis がこれまでに与えた番号は ' + ids[0] + ' から ' + ids[ids.length - 1] + ' の ' + ids.length + ' 件で、そのうち ' + gone.length + ' 件を削除しています。',
+        '削除した記録を CORE が外すかどうかと、その時期は、CORE が決めます。',
+        '2026-11-16 の 21:16（日本時間）に、運営者がブラウザで CORE のデータ提供者を「Sophaxis」で検索しました。一致するものはありませんでした。'];
+      for (const s of EN.concat(JA)) if (!rd.includes(s)) bad.push('README.md: ' + s.slice(0, 50));
+      /* The site: both top pages, the press facts and the contact pages, built from site.json. */
+      if (!x['site/index.html'].includes('<p class="meta">Registered with <a href="' + c.url + '">CORE</a>, the aggregator of open access research at the Open University, as a data provider (provider ' + c.provider + ', created ' + c.since + '). On ' + SEEN + " the operator checked CORE in a browser and found Sophaxis's records taken in.</p>")) bad.push('site/index.html: the line on CORE');
+      if (!x['site/index.ja.html'].includes('<p class="meta"><a href="' + c.url + '">CORE</a>（英国のオープン大学が運営するオープンアクセスの論文の索引）に、データ提供元として登録されています（' + c.since + '、提供元 ' + c.provider + '）。' + SEEN + ' に、運営者が CORE をブラウザで確かめ、Sophaxis の記録が取り込まれていました。</p>')) bad.push('site/index.ja.html: the line on CORE');
+      if (!x['site/press.html'].includes('<tr><th scope="row">Data provider to</th><td><a href="' + c.url + '">CORE</a> (provider ' + c.provider + ', since ' + c.since + ')</td></tr>')
+        || !x['site/press.ja.html'].includes('<tr><th scope="row">データ提供元として登録</th><td><a href="' + c.url + '">CORE</a>（提供元 ' + c.provider + '、' + c.since + ' から）</td></tr>')) bad.push('the press pages: the row on CORE');
+      if (!x['site/contact.html'].includes('<a href="' + c.url + '">provider ' + c.provider + '</a>') || !x['site/contact.ja.html'].includes('<a href="' + c.url + '">提供元 ' + c.provider + '</a>')) bad.push('the contact pages: the link to CORE');
+      /* Every paragraph, item or row (in a page, every paragraph, item, row or line) that says Sophaxis is registered with, listed in
+       * or taken in by CORE names the operator's observation. */
+      const CLAIM = /[Rr]egistered with CORE|CORE[^.\n]{0,60}registered Sophaxis|[Ll]isted (?:in|on) CORE|in CORE\b|taken in by CORE|CORE[^。\n]{0,60}(?:登録されて|掲載|載って|取り込)/;
+      const SAW = new RegExp(SEEN + '[^\\n]*(?:records taken in|記録が取り込まれていました)|Records taken in by CORE', 'i');
+      for (const f of FILES.filter((g) => !/\.json$/.test(g)).concat(['data/news.json'])) {
+        const lines = /\.html$/.test(f) ? x[f].split(/<\/p>|<\/li>|<\/tr>|\n/) : /\.md$/.test(f) ? x[f].split(/\n\n|\n(?=- |\| )/) : x[f].split('\n');
+        for (const l of lines.map((t) => t.replace(/<[^>]+>/g, ''))) if (CLAIM.test(l) && !SAW.test(l)) bad.push(f + ': a line on CORE without the observation of ' + SEEN + ': ' + l.replace(/<[^>]+>/g, '').trim().slice(0, 60));
+      }
+      return bad;
+    };
+    const now36 = coreProblems(real36);
+    ok('CORE: Sophaxis is registered as a data provider (site.json dataProviderIn, not listedIn), as CORE\'s API gave it and the fetch kept it, and the operator saw its records taken in on ' + SEEN + '; the README quotes only kept parts, its counts come from the records, the 2026-11-16 search is kept, the site shows it on both top pages, the press and the contact pages, and every line on CORE names the observation',
+      now36.length === 0, now36.join(' / '));
+    const w36 = (f, a, b) => Object.assign({}, real36, { [f]: String(real36[f]).replace(a, b) });
+    const breaks36 = [
+      ['CORE put among the registries', w36('site.json', '"listedIn": [\n', '"listedIn": [\n    { "name": "CORE", "description": "the aggregator", "url": "https://core.ac.uk/", "since": "2026-11-10" },\n')],
+      ['the top page without the observation', w36('site/index.html', ' On ' + SEEN + " the operator checked CORE in a browser and found Sophaxis's records taken in.", '')],
+      ['a Japanese line that says Sophaxis is in CORE without it', w36('contact.ja.md', '\n- Open Access Directory：', '\n- CORE：Sophaxis は CORE に掲載されています。\n- Open Access Directory：')],
+      ['an English line that says it is listed in CORE without it', w36('docs/operations.md', '\n- Points raised by outside assessments', '\n- Sophaxis is listed in CORE.\n- Points raised by outside assessments')],
+      ['a quoted part of the API altered', w36('README.md', '「"type":"REPOSITORY"」', '「"type":"JOURNAL"」')],
+      ['a part the README quotes not kept', w36('verification/sources-raw.json', '"text": "\\"type\\":\\"REPOSITORY\\""', '"text": "\\"type\\""')],
+      ['another count of ids', w36('README.md', 'Sophaxis has given 8 ids', 'Sophaxis has given 9 ids')],
+      ['the search of 2026-11-16 dropped', w36('README.md', '2026-11-16 の 21:16（日本時間）に、運営者がブラウザで CORE のデータ提供者を「Sophaxis」で検索しました。一致するものはありませんでした。', '')],
+      ['the press without CORE', w36('site/press.ja.html', '<th scope="row">データ提供元として登録</th>', '<th scope="row">掲載先</th>')],
+    ];
+    const missed36 = breaks36.filter(([, b]) => coreProblems(b).length === 0).map(([k]) => k);
+    ok('break on purpose: each of ' + breaks36.length + ' ways (' + breaks36.map(([k]) => k).join(', ') + ') fails', missed36.length === 0, missed36.join(' / '));
   }
   /* 2026-11-12 (second pass): ROAR's own pages (fetched as roar-help and roar-information) say that a deposit is put in an
    * "editorial buffer" until "approved by an editor", and do not say what is checked; so the listing is stated with its day,
@@ -10160,7 +10244,8 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
     if (!String((site.termsNotice || {}).text || '').includes(NOTICE + ' ' + RE_EN + "; this is the operator's own definition, which rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it.")) bad.push('the notice on the top page');
     if (!plain(x['site/index.html']).includes(NOTICE)) bad.push('site/index.html: the notice is not built');
     const e = feed.find((c) => c.title === TITLE);
-    if (!e || e.date !== ANNOUNCED || e.from !== FROM || JSON.stringify(e.policies) !== '["submission"]' || feed.indexOf(e) !== 0
+    /* The first entry of its day: a later entry (2026-11-26, CORE named among the harvesters) stands above it, newest first. */
+    if (!e || e.date !== ANNOUNCED || e.from !== FROM || JSON.stringify(e.policies) !== '["submission"]' || feed.indexOf(e) !== feed.findIndex((c) => c.date === ANNOUNCED)
       || !String(e.text).startsWith('From ' + FROM + ', for a new work whose submission issue is opened on or after that day, Sophaxis accepts the work only if it is deposited in ' + orList(now) + ', with a DOI from that repository. ')
       || !String(e.text).includes(' The other ' + NO + ' repositories, ' + andList(others) + ', are no longer accepted for a new work;')
       || !String(e.text).includes(RE_EN + "; this is the operator's own definition, which rates no other repository, and none of the three organisations endorses Sophaxis or is affiliated with it.")
@@ -10174,7 +10259,8 @@ console.log('\n147. The entrance (2026-11-23): from 2026-12-07 a new work only f
       || !String(e.ja).endsWith(ANNOUNCED + ' に利用者が求め、細かいところは Claude が決めました。')) bad.push('the Japanese feed entry');
     if (!plain(x['site/index.ja.html']).includes(e ? e.ja : '\u0000')) bad.push('site/index.ja.html: the Japanese notice does not list it');
     if (!plain(x['site/policies/changes.xml']).includes(TITLE)) bad.push('the feed of policy changes is not built');
-    if ((site.topUpdated || {}).en !== ANNOUNCED || (site.topUpdated || {}).ja !== ANNOUNCED) bad.push('site.json: topUpdated is not ' + ANNOUNCED + ' in both languages');
+    /* Not before the announcement. The top pages changed again on 2026-11-26 (CORE); check 121 holds the day to the last change of their text. */
+    if (!((site.topUpdated || {}).en >= ANNOUNCED) || !((site.topUpdated || {}).ja >= ANNOUNCED)) bad.push('site.json: topUpdated is before ' + ANNOUNCED + ' in one of the languages');
     const cm = String(x['verification/commitments.txt'] || '').split('\n');
     for (const c of ['A work already listed stays listed, and a new version of it is accepted from the repository where it is listed.', 'A submission whose issue is opened before ' + FROM + ' is judged under the list of ' + NA + ' repositories, even when it is decided on or after that day.'])
       if (!cm.includes(c)) bad.push('the commitment "' + c.slice(0, 40) + '"');
