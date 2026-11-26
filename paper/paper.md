@@ -103,6 +103,7 @@ Sophaxis went public on 2026-10-30.
 At the time of writing, every listed record is a submission by the operator, moderated under the same rules as any other, so the operator's own preprints are its only research use so far.
 There is no record yet of use by other authors.
 Sophaxis is listed in ROAR, the Registry of Open Access Repositories, and on the page of disciplinary repositories of the Open Access Directory, and its application to the Directory of Open Access Preprint Repositories (DOAPR) is under review.
+CORE, the aggregator of open access research, has registered Sophaxis as a data provider and has taken in its records through OAI-PMH.
 The intake also runs deposit-check, the operator's checker of DOI metadata, pinned to one commit, to give advice on a submission.
 The records are exposed through OAI-PMH, as JSON and as citation files, and the code and the records are archived at Zenodo with each release [@sophaxis], so that the design can be examined, rerun and reused.
 

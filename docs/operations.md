@@ -38,6 +38,7 @@ Sophaxis is run by one person. This page is the operator's routine, written down
 
 - The application to OpenDOAR is drafted in [opendoar.md](./opendoar.md), for the day it takes new submissions again. Its first section says what holds before it is sent. It has not been sent.
 - PhilPapers answers automated requests with 403, so the state of the request to its Open Access Gateway, asked on 2026-11-03, cannot be read from here. Its reply came by email, and the README records it beside the registry table. The reply named the operator's own works as the reason. No new request has been made, and none is made before a work by another researcher is listed.
+- CORE has registered Sophaxis as a data provider ([provider 27777](https://core.ac.uk/data-providers/27777), whose record CORE created on 2026-11-10; `dataProviderIn` in `site.json`). It harvests the OAI-PMH interface. On 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in, records that Sophaxis has removed among them. Whether and when CORE drops a removed record is CORE's decision. CORE's page of contacts says that a request to update or remove an article goes through its article update page, <https://core.ac.uk/article-update>, and is not answered by email; `sources.yml` keeps the parts of that page that the README quotes.
 - Points raised by outside assessments, and what was done about each, are in [outside-assessments.md](./outside-assessments.md).
 
 ## If Vercel cannot serve the site
