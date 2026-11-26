@@ -114,6 +114,7 @@ Outside the site:
 - GitHub's own procedure is to rewrite the history first and then ask GitHub Support, which helps only with sensitive data whose risk cannot be removed otherwise; where it does not help, the earlier versions stay in the history.
 - The operator also asks the Internet Archive to exclude its earlier copies of the record.
 - Copies that others have already taken are outside Sophaxis's control; the operator tells the ones it knows of.
+- The Zenodo record of a removed work can stay in the Sophaxis community at Zenodo, and the metadata of the deposit can still give the record page as identical (`IsIdenticalTo`), at Zenodo and at DataCite. The community is changed only from the operator's account at Zenodo, and the metadata of a deposit only from the account that holds it; no automatic step of Sophaxis reaches either. On 2026-11-26 both were so for record 2026.0005, removed on 2026-11-23.
 - A follow-up issue lists these steps, with the request to the Internet Archive. Each day an automatic step checks whether the emptied issues are deleted and whether the Wayback Machine still lists a copy, ticks what is done, and reminds the operator once a week of the rest.
 
 The Sophaxis id of a removed record is never given to another work.
