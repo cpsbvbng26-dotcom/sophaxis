@@ -1,6 +1,6 @@
 # For anyone introducing Sophaxis
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [紹介する人のために（日本語訳）](./press.ja.md). It is a translation; where the two differ, the English text applies.
 
