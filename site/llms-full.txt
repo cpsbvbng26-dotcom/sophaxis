@@ -1080,7 +1080,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.html
 
 # Privacy Policy
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [個人情報の取り扱いについて](https://sophaxis.vercel.app/policies/privacy.ja.html), which follows the headings of Japan's Act on the Protection of Personal Information.
 
@@ -1192,7 +1192,7 @@ Earlier versions stay in the history of the public repository and in the saves o
 ## Reuse and copies elsewhere
 
 The records are offered for reuse in `feed.xml`, `papers.json` and the OAI-PMH interface at `/oai`.
-Harvesters, such as OpenAIRE, copy the title, the authors, the abstract and the licence from there.
+Harvesters, such as OpenAIRE and CORE, copy the title, the authors, the abstract and the licence from there.
 The OAI-PMH interface gives the same email address as the operator's ORCID record, because the protocol requires one.
 Requests about personal data go to the address on the operator's ORCID record, as below.
 The pages and the PDF copies of a work whose authors consent to it are saved to the Internet Archive.
@@ -1434,7 +1434,7 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.html
 
 # Withdrawal Policy
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [撤回の規程（日本語訳）](https://sophaxis.vercel.app/policies/withdrawal.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1469,7 +1469,7 @@ A notice at the top gives the date of withdrawal and the reason.
 The record stays in the lists, the search, the feed and `papers.json`, marked as withdrawn.
 The PDF copies are taken off the site, and the record links to the repository only.
 A withdrawn record takes no new versions.
-Earlier copies stay in the history of the public repository and in the Internet Archive, and harvesters of the OAI-PMH interface keep what they took.
+Earlier copies stay in the history of the public repository and in the Internet Archive, and harvesters of the OAI-PMH interface, such as CORE, keep what they took.
 
 ## Removal at an author's request
 
@@ -1519,7 +1519,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.html
 
 # Takedown Policy
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [削除の規程（日本語訳）](https://sophaxis.vercel.app/policies/takedown.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -1613,7 +1613,7 @@ On the site:
 In the records and the OAI-PMH interface:
 
 - The record keeps only its Sophaxis id, the word "removed" and the day of removal. The day is kept because the OAI-PMH interface needs it.
-- The OAI-PMH interface marks the record as deleted, with that day and no metadata, so that harvesters can remove it when they next visit.
+- The OAI-PMH interface marks the record as deleted, with that day and no metadata, so that harvesters can remove it when they next visit. Whether and when a harvester removes it is the harvester's decision: on 2026-11-26 the operator saw that CORE, which harvests the interface, still showed works whose records Sophaxis had removed.
 
 In the issues:
 
@@ -2781,7 +2781,7 @@ Source: https://sophaxis.vercel.app/contact.html
 
 # Operator and contact
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-26.
 
 Japanese: [運営者と連絡先（日本語訳）](https://sophaxis.vercel.app/contact.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -2853,6 +2853,7 @@ The names and marks of Sophaxis, what was searched, and the steps when a notice 
 - Zenodo: the code and the records, archived with each release. Version 1.0.0 has the DOI [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372); [10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) stands for every version. The community <https://zenodo.org/communities/sophaxis> gathers the Zenodo records of works listed on Sophaxis; it is not an affiliation with Zenodo.
 - GitHub: the [public repository](https://github.com/cpsbvbng26-dotcom/sophaxis) with the code, the records and the submissions.
 - ROAR: Sophaxis has been listed in the Registry of Open Access Repositories at the University of Southampton since 2026-11-06 (Japan time): [record 27422](https://roar.eprints.org/27422/).
+- CORE: Sophaxis is registered with CORE, the aggregator of open access research at the Open University, as a data provider: [provider 27777](https://core.ac.uk/data-providers/27777), whose record CORE created on 2026-11-10. On 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in.
 - Open Access Directory: Sophaxis has been listed under Philosophy and under Mathematics on its [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) page since 2026-11-09 (Japan time). The operator added the entry, and the listing is not a review of Sophaxis.
 - X: the official account [@SophaxisX](https://x.com/SophaxisX), with new records and news. The handle ends in X because @Sophaxis was already taken; that account is not Sophaxis.
 
@@ -3022,7 +3023,7 @@ Source: https://sophaxis.vercel.app/press.html
 
 # For anyone introducing Sophaxis
 
-Last updated: 2026-11-23.
+Last updated: 2026-11-26.
 
 Japanese: [紹介する人のために（日本語訳）](https://sophaxis.vercel.app/press.ja.html). It is a translation; where the two differ, the English text applies.
 
@@ -3306,7 +3307,7 @@ Source: https://sophaxis.vercel.app/policies/privacy.ja.html
 
 # 個人情報の取り扱いについて
 
-最終更新：2026-11-23。
+最終更新：2026-11-26。
 
 Sophaxis の個人情報の取り扱いを書いた、英語の [Privacy Policy](https://sophaxis.vercel.app/policies/privacy.html) の訳です。項目は日本の個人情報保護法に沿って並べ替えてあります。英語と違うところは、英語が優先します。
 
@@ -3386,7 +3387,7 @@ Sophaxis は、Vercel のアクセス解析を有効にしていません。
 ## 公開と第三者への提供
 
 著者の氏名と ORCID iD は、記録の頁で公開します。
-記録は、`feed.xml`・`papers.json`・OAI-PMH でも公開します。OpenAIRE などの収集者は、そこから題・著者・要旨・ライセンスを写します。
+記録は、`feed.xml`・`papers.json`・OAI-PMH でも公開します。OpenAIRE や CORE などの収集者は、そこから題・著者・要旨・ライセンスを写します。
 著者が同意した作品の頁と PDF の写しは、Internet Archive（米国）に保存します。
 Zenodo に置かれた作品は、Zenodo にある Sophaxis のコミュニティ（https://zenodo.org/communities/sophaxis）にも集めることがあります。
 コミュニティに記録を出すのは著者です。記録を持つのは Zenodo で、運営はスイスの CERN です。
@@ -4702,7 +4703,7 @@ Source: https://sophaxis.vercel.app/policies/takedown.ja.html
 
 # 削除の規程（日本語訳）
 
-最終更新：2026-11-23。
+最終更新：2026-11-26。
 
 これは英語の [Takedown Policy](https://sophaxis.vercel.app/policies/takedown.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4796,7 +4797,7 @@ issue の文が他人の権利を侵害していると知ったとき、また�
 記録と OAI-PMH の口では：
 
 - 記録には、Sophaxis の番号、「removed」の語、削除の日だけが残ります。日を残すのは、OAI-PMH の口がそれを必要とするためです。
-- OAI-PMH の口は、その日を添え、メタデータなしで、記録を削除済みとして示します。収集者が次に訪れたときに取り除けるようにするためです。
+- OAI-PMH の口は、その日を添え、メタデータなしで、記録を削除済みとして示します。収集者が次に訪れたときに取り除けるようにするためです。取り除くかどうかと、その時期は、収集者が決めます。2026-11-26 に運営者が確かめたとき、この口を収集する CORE には、Sophaxis が記録を削除した作品がまだ出ていました。
 
 issue では：
 
@@ -4877,7 +4878,7 @@ Source: https://sophaxis.vercel.app/policies/withdrawal.ja.html
 
 # 撤回の規程（日本語訳）
 
-最終更新：2026-11-23。
+最終更新：2026-11-26。
 
 これは英語の [Withdrawal Policy](https://sophaxis.vercel.app/policies/withdrawal.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。このことは、[利用規約](https://sophaxis.vercel.app/policies/terms.ja.html)の「日本国外の方へ」の節に定めています。
 
@@ -4912,7 +4913,7 @@ issue は公開されます。
 記録は、撤回済みの印を付けて、一覧・検索・フィード・`papers.json` に残ります。
 PDF の写しはサイトから外し、記録は預け先へのリンクだけになります。
 撤回した記録には、新しい版を加えません。
-過去の写しは、公開のリポジトリの履歴と Internet Archive に残り、OAI-PMH の口の収集者は、取ったものを保ちます。
+過去の写しは、公開のリポジトリの履歴と Internet Archive に残り、CORE などの OAI-PMH の口の収集者は、取ったものを保ちます。
 
 ## 著者の求めによる削除
 
@@ -5396,7 +5397,7 @@ Source: https://sophaxis.vercel.app/history.ja.html
 
 # 沿革と名前（日本語訳）
 
-最終更新：2026-11-15。
+最終更新：2026-11-26。
 
 これは英語の [History and name](https://sophaxis.vercel.app/history.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -5961,7 +5962,7 @@ Source: https://sophaxis.vercel.app/contact.ja.html
 
 # 運営者と連絡先（日本語訳）
 
-最終更新：2026-11-19。
+最終更新：2026-11-26。
 
 これは英語の [Operator and contact](https://sophaxis.vercel.app/contact.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 
@@ -6037,6 +6038,7 @@ Sophaxis の名としるし、調べた記録、知らせが来たときの手�
 - Zenodo：コードと記録を、版を出すたびに保存しています。版 1.0.0 の DOI は [10.5281/zenodo.24033372](https://doi.org/10.5281/zenodo.24033372) です。[10.5281/zenodo.24033371](https://doi.org/10.5281/zenodo.24033371) はすべての版を表します。コミュニティ <https://zenodo.org/communities/sophaxis> は、Sophaxis に載っている作品の Zenodo の記録を集めています。これは、Sophaxis が Zenodo と組織のうえでつながっていることを意味するものではありません。
 - GitHub：コード、記録、投稿を収めた[公開のリポジトリ](https://github.com/cpsbvbng26-dotcom/sophaxis)です。
 - ROAR：Sophaxis は、2026-11-06（日本時間）から、サウサンプトン大学の Registry of Open Access Repositories に載っています。[記録 27422](https://roar.eprints.org/27422/) です。
+- CORE：Sophaxis は、英国のオープン大学が運営するオープンアクセスの論文の索引 CORE に、データ提供元として登録されています（[提供元 27777](https://core.ac.uk/data-providers/27777)）。CORE の記録は 2026-11-10 に作られています。2026-11-26 に、運営者が CORE をブラウザで確かめ、Sophaxis の記録が取り込まれていました。
 - Open Access Directory：2026-11-09（日本時間）から、その [Disciplinary repositories](https://oad.simmons.edu/oadwiki/Disciplinary_repositories) の頁の Philosophy と Mathematics の二つの節に、Sophaxis が載っています。項目は運営者が足したもので、この掲載は Sophaxis の審査ではありません。
 - X：公式のアカウント [@SophaxisX](https://x.com/SophaxisX) で、新しい記録とお知らせを流します。@Sophaxis はすでに使われていたので、名の末尾に X を付けました。@Sophaxis のアカウントは Sophaxis ではありません。
 
@@ -6536,7 +6538,7 @@ Source: https://sophaxis.vercel.app/press.ja.html
 
 # 紹介する人のために（日本語訳）
 
-最終更新：2026-11-23。
+最終更新：2026-11-26。
 
 これは英語の [For anyone introducing Sophaxis](https://sophaxis.vercel.app/press.html) の訳です。訳と英語の文が食い違うときは、英語の文が適用されます。
 

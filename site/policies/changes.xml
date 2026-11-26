@@ -5,8 +5,17 @@
   <id>https://sophaxis.vercel.app/policies/changes.xml</id>
   <link rel="self" href="https://sophaxis.vercel.app/policies/changes.xml"/>
   <link href="https://sophaxis.vercel.app/policy.html"/>
-  <updated>2026-11-23T00:00:00Z</updated>
+  <updated>2026-11-26T00:00:00Z</updated>
   <author><name>Takuya Nemoto</name></author>
+  <entry>
+    <id>https://sophaxis.vercel.app/policies/changes.xml#c43</id>
+    <title>CORE named among the harvesters</title>
+    <link href="https://sophaxis.vercel.app/policies/privacy.html" title="Privacy Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/takedown.html" title="Takedown Policy"/>
+    <link href="https://sophaxis.vercel.app/policies/withdrawal.html" title="Withdrawal Policy"/>
+    <updated>2026-11-26T00:00:00Z</updated>
+    <summary>CORE, the aggregator of open access research at the Open University, harvests the OAI-PMH interface: it has registered Sophaxis as a data provider, and on 2026-11-26 the operator checked CORE in a browser and found Sophaxis's records taken in. The Privacy Policy and the Withdrawal Policy name CORE among the harvesters, and the Takedown Policy says that whether and when a harvester removes a removed record is the harvester's decision, and that on 2026-11-26 CORE still showed works whose records Sophaxis had removed. These are facts, not new rules: no right or duty changes. Policies: Privacy Policy, Takedown Policy, Withdrawal Policy.</summary>
+  </entry>
   <entry>
     <id>https://sophaxis.vercel.app/policies/changes.xml#c42</id>
     <title>New works only from SSRN, arXiv or Jxiv</title>
